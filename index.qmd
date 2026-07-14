@@ -13,7 +13,7 @@ of Technology.
 
 ## Course Description
 
-Theory of sampling distributions; principles of data reduction; interval and point estimation, sufficient statistics, order statistics, hypothesis testing, correlation and linear regression; introduction to linear models.
+This course teaches students Monte Carlo simulation techniques, focusing on applications in financial risk management, uncertainty quantification, and Bayesian inference. These sampling methods are used to compute the expected values, quantiles, and densities. Advanced techniques, such as Quasi-Monte Carlo methods and Markov chain Monte Carlo, are covered. Students will gain experience using popular computer languages for Monte Carlo computations.
 
 <details>
 <summary><strong>Instructor:</strong> Fred J. Hickernell</summary>
