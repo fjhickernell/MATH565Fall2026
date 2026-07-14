@@ -1,0 +1,8 @@
+[submodule "qmcsoftware"]
+	path = qmcsoftware
+	url = git@github.com:QMCSoftware/QMCSoftware.git
+	branch = develop
+[submodule "classlib"]
+	path = classlib
+	url = git@github.com:fjhickernell/HickernellAcademicLib.git
+	branch = main

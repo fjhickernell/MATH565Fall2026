@@ -1,0 +1,176 @@
+---
+title: "Welcome to MATH 565"
+subtitle: "Fall 2026"
+metadata-files:
+  - classlib/classlib/quarto/website/hickernell-website.yml
+title-block-banner: false
+---
+
+## Monte Carlo and Quasi-Monte Carlo Methods
+
+This is the course website for **MATH 565 — Fall 2026** at Illinois Institute
+of Technology.
+
+## Course Description
+
+Theory of sampling distributions; principles of data reduction; interval and point estimation, sufficient statistics, order statistics, hypothesis testing, correlation and linear regression; introduction to linear models.
+
+<details>
+<summary><strong>Instructor:</strong> Fred J. Hickernell</summary>
+
+[![](classlib/classlib/quarto/assets/images/fredplaidshirtcropped.jpg){.instructor-photo alt="Fred J. Hickernell"}](classlib/classlib/quarto/assets/images/fredplaidshirtcropped.jpg)
+
+* *Office:* Galvin Tower 18C3-1  
+* *Office hours:* By appointment [(book here)](https://outlook.office.com/bookwithme/user/037b70c376b1407ea8aa7e57c242da0e@illinoistech.edu?anonymous&ep=plink)
+* *Phone:* 312-567-8983  
+* *Email:* <hickernell@illinoistech.edu>  
+* [_Website_](https://www.iit.edu/directory/people/fred-hickernell)  &nbsp;&nbsp;&nbsp; 
+[_LinkedIn_](https://www.linkedin.com/in/fjhickernell/)  &nbsp;&nbsp;&nbsp; 
+[_Google Scholar_](https://scholar.google.com/citations?user=dJbMJG8AAAAJ&hl=en)   &nbsp;&nbsp;&nbsp; 
+[_Mathematics Genealogy Profile_](https://mathgenealogy.org/id.php?id=57571)
+
+*Brief bio:* Fred J. Hickernell is professor of applied mathematics. His research focuses on improving the efficiency of computer simulations and developing justifiable stopping criteria. He has spent most of his career at Hong Kong Baptist University and Illinois Institute of Technology, often in academic administrative roles. He has served on the editorial boards of the Journal of Complexity, Mathematics of Computation, and the SIAM Journal on Numerical Analysis.  He is a Fellow of the Institute of Mathematical Statistics and the recipient of the 2016 Joseph F. Traub Prize for Achievement in Information-Based Complexity. 
+
+Hickernell speaks Cantonese and enjoys Chinese food. He is married with adult children.  He enjoys discussing matters of substance.  His most important identity is a disciple of Jesus.
+</details>
+
+<details>
+<summary><strong>Teaching Assistant:</strong> Nishi Thakur</summary>
+
+* **Office:** RE 117
+* **Office hours:** Tu & Th 3:15–4:45 in RE 129
+* **Email:** <nthakur5@hawk.illinoistech.edu> 
+
+</details>
+
+<div style="margin-top:1em; margin-bottom:0.4em;">
+<strong>Textbook:</strong> Art B. Owen, [*Monte Carlo Theory, Methods, and Examples*](https://artowen.su.domains/mc/), 2025+
+</div>
+
+<details>
+<summary><strong>Recommended resources</strong></summary>
+
+* [Python](https://www.python.org)
+* [Anaconda / Miniconda](https://www.anaconda.com)
+* [pip (Python package manager)](https://pip.pypa.io/en/stable/)
+* [R](https://www.r-project.org)
+* [RStudio (Posit)](https://posit.co/download/rstudio-desktop/)* [VS Code](https://code.visualstudio.com)
+* [Jupyter](https://docs.jupyter.org/en/latest/)
+* [Github](https://github.com)
+* [LaTeX](https://www.latex-project.org/get/)
+* [Overleaf](https://www.overleaf.com)
+* [qmcpy](https://qmcpy.org)
+* [Course Repository](https://github.com/fjhickernell/MATH565Fall2026)
+
+</details>
+
+<details>
+<summary><strong>Prerequisites/Requirements</strong></summary>
+
+* Calculus
+* Matrix algebra
+* A calculus-based probability course, such as MATH 474 or MATH 475; you should understand
+  * Discrete and continuous random variables
+  * Probability mass and density functions, cumulative distribution functions
+  * Mean, median, standard deviation, quantile, covariance, (in)dependence
+  * Population versus sample quantities
+  * Central Limit Theorem
+* Facility in numerical programming, meaning
+  * Programming in Python, or some other language such as MATLAB, or R
+  * Using an integrated development environment (IDE), such as VS Code
+  * You are highly encouraged to become familiar with GitHub
+* Facility with LaTeX or some other technical document preparation system; Markdown is helpful
+
+</details>
+
+<details>
+<summary><strong>Objectives</strong></summary>
+By the end of this course, students will be able to:
+
+- Understand the basics of Monte Carlo and Quasi-Monte Carlo Methods.
+- Understand the basics of Markov chain Monte Carlo (MCMC).
+- Understand how these methods are used for computations.
+- Assess the performance of Monte Carlo methods and improve their effectiveness.
+- Understand basic implementation issues in performing Monte Carlo calculations.
+
+</details>
+
+<details>
+<summary><strong>Where to Find It</strong></summary>
+
+| **This course website** | **Canvas website** |
+|---|---|
+| [Syllabus](index.qmd) | Grades |
+| [Schedule and Lecture Notes](pages/schedule.qmd) | Online Discussions |
+| [Notebooks](pages/notebooks.qmd) | |
+| [Class Git Repository](https://github.com/fjhickernell/MATH565Fall2026) | |
+
+</details>
+
+## Course Outline
+
+<details>
+<summary><strong>Introduction</strong> — 4 hours</summary>
+
+- What is a Monte Carlo method?
+- Probability review
+- Point and interval estimators of means, variances, probability distribution functions, and quantile functions
+- Conditional Monte Carlo
+
+</details>
+
+
+<details>
+<summary><strong>Generating Samples</strong> — 8 hours</summary>
+
+- Pseudo-random numbers
+- Random vectors with different distributions
+- Low discrepancy sampling
+- Acceptance-rejection sampling
+
+</details>
+
+<details>
+<summary><strong>Markov Chain Monte Carlo + Discrepancy</strong> — 9 hours</summary>
+
+- Markov chains
+- Metropolis-Hastings
+- Kernel-based discrepancies and maximum mean discrepancy
+- Discrepancy as a measure of cubature error
+- Sample quality
+- Gibbs sampler
+- Convergence diagnostics
+- Error estimation
+
+</details>
+
+<details>
+<summary><strong>Enhancing Efficiency</strong> — 15 hours</summary>
+
+- Control variates
+- Importance sampling
+- Antithetic variates
+- Stratified sampling and Latin hypercube
+- Quasi-Monte Carlo sampling
+
+</details>
+
+<details>
+<summary><strong>Selected Topics</strong> — 6 hours</summary>
+
+- *(TBA)*
+
+</details>
+
+
+## Assessment
+
+- [**Assignments:**](pages/homework.qmd) 15%
+- [**Project:**](pages/project.qmd) 25%
+- [**Midterm Tests:**](pages/tests.qmd) 20%
+- **Final Exam (Take-Home (35%) + In-Class (65%)):** 40%
+- **Extra Credit:** up to 10%, beginning August 25, if you are the first to find an error in
+    - My lecture slides, Jupyter Notebooks, or assignments at least 24 hours after I have presented them in class, or
+    - Art Owen's book,
+
+  Then I will award you 0.5 or 1 extra credit points, up to a maximum of 10 points. These are added to your final weighted total. *Note that the weighted total may not correctly reflect the extra credit until grades are recorded for all categories.*

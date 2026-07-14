@@ -1,0 +1,75 @@
+name: Publish Quarto site to gh-pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-22.04
+    env:
+      RETICULATE_USE_MANAGED_VENV: "false"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+          clean: true
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Set RETICULATE_PYTHON
+        run: echo "RETICULATE_PYTHON=$pythonLocation/bin/python" >> "$GITHUB_ENV"
+
+      - name: Force submodule branches
+        run: |
+          git -C classlib fetch origin main
+          git -C classlib checkout -B main origin/main
+          git -C qmcsoftware fetch origin develop
+          git -C qmcsoftware checkout -B develop origin/develop
+
+      - name: Install Python packages from submodules
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e classlib
+          python -m pip install -e "qmcsoftware/.[class]"
+
+      - uses: r-lib/actions/setup-r@v2
+
+      - name: Install R packages
+        run: R -q -e 'install.packages(c("knitr","rmarkdown","reticulate"), repos="https://cloud.r-project.org")'
+
+      - name: Render website
+        run: quarto render
+
+      - name: Render slides subproject
+        working-directory: slides
+        run: quarto render
+
+      - name: Stage slides into website output
+        run: |
+          rm -rf _site/slides
+          mkdir -p _site/slides
+          rsync -a --delete slides/_site/ _site/slides/
+
+      - name: Clean Quarto publish worktree
+        run: |
+          rm -rf .quarto/quarto-publish-worktree-*
+          rm -rf _site/.git
+
+      - name: Publish to gh-pages
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+          render: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

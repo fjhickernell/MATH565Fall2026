@@ -1,14 +1,23 @@
-# MATH 565 Fall 2026
+# MATH 565 — Fall 2026
 
-Course materials for **MATH 565: Monte Carlo and Quasi-Monte Carlo Methods**
-at the Illinois Institute of Technology, Fall 2026.
+This repository contains the Quarto website source for **MATH 565: Monte
+Carlo and Quasi-Monte Carlo Methods** at Illinois Institute of Technology.
 
-This repository contains the Quarto-based course website, lecture notes,
-assignments, and supporting material.
+Course content will be added incrementally. The current repository is a clean
+website skeleton based on the architecture of MATH563Spring2026.
 
-## Repository Roles
+**Course website:** https://fjhickernell.github.io/MATH565Fall2026/
 
-- **MATH565Fall2025** — Historical source repository (Jekyll + Apple Keynote). Read-only reference during migration.
-- **MATH565Fall2026** — Active development repository for the Fall 2026 offering using Quarto.
+## Local setup
 
-The migration is being performed incrementally so that the Fall 2025 materials remain available as a reference while the new course is developed.
+```bash
+git clone --recurse-submodules https://github.com/fjhickernell/MATH565Fall2026.git
+cd MATH565Fall2026
+python -m pip install -e classlib
+python -m pip install -e "qmcsoftware/.[class]"
+quarto render
+(cd slides && quarto render)
+```
+
+The deployment workflow renders the website and slides separately, stages the
+slides under `_site/slides`, and publishes the combined site to `gh-pages`.

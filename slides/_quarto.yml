@@ -1,0 +1,11 @@
+project:
+  type: default
+  output-dir: _site
+  resources:
+    - ../classlib/**/*
+
+course_repo: "https://github.com/fjhickernell/MATH565Fall2026"
+course_repo_label: "MATH565Fall2026 on GitHub"
+
+execute:
+  kernel: qmcpy

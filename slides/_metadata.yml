@@ -1,0 +1,33 @@
+metadata-files:
+  - ../classlib/classlib/quarto/slides/hickernell-slides.yml
+  - ../classlib/classlib/quarto/metadata/hickernell-texts.yml
+
+course_title: "MATH 565 — Fall 2026"
+author: "Fred J. Hickernell"
+date: today
+date-format: "MMMM D, YYYY"
+
+reveal-options:
+  disableLayout: false
+
+course_website: https://fjhickernell.github.io/MATH565Fall2026/
+
+decks:
+  d01:
+    file: 01-course-overview.html
+    title: Course Overview
+    short_title: Course Overview
+
+format:
+  revealjs:
+    navigation-mode: grid
+    controls: true
+    html-math-method:
+      method: mathjax
+      url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js
+
+execute:
+  warning: false
+  message: false
+  freeze: false
+  fig-path: "{basename}_files/figure-revealjs/"

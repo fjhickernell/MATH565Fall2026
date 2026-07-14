@@ -1,0 +1,2 @@
+# Course-site-only Python dependencies may be listed here temporarily.
+# Prefer dependencies supplied by HickernellClassLib or QMCSoftware.

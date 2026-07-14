@@ -1,0 +1,5 @@
+# Example local R environment for this repo
+# Copy to .Renviron (not tracked) and adjust if needed
+
+RETICULATE_USE_MANAGED_VENV=false
+RETICULATE_PYTHON=${HOME}/miniconda3/envs/qmcpy/bin/python

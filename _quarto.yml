@@ -1,0 +1,76 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+    - "pages/**/*.qmd"
+    - "!slides/**"
+  resources:
+    - assets/**
+    - classlib/classlib/quarto/**
+    - classlib/classlib/notebooks/**
+
+format:
+  html:
+    css:
+      - classlib/classlib/quarto/website/hickernell-website.css
+    link-external-newwindow: true
+
+metadata:
+  instructor_photo: classlib/classlib/quarto/assets/images/fredplaidshirtcropped.jpg
+
+metadata-files:
+  - classlib/classlib/quarto/metadata/hickernell-texts.yml
+
+# Navigation must live here (cannot be delegated via metadata-files).
+# Styling/layout lives in HickernellClassLib (hickernell-website.yml).
+website:
+  title: "MATH 565 — Fall 2026"
+  navbar:
+    logo: classlib/classlib/quarto/assets/images/normal-scatter.png
+    left:
+      - href: index.qmd
+        text: Welcome
+      - href: classlib/classlib/quarto/pages/stats-qs.qmd
+        text: Stats Qs
+      - href: pages/schedule.qmd
+        text: Schedule
+      - href: pages/notebooks.qmd
+        text: Notebooks
+      - href: pages/homework.qmd
+        text: Assignments
+      - href: pages/tests.qmd
+        text: Tests
+      - href: pages/project.qmd
+        text: Project
+      - text: Resources
+        menu:
+          - href: classlib/classlib/quarto/pages/policies.qmd
+            text: Policies
+          - href: classlib/classlib/quarto/pages/git-clone-update-with-submodules.qmd
+            text: Accessing repo
+          - href: classlib/classlib/quarto/pages/interesting-articles-links.qmd
+            text: Interesting articles & links
+          - href: https://imstat.org/free-student-membership/
+            text: 🆓 IMS Student Membership
+          - href: https://www.siam.org/membership/individual-membership/student-membership/
+            text: 🆓 SIAM Student Membership
+    right:
+      - text: Related
+        menu:
+          - text: MATH 476 — Statistics
+            href: https://fjhickernell.github.io/MATH476Spring2026/
+          - text: MATH 563 — Mathematical Statistics
+            href: https://fjhickernell.github.io/MATH563Spring2026/
+          - text: QMCPy
+            href: https://qmcpy.org
+
+  page-footer:
+    left: "© 2026 Fred J. Hickernell · Illinois Institute of Technology"
+
+course_repo: "https://github.com/fjhickernell/MATH565Fall2026"
+course_repo_label: "MATH565Fall2026 on GitHub"
+
+execute:
+  kernel: qmcpy
+  env:
+    RETICULATE_PYTHON: /opt/miniconda3/envs/qmcpy/bin/python

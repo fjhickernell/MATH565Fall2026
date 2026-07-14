@@ -1,0 +1,6 @@
+metadata-files:
+  - ../classlib/classlib/quarto/website/hickernell-website.yml
+
+metadata:
+  stats_css: "/classlib/classlib/quarto/css/stats-questions.css"
+  stats_js: "/classlib/classlib/quarto/js/stats-questions.js"
