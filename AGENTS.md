@@ -76,7 +76,10 @@ course-site changes in the target repository.
 
 Do not commit or push during ordinary intermediate work unless the user asks.
 
-When the user instructs **"Finished"**:
+When the user instructs **"Finished"**, complete the workflow below. If text
+follows `Finished:`, use that text as the commit message. If the user says
+only `Finished`, construct a concise commit message that accurately describes
+the current task's intended changes.
 
 1. Review only the changes associated with the current task in
    `MATH565Fall2026` and `classlib`.
