@@ -13,7 +13,12 @@ of Technology.
 
 ## Course Description
 
-This course teaches students Monte Carlo simulation techniques, focusing on applications in financial risk management, uncertainty quantification, and Bayesian inference. These sampling methods are used to compute the expected values, quantiles, and densities. Advanced techniques, such as Quasi-Monte Carlo methods and Markov chain Monte Carlo, are covered. Students will gain experience using popular computer languages for Monte Carlo computations.
+This course teaches Monte Carlo simulation techniques, focusing on
+applications in financial risk management, uncertainty quantification, and
+Bayesian inference. These sampling methods are used to compute expected
+values, quantiles, and densities. Advanced techniques, including quasi-Monte
+Carlo and Markov chain Monte Carlo methods, are covered. Students will gain
+experience using popular programming languages for Monte Carlo computations.
 
 <details>
 <summary><strong>Instructor:</strong> Fred J. Hickernell</summary>
@@ -24,22 +29,33 @@ This course teaches students Monte Carlo simulation techniques, focusing on appl
 * *Office hours:* By appointment [(book here)](https://outlook.office.com/bookwithme/user/037b70c376b1407ea8aa7e57c242da0e@illinoistech.edu?anonymous&ep=plink)
 * *Phone:* 312-567-8983  
 * *Email:* <hickernell@illinoistech.edu>  
-* [_Website_](https://www.iit.edu/directory/people/fred-hickernell)  &nbsp;&nbsp;&nbsp; 
-[_LinkedIn_](https://www.linkedin.com/in/fjhickernell/)  &nbsp;&nbsp;&nbsp; 
-[_Google Scholar_](https://scholar.google.com/citations?user=dJbMJG8AAAAJ&hl=en)   &nbsp;&nbsp;&nbsp; 
+* [_Website_](https://www.iit.edu/directory/people/fred-hickernell)
+  &nbsp;&nbsp;&nbsp;
+  [_LinkedIn_](https://www.linkedin.com/in/fjhickernell/)
+  &nbsp;&nbsp;&nbsp;
+  [_Google Scholar_](https://scholar.google.com/citations?user=dJbMJG8AAAAJ&hl=en)
+  &nbsp;&nbsp;&nbsp;
 [_Mathematics Genealogy Profile_](https://mathgenealogy.org/id.php?id=57571)
 
-*Brief bio:* Fred J. Hickernell is professor of applied mathematics. His research focuses on improving the efficiency of computer simulations and developing justifiable stopping criteria. He has spent most of his career at Hong Kong Baptist University and Illinois Institute of Technology, often in academic administrative roles. He has served on the editorial boards of the Journal of Complexity, Mathematics of Computation, and the SIAM Journal on Numerical Analysis.  He is a Fellow of the Institute of Mathematical Statistics and the recipient of the 2016 Joseph F. Traub Prize for Achievement in Information-Based Complexity. 
+*Brief bio:* Fred J. Hickernell is professor of applied mathematics. His
+research focuses on improving the efficiency of computer simulations and
+developing justifiable stopping criteria. He has spent most of his career at
+Hong Kong Baptist University and Illinois Institute of Technology, often in
+academic administrative roles. He has served on the editorial boards of the
+Journal of Complexity, Mathematics of Computation, and the SIAM Journal on
+Numerical Analysis. He is a Fellow of the Institute of Mathematical
+Statistics and the recipient of the 2016 Joseph F. Traub Prize for Achievement
+in Information-Based Complexity.
 
-Hickernell speaks Cantonese and enjoys Chinese food. He is married with adult children.  He enjoys discussing matters of substance.  His most important identity is a disciple of Jesus.
+Hickernell speaks Cantonese and enjoys Chinese food. He is married with adult
+children. He enjoys discussing matters of substance. His most important
+identity is a disciple of Jesus.
 </details>
 
 <details>
-<summary><strong>Teaching Assistant:</strong> Nishi Thakur</summary>
+<summary><strong>Teaching Assistant:</strong> TBA</summary>
 
-* **Office:** RE 117
-* **Office hours:** Tu & Th 3:15–4:45 in RE 129
-* **Email:** <nthakur5@hawk.illinoistech.edu> 
+Teaching-assistant information for Fall 2026 will be posted when available.
 
 </details>
 
@@ -54,9 +70,10 @@ Hickernell speaks Cantonese and enjoys Chinese food. He is married with adult ch
 * [Anaconda / Miniconda](https://www.anaconda.com)
 * [pip (Python package manager)](https://pip.pypa.io/en/stable/)
 * [R](https://www.r-project.org)
-* [RStudio (Posit)](https://posit.co/download/rstudio-desktop/)* [VS Code](https://code.visualstudio.com)
+* [RStudio (Posit)](https://posit.co/download/rstudio-desktop/)
+* [VS Code](https://code.visualstudio.com)
 * [Jupyter](https://docs.jupyter.org/en/latest/)
-* [Github](https://github.com)
+* [GitHub](https://github.com)
 * [LaTeX](https://www.latex-project.org/get/)
 * [Overleaf](https://www.overleaf.com)
 * [qmcpy](https://qmcpy.org)
@@ -85,6 +102,7 @@ Hickernell speaks Cantonese and enjoys Chinese food. He is married with adult ch
 
 <details>
 <summary><strong>Objectives</strong></summary>
+
 By the end of this course, students will be able to:
 
 - Understand the basics of Monte Carlo and Quasi-Monte Carlo Methods.
@@ -101,8 +119,12 @@ By the end of this course, students will be able to:
 | **This course website** | **Canvas website** |
 |---|---|
 | [Syllabus](index.qmd) | Grades |
-| [Schedule and Lecture Notes](pages/schedule.qmd) | Online Discussions |
-| [Notebooks](pages/notebooks.qmd) | |
+| [Schedule and Lecture Notes](pages/schedule.qmd) | Announcements |
+| [Notebooks](pages/notebooks.qmd) | Discussions |
+| [Assignments](pages/homework.qmd) | Assignments and submissions |
+| [Tests and Exams](pages/tests.qmd) | |
+| [Project](pages/project.qmd) | |
+| [Course Policies](classlib/classlib/quarto/pages/policies.qmd) | |
 | [Class Git Repository](https://github.com/fjhickernell/MATH565Fall2026) | |
 
 </details>
@@ -168,9 +190,13 @@ By the end of this course, students will be able to:
 - [**Assignments:**](pages/homework.qmd) 15%
 - [**Project:**](pages/project.qmd) 25%
 - [**Midterm Tests:**](pages/tests.qmd) 20%
-- **Final Exam (Take-Home (35%) + In-Class (65%)):** 40%
-- **Extra Credit:** up to 10%, beginning August 25, if you are the first to find an error in
-    - My lecture slides, Jupyter Notebooks, or assignments at least 24 hours after I have presented them in class, or
-    - Art Owen's book,
+- [**Final Exam (Take-Home (35%) + In-Class (65%)):**](pages/tests.qmd) 40%
+- **Extra Credit:** up to 10% if you are the first to find an error in
+  - My lecture slides, Jupyter notebooks, or assignments at least 24 hours
+    after I have presented them in class, or
+  - Art Owen's book.
 
-  Then I will award you 0.5 or 1 extra credit points, up to a maximum of 10 points. These are added to your final weighted total. *Note that the weighted total may not correctly reflect the extra credit until grades are recorded for all categories.*
+  I will award 0.5 or 1 extra-credit points, up to a maximum of 10 points.
+  These are added to your final weighted total. *The weighted total may not
+  correctly reflect extra credit until grades are recorded for all
+  categories.*
