@@ -57,6 +57,20 @@ appropriate phase rather than appended indiscriminately.
   - [ ] Notebooks (`pages/notebooks.qmd`)
   - [ ] Assignments (`pages/homework.qmd`)
   - [ ] Tests (`pages/tests.qmd`)
+    - [x] Create the initial Fall 2026 tests-page skeleton and provisional
+      instructions.
+    - [x] Add and initialize `HickernellTestArchive` at
+      `assets/tests/archive`.
+    - [x] Leave test dates, coverage, rooms, final-exam details, and current
+      PDFs marked TBA.
+    - [x] Connect the shared archive-search instructions and dynamic MATH 565
+      archive listing.
+    - [x] Adopt the established test and examination instructions.
+    - [ ] Finalize coverage, rooms, final-exam date/time/location, and current
+      PDF links.
+    - [x] Validate recursive submodule initialization and archive enumeration.
+    - [x] Validate Quarto rendering and generated page structure.
+    - [ ] Inspect the visible page layout in a browser.
   - [ ] Project (`pages/project.qmd`)
   - [ ] Policies (`classlib/classlib/quarto/pages/policies.qmd`)
   - [ ] Accessing repo

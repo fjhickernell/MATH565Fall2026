@@ -6,3 +6,6 @@
 	path = classlib
 	url = git@github.com:fjhickernell/HickernellAcademicLib.git
 	branch = main
+[submodule "assets/tests/archive"]
+	path = assets/tests/archive
+	url = git@github.com:fjhickernell/HickernellTestArchive.git

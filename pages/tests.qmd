@@ -1,5 +1,67 @@
 ---
 title: "Tests"
+execute:
+  echo: false
 ---
 
-Test and examination information will be posted here.
+## Instructions for Tests and Exams
+
+Unless otherwise noted
+
+- Tests are closed book, but you may use **four** letter-sized sheets (both
+  sides) of notes (**eight** sheets for the final); notes must be handwritten
+  or typed as you please; no sharing of notes during the test.
+- Calculators and other electronic devices are **not** allowed; phones must be
+  placed in your bags under your desks or at the front of the room; hands must
+  be on top of your desks.
+- You are expected to simplify any expressions that can be simplified as even
+  numbers, but you may leave other expressions as is, e.g., $\sqrt{47}$ or
+  $18/29$.
+- You will be provided all of the **critical values** that you need and are
+  not expected to memorize them, but you should know how to use them.
+- Show all **your work** to justify your answers; answers without adequate
+  justification will not receive credit.
+- You will be asked to sign an **integrity** statement on the question paper,
+  and you are expected to abide by it.
+
+## This semester's tests and final examination
+
+Coverage, rooms, final-examination details, and PDFs will be added as they are
+finalized.
+
+| Date | Assessment | Coverage or notes | PDF |
+|---|---|---|---|
+| TBA | Test 1 | Coverage TBA; room TBA | TBA |
+| TBA | Test 2 | Coverage TBA; room TBA | TBA |
+| TBA | Final Exam—Take-Home and In-Class | Date, time, location, and coverage TBA | TBA |
+
+---
+
+{{< include ../classlib/classlib/quarto/snippets/search-test-archives.qmd >}}
+
+## Archived MATH 565 tests and examinations
+
+Archived assessments are provided for reference. Topics, coverage, and course
+emphasis may differ from the current semester. Archived files may contain
+errors, and errors found in archived assessments are not eligible for course
+extra credit.
+
+```{python}
+from pathlib import Path
+from urllib.parse import quote
+from IPython.display import Markdown, display
+
+root = Path("../assets/tests/archive/565")
+pdfs = sorted(root.glob("*.pdf"), key=lambda path: path.name.lower()) \
+    if root.exists() else []
+
+if not pdfs:
+    display(Markdown("*No archived MATH 565 tests found yet.*"))
+else:
+    lines = []
+    for path in pdfs:
+        href = "../assets/tests/archive/565/" + quote(path.name)
+        label = path.stem.replace("_", " ")
+        lines.append(f"- [{label}]({href})")
+    display(Markdown("\n".join(lines)))
+```
