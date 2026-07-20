@@ -86,6 +86,7 @@ appropriate phase rather than appended indiscriminately.
       them.
     - [ ] Add assignment entries and due dates as they are finalized.
     - [x] Validate Quarto rendering and generated page structure.
+    - [ ] Inspect the visible page layout in a browser.
   - [ ] Tests (`pages/tests.qmd`)
     - [x] Create the initial Fall 2026 tests-page skeleton and provisional
       instructions.
@@ -156,7 +157,7 @@ appropriate phase rather than appended indiscriminately.
 
 ## 7. Remaining course-content migration
 
-- [ ] Inventory lectures, assignments, notebooks, policies, schedules,
+- [ ] Inventory remaining lectures, assignments, policies, schedules,
   assessments, and supporting resources in the course-material reference.
 - [ ] Convert remaining lecture decks in coherent teaching units.
 - [ ] Adapt course pages and policies to the authoritative repository.

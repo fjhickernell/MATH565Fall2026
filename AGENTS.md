@@ -1,6 +1,9 @@
 # AGENTS.md
 
-At the beginning of every new Codex session, reread AGENTS.md, PLAN.md, and STATUS.md; inspect the current Git status, submodule status, and recent commits; and reconstruct the current project state from the repository. Do not rely on memory from prior chat sessions.
+At the beginning of every new Codex session, follow the document-reading order
+under "Before editing"; inspect the current Git status, submodule status, and
+recent commits; and reconstruct the current project state from the repository.
+Do not rely on memory from prior chat sessions.
 
 ## Repository purpose
 
@@ -79,8 +82,10 @@ current task's intended changes.
    needed.
 6. Commit and push the current task's intended authoritative-repository
    changes.
-7. Confirm that both repositories are clean and synchronized with their
-   upstream branches.
+7. Confirm that the authoritative course repository and any intentionally
+   modified writable repositories, such as `classlib`, are clean and
+   synchronized with their upstream branches. Confirm that pinned read-only
+   submodules remain unchanged.
 
-Never include changes from `qmcsoftware` or either reference repository in
-this completion workflow.
+Never include changes from `qmcsoftware`, `assets/tests/archive`, or either
+reference repository in this completion workflow.
