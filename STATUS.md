@@ -157,6 +157,10 @@ appropriate phase rather than appended indiscriminately.
 - [ ] Validate internal links, external links, navigation, assets,
   mathematical notation, and executable examples.
 - [ ] Verify that generated output remains excluded from `main`.
+- [x] Correct the GitHub Pages workflow to retain the parent-recorded recursive
+  submodule commits without moving-branch overrides.
+- [ ] Validate GitHub Pages using the parent-recorded recursive submodule
+  commits.
 - [ ] Establish and validate automated GitHub Pages deployment.
 - [ ] Confirm that the published site matches local validated output.
 
