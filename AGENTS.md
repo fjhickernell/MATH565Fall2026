@@ -1,5 +1,7 @@
 # AGENTS.md
 
+At the beginning of every new Codex session, reread AGENTS.md, PLAN.md, and STATUS.md; inspect the current Git status, submodule status, and recent commits; and reconstruct the current project state from the repository. Do not rely on memory from prior chat sessions.
+
 ## Repository purpose
 
 This repository contains the MATH 565 Fall 2026 course website and course
