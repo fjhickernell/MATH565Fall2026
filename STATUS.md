@@ -118,7 +118,23 @@ appropriate phase rather than appended indiscriminately.
 - [ ] Confirm that shared website styling and resources are sourced from
   `classlib` where appropriate.
 
-## 4. Slide framework
+## 4. Validation and deployment
+
+- [x] Render the complete website successfully from a clean local setup.
+- [x] Render the complete slide project successfully.
+- [x] Stage slide output beneath the website output and verify the combined
+  site.
+- [ ] Validate internal links, external links, navigation, assets,
+  mathematical notation, and executable examples.
+- [x] Verify that generated output remains excluded from `main`.
+- [x] Correct the GitHub Pages workflow to retain the parent-recorded recursive
+  submodule commits without moving-branch overrides.
+- [x] Validate GitHub Pages using the parent-recorded recursive submodule
+  commits.
+- [x] Establish and validate automated GitHub Pages deployment.
+- [ ] Confirm that the published site matches local validated output.
+
+## 5. Slide framework
 
 - [x] Create an independent RevealJS Quarto project under `slides/`.
 - [x] Add slide-project configuration and metadata.
@@ -127,7 +143,7 @@ appropriate phase rather than appended indiscriminately.
   `classlib`.
 - [ ] Confirm that rendered slides are linked correctly from the website.
 
-## 5. Prototype lecture conversion
+## 6. Prototype lecture conversion
 
 - [ ] Select a representative lecture from the course-material reference.
 - [ ] Convert the lecture to a maintainable Quarto RevealJS source deck.
@@ -137,7 +153,7 @@ appropriate phase rather than appended indiscriminately.
 - [ ] Refine reusable slide and course conventions based on the prototype.
 - [ ] Document any resulting author-workflow changes.
 
-## 6. Remaining course-content migration
+## 7. Remaining course-content migration
 
 - [ ] Inventory lectures, assignments, notebooks, policies, schedules,
   assessments, and supporting resources in the course-material reference.
@@ -147,22 +163,6 @@ appropriate phase rather than appended indiscriminately.
 - [ ] Review migrated material for obsolete dates, links, software
   instructions, and legacy Jekyll or Keynote assumptions.
 - [ ] Move only genuinely reusable improvements into `classlib`.
-
-## 7. Validation and deployment
-
-- [ ] Render the complete website successfully from a clean local setup.
-- [ ] Render the complete slide project successfully.
-- [ ] Stage slide output beneath the website output and verify the combined
-  site.
-- [ ] Validate internal links, external links, navigation, assets,
-  mathematical notation, and executable examples.
-- [ ] Verify that generated output remains excluded from `main`.
-- [x] Correct the GitHub Pages workflow to retain the parent-recorded recursive
-  submodule commits without moving-branch overrides.
-- [ ] Validate GitHub Pages using the parent-recorded recursive submodule
-  commits.
-- [ ] Establish and validate automated GitHub Pages deployment.
-- [ ] Confirm that the published site matches local validated output.
 
 ## 8. Course readiness
 
