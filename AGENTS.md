@@ -1,5 +1,7 @@
 # AGENTS.md
 
+At the beginning of every new Codex session, reread AGENTS.md, PLAN.md, and STATUS.md; inspect the current Git status, submodule status, and recent commits; and reconstruct the current project state from the repository. Do not rely on memory from prior chat sessions.
+
 ## Repository purpose
 
 This repository contains the MATH 565 Fall 2026 course website and course
@@ -8,10 +10,16 @@ materials.
 ## Repository boundaries
 
 - Write course-specific changes only in this authoritative repository.
-- `classlib` is a writable submodule for genuinely reusable academic-library
-  code and presentation infrastructure.
-- `qmcsoftware` is read-only. Do not edit, commit, push, change its checked-out
-  commit, or update its submodule pointer.
+- `classlib` may be edited only for genuinely reusable academic-library code
+  and presentation infrastructure. Validate, commit, and push an intended
+  change in `HickernellAcademicLib` first, then intentionally update the
+  `classlib` pointer in this repository. Never advance the pointer merely
+  because a newer `classlib` commit exists.
+- `qmcsoftware` and `assets/tests/archive` (`HickernellTestArchive`) are
+  read-only pinned dependencies unless the user explicitly authorizes a
+  change.
+- Routine builds and deployment must initialize the recorded submodule commits
+  recursively and must not use `git submodule update --remote`.
 - The architecture and course-material reference repositories named in
   `PLAN.md` are read-only.
 - Do not write to any other repository unless the user explicitly changes

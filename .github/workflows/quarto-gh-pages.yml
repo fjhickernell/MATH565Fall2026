@@ -30,13 +30,6 @@ jobs:
       - name: Set RETICULATE_PYTHON
         run: echo "RETICULATE_PYTHON=$pythonLocation/bin/python" >> "$GITHUB_ENV"
 
-      - name: Force submodule branches
-        run: |
-          git -C classlib fetch origin main
-          git -C classlib checkout -B main origin/main
-          git -C qmcsoftware fetch origin develop
-          git -C qmcsoftware checkout -B develop origin/develop
-
       - name: Install Python packages from submodules
         run: |
           python -m pip install --upgrade pip
@@ -65,6 +58,17 @@ jobs:
         run: |
           rm -rf .quarto/quarto-publish-worktree-*
           rm -rf _site/.git
+
+      - name: Initialize gh-pages branch if absent
+        run: |
+          if ! git ls-remote --exit-code --heads origin gh-pages > /dev/null 2>&1; then
+            git config user.name "Quarto GHA Workflow Runner"
+            git config user.email "quarto-github-actions-publish@example.com"
+            empty_tree="$(git hash-object -t tree /dev/null)"
+            initial_commit="$(git commit-tree "$empty_tree" -m "Initialize gh-pages branch")"
+            git branch gh-pages "$initial_commit"
+            git push origin gh-pages
+          fi
 
       - name: Publish to gh-pages
         uses: quarto-dev/quarto-actions/publish@v2

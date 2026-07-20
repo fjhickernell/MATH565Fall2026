@@ -13,6 +13,9 @@ The two reference repositories are read-only. `classlib` is the writable
 shared academic library, while `qmcsoftware` is a read-only pinned dependency
 whose checked-out commit and submodule pointer must remain unchanged.
 
+Local builds and automation initialize submodules recursively at the commits
+recorded by `MATH565Fall2026`, without overriding them with moving branch tips.
+
 ## Purpose
 
 The authoritative repository maintains the course website, lecture slides,
