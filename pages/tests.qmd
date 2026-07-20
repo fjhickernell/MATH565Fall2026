@@ -9,7 +9,7 @@ execute:
 Unless otherwise noted
 
 - Tests are closed book, but you may use **four** letter-sized sheets (both
-  sides) of notes (**eight** sheets for the final); notes must be handwritten
+  sides) of notes (**eight** sheets for the in-class portion of the final); notes must be handwritten
   or typed as you please; no sharing of notes during the test.
 - Calculators and other electronic devices are **not** allowed; phones must be
   placed in your bags under your desks or at the front of the room; hands must
