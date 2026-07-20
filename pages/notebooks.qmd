@@ -2,4 +2,34 @@
 title: "Jupyter Notebooks"
 ---
 
-Course notebooks will be posted here.
+The course notebooks provide executable examples of Monte Carlo and
+quasi-Monte Carlo concepts, algorithms, applications, and computational
+performance. They are intended to complement the lectures and give students
+code that can be explored and adapted.
+
+Notebooks will be organized by topic. Links will be added after each notebook
+has been migrated to the Fall 2026 repository, updated for the current course
+environment, and validated from a clean setup.
+
+::: {.callout-note}
+## Migration in progress
+
+Notebook content is still being migrated from the previous course offering.
+No Fall 2026 course notebooks are available here yet.
+:::
+
+## Sampling
+
+Notebooks on random and low-discrepancy sample generation, acceptance-rejection
+sampling, conditional Monte Carlo, Markov chain Monte Carlo, and related
+sampling methods will appear here.
+
+## Applications
+
+Notebooks applying Monte Carlo and quasi-Monte Carlo methods to integration,
+financial options, queueing models, and other examples will appear here.
+
+## Performance
+
+Notebooks examining convergence, discrepancy, accuracy, algorithmic
+efficiency, and computational performance will appear here.

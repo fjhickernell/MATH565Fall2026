@@ -2,4 +2,76 @@
 title: "Schedule"
 ---
 
-The Fall 2026 course schedule will be posted here.
+Classes normally meet Tuesdays and Thursdays at 10:00 AM in **TBA**.
+
+This schedule is provisional and will be updated as topics, assignments,
+holidays, and examination details are finalized.
+
+### August
+
+| Week | Date | Topic | Slides / Materials |
+|---:|---|---|---|
+| 1 | Tue Aug 18 | | |
+| | Thu Aug 20 | | |
+| 2 | Tue Aug 25 | | |
+| | Thu Aug 27 | | |
+
+### September
+
+| Week | Date | Topic | Slides / Materials |
+|---:|---|---|---|
+| 3 | Tue Sep 1 | | |
+| | Thu Sep 3 | | |
+| 4 | Tue Sep 8 | | |
+| | Thu Sep 10 | | |
+| 5 | Tue Sep 15 | | |
+| | Thu Sep 17 | | |
+| 6 | Tue Sep 22 | | |
+| | Thu Sep 24 | | |
+| 7 | Tue Sep 29 | | |
+
+### October
+
+| Week | Date | Topic | Slides / Materials |
+|---:|---|---|---|
+| 7 | Thu Oct 1 | | |
+| 8 | Tue Oct 6 | | |
+| | Thu Oct 8 | | |
+| 9 | Tue Oct 13 | | |
+| | Thu Oct 15 | | |
+| 10 | Tue Oct 20 | | |
+| | Thu Oct 22 | | |
+| 11 | Tue Oct 27 | | |
+| | Thu Oct 29 | | |
+
+### November
+
+| Week | Date | Topic | Slides / Materials |
+|---:|---|---|---|
+| 12 | Tue Nov 3 | | |
+| | Thu Nov 5 | | |
+| 13 | Tue Nov 10 | | |
+| | Thu Nov 12 | | |
+| 14 | Tue Nov 17 | | |
+| | Thu Nov 19 | | |
+| 15 | Tue Nov 24 | | |
+| | Thu Nov 26 | **No Class — Thanksgiving holiday** | |
+
+### December
+
+| Week | Date | Topic | Slides / Materials |
+|---:|---|---|---|
+| 16 | Tue Dec 1 | | |
+| | Thu Dec 3 | | |
+
+The official last day of classes is Saturday, December 5. Because the course
+meets on Tuesdays and Thursdays, Thursday, December 3 is the final regular
+class meeting.
+
+### Final examinations
+
+Final examinations occur during the following week.
+
+| Week | Date | Topic | Slides / Materials |
+|---:|---|---|---|
+| 17 | TBA | **Final Exam — time and location TBA** | |

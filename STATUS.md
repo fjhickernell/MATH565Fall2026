@@ -54,8 +54,37 @@ appropriate phase rather than appended indiscriminately.
     - [ ] Inspect visible browser layout.
     - [x] Confirm no course-specific customization is presently required.
   - [ ] Schedule (`pages/schedule.qmd`)
+    - [x] Create the Fall 2026 Tuesday/Thursday meeting calendar.
+    - [x] Verify the August 18 start date and December 3 final regular
+      meeting.
+    - [x] Mark Thanksgiving Day, November 26, as no class.
+    - [x] Record the classroom as TBA.
+    - [x] Add a TBA final-exam entry for the following week.
+    - [x] Leave unknown topics, materials, and additional dates blank.
+    - [x] Validate Quarto rendering and generated page structure.
+    - [ ] Inspect the visible page layout in a browser.
   - [ ] Notebooks (`pages/notebooks.qmd`)
+    - [x] Introduce the role of notebooks in MATH 565.
+    - [x] Organize future links under Sampling, Applications, and
+      Performance.
+    - [x] Clearly mark notebook migration as in progress without adding
+      placeholder links.
+    - [x] Record the detailed Fall 2025 inventory, target paths,
+      dependencies, concerns, and migration order in
+      `notebooks/NOTEBOOK_INVENTORY.md`.
+    - [ ] Create the target directories and migrate notebooks incrementally
+      according to `notebooks/NOTEBOOK_INVENTORY.md`.
+    - [ ] Add notebook links only after each target exists and passes
+      validation.
+    - [x] Validate Quarto rendering and generated page structure.
+    - [ ] Inspect the visible page layout in a browser.
   - [ ] Assignments (`pages/homework.qmd`)
+    - [x] Create the initial Fall 2026 assignments-page structure.
+    - [x] Record the currently established assignment ground rules.
+    - [x] Leave assignment details and due dates pending rather than inventing
+      them.
+    - [ ] Add assignment entries and due dates as they are finalized.
+    - [x] Validate Quarto rendering and generated page structure.
   - [ ] Tests (`pages/tests.qmd`)
     - [x] Create the initial Fall 2026 tests-page skeleton and provisional
       instructions.
