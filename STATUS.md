@@ -32,6 +32,7 @@ appropriate phase rather than appended indiscriminately.
 
 - [x] Configure the root Quarto website project.
 - [x] Create initial course-page source files.
+- [ ] Verify that GitHub Actions renders the site successfully.
 - [ ] Complete student-facing website pages, see `_quarto.yml`
   navbar:
   - [ ] Welcome (`index.qmd`)
