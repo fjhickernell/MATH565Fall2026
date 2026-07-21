@@ -86,7 +86,8 @@ appearance:
 - `.main-message` gives a central takeaway stronger emphasis than a
   `.key-point`.
 - `.alert` applies Keynote-style accent blue to a short term or expression; it
-  works in ordinary text and MathJax output.
+  works in ordinary text and MathJax output. Favor `.alert` over Markdown bold
+  text for emphasis on slides.
 - `.h3` creates heading-like text without changing RevealJS slide structure.
 - `.small` de-emphasizes secondary material by reducing its text size.
 - `.indent` applies a standard left indent.

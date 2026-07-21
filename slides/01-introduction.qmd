@@ -22,13 +22,13 @@ subtitle: |
 
 # Course map
 
-1. **Introduction**
+1. [Introduction]{.alert}
 2. Generating samples
 3. Markov chain Monte Carlo
 4. Improving efficiency
 5. Selected topics
 
-::: {.callout-note}
+::: {.key-point}
 Course details, schedule updates, assignments, and supporting materials are on
 the [course website]({{< meta course_website >}}).
 :::
@@ -40,15 +40,15 @@ decisions.
 
 ::: {.columns}
 ::: {.column width="50%"}
-- **Finance:** market forces and option payoffs
-- **Engineering:** variable system parameters
-- **Image rendering:** only finitely many rays can be traced
+- [Finance:]{.alert} market forces and option payoffs
+- [Engineering:]{.alert} variable system parameters
+- [Image rendering:]{.alert} only finitely many rays can be traced
 :::
 
 ::: {.column width="50%"}
-- **Bayesian inference:** posterior uncertainty after observing data
-- **Neural networks:** high-dimensional parameter searches
-- **Queues:** uncertain arrival and service times
+- [Bayesian inference:]{.alert} posterior uncertainty after observing data
+- [Neural networks:]{.alert} high-dimensional parameter searches
+- [Queues:]{.alert} uncertain arrival and service times
 :::
 :::
 
@@ -58,12 +58,12 @@ decisions.
 ## Why is there uncertainty?
 
 ::: {.incremental}
-- **Finance:** stochastic processes, often driven by Brownian motion
-- **Engineering:** variability modeled, for example, by Gaussian processes
-- **Image rendering:** a finite sample must stand in for all possible rays
-- **Bayesian inference:** the posterior combines prior information and data
-- **Neural networks:** not every direction in parameter space can be searched
-- **Queues:** customer arrival and service times vary
+- [Finance:]{.alert} stochastic processes, often driven by Brownian motion
+- [Engineering:]{.alert} variability modeled, for example, by Gaussian processes
+- [Image rendering:]{.alert} a finite sample must stand in for all possible rays
+- [Bayesian inference:]{.alert} the posterior combines prior information and data
+- [Neural networks:]{.alert} not every direction in parameter space can be searched
+- [Queues:]{.alert} customer arrival and service times vary
 :::
 
 ## How is uncertainty expressed quantitatively?
