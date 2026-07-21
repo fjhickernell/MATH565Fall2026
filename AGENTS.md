@@ -38,6 +38,9 @@ Before substantial work, read these documents when they exist, in this order:
 4. `AUTHOR_WORKFLOW.md`
 5. `AGENTS.md`
 
+Before making substantial slide changes, also read `docs/slide-style.md`.
+Before making substantial page changes, also read `docs/pages-style.md`.
+
 Inspect the state of every repository relevant to the task. Never overwrite,
 discard, or commit pre-existing user changes. Run the established
 synchronization workflow only when required by the project's synchronization
