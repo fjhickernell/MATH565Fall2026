@@ -30,9 +30,44 @@
   {
     "objectID": "pages/project.html",
     "href": "pages/project.html",
-    "title": "Project",
+    "title": "Topic Selection & Presentation Scheduling",
     "section": "",
-    "text": "Fall 2026 project information will be posted here."
+    "text": "The course project is an opportunity to investigate a topic in Monte Carlo or quasi-Monte Carlo methods and communicate its value clearly and critically. Approach the presentation as a report to colleagues who need to decide whether the article, method, or software feature is worth pursuing further."
+  },
+  {
+    "objectID": "pages/project.html#project-types",
+    "href": "pages/project.html#project-types",
+    "title": "Topic Selection & Presentation Scheduling",
+    "section": "Project types",
+    "text": "Project types\nChoose one of the following project types.\n\nResearch article review: Review a scholarly research article related to Monte Carlo methods or their applications. This is an individual project, and each student must choose a different article. The topic should not substantially duplicate material discussed in class. In general, the article should have been published at least fifteen years ago.\nQMCPy feature: Create a new feature for qmcpy and a blog post that illustrates it. This project may be completed individually or by a team of two. Discuss the proposed feature with the instructor to ensure that its scope is appropriate."
+  },
+  {
+    "objectID": "pages/project.html#topic-selection-and-approval",
+    "href": "pages/project.html#topic-selection-and-approval",
+    "title": "Topic Selection & Presentation Scheduling",
+    "section": "Topic selection and approval",
+    "text": "Topic selection and approval\n\nChoose a project type and identify a focused topic.\nSubmit the topic for approval. Revised topics will use the same process.\nCheck the approved-topic list after submissions have been reviewed and revise the proposal if requested.\n\n\n\n\nTopic-selection item\nFall 2026 information\n\n\n\n\nTopic submission deadline\nTBA\n\n\nTopic submission form\nTBA\n\n\nApproved-topic list\nTBA\n\n\n\nFor an article review, identify the main idea, illustrate it with examples of your own, offer warranted criticism, and suggest future work. For a QMCPy feature, explain the need for the feature, demonstrate its use, and discuss its strengths, limitations, and possible extensions."
+  },
+  {
+    "objectID": "pages/project.html#presentation-expectations",
+    "href": "pages/project.html#presentation-expectations",
+    "title": "Topic Selection & Presentation Scheduling",
+    "section": "Presentation expectations",
+    "text": "Presentation expectations\n\nPrepare a 15-minute oral presentation followed by 5 minutes for questions and answers.\nA two-person QMCPy feature team will have 30 minutes for the presentation followed by 10 minutes for questions and answers.\nPrepare a handout for the audience.\nProvide enough background for classmates who are not specialists in the exact topic, while remaining responsible for the technical details.\nExplain both strengths and weaknesses, including important assumptions and limitations.\nBe prepared to answer probing questions. Assessment depends on both the clarity of the presentation and the quality of the answers.\n\nDetailed feedback questions and assessment guidance are on the Project Assessment page."
+  },
+  {
+    "objectID": "pages/project.html#presentation-scheduling-and-observations",
+    "href": "pages/project.html#presentation-scheduling-and-observations",
+    "title": "Topic Selection & Presentation Scheduling",
+    "section": "Presentation scheduling and observations",
+    "text": "Presentation scheduling and observations\nPresentation and observation logistics will be finalized during Fall 2026.\n\n\n\nPlanning item\nFall 2026 information\n\n\n\n\nPresentation dates and times\nTBA\n\n\nPresentation location and format\nTBA\n\n\nPresenter sign-up deadline\nTBA\n\n\nPresenter scheduling tool\nTBA\n\n\nPresentation schedule\nTBA\n\n\nObserver sign-up process\nTBA\n\n\nEquipment and connection requirements\nTBA\n\n\nAssessment submission procedure\nTBA\n\n\n\nEach student is expected to observe and assess two other presentations. Arrive on time for both presentations and observations, be prepared, and give substantive feedback. The final observation and submission procedures will be posted when the schedule is available."
+  },
+  {
+    "objectID": "pages/project.html#presentation-guidance",
+    "href": "pages/project.html#presentation-guidance",
+    "title": "Topic Selection & Presentation Scheduling",
+    "section": "Presentation guidance",
+    "text": "Presentation guidance\n\nKeep the big picture in view rather than getting bogged down in details.\nMotivate the topic with relevant background, prior work, or applications.\nUse a simple example to illuminate the main point.\nDiscuss strengths, weaknesses, alternatives, and possible future work.\nUse clear plots, tables, pictures, and key formulas where they help the audience.\nUse your own words and give appropriate credit; do not plagiarize.\nAim for roughly one slide per minute and avoid overloading slides.\nLook at the audience rather than reading notes.\nPractice beforehand, obtain feedback, and stay within the allotted time.\nReview the Project Assessment questions while preparing the presentation.\n\nAdditional room-specific and session procedures will be added when the Fall 2026 presentation logistics are known."
   },
   {
     "objectID": "pages/notebooks.html",
@@ -305,7 +340,7 @@
     "href": "pages/project-assessment.html",
     "title": "Project Assessment",
     "section": "",
-    "text": "Project assessment guidance will be posted here."
+    "text": "Use this project assessment page to provide thoughtful, constructive feedback on a MATH 565 presentation. Review these questions while preparing your own project as well as when observing classmates.\nThe Fall 2026 procedure for submitting completed assessments is TBA. Topic selection and presentation logistics are maintained separately on the Topic Selection & Presentation Scheduling page.\n\nPresenter’s name:\nProject title:\nObserver’s name:\n\n\n1. What are the main points of the presentation?\nWhat question was addressed? What was the main claim, result, feature, or conclusion?\n \n \n\n\n\n2. What are the strengths and weaknesses of the article or QMCPy feature?\nConsider clarity, insight, technical correctness, evidence, assumptions, limitations, and the value of pursuing the work further.\n \n \n\n\n\n3. What did the presenter do well?\nConsider organization, pacing, explanation of ideas, examples, visuals, and responses to questions.\n \n \n\n\n\n4. How might the presenter have done better?\nIdentify specific changes that would most improve the presentation’s clarity, correctness, or impact."
   },
   {
     "objectID": "pages/schedule.html",

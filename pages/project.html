@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Project – MATH 565 — Fall 2026</title>
+<title>Topic Selection &amp; Presentation Scheduling – MATH 565 — Fall 2026</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -120,10 +120,21 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="../pages/tests.html"> 
 <span class="menu-text">Tests</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="../pages/project.html" aria-current="page"> 
-<span class="menu-text">Project</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-project" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Project</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-project">    
+        <li>
+    <a class="dropdown-item" href="../pages/project.html">
+ <span class="dropdown-text">Topic Selection &amp; Presentation Scheduling</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/project-assessment.html">
+ <span class="dropdown-text">Project Assessment</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-resources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Resources</span>
@@ -183,7 +194,17 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#project-types" id="toc-project-types" class="nav-link active" data-scroll-target="#project-types">Project types</a></li>
+  <li><a href="#topic-selection-and-approval" id="toc-topic-selection-and-approval" class="nav-link" data-scroll-target="#topic-selection-and-approval">Topic selection and approval</a></li>
+  <li><a href="#presentation-expectations" id="toc-presentation-expectations" class="nav-link" data-scroll-target="#presentation-expectations">Presentation expectations</a></li>
+  <li><a href="#presentation-scheduling-and-observations" id="toc-presentation-scheduling-and-observations" class="nav-link" data-scroll-target="#presentation-scheduling-and-observations">Presentation scheduling and observations</a></li>
+  <li><a href="#presentation-guidance" id="toc-presentation-guidance" class="nav-link" data-scroll-target="#presentation-guidance">Presentation guidance</a></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
@@ -194,7 +215,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Project</h1>
+<h1 class="title">Topic Selection &amp; Presentation Scheduling</h1>
 </div>
 
 
@@ -211,9 +232,123 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Fall 2026 project information will be posted here.</p>
+<p>The course project is an opportunity to investigate a topic in Monte Carlo or quasi-Monte Carlo methods and communicate its value clearly and critically. Approach the presentation as a report to colleagues who need to decide whether the article, method, or software feature is worth pursuing further.</p>
+<section id="project-types" class="level2">
+<h2 class="anchored" data-anchor-id="project-types">Project types</h2>
+<p>Choose one of the following project types.</p>
+<ul>
+<li><strong>Research article review:</strong> Review a scholarly research article related to Monte Carlo methods or their applications. This is an individual project, and each student must choose a different article. The topic should not substantially duplicate material discussed in class. In general, the article should have been published at least fifteen years ago.</li>
+<li><strong>QMCPy feature:</strong> Create a new feature for <code>qmcpy</code> and a blog post that illustrates it. This project may be completed individually or by a team of two. Discuss the proposed feature with the instructor to ensure that its scope is appropriate.</li>
+</ul>
+</section>
+<section id="topic-selection-and-approval" class="level2">
+<h2 class="anchored" data-anchor-id="topic-selection-and-approval">Topic selection and approval</h2>
+<ol type="1">
+<li>Choose a project type and identify a focused topic.</li>
+<li>Submit the topic for approval. Revised topics will use the same process.</li>
+<li>Check the approved-topic list after submissions have been reviewed and revise the proposal if requested.</li>
+</ol>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Topic-selection item</th>
+<th>Fall 2026 information</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Topic submission deadline</td>
+<td><strong>TBA</strong></td>
+</tr>
+<tr class="even">
+<td>Topic submission form</td>
+<td><strong>TBA</strong></td>
+</tr>
+<tr class="odd">
+<td>Approved-topic list</td>
+<td><strong>TBA</strong></td>
+</tr>
+</tbody>
+</table>
+<p>For an article review, identify the main idea, illustrate it with examples of your own, offer warranted criticism, and suggest future work. For a QMCPy feature, explain the need for the feature, demonstrate its use, and discuss its strengths, limitations, and possible extensions.</p>
+</section>
+<section id="presentation-expectations" class="level2">
+<h2 class="anchored" data-anchor-id="presentation-expectations">Presentation expectations</h2>
+<ul>
+<li>Prepare a <strong>15-minute oral presentation</strong> followed by <strong>5 minutes for questions and answers</strong>.</li>
+<li>A two-person QMCPy feature team will have <strong>30 minutes for the presentation</strong> followed by <strong>10 minutes for questions and answers</strong>.</li>
+<li>Prepare a handout for the audience.</li>
+<li>Provide enough background for classmates who are not specialists in the exact topic, while remaining responsible for the technical details.</li>
+<li>Explain both strengths and weaknesses, including important assumptions and limitations.</li>
+<li>Be prepared to answer probing questions. Assessment depends on both the clarity of the presentation and the quality of the answers.</li>
+</ul>
+<p>Detailed feedback questions and assessment guidance are on the <a href="../pages/project-assessment.html">Project Assessment</a> page.</p>
+</section>
+<section id="presentation-scheduling-and-observations" class="level2">
+<h2 class="anchored" data-anchor-id="presentation-scheduling-and-observations">Presentation scheduling and observations</h2>
+<p>Presentation and observation logistics will be finalized during Fall 2026.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Planning item</th>
+<th>Fall 2026 information</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Presentation dates and times</td>
+<td><strong>TBA</strong></td>
+</tr>
+<tr class="even">
+<td>Presentation location and format</td>
+<td><strong>TBA</strong></td>
+</tr>
+<tr class="odd">
+<td>Presenter sign-up deadline</td>
+<td><strong>TBA</strong></td>
+</tr>
+<tr class="even">
+<td>Presenter scheduling tool</td>
+<td><strong>TBA</strong></td>
+</tr>
+<tr class="odd">
+<td>Presentation schedule</td>
+<td><strong>TBA</strong></td>
+</tr>
+<tr class="even">
+<td>Observer sign-up process</td>
+<td><strong>TBA</strong></td>
+</tr>
+<tr class="odd">
+<td>Equipment and connection requirements</td>
+<td><strong>TBA</strong></td>
+</tr>
+<tr class="even">
+<td>Assessment submission procedure</td>
+<td><strong>TBA</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Each student is expected to observe and assess <strong>two</strong> other presentations. Arrive on time for both presentations and observations, be prepared, and give substantive feedback. The final observation and submission procedures will be posted when the schedule is available.</p>
+</section>
+<section id="presentation-guidance" class="level2">
+<h2 class="anchored" data-anchor-id="presentation-guidance">Presentation guidance</h2>
+<ul>
+<li>Keep the big picture in view rather than getting bogged down in details.</li>
+<li>Motivate the topic with relevant background, prior work, or applications.</li>
+<li>Use a simple example to illuminate the main point.</li>
+<li>Discuss strengths, weaknesses, alternatives, and possible future work.</li>
+<li>Use clear plots, tables, pictures, and key formulas where they help the audience.</li>
+<li>Use your own words and give appropriate credit; do not plagiarize.</li>
+<li>Aim for roughly one slide per minute and avoid overloading slides.</li>
+<li>Look at the audience rather than reading notes.</li>
+<li>Practice beforehand, obtain feedback, and stay within the allotted time.</li>
+<li>Review the <a href="../pages/project-assessment.html">Project Assessment</a> questions while preparing the presentation.</li>
+</ul>
+<p>Additional room-specific and session procedures will be added when the Fall 2026 presentation logistics are known.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
