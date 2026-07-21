@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="01-course-overview_files/libs/clipboard/clipboard.min.js"></script>
-<script src="01-course-overview_files/libs/quarto-html/tabby.min.js"></script>
-<script src="01-course-overview_files/libs/quarto-html/popper.min.js"></script>
-<script src="01-course-overview_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="01-course-overview_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="01-course-overview_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="01-course-overview_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="01-introduction_files/libs/clipboard/clipboard.min.js"></script>
+<script src="01-introduction_files/libs/quarto-html/tabby.min.js"></script>
+<script src="01-introduction_files/libs/quarto-html/popper.min.js"></script>
+<script src="01-introduction_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="01-introduction_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="01-introduction_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="01-introduction_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Fred J. Hickernell">
@@ -15,8 +15,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="01-course-overview_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="01-course-overview_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="01-introduction_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="01-introduction_files/libs/revealjs/dist/reveal.css">
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -33,11 +33,11 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="01-course-overview_files/libs/revealjs/dist/theme/quarto-b58af031a03075c6f70b6cee6c87cae8.css">
-  <link href="01-course-overview_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="01-course-overview_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="01-course-overview_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="01-course-overview_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="01-introduction_files/libs/revealjs/dist/theme/quarto-b58af031a03075c6f70b6cee6c87cae8.css">
+  <link href="01-introduction_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="01-introduction_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="01-introduction_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="01-introduction_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -570,7 +570,7 @@
 
 <section id="title-slide" data-background-color="#f5f7fb" data-background-image="https://fjhickernell.github.io/MATH565Fall2026/classlib/classlib/quarto/assets/images/normal-scatter.png" data-background-position="top left" data-background-size="55%" class="quarto-title-block center">
   <h1 class="title">MATH 565 — Fall 2026</h1>
-  <p class="subtitle"><span class="deck-title">Course Overview</span></p>
+  <p class="subtitle"><span class="deck-title">Introduction</span><br> <span class="deck-meta">Owen, Chapters 1 and 2</span></p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -582,34 +582,451 @@ Fred J. Hickernell
 
   <p class="date">July 21, 2026</p>
 </section>
-<section id="math-565-fall-2026" class="slide level2">
-<h2>MATH 565 — Fall 2026</h2>
-<p>Lecture material will be added here.</p>
+<section>
+<section id="course-map" class="title-slide slide level1 center">
+<h1>Course map</h1>
+<ol type="1">
+<li><strong>Introduction</strong></li>
+<li>Generating samples</li>
+<li>Markov chain Monte Carlo</li>
+<li>Improving efficiency</li>
+<li>Selected topics</li>
+</ol>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Course details, schedule updates, assignments, and supporting materials are on the <a href="https://fjhickernell.github.io/MATH565Fall2026/">course website</a>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="monte-carlo-helps-with-uncertainty" class="slide level2">
+<h2>Monte Carlo helps with uncertainty</h2>
+<p>Monte Carlo methods turn uncertain inputs into quantitative information for decisions.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><strong>Finance:</strong> market forces and option payoffs</li>
+<li><strong>Engineering:</strong> variable system parameters</li>
+<li><strong>Image rendering:</strong> only finitely many rays can be traced</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><strong>Bayesian inference:</strong> posterior uncertainty after observing data</li>
+<li><strong>Neural networks:</strong> high-dimensional parameter searches</li>
+<li><strong>Queues:</strong> uncertain arrival and service times</li>
+</ul>
+</div></div>
+<p><a href="https://www.wsj.com/articles/as-forecasts-go-you-can-bet-on-monte-carlo-1470994203">Motivating article: <em>As Forecasts Go, You Can Bet on Monte Carlo</em> (WSJ, 2016)</a></p>
+</section>
+<section id="why-is-there-uncertainty" class="slide level2">
+<h2>Why is there uncertainty?</h2>
+<ul>
+<li class="fragment"><strong>Finance:</strong> stochastic processes, often driven by Brownian motion</li>
+<li class="fragment"><strong>Engineering:</strong> variability modeled, for example, by Gaussian processes</li>
+<li class="fragment"><strong>Image rendering:</strong> a finite sample must stand in for all possible rays</li>
+<li class="fragment"><strong>Bayesian inference:</strong> the posterior combines prior information and data</li>
+<li class="fragment"><strong>Neural networks:</strong> not every direction in parameter space can be searched</li>
+<li class="fragment"><strong>Queues:</strong> customer arrival and service times vary</li>
+</ul>
+</section>
+<section id="how-is-uncertainty-expressed-quantitatively" class="slide level2">
+<h2>How is uncertainty expressed quantitatively?</h2>
+<p>Let the <span class="alert">quantity of interest</span> be</p>
+<p><span class="math display">\[
+Y=f(\boldsymbol X),
+\]</span></p>
+<p>where <span class="math inline">\(\boldsymbol X\)</span> has a distribution that is simpler to sample than the distribution of <span class="math inline">\(Y\)</span>.</p>
+<p>Examples of <span class="math inline">\(Y\)</span> include an option payoff, fluid pressure, pixel intensity, a statistical-model parameter, a neural-network parameter, or a service time.</p>
+<ul>
+<li class="fragment">Generate sample versions <span class="math inline">\(Y_1,\ldots,Y_n\)</span>.</li>
+<li class="fragment">Use them to estimate a mean, variance, quantile, or probability distribution.</li>
+</ul>
+</section>
+<section id="are-we-there-yet" class="slide level2">
+<h2>Are we there yet?</h2>
+<p>You are visiting a friend. The trip requires</p>
+<ul>
+<li>a 5-minute walk to the train,</li>
+<li>waiting for a train that arrives every 20 minutes,</li>
+<li>a 35-minute train ride,</li>
+<li>a taxi that is waiting with probability <span class="math inline">\(0.2\)</span>,</li>
+<li>otherwise, a taxi wait with mean 10 minutes, and</li>
+<li>a 12-minute taxi ride.</li>
+</ul>
+<div class="key-point">
+<p>How long should you allow for the trip?</p>
+</div>
+<p>The companion <code>AreWeThereYet</code> notebook is being migrated for Fall 2026.</p>
+</section>
+<section id="why-participate-synchronously" class="slide level2">
+<h2>Why participate synchronously?</h2>
+<ul>
+<li class="fragment">Keep pace with the course.</li>
+<li class="fragment">Ask questions and receive answers in real time.</li>
+<li class="fragment">Influence the pace and direction of discussion.</li>
+<li class="fragment">Help classmates learn and benefit from their questions.</li>
+<li class="fragment">Build a learning community and get to know one another.</li>
+</ul>
+</section></section>
+<section>
+<section id="probability-review" class="title-slide slide level1 center">
+<h1>Probability review</h1>
+
+</section>
+<section id="random-variables-and-distributions" class="slide level2">
+<h2>Random variables and distributions</h2>
+<p>Let <span class="math inline">\(Y\)</span> be a random variable with sample space <span class="math inline">\(\mathcal{Y}  \subseteq\mathbb{R}\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{P}(Y\in\Omega)
+  &amp;:= \text{probability of the event }\Omega,\\
+F(y)&amp;:=\mathbb{P}(Y\le y), &amp;&amp; y\in\mathcal{Y},\\
+Q(p)&amp;:=\inf\{y\in\mathcal{Y}:F(y)\ge p\}, &amp;&amp; 0&lt;p&lt;1,\\
+\mathbb{E}[g(Y)]&amp;:=\int_{\mathcal{Y}}g(y)\,\mathrm{d}F(y).
+\end{aligned}
+\]</span></p>
+<p><span class="math inline">\(F\)</span> is the <span class="alert">cumulative distribution function</span>; <span class="math inline">\(Q\)</span> is the <span class="alert">quantile function</span>.</p>
+</section>
+<section id="discrete-and-continuous-distributions" class="slide level2">
+<h2>Discrete and continuous distributions</h2>
+<div class="columns">
+<div class="column" style="width:48%;">
+<h3 id="discrete">Discrete</h3>
+<p>The probability mass function is</p>
+<p><span class="math display">\[
+\rho(y):=\mathbb{P}(Y=y).
+\]</span></p>
+<p><span class="math display">\[
+\mathbb{E}[g(Y)]
+=\sum_{y\in\mathcal{Y}}g(y)\rho(y).
+\]</span></p>
+</div><div class="column" style="width:48%;">
+<h3 id="continuous">Continuous</h3>
+<p>The probability density function satisfies</p>
+<p><span class="math display">\[
+\rho(y):=F'(y).
+\]</span></p>
+<p><span class="math display">\[
+\mathbb{E}[g(Y)]
+=\int_{\mathcal{Y}}g(y)\rho(y)\,\mathrm{d}y.
+\]</span></p>
+</div></div>
+</section>
+<section id="moments" class="slide level2">
+<h2>Moments</h2>
+<p>For a scalar random variable <span class="math inline">\(Y\)</span>,</p>
+<p><span class="math display">\[
+\mu:=\mathbb{E}(Y),\qquad
+\sigma^2:=\operatorname{Var}(Y)
+=\mathbb{E}\bigl[(Y-\mu)^2\bigr].
+\]</span></p>
+<p><span class="math inline">\(\mu\)</span> is the <span class="alert">mean</span>, <span class="math inline">\(\sigma^2\)</span> the <span class="alert">variance</span>, and <span class="math inline">\(\sigma\)</span> the <span class="alert">standard deviation</span>.</p>
+<p>For a <span class="math inline">\(d\)</span>-dimensional random vector <span class="math inline">\(\boldsymbol Y\)</span> with mean <span class="math inline">\(\boldsymbol\mu\)</span>,</p>
+<p><span class="math display">\[
+\operatorname{Cov}(\boldsymbol Y)
+:=\left(
+\mathbb{E}\left[(Y_j-\mu_j)(Y_k-\mu_k)\right]
+\right)_{j,k=1}^{d}.
+\]</span></p>
+</section>
+<section id="binomial-distribution" class="slide level2">
+<h2>Binomial distribution</h2>
+<p>For <span class="math inline">\(Y\sim\operatorname{Binomial}(n,p)\)</span>,</p>
+<p><span class="math display">\[
+\rho(y)=\mathbb{P}(Y=y)
+=\binom{n}{y}p^y(1-p)^{n-y},
+\qquad y=0,1,\ldots,n,
+\]</span></p>
+<p><span class="math display">\[
+F(y)=\sum_{j=0}^{\lfloor y\rfloor}\binom{n}{j}p^j(1-p)^{n-j},
+\qquad
+Q(q)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge q\}.
+\]</span></p>
+<p><span class="math display">\[
+\mathbb{E}(Y)=np,
+\qquad
+\operatorname{Var}(Y)=np(1-p).
+\]</span></p>
+<p>The Bernoulli distribution is the case <span class="math inline">\(n=1\)</span>. <code>scipy.stats.binom(n, p)</code></p>
+</section>
+<section id="exponential-distribution" class="slide level2">
+<h2>Exponential distribution</h2>
+<p>The exponential distribution models a memoryless waiting time. For <span class="math inline">\(Y\sim\operatorname{Exponential}(\lambda)\)</span>,</p>
+<p><span class="math display">\[
+\rho(y)=
+\begin{cases}
+0, &amp; y&lt;0,\\
+\lambda e^{-\lambda y}, &amp; y\ge 0,
+\end{cases}
+\qquad
+F(y)=
+\begin{cases}
+0, &amp; y&lt;0,\\
+1-e^{-\lambda y}, &amp; y\ge 0.
+\end{cases}
+\]</span></p>
+<p><span class="math display">\[
+Q(p)=-\frac{\log(1-p)}{\lambda},
+\quad
+\mathbb{E}(Y)=\frac{1}{\lambda},
+\quad
+\operatorname{Var}(Y)=\frac{1}{\lambda^2}.
+\]</span></p>
+<p><code>scipy.stats.expon(loc=0, scale=1/lambda)</code></p>
+</section>
+<section id="multivariate-normal-distribution" class="slide level2">
+<h2>Multivariate normal distribution</h2>
+<p>Used in finance and uncertainty quantification:</p>
+<p><span class="math display">\[
+\boldsymbol Y\sim\mathcal{N}(\boldsymbol\mu,\boldsymbol\Sigma),
+\]</span></p>
+<p>where <span class="math inline">\(\boldsymbol\mu\)</span> is the mean vector and <span class="math inline">\(\boldsymbol\Sigma\)</span> is the covariance matrix. Its density is</p>
+<p><span class="math display">\[
+\rho(\boldsymbol y)
+=\frac{1}{(2\pi)^{d/2}|\boldsymbol\Sigma|^{1/2}}
+\exp\left(
+-\frac{1}{2}(\boldsymbol y-\boldsymbol\mu)^{\mathsf T}
+\boldsymbol\Sigma^{-1}(\boldsymbol y-\boldsymbol\mu)
+\right).
+\]</span></p>
+<p><code>scipy.stats.multivariate_normal(mean=mu, cov=Sigma)</code></p>
+</section></section>
+<section>
+<section id="from-samples-to-estimates" class="title-slide slide level1 center">
+<h1>From samples to estimates</h1>
+
+</section>
+<section id="sampling" class="slide level2">
+<h2>Sampling</h2>
+<p>Let <span class="math inline">\(Y\)</span> be a random variable, often <span class="math inline">\(Y=f(\boldsymbol X)\)</span>, and let <span class="math inline">\(Y_1,\ldots,Y_n\)</span> be a sample - not necessarily random or IID.</p>
+<p>The <span class="alert">sample mean</span> and <span class="alert">sample variance</span> are</p>
+<p><span class="math display">\[
+\widehat\mu_n:=\frac{1}{n}\sum_{i=1}^nY_i,
+\qquad
+\widehat\sigma_n^2
+:=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\widehat\mu_n)^2.
+\]</span></p>
+</section>
+<section id="under-random-sampling" class="slide level2">
+<h2>Under random sampling</h2>
+<p>Suppose <span class="math inline">\(Y_1,Y_2,\ldots\overset{\mathrm{IID}}{\sim}Y\)</span>, where <span class="math inline">\(\mathbb{E}(Y)=\mu\)</span> and <span class="math inline">\(\operatorname{Var}(Y)=\sigma^2\)</span>.</p>
+<p><span class="math display">\[
+\mathbb{E}(\widehat\mu_n)=\mu,
+\qquad
+\mathbb{E}(\widehat\sigma_n^2)=\sigma^2.
+\]</span></p>
+<p>Thus both estimators are <span class="alert">unbiased</span>. Moreover,</p>
+<p><span class="math display">\[
+\operatorname{MSE}(\widehat\mu_n)
+=\mathbb{E}\left[(\mu-\widehat\mu_n)^2\right]
+=\frac{\sigma^2}{n},
+\qquad
+\operatorname{RMSE}(\widehat\mu_n)=\frac{\sigma}{\sqrt{n}}.
+\]</span></p>
+</section>
+<section id="central-limit-theorem" class="slide level2">
+<h2>Central Limit Theorem</h2>
+<p>If <span class="math inline">\(Y_1,Y_2,\ldots\overset{\mathrm{IID}}{\sim}Y\)</span> and <span class="math inline">\(0&lt;\sigma^2&lt;\infty\)</span>, then</p>
+<p><span class="math display">\[
+\frac{\widehat\mu_n-\mu}{\sigma/\sqrt{n}}
+\xrightarrow{\mathrm{d}}\mathcal{N}(0,1)
+\qquad\text{as }n\to\infty.
+\]</span></p>
+<p>For large <span class="math inline">\(n\)</span>,</p>
+<p><span class="math display">\[
+\widehat\mu_n\ \dot\sim\
+\mathcal{N}\left(\mu,\frac{\sigma^2}{n}\right).
+\]</span></p>
+<div class="key-point">
+<p>Monte Carlo error for a sample mean typically decreases like <span class="math inline">\(n^{-1/2}\)</span>.</p>
+</div>
+</section>
+<section id="monte-carlo-estimates-of-properties-of-y" class="slide level2">
+<h2>Monte Carlo estimates of properties of <span class="math inline">\(Y\)</span></h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Population quantity</th>
+<th>Sample approximation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mean <span class="math inline">\(\mu\)</span></td>
+<td><span class="math inline">\(\widehat\mu_n\)</span> and an approximate 99% interval <span class="math inline">\(\widehat\mu_n\pm2.58\widehat\sigma_n/\sqrt n\)</span></td>
+</tr>
+<tr class="even">
+<td>Variance <span class="math inline">\(\sigma^2\)</span></td>
+<td><span class="math inline">\(\widehat\sigma_n^2\)</span></td>
+</tr>
+<tr class="odd">
+<td>CDF <span class="math inline">\(F\)</span></td>
+<td>Empirical distribution function <span class="math inline">\(\widehat F_n\)</span></td>
+</tr>
+<tr class="even">
+<td>Quantile function <span class="math inline">\(Q\)</span></td>
+<td>Empirical quantile function <span class="math inline">\(\widehat Q_n\)</span></td>
+</tr>
+<tr class="odd">
+<td>Density or mass function <span class="math inline">\(\rho\)</span></td>
+<td>Histogram or kernel density estimate</td>
+</tr>
+</tbody>
+</table>
+<p>The mean has a natural interval estimate; the other rows commonly begin with point estimates.</p>
+</section>
+<section id="computational-counterparts" class="slide level2">
+<h2>Computational counterparts</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th>Python tool</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mean</td>
+<td><code>np.mean(data)</code></td>
+</tr>
+<tr class="even">
+<td>Variance</td>
+<td><code>np.var(data, ddof=1)</code></td>
+</tr>
+<tr class="odd">
+<td>Empirical CDF</td>
+<td><code>statsmodels.distributions.empirical_distribution.ECDF(data)</code></td>
+</tr>
+<tr class="even">
+<td>Empirical quantile</td>
+<td><code>np.quantile(data, probabilities)</code></td>
+</tr>
+<tr class="odd">
+<td>Histogram</td>
+<td><code>np.histogram(data, bins="auto")</code></td>
+</tr>
+<tr class="even">
+<td>Kernel density estimate</td>
+<td><code>scipy.stats.gaussian_kde(data)</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="are-we-there-yet-revisited" class="slide level2">
+<h2>Are we there yet? Revisited</h2>
+<p>For the travel-time model,</p>
+<ol type="1">
+<li>model each uncertain waiting time,</li>
+<li>generate independent trip times <span class="math inline">\(Y_1,\ldots,Y_n\)</span>,</li>
+<li>estimate the mean and relevant upper quantiles, and</li>
+<li>report Monte Carlo uncertainty with the estimates.</li>
+</ol>
+<div class="key-point">
+<p>The question “How long should I allow?” is usually a quantile question, not only a mean question.</p>
+</div>
+<p>The companion <code>AreWeThereYet</code> notebook is being migrated for Fall 2026.</p>
+</section></section>
+<section>
+<section id="conditioning" class="title-slide slide level1 center">
+<h1>Conditioning</h1>
+
+</section>
+<section id="conditional-probability" class="slide level2">
+<h2>Conditional probability</h2>
+<p>For a random vector <span class="math inline">\((Y,Z)\)</span>,</p>
+<p><span class="math display">\[
+\mathbb{P}(Y=y\mid Z=z)
+=\frac{\mathbb{P}(Y=y,Z=z)}{\mathbb{P}(Z=z)}
+=\frac{\mathbb{P}(Z=z\mid Y=y)\mathbb{P}(Y=y)}
+{\mathbb{P}(Z=z)}.
+\]</span></p>
+<p>The second equality is <span class="alert">Bayes’ theorem</span>. For densities,</p>
+<p><span class="math display">\[
+\rho_{Y\mid Z}(y\mid z)=\frac{\rho_{Y,Z}(y,z)}{\rho_Z(z)}.
+\]</span></p>
+</section>
+<section id="laws-of-total-expectation-and-variance" class="slide level2">
+<h2>Laws of total expectation and variance</h2>
+<p><span class="math display">\[
+\mathbb{E}(Y)=\mathbb{E}_Z\bigl[\mathbb{E}(Y\mid Z)\bigr],
+\]</span></p>
+<p><span class="math display">\[
+\operatorname{Var}(Y)
+=\mathbb{E}_Z\bigl[\operatorname{Var}(Y\mid Z)\bigr]
++\operatorname{Var}_Z\bigl(\mathbb{E}(Y\mid Z)\bigr).
+\]</span></p>
+<div class="key-point">
+<p>Conditioning separates variation within a fixed <span class="math inline">\(Z\)</span> from variation in the conditional mean across values of <span class="math inline">\(Z\)</span>.</p>
+</div>
+</section>
+<section id="conditional-monte-carlo" class="slide level2">
+<h2>Conditional Monte Carlo</h2>
+<p>Let <span class="math inline">\(Y=f(X_1,\ldots,X_d)\)</span> and <span class="math inline">\(Z=(X_2,\ldots,X_d)\)</span>. If</p>
+<p><span class="math display">\[
+g(Z):=\mathbb{E}(Y\mid Z)
+\]</span></p>
+<p>is available analytically, then</p>
+<p><span class="math display">\[
+\mu=\mathbb{E}(Y)=\mathbb{E}_Z[g(Z)],
+\qquad
+\operatorname{Var}_Z(g(Z))\le\operatorname{Var}(Y).
+\]</span></p>
+<p>Sampling <span class="math inline">\(g(Z)\)</span> instead of <span class="math inline">\(Y\)</span> can therefore reduce variance.</p>
+<p>If the conditional density <span class="math inline">\(h(y,Z):=\rho_{Y\mid Z}(y\mid Z)\)</span> is available,</p>
+<p><span class="math display">\[
+\rho_Y(y)=\mathbb{E}_Z[h(y,Z)],
+\]</span></p>
+<p>so a probability density can itself be expressed as an expectation.</p>
+</section></section>
+<section id="big-ideas" class="title-slide slide level1 center">
+<h1>Big ideas</h1>
+<ul>
+<li class="fragment">Use sample quantities to estimate properties of a random variable whose distribution is difficult to obtain directly.</li>
+<li class="fragment">Targets include means, variances, covariances, probability mass or density functions, cumulative distribution functions, and quantiles.</li>
+<li class="fragment">For means, the CLT provides interval estimates that quantify Monte Carlo uncertainty.</li>
+<li class="fragment">Other properties often begin with point estimates - one approximate value for each target.</li>
+<li class="fragment">Conditioning can turn a difficult random quantity into a lower-variance expectation.</li>
+</ul>
 
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 <div class="fh-footer">
-<p><span class="fh-footer-main"> © 2026 Fred J. Hickernell · Illinois Tech · assisted by ChatGPT <span class="fh-footer-sep">·</span> <span class="fh-footer-deck"> Course Overview </span> <span class="fh-footer-sep">·</span> <a id="fh-course-website" href="#" target="_blank" rel="noopener" onmouseenter="(function(a){var el=document.getElementById('course-website-meta'); if(!el) return; var url=(JSON.parse(el.textContent||'{}').course_website||'').trim(); if(url) a.setAttribute('href',url);})(this)" onfocus="(function(a){var el=document.getElementById('course-website-meta'); if(!el) return; var url=(JSON.parse(el.textContent||'{}').course_website||'').trim(); if(url) a.setAttribute('href',url);})(this)">MATH 565 — Fall 2026 Website</a> <span class="fh-footer-sep">·</span> <span class="fh-footer-ex"> <span class="math inline">\(\exstar\)</span> = exercise </span> </span></p>
+<p><span class="fh-footer-main"> © 2026 Fred J. Hickernell · Illinois Tech · assisted by ChatGPT <span class="fh-footer-sep">·</span> <span class="fh-footer-deck"> Introduction </span> <span class="fh-footer-sep">·</span> <a id="fh-course-website" href="#" target="_blank" rel="noopener" onmouseenter="(function(a){var el=document.getElementById('course-website-meta'); if(!el) return; var url=(JSON.parse(el.textContent||'{}').course_website||'').trim(); if(url) a.setAttribute('href',url);})(this)" onfocus="(function(a){var el=document.getElementById('course-website-meta'); if(!el) return; var url=(JSON.parse(el.textContent||'{}').course_website||'').trim(); if(url) a.setAttribute('href',url);})(this)">MATH 565 — Fall 2026 Website</a> <span class="fh-footer-sep">·</span> <span class="fh-footer-ex"> <span class="math inline">\(\exstar\)</span> = exercise </span> </span></p>
 </div>
 </div>
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="01-course-overview_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="01-introduction_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="01-course-overview_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="01-course-overview_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="01-course-overview_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="01-course-overview_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="01-course-overview_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="01-introduction_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="01-introduction_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="01-introduction_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="01-introduction_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="01-introduction_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="01-course-overview_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="01-course-overview_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="01-course-overview_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="01-course-overview_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="01-introduction_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="01-introduction_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="01-introduction_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="01-introduction_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -1144,6 +1561,14 @@ Fred J. Hickernell
       });
       </script>
     <script src="../classlib/classlib/quarto/slides/deck-nav-arrows.js"></script>
+    <script id="deck-nav-meta" type="application/json">
+    {
+      "deck_prev_file": "",
+      "deck_prev_title": "",
+      "deck_next_file": "",
+      "deck_next_title": ""
+    }
+    </script>
     
 
 </body></html>
