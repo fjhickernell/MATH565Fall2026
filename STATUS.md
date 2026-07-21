@@ -81,6 +81,9 @@ appropriate phase rather than appended indiscriminately.
     - [ ] Inspect the visible page layout in a browser.
   - [ ] Assignments (`pages/homework.qmd`)
     - [x] Create the initial Fall 2026 assignments-page structure.
+    - [x] Create the `assignments/` source directory and an Assignment 1
+      Quarto template based on the architecture and course-material
+      references.
     - [x] Record the currently established assignment ground rules.
     - [x] Leave assignment details and due dates pending rather than inventing
       them.

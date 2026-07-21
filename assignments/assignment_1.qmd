@@ -1,0 +1,31 @@
+---
+title: "Assignment 1: Nagel–Schreckenberg Traffic Model"
+metadata-files:
+  - ../classlib/classlib/quarto/website/hickernell-website.yml
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    include-in-header:
+      - ../classlib/classlib/quarto/slides/hickernell-latex-macros.js
+---
+
+## Due date
+
+**Due:** TBA
+
+## Assignment
+
+Section 1.1 of Art Owen's
+[*Monte Carlo Theory, Methods and Examples*](https://artowen.su.domains/mc/)
+discusses the Nagel–Schreckenberg traffic model. Read this section, and then:
+
+1. Complete Exercise 1.1 in the text.
+2. Add a paragraph describing which parts of the exercise were challenging
+   for you.
+
+## Submission
+
+Follow the submission requirements on the [Assignments](../pages/homework.qmd)
+page. Your work should include enough explanation and supporting code for
+another reader to reproduce and understand your results.
