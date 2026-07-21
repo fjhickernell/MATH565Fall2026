@@ -1,0 +1,441 @@
+---
+title: "{{< meta course_title >}}"
+deck_id: d01
+deck_title: "{{< meta decks.d01.title >}}"
+deck_short_title: "{{< meta decks.d01.short_title >}}"
+
+include-after-body:
+  - text: |
+      <script id="deck-nav-meta" type="application/json">
+      {
+        "deck_prev_file": "",
+        "deck_prev_title": "",
+        "deck_next_file": "",
+        "deck_next_title": ""
+      }
+      </script>
+
+subtitle: |
+  <span class="deck-title">{{< meta deck_title >}}</span><br>
+  <span class="deck-meta">Owen, Chapters 1 and 2</span>
+---
+
+# Course map
+
+1. **Introduction**
+2. Generating samples
+3. Markov chain Monte Carlo
+4. Improving efficiency
+5. Selected topics
+
+::: {.callout-note}
+Course details, schedule updates, assignments, and supporting materials are on
+the [course website]({{< meta course_website >}}).
+:::
+
+## Monte Carlo helps with uncertainty
+
+Monte Carlo methods turn uncertain inputs into quantitative information for
+decisions.
+
+::: {.columns}
+::: {.column width="50%"}
+- **Finance:** market forces and option payoffs
+- **Engineering:** variable system parameters
+- **Image rendering:** only finitely many rays can be traced
+:::
+
+::: {.column width="50%"}
+- **Bayesian inference:** posterior uncertainty after observing data
+- **Neural networks:** high-dimensional parameter searches
+- **Queues:** uncertain arrival and service times
+:::
+:::
+
+[Motivating article: *As Forecasts Go, You Can Bet on Monte Carlo*
+(WSJ, 2016)](https://www.wsj.com/articles/as-forecasts-go-you-can-bet-on-monte-carlo-1470994203)
+
+## Why is there uncertainty?
+
+::: {.incremental}
+- **Finance:** stochastic processes, often driven by Brownian motion
+- **Engineering:** variability modeled, for example, by Gaussian processes
+- **Image rendering:** a finite sample must stand in for all possible rays
+- **Bayesian inference:** the posterior combines prior information and data
+- **Neural networks:** not every direction in parameter space can be searched
+- **Queues:** customer arrival and service times vary
+:::
+
+## How is uncertainty expressed quantitatively?
+
+Let the [quantity of interest]{.alert} be
+
+$$
+Y=f(\boldsymbol X),
+$$
+
+where $\boldsymbol X$ has a distribution that is simpler to sample than the
+distribution of $Y$.
+
+Examples of $Y$ include an option payoff, fluid pressure, pixel intensity,
+a statistical-model parameter, a neural-network parameter, or a service time.
+
+::: {.incremental}
+- Generate sample versions $Y_1,\ldots,Y_n$.
+- Use them to estimate a mean, variance, quantile, or probability distribution.
+:::
+
+## Are we there yet?
+
+You are visiting a friend. The trip requires
+
+- a 5-minute walk to the train,
+- waiting for a train that arrives every 20 minutes,
+- a 35-minute train ride,
+- a taxi that is waiting with probability $0.2$,
+- otherwise, a taxi wait with mean 10 minutes, and
+- a 12-minute taxi ride.
+
+::: {.key-point}
+How long should you allow for the trip?
+:::
+
+The companion `AreWeThereYet` notebook is being migrated for Fall 2026.
+
+## Why participate synchronously?
+
+::: {.incremental}
+- Keep pace with the course.
+- Ask questions and receive answers in real time.
+- Influence the pace and direction of discussion.
+- Help classmates learn and benefit from their questions.
+- Build a learning community and get to know one another.
+:::
+
+# Probability review
+
+## Random variables and distributions
+
+Let $Y$ be a random variable with sample space $\mathcal{Y}  \subseteq\mathbb{R}$.
+
+$$
+\begin{aligned}
+\mathbb{P}(Y\in\Omega)
+  &:= \text{probability of the event }\Omega,\\
+F(y)&:=\mathbb{P}(Y\le y), && y\in\mathcal{Y},\\
+Q(p)&:=\inf\{y\in\mathcal{Y}:F(y)\ge p\}, && 0<p<1,\\
+\mathbb{E}[g(Y)]&:=\int_{\mathcal{Y}}g(y)\,\mathrm{d}F(y).
+\end{aligned}
+$$
+
+$F$ is the [cumulative distribution function]{.alert}; $Q$ is the
+[quantile function]{.alert}.
+
+## Discrete and continuous distributions
+
+::: {.columns}
+::: {.column width="48%"}
+### Discrete
+
+The probability mass function is
+
+$$
+\rho(y):=\mathbb{P}(Y=y).
+$$
+
+$$
+\mathbb{E}[g(Y)]
+=\sum_{y\in\mathcal{Y}}g(y)\rho(y).
+$$
+:::
+
+::: {.column width="48%"}
+### Continuous
+
+The probability density function satisfies
+
+$$
+\rho(y):=F'(y).
+$$
+
+$$
+\mathbb{E}[g(Y)]
+=\int_{\mathcal{Y}}g(y)\rho(y)\,\mathrm{d}y.
+$$
+:::
+:::
+
+## Moments
+
+For a scalar random variable $Y$,
+
+$$
+\mu:=\mathbb{E}(Y),\qquad
+\sigma^2:=\operatorname{Var}(Y)
+=\mathbb{E}\bigl[(Y-\mu)^2\bigr].
+$$
+
+$\mu$ is the [mean]{.alert}, $\sigma^2$ the [variance]{.alert}, and $\sigma$
+the [standard deviation]{.alert}.
+
+For a $d$-dimensional random vector $\boldsymbol Y$ with mean
+$\boldsymbol\mu$,
+
+$$
+\operatorname{Cov}(\boldsymbol Y)
+:=\left(
+\mathbb{E}\left[(Y_j-\mu_j)(Y_k-\mu_k)\right]
+\right)_{j,k=1}^{d}.
+$$
+
+## Binomial distribution
+
+For $Y\sim\operatorname{Binomial}(n,p)$,
+
+$$
+\rho(y)=\mathbb{P}(Y=y)
+=\binom{n}{y}p^y(1-p)^{n-y},
+\qquad y=0,1,\ldots,n,
+$$
+
+$$
+F(y)=\sum_{j=0}^{\lfloor y\rfloor}\binom{n}{j}p^j(1-p)^{n-j},
+\qquad
+Q(q)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge q\}.
+$$
+
+$$
+\mathbb{E}(Y)=np,
+\qquad
+\operatorname{Var}(Y)=np(1-p).
+$$
+
+The Bernoulli distribution is the case $n=1$.
+`scipy.stats.binom(n, p)`
+
+## Exponential distribution
+
+The exponential distribution models a memoryless waiting time. For
+$Y\sim\operatorname{Exponential}(\lambda)$,
+
+$$
+\rho(y)=
+\begin{cases}
+0, & y<0,\\
+\lambda e^{-\lambda y}, & y\ge 0,
+\end{cases}
+\qquad
+F(y)=
+\begin{cases}
+0, & y<0,\\
+1-e^{-\lambda y}, & y\ge 0.
+\end{cases}
+$$
+
+$$
+Q(p)=-\frac{\log(1-p)}{\lambda},
+\quad
+\mathbb{E}(Y)=\frac{1}{\lambda},
+\quad
+\operatorname{Var}(Y)=\frac{1}{\lambda^2}.
+$$
+
+`scipy.stats.expon(loc=0, scale=1/lambda)`
+
+## Multivariate normal distribution
+
+Used in finance and uncertainty quantification:
+
+$$
+\boldsymbol Y\sim\mathcal{N}(\boldsymbol\mu,\boldsymbol\Sigma),
+$$
+
+where $\boldsymbol\mu$ is the mean vector and $\boldsymbol\Sigma$ is the
+covariance matrix. Its density is
+
+$$
+\rho(\boldsymbol y)
+=\frac{1}{(2\pi)^{d/2}|\boldsymbol\Sigma|^{1/2}}
+\exp\left(
+-\frac{1}{2}(\boldsymbol y-\boldsymbol\mu)^{\mathsf T}
+\boldsymbol\Sigma^{-1}(\boldsymbol y-\boldsymbol\mu)
+\right).
+$$
+
+`scipy.stats.multivariate_normal(mean=mu, cov=Sigma)`
+
+# From samples to estimates
+
+## Sampling
+
+Let $Y$ be a random variable, often $Y=f(\boldsymbol X)$, and let
+$Y_1,\ldots,Y_n$ be a sample - not necessarily random or IID.
+
+The [sample mean]{.alert} and [sample variance]{.alert} are
+
+$$
+\widehat\mu_n:=\frac{1}{n}\sum_{i=1}^nY_i,
+\qquad
+\widehat\sigma_n^2
+:=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\widehat\mu_n)^2.
+$$
+
+## Under random sampling
+
+Suppose $Y_1,Y_2,\ldots\overset{\mathrm{IID}}{\sim}Y$, where
+$\mathbb{E}(Y)=\mu$ and $\operatorname{Var}(Y)=\sigma^2$.
+
+$$
+\mathbb{E}(\widehat\mu_n)=\mu,
+\qquad
+\mathbb{E}(\widehat\sigma_n^2)=\sigma^2.
+$$
+
+Thus both estimators are [unbiased]{.alert}. Moreover,
+
+$$
+\operatorname{MSE}(\widehat\mu_n)
+=\mathbb{E}\left[(\mu-\widehat\mu_n)^2\right]
+=\frac{\sigma^2}{n},
+\qquad
+\operatorname{RMSE}(\widehat\mu_n)=\frac{\sigma}{\sqrt{n}}.
+$$
+
+## Central Limit Theorem
+
+If $Y_1,Y_2,\ldots\overset{\mathrm{IID}}{\sim}Y$ and $0<\sigma^2<\infty$,
+then
+
+$$
+\frac{\widehat\mu_n-\mu}{\sigma/\sqrt{n}}
+\xrightarrow{\mathrm{d}}\mathcal{N}(0,1)
+\qquad\text{as }n\to\infty.
+$$
+
+For large $n$,
+
+$$
+\widehat\mu_n\ \dot\sim\
+\mathcal{N}\left(\mu,\frac{\sigma^2}{n}\right).
+$$
+
+::: {.key-point}
+Monte Carlo error for a sample mean typically decreases like $n^{-1/2}$.
+:::
+
+## Monte Carlo estimates of properties of $Y$
+
+| Population quantity | Sample approximation |
+|---|---|
+| Mean $\mu$ | $\widehat\mu_n$ and an approximate 99% interval $\widehat\mu_n\pm2.58\widehat\sigma_n/\sqrt n$ |
+| Variance $\sigma^2$ | $\widehat\sigma_n^2$ |
+| CDF $F$ | Empirical distribution function $\widehat F_n$ |
+| Quantile function $Q$ | Empirical quantile function $\widehat Q_n$ |
+| Density or mass function $\rho$ | Histogram or kernel density estimate |
+
+The mean has a natural interval estimate; the other rows commonly begin with
+point estimates.
+
+## Computational counterparts
+
+| Quantity | Python tool |
+|---|---|
+| Mean | `np.mean(data)` |
+| Variance | `np.var(data, ddof=1)` |
+| Empirical CDF | `statsmodels.distributions.empirical_distribution.ECDF(data)` |
+| Empirical quantile | `np.quantile(data, probabilities)` |
+| Histogram | `np.histogram(data, bins="auto")` |
+| Kernel density estimate | `scipy.stats.gaussian_kde(data)` |
+
+## Are we there yet? Revisited
+
+For the travel-time model,
+
+1. model each uncertain waiting time,
+2. generate independent trip times $Y_1,\ldots,Y_n$,
+3. estimate the mean and relevant upper quantiles, and
+4. report Monte Carlo uncertainty with the estimates.
+
+::: {.key-point}
+The question "How long should I allow?" is usually a quantile question, not
+only a mean question.
+:::
+
+The companion `AreWeThereYet` notebook is being migrated for Fall 2026.
+
+# Conditioning
+
+## Conditional probability
+
+For a random vector $(Y,Z)$,
+
+$$
+\mathbb{P}(Y=y\mid Z=z)
+=\frac{\mathbb{P}(Y=y,Z=z)}{\mathbb{P}(Z=z)}
+=\frac{\mathbb{P}(Z=z\mid Y=y)\mathbb{P}(Y=y)}
+{\mathbb{P}(Z=z)}.
+$$
+
+The second equality is [Bayes' theorem]{.alert}. For densities,
+
+$$
+\rho_{Y\mid Z}(y\mid z)=\frac{\rho_{Y,Z}(y,z)}{\rho_Z(z)}.
+$$
+
+## Laws of total expectation and variance
+
+$$
+\mathbb{E}(Y)=\mathbb{E}_Z\bigl[\mathbb{E}(Y\mid Z)\bigr],
+$$
+
+$$
+\operatorname{Var}(Y)
+=\mathbb{E}_Z\bigl[\operatorname{Var}(Y\mid Z)\bigr]
++\operatorname{Var}_Z\bigl(\mathbb{E}(Y\mid Z)\bigr).
+$$
+
+::: {.key-point}
+Conditioning separates variation within a fixed $Z$ from variation in the
+conditional mean across values of $Z$.
+:::
+
+## Conditional Monte Carlo
+
+Let $Y=f(X_1,\ldots,X_d)$ and $Z=(X_2,\ldots,X_d)$. If
+
+$$
+g(Z):=\mathbb{E}(Y\mid Z)
+$$
+
+is available analytically, then
+
+$$
+\mu=\mathbb{E}(Y)=\mathbb{E}_Z[g(Z)],
+\qquad
+\operatorname{Var}_Z(g(Z))\le\operatorname{Var}(Y).
+$$
+
+Sampling $g(Z)$ instead of $Y$ can therefore reduce variance.
+
+If the conditional density $h(y,Z):=\rho_{Y\mid Z}(y\mid Z)$ is available,
+
+$$
+\rho_Y(y)=\mathbb{E}_Z[h(y,Z)],
+$$
+
+so a probability density can itself be expressed as an expectation.
+
+# Big ideas
+
+::: {.incremental}
+- Use sample quantities to estimate properties of a random variable whose
+  distribution is difficult to obtain directly.
+- Targets include means, variances, covariances, probability mass or density
+  functions, cumulative distribution functions, and quantiles.
+- For means, the CLT provides interval estimates that quantify Monte Carlo
+  uncertainty.
+- Other properties often begin with point estimates - one approximate value
+  for each target.
+- Conditioning can turn a difficult random quantity into a lower-variance
+  expectation.
+:::

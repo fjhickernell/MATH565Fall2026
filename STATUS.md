@@ -155,20 +155,31 @@ appropriate phase rather than appended indiscriminately.
 
 - [x] Create an independent RevealJS Quarto project under `slides/`.
 - [x] Add slide-project configuration and metadata.
-- [x] Add an initial course-overview slide source.
-- [ ] Validate shared slide styling, metadata, navigation, and assets from
+- [x] Add the initial numbered slide source and metadata entry.
+- [x] Validate shared slide styling, metadata, navigation, and assets from
   `classlib`.
-- [ ] Confirm that rendered slides are linked correctly from the website.
+- [x] Confirm that rendered slides are linked correctly from the website.
 
 ## 6. Prototype lecture conversion
 
-- [ ] Select a representative lecture from the course-material reference.
-- [ ] Convert the lecture to a maintainable Quarto RevealJS source deck.
-- [ ] Migrate its mathematical notation, examples, figures, and executable
-  code without changing pedagogical intent.
-- [ ] Verify website links, slide navigation, rendering, and local execution.
-- [ ] Refine reusable slide and course conventions based on the prototype.
-- [ ] Document any resulting author-workflow changes.
+- [x] Select the introductory lecture from the course-material reference as
+  the prototype.
+- [x] Convert the introductory lecture to a maintainable Quarto RevealJS
+  source deck.
+- [x] Migrate its mathematical notation, examples, and pedagogical sequence
+  to native Markdown, LaTeX, tables, and RevealJS fragments.
+- [x] Verify the website link, slide navigation, and Quarto rendering.
+- [x] Inspect the rendered lecture slide by slide and compare it with the
+  Fall 2025 PDF.
+- [x] Establish prototype conventions: numbered course-specific sources,
+  metadata-driven deck titles and navigation, native Markdown and LaTeX,
+  native tables and layouts, and RevealJS fragments for staged builds.
+- [ ] Link the companion `AreWeThereYet` notebook after it has been migrated
+  and validated.
+- [ ] Reassess possible reusable `classlib` improvements after Lecture 2
+  demonstrates which patterns genuinely recur.
+- [x] Confirm that the prototype requires no change to the documented author
+  workflow.
 
 ## 7. Remaining course-content migration
 

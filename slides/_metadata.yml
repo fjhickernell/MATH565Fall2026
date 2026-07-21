@@ -14,9 +14,9 @@ course_website: https://fjhickernell.github.io/MATH565Fall2026/
 
 decks:
   d01:
-    file: 01-course-overview.html
-    title: Course Overview
-    short_title: Course Overview
+    file: 01-introduction.html
+    title: Introduction
+    short_title: Introduction
 
 format:
   revealjs:
