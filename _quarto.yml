@@ -40,8 +40,12 @@ website:
         text: Assignments
       - href: pages/tests.qmd
         text: Tests
-      - href: pages/project.qmd
-        text: Project
+      - text: Project
+        menu:
+          - href: pages/project.qmd
+            text: Topic Selection & Presentation Scheduling
+          - href: pages/project-assessment.qmd
+            text: Project Assessment
       - text: Resources
         menu:
           - href: classlib/classlib/quarto/pages/policies.qmd

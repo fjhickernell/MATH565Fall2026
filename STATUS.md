@@ -102,7 +102,23 @@ appropriate phase rather than appended indiscriminately.
     - [x] Validate recursive submodule initialization and archive enumeration.
     - [x] Validate Quarto rendering and generated page structure.
     - [ ] Inspect the visible page layout in a browser.
-  - [ ] Project (`pages/project.qmd`)
+  - [ ] Project
+    - [x] Configure the Project navbar entry as a dropdown.
+    - [x] Add Topic Selection & Presentation Scheduling linking to
+      `pages/project.qmd`.
+    - [x] Add Project Assessment linking to
+      `pages/project-assessment.qmd`.
+    - [x] Use the MATH 563 project page as the structural reference.
+    - [x] Carry forward relevant MATH 565 Fall 2025 project content.
+    - [x] Replace unavailable Fall 2026 links and scheduling resources with
+      TBA.
+    - [x] Separate topic-selection and presentation-scheduling guidance from
+      assessment criteria.
+    - [x] Validate Quarto rendering and generated page structure.
+    - [x] Verify both Project dropdown links in the generated navigation.
+    - [ ] Finalize Fall 2026 links, dates, deadlines, scheduling tools, and
+      presentation logistics.
+    - [ ] Inspect the visible page layout and dropdown behavior in a browser.
   - [ ] Policies (`classlib/classlib/quarto/pages/policies.qmd`)
   - [ ] Accessing repo
     (`classlib/classlib/quarto/pages/git-clone-update-with-submodules.qmd`)
@@ -114,8 +130,7 @@ appropriate phase rather than appended indiscriminately.
   - [ ] MATH 563 — Mathematical Statistics
   - [ ] QMCPy
 - [x] Create the initial project-assessment page
-  (`pages/project-assessment.qmd`), which is not currently a navbar
-  destination.
+  (`pages/project-assessment.qmd`).
 - [x] Configure course-page metadata.
 - [ ] Confirm that shared website styling and resources are sourced from
   `classlib` where appropriate.
@@ -176,3 +191,4 @@ appropriate phase rather than appended indiscriminately.
 - [ ] Test the documented workflow on another machine or a fresh clone.
 - [ ] Confirm that all student-facing pages and downloads are ready for the
   course launch.
+- [ ] Announce the course website on Canvas.

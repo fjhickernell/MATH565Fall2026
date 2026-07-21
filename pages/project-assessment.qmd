@@ -1,5 +1,68 @@
 ---
 title: "Project Assessment"
+toc: false
+format:
+  html:
+    toc-location: body
+    page-layout: full
 ---
 
-Project assessment guidance will be posted here.
+Use this project assessment page to provide thoughtful, constructive feedback
+on a MATH 565 presentation. Review these questions while preparing your own
+project as well as when observing classmates.
+
+The Fall 2026 procedure for submitting completed assessments is **TBA**. Topic
+selection and presentation logistics are maintained separately on the
+[Topic Selection & Presentation Scheduling](project.qmd) page.
+
+---
+
+**Presenter’s name:**
+
+**Project title:**
+
+**Observer’s name:**
+
+---
+
+### 1. What are the main points of the presentation?
+
+*What question was addressed? What was the main claim, result, feature, or
+conclusion?*
+
+&nbsp;
+
+&nbsp;
+
+---
+
+### 2. What are the strengths and weaknesses of the article or QMCPy feature?
+
+*Consider clarity, insight, technical correctness, evidence, assumptions,
+limitations, and the value of pursuing the work further.*
+
+&nbsp;
+
+&nbsp;
+
+---
+
+### 3. What did the presenter do well?
+
+*Consider organization, pacing, explanation of ideas, examples, visuals, and
+responses to questions.*
+
+&nbsp;
+
+&nbsp;
+
+---
+
+### 4. How might the presenter have done better?
+
+*Identify specific changes that would most improve the presentation’s clarity,
+correctness, or impact.*
+
+&nbsp;
+
+&nbsp;
