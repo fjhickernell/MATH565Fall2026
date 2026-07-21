@@ -266,6 +266,34 @@
     "text": "Common issues and fixes\n\n“fatal: not a git repository”\nYou’re not inside the course repo folder. Change into it:\ncd MATHXXXSpring20YY\n\n\n“Permission denied (publickey)” (SSH)\nYou’re using an SSH URL but your SSH key isn’t set up for GitHub. Use the HTTPS URL instead, or configure SSH.\n\n\nSubmodule errors after pulling\nRe-run the submodule update:\ngit submodule update --init --recursive\n\n\nYou accidentally cloned without submodules\nFrom inside the repo:\ngit submodule update --init --recursive\n\n\nAvoid updating submodules beyond what the instructor pinned\nStudents should not run git submodule update --remote unless explicitly instructed."
   },
   {
+    "objectID": "assignments/assignment_1.html",
+    "href": "assignments/assignment_1.html",
+    "title": "Assignment 1: Nagel–Schreckenberg Traffic Model",
+    "section": "",
+    "text": "Due: TBA"
+  },
+  {
+    "objectID": "assignments/assignment_1.html#due-date",
+    "href": "assignments/assignment_1.html#due-date",
+    "title": "Assignment 1: Nagel–Schreckenberg Traffic Model",
+    "section": "",
+    "text": "Due: TBA"
+  },
+  {
+    "objectID": "assignments/assignment_1.html#assignment",
+    "href": "assignments/assignment_1.html#assignment",
+    "title": "Assignment 1: Nagel–Schreckenberg Traffic Model",
+    "section": "Assignment",
+    "text": "Assignment\nSection 1.1 of Art Owen’s Monte Carlo Theory, Methods and Examples discusses the Nagel–Schreckenberg traffic model. Read this section, and then:\n\nComplete Exercise 1.1 in the text.\nAdd a paragraph describing which parts of the exercise were challenging for you."
+  },
+  {
+    "objectID": "assignments/assignment_1.html#submission",
+    "href": "assignments/assignment_1.html#submission",
+    "title": "Assignment 1: Nagel–Schreckenberg Traffic Model",
+    "section": "Submission",
+    "text": "Submission\nFollow the submission requirements on the Assignments page. Your work should include enough explanation and supporting code for another reader to reproduce and understand your results."
+  },
+  {
     "objectID": "classlib/classlib/quarto/pages/interesting-articles-links.html",
     "href": "classlib/classlib/quarto/pages/interesting-articles-links.html",
     "title": "Interesting Articles & Links",
