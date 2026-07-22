@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-07-21">
+  <meta name="dcterms.date" content="2026-07-22">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -580,30 +580,20 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">July 21, 2026</p>
+  <p class="date">July 22, 2026</p>
 </section>
 <section>
 <section id="course-map" class="title-slide slide level1 center">
 <h1>Course map</h1>
 <ol type="1">
-<li><strong>Introduction</strong></li>
+<li><span class="alert">Introduction</span></li>
 <li>Generating samples</li>
 <li>Markov chain Monte Carlo</li>
 <li>Improving efficiency</li>
 <li>Selected topics</li>
 </ol>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
+<div class="key-point">
 <p>Course details, schedule updates, assignments, and supporting materials are on the <a href="https://fjhickernell.github.io/MATH565Fall2026/">course website</a>.</p>
-</div>
-</div>
 </div>
 </section>
 <section id="monte-carlo-helps-with-uncertainty" class="slide level2">
@@ -612,15 +602,15 @@ Fred J. Hickernell
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li><strong>Finance:</strong> market forces and option payoffs</li>
-<li><strong>Engineering:</strong> variable system parameters</li>
-<li><strong>Image rendering:</strong> only finitely many rays can be traced</li>
+<li><span class="alert">Finance:</span> market forces and option payoffs</li>
+<li><span class="alert">Engineering:</span> variable system parameters</li>
+<li><span class="alert">Image rendering:</span> only finitely many rays can be traced</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <ul>
-<li><strong>Bayesian inference:</strong> posterior uncertainty after observing data</li>
-<li><strong>Neural networks:</strong> high-dimensional parameter searches</li>
-<li><strong>Queues:</strong> uncertain arrival and service times</li>
+<li><span class="alert">Bayesian inference:</span> posterior uncertainty after observing data</li>
+<li><span class="alert">Neural networks:</span> high-dimensional parameter searches</li>
+<li><span class="alert">Queues:</span> uncertain arrival and service times</li>
 </ul>
 </div></div>
 <p><a href="https://www.wsj.com/articles/as-forecasts-go-you-can-bet-on-monte-carlo-1470994203">Motivating article: <em>As Forecasts Go, You Can Bet on Monte Carlo</em> (WSJ, 2016)</a></p>
@@ -628,12 +618,12 @@ Fred J. Hickernell
 <section id="why-is-there-uncertainty" class="slide level2">
 <h2>Why is there uncertainty?</h2>
 <ul>
-<li class="fragment"><strong>Finance:</strong> stochastic processes, often driven by Brownian motion</li>
-<li class="fragment"><strong>Engineering:</strong> variability modeled, for example, by Gaussian processes</li>
-<li class="fragment"><strong>Image rendering:</strong> a finite sample must stand in for all possible rays</li>
-<li class="fragment"><strong>Bayesian inference:</strong> the posterior combines prior information and data</li>
-<li class="fragment"><strong>Neural networks:</strong> not every direction in parameter space can be searched</li>
-<li class="fragment"><strong>Queues:</strong> customer arrival and service times vary</li>
+<li class="fragment"><span class="alert">Finance:</span> stochastic processes, often driven by Brownian motion</li>
+<li class="fragment"><span class="alert">Engineering:</span> variability modeled, for example, by Gaussian processes</li>
+<li class="fragment"><span class="alert">Image rendering:</span> a finite sample must stand in for all possible rays</li>
+<li class="fragment"><span class="alert">Bayesian inference:</span> the posterior combines prior information and data</li>
+<li class="fragment"><span class="alert">Neural networks:</span> not every direction in parameter space can be searched</li>
+<li class="fragment"><span class="alert">Queues:</span> customer arrival and service times vary</li>
 </ul>
 </section>
 <section id="how-is-uncertainty-expressed-quantitatively" class="slide level2">
