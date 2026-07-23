@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-07-22">
+  <meta name="dcterms.date" content="2026-07-23">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -33,7 +33,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="01-introduction_files/libs/revealjs/dist/theme/quarto-b58af031a03075c6f70b6cee6c87cae8.css">
+  <link rel="stylesheet" href="01-introduction_files/libs/revealjs/dist/theme/quarto-e9cc052d6baf1789e8d5a43aab2e3256.css">
   <link href="01-introduction_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="01-introduction_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="01-introduction_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -580,7 +580,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">July 22, 2026</p>
+  <p class="date">July 23, 2026</p>
 </section>
 <section>
 <section id="course-map" class="title-slide slide level1 center">
@@ -598,45 +598,70 @@ Fred J. Hickernell
 </section>
 <section id="monte-carlo-helps-with-uncertainty" class="slide level2">
 <h2>Monte Carlo helps with uncertainty</h2>
-<p>Monte Carlo methods turn uncertain inputs into quantitative information for decisions.</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<ul>
-<li><span class="alert">Finance:</span> market forces and option payoffs</li>
-<li><span class="alert">Engineering:</span> variable system parameters</li>
-<li><span class="alert">Image rendering:</span> only finitely many rays can be traced</li>
-</ul>
-</div><div class="column" style="width:50%;">
-<ul>
-<li><span class="alert">Bayesian inference:</span> posterior uncertainty after observing data</li>
-<li><span class="alert">Neural networks:</span> high-dimensional parameter searches</li>
-<li><span class="alert">Queues:</span> uncertain arrival and service times</li>
-</ul>
+<div class="columns" style="text-align: center;">
+<div class="column" style="width:33.33%;">
+<p><span class="alert">Finance</span></p>
+<p><a href="https://www.pexels.com/photo/numbers-on-monitor-534216/" class="image-source" target="_blank" rel="noopener" style="width: 95%;" title="View image source"><img data-src="assets/images/financialmarkets.png" alt="Stock-market display"></a></p>
+</div><div class="column" style="width:33.33%;">
+<p><span class="alert">Engineering</span></p>
+<p><a href="https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/thumbnails/image/4Fraking42412-920.jpg" class="image-source" target="_blank" rel="noopener" style="width: 70%;" title="View image source"><img data-src="assets/images/4Fraking42412-920.jpg" alt="Hydraulic-fracturing water cycle and well diagram"></a></p>
+</div><div class="column" style="width:33.33%;">
+<p><span class="alert">Image rendering</span></p>
+<p><a href="https://research.nvidia.com/publication/2023-05_recursive-control-variates-inverse-rendering" class="image-source" target="_blank" rel="noopener" style="width: 54%;" title="View image source"><img data-src="assets/images/raytracing.jpg" alt="Ray-traced results compared with reference images"></a></p>
 </div></div>
-<p><a href="https://www.wsj.com/articles/as-forecasts-go-you-can-bet-on-monte-carlo-1470994203">Motivating article: <em>As Forecasts Go, You Can Bet on Monte Carlo</em> (WSJ, 2016)</a></p>
+<div class="vspace-sm">
+
+</div>
+<div class="columns" style="text-align: center;">
+<div class="column" style="width:33.33%;">
+<p><span class="alert">Bayesian inference</span></p>
+<p><img data-src="assets/images/bayesian-inference.jpg" style="width: 94%;" alt="Bayesian inference visualization"></p>
+</div><div class="column" style="width:33.33%;">
+<p><span class="alert">Neural networks</span></p>
+<p><img data-src="assets/images/neural-network.png" style="width: 71%;" alt="Neural-network diagram"></p>
+</div><div class="column" style="width:33.33%;">
+<p><span class="alert">Queues</span></p>
+<p><img data-src="assets/images/InNOut.jpg" style="width: 89%;" alt="In-N-Out drive-through queue"></p>
+</div></div>
 </section>
 <section id="why-is-there-uncertainty" class="slide level2">
 <h2>Why is there uncertainty?</h2>
+<p><a href="https://www.wsj.com/articles/as-forecasts-go-you-can-bet-on-monte-carlo-1470994203">J. Craven McGinty, As Forecasts Go, You Can Bet on Monte Carlo, <em>Wall Street Journal</em>, August 12, 2016</a></p>
 <ul>
-<li class="fragment"><span class="alert">Finance:</span> stochastic processes, often driven by Brownian motion</li>
-<li class="fragment"><span class="alert">Engineering:</span> variability modeled, for example, by Gaussian processes</li>
-<li class="fragment"><span class="alert">Image rendering:</span> a finite sample must stand in for all possible rays</li>
-<li class="fragment"><span class="alert">Bayesian inference:</span> the posterior combines prior information and data</li>
-<li class="fragment"><span class="alert">Neural networks:</span> not every direction in parameter space can be searched</li>
-<li class="fragment"><span class="alert">Queues:</span> customer arrival and service times vary</li>
+<li>Finance: <span class="alert">market forces</span> often modeled by stochastic processes driven by Brownian motion</li>
+<li>Engineering: <span class="alert">system parameter variability</span> modeled, for example, by Gaussian processes</li>
+<li>Image rendering: a <span class="alert">finite sample</span> must stand in for all possible rays</li>
+<li>Bayesian inference: the <span class="alert">posterior probability distribution</span> combines prior information and data</li>
+<li>Neural networks: <span class="alert">not every direction</span> in parameter space can be searched</li>
+<li>Queues: customer <span class="alert">arrival and service times</span> vary</li>
 </ul>
 </section>
 <section id="how-is-uncertainty-expressed-quantitatively" class="slide level2">
 <h2>How is uncertainty expressed quantitatively?</h2>
 <p>Let the <span class="alert">quantity of interest</span> be</p>
-<p><span class="math display">\[
-Y=f(\boldsymbol X),
-\]</span></p>
-<p>where <span class="math inline">\(\boldsymbol X\)</span> has a distribution that is simpler to sample than the distribution of <span class="math inline">\(Y\)</span>.</p>
-<p>Examples of <span class="math inline">\(Y\)</span> include an option payoff, fluid pressure, pixel intensity, a statistical-model parameter, a neural-network parameter, or a service time.</p>
+<p><span class="math display">\[\begin{align*}
+Y&amp;=
+\text{random variable denoting } \alerttext{quantity of interest}
+= \begin{cases}
+\text{option payoff} \\
+\text{fluid pressure} \\
+\text{pixel intensity} \\
+\text{statistical model parameter}\\
+\text{neural-network parameter} \\
+\text{service time}
+\end{cases} \\
+&amp; = f(\boldsymbol X), \text{ where} \\
+\boldsymbol X &amp; = \text{multivariate random variable that is }\alerttext{easy to sample}
+\end{align*}\]</span></p>
 <ul>
-<li class="fragment">Generate sample versions <span class="math inline">\(Y_1,\ldots,Y_n\)</span>.</li>
-<li class="fragment">Use them to estimate a mean, variance, quantile, or probability distribution.</li>
+<li>Generate <span class="alert">sample</span> versions <span class="math inline">\(Y_1,\ldots,Y_n\)</span></li>
+<li>Use samples to estimate <span class="alert">population parameters</span>:
+<ul>
+<li>mean</li>
+<li>variance</li>
+<li>quantile</li>
+<li>probability distribution</li>
+</ul></li>
 </ul>
 </section>
 <section id="are-we-there-yet" class="slide level2">
