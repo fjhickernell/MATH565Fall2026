@@ -17,7 +17,7 @@ include-after-body:
 
 subtitle: |
   <span class="deck-title">{{< meta deck_title >}}</span><br>
-  <span class="deck-meta">Owen, Chapters 1 and 2</span>
+  <span class="deck-meta">{{< meta texts.owen.short >}}, Chapters 1 and 2</span>
 ---
 
 # Course map
@@ -35,55 +35,94 @@ the [course website]({{< meta course_website >}}).
 
 ## Monte Carlo helps with uncertainty
 
-Monte Carlo methods turn uncertain inputs into quantitative information for
-decisions.
+::: {.columns style="text-align: center;"}
+::: {.column width="33.33%"}
+[Finance]{.alert}
 
-::: {.columns}
-::: {.column width="50%"}
-- [Finance:]{.alert} market forces and option payoffs
-- [Engineering:]{.alert} variable system parameters
-- [Image rendering:]{.alert} only finitely many rays can be traced
+[![](assets/images/financialmarkets.png){fig-alt="Stock-market display"}](https://www.pexels.com/photo/numbers-on-monitor-534216/){.image-source target="_blank" rel="noopener" style="width: 95%;" title="View image source"}
+
 :::
 
-::: {.column width="50%"}
-- [Bayesian inference:]{.alert} posterior uncertainty after observing data
-- [Neural networks:]{.alert} high-dimensional parameter searches
-- [Queues:]{.alert} uncertain arrival and service times
+::: {.column width="33.33%"}
+[Engineering]{.alert}
+
+[![](assets/images/4Fraking42412-920.jpg){fig-alt="Hydraulic-fracturing water cycle and well diagram"}](https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/thumbnails/image/4Fraking42412-920.jpg){.image-source target="_blank" rel="noopener" style="width: 70%;" title="View image source"}
+
+:::
+
+::: {.column width="33.33%"}
+[Image rendering]{.alert}
+
+[![](assets/images/raytracing.jpg){fig-alt="Ray-traced results compared with reference images"}](https://research.nvidia.com/publication/2023-05_recursive-control-variates-inverse-rendering){.image-source target="_blank" rel="noopener" style="width: 54%;" title="View image source"}
+
 :::
 :::
 
-[Motivating article: *As Forecasts Go, You Can Bet on Monte Carlo*
-(WSJ, 2016)](https://www.wsj.com/articles/as-forecasts-go-you-can-bet-on-monte-carlo-1470994203)
+<div class="vspace-sm"></div>
+
+::: {.columns style="text-align: center;"}
+::: {.column width="33.33%"}
+[Bayesian inference]{.alert}
+
+![](assets/images/bayesian-inference.jpg){fig-alt="Bayesian inference visualization" style="width: 94%;"}
+
+:::
+
+::: {.column width="33.33%"}
+[Neural networks]{.alert}
+
+![](assets/images/neural-network.png){fig-alt="Neural-network diagram" style="width: 71%;"}
+
+:::
+
+::: {.column width="33.33%"}
+[Queues]{.alert}
+
+![](assets/images/InNOut.jpg){fig-alt="In-N-Out drive-through queue" style="width: 89%;"}
+
+:::
+:::
+
+
 
 ## Why is there uncertainty?
 
-::: {.incremental}
-- [Finance:]{.alert} stochastic processes, often driven by Brownian motion
-- [Engineering:]{.alert} variability modeled, for example, by Gaussian processes
-- [Image rendering:]{.alert} a finite sample must stand in for all possible rays
-- [Bayesian inference:]{.alert} the posterior combines prior information and data
-- [Neural networks:]{.alert} not every direction in parameter space can be searched
-- [Queues:]{.alert} customer arrival and service times vary
-:::
+[{{< meta papers.wsj_monte_carlo_2016.full >}}]({{< meta papers.wsj_monte_carlo_2016.publisher_url >}})
+
+
+- Finance: [market forces]{.alert} often modeled by stochastic processes driven by Brownian motion
+- Engineering: [system parameter variability]{.alert} modeled, for example, by Gaussian processes
+- Image rendering: a [finite sample]{.alert} must stand in for all possible rays
+- Bayesian inference: the [posterior probability distribution]{.alert} combines prior information and data
+- Neural networks: [not every direction]{.alert} in parameter space can be searched
+- Queues: customer [arrival and service times]{.alert} vary
+
 
 ## How is uncertainty expressed quantitatively?
 
 Let the [quantity of interest]{.alert} be
 
-$$
-Y=f(\boldsymbol X),
-$$
+\begin{align*}
+Y&=
+\text{random variable denoting } \alerttext{quantity of interest}
+= \begin{cases}
+\text{option payoff} \\
+\text{fluid pressure} \\
+\text{pixel intensity} \\
+\text{statistical model parameter}\\
+\text{neural-network parameter} \\
+\text{service time}
+\end{cases} \\
+& = f(\boldsymbol X), \text{ where} \\
+\boldsymbol X & = \text{multivariate random variable that is }\alerttext{easy to sample}
+\end{align*}
 
-where $\boldsymbol X$ has a distribution that is simpler to sample than the
-distribution of $Y$.
-
-Examples of $Y$ include an option payoff, fluid pressure, pixel intensity,
-a statistical-model parameter, a neural-network parameter, or a service time.
-
-::: {.incremental}
-- Generate sample versions $Y_1,\ldots,Y_n$.
-- Use them to estimate a mean, variance, quantile, or probability distribution.
-:::
+- Generate [sample]{.alert} versions $Y_1,\ldots,Y_n$
+- Use samples to estimate [population parameters]{.alert}:
+  - mean
+  - variance
+  - quantile
+  - probability distribution
 
 ## Are we there yet?
 

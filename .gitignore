@@ -11,8 +11,7 @@ docs/*
 .Renviron
 .quarto-watch-logs/
 
-# local symlinks for slide preview
+# local symlink for slide preview
 slides/classlib
-slides/assets
 
 /.quarto/

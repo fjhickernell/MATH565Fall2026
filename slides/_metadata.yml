@@ -1,6 +1,7 @@
 metadata-files:
   - ../classlib/classlib/quarto/slides/hickernell-slides.yml
   - ../classlib/classlib/quarto/metadata/hickernell-texts.yml
+  - ../classlib/classlib/quarto/metadata/hickernell-papers.yml
 
 course_title: "MATH 565 — Fall 2026"
 author: "Fred J. Hickernell"

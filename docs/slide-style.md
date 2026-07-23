@@ -3,6 +3,8 @@
 - Slides are for presentation, not reading.
 - Preserve mathematical correctness and pedagogical flow.
 - Keep slides visually clean.
+- Use punctuation sparingly; short bullets, labels, headings, and standalone slide
+  statements generally do not need terminal punctuation unless it improves clarity
 - Preserve figures whenever practical.
 - Use progressive disclosure only when it improves understanding.
 
@@ -146,7 +148,41 @@ The `.key-point` block is preferred over Quarto callouts.
 - Prefer vector graphics.
 - Center figures unless there is a pedagogical reason not to.
 
+## Image source overlay
+
+For a sourced image, make the image itself an external link and add the
+`.image-source` class to that link. The shared slide theme adds a small,
+semi-transparent external-link indicator in the image's upper-right corner.
+The indicator becomes more visible on hover or keyboard focus and introduces
+no caption or visible source text.
+
+Put the display width on the link rather than the nested image; the link is the
+overlay's positioning wrapper:
+
+```markdown
+[![](assets/images/example.jpg){fig-alt="Concise image description"}](https://example.com/original){.image-source target="_blank" rel="noopener" style="width: 95%;" title="View image source"}
+```
+
+Use `fig-alt` for descriptive alternative text without a visible caption,
+retain `target="_blank" rel="noopener"` for external sources, and use the same
+pattern consistently for future slide conversions. Do not put the description
+between `![` and `]`, because Quarto treats that text as a visible figure
+caption.
+
 # References
+
+Book and article references must come from the shared metadata databases loaded by
+`../classlib/classlib/quarto/slides/hickernell-slides.yml`:
+
+- `../classlib/classlib/quarto/metadata/hickernell-texts.yml` contains books and
+  other texts under `texts`.
+- `../classlib/classlib/quarto/metadata/hickernell-papers.yml` contains articles
+  and papers under `papers`.
+
+Use Quarto metadata shortcodes instead of repeating citation text or publisher
+URLs in a deck. For example, use `{{< meta texts.owen.short >}}` for Owen, or
+link an article with
+`[{{< meta papers.wsj_monte_carlo_2016.full >}}]({{< meta papers.wsj_monte_carlo_2016.publisher_url >}})`.
 
 - Use bibliography citations.
 - Avoid raw URLs on slides.
