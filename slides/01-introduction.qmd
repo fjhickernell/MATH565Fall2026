@@ -131,7 +131,7 @@ Y&=
   - quantile
   - probability distribution
 
-## Monte Carlo at a glance
+## Quasi-Monte Carlo at a glance
 
 ```{python}
 #| echo: false
@@ -159,6 +159,23 @@ print(
     render_tree(
         "qmc",
         groups=["foundation", "theory", "practice"],
+        show_group_headings=True,
+        asset_base_url="classlib/classlib/quarto/components/trees",
+        width="68%",
+        classes=["monte-carlo-at-a-glance-tree"],
+    )
+)
+```
+
+## Monte Carlo at a glance
+
+```{python}
+#| echo: false
+#| output: asis
+print(
+    render_tree(
+        "mc",
+        groups=["foundation", "methods", "practice"],
         show_group_headings=True,
         asset_base_url="classlib/classlib/quarto/components/trees",
         width="68%",

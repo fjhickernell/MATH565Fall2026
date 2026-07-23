@@ -1,10 +1,16 @@
-/* Deck-specific imports for the tree component review slide. */
+/* Deck-specific imports for the QMC and Monte Carlo overview trees. */
 
 /*-- scss:rules --*/
 
 @import "../classlib/classlib/quarto/components/trees/tree-base";
 @import "../classlib/classlib/quarto/components/trees/qmc/tree";
+@import "../classlib/classlib/quarto/components/trees/mc/tree";
 
 .tree-component.monte-carlo-at-a-glance-tree {
   margin-inline: auto !important;
+}
+
+.tree-component--mc.monte-carlo-at-a-glance-tree {
+  left: 50%;
+  transform: translateX(-50%);
 }
