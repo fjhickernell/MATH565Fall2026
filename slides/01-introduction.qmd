@@ -4,6 +4,13 @@ deck_id: d01
 deck_title: "{{< meta decks.d01.title >}}"
 deck_short_title: "{{< meta decks.d01.short_title >}}"
 
+format:
+  revealjs:
+    theme:
+      - simple
+      - ../classlib/classlib/quarto/slides/hickernell-slides.scss
+      - 01-introduction-tree.scss
+
 include-after-body:
   - text: |
       <script id="deck-nav-meta" type="application/json">
@@ -123,6 +130,42 @@ Y&=
   - variance
   - quantile
   - probability distribution
+
+## Monte Carlo at a glance
+
+```{python}
+#| echo: false
+#| output: asis
+from pathlib import Path
+import sys
+
+for repository_root in (Path.cwd(), *Path.cwd().parents):
+    tree_components = (
+        repository_root
+        / "classlib"
+        / "classlib"
+        / "quarto"
+        / "components"
+    )
+    if (tree_components / "trees" / "__init__.py").is_file():
+        sys.path.insert(0, str(tree_components.resolve()))
+        break
+else:
+    raise FileNotFoundError("Cannot find the classlib tree components")
+
+from trees import render_tree
+
+print(
+    render_tree(
+        "qmc",
+        groups=["foundation", "theory", "practice"],
+        show_group_headings=True,
+        asset_base_url="classlib/classlib/quarto/components/trees",
+        width="68%",
+        classes=["monte-carlo-at-a-glance-tree"],
+    )
+)
+```
 
 ## Are we there yet?
 
