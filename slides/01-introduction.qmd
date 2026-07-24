@@ -4,21 +4,14 @@ deck_id: d01
 deck_title: "{{< meta decks.d01.title >}}"
 deck_short_title: "{{< meta decks.d01.short_title >}}"
 
-format:
-  revealjs:
-    theme:
-      - simple
-      - ../classlib/classlib/quarto/slides/hickernell-slides.scss
-      - 01-introduction-tree.scss
-
 include-after-body:
   - text: |
       <script id="deck-nav-meta" type="application/json">
       {
         "deck_prev_file": "",
         "deck_prev_title": "",
-        "deck_next_file": "",
-        "deck_next_title": ""
+        "deck_next_file": "{{< meta decks.d02.file >}}",
+        "deck_next_title": "{{< meta decks.d02.title >}}"
       }
       </script>
 
@@ -27,17 +20,53 @@ subtitle: |
   <span class="deck-meta">{{< meta texts.owen.short >}}, Chapters 1 and 2</span>
 ---
 
-# Course map
+```{python}
+#| include: false
 
-1. [Introduction]{.alert}
-2. Generating samples
-3. Markov chain Monte Carlo
-4. Improving efficiency
-5. Selected topics
+from tree_markers import render_tree_marker
+from trees import render_tree
+```
+
+# Course Map
+
+- [{{< meta decks.d01.title >}}]({{< meta decks.d01.file >}}){.alert}
+- [{{< meta decks.d02.title >}}]({{< meta decks.d02.file >}})
+- [{{< meta decks.d03.title >}}]({{< meta decks.d03.file >}})
+- [{{< meta decks.d04.title >}}]({{< meta decks.d04.file >}})
+- [{{< meta decks.d05.title >}}]({{< meta decks.d05.file >}})
 
 ::: {.key-point}
 Course details, schedule updates, assignments, and supporting materials are on
 the [course website]({{< meta course_website >}}).
+:::
+
+# What is Monte Carlo?
+
+::: {.columns}
+::: {.column width="36%"}
+- Monte Carlo helps with uncertainty
+- Why is there uncertainty?
+- How is uncertainty expressed quantitatively?
+- Are we there yet?
+- Why participate synchronously?
+:::
+
+::: {.column width="64%"}
+```{python}
+#| echo: false
+#| output: asis
+print(
+    render_tree(
+        "mc",
+        groups=["foundation", "methods", "practice"],
+        show_group_headings=True,
+        asset_base_url="classlib/classlib/quarto/components/trees",
+        width="100%",
+        classes=["monte-carlo-at-a-glance-tree"],
+    )
+)
+```
+:::
 :::
 
 ## Monte Carlo helps with uncertainty
@@ -91,7 +120,6 @@ the [course website]({{< meta course_website >}}).
 :::
 
 
-
 ## Why is there uncertainty?
 
 [{{< meta papers.wsj_monte_carlo_2016.full >}}]({{< meta papers.wsj_monte_carlo_2016.publisher_url >}})
@@ -131,60 +159,6 @@ Y&=
   - quantile
   - probability distribution
 
-## Quasi-Monte Carlo at a glance
-
-```{python}
-#| echo: false
-#| output: asis
-from pathlib import Path
-import sys
-
-for repository_root in (Path.cwd(), *Path.cwd().parents):
-    tree_components = (
-        repository_root
-        / "classlib"
-        / "classlib"
-        / "quarto"
-        / "components"
-    )
-    if (tree_components / "trees" / "__init__.py").is_file():
-        sys.path.insert(0, str(tree_components.resolve()))
-        break
-else:
-    raise FileNotFoundError("Cannot find the classlib tree components")
-
-from trees import render_tree
-from tree_markers import render_tree_marker
-
-print(
-    render_tree(
-        "qmc",
-        groups=["foundation", "theory", "practice"],
-        show_group_headings=True,
-        asset_base_url="classlib/classlib/quarto/components/trees",
-        width="68%",
-        classes=["monte-carlo-at-a-glance-tree"],
-    )
-)
-```
-
-## Monte Carlo at a glance
-
-```{python}
-#| echo: false
-#| output: asis
-print(
-    render_tree(
-        "mc",
-        groups=["foundation", "methods", "practice"],
-        show_group_headings=True,
-        asset_base_url="classlib/classlib/quarto/components/trees",
-        width="68%",
-        classes=["monte-carlo-at-a-glance-tree"],
-    )
-)
-```
-
 ## Are we there yet?
 
 You are visiting a friend. The trip requires
@@ -213,14 +187,20 @@ The companion `AreWeThereYet` notebook is being migrated for Fall 2026.
 :::
 
 # Probability review {.tree-marker-slide}
+
+- Random variables and distributions
+- Discrete and continuous distributions
+- Moments
+- Binomial distribution
+- Exponential distribution
+- Multivariate normal distribution
+
 ```{python}
 #| echo: false
 #| output: asis
 
 print(render_tree_marker("probability"))
 ```
-
-- Random variables and distributions
 
 ## Random variables and distributions {.tree-marker-slide}
 
@@ -381,6 +361,13 @@ $$
 
 # From samples to estimates
 
+- Sampling
+- Under random sampling
+- Central Limit Theorem
+- Monte Carlo estimates of properties of $Y$
+- Computational counterparts
+- Are we there yet? Revisited
+
 ## Sampling
 
 Let $Y$ be a random variable, often $Y=f(\vX)$, and let
@@ -479,6 +466,10 @@ only a mean question.
 The companion `AreWeThereYet` notebook is being migrated for Fall 2026.
 
 # Conditioning
+
+- Conditional probability
+- Laws of total expectation and variance
+- Conditional Monte Carlo
 
 ## Conditional probability
 

@@ -18,12 +18,39 @@
 - Use `<h3>` (or our `.h3` helper class if appropriate) when heading-like
   styling is needed without adding another Markdown heading level.
 
+## Deck and section navigation
+
+Each deck follows this opening sequence:
+
+1. The generated title slide identifies the course and deck.
+2. The `# Course Map` slide lists and links every deck in course order, with
+   the current deck marked using `.alert`.
+3. The deck's instructional sections follow.
+
+Every instructional `#` section slide must contain a bullet list of all `##`
+slide headings that belong to that section, in their presentation order. The
+list is a navigational outline for students. It may share the section slide
+with introductory text, a figure, a tree, or other useful content. Update the
+outline whenever a subordinate slide is added, removed, renamed, or reordered.
+A `#` section with no subordinate `##` slides does not need an empty list.
+
+Register every deck in `slides/_metadata.yml` with its file, full title, and
+short footer title. Each deck supplies `deck-nav-meta` in its YAML front matter
+using the adjacent metadata entries. The first deck has no previous target,
+the last deck has no next target, and intermediate decks provide both. The
+shared theme turns this metadata into the `«` and `»` links at the bottom of
+the rendered slides.
+
 # Shared slide theme
 
 The shared
 [`hickernell-slides.scss`](../classlib/classlib/quarto/slides/hickernell-slides.scss)
 theme is the authoritative source for repository-wide slide styling. Use its
 existing features before adding deck-specific CSS.
+
+Course-wide additions belong in `slides/math565-slides.scss`, which is loaded
+for every deck through `slides/_metadata.yml`. Use a deck-specific stylesheet
+only for a genuine exception that should not affect other MATH 565 decks.
 
 The theme provides these important conventions and author-facing features:
 
@@ -182,9 +209,9 @@ Small, course-specific tree variants are named in
 and CSS classes, belong under `defaults`; each entry under `markers` selects
 the groups, labels, headings, or mask needed for one teaching context.
 
-Add `tree-markers.scss` to the RevealJS theme list for each deck that uses
-markers. A deck-specific stylesheet may import it when that deck also needs
-other tree styling, as `01-introduction-tree.scss` does.
+The course-wide `slides/math565-slides.scss` imports `tree-markers.scss`, so
+all MATH 565 decks can use the tree and its named marker variants without
+repeating theme configuration in each deck.
 
 Import the course helper once in a deck:
 

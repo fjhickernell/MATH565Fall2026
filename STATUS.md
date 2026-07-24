@@ -159,6 +159,11 @@ appropriate phase rather than appended indiscriminately.
 - [x] Create an independent RevealJS Quarto project under `slides/`.
 - [x] Add slide-project configuration and metadata.
 - [x] Add the initial numbered slide source and metadata entry.
+- [x] Register the five Fall 2026 decks using the Fall 2025 lecture titles.
+- [x] Add placeholder Quarto sources for decks awaiting conversion.
+- [x] Connect previous/next deck navigation across all five decks.
+- [x] Establish the Course Map and per-section outline conventions.
+- [x] Load course-wide slide styling consistently across every deck.
 - [x] Validate shared slide styling, metadata, navigation, and assets from
   `classlib`.
 - [x] Confirm that rendered slides are linked correctly from the website.

@@ -19,10 +19,34 @@ decks:
     title: Introduction
     short_title: Introduction
 
+  d02:
+    file: 02-generating-samples.html
+    title: Generating Samples
+    short_title: Generating Samples
+
+  d03:
+    file: 03-markov-chain-monte-carlo.html
+    title: Markov Chain Monte Carlo
+    short_title: MCMC
+
+  d04:
+    file: 04-improving-efficiency.html
+    title: Improving Efficiency
+    short_title: Improving Efficiency
+
+  d05:
+    file: 05-selected-topics.html
+    title: Selected Topics
+    short_title: Selected Topics
+
 format:
   revealjs:
     navigation-mode: grid
     controls: true
+    theme:
+      - simple
+      - ../classlib/classlib/quarto/slides/hickernell-slides.scss
+      - math565-slides.scss
     html-math-method:
       method: mathjax
       url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js

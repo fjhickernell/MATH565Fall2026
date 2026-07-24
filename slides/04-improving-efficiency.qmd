@@ -1,0 +1,36 @@
+---
+title: "{{< meta course_title >}}"
+deck_id: d04
+deck_title: "{{< meta decks.d04.title >}}"
+deck_short_title: "{{< meta decks.d04.short_title >}}"
+
+include-after-body:
+  - text: |
+      <script id="deck-nav-meta" type="application/json">
+      {
+        "deck_prev_file": "{{< meta decks.d03.file >}}",
+        "deck_prev_title": "{{< meta decks.d03.title >}}",
+        "deck_next_file": "{{< meta decks.d05.file >}}",
+        "deck_next_title": "{{< meta decks.d05.title >}}"
+      }
+      </script>
+
+subtitle: <span class="deck-title">{{< meta deck_title >}}</span>
+---
+
+# Course Map
+
+- [{{< meta decks.d01.title >}}]({{< meta decks.d01.file >}})
+- [{{< meta decks.d02.title >}}]({{< meta decks.d02.file >}})
+- [{{< meta decks.d03.title >}}]({{< meta decks.d03.file >}})
+- [{{< meta decks.d04.title >}}]({{< meta decks.d04.file >}}){.alert}
+- [{{< meta decks.d05.title >}}]({{< meta decks.d05.file >}})
+
+# Improving Efficiency
+
+- Content migration
+
+## Content migration
+
+This deck is a placeholder for the Fall 2026 Quarto conversion of the
+Improving Efficiency lecture.

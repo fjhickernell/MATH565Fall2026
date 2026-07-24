@@ -11,6 +11,10 @@ docs/*
 .Renviron
 .quarto-watch-logs/
 
+# Python bytecode caches
+__pycache__/
+*.py[cod]
+
 # local symlink for slide preview
 slides/classlib
 
