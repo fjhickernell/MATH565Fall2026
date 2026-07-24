@@ -142,6 +142,33 @@ The `.key-point` block is preferred over Quarto callouts.
 - Avoid overcrowded slides.
 - Preserve mathematical accuracy during conversion.
 
+## Shared LaTeX macros
+
+Treat
+[`hickernell-latex-macros.js`](../classlib/classlib/quarto/slides/hickernell-latex-macros.js)
+as the authoritative notation registry for RevealJS slides. The macros provide
+consistency as well as convenience: changing a shared definition should
+update every slide that uses the corresponding semantic command.
+
+- Check the shared macro file before writing out notation directly.
+- Use an existing macro whenever its mathematical meaning matches the
+  intended notation.
+- Do not reproduce a macro's current expansion in slide source. For example,
+  write `\Exp`, `\Norm`, `\Prob`, `\Ex`, `\var`, `\cov`, `\reals`, `\vx`, and
+  `\dif` rather than spelling out their present typographic definitions.
+- Prefer semantic distribution macros such as `\Bern`, `\Bin`, `\Unif`,
+  `\Norm`, `\Exp`, `\Gam`, and `\Pois`. For example, write
+  `$Y\sim\Exp(\lambda)$`, not `$Y\sim\operatorname{Exp}(\lambda)$`.
+- When notation recurs across slides or decks, has a course-wide meaning, or
+  may reasonably change later, propose a new shared macro instead of creating
+  repeated local notation.
+- Do not add a shared macro solely to shorten a one-off expression.
+
+New macros should have a clear semantic name, follow the conventions already
+used in the registry, and avoid silently changing an established command's
+meaning. When a macro must also work in TeX or PDF output, keep the companion
+`hickernell-latex-macros.tex` definition consistent.
+
 # Figures
 
 - Preserve existing figures whenever possible.
