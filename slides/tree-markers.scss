@@ -1,0 +1,22 @@
+/* Focused tree-component imports and positioning for course tree markers. */
+
+/*-- scss:rules --*/
+
+@import "../classlib/classlib/quarto/components/trees/tree-base";
+@import "../classlib/classlib/quarto/components/trees/qmc/tree";
+@import "../classlib/classlib/quarto/components/trees/mc/tree";
+
+.reveal .slides section.tree-marker-slide {
+  position: relative;
+}
+
+.reveal .slides section.tree-marker-slide .tree-component.course-tree-marker {
+  position: absolute;
+  top: -0.3em;
+  right: 0.1em;
+  z-index: 1;
+}
+
+.reveal .slides section.tree-marker-slide > p {
+  max-width: 75%;
+}

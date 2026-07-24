@@ -154,6 +154,7 @@ else:
     raise FileNotFoundError("Cannot find the classlib tree components")
 
 from trees import render_tree
+from tree_markers import render_tree_marker
 
 print(
     render_tree(
@@ -211,9 +212,24 @@ The companion `AreWeThereYet` notebook is being migrated for Fall 2026.
 - Build a learning community and get to know one another.
 :::
 
-# Probability review
+# Probability review {.tree-marker-slide}
+```{python}
+#| echo: false
+#| output: asis
 
-## Random variables and distributions
+print(render_tree_marker("probability"))
+```
+
+- Random variables and distributions
+
+## Random variables and distributions {.tree-marker-slide}
+
+```{python}
+#| echo: false
+#| output: asis
+
+print(render_tree_marker("probability"))
+```
 
 Let $Y$ be a random variable with sample space $\mathcal{Y}  \subseteq\mathbb{R}$.
 

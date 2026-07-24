@@ -148,6 +148,41 @@ The `.key-point` block is preferred over Quarto callouts.
 - Prefer vector graphics.
 - Center figures unless there is a pedagogical reason not to.
 
+## Course tree markers
+
+Small, course-specific tree variants are named in
+`slides/tree-markers.yml`. Shared marker defaults, such as width, font scale,
+and CSS classes, belong under `defaults`; each entry under `markers` selects
+the groups, labels, headings, or mask needed for one teaching context.
+
+Add `tree-markers.scss` to the RevealJS theme list for each deck that uses
+markers. A deck-specific stylesheet may import it when that deck also needs
+other tree styling, as `01-introduction-tree.scss` does.
+
+Import the course helper once in a deck:
+
+```python
+from tree_markers import render_tree_marker
+```
+
+Give each slide containing a marker the `.tree-marker-slide` class and render
+the saved variant with an `asis` cell:
+
+````markdown
+## Random variables and distributions {.tree-marker-slide}
+
+```{python}
+#| echo: false
+#| output: asis
+
+print(render_tree_marker("probability"))
+```
+````
+
+Add and tune named presets as the course develops instead of copying full
+`render_tree(...)` calls. Keep the full overview trees as direct renderer
+calls when they require a unique composition.
+
 ## Image source overlay
 
 For a sourced image, make the image itself an external link and add the
