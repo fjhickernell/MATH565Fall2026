@@ -12,7 +12,7 @@ the root of the `gh-pages` branch by GitHub Actions.
 - `classlib/` — shared styling, metadata, snippets, and notebooks (submodule)
 - `qmcsoftware/` — QMCPy source and course dependencies (submodule)
 
-Do not edit shared styling locally; make those changes in HickernellClassLib.
+Do not edit shared styling locally; make those changes in HickernellAcademicLib.
 
 ## Fresh clone
 

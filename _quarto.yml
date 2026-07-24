@@ -22,7 +22,7 @@ metadata-files:
   - classlib/classlib/quarto/metadata/hickernell-texts.yml
 
 # Navigation must live here (cannot be delegated via metadata-files).
-# Styling/layout lives in HickernellClassLib (hickernell-website.yml).
+# Styling/layout lives in HickernellAcademicLib (hickernell-website.yml).
 website:
   title: "MATH 565 — Fall 2026"
   navbar:
