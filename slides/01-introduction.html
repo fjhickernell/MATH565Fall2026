@@ -593,19 +593,127 @@ Fred J. Hickernell
 
   <p class="date">July 24, 2026</p>
 </section>
-<section>
 <section id="course-map" class="title-slide slide level1 center">
-<h1>Course map</h1>
-<ol type="1">
-<li><span class="alert">Introduction</span></li>
-<li>Generating samples</li>
-<li>Markov chain Monte Carlo</li>
-<li>Improving efficiency</li>
-<li>Selected topics</li>
-</ol>
+<h1>Course Map</h1>
+<ul>
+<li><a href="01-introduction.html" class="alert">Introduction</a></li>
+<li><a href="02-generating-samples.html">Generating Samples</a></li>
+<li><a href="03-markov-chain-monte-carlo.html">Markov Chain Monte Carlo</a></li>
+<li><a href="04-improving-efficiency.html">Improving Efficiency</a></li>
+<li><a href="05-selected-topics.html">Selected Topics</a></li>
+</ul>
 <div class="key-point">
 <p>Course details, schedule updates, assignments, and supporting materials are on the <a href="https://fjhickernell.github.io/MATH565Fall2026/">course website</a>.</p>
 </div>
+</section>
+
+<section>
+<section id="what-is-monte-carlo" class="title-slide slide level1 center">
+<h1>What is Monte Carlo?</h1>
+<div class="columns">
+<div class="column" style="width:36%;">
+<ul>
+<li>Monte Carlo helps with uncertainty</li>
+<li>Why is there uncertainty?</li>
+<li>How is uncertainty expressed quantitatively?</li>
+<li>Are we there yet?</li>
+<li>Why participate synchronously?</li>
+</ul>
+</div><div class="column" style="width:64%;">
+<div class="tree-component tree-component--mc monte-carlo-at-a-glance-tree" data-tree-id="mc" style="--tree-width: 100%; --tree-font-scale: 1; --tree-aspect-ratio: 4 / 3;">
+<img class="tree-component__image" src="classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+<div class="tree-component__group-heading" data-group-id="foundation" style="--tree-left: 42%; --tree-top: 79%; --tree-align: left;">
+Foundation
+</div>
+<div class="tree-component__group-heading" data-group-id="methods" style="--tree-left: 35%; --tree-top: 52%; --tree-align: left;">
+Methods
+</div>
+<div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 38%; --tree-top: 18%; --tree-align: left;">
+Practice
+</div>
+<div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">
+Probability
+</div>
+<div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">
+Statistics
+</div>
+<div class="tree-component__label" data-label-id="analysis" style="--tree-left: 26%; --tree-top: 81%; --tree-align: left;">
+Analysis
+</div>
+<div class="tree-component__label" data-label-id="linear-algebra" style="--tree-left: 39%; --tree-top: 89%; --tree-align: center;">
+Linear<br>Algebra
+</div>
+<div class="tree-component__label" data-label-id="cs" style="--tree-left: 61%; --tree-top: 88%; --tree-align: center;">
+Computer<br>Science
+</div>
+<div class="tree-component__label" data-label-id="domain" style="--tree-left: 78%; --tree-top: 79%; --tree-align: center;">
+Domain<br>Knowledge
+</div>
+<div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">
+(Quasi-)Random<br>Number Generation
+</div>
+<div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">
+Low Discrepancy<br>Sequences
+</div>
+<div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">
+Estimation
+</div>
+<div class="tree-component__label" data-label-id="pseudorandom-numbers" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">
+Pseudorandom<br>Numbers
+</div>
+<div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 61%; --tree-top: 70%; --tree-align: center;">
+Error<br>Assessment
+</div>
+<div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">
+Discrepancy<br>Measures
+</div>
+<div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">
+Variance<br>Reduction
+</div>
+<div class="tree-component__label" data-label-id="importance-sampling" style="--tree-left: 31%; --tree-top: 35%; --tree-align: center;">
+Importance<br>Sampling
+</div>
+<div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">
+Markov Chain<br>Monte Carlo
+</div>
+<div class="tree-component__label" data-label-id="multilevel" style="--tree-left: 61%; --tree-top: 52%; --tree-align: center;">
+Multilevel<br>Monte Carlo
+</div>
+<div class="tree-component__label" data-label-id="stochastic-optimization" style="--tree-left: 77%; --tree-top: 46%; --tree-align: center;">
+Stochastic<br>Optimization
+</div>
+<div class="tree-component__label" data-label-id="uq" style="--tree-left: 12%; --tree-top: 19%; --tree-align: center;">
+Uncertainty<br>Quantification
+</div>
+<div class="tree-component__label" data-label-id="qf" style="--tree-left: 5%; --tree-top: 33%; --tree-align: center;">
+Quantitative<br>Finance
+</div>
+<div class="tree-component__label" data-label-id="density-estimation" style="--tree-left: 7%; --tree-top: 7%; --tree-align: center;">
+Density<br>Estimation
+</div>
+<div class="tree-component__label" data-label-id="statistical-inference" style="--tree-left: 3%; --tree-top: 45%; --tree-align: center;">
+Statistical<br>Inference
+</div>
+<div class="tree-component__label" data-label-id="bayesian-computation" style="--tree-left: 51%; --tree-top: 6%; --tree-align: center;">
+Bayesian<br>Computation
+</div>
+<div class="tree-component__label" data-label-id="data-driven" style="--tree-left: 76%; --tree-top: 20%; --tree-align: center;">
+Data-Driven<br>Error Bounds
+</div>
+<div class="tree-component__label" data-label-id="software" style="--tree-left: 58%; --tree-top: 25%; --tree-align: center;">
+Software
+</div>
+<div class="tree-component__label" data-label-id="hpc" style="--tree-left: 69%; --tree-top: 33%; --tree-align: center;">
+High-Performance<br>Computing
+</div>
+<div class="tree-component__label" data-label-id="ai" style="--tree-left: 72%; --tree-top: 11%; --tree-align: center;">
+AI Assistance
+</div>
+<div class="tree-component__label" data-label-id="community" style="--tree-left: 26%; --tree-top: 3%; --tree-align: center;">
+Collaboration<br>&amp; Community
+</div>
+</div>
+</div></div>
 </section>
 <section id="monte-carlo-helps-with-uncertainty" class="slide level2">
 <h2>Monte Carlo helps with uncertainty</h2>
@@ -675,186 +783,6 @@ Y&amp;=
 </ul></li>
 </ul>
 </section>
-<section id="quasi-monte-carlo-at-a-glance" class="slide level2">
-<h2>Quasi-Monte Carlo at a glance</h2>
-<div class="tree-component tree-component--qmc monte-carlo-at-a-glance-tree" data-tree-id="qmc" style="--tree-width: 68%; --tree-font-scale: 1; --tree-aspect-ratio: 4 / 3;">
-<img class="tree-component__image" src="classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Quasi-Monte Carlo foundations, theory, and practice">
-<div class="tree-component__group-heading" data-group-id="foundation" style="--tree-left: 44%; --tree-top: 79%; --tree-align: left;">
-Foundation
-</div>
-<div class="tree-component__group-heading" data-group-id="theory" style="--tree-left: 38%; --tree-top: 52%; --tree-align: left;">
-Theory
-</div>
-<div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 30%; --tree-top: 19%; --tree-align: left;">
-Practice
-</div>
-<div class="tree-component__label" data-label-id="algebra" style="--tree-left: 8%; --tree-top: 79%; --tree-align: left;">
-Algebra
-</div>
-<div class="tree-component__label" data-label-id="analysis" style="--tree-left: 22%; --tree-top: 87%; --tree-align: left;">
-Analysis
-</div>
-<div class="tree-component__label" data-label-id="cs" style="--tree-left: 42%; --tree-top: 90%; --tree-align: center;">
-Computer<br>Science
-</div>
-<div class="tree-component__label" data-label-id="domain" style="--tree-left: 65%; --tree-top: 89%; --tree-align: center;">
-Domain<br>Knowledge
-</div>
-<div class="tree-component__label" data-label-id="statistics" style="--tree-left: 78%; --tree-top: 79%; --tree-align: left;">
-Statistics
-</div>
-<div class="tree-component__label" data-label-id="sequence" style="--tree-left: 25%; --tree-top: 70%; --tree-align: center;">
-Sequence<br>Construction
-</div>
-<div class="tree-component__label" data-label-id="error" style="--tree-left: 43%; --tree-top: 60%; --tree-align: center;">
-Error<br>Bounds
-</div>
-<div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 25%; --tree-top: 62%; --tree-align: left;">
-Discrepancy
-</div>
-<div class="tree-component__label" data-label-id="change-measure" style="--tree-left: 23%; --tree-top: 38%; --tree-align: center;">
-Variation<br>Reduction
-</div>
-<div class="tree-component__label" data-label-id="ibc" style="--tree-left: 45%; --tree-top: 70%; --tree-align: center;">
-Information-Based<br>Complexity
-</div>
-<div class="tree-component__label" data-label-id="multi" style="--tree-left: 45%; --tree-top: 36%; --tree-align: left;">
-Multilevel
-</div>
-<div class="tree-component__label" data-label-id="dimension" style="--tree-left: 39%; --tree-top: 42%; --tree-align: center;">
-Effective<br>Dimension
-</div>
-<div class="tree-component__label" data-label-id="random" style="--tree-left: 56%; --tree-top: 45%; --tree-align: center;">
-Randomization
-</div>
-<div class="tree-component__label" data-label-id="prob" style="--tree-left: 55%; --tree-top: 60%; --tree-align: center;">
-Probabilistic<br>Numerics
-</div>
-<div class="tree-component__label" data-label-id="uq" style="--tree-left: 8%; --tree-top: 20%; --tree-align: center;">
-Uncertainty<br>Quantification
-</div>
-<div class="tree-component__label" data-label-id="qf" style="--tree-left: 5%; --tree-top: 33%; --tree-align: center;">
-Quantitative<br>Finance
-</div>
-<div class="tree-component__label" data-label-id="software" style="--tree-left: 55%; --tree-top: 25%; --tree-align: center;">
-Software
-</div>
-<div class="tree-component__label" data-label-id="community" style="--tree-left: 31%; --tree-top: 9%; --tree-align: center;">
-Collaboration<br>&amp; Community
-</div>
-<div class="tree-component__label" data-label-id="cg" style="--tree-left: 12%; --tree-top: 6%; --tree-align: center;">
-Computer<br>Graphics
-</div>
-<div class="tree-component__label" data-label-id="data-driven" style="--tree-left: 75%; --tree-top: 20%; --tree-align: center;">
-Data-Driven<br>Error Bounds
-</div>
-<div class="tree-component__label" data-label-id="hpc" style="--tree-left: 70%; --tree-top: 35%; --tree-align: center;">
-High-Performance<br>Computing
-</div>
-<div class="tree-component__label" data-label-id="ai" style="--tree-left: 69%; --tree-top: 7%; --tree-align: center;">
-AI Assistance
-</div>
-<div class="tree-component__label" data-label-id="missing" style="--tree-left: 53%; --tree-top: 7%; --tree-align: center;">
-Missing<br>Data
-</div>
-<div class="tree-component__label" data-label-id="infer" style="--tree-left: 3%; --tree-top: 45%; --tree-align: center;">
-Statistical<br>Inference
-</div>
-</div>
-</section>
-<section id="monte-carlo-at-a-glance" class="slide level2">
-<h2>Monte Carlo at a glance</h2>
-<div class="tree-component tree-component--mc monte-carlo-at-a-glance-tree" data-tree-id="mc" style="--tree-width: 68%; --tree-font-scale: 1; --tree-aspect-ratio: 4 / 3;">
-<img class="tree-component__image" src="classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-<div class="tree-component__group-heading" data-group-id="foundation" style="--tree-left: 42%; --tree-top: 79%; --tree-align: left;">
-Foundation
-</div>
-<div class="tree-component__group-heading" data-group-id="methods" style="--tree-left: 35%; --tree-top: 55%; --tree-align: left;">
-Methods
-</div>
-<div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 38%; --tree-top: 18%; --tree-align: left;">
-Practice
-</div>
-<div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">
-Probability
-</div>
-<div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">
-Statistics
-</div>
-<div class="tree-component__label" data-label-id="analysis" style="--tree-left: 26%; --tree-top: 81%; --tree-align: left;">
-Analysis
-</div>
-<div class="tree-component__label" data-label-id="linear-algebra" style="--tree-left: 46%; --tree-top: 89%; --tree-align: center;">
-Linear<br>Algebra
-</div>
-<div class="tree-component__label" data-label-id="cs" style="--tree-left: 61%; --tree-top: 88%; --tree-align: center;">
-Computer<br>Science
-</div>
-<div class="tree-component__label" data-label-id="domain" style="--tree-left: 78%; --tree-top: 79%; --tree-align: center;">
-Domain<br>Knowledge
-</div>
-<div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">
-(Quasi-)Random<br>Number Generation
-</div>
-<div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">
-Low Discrepancy<br>Sequences
-</div>
-<div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 66%; --tree-align: center;">
-Estimation
-</div>
-<div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 61%; --tree-top: 70%; --tree-align: center;">
-Error<br>Assessment
-</div>
-<div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">
-Discrepancy<br>Measures
-</div>
-<div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">
-Variance<br>Reduction
-</div>
-<div class="tree-component__label" data-label-id="importance-sampling" style="--tree-left: 31%; --tree-top: 35%; --tree-align: center;">
-Importance<br>Sampling
-</div>
-<div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">
-Markov Chain<br>Monte Carlo
-</div>
-<div class="tree-component__label" data-label-id="multilevel" style="--tree-left: 61%; --tree-top: 52%; --tree-align: center;">
-Multilevel<br>Monte Carlo
-</div>
-<div class="tree-component__label" data-label-id="stochastic-optimization" style="--tree-left: 77%; --tree-top: 46%; --tree-align: center;">
-Stochastic<br>Optimization
-</div>
-<div class="tree-component__label" data-label-id="uq" style="--tree-left: 12%; --tree-top: 19%; --tree-align: center;">
-Uncertainty<br>Quantification
-</div>
-<div class="tree-component__label" data-label-id="qf" style="--tree-left: 5%; --tree-top: 33%; --tree-align: center;">
-Quantitative<br>Finance
-</div>
-<div class="tree-component__label" data-label-id="density-estimation" style="--tree-left: 7%; --tree-top: 7%; --tree-align: center;">
-Density<br>Estimation
-</div>
-<div class="tree-component__label" data-label-id="statistical-inference" style="--tree-left: 3%; --tree-top: 45%; --tree-align: center;">
-Statistical<br>Inference
-</div>
-<div class="tree-component__label" data-label-id="bayesian-computation" style="--tree-left: 51%; --tree-top: 6%; --tree-align: center;">
-Bayesian<br>Computation
-</div>
-<div class="tree-component__label" data-label-id="data-driven" style="--tree-left: 76%; --tree-top: 20%; --tree-align: center;">
-Data-Driven<br>Error Bounds
-</div>
-<div class="tree-component__label" data-label-id="software" style="--tree-left: 58%; --tree-top: 25%; --tree-align: center;">
-Software
-</div>
-<div class="tree-component__label" data-label-id="hpc" style="--tree-left: 69%; --tree-top: 33%; --tree-align: center;">
-High-Performance<br>Computing
-</div>
-<div class="tree-component__label" data-label-id="ai" style="--tree-left: 72%; --tree-top: 11%; --tree-align: center;">
-AI Assistance
-</div>
-<div class="tree-component__label" data-label-id="community" style="--tree-left: 26%; --tree-top: 3%; --tree-align: center;">
-Collaboration<br>&amp; Community
-</div>
-</div>
-</section>
 <section id="are-we-there-yet" class="slide level2">
 <h2>Are we there yet?</h2>
 <p>You are visiting a friend. The trip requires</p>
@@ -884,15 +812,20 @@ Collaboration<br>&amp; Community
 <section>
 <section id="probability-review" class="title-slide slide level1 tree-marker-slide center">
 <h1>Probability review</h1>
+<ul>
+<li>Random variables and distributions</li>
+<li>Discrete and continuous distributions</li>
+<li>Moments</li>
+<li>Binomial distribution</li>
+<li>Exponential distribution</li>
+<li>Multivariate normal distribution</li>
+</ul>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
 <img class="tree-component__image" src="classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
 <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">
 Probability
 </div>
 </div>
-<ul>
-<li>Random variables and distributions</li>
-</ul>
 </section>
 <section id="random-variables-and-distributions" class="slide level2 tree-marker-slide">
 <h2>Random variables and distributions</h2>
@@ -1021,7 +954,14 @@ Q(p)=-\frac{\log(1-p)}{\lambda},
 <section>
 <section id="from-samples-to-estimates" class="title-slide slide level1 center">
 <h1>From samples to estimates</h1>
-
+<ul>
+<li>Sampling</li>
+<li>Under random sampling</li>
+<li>Central Limit Theorem</li>
+<li>Monte Carlo estimates of properties of <span class="math inline">\(Y\)</span></li>
+<li>Computational counterparts</li>
+<li>Are we there yet? Revisited</li>
+</ul>
 </section>
 <section id="sampling" class="slide level2">
 <h2>Sampling</h2>
@@ -1164,7 +1104,11 @@ Q(p)=-\frac{\log(1-p)}{\lambda},
 <section>
 <section id="conditioning" class="title-slide slide level1 center">
 <h1>Conditioning</h1>
-
+<ul>
+<li>Conditional probability</li>
+<li>Laws of total expectation and variance</li>
+<li>Conditional Monte Carlo</li>
+</ul>
 </section>
 <section id="conditional-probability" class="slide level2">
 <h2>Conditional probability</h2>
@@ -1785,8 +1729,8 @@ g(Z):=\Ex(Y\mid Z)
     {
       "deck_prev_file": "",
       "deck_prev_title": "",
-      "deck_next_file": "",
-      "deck_next_title": ""
+      "deck_next_file": "02-generating-samples.html",
+      "deck_next_title": "Generating Samples"
     }
     </script>
     
