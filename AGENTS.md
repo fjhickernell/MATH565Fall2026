@@ -89,6 +89,9 @@ current task's intended changes.
    modified writable repositories, such as `classlib`, are clean and
    synchronized with their upstream branches. Confirm that pinned read-only
    submodules remain unchanged.
+8. End the completion response by prompting the user to run Codex's `/status`
+   command to view current Codex usage. Do not substitute a Git or project
+   status report for the Codex usage report.
 
 Never include changes from `qmcsoftware`, `assets/tests/archive`, or either
 reference repository in this completion workflow.
