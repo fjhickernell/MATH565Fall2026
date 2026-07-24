@@ -6,8 +6,8 @@
 <script src="01-introduction_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="01-introduction_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="01-introduction_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="01-introduction_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="01-introduction_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
   <meta name="dcterms.date" content="2026-07-24">
@@ -21,10 +21,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -583,7 +586,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Fred J. Hickernell 
+Fred J. Hickernell
 </div>
 </div>
 </div>
@@ -658,8 +661,8 @@ Y&amp;=
 \text{neural-network parameter} \\
 \text{service time}
 \end{cases} \\
-&amp; = f(\boldsymbol X), \text{ where} \\
-\boldsymbol X &amp; = \text{multivariate random variable that is }\alerttext{easy to sample}
+&amp; = f(\vX), \text{ where} \\
+\vX &amp; = \text{multivariate random variable that is }\alerttext{easy to sample}
 \end{align*}\]</span></p>
 <ul>
 <li>Generate <span class="alert">sample</span> versions <span class="math inline">\(Y_1,\ldots,Y_n\)</span></li>
@@ -899,14 +902,14 @@ Probability
 Probability
 </div>
 </div>
-<p>Let <span class="math inline">\(Y\)</span> be a random variable with sample space <span class="math inline">\(\mathcal{Y}  \subseteq\mathbb{R}\)</span>.</p>
+<p>Let <span class="math inline">\(Y\)</span> be a random variable with sample space <span class="math inline">\(\mathcal{Y} \subseteq \reals\)</span>.</p>
 <p><span class="math display">\[
 \begin{aligned}
-\mathbb{P}(Y\in\Omega)
+\Prob(Y\in\Omega)
   &amp;:= \text{probability of the event }\Omega,\\
-F(y)&amp;:=\mathbb{P}(Y\le y), &amp;&amp; y\in\mathcal{Y},\\
+F(y)&amp;:=\Prob(Y\le y), &amp;&amp; y\in\mathcal{Y},\\
 Q(p)&amp;:=\inf\{y\in\mathcal{Y}:F(y)\ge p\}, &amp;&amp; 0&lt;p&lt;1,\\
-\mathbb{E}[g(Y)]&amp;:=\int_{\mathcal{Y}}g(y)\,\mathrm{d}F(y).
+\Ex[g(Y)]&amp;:=\int_{\mathcal{Y}}g(y)\,\dif F(y).
 \end{aligned}
 \]</span></p>
 <p><span class="math inline">\(F\)</span> is the <span class="alert">cumulative distribution function</span>; <span class="math inline">\(Q\)</span> is the <span class="alert">quantile function</span>.</p>
@@ -918,10 +921,10 @@ Q(p)&amp;:=\inf\{y\in\mathcal{Y}:F(y)\ge p\}, &amp;&amp; 0&lt;p&lt;1,\\
 <h3 id="discrete">Discrete</h3>
 <p>The probability mass function is</p>
 <p><span class="math display">\[
-\rho(y):=\mathbb{P}(Y=y).
+\rho(y):=\Prob(Y=y).
 \]</span></p>
 <p><span class="math display">\[
-\mathbb{E}[g(Y)]
+\Ex[g(Y)]
 =\sum_{y\in\mathcal{Y}}g(y)\rho(y).
 \]</span></p>
 </div><div class="column" style="width:48%;">
@@ -931,8 +934,8 @@ Q(p)&amp;:=\inf\{y\in\mathcal{Y}:F(y)\ge p\}, &amp;&amp; 0&lt;p&lt;1,\\
 \rho(y):=F'(y).
 \]</span></p>
 <p><span class="math display">\[
-\mathbb{E}[g(Y)]
-=\int_{\mathcal{Y}}g(y)\rho(y)\,\mathrm{d}y.
+\Ex[g(Y)]
+=\int_{\mathcal{Y}}g(y)\rho(y)\,\dif y.
 \]</span></p>
 </div></div>
 </section>
@@ -940,24 +943,24 @@ Q(p)&amp;:=\inf\{y\in\mathcal{Y}:F(y)\ge p\}, &amp;&amp; 0&lt;p&lt;1,\\
 <h2>Moments</h2>
 <p>For a scalar random variable <span class="math inline">\(Y\)</span>,</p>
 <p><span class="math display">\[
-\mu:=\mathbb{E}(Y),\qquad
-\sigma^2:=\operatorname{Var}(Y)
-=\mathbb{E}\bigl[(Y-\mu)^2\bigr].
+\mu:=\Ex(Y),\qquad
+\sigma^2:=\var(Y)
+=\Ex\bigl[(Y-\mu)^2\bigr].
 \]</span></p>
 <p><span class="math inline">\(\mu\)</span> is the <span class="alert">mean</span>, <span class="math inline">\(\sigma^2\)</span> the <span class="alert">variance</span>, and <span class="math inline">\(\sigma\)</span> the <span class="alert">standard deviation</span>.</p>
-<p>For a <span class="math inline">\(d\)</span>-dimensional random vector <span class="math inline">\(\boldsymbol Y\)</span> with mean <span class="math inline">\(\boldsymbol\mu\)</span>,</p>
+<p>For a <span class="math inline">\(d\)</span>-dimensional random vector <span class="math inline">\(\vY\)</span> with mean <span class="math inline">\(\vmu\)</span>,</p>
 <p><span class="math display">\[
-\operatorname{Cov}(\boldsymbol Y)
+\cov(\vY)
 :=\left(
-\mathbb{E}\left[(Y_j-\mu_j)(Y_k-\mu_k)\right]
+\Ex\left[(Y_j-\mu_j)(Y_k-\mu_k)\right]
 \right)_{j,k=1}^{d}.
 \]</span></p>
 </section>
 <section id="binomial-distribution" class="slide level2">
 <h2>Binomial distribution</h2>
-<p>For <span class="math inline">\(Y\sim\operatorname{Binomial}(n,p)\)</span>,</p>
+<p>For <span class="math inline">\(Y\sim\Bin(n,p)\)</span>,</p>
 <p><span class="math display">\[
-\rho(y)=\mathbb{P}(Y=y)
+\rho(y)=\Prob(Y=y)
 =\binom{n}{y}p^y(1-p)^{n-y},
 \qquad y=0,1,\ldots,n,
 \]</span></p>
@@ -967,34 +970,34 @@ F(y)=\sum_{j=0}^{\lfloor y\rfloor}\binom{n}{j}p^j(1-p)^{n-j},
 Q(q)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge q\}.
 \]</span></p>
 <p><span class="math display">\[
-\mathbb{E}(Y)=np,
+\Ex(Y)=np,
 \qquad
-\operatorname{Var}(Y)=np(1-p).
+\var(Y)=np(1-p).
 \]</span></p>
 <p>The Bernoulli distribution is the case <span class="math inline">\(n=1\)</span>. <code>scipy.stats.binom(n, p)</code></p>
 </section>
 <section id="exponential-distribution" class="slide level2">
 <h2>Exponential distribution</h2>
-<p>The exponential distribution models a memoryless waiting time. For <span class="math inline">\(Y\sim\operatorname{Exponential}(\lambda)\)</span>,</p>
+<p>The exponential distribution models a memoryless waiting time. For <span class="math inline">\(Y\sim\Exp(\lambda)\)</span>,</p>
 <p><span class="math display">\[
 \rho(y)=
 \begin{cases}
 0, &amp; y&lt;0,\\
-\lambda e^{-\lambda y}, &amp; y\ge 0,
+\lambda \me^{-\lambda y}, &amp; y\ge 0,
 \end{cases}
 \qquad
 F(y)=
 \begin{cases}
 0, &amp; y&lt;0,\\
-1-e^{-\lambda y}, &amp; y\ge 0.
+1-\me^{-\lambda y}, &amp; y\ge 0.
 \end{cases}
 \]</span></p>
 <p><span class="math display">\[
 Q(p)=-\frac{\log(1-p)}{\lambda},
 \quad
-\mathbb{E}(Y)=\frac{1}{\lambda},
+\Ex(Y)=\frac{1}{\lambda},
 \quad
-\operatorname{Var}(Y)=\frac{1}{\lambda^2}.
+\var(Y)=\frac{1}{\lambda^2}.
 \]</span></p>
 <p><code>scipy.stats.expon(loc=0, scale=1/lambda)</code></p>
 </section>
@@ -1002,15 +1005,15 @@ Q(p)=-\frac{\log(1-p)}{\lambda},
 <h2>Multivariate normal distribution</h2>
 <p>Used in finance and uncertainty quantification:</p>
 <p><span class="math display">\[
-\boldsymbol Y\sim\mathcal{N}(\boldsymbol\mu,\boldsymbol\Sigma),
+\vY\sim\Norm(\vmu,\boldsymbol\Sigma),
 \]</span></p>
-<p>where <span class="math inline">\(\boldsymbol\mu\)</span> is the mean vector and <span class="math inline">\(\boldsymbol\Sigma\)</span> is the covariance matrix. Its density is</p>
+<p>where <span class="math inline">\(\vmu\)</span> is the mean vector and <span class="math inline">\(\boldsymbol\Sigma\)</span> is the covariance matrix. Its density is</p>
 <p><span class="math display">\[
-\rho(\boldsymbol y)
-=\frac{1}{(2\pi)^{d/2}|\boldsymbol\Sigma|^{1/2}}
+\rho(\vy)
+=\frac{1}{(2\pi)^{d/2}\abs{\boldsymbol\Sigma}^{1/2}}
 \exp\left(
--\frac{1}{2}(\boldsymbol y-\boldsymbol\mu)^{\mathsf T}
-\boldsymbol\Sigma^{-1}(\boldsymbol y-\boldsymbol\mu)
+-\frac{1}{2}(\vy-\vmu)^{\mathsf T}
+\boldsymbol\Sigma^{-1}(\vy-\vmu)
 \right).
 \]</span></p>
 <p><code>scipy.stats.multivariate_normal(mean=mu, cov=Sigma)</code></p>
@@ -1022,44 +1025,44 @@ Q(p)=-\frac{\log(1-p)}{\lambda},
 </section>
 <section id="sampling" class="slide level2">
 <h2>Sampling</h2>
-<p>Let <span class="math inline">\(Y\)</span> be a random variable, often <span class="math inline">\(Y=f(\boldsymbol X)\)</span>, and let <span class="math inline">\(Y_1,\ldots,Y_n\)</span> be a sample - not necessarily random or IID.</p>
+<p>Let <span class="math inline">\(Y\)</span> be a random variable, often <span class="math inline">\(Y=f(\vX)\)</span>, and let <span class="math inline">\(Y_1,\ldots,Y_n\)</span> be a sample - not necessarily random or IID.</p>
 <p>The <span class="alert">sample mean</span> and <span class="alert">sample variance</span> are</p>
 <p><span class="math display">\[
-\widehat\mu_n:=\frac{1}{n}\sum_{i=1}^nY_i,
+\hmu_n:=\frac{1}{n}\sum_{i=1}^nY_i,
 \qquad
-\widehat\sigma_n^2
-:=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\widehat\mu_n)^2.
+\hsigma_n^2
+:=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\hmu_n)^2.
 \]</span></p>
 </section>
 <section id="under-random-sampling" class="slide level2">
 <h2>Under random sampling</h2>
-<p>Suppose <span class="math inline">\(Y_1,Y_2,\ldots\overset{\mathrm{IID}}{\sim}Y\)</span>, where <span class="math inline">\(\mathbb{E}(Y)=\mu\)</span> and <span class="math inline">\(\operatorname{Var}(Y)=\sigma^2\)</span>.</p>
+<p>Suppose <span class="math inline">\(Y_1,Y_2,\ldots\IIDsim Y\)</span>, where <span class="math inline">\(\Ex(Y)=\mu\)</span> and <span class="math inline">\(\var(Y)=\sigma^2\)</span>.</p>
 <p><span class="math display">\[
-\mathbb{E}(\widehat\mu_n)=\mu,
+\Ex(\hmu_n)=\mu,
 \qquad
-\mathbb{E}(\widehat\sigma_n^2)=\sigma^2.
+\Ex(\hsigma_n^2)=\sigma^2.
 \]</span></p>
 <p>Thus both estimators are <span class="alert">unbiased</span>. Moreover,</p>
 <p><span class="math display">\[
-\operatorname{MSE}(\widehat\mu_n)
-=\mathbb{E}\left[(\mu-\widehat\mu_n)^2\right]
+\mse(\hmu_n)
+=\Ex\left[(\mu-\hmu_n)^2\right]
 =\frac{\sigma^2}{n},
 \qquad
-\operatorname{RMSE}(\widehat\mu_n)=\frac{\sigma}{\sqrt{n}}.
+\rmse(\hmu_n)=\frac{\sigma}{\sqrt{n}}.
 \]</span></p>
 </section>
 <section id="central-limit-theorem" class="slide level2">
 <h2>Central Limit Theorem</h2>
-<p>If <span class="math inline">\(Y_1,Y_2,\ldots\overset{\mathrm{IID}}{\sim}Y\)</span> and <span class="math inline">\(0&lt;\sigma^2&lt;\infty\)</span>, then</p>
+<p>If <span class="math inline">\(Y_1,Y_2,\ldots\IIDsim Y\)</span> and <span class="math inline">\(0&lt;\sigma^2&lt;\infty\)</span>, then</p>
 <p><span class="math display">\[
-\frac{\widehat\mu_n-\mu}{\sigma/\sqrt{n}}
-\xrightarrow{\mathrm{d}}\mathcal{N}(0,1)
+\frac{\hmu_n-\mu}{\sigma/\sqrt{n}}
+\dto\Norm(0,1)
 \qquad\text{as }n\to\infty.
 \]</span></p>
 <p>For large <span class="math inline">\(n\)</span>,</p>
 <p><span class="math display">\[
-\widehat\mu_n\ \dot\sim\
-\mathcal{N}\left(\mu,\frac{\sigma^2}{n}\right).
+\hmu_n\appxsim
+\Norm\left(\mu,\frac{\sigma^2}{n}\right).
 \]</span></p>
 <div class="key-point">
 <p>Monte Carlo error for a sample mean typically decreases like <span class="math inline">\(n^{-1/2}\)</span>.</p>
@@ -1081,15 +1084,15 @@ Q(p)=-\frac{\log(1-p)}{\lambda},
 <tbody>
 <tr class="odd">
 <td>Mean <span class="math inline">\(\mu\)</span></td>
-<td><span class="math inline">\(\widehat\mu_n\)</span> and an approximate 99% interval <span class="math inline">\(\widehat\mu_n\pm2.58\widehat\sigma_n/\sqrt n\)</span></td>
+<td><span class="math inline">\(\hmu_n\)</span> and an approximate 99% interval <span class="math inline">\(\hmu_n\pm2.58\hsigma_n/\sqrt n\)</span></td>
 </tr>
 <tr class="even">
 <td>Variance <span class="math inline">\(\sigma^2\)</span></td>
-<td><span class="math inline">\(\widehat\sigma_n^2\)</span></td>
+<td><span class="math inline">\(\hsigma_n^2\)</span></td>
 </tr>
 <tr class="odd">
 <td>CDF <span class="math inline">\(F\)</span></td>
-<td>Empirical distribution function <span class="math inline">\(\widehat F_n\)</span></td>
+<td>Empirical distribution function <span class="math inline">\(\hF_n\)</span></td>
 </tr>
 <tr class="even">
 <td>Quantile function <span class="math inline">\(Q\)</span></td>
@@ -1167,10 +1170,10 @@ Q(p)=-\frac{\log(1-p)}{\lambda},
 <h2>Conditional probability</h2>
 <p>For a random vector <span class="math inline">\((Y,Z)\)</span>,</p>
 <p><span class="math display">\[
-\mathbb{P}(Y=y\mid Z=z)
-=\frac{\mathbb{P}(Y=y,Z=z)}{\mathbb{P}(Z=z)}
-=\frac{\mathbb{P}(Z=z\mid Y=y)\mathbb{P}(Y=y)}
-{\mathbb{P}(Z=z)}.
+\Prob(Y=y\mid Z=z)
+=\frac{\Prob(Y=y,Z=z)}{\Prob(Z=z)}
+=\frac{\Prob(Z=z\mid Y=y)\Prob(Y=y)}
+{\Prob(Z=z)}.
 \]</span></p>
 <p>The second equality is <span class="alert">Bayes’ theorem</span>. For densities,</p>
 <p><span class="math display">\[
@@ -1180,12 +1183,12 @@ Q(p)=-\frac{\log(1-p)}{\lambda},
 <section id="laws-of-total-expectation-and-variance" class="slide level2">
 <h2>Laws of total expectation and variance</h2>
 <p><span class="math display">\[
-\mathbb{E}(Y)=\mathbb{E}_Z\bigl[\mathbb{E}(Y\mid Z)\bigr],
+\Ex(Y)=\Ex_Z\bigl[\Ex(Y\mid Z)\bigr],
 \]</span></p>
 <p><span class="math display">\[
-\operatorname{Var}(Y)
-=\mathbb{E}_Z\bigl[\operatorname{Var}(Y\mid Z)\bigr]
-+\operatorname{Var}_Z\bigl(\mathbb{E}(Y\mid Z)\bigr).
+\var(Y)
+=\Ex_Z\bigl[\var(Y\mid Z)\bigr]
++\var_Z\bigl(\Ex(Y\mid Z)\bigr).
 \]</span></p>
 <div class="key-point">
 <p>Conditioning separates variation within a fixed <span class="math inline">\(Z\)</span> from variation in the conditional mean across values of <span class="math inline">\(Z\)</span>.</p>
@@ -1195,18 +1198,18 @@ Q(p)=-\frac{\log(1-p)}{\lambda},
 <h2>Conditional Monte Carlo</h2>
 <p>Let <span class="math inline">\(Y=f(X_1,\ldots,X_d)\)</span> and <span class="math inline">\(Z=(X_2,\ldots,X_d)\)</span>. If</p>
 <p><span class="math display">\[
-g(Z):=\mathbb{E}(Y\mid Z)
+g(Z):=\Ex(Y\mid Z)
 \]</span></p>
 <p>is available analytically, then</p>
 <p><span class="math display">\[
-\mu=\mathbb{E}(Y)=\mathbb{E}_Z[g(Z)],
+\mu=\Ex(Y)=\Ex_Z[g(Z)],
 \qquad
-\operatorname{Var}_Z(g(Z))\le\operatorname{Var}(Y).
+\var_Z(g(Z))\le\var(Y).
 \]</span></p>
 <p>Sampling <span class="math inline">\(g(Z)\)</span> instead of <span class="math inline">\(Y\)</span> can therefore reduce variance.</p>
 <p>If the conditional density <span class="math inline">\(h(y,Z):=\rho_{Y\mid Z}(y\mid Z)\)</span> is available,</p>
 <p><span class="math display">\[
-\rho_Y(y)=\mathbb{E}_Z[h(y,Z)],
+\rho_Y(y)=\Ex_Z[h(y,Z)],
 \]</span></p>
 <p>so a probability density can itself be expressed as an expectation.</p>
 </section></section>
