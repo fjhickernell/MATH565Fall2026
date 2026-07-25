@@ -233,6 +233,12 @@ print(render_tree_marker("probability"))
 ```
 ````
 
+Position the marker element, not the slide `section`. RevealJS positions real
+slides absolutely, including the children of a vertical stack. Do not set
+`position: relative` or another replacement position on `.tree-marker-slide`;
+doing so puts consecutive marked slides into normal document flow and offsets
+later slides down the page.
+
 Add and tune named presets as the course develops instead of copying full
 `render_tree(...)` calls. Keep the full overview trees as direct renderer
 calls when they require a unique composition.
