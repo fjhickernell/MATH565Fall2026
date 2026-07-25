@@ -237,6 +237,14 @@ Add and tune named presets as the course develops instead of copying full
 `render_tree(...)` calls. Keep the full overview trees as direct renderer
 calls when they require a unique composition.
 
+### Asset paths
+
+Published slide HTML lives under `_site/slides/`, while shared tree assets live
+under `_site/classlib/`. Therefore, tree renderers and marker presets must use
+`../classlib/classlib/quarto/components/trees` as their `asset_base_url`.
+Do not use `classlib/classlib/...`, which would resolve beneath
+`_site/slides/` on GitHub Pages.
+
 ## Image source overlay
 
 For a sourced image, make the image itself an external link and add the

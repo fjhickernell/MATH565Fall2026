@@ -66,32 +66,42 @@ purpose, strategy, construction state, workflow, or agent behavior.
 checked and visible; insert new tasks in the appropriate phase, and do not
 remove completed work merely because it is finished.
 
-## Git and completion
+## Git and checkpoints
 
 Do not commit or push during ordinary intermediate work unless the user asks.
 
-When the user instructs **"Finished"**, complete the workflow below. If text
-follows `Finished:`, use that text as the commit message. If the user says only
-`Finished`, construct a concise commit message that accurately describes the
-current task's intended changes.
+The word **"Finished"** has no special meaning. Treat it as ordinary
+conversation unless the user explicitly asks to commit or push.
 
-1. Review only the changes associated with the current task in the
+When the user instructs **"Checkpoint"**, complete the workflow below. This is
+explicit authorization to validate, document durable conventions when needed,
+stage the intended changes, commit them, and push the current branch. If text
+follows `Checkpoint:`, use that text as the commit message. If the user says
+only `Checkpoint`, construct a concise commit message that accurately
+describes the intended changes.
+
+1. Review only the intended changes associated with the current work in the
    authoritative repository and `classlib`.
 2. Identify and avoid committing unrelated user work.
 3. Run appropriate validation for the task's changes before committing.
-4. When the task includes intended `classlib` changes, publish `classlib`
+4. Decide whether the work established a permanent convention or workflow
+   that belongs in developer documentation such as `docs/slide-style.md`,
+   `AUTHOR_WORKFLOW.md`, or another appropriate file. Document durable
+   guidance when needed, but do not record transient debugging or failed
+   attempts.
+5. When the task includes intended `classlib` changes, publish `classlib`
    using the established project workflow.
-5. Update the authoritative repository's `classlib` submodule pointer if
+6. Update the authoritative repository's `classlib` submodule pointer if
    needed.
-6. Commit and push the current task's intended authoritative-repository
-   changes.
-7. Confirm that the authoritative course repository and any intentionally
+7. Stage all intended changes and create the commit using the requested or
+   constructed message.
+8. Push the current branch.
+9. Confirm that the authoritative course repository and any intentionally
    modified writable repositories, such as `classlib`, are clean and
    synchronized with their upstream branches. Confirm that pinned read-only
    submodules remain unchanged.
-8. End the completion response by prompting the user to run Codex's `/status`
-   command to view current Codex usage. Do not substitute a Git or project
-   status report for the Codex usage report.
+10. Report the commit hash, confirmation that the push succeeded, whether
+    documentation was updated and where, and any remaining follow-up items.
 
 Never include changes from `qmcsoftware`, `assets/tests/archive`, or either
-reference repository in this completion workflow.
+reference repository in this checkpoint workflow.

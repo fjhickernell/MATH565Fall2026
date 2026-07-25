@@ -32,7 +32,7 @@ appropriate phase rather than appended indiscriminately.
 
 - [x] Configure the root Quarto website project.
 - [x] Create initial course-page source files.
-- [ ] Verify that GitHub Actions renders the site successfully.
+- [x] Verify that GitHub Actions renders the site successfully.
 - [ ] Complete student-facing website pages, see `_quarto.yml`
   navbar:
   - [ ] Welcome (`index.qmd`)
@@ -152,6 +152,8 @@ appropriate phase rather than appended indiscriminately.
 - [x] Validate GitHub Pages using the parent-recorded recursive submodule
   commits.
 - [x] Establish and validate automated GitHub Pages deployment.
+- [x] Validate shared tree asset paths in the staged output and published
+  GitHub Pages slides.
 - [ ] Confirm that the published site matches local validated output.
 
 ## 5. Slide framework
@@ -166,6 +168,9 @@ appropriate phase rather than appended indiscriminately.
 - [x] Load course-wide slide styling consistently across every deck.
 - [x] Validate shared slide styling, metadata, navigation, and assets from
   `classlib`.
+- [x] Add reusable Monte Carlo overview-tree rendering and named course tree
+  marker presets.
+- [x] Document the GitHub Pages asset-path convention for shared tree images.
 - [x] Confirm that rendered slides are linked correctly from the website.
 
 ## 6. Prototype lecture conversion
