@@ -60,7 +60,7 @@ print(
         "mc",
         groups=["foundation", "methods", "practice"],
         show_group_headings=True,
-        asset_base_url="classlib/classlib/quarto/components/trees",
+        asset_base_url="../classlib/classlib/quarto/components/trees",
         width="100%",
         classes=["monte-carlo-at-a-glance-tree"],
     )

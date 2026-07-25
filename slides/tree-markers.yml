@@ -3,7 +3,7 @@ version: 1
 # Shared defaults for small course trees used as slide markers.
 defaults:
   tree: mc
-  asset_base_url: classlib/classlib/quarto/components/trees
+  asset_base_url: ../classlib/classlib/quarto/components/trees
   width: 16%
   font_scale: 3.9
   classes:
