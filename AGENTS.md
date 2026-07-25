@@ -75,33 +75,42 @@ conversation unless the user explicitly asks to commit or push.
 
 When the user instructs **"Checkpoint"**, complete the workflow below. This is
 explicit authorization to validate, document durable conventions when needed,
-stage the intended changes, commit them, and push the current branch. If text
-follows `Checkpoint:`, use that text as the commit message. If the user says
-only `Checkpoint`, construct a concise commit message that accurately
-describes the intended changes.
+stage every modified or untracked non-ignored file, commit the complete
+repository state, and push the current branch. A checkpoint is a preservation
+snapshot, not a task-scoped commit: do not omit a change merely because it was
+created by the user, predates the current task, or appears unrelated. Files
+properly ignored by Git remain excluded. If text follows `Checkpoint:`, use
+that text as the commit message. If the user says only `Checkpoint`, construct
+a concise commit message that accurately describes the complete set of
+changes.
 
-1. Review only the intended changes associated with the current work in the
-   authoritative repository and `classlib`.
-2. Identify and avoid committing unrelated user work.
-3. Run appropriate validation for the task's changes before committing.
+1. Inspect the authoritative repository and every submodule recursively using
+   status output that includes all untracked files.
+2. Inventory every tracked modification and every untracked, non-ignored file
+   in the authoritative repository and any writable repository in scope, such
+   as `classlib`.
+3. Run appropriate validation for the complete set of changes before
+   committing.
 4. Decide whether the work established a permanent convention or workflow
    that belongs in developer documentation such as `docs/slide-style.md`,
    `AUTHOR_WORKFLOW.md`, or another appropriate file. Document durable
    guidance when needed, but do not record transient debugging or failed
    attempts.
-5. When the task includes intended `classlib` changes, publish `classlib`
-   using the established project workflow.
+5. When `classlib` contains non-ignored changes, include all of them and
+   publish `classlib` using the established project workflow.
 6. Update the authoritative repository's `classlib` submodule pointer if
    needed.
-7. Stage all intended changes and create the commit using the requested or
-   constructed message.
+7. Stage every modified and untracked non-ignored file in the authoritative
+   repository and create the commit using the requested or constructed
+   message.
 8. Push the current branch.
-9. Confirm that the authoritative course repository and any intentionally
-   modified writable repositories, such as `classlib`, are clean and
-   synchronized with their upstream branches. Confirm that pinned read-only
-   submodules remain unchanged.
+9. Confirm that the authoritative course repository and every writable
+   repository in scope are clean and synchronized with their upstream
+   branches. Confirm that pinned read-only submodules remain unchanged.
 10. Report the commit hash, confirmation that the push succeeded, whether
     documentation was updated and where, and any remaining follow-up items.
 
 Never include changes from `qmcsoftware`, `assets/tests/archive`, or either
-reference repository in this checkpoint workflow.
+reference repository in this checkpoint workflow. If any protected read-only
+repository is dirty, do not discard or silently omit its work and do not claim
+the checkpoint is complete; report the blocker and obtain user direction.
