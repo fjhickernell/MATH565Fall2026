@@ -156,6 +156,7 @@ Y&=
   - variance
   - quantile
   - probability distribution
+  - minumum or maximum
 
 ## Are we there yet?
 
