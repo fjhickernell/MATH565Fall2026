@@ -135,8 +135,6 @@ print(
 
 ## How is uncertainty expressed quantitatively?
 
-Let the [quantity of interest]{.alert} be
-
 \begin{align*}
 Y&=
 \text{random variable denoting } \alerttext{quantity of interest}
