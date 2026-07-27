@@ -37,7 +37,7 @@ from trees import render_tree
 
 ::: {.key-point}
 Course details, schedule updates, assignments, and supporting materials are on
-the [course website]({{< meta course_website >}}).
+the [course website]({{< meta course_website >}})
 :::
 
 # What is Monte Carlo?
@@ -162,28 +162,47 @@ Y&=
 
 You are visiting a friend. The trip requires
 
-- a 5-minute walk to the train,
-- waiting for a train that arrives every 20 minutes,
-- a 35-minute train ride,
+- a $5$-minute walk to the train,
+- waiting for a train that arrives every $20$ minutes,
+- a $35$-minute train ride,
 - a taxi that is waiting with probability $0.2$,
-- otherwise, a taxi wait with mean 10 minutes, and
-- a 12-minute taxi ride.
+- otherwise, a taxi wait with mean $10$ minutes, and
+- a $12$-minute taxi ride.
 
 ::: {.key-point}
 How long should you allow for the trip?
 :::
 
-The companion `AreWeThereYet` notebook is being migrated for Fall 2026.
+The companion `AreWeThereYet` notebook is being migrated for Fall 2026
+
+# Course Logistics
+
+- What is where?
+- Why participate synchronously?
+
+## What is where?
+
+- [Course Website](https://fjhickernell.github.io/MATH565Fall2026)
+
+    - Course slides are on the course website under the [Schedule](https://fjhickernell.github.io/MATH565Fall2026/pages/schedule.html)
+
+    - Homework assignments are at [Assignments](https://fjhickernell.github.io/MATH565Fall2026/pages/homework.html)
+
+    - Basic course information is on the course website [Welcome page](https://fjhickernell.github.io/MATH565Fall2026/)
+
+- All materials are in the [Course Repository](https://github.com/fjhickernell/MATH565Fall2026), which is used to build the course website
+
+- Grades are in [Canvas](https://iit.instructure.com)
+
 
 ## Why participate synchronously?
 
-::: {.incremental}
-- Keep pace with the course.
-- Ask questions and receive answers in real time.
-- Influence the pace and direction of discussion.
-- Help classmates learn and benefit from their questions.
-- Build a learning community and get to know one another.
-:::
+- Keep pace with the course
+- Ask questions and receive answers in real time
+- Influence the pace and direction of discussion
+- Help classmates learn and benefit from their questions
+- Build a learning community and get to know one another
+
 
 # Probability review {.tree-marker-slide}
 

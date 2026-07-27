@@ -125,7 +125,7 @@ By the end of this course, students will be able to:
 | [Tests and Exams](pages/tests.qmd) | |
 | [Project](pages/project.qmd) | |
 | [Course Policies](classlib/classlib/quarto/pages/policies.qmd) | |
-| [Class Git Repository](https://github.com/fjhickernell/MATH565Fall2026) | |
+| [Course Repository](https://github.com/fjhickernell/MATH565Fall2026) | |
 
 </details>
 
@@ -197,6 +197,9 @@ By the end of this course, students will be able to:
   - Art Owen's book.
 
   I will award 0.5 or 1 extra-credit points, up to a maximum of 10 points.
-  These are added to your final weighted total. *The weighted total may not
-  correctly reflect extra credit until grades are recorded for all
-  categories.*
+  The last day for submitting an error is **December 6**.
+
+  To report an error, create an [issue](https://github.com/fjhickernell/MATH565Fall2026/issues) in the course repository.
+  Extra-credit points are added to your final weighted total. *The weighted
+  total may not correctly reflect extra credit until grades are recorded for
+  all categories.*

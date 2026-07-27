@@ -129,6 +129,10 @@ individual course page.
 - Introduce specialized terminology before relying on it.
 - Mark genuinely unknown semester-specific information as `TBA`; do not invent
   details or leave a misleading blank where students expect information.
+- Across student-facing pages, slides, and notes, use **course repository** for
+  the GitHub source and **course website** for the published site. Avoid
+  **class repository**, **class website**, and the shorthand **repo** or
+  **site** in prose.
 
 # General conventions reflected in the slide theme
 
