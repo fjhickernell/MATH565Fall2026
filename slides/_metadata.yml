@@ -56,3 +56,6 @@ execute:
   message: false
   freeze: false
   fig-path: "{basename}_files/figure-revealjs/"
+
+filters:
+  - tree-marker.lua

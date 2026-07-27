@@ -14,3 +14,7 @@ markers:
   probability:
     labels:
       - probability
+
+  statistics:
+    labels:
+      - statistics

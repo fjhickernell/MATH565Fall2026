@@ -220,111 +220,79 @@ The companion `AreWeThereYet` notebook is being migrated for Fall 2026
 print(render_tree_marker("probability"))
 ```
 
-## Random variables and distributions {.tree-marker-slide}
+## Random variables and distributions {.tree-marker-slide tree-marker="probability"}
 
-```{python}
-#| echo: false
-#| output: asis
+Let $Y$ be a [random variable]{.alert} with sample space
+$\mathcal{Y} \subseteq \reals$
 
-print(render_tree_marker("probability"))
-```
-
-Let $Y$ be a random variable with sample space
-$\mathcal{Y} \subseteq \reals$.
-
-$$
-\begin{aligned}
+\begin{align*}
 \Prob(Y\in\Omega)
-  &:= \text{probability of the event }\Omega,\\
-F(y)&:=\Prob(Y\le y), && y\in\mathcal{Y},\\
-Q(p)&:=\inf\{y\in\mathcal{Y}:F(y)\ge p\}, && 0<p<1,\\
-\Ex[g(Y)]&:=\int_{\mathcal{Y}}g(y)\,\dif F(y).
-\end{aligned}
-$$
-
-$F$ is the [cumulative distribution function]{.alert}; $Q$ is the
-[quantile function]{.alert}.
-
-## Discrete and continuous distributions
+  &\text{ means probability of the } \alerttext{event }\Omega\\
+F \text{ is the }\alerttext{cumulative distribution function}\text{, } F(y)&:=\Prob(Y\le y), \;  y\in\mathcal{Y}, \quad\text{right continuous}\\
+Q \text{ is the }\alerttext{quantile function}\text{, } Q(p)&:=\inf\{y\in\mathcal{Y}:F(y)\ge p\}, \; 0<p<1, \quad\text{left continuous}\\
+& = F^{-1}(p) \text{ if $F$ is continuous} \\
+\Ex[g(Y)]&:=\int_{\mathcal{Y}}g(y)\,\dif F(y)
+\end{align*}
 
 ::: {.columns}
-::: {.column width="48%"}
+::: {.column width="50%"}
 ### Discrete
 
-The probability mass function is
+[Probability mass function (PMF)]{.alert}, $\varrho$
 
-$$
-\rho(y):=\Prob(Y=y).
-$$
-
-$$
+\begin{gather*}
+\varrho(y):=\Prob(Y=y) \\
 \Ex[g(Y)]
-=\sum_{y\in\mathcal{Y}}g(y)\rho(y).
-$$
+=\sum_{y\in\mathcal{Y}}g(y)\varrho(y)
+\end{gather*}
 :::
 
-::: {.column width="48%"}
+::: {.column width="50%"}
 ### Continuous
 
-The probability density function satisfies
+[Probability density function (PDF)]{.alert}, $\varrho$
 
-$$
-\rho(y):=F'(y).
-$$
-
-$$
+\begin{gather*}
+\varrho(y):=F'(y)\\
 \Ex[g(Y)]
-=\int_{\mathcal{Y}}g(y)\rho(y)\,\dif y.
-$$
+=\int_{\mathcal{Y}}g(y)\varrho(y)\,\dif y
+\end{gather*}
 :::
 :::
 
-## Moments
+## Moments of random variables
 
-For a scalar random variable $Y$,
-
-$$
-\mu:=\Ex(Y),\qquad
-\sigma^2:=\var(Y)
-=\Ex\bigl[(Y-\mu)^2\bigr].
-$$
-
-$\mu$ is the [mean]{.alert}, $\sigma^2$ the [variance]{.alert}, and $\sigma$
-the [standard deviation]{.alert}.
-
-For a $d$-dimensional random vector $\vY$ with mean $\vmu$,
-
-$$
+\begin{align*}
+\mu & :=\Ex(Y) \text{is the }\alerttext{mean}\text{ of }Y \\
+\sigma^2 & :=\var(Y)
+=\Ex\bigl[(Y-\mu)^2\bigr] = \Ex(Y^2) - \bigl[\Ex(Y)]^2 \text{ is the }\alerttext{variance}\text{ of } Y
+\\
+\sigma & \text{ is the }\alerttext{standard deviation}\text{ of } Y \\
 \cov(\vY)
-:=\left(
-\Ex\left[(Y_j-\mu_j)(Y_k-\mu_k)\right]
-\right)_{j,k=1}^{d}.
-$$
+& :=\bigl(
+\Ex[(Y_j-\mu_j)(Y_k-\mu_k)]
+\bigr)_{j,k=1}^{d} \\
+& \text{ is the }\alerttext{covariance matrix}\text{ of the $d$-dimensional random vector } \vY
+\end{align*}
 
 ## Binomial distribution
 
-For $Y\sim\Bin(n,p)$,
+For $Y\sim\Bin(n,p)$, (see `scipy.stats.binom(n, p)`)
 
-$$
-\rho(y)=\Prob(Y=y)
+\begin{gather*}
+\varrho(y)=\Prob(Y=y)
 =\binom{n}{y}p^y(1-p)^{n-y},
-\qquad y=0,1,\ldots,n,
-$$
-
-$$
-F(y)=\sum_{j=0}^{\lfloor y\rfloor}\binom{n}{j}p^j(1-p)^{n-j},
-\qquad
-Q(q)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge q\}.
-$$
-
-$$
+\qquad y=0,1,\ldots,n
+\\
+F(y)=\sum_{j=0}^{ y}\binom{n}{j}p^j(1-p)^{n-j}, \qquad y=0,1,\ldots,n \\
+Q(p)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge p\} \quad \text{no simple formula}
+\\
 \Ex(Y)=np,
 \qquad
-\var(Y)=np(1-p).
-$$
+\var(Y)=np(1-p)
+\end{gather*}
 
-The Bernoulli distribution is the case $n=1$.
-`scipy.stats.binom(n, p)`
+The Bernoulli distribution, $\Bern(p)$, is the case $n=1$
 
 ## Exponential distribution
 

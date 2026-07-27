@@ -126,3 +126,23 @@ def render_tree_marker(name: str, **overrides: Any) -> str:
         ) from error
 
     return render_tree(tree, **options)
+
+
+def _main(args: list[str]) -> int:
+    if len(args) != 1:
+        print(
+            "usage: python tree_markers.py MARKER_NAME",
+            file=sys.stderr,
+        )
+        return 2
+
+    try:
+        print(render_tree_marker(args[0]))
+    except (FileNotFoundError, TreeMarkerPresetError) as error:
+        print(f"tree marker render error: {error}", file=sys.stderr)
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(_main(sys.argv[1:]))

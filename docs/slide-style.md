@@ -186,6 +186,17 @@ update every slide that uses the corresponding semantic command.
 - Prefer semantic distribution macros such as `\Bern`, `\Bin`, `\Unif`,
   `\Norm`, `\Exp`, `\Gam`, and `\Pois`. For example, write
   `$Y\sim\Exp(\lambda)$`, not `$Y\sim\operatorname{Exp}(\lambda)$`.
+- Use `\varrho` for probability mass functions and probability density
+  functions.
+- For successive displayed equations, prefer one
+  `\begin{gather*} ... \\ ... \end{gather*}` environment instead of multiple
+  consecutive `$$ ... $$` blocks.
+- When equations need shared alignment points, prefer a standalone
+  `\begin{align*} ... \end{align*}` environment rather than placing
+  `aligned` inside a displayed equation.
+- Use `multline` or `multline*` for a single long equation that must wrap
+  across lines, and use `\MoveEqLeft` as needed to position a long first line
+  in a multiline display.
 - When notation recurs across slides or decks, has a course-wide meaning, or
   may reasonably change later, propose a new shared macro instead of creating
   repeated local notation.
@@ -213,14 +224,27 @@ The course-wide `slides/math565-slides.scss` imports `tree-markers.scss`, so
 all MATH 565 decks can use the tree and its named marker variants without
 repeating theme configuration in each deck.
 
-Import the course helper once in a deck:
+To add a saved marker to a slide, give its heading the
+`.tree-marker-slide` class and select the preset with the `tree-marker`
+attribute:
+
+```markdown
+## Random variables and distributions {.tree-marker-slide tree-marker="probability"}
+```
+
+The slide project's `tree-marker.lua` filter calls the existing
+`render_tree_marker()` helper at render time, so `slides/tree-markers.yml`
+remains authoritative. An unknown marker name stops the render with an error.
+New markers need only a new entry under `markers` in that file.
+
+Explicit Python calls remain supported for overview trees and existing slide
+sources. Import the course helper once in a deck:
 
 ```python
 from tree_markers import render_tree_marker
 ```
 
-Give each slide containing a marker the `.tree-marker-slide` class and render
-the saved variant with an `asis` cell:
+Then render the saved variant with an `asis` cell:
 
 ````markdown
 ## Random variables and distributions {.tree-marker-slide}
