@@ -236,7 +236,7 @@ The companion `AreWeThereYet` notebook is being migrated for Fall 2026
 - [Moments of random variables](#moments-of-random-variables)
 - [Binomial distribution](#binomial-distribution)
 - [Exponential distribution](#exponential-distribution)
-- [Multivariate normal distribution](#multivariate-normal-distribution)
+- [Multivariate normal or Gaussian distribution](#multivariate-normal-or-gaussian-distribution)
 
 ```{python}
 #| echo: false
@@ -289,8 +289,9 @@ Q \text{ is the }\alerttext{quantile function}\text{, } Q(p)&:=\inf\{y\in\mathca
 
 \begin{align*}
 \mu & :=\Ex(Y) \text{is the }\alerttext{mean}\text{ of }Y \\
+\med(Y) & := Q(0.5) \\
 \sigma^2 & :=\var(Y)
-=\Ex\bigl[(Y-\mu)^2\bigr] = \Ex(Y^2) - \bigl[\Ex(Y)]^2 \text{ is the }\alerttext{variance}\text{ of } Y
+=\Ex\bigl[(Y-\mu)^2\bigr] \overset{\exstar}{=} \Ex(Y^2) - \bigl[\Ex(Y)]^2 \text{ is the }\alerttext{variance}\text{ of } Y
 \\
 \sigma & \text{ is the }\alerttext{standard deviation}\text{ of } Y \\
 \cov(\vY)
@@ -299,6 +300,12 @@ Q \text{ is the }\alerttext{quantile function}\text{, } Q(p)&:=\inf\{y\in\mathca
 \bigr)_{j,k=1}^{d} \\
 & \text{ is the }\alerttext{covariance matrix}\text{ of the $d$-dimensional random vector } \vY
 \end{align*}
+
+$\exstar$ Show that $\displaystyle \mu = \argmin_m \Ex\bigl[ (Y-m)^2 \bigr]$
+
+$\exstar$ Show that $\displaystyle \med(Y) = \argmin_m \Ex \lvert Y-m \rvert$
+
+$\exstar$ Show that $\cov(\vY)$ is symmetric and has non-negative eigenvalues
 
 ## Binomial distribution {.tree-marker-slide tree-marker="probability"}
 
@@ -317,58 +324,55 @@ Q(p)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge p\} \quad \text{no simple formula}
 \var(Y)=np(1-p)
 \end{gather*}
 
-The Bernoulli distribution, $\Bern(p)$, is the case $n=1$
+The [Bernoulli]{.alert} distribution, $\Bern(p)$, is the case $n=1$
 
 ## Exponential distribution {.tree-marker-slide tree-marker="probability"}
 
-The exponential distribution models a memoryless waiting time. For
-$Y\sim\Exp(\lambda)$,
+Models a [memoryless waiting time]{.alert}
 
-$$
-\rho(y)=
+For
+$Y\sim\Exp(\lambda)$, (see `scipy.stats.expon(loc=0, scale=1/lambda)`)
+
+\begin{gather*}
+\varrho(y)=
 \begin{cases}
-0, & y<0,\\
-\lambda \me^{-\lambda y}, & y\ge 0,
+0, & y<0\\
+\lambda \me^{-\lambda y}, & y\ge 0
 \end{cases}
-\qquad
+\\
 F(y)=
 \begin{cases}
-0, & y<0,\\
-1-\me^{-\lambda y}, & y\ge 0.
+0, & y<0\\
+1-\me^{-\lambda y}, & y\ge 0
 \end{cases}
-$$
-
-$$
-Q(p)=-\frac{\log(1-p)}{\lambda},
-\quad
+\\
+Q(p)=-\frac{\log(1-p)}{\lambda}
+\\
 \Ex(Y)=\frac{1}{\lambda},
 \quad
-\var(Y)=\frac{1}{\lambda^2}.
-$$
+\var(Y)=\frac{1}{\lambda^2}
+\end{gather*}
 
-`scipy.stats.expon(loc=0, scale=1/lambda)`
 
-## Multivariate normal distribution {.tree-marker-slide tree-marker="probability"}
+## Multivariate normal or Gaussian distribution {.tree-marker-slide tree-marker="probability"}
 
-Used in finance and uncertainty quantification:
-
-$$
-\vY\sim\Norm(\vmu,\boldsymbol\Sigma),
-$$
-
-where $\vmu$ is the mean vector and $\boldsymbol\Sigma$ is the
-covariance matrix. Its density is
+Used in finance and uncertainty quantification, (see `scipy.stats.multivariate_normal(mean=mu, cov=Sigma)`):
 
 $$
-\rho(\vy)
-=\frac{1}{(2\pi)^{d/2}\abs{\boldsymbol\Sigma}^{1/2}}
+\vY\sim\Norm(\vmu,\mSigma)
+$$
+
+where $\vmu$ is the mean vector and $\mSigma$ is the
+covariance matrix
+
+$$
+\varrho(\vy)
+=\frac{1}{(2\pi)^{d/2}\abs{\mSigma}^{1/2}}
 \exp\left(
 -\frac{1}{2}(\vy-\vmu)^{\mathsf T}
-\boldsymbol\Sigma^{-1}(\vy-\vmu)
-\right).
+\mSigma^{-1}(\vy-\vmu)
+\right)
 $$
-
-`scipy.stats.multivariate_normal(mean=mu, cov=Sigma)`
 
 # Samples and estimates {.tree-marker-slide tree-marker="statistics"}
 
@@ -381,17 +385,17 @@ $$
 
 ## Sampling
 
-Let $Y$ be a random variable, often $Y=f(\vX)$, and let
-$Y_1,\ldots,Y_n$ be a sample - not necessarily random or IID.
+Let 
 
-The [sample mean]{.alert} and [sample variance]{.alert} are
+- $Y$ be a random variable, often $Y=f(\vX)$
 
-$$
-\hmu_n:=\frac{1}{n}\sum_{i=1}^nY_i,
-\qquad
-\hsigma_n^2
-:=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\hmu_n)^2.
-$$
+- $Y_1,\ldots,Y_n$ be a sample—not necessarily random or IID
+
+\begin{align*}
+\hmu_n & :=\frac{1}{n}\sum_{i=1}^nY_i \text{ is the }\alerttext{sample mean}\\
+\hsigma_n^2 &
+:=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\hmu_n)^2 \text{ is the }\alerttext{sample variance}\\
+\end{align*}
 
 ## Under random sampling
 
