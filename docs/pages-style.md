@@ -4,6 +4,12 @@
 - Favor clarity, consistency, and maintainability.
 - Preserve mathematical correctness.
 - Prefer reusable patterns over one-off formatting.
+- Preserve pedagogical intent during format changes.
+- Keep sources understandable to future instructors.
+- Prefer native Markdown, LaTeX, tables, and other maintainable Quarto
+  structures when converting legacy material.
+- Keep reusable styling and presentation infrastructure in `classlib`, while
+  course-specific content and configuration remain in the course repository.
 - Let the shared website theme control typography, spacing, colors, and other
   presentation details. Do not add page-local CSS merely to make one page look
   different.
@@ -45,9 +51,8 @@ for content whose type carries meaning, such as a warning or a genuinely
 separate note. Do not use either mechanism so frequently that emphasis loses
 its value.
 
-The class is already established by the shared slide theme. Its equivalent
-page treatment should live in the shared website stylesheet rather than in an
-individual course page.
+The shared website stylesheet provides the page treatment; do not recreate it
+in an individual course page.
 
 # Mathematics
 
@@ -154,18 +159,3 @@ identify several principles that also apply to ordinary pages:
 - Allow mathematics enough space to render without clipping or crowding.
 - Design for varied screen sizes and avoid layout assumptions tied to one
   browser or display.
-
-# Candidate style conventions to migrate later
-
-The following repository-wide style principles currently appear in `PLAN.md`
-or `STATUS.md` and may eventually belong primarily in this guide:
-
-- Preserve pedagogical intent during format changes.
-- Keep sources understandable to future instructors.
-- Prefer native Markdown, LaTeX, tables, and other maintainable Quarto
-  structures when converting legacy material.
-- Keep reusable styling and presentation infrastructure in `classlib`, while
-  course-specific content and configuration remain in the course repository.
-
-`AGENTS.md` contains repository boundaries and operational safeguards rather
-than page-style guidance, so no candidate convention from it is listed here.

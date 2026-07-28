@@ -25,8 +25,8 @@ appropriate phase rather than appended indiscriminately.
 - [x] Add `AUTHOR_WORKFLOW.md` with author setup, preview, render, and
   publishing procedures.
 - [x] Add `STATUS.md` as the permanent phase-organized construction record.
-- [ ] Reconcile project documentation whenever repository strategy or author
-  workflow changes.
+- [x] Reconcile project documentation and style guides after establishing the
+  prototype course conventions.
 
 ## 3. Website framework
 
@@ -123,19 +123,23 @@ appropriate phase rather than appended indiscriminately.
       presentation logistics.
     - [ ] Inspect the visible page layout and dropdown behavior in a browser.
   - [ ] Policies (`classlib/classlib/quarto/pages/policies.qmd`)
+    - [ ] Verify that institutional offices, personnel, contact details, and
+      policy links are current for Fall 2026.
   - [ ] Accessing repo
     (`classlib/classlib/quarto/pages/git-clone-update-with-submodules.qmd`)
-  - [ ] Interesting articles & links
+    - [ ] Replace or resolve generic `REPO_URL` and `MATHXXXSpring20YY`
+      placeholders for a self-contained MATH 565 student workflow.
+  - [x] Interesting articles & links
     (`classlib/classlib/quarto/pages/interesting-articles-links.qmd`)
-  - [ ] IMS Student Membership
-  - [ ] SIAM Student Membership
-  - [ ] MATH 476 — Statistics
-  - [ ] MATH 563 — Mathematical Statistics
-  - [ ] QMCPy
+  - [x] IMS Student Membership
+  - [x] SIAM Student Membership
+  - [x] MATH 476 — Statistics
+  - [x] MATH 563 — Mathematical Statistics
+  - [x] QMCPy
 - [x] Create the initial project-assessment page
   (`pages/project-assessment.qmd`).
 - [x] Configure course-page metadata.
-- [ ] Confirm that shared website styling and resources are sourced from
+- [x] Confirm that shared website styling and resources are sourced from
   `classlib` where appropriate.
 
 ## 4. Validation and deployment

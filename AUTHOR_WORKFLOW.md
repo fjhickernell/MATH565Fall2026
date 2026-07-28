@@ -12,11 +12,32 @@ the root of the `gh-pages` branch by GitHub Actions.
 - `classlib/` — shared styling, metadata, snippets, and notebooks (submodule)
 - `qmcsoftware/` — QMCPy source and course dependencies (submodule)
 
-Do not edit shared styling locally; make those changes in HickernellAcademicLib.
+Make genuinely reusable shared-style or presentation-infrastructure changes in
+the `classlib` submodule. Validate, commit, and push those changes to
+HickernellAcademicLib first, then intentionally update the course repository's
+`classlib` pointer. Keep course-specific content and styling in this
+repository, and do not leave course-only modifications in `classlib`.
 
-## Fresh clone
+## Prerequisites
+
+Install:
+
+- Git
+- Quarto
+- Python with the course environment used by the `qmcpy` Jupyter kernel
+- R with `knitr`, `rmarkdown`, and `reticulate`
+
+Install the required R packages when they are not already available:
+
+```r
+install.packages(c("knitr", "rmarkdown", "reticulate"))
+```
+
+## Fresh clone and Python packages
 
 ```bash
+git clone --recurse-submodules https://github.com/fjhickernell/MATH565Fall2026.git
+cd MATH565Fall2026
 git submodule update --init --recursive
 python -m pip install -e classlib
 python -m pip install -e "qmcsoftware/.[class]"

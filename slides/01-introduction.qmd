@@ -29,26 +29,37 @@ from trees import render_tree
 
 # Course Map
 
+::: {.columns}
+::: {.column width="45%"}
+<h3>Course decks</h3>
+
 - [{{< meta decks.d01.title >}}]({{< meta decks.d01.file >}}){.alert}
 - [{{< meta decks.d02.title >}}]({{< meta decks.d02.file >}})
 - [{{< meta decks.d03.title >}}]({{< meta decks.d03.file >}})
 - [{{< meta decks.d04.title >}}]({{< meta decks.d04.file >}})
 - [{{< meta decks.d05.title >}}]({{< meta decks.d05.file >}})
+:::
 
-::: {.key-point}
-Course details, schedule updates, assignments, and supporting materials are on
-the [course website]({{< meta course_website >}})
+::: {.column width="55%"}
+<h3>In this deck</h3>
+
+- [What is Monte Carlo?](#what-is-monte-carlo)
+- [Course Logistics](#course-logistics)
+- [Probability review](#probability-review)
+- [Samples and estimates](#samples-and-estimates)
+- [Conditioning](#conditioning)
+- [Big ideas](#big-ideas)
+:::
 :::
 
 # What is Monte Carlo?
 
 ::: {.columns}
 ::: {.column width="36%"}
-- Monte Carlo helps with uncertainty
-- Why is there uncertainty?
-- How is uncertainty expressed quantitatively?
-- Are we there yet?
-- Why participate synchronously?
+- [Monte Carlo helps with uncertainty](#monte-carlo-helps-with-uncertainty)
+- [Why is there uncertainty?](#why-is-there-uncertainty)
+- [How is uncertainty expressed quantitatively?](#how-is-uncertainty-expressed-quantitatively)
+- [Are we there yet?](#are-we-there-yet)
 :::
 
 ::: {.column width="64%"}
@@ -177,10 +188,25 @@ The companion `AreWeThereYet` notebook is being migrated for Fall 2026
 
 # Course Logistics
 
-- What is where?
-- Why participate synchronously?
+- [What is where?](#what-is-where)
+- [Why participate synchronously?](#why-participate-synchronously)
 
 ## What is where?
+
+- Navigating these slides
+
+    - Each slide deck has a list of decks and list of major sections after the title page
+
+    - Each major section is headed by a slide that points to minor sections
+
+    - <span class="controls nav-control-sample" aria-label="Previous major section"><span class="controls-arrow" aria-hidden="true"></span></span> and <span class="controls nav-control-sample nav-control-sample-right" aria-label="Next major section"><span class="controls-arrow" aria-hidden="true"></span></span> jump to the previous and next major sections
+
+    - <span class="controls nav-control-sample nav-control-sample-up" aria-label="Previous slide"><span class="controls-arrow" aria-hidden="true"></span></span> and <span class="controls nav-control-sample nav-control-sample-down" aria-label="Next slide"><span class="controls-arrow" aria-hidden="true"></span></span> jump to the previous and next slide
+
+    - <span class="deck-nav-sample" aria-label="Previous slide deck">«</span> and <span class="deck-nav-sample" aria-label="Next slide deck">»</span> at the bottom jump to the previous and next decks
+
+    - <span class="slide-menu-button nav-menu-sample" aria-label="Slide menu"><span class="fas fa-bars" aria-hidden="true"></span></span> at the bottom left shows all slides, as does <kbd>Esc</kbd>
+
 
 - [Course Website](https://fjhickernell.github.io/MATH565Fall2026)
 
@@ -195,7 +221,7 @@ The companion `AreWeThereYet` notebook is being migrated for Fall 2026
 - Grades are in [Canvas](https://iit.instructure.com)
 
 
-## Why participate synchronously?
+## Why participate synchronously? {data-state="goldborder"}
 
 - Keep pace with the course
 - Ask questions and receive answers in real time
@@ -204,14 +230,13 @@ The companion `AreWeThereYet` notebook is being migrated for Fall 2026
 - Build a learning community and get to know one another
 
 
-# Probability review {.tree-marker-slide}
+# Probability review {.tree-marker-slide tree-marker="probability"}
 
-- Random variables and distributions
-- Discrete and continuous distributions
-- Moments
-- Binomial distribution
-- Exponential distribution
-- Multivariate normal distribution
+- [Random variables and distributions](#random-variables-and-distributions)
+- [Moments of random variables](#moments-of-random-variables)
+- [Binomial distribution](#binomial-distribution)
+- [Exponential distribution](#exponential-distribution)
+- [Multivariate normal distribution](#multivariate-normal-distribution)
 
 ```{python}
 #| echo: false
@@ -260,7 +285,7 @@ Q \text{ is the }\alerttext{quantile function}\text{, } Q(p)&:=\inf\{y\in\mathca
 :::
 :::
 
-## Moments of random variables
+## Moments of random variables {.tree-marker-slide tree-marker="probability"}
 
 \begin{align*}
 \mu & :=\Ex(Y) \text{is the }\alerttext{mean}\text{ of }Y \\
@@ -275,7 +300,7 @@ Q \text{ is the }\alerttext{quantile function}\text{, } Q(p)&:=\inf\{y\in\mathca
 & \text{ is the }\alerttext{covariance matrix}\text{ of the $d$-dimensional random vector } \vY
 \end{align*}
 
-## Binomial distribution
+## Binomial distribution {.tree-marker-slide tree-marker="probability"}
 
 For $Y\sim\Bin(n,p)$, (see `scipy.stats.binom(n, p)`)
 
@@ -294,7 +319,7 @@ Q(p)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge p\} \quad \text{no simple formula}
 
 The Bernoulli distribution, $\Bern(p)$, is the case $n=1$
 
-## Exponential distribution
+## Exponential distribution {.tree-marker-slide tree-marker="probability"}
 
 The exponential distribution models a memoryless waiting time. For
 $Y\sim\Exp(\lambda)$,
@@ -323,7 +348,7 @@ $$
 
 `scipy.stats.expon(loc=0, scale=1/lambda)`
 
-## Multivariate normal distribution
+## Multivariate normal distribution {.tree-marker-slide tree-marker="probability"}
 
 Used in finance and uncertainty quantification:
 
@@ -345,14 +370,14 @@ $$
 
 `scipy.stats.multivariate_normal(mean=mu, cov=Sigma)`
 
-# From samples to estimates
+# Samples and estimates {.tree-marker-slide tree-marker="statistics"}
 
-- Sampling
-- Under random sampling
-- Central Limit Theorem
-- Monte Carlo estimates of properties of $Y$
-- Computational counterparts
-- Are we there yet? Revisited
+- [Sampling](#sampling)
+- [Under random sampling](#under-random-sampling)
+- [Central Limit Theorem](#central-limit-theorem)
+- [Monte Carlo estimates of properties of $Y$](#monte-carlo-estimates-of-properties-of-y)
+- [Computational counterparts](#computational-counterparts)
+- [Are we there yet? Revisited](#are-we-there-yet-revisited)
 
 ## Sampling
 
@@ -453,9 +478,9 @@ The companion `AreWeThereYet` notebook is being migrated for Fall 2026.
 
 # Conditioning
 
-- Conditional probability
-- Laws of total expectation and variance
-- Conditional Monte Carlo
+- [Conditional probability](#conditional-probability)
+- [Laws of total expectation and variance](#laws-of-total-expectation-and-variance)
+- [Conditional Monte Carlo](#conditional-monte-carlo)
 
 ## Conditional probability
 
@@ -517,7 +542,7 @@ $$
 
 so a probability density can itself be expressed as an expectation.
 
-# Big ideas
+# Big ideas {data-state="goldborder"}
 
 ::: {.incremental}
 - Use sample quantities to estimate properties of a random variable whose

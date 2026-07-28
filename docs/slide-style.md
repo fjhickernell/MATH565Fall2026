@@ -23,8 +23,11 @@
 Each deck follows this opening sequence:
 
 1. The generated title slide identifies the course and deck.
-2. The `# Course Map` slide lists and links every deck in course order, with
-   the current deck marked using `.alert`.
+2. The `# Course Map` slide uses two columns:
+   - **Course decks** lists and links every deck in course order, with the
+     current deck marked using `.alert`.
+   - **In this deck** lists and links every `#` section in the current deck,
+     in presentation order.
 3. The deck's instructional sections follow.
 
 Every instructional `#` section slide must contain a bullet list of all `##`
@@ -33,6 +36,29 @@ list is a navigational outline for students. It may share the section slide
 with introductory text, a figure, a tree, or other useful content. Update the
 outline whenever a subordinate slide is added, removed, renamed, or reordered.
 A `#` section with no subordinate `##` slides does not need an empty list.
+
+Use raw `<h3>` elements for the two Course Map column labels. A Markdown `###`
+directly after a `#` heading can alter RevealJS slide structure.
+
+```markdown
+# Course Map
+
+::: {.columns}
+::: {.column width="45%"}
+<h3>Course decks</h3>
+
+- [Current deck](current-deck.html){.alert}
+- [Next deck](next-deck.html)
+:::
+
+::: {.column width="55%"}
+<h3>In this deck</h3>
+
+- [First section](#first-section)
+- [Second section](#second-section)
+:::
+:::
+```
 
 Register every deck in `slides/_metadata.yml` with its file, full title, and
 short footer title. Each deck supplies `deck-nav-meta` in its YAML front matter
@@ -64,8 +90,8 @@ The theme provides these important conventions and author-facing features:
 - Footer links, slide numbers, RevealJS controls, and previous/next deck
   navigation have coordinated styling and click behavior.
 - Add the `.headerless` slide class when a slide should suppress its banner.
-  The `.hidden` class hides an element, and `.goldborder` adds the theme's gold
-  border to a selected slide.
+  The `.hidden` class hides an element. Add `data-state="goldborder"` to a
+  slide heading when the slide should have the theme's gold border.
 
 ## Table visual policy
 

@@ -73,16 +73,20 @@ Do not commit or push during ordinary intermediate work unless the user asks.
 The word **"Finished"** has no special meaning. Treat it as ordinary
 conversation unless the user explicitly asks to commit or push.
 
-When the user instructs **"Checkpoint"**, complete the workflow below. This is
-explicit authorization to validate, document durable conventions when needed,
-stage every modified or untracked non-ignored file, commit the complete
-repository state, and push the current branch. A checkpoint is a preservation
-snapshot, not a task-scoped commit: do not omit a change merely because it was
-created by the user, predates the current task, or appears unrelated. Files
-properly ignored by Git remain excluded. If text follows `Checkpoint:`, use
-that text as the commit message. If the user says only `Checkpoint`, construct
-a concise commit message that accurately describes the complete set of
-changes.
+Only these two checkpoint commands are recognized:
+
+- `Checkpoint`
+- `Checkpoint <commit message>`
+
+Either command is explicit authorization to validate, document durable
+conventions when needed, stage every modified or untracked non-ignored file,
+commit the complete repository state, and push the current branch. A
+checkpoint is a preservation snapshot, not a task-scoped commit: do not omit a
+change merely because it was created by the user, predates the current task,
+or appears unrelated. Files properly ignored by Git remain excluded. For
+`Checkpoint <commit message>`, use the text after `Checkpoint ` as the exact
+commit message. For `Checkpoint`, construct a concise commit message that
+accurately describes the complete set of changes.
 
 1. Inspect the authoritative repository and every submodule recursively using
    status output that includes all untracked files.
