@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-07-27">
+  <meta name="dcterms.date" content="2026-07-28">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -36,7 +36,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="01-introduction_files/libs/revealjs/dist/theme/quarto-791676db22f4c161d29d484775c854fe.css">
+  <link rel="stylesheet" href="01-introduction_files/libs/revealjs/dist/theme/quarto-2984d8a8ddac58369fbdb1cd9db03307.css">
   <link href="01-introduction_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="01-introduction_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="01-introduction_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -591,10 +591,15 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">July 27, 2026</p>
+  <p class="date">July 28, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 center">
 <h1>Course Map</h1>
+<div class="columns">
+<div class="column" style="width:45%;">
+<h3>
+Course decks
+</h3>
 <ul>
 <li><a href="01-introduction.html" class="alert">Introduction</a></li>
 <li><a href="02-generating-samples.html">Generating Samples</a></li>
@@ -602,9 +607,19 @@ Fred J. Hickernell
 <li><a href="04-improving-efficiency.html">Improving Efficiency</a></li>
 <li><a href="05-selected-topics.html">Selected Topics</a></li>
 </ul>
-<div class="key-point">
-<p>Course details, schedule updates, assignments, and supporting materials are on the <a href="https://fjhickernell.github.io/MATH565Fall2026/">course website</a></p>
-</div>
+</div><div class="column" style="width:55%;">
+<h3>
+In this deck
+</h3>
+<ul>
+<li><a href="#/what-is-monte-carlo">What is Monte Carlo?</a></li>
+<li><a href="#/course-logistics">Course Logistics</a></li>
+<li><a href="#/probability-review">Probability review</a></li>
+<li><a href="#/samples-and-estimates">Samples and estimates</a></li>
+<li><a href="#/conditioning">Conditioning</a></li>
+<li><a href="#/big-ideas">Big ideas</a></li>
+</ul>
+</div></div>
 </section>
 
 <section>
@@ -613,11 +628,10 @@ Fred J. Hickernell
 <div class="columns">
 <div class="column" style="width:36%;">
 <ul>
-<li>Monte Carlo helps with uncertainty</li>
-<li>Why is there uncertainty?</li>
-<li>How is uncertainty expressed quantitatively?</li>
-<li>Are we there yet?</li>
-<li>Why participate synchronously?</li>
+<li><a href="#/monte-carlo-helps-with-uncertainty">Monte Carlo helps with uncertainty</a></li>
+<li><a href="#/why-is-there-uncertainty">Why is there uncertainty?</a></li>
+<li><a href="#/how-is-uncertainty-expressed-quantitatively">How is uncertainty expressed quantitatively?</a></li>
+<li><a href="#/are-we-there-yet">Are we there yet?</a></li>
 </ul>
 </div><div class="column" style="width:64%;">
 <div class="tree-component tree-component--mc monte-carlo-at-a-glance-tree" data-tree-id="mc" style="--tree-width: 100%; --tree-font-scale: 1; --tree-aspect-ratio: 4 / 3;">
@@ -806,13 +820,22 @@ Y&amp;=
 <section id="course-logistics" class="title-slide slide level1 center">
 <h1>Course Logistics</h1>
 <ul>
-<li>What is where?</li>
-<li>Why participate synchronously?</li>
+<li><a href="#/what-is-where">What is where?</a></li>
+<li><a href="#/why-participate-synchronously">Why participate synchronously?</a></li>
 </ul>
 </section>
 <section id="what-is-where" class="slide level2">
 <h2>What is where?</h2>
 <ul>
+<li><p>Navigating these slides</p>
+<ul>
+<li><p>Each slide deck has a list of decks and list of major sections after the title page</p></li>
+<li><p>Each major section is headed by a slide that points to minor sections</p></li>
+<li><p><span class="controls nav-control-sample" aria-label="Previous major section"><span class="controls-arrow" aria-hidden="true"></span></span> and <span class="controls nav-control-sample nav-control-sample-right" aria-label="Next major section"><span class="controls-arrow" aria-hidden="true"></span></span> jump to the previous and next major sections</p></li>
+<li><p><span class="controls nav-control-sample nav-control-sample-up" aria-label="Previous slide"><span class="controls-arrow" aria-hidden="true"></span></span> and <span class="controls nav-control-sample nav-control-sample-down" aria-label="Next slide"><span class="controls-arrow" aria-hidden="true"></span></span> jump to the previous and next slide</p></li>
+<li><p><span class="deck-nav-sample" aria-label="Previous slide deck">«</span> and <span class="deck-nav-sample" aria-label="Next slide deck">»</span> at the bottom jump to the previous and next decks</p></li>
+<li><p><span class="slide-menu-button nav-menu-sample" aria-label="Slide menu"><span class="fas fa-bars" aria-hidden="true"></span></span> at the bottom left shows all slides, as does <kbd>Esc</kbd></p></li>
+</ul></li>
 <li><p><a href="https://fjhickernell.github.io/MATH565Fall2026">Course Website</a></p>
 <ul>
 <li><p>Course slides are on the course website under the <a href="https://fjhickernell.github.io/MATH565Fall2026/pages/schedule.html">Schedule</a></p></li>
@@ -823,7 +846,7 @@ Y&amp;=
 <li><p>Grades are in <a href="https://iit.instructure.com">Canvas</a></p></li>
 </ul>
 </section>
-<section id="why-participate-synchronously" class="slide level2">
+<section id="why-participate-synchronously" class="slide level2" data-state="goldborder">
 <h2>Why participate synchronously?</h2>
 <ul>
 <li>Keep pace with the course</li>
@@ -834,15 +857,19 @@ Y&amp;=
 </ul>
 </section></section>
 <section>
-<section id="probability-review" class="title-slide slide level1 tree-marker-slide center">
+<section id="probability-review" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="probability">
 <h1>Probability review</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
 <ul>
-<li>Random variables and distributions</li>
-<li>Discrete and continuous distributions</li>
-<li>Moments</li>
-<li>Binomial distribution</li>
-<li>Exponential distribution</li>
-<li>Multivariate normal distribution</li>
+<li><a href="#/random-variables-and-distributions">Random variables and distributions</a></li>
+<li><a href="#/moments-of-random-variables">Moments of random variables</a></li>
+<li><a href="#/binomial-distribution">Binomial distribution</a></li>
+<li><a href="#/exponential-distribution">Exponential distribution</a></li>
+<li><a href="#/multivariate-normal-distribution">Multivariate normal distribution</a></li>
 </ul>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
 <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
@@ -886,8 +913,13 @@ Q \text{ is the }\alerttext{quantile function}\text{, } Q(p)&amp;:=\inf\{y\in\ma
 \end{gather*}\]</span></p>
 </div></div>
 </section>
-<section id="moments-of-random-variables" class="slide level2">
+<section id="moments-of-random-variables" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Moments of random variables</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
 <p><span class="math display">\[\begin{align*}
 \mu &amp; :=\Ex(Y) \text{is the }\alerttext{mean}\text{ of }Y \\
 \sigma^2 &amp; :=\var(Y)
@@ -901,8 +933,13 @@ Q \text{ is the }\alerttext{quantile function}\text{, } Q(p)&amp;:=\inf\{y\in\ma
 &amp; \text{ is the }\alerttext{covariance matrix}\text{ of the $d$-dimensional random vector } \vY
 \end{align*}\]</span></p>
 </section>
-<section id="binomial-distribution" class="slide level2">
+<section id="binomial-distribution" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Binomial distribution</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
 <p>For <span class="math inline">\(Y\sim\Bin(n,p)\)</span>, (see <code>scipy.stats.binom(n, p)</code>)</p>
 <p><span class="math display">\[\begin{gather*}
 \varrho(y)=\Prob(Y=y)
@@ -918,8 +955,13 @@ Q(p)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge p\} \quad \text{no simple formula}
 \end{gather*}\]</span></p>
 <p>The Bernoulli distribution, <span class="math inline">\(\Bern(p)\)</span>, is the case <span class="math inline">\(n=1\)</span></p>
 </section>
-<section id="exponential-distribution" class="slide level2">
+<section id="exponential-distribution" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Exponential distribution</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
 <p>The exponential distribution models a memoryless waiting time. For <span class="math inline">\(Y\sim\Exp(\lambda)\)</span>,</p>
 <p><span class="math display">\[
 \rho(y)=
@@ -943,8 +985,13 @@ Q(p)=-\frac{\log(1-p)}{\lambda},
 \]</span></p>
 <p><code>scipy.stats.expon(loc=0, scale=1/lambda)</code></p>
 </section>
-<section id="multivariate-normal-distribution" class="slide level2">
+<section id="multivariate-normal-distribution" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Multivariate normal distribution</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
 <p>Used in finance and uncertainty quantification:</p>
 <p><span class="math display">\[
 \vY\sim\Norm(\vmu,\boldsymbol\Sigma),
@@ -961,15 +1008,20 @@ Q(p)=-\frac{\log(1-p)}{\lambda},
 <p><code>scipy.stats.multivariate_normal(mean=mu, cov=Sigma)</code></p>
 </section></section>
 <section>
-<section id="from-samples-to-estimates" class="title-slide slide level1 center">
-<h1>From samples to estimates</h1>
+<section id="samples-and-estimates" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="statistics">
+<h1>Samples and estimates</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+</div>
+
 <ul>
-<li>Sampling</li>
-<li>Under random sampling</li>
-<li>Central Limit Theorem</li>
-<li>Monte Carlo estimates of properties of <span class="math inline">\(Y\)</span></li>
-<li>Computational counterparts</li>
-<li>Are we there yet? Revisited</li>
+<li><a href="#/sampling">Sampling</a></li>
+<li><a href="#/under-random-sampling">Under random sampling</a></li>
+<li><a href="#/central-limit-theorem">Central Limit Theorem</a></li>
+<li><a href="#/monte-carlo-estimates-of-properties-of-y">Monte Carlo estimates of properties of <span class="math inline">\(Y\)</span></a></li>
+<li><a href="#/computational-counterparts">Computational counterparts</a></li>
+<li><a href="#/are-we-there-yet-revisited">Are we there yet? Revisited</a></li>
 </ul>
 </section>
 <section id="sampling" class="slide level2">
@@ -1114,9 +1166,9 @@ Q(p)=-\frac{\log(1-p)}{\lambda},
 <section id="conditioning" class="title-slide slide level1 center">
 <h1>Conditioning</h1>
 <ul>
-<li>Conditional probability</li>
-<li>Laws of total expectation and variance</li>
-<li>Conditional Monte Carlo</li>
+<li><a href="#/conditional-probability">Conditional probability</a></li>
+<li><a href="#/laws-of-total-expectation-and-variance">Laws of total expectation and variance</a></li>
+<li><a href="#/conditional-monte-carlo">Conditional Monte Carlo</a></li>
 </ul>
 </section>
 <section id="conditional-probability" class="slide level2">
@@ -1166,7 +1218,7 @@ g(Z):=\Ex(Y\mid Z)
 \]</span></p>
 <p>so a probability density can itself be expressed as an expectation.</p>
 </section></section>
-<section id="big-ideas" class="title-slide slide level1 center">
+<section id="big-ideas" class="title-slide slide level1 center" data-state="goldborder">
 <h1>Big ideas</h1>
 <ul>
 <li class="fragment">Use sample quantities to estimate properties of a random variable whose distribution is difficult to obtain directly.</li>
