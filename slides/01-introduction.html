@@ -869,7 +869,7 @@ Y&amp;=
 <li><a href="#/moments-of-random-variables">Moments of random variables</a></li>
 <li><a href="#/binomial-distribution">Binomial distribution</a></li>
 <li><a href="#/exponential-distribution">Exponential distribution</a></li>
-<li><a href="#/multivariate-normal-distribution">Multivariate normal distribution</a></li>
+<li><a href="#/multivariate-normal-or-gaussian-distribution">Multivariate normal or Gaussian distribution</a></li>
 </ul>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
 <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
@@ -922,8 +922,9 @@ Q \text{ is the }\alerttext{quantile function}\text{, } Q(p)&amp;:=\inf\{y\in\ma
 
 <p><span class="math display">\[\begin{align*}
 \mu &amp; :=\Ex(Y) \text{is the }\alerttext{mean}\text{ of }Y \\
+\med(Y) &amp; := Q(0.5) \\
 \sigma^2 &amp; :=\var(Y)
-=\Ex\bigl[(Y-\mu)^2\bigr] = \Ex(Y^2) - \bigl[\Ex(Y)]^2 \text{ is the }\alerttext{variance}\text{ of } Y
+=\Ex\bigl[(Y-\mu)^2\bigr] \overset{\exstar}{=} \Ex(Y^2) - \bigl[\Ex(Y)]^2 \text{ is the }\alerttext{variance}\text{ of } Y
 \\
 \sigma &amp; \text{ is the }\alerttext{standard deviation}\text{ of } Y \\
 \cov(\vY)
@@ -932,6 +933,9 @@ Q \text{ is the }\alerttext{quantile function}\text{, } Q(p)&amp;:=\inf\{y\in\ma
 \bigr)_{j,k=1}^{d} \\
 &amp; \text{ is the }\alerttext{covariance matrix}\text{ of the $d$-dimensional random vector } \vY
 \end{align*}\]</span></p>
+<p><span class="math inline">\(\exstar\)</span> Show that <span class="math inline">\(\displaystyle \mu = \argmin_m \Ex\bigl[ (Y-m)^2 \bigr]\)</span></p>
+<p><span class="math inline">\(\exstar\)</span> Show that <span class="math inline">\(\displaystyle \med(Y) = \argmin_m \Ex \lvert Y-m \rvert\)</span></p>
+<p><span class="math inline">\(\exstar\)</span> Show that <span class="math inline">\(\cov(\vY)\)</span> is symmetric and has non-negative eigenvalues</p>
 </section>
 <section id="binomial-distribution" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Binomial distribution</h2>
@@ -953,7 +957,7 @@ Q(p)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge p\} \quad \text{no simple formula}
 \qquad
 \var(Y)=np(1-p)
 \end{gather*}\]</span></p>
-<p>The Bernoulli distribution, <span class="math inline">\(\Bern(p)\)</span>, is the case <span class="math inline">\(n=1\)</span></p>
+<p>The <span class="alert">Bernoulli</span> distribution, <span class="math inline">\(\Bern(p)\)</span>, is the case <span class="math inline">\(n=1\)</span></p>
 </section>
 <section id="exponential-distribution" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Exponential distribution</h2>
@@ -962,50 +966,48 @@ Q(p)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge p\} \quad \text{no simple formula}
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
-<p>The exponential distribution models a memoryless waiting time. For <span class="math inline">\(Y\sim\Exp(\lambda)\)</span>,</p>
-<p><span class="math display">\[
-\rho(y)=
+<p>Models a <span class="alert">memoryless waiting time</span></p>
+<p>For <span class="math inline">\(Y\sim\Exp(\lambda)\)</span>, (see <code>scipy.stats.expon(loc=0, scale=1/lambda)</code>)</p>
+<p><span class="math display">\[\begin{gather*}
+\varrho(y)=
 \begin{cases}
-0, &amp; y&lt;0,\\
-\lambda \me^{-\lambda y}, &amp; y\ge 0,
+0, &amp; y&lt;0\\
+\lambda \me^{-\lambda y}, &amp; y\ge 0
 \end{cases}
-\qquad
+\\
 F(y)=
 \begin{cases}
-0, &amp; y&lt;0,\\
-1-\me^{-\lambda y}, &amp; y\ge 0.
+0, &amp; y&lt;0\\
+1-\me^{-\lambda y}, &amp; y\ge 0
 \end{cases}
-\]</span></p>
-<p><span class="math display">\[
-Q(p)=-\frac{\log(1-p)}{\lambda},
-\quad
+\\
+Q(p)=-\frac{\log(1-p)}{\lambda}
+\\
 \Ex(Y)=\frac{1}{\lambda},
 \quad
-\var(Y)=\frac{1}{\lambda^2}.
-\]</span></p>
-<p><code>scipy.stats.expon(loc=0, scale=1/lambda)</code></p>
+\var(Y)=\frac{1}{\lambda^2}
+\end{gather*}\]</span></p>
 </section>
-<section id="multivariate-normal-distribution" class="slide level2 tree-marker-slide" data-tree-marker="probability">
-<h2>Multivariate normal distribution</h2>
+<section id="multivariate-normal-or-gaussian-distribution" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<h2>Multivariate normal or Gaussian distribution</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
-<p>Used in finance and uncertainty quantification:</p>
+<p>Used in finance and uncertainty quantification, (see <code>scipy.stats.multivariate_normal(mean=mu, cov=Sigma)</code>):</p>
 <p><span class="math display">\[
-\vY\sim\Norm(\vmu,\boldsymbol\Sigma),
+\vY\sim\Norm(\vmu,\mSigma)
 \]</span></p>
-<p>where <span class="math inline">\(\vmu\)</span> is the mean vector and <span class="math inline">\(\boldsymbol\Sigma\)</span> is the covariance matrix. Its density is</p>
+<p>where <span class="math inline">\(\vmu\)</span> is the mean vector and <span class="math inline">\(\mSigma\)</span> is the covariance matrix</p>
 <p><span class="math display">\[
-\rho(\vy)
-=\frac{1}{(2\pi)^{d/2}\abs{\boldsymbol\Sigma}^{1/2}}
+\varrho(\vy)
+=\frac{1}{(2\pi)^{d/2}\abs{\mSigma}^{1/2}}
 \exp\left(
 -\frac{1}{2}(\vy-\vmu)^{\mathsf T}
-\boldsymbol\Sigma^{-1}(\vy-\vmu)
-\right).
+\mSigma^{-1}(\vy-\vmu)
+\right)
 \]</span></p>
-<p><code>scipy.stats.multivariate_normal(mean=mu, cov=Sigma)</code></p>
 </section></section>
 <section>
 <section id="samples-and-estimates" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="statistics">
@@ -1026,14 +1028,16 @@ Q(p)=-\frac{\log(1-p)}{\lambda},
 </section>
 <section id="sampling" class="slide level2">
 <h2>Sampling</h2>
-<p>Let <span class="math inline">\(Y\)</span> be a random variable, often <span class="math inline">\(Y=f(\vX)\)</span>, and let <span class="math inline">\(Y_1,\ldots,Y_n\)</span> be a sample - not necessarily random or IID.</p>
-<p>The <span class="alert">sample mean</span> and <span class="alert">sample variance</span> are</p>
-<p><span class="math display">\[
-\hmu_n:=\frac{1}{n}\sum_{i=1}^nY_i,
-\qquad
-\hsigma_n^2
-:=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\hmu_n)^2.
-\]</span></p>
+<p>Let</p>
+<ul>
+<li><p><span class="math inline">\(Y\)</span> be a random variable, often <span class="math inline">\(Y=f(\vX)\)</span></p></li>
+<li><p><span class="math inline">\(Y_1,\ldots,Y_n\)</span> be a sample—not necessarily random or IID</p></li>
+</ul>
+<p><span class="math display">\[\begin{align*}
+\hmu_n &amp; :=\frac{1}{n}\sum_{i=1}^nY_i \text{ is the }\alerttext{sample mean}\\
+\hsigma_n^2 &amp;
+:=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\hmu_n)^2 \text{ is the }\alerttext{sample variance}\\
+\end{align*}\]</span></p>
 </section>
 <section id="under-random-sampling" class="slide level2">
 <h2>Under random sampling</h2>
