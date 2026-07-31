@@ -30,10 +30,10 @@ Coverage, rooms, final-examination details, and PDFs will be added as they are
 finalized.
 
 | Date | Assessment | Coverage or notes | PDF |
-|---|---|---|---|
+|---|---------|---------|---------|
 | TBA | Test 1 | Coverage TBA; room TBA | TBA |
 | TBA | Test 2 | Coverage TBA; room TBA | TBA |
-| TBA | Final Exam—Take-Home and In-Class | Date, time, location, and coverage TBA | TBA |
+| TBA | Final Exam—Take-Home and In-Class | Date, time, location, and coverage TBA<br>**No arrangements to take in-class earlier** | TBA |
 
 ---
 

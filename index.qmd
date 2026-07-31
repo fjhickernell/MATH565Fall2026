@@ -191,6 +191,7 @@ By the end of this course, students will be able to:
 - [**Project:**](pages/project.qmd) 25%
 - [**Midterm Tests:**](pages/tests.qmd) 20%
 - [**Final Exam (Take-Home (35%) + In-Class (65%)):**](pages/tests.qmd) 40%
+    - In-Class _on the date assigned by the registrar_
 - **Extra Credit:** up to 10% if you are the first to find an error in
   - My lecture slides, Jupyter notebooks, or assignments at least 24 hours
     after I have presented them in class, or
