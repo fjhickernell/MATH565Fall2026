@@ -75,6 +75,9 @@ appropriate phase rather than appended indiscriminately.
       `notebooks/NOTEBOOK_INVENTORY.md`.
     - [ ] Create the target directories and migrate notebooks incrementally
       according to `notebooks/NOTEBOOK_INVENTORY.md`.
+      - [x] Create the Sampling, Applications, and Performance directories.
+      - [x] Migrate `AreWeThereYet.ipynb` to Applications with modern minimal
+        `classlib`/`nbviz` initialization and validate clean execution.
     - [ ] Add notebook links only after each target exists and passes
       validation.
     - [x] Validate Quarto rendering and generated page structure.

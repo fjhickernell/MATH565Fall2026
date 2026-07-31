@@ -74,10 +74,11 @@ notebook's dominant teaching purpose; ambiguous cases are identified below.
 
 ### `AreWeThereYet.ipynb`
 
-- **Status:** Not migrated.
+- **Status:** Migrated for instructor review; initialization modernized and
+  automated execution validated in the documented course environment.
 - **Source:** `MATH565Fall2025/notebooks/AreWeThereYet.ipynb`
 - **Proposed target:**
-  `MATH565Fall2026/notebooks/performance/AreWeThereYet.ipynb`
+  `MATH565Fall2026/notebooks/applications/AreWeThereYet.ipynb`
 - **Description:** Uses a waiting-time model to study Monte Carlo estimation,
   convergence rates, root mean squared error, the central limit theorem,
   unknown variance, confidence intervals, and quantiles.
@@ -88,12 +89,16 @@ notebook's dominant teaching purpose; ambiguous cases are identified below.
   broad structure and cell count but no saved outputs. Treat it as an earlier
   duplicate unless a cell-by-cell review finds a specific correction.
   Several checkpoints have related names but are not primary sources.
-- **Migration concerns:** Colab setup clones Fall 2025 and installs QMCPy from
-  `develop`. Review the zero-inflated exponential example, repository links,
-  and path discovery.
-- **Classification:** The waiting-time story is an application, but the
-  notebook's dominant purpose is convergence and error assessment; therefore
-  Performance is recommended.
+- **Migration notes:** Removed the stale Fall 2025 Colab bootstrap and fragile
+  repository-path injection. The notebook now follows the current shared
+  initialization pattern (`import classlib as cl`, `cl.nbviz.init`, and
+  `cl.nbviz.TOL_BRIGHT`) and imports only the packages it uses. The
+  zero-inflated exponential example and the notebook's mathematical and
+  pedagogical details still require careful instructor review before the
+  notebook is linked from the course website.
+- **Classification:** Applications. The waiting-time model is the course's
+  introductory illustrative application, even though it also introduces
+  convergence and error assessment.
 
 ### `AsianOptionExample.ipynb`
 
@@ -381,6 +386,86 @@ PyTorch and platform-specific capabilities. Confirm imported `classlib` and
 QMCPy APIs against the pinned submodules rather than relying on moving remote
 branches.
 
+### Initialization cells
+
+Modernize each migrated notebook's initialization cell using the current
+`classlib` namespace pattern established in `AreWeThereYet.ipynb`. Import the
+package once as `cl`, initialize notebook visualization through `cl.nbviz`,
+and access other shared modules through the same namespace. A typical minimal
+initialization is:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import classlib as cl
+
+%matplotlib inline
+
+cl.nbviz.init(use_tex=True)
+colors = cl.nbviz.TOL_BRIGHT
+```
+
+Add SciPy, QMCPy, IPython display helpers, or other packages only when the
+notebook actually uses them. Likewise, call `cl.nbviz.configure(...)` only
+when the notebook intentionally saves figures. Replace legacy aliases such as
+`import classlib.nbviz as nb` and update calls to `cl.nbviz.<name>`; use
+namespaced helpers such as `cl.distributions.<name>` where appropriate.
+Remove unused imports, constants, duplicated setup, `sys.path` manipulation,
+and working-directory-based repository discovery. The repository's documented
+editable installation makes `classlib` available without notebook-local path
+injection.
+
+### New notebooks created from scratch
+
+The migration guidance above also establishes the baseline for new MATH 565
+notebooks, but a new notebook should begin cleanly rather than copying legacy
+setup from a migrated file. Place it directly in the appropriate
+`notebooks/sampling/`, `notebooks/applications/`, or
+`notebooks/performance/` directory and select the course `qmcpy` Jupyter
+kernel. Start with a Markdown title and short statement of purpose, followed
+by one initialization cell based on this template:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import classlib as cl
+
+%matplotlib inline
+
+cl.nbviz.init(use_tex=True)
+colors = cl.nbviz.TOL_BRIGHT
+```
+
+Treat this as a starting template, not a mandatory list of imports. Remove
+NumPy or Matplotlib if the notebook does not use them, and add dependencies
+only where the notebook needs them. Common additions include:
+
+```python
+import scipy.stats as stats
+import qmcpy as qp
+from IPython.display import display, Markdown
+```
+
+For reproducible pseudo-random examples, create an explicit generator with a
+documented seed, for example `rng = np.random.default_rng(2026)`, and use that
+generator consistently when the relevant APIs support it. If the notebook
+deliberately writes figures, add an explicit configuration with a
+notebook-specific path:
+
+```python
+cl.nbviz.configure(
+    figpath="_figures/notebook_name",
+    savefigs=True,
+    imgfrmt="png",
+)
+```
+
+Do not add package-install commands, repository cloning, `sys.path` changes,
+or working-directory discovery to a new notebook. Its dependencies come from
+the documented repository setup. Before adding it to `pages/notebooks.qmd`,
+restart the kernel, run all cells in order, inspect the results and runtime,
+and confirm that any generated files follow the repository output policy.
+
 ### Data, images, and generated files
 
 No principal notebook was found to read a separate course image or tabular
@@ -430,8 +515,9 @@ For each migrated notebook:
    semester-specific material.
 3. Replace fragile working-directory and repository-root assumptions.
 4. Update Fall 2025, Colab, repository, and dependency links.
-5. Confirm all imported `classlib` and QMCPy APIs against pinned submodules.
-6. Remove unused imports and duplicated setup when appropriate.
+5. Modernize the initialization cell according to the convention above and
+   confirm all imported `classlib` and QMCPy APIs against pinned submodules.
+6. Remove unused imports and duplicated setup.
 7. Decide how generated figures and other output files are handled.
 8. Restart the kernel and run all cells in order in the documented course
    environment.
