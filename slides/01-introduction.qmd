@@ -325,6 +325,15 @@ Q(p)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge p\} \quad \text{no simple formula}
 \end{gather*}
 
 The [Bernoulli]{.alert} distribution, $\Bern(p)$, is the case $n=1$
+\begin{gather*}
+\varrho(y)=\Prob(Y=y)
+=p^y(1-p)^{1-y},
+\qquad y=0,1
+\\
+\Ex(Y)=p,
+\qquad
+\var(Y)=p(1-p)
+\end{gather*}
 
 ## Exponential distribution {.tree-marker-slide tree-marker="probability"}
 
@@ -335,21 +344,15 @@ $Y\sim\Exp(\lambda)$, (see `scipy.stats.expon(loc=0, scale=1/lambda)`)
 
 \begin{gather*}
 \varrho(y)=
-\begin{cases}
-0, & y<0\\
-\lambda \me^{-\lambda y}, & y\ge 0
-\end{cases}
+\lambda \me^{-\lambda y}, \quad  0 \le y < \infty
 \\
 F(y)=
-\begin{cases}
-0, & y<0\\
-1-\me^{-\lambda y}, & y\ge 0
-\end{cases}
+1-\me^{-\lambda y},  \quad  0 \le y < \infty
 \\
-Q(p)=-\frac{\log(1-p)}{\lambda}
+Q(p) \overset{\exstar}{=} -\frac{\log(1-p)}{\lambda}  \quad 0 < p < 1
 \\
-\Ex(Y)=\frac{1}{\lambda},
-\quad
+\Ex(Y)=\frac{1}{\lambda}
+\\
 \var(Y)=\frac{1}{\lambda^2}
 \end{gather*}
 
@@ -371,7 +374,7 @@ $$
 \exp\left(
 -\frac{1}{2}(\vy-\vmu)^{\mathsf T}
 \mSigma^{-1}(\vy-\vmu)
-\right)
+\right), \qquad \vy \in \reals^d
 $$
 
 # Samples and estimates {.tree-marker-slide tree-marker="statistics"}
@@ -392,31 +395,36 @@ Let
 - $Y_1,\ldots,Y_n$ be a sample—not necessarily random or IID
 
 \begin{align*}
-\hmu_n & :=\frac{1}{n}\sum_{i=1}^nY_i \text{ is the }\alerttext{sample mean}\\
+\hmu_n & :=\frac{1}{n}\sum_{i=1}^nY_i \quad \text{is the }\alerttext{sample mean}\\
 \hsigma_n^2 &
-:=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\hmu_n)^2 \text{ is the }\alerttext{sample variance}\\
+:=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\hmu_n)^2 \quad \text{is the }\alerttext{sample variance}\\
+\end{align*}
+
+### Mean squared error, bias, and variance
+If $\vTheta$ is an estimator of a population parameter (mean, variance, median, $\ldots$) $\vtheta$, then
+\begin{align*}
+\bias(\vTheta) &: = \Ex(\vTheta) - \theta \quad \alerttext{unbiased means zero bias} \\
+\mse(\vTheta) & : = \Ex\bigl[ \bigl(\vTheta - \Ex(\vTheta) \bigr)^2 \bigr] \quad \text{is the }\alerttext{mean squared error}\\
+& \overset{\exstar}{=} [\bias(\vTheta)]^2 + \var(\vTheta)
 \end{align*}
 
 ## Under random sampling
 
-Suppose $Y_1,Y_2,\ldots\IIDsim Y$, where
-$\Ex(Y)=\mu$ and $\var(Y)=\sigma^2$.
-
+Suppose $Y_1,Y_2,\ldots\sim Y$, where
+$\Ex(Y)=\mu$ and $\var(Y)=\sigma^2$.  Then
 $$
-\Ex(\hmu_n)=\mu,
-\qquad
-\Ex(\hsigma_n^2)=\sigma^2.
+\Ex(\hmu_n)=\mu \quad \text{$\hmu_n$ is an }\alerttext{unbiased}\text{ estimator of }\mu
 $$
-
-Thus both estimators are [unbiased]{.alert}. Moreover,
-
-$$
+If in addition, $Y_1,Y_2,\ldots$ are [uncorrelated]{.alert}, then 
+\begin{gather*}
+\Ex(\hsigma_n^2)=\sigma^2  \quad \text{$\hsigma_n^2$ is an }\alerttext{unbiased}\text{ estimator of }\sigma^2 \\
 \mse(\hmu_n)
 =\Ex\left[(\mu-\hmu_n)^2\right]
 =\frac{\sigma^2}{n},
 \qquad
-\rmse(\hmu_n)=\frac{\sigma}{\sqrt{n}}.
-$$
+\rmse(\hmu_n)=\frac{\sigma}{\sqrt{n}}
+\end{gather*}
+
 
 ## Central Limit Theorem
 
