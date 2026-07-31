@@ -18,3 +18,23 @@ markers:
   statistics:
     labels:
       - statistics
+
+  probstat:
+    font_scale: 3.3
+    labels:
+      - probability
+      - statistics
+
+  estimation:
+    labels:
+      - estimation
+
+  stat-estim:
+    labels:
+      - statistics
+      - estimation
+
+  prob-est:
+    labels:
+      - probability
+      - estimation

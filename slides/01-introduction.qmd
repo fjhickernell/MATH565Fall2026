@@ -377,7 +377,7 @@ $$
 \right), \qquad \vy \in \reals^d
 $$
 
-# Samples and estimates {.tree-marker-slide tree-marker="statistics"}
+# Samples and estimates {.tree-marker-slide tree-marker="stat-estim"}
 
 - [Sampling](#sampling)
 - [Under random sampling](#under-random-sampling)
@@ -386,7 +386,7 @@ $$
 - [Computational counterparts](#computational-counterparts)
 - [Are we there yet? Revisited](#are-we-there-yet-revisited)
 
-## Sampling
+## Sampling {.tree-marker-slide tree-marker="stat-estim"}
 
 Let 
 
@@ -408,7 +408,7 @@ If $\vTheta$ is an estimator of a population parameter (mean, variance, median, 
 & \overset{\exstar}{=} [\bias(\vTheta)]^2 + \var(\vTheta)
 \end{align*}
 
-## Under random sampling
+## Under random sampling {.tree-marker-slide tree-marker="stat-estim"}
 
 Suppose $Y_1,Y_2,\ldots\sim Y$, where
 $\Ex(Y)=\mu$ and $\var(Y)=\sigma^2$.  Then
@@ -420,13 +420,13 @@ If in addition, $Y_1,Y_2,\ldots$ are [uncorrelated]{.alert}, then
 \Ex(\hsigma_n^2)=\sigma^2  \quad \text{$\hsigma_n^2$ is an }\alerttext{unbiased}\text{ estimator of }\sigma^2 \\
 \mse(\hmu_n)
 =\Ex\left[(\mu-\hmu_n)^2\right]
-=\frac{\sigma^2}{n},
-\qquad
+=\frac{\sigma^2}{n}
+\\
 \rmse(\hmu_n)=\frac{\sigma}{\sqrt{n}}
 \end{gather*}
 
 
-## Central Limit Theorem
+## Central Limit Theorem {.tree-marker-slide tree-marker="probstat"}
 
 If $Y_1,Y_2,\ldots\IIDsim Y$ and $0<\sigma^2<\infty$,
 then
@@ -434,32 +434,39 @@ then
 $$
 \frac{\hmu_n-\mu}{\sigma/\sqrt{n}}
 \dto\Norm(0,1)
-\qquad\text{as }n\to\infty.
+\qquad\text{as }n\to\infty
 $$
 
 For large $n$,
 
 $$
 \hmu_n\appxsim
-\Norm\left(\mu,\frac{\sigma^2}{n}\right).
+\Norm\left(\mu,\frac{\sigma^2}{n}\right)
 $$
 
 ::: {.key-point}
-Monte Carlo error for a sample mean typically decreases like $n^{-1/2}$.
+Monte Carlo error for a sample mean typically decreases like $n^{-1/2}$
 :::
 
-## Monte Carlo estimates of properties of $Y$
+## Monte Carlo estimators of properties of $Y$ {data-state="goldborder" .tree-marker-slide tree-marker="stat-estim"}
 
 | Population quantity | Sample approximation |
-|---|---|
-| Mean $\mu$ | $\hmu_n$ and an approximate 99% interval $\hmu_n\pm2.58\hsigma_n/\sqrt n$ |
-| Variance $\sigma^2$ | $\hsigma_n^2$ |
-| CDF $F$ | Empirical distribution function $\hF_n$ |
-| Quantile function $Q$ | Empirical quantile function $\widehat Q_n$ |
-| Density or mass function $\rho$ | Histogram or kernel density estimate |
+|---|------|
+| Mean, $\mu$ | [point estimator]{.alert} $\hmu_n$ <br>approximate 99% [confidence interval]{.alert} $\hmu_n\pm2.58\hsigma_n/\sqrt n$ |
+| Variance, $\sigma^2$ | $\hsigma_n^2$ |
+| CDF, $F$ | Empirical distribution function, $\displaystyle  \hF_n(y) := \frac 1n \sum_{i=1}^n \indic(Y_i \le y)$ |
+| Quantile function, $Q$ | Empirical quantile function, $\widehat Q_n$ |
+| Density or mass function, $\varrho$ | Histogram or kernel density estimator |
 
-The mean has a natural interval estimate; the other rows commonly begin with
-point estimates.
+- Mean has a natural interval estimator
+- Other properties commonly begin with
+point estimators
+
+::: {.key-point}
+[Estimator]{.alert} is a random quantity based on random data not yet observed
+
+[Estimate]{.alert} is the numerical result based on observed data
+:::
 
 ## Computational counterparts
 
@@ -488,13 +495,13 @@ only a mean question.
 
 The companion `AreWeThereYet` notebook is being migrated for Fall 2026.
 
-# Conditioning
+# Conditioning {.tree-marker-slide tree-marker="prob-est"}
 
 - [Conditional probability](#conditional-probability)
 - [Laws of total expectation and variance](#laws-of-total-expectation-and-variance)
 - [Conditional Monte Carlo](#conditional-monte-carlo)
 
-## Conditional probability
+## Conditional probability {.tree-marker-slide tree-marker="probability"}
 
 For a random vector $(Y,Z)$,
 
@@ -508,10 +515,10 @@ $$
 The second equality is [Bayes' theorem]{.alert}. For densities,
 
 $$
-\rho_{Y\mid Z}(y\mid z)=\frac{\rho_{Y,Z}(y,z)}{\rho_Z(z)}.
+\varrho_{Y\mid Z}(y\mid z)=\frac{\varrho_{Y,Z}(y,z)}{\varrho_Z(z)}.
 $$
 
-## Laws of total expectation and variance
+## Laws of total expectation and variance {.tree-marker-slide tree-marker="probability"}
 
 $$
 \Ex(Y)=\Ex_Z\bigl[\Ex(Y\mid Z)\bigr],
@@ -528,7 +535,7 @@ Conditioning separates variation within a fixed $Z$ from variation in the
 conditional mean across values of $Z$.
 :::
 
-## Conditional Monte Carlo
+## Conditional Monte Carlo {.tree-marker-slide tree-marker="prob-est"}
 
 Let $Y=f(X_1,\ldots,X_d)$ and $Z=(X_2,\ldots,X_d)$. If
 
@@ -541,30 +548,30 @@ is available analytically, then
 $$
 \mu=\Ex(Y)=\Ex_Z[g(Z)],
 \qquad
-\var_Z(g(Z))\le\var(Y).
+\var_Z(g(Z)) \overset{\exstar}{\le} \var(Y)
 $$
 
-Sampling $g(Z)$ instead of $Y$ can therefore reduce variance.
+Sampling $g(Z)$ instead of $Y$ can therefore reduce variance
 
-If the conditional density $h(y,Z):=\rho_{Y\mid Z}(y\mid Z)$ is available,
+&nbsp;
+
+If the conditional density $h(y,Z):=\varrho_{Y\mid Z}(y\mid Z)$ is available
 
 $$
-\rho_Y(y)=\Ex_Z[h(y,Z)],
+\varrho_Y(y)=\Ex_Z[h(y,Z)]
 $$
 
-so a probability density can itself be expressed as an expectation.
+so a probability density can itself be expressed as an expectation
 
 # Big ideas {data-state="goldborder"}
 
-::: {.incremental}
 - Use sample quantities to estimate properties of a random variable whose
-  distribution is difficult to obtain directly.
+  distribution is difficult to obtain directly
 - Targets include means, variances, covariances, probability mass or density
-  functions, cumulative distribution functions, and quantiles.
+  functions, cumulative distribution functions, and quantiles
 - For means, the CLT provides interval estimates that quantify Monte Carlo
-  uncertainty.
+  uncertainty
 - Other properties often begin with point estimates - one approximate value
-  for each target.
+  for each target
 - Conditioning can turn a difficult random quantity into a lower-variance
-  expectation.
-:::
+  expectation

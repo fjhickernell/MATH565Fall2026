@@ -213,7 +213,8 @@ update every slide that uses the corresponding semantic command.
   `\Norm`, `\Exp`, `\Gam`, and `\Pois`. For example, write
   `$Y\sim\Exp(\lambda)$`, not `$Y\sim\operatorname{Exp}(\lambda)$`.
 - Use `\varrho` for probability mass functions and probability density
-  functions.
+  functions, including marginal, joint, and conditional forms. Reserve `\rho`
+  for correlation coefficients and other non-PMF/PDF meanings.
 - For successive displayed equations, prefer one
   `\begin{gather*} ... \\ ... \end{gather*}` environment instead of multiple
   consecutive `$$ ... $$` blocks.
