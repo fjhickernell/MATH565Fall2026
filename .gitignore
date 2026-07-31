@@ -19,3 +19,7 @@ __pycache__/
 slides/classlib
 
 /.quarto/
+
+# Jupyter notebook checkpoints
+
+**/.ipynb_checkpoints/
