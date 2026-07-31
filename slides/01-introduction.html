@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-07-28">
+  <meta name="dcterms.date" content="2026-07-31">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -591,7 +591,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">July 28, 2026</p>
+  <p class="date">July 31, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 center">
 <h1>Course Map</h1>
@@ -957,7 +957,15 @@ Q(p)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge p\} \quad \text{no simple formula}
 \qquad
 \var(Y)=np(1-p)
 \end{gather*}\]</span></p>
-<p>The <span class="alert">Bernoulli</span> distribution, <span class="math inline">\(\Bern(p)\)</span>, is the case <span class="math inline">\(n=1\)</span></p>
+<p>The <span class="alert">Bernoulli</span> distribution, <span class="math inline">\(\Bern(p)\)</span>, is the case <span class="math inline">\(n=1\)</span> <span class="math display">\[\begin{gather*}
+\varrho(y)=\Prob(Y=y)
+=p^y(1-p)^{1-y},
+\qquad y=0,1
+\\
+\Ex(Y)=p,
+\qquad
+\var(Y)=p(1-p)
+\end{gather*}\]</span></p>
 </section>
 <section id="exponential-distribution" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Exponential distribution</h2>
@@ -970,21 +978,15 @@ Q(p)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge p\} \quad \text{no simple formula}
 <p>For <span class="math inline">\(Y\sim\Exp(\lambda)\)</span>, (see <code>scipy.stats.expon(loc=0, scale=1/lambda)</code>)</p>
 <p><span class="math display">\[\begin{gather*}
 \varrho(y)=
-\begin{cases}
-0, &amp; y&lt;0\\
-\lambda \me^{-\lambda y}, &amp; y\ge 0
-\end{cases}
+\lambda \me^{-\lambda y}, \quad  0 \le y &lt; \infty
 \\
 F(y)=
-\begin{cases}
-0, &amp; y&lt;0\\
-1-\me^{-\lambda y}, &amp; y\ge 0
-\end{cases}
+1-\me^{-\lambda y},  \quad  0 \le y &lt; \infty
 \\
-Q(p)=-\frac{\log(1-p)}{\lambda}
+Q(p) \overset{\exstar}{=} -\frac{\log(1-p)}{\lambda}  \quad 0 &lt; p &lt; 1
 \\
-\Ex(Y)=\frac{1}{\lambda},
-\quad
+\Ex(Y)=\frac{1}{\lambda}
+\\
 \var(Y)=\frac{1}{\lambda^2}
 \end{gather*}\]</span></p>
 </section>
@@ -1006,7 +1008,7 @@ Q(p)=-\frac{\log(1-p)}{\lambda}
 \exp\left(
 -\frac{1}{2}(\vy-\vmu)^{\mathsf T}
 \mSigma^{-1}(\vy-\vmu)
-\right)
+\right), \qquad \vy \in \reals^d
 \]</span></p>
 </section></section>
 <section>
@@ -1034,27 +1036,29 @@ Q(p)=-\frac{\log(1-p)}{\lambda}
 <li><p><span class="math inline">\(Y_1,\ldots,Y_n\)</span> be a sample—not necessarily random or IID</p></li>
 </ul>
 <p><span class="math display">\[\begin{align*}
-\hmu_n &amp; :=\frac{1}{n}\sum_{i=1}^nY_i \text{ is the }\alerttext{sample mean}\\
+\hmu_n &amp; :=\frac{1}{n}\sum_{i=1}^nY_i \quad \text{is the }\alerttext{sample mean}\\
 \hsigma_n^2 &amp;
-:=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\hmu_n)^2 \text{ is the }\alerttext{sample variance}\\
+:=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\hmu_n)^2 \quad \text{is the }\alerttext{sample variance}\\
+\end{align*}\]</span></p>
+<h3 id="mean-squared-error-bias-and-variance">Mean squared error, bias, and variance</h3>
+<p>If <span class="math inline">\(\vTheta\)</span> is an estimator of a population parameter (mean, variance, median, <span class="math inline">\(\ldots\)</span>) <span class="math inline">\(\vtheta\)</span>, then <span class="math display">\[\begin{align*}
+\bias(\vTheta) &amp;: = \Ex(\vTheta) - \theta \quad \alerttext{unbiased means zero bias} \\
+\mse(\vTheta) &amp; : = \Ex\bigl[ \bigl(\vTheta - \Ex(\vTheta) \bigr)^2 \bigr] \quad \text{is the }\alerttext{mean squared error}\\
+&amp; \overset{\exstar}{=} [\bias(\vTheta)]^2 + \var(\vTheta)
 \end{align*}\]</span></p>
 </section>
 <section id="under-random-sampling" class="slide level2">
 <h2>Under random sampling</h2>
-<p>Suppose <span class="math inline">\(Y_1,Y_2,\ldots\IIDsim Y\)</span>, where <span class="math inline">\(\Ex(Y)=\mu\)</span> and <span class="math inline">\(\var(Y)=\sigma^2\)</span>.</p>
-<p><span class="math display">\[
-\Ex(\hmu_n)=\mu,
-\qquad
-\Ex(\hsigma_n^2)=\sigma^2.
-\]</span></p>
-<p>Thus both estimators are <span class="alert">unbiased</span>. Moreover,</p>
-<p><span class="math display">\[
+<p>Suppose <span class="math inline">\(Y_1,Y_2,\ldots\sim Y\)</span>, where <span class="math inline">\(\Ex(Y)=\mu\)</span> and <span class="math inline">\(\var(Y)=\sigma^2\)</span>. Then <span class="math display">\[
+\Ex(\hmu_n)=\mu \quad \text{$\hmu_n$ is an }\alerttext{unbiased}\text{ estimator of }\mu
+\]</span> If in addition, <span class="math inline">\(Y_1,Y_2,\ldots\)</span> are <span class="alert">uncorrelated</span>, then <span class="math display">\[\begin{gather*}
+\Ex(\hsigma_n^2)=\sigma^2  \quad \text{$\hsigma_n^2$ is an }\alerttext{unbiased}\text{ estimator of }\sigma^2 \\
 \mse(\hmu_n)
 =\Ex\left[(\mu-\hmu_n)^2\right]
 =\frac{\sigma^2}{n},
 \qquad
-\rmse(\hmu_n)=\frac{\sigma}{\sqrt{n}}.
-\]</span></p>
+\rmse(\hmu_n)=\frac{\sigma}{\sqrt{n}}
+\end{gather*}\]</span></p>
 </section>
 <section id="central-limit-theorem" class="slide level2">
 <h2>Central Limit Theorem</h2>
