@@ -5,10 +5,20 @@ under "Before editing"; inspect the current Git status, submodule status, and
 recent commits; and reconstruct the current project state from the repository.
 Do not rely on memory from prior chat sessions.
 
+## Repository shorthand
+
+Within the current teaching workspace:
+
+- `332` refers to the most recent MATH 332 course repository.
+- `565` refers to the most recent MATH 565 course repository.
+
+If older course repositories are also open in the workspace, refer to them
+explicitly by year (e.g., `565-2025` or `MATH565Fall2025`) to avoid ambiguity.
+
 ## Repository purpose
 
-This repository contains the MATH 565 Fall 2026 course website and course
-materials.
+This is the active, authoritative MATH 565 course repository. It contains the
+Fall 2026 course website and course materials.
 
 ## Repository boundaries
 
@@ -23,6 +33,9 @@ materials.
   change.
 - Routine builds and deployment must initialize the recorded submodule commits
   recursively and must not use `git submodule update --remote`.
+- The most recent MATH 332 repository is a separate active course repository.
+  Do not modify it during MATH 565 work unless the task explicitly includes
+  MATH 332.
 - The architecture and course-material reference repositories named in
   `PLAN.md` are read-only.
 - Do not write to any other repository unless the user explicitly changes

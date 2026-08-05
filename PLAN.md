@@ -16,6 +16,11 @@ whose checked-out commit and submodule pointer must remain unchanged.
 `assets/tests/archive`; it supports references to archived material without
 duplicating that material in the authoritative repository.
 
+Within the broader teaching workspace, the most recent MATH 332 repository is
+also an active course repository. It is a separate project, not one of this
+plan's read-only reference repositories. Older course repositories remain
+historical references and should be identified explicitly by year when needed.
+
 Local builds and automation initialize submodules recursively at the commits
 recorded by `MATH565Fall2026`, without overriding them with moving branch tips.
 
