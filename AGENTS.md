@@ -132,7 +132,8 @@ accurately describes the complete set of changes.
    guidance when needed, but do not record transient debugging or failed
    attempts.
 5. When `classlib` contains non-ignored changes, include all of them and
-   publish `classlib` using the established project workflow.
+   publish `classlib` using the arrive/validation/depart sequence documented
+   under "Propagating classlib changes" in `AUTHOR_WORKFLOW.md`.
 6. Update the authoritative repository's `classlib` submodule pointer if
    needed.
 7. Stage every modified and untracked non-ignored file in the authoritative

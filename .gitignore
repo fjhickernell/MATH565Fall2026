@@ -23,3 +23,7 @@ slides/classlib
 # Jupyter notebook checkpoints
 
 **/.ipynb_checkpoints/
+
+# JupyterLab desktop settings and workspace state
+
+**/.jupyter/

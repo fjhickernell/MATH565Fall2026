@@ -18,6 +18,33 @@ HickernellAcademicLib first, then intentionally update the course repository's
 `classlib` pointer. Keep course-specific content and styling in this
 repository, and do not leave course-only modifications in `classlib`.
 
+## Propagating classlib changes
+
+Develop and review a reusable change in the course repository's `classlib`
+working tree. Leave both the classlib change and the course submodule pointer
+uncommitted until issuing `Checkpoint`.
+
+During the checkpoint, use this sequence:
+
+1. Validate, commit, and push the classlib change to HickernellAcademicLib.
+2. Restore the course repository's recorded classlib checkout with
+   `git submodule update --checkout classlib`.
+3. Run `arrive` to synchronize standalone development repositories and
+   fast-forward active repositories while retaining their recorded submodule
+   pins.
+4. Check out the newly published classlib commit in the course submodule and
+   run the complete course validation, including the root website render, the
+   independent slide render, and the assembled-site check.
+5. Run `depart` to promote the published classlib commit, commit the resulting
+   course submodule pointer, and push the course repository.
+6. Confirm that HickernellAcademicLib and the course repository are clean and
+   synchronized with their upstreams and that protected submodules remain
+   clean.
+
+This ordering ensures that the course never publishes a pointer to a classlib
+commit that is unavailable upstream. Review the complete pointer diff before
+`depart`; do not propagate unrelated or unauthorized dependency updates.
+
 ## Prerequisites
 
 Install:
