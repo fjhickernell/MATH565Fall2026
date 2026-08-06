@@ -79,6 +79,24 @@ purpose, strategy, construction state, workflow, or agent behavior.
 checked and visible; insert new tasks in the appropriate phase, and do not
 remove completed work merely because it is finished.
 
+## Institutional memory
+
+The `notes/` directory is this repository's institutional memory. Agents
+should consult its files when planning work, proposing changes, drafting or
+revising course materials, or making architectural decisions.
+
+These files document design intent, rationale, deferred ideas, and
+implementation knowledge. Detailed institutional memory belongs there rather
+than in this concise `AGENTS.md` file.
+
+The files under `notes/` are not student-facing course content and must not be
+treated as source material for lectures, slides, notebooks, assignments,
+exams, or the course website.
+
+Content from `notes/` should appear in student-facing materials only after it
+has been intentionally incorporated into those materials or when the user
+explicitly requests it.
+
 ## Git and checkpoints
 
 Do not commit or push during ordinary intermediate work unless the user asks.
