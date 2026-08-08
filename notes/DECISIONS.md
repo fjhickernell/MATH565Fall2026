@@ -6,8 +6,11 @@ would benefit from understanding why a choice was made.
 
 ## Decision log
 
-### YYYY-MM-DD — Decision title
+### 2026-08-08 — Place MCTS in a later slide deck
 
-- **Decision:** Record the choice that was made.
-- **Rationale:** Explain why this option was selected.
-- **Consequences:** Note important implications or follow-up work.
+- **Decision:** Do not add Markov chain tree search (MCTS) to the Introduction
+  deck; cover it in a later MATH 565 slide deck.
+- **Rationale:** The instructor selected a later placement in the course.
+- **Consequences:** Finish `slides/01-introduction.qmd` without an MCTS
+  example. Choose the specific later deck when planning that portion of the
+  lecture sequence.

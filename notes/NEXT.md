@@ -15,9 +15,8 @@ Finish the migrated `notebooks/applications/AreWeThereYet.ipynb` notebook.
   yet been approved as the best ending.
 - After the notebook is finished, complete the remaining work on
   `slides/01-introduction.qmd`, including the closing and transition.
-- MCTS is absent from the deck. Existing planning material identifies it only
-  as a possible Fall 2026 addition, not specifically as required Introduction
-  content.
+- MCTS will be covered in a later slide deck and does not belong in the
+  Introduction deck; the specific later deck remains to be chosen.
 - The navigation-control samples now have demonstrated reuse in MATH 332 and
   have been promoted to `classlib`; other reusable improvements remain
   deferred until a second use is demonstrated. Shared AI guidance belongs to
@@ -29,8 +28,6 @@ Finish the migrated `notebooks/applications/AreWeThereYet.ipynb` notebook.
 - What revisions emerge from the instructor's review of `AreWeThereYet`?
 - What should students understand or do after the current `Big ideas` recap,
   and should the lecture close with a more concrete transition?
-- Does an MCTS example belong in the Introduction, a later lecture, or the
-  longer-term curricular plan?
 
 ## Constraints
 
@@ -50,5 +47,5 @@ Finish the migrated `notebooks/applications/AreWeThereYet.ipynb` notebook.
 - The notebook executes from a clean kernel without errors and its results are
   checked.
 - The following task remains explicit: finish
-  `slides/01-introduction.qmd`, including an approved closing and transition
-  and an explicit decision about MCTS placement.
+  `slides/01-introduction.qmd`, including an approved closing and transition;
+  MCTS is reserved for a later deck.
