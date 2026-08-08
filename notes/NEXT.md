@@ -2,16 +2,19 @@
 
 ## Current task
 
-Review the remaining Introduction-deck closing and transition with the
-instructor before editing `slides/01-introduction.qmd`.
+Finish the migrated `notebooks/applications/AreWeThereYet.ipynb` notebook.
 
 ## Current state
 
 - The Introduction deck is the rendered and validated prototype; its main
   mathematical sequence and course-logistics links are substantially complete.
+- `notebooks/applications/AreWeThereYet.ipynb` has been migrated, executes
+  cleanly, and is linked from both travel-time slides, but the instructor has
+  not finished reviewing and refining it.
 - The closing `Big ideas` slide is a recap whose purpose and wording have not
   yet been approved as the best ending.
-- The migrated `AreWeThereYet` notebook is linked from both travel-time slides.
+- After the notebook is finished, complete the remaining work on
+  `slides/01-introduction.qmd`, including the closing and transition.
 - MCTS is absent from the deck. Existing planning material identifies it only
   as a possible Fall 2026 addition, not specifically as required Introduction
   content.
@@ -23,14 +26,17 @@ instructor before editing `slides/01-introduction.qmd`.
 
 ## Questions to resolve
 
-- What should students understand or do after the current `Big ideas` recap?
-- Should the lecture close with a more concrete transition to the next topic?
+- What revisions emerge from the instructor's review of `AreWeThereYet`?
+- What should students understand or do after the current `Big ideas` recap,
+  and should the lecture close with a more concrete transition?
 - Does an MCTS example belong in the Introduction, a later lecture, or the
   longer-term curricular plan?
 
 ## Constraints
 
-- Review the proposed direction with the instructor before changing slides.
+- Finish and approve the notebook before treating its migration as complete.
+- Review the proposed Introduction-deck direction with the instructor before
+  changing slides.
 - Preserve the substantially complete mathematical and logistics material
   unless a concrete issue is identified.
 - Do not promote course material to `classlib` without demonstrated reuse.
@@ -39,9 +45,10 @@ instructor before editing `slides/01-introduction.qmd`.
 
 ## Done when
 
-- The instructor approves the purpose and wording of the closing and the
-  transition to subsequent material.
-- The MCTS placement has an explicit decision.
-- Any approved slide changes have been rendered and visually checked, with
-  navigation and links verified.
-- `notes/NEXT.md` identifies the next single immediate task.
+- The instructor approves the notebook's content, organization, examples, and
+  student workflow.
+- The notebook executes from a clean kernel without errors and its results are
+  checked.
+- The following task remains explicit: finish
+  `slides/01-introduction.qmd`, including an approved closing and transition
+  and an explicit decision about MCTS placement.
