@@ -15,9 +15,11 @@ instructor before editing `slides/01-introduction.qmd`.
 - MCTS is absent from the deck. Existing planning material identifies it only
   as a possible Fall 2026 addition, not specifically as required Introduction
   content.
-- Reusable `classlib` improvements remain deferred until Lecture 2
-  demonstrates actual reuse. Shared AI guidance belongs to the separate
-  course-policy review unless the instructor chooses to connect it here.
+- The navigation-control samples now have demonstrated reuse in MATH 332 and
+  have been promoted to `classlib`; other reusable improvements remain
+  deferred until a second use is demonstrated. Shared AI guidance belongs to
+  the separate course-policy review unless the instructor chooses to connect
+  it here.
 
 ## Questions to resolve
 
