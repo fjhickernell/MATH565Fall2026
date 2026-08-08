@@ -184,7 +184,7 @@ You are visiting a friend. The trip requires
 How long should you allow for the trip?
 :::
 
-The companion `AreWeThereYet` notebook is being migrated for Fall 2026
+[Companion `AreWeThereYet` notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/AreWeThereYet.ipynb)
 
 # Course Logistics
 
@@ -493,7 +493,7 @@ The question "How long should I allow?" is usually a quantile question, not
 only a mean question.
 :::
 
-The companion `AreWeThereYet` notebook is being migrated for Fall 2026.
+[Companion `AreWeThereYet` notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/AreWeThereYet.ipynb)
 
 # Conditioning {.tree-marker-slide tree-marker="prob-est"}
 

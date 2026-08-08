@@ -54,6 +54,19 @@ Before substantial work, read these documents when they exist, in this order:
 Before making substantial slide changes, also read `docs/slide-style.md`.
 Before making substantial page changes, also read `docs/pages-style.md`.
 
+Read `notes/NEXT.md` early in each work session. Treat it as the current
+cross-session handoff, not as authorization to begin its task without the
+user's request. Before a checkpoint, update it when the immediate next task
+has changed; keep longer-term work in `notes/TODO-LATER.md`.
+
+### Next-task shorthand
+
+Interpret `Next?` as a request to read and summarize `notes/NEXT.md` from both
+active repositories, `MATH332Fall2026` and `MATH565Fall2026`. Interpret
+`Next 332?` and `Next 565?` as requests for only the named course. Read the
+files each time rather than relying on conversation memory. Reporting a next
+task does not authorize beginning it.
+
 Inspect the state of every repository relevant to the task. Never overwrite,
 discard, or commit pre-existing user changes. Run the established
 synchronization workflow only when required by the project's synchronization
