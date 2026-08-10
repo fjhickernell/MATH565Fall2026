@@ -19,9 +19,10 @@ Finish the migrated `notebooks/applications/AreWeThereYet.ipynb` notebook.
   Introduction deck; the specific later deck remains to be chosen.
 - The navigation-control samples now have demonstrated reuse in MATH 332 and
   have been promoted to `classlib`; other reusable improvements remain
-  deferred until a second use is demonstrated. Shared AI guidance belongs to
-  the separate course-policy review unless the instructor chooses to connect
-  it here.
+  deferred until a second use is demonstrated.
+- The Course Logistics section now includes four reusable `classlib` slides
+  on productive AI roles, verification, and retained human responsibility;
+  formal AI-policy review remains separate.
 
 ## Questions to resolve
 
@@ -37,8 +38,8 @@ Finish the migrated `notebooks/applications/AreWeThereYet.ipynb` notebook.
 - Preserve the substantially complete mathematical and logistics material
   unless a concrete issue is identified.
 - Do not promote course material to `classlib` without demonstrated reuse.
-- Keep shared AI-policy work separate unless its role in this lecture is
-  explicitly approved.
+- Keep formal AI-policy work separate from the approved shared guidance in
+  this lecture.
 
 ## Done when
 

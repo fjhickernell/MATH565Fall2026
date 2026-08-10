@@ -190,6 +190,10 @@ How long should you allow for the trip?
 
 - [What is where?](#what-is-where)
 - [Why participate synchronously?](#why-participate-synchronously)
+- [What role is AI playing?](#what-role-is-ai-playing)
+- [From collaborator to contractor](#from-collaborator-to-contractor)
+- [Verify what AI produces](#verify-what-ai-produces)
+- [Responsibility stays with you](#responsibility-stays-with-you)
 
 ## What is where?
 
@@ -228,6 +232,8 @@ How long should you allow for the trip?
 - Influence the pace and direction of discussion
 - Help classmates learn and benefit from their questions
 - Build a learning community and get to know one another
+
+{{< include ../classlib/classlib/quarto/slides/shared/general/using-ai-well.qmd >}}
 
 
 # Probability review {.tree-marker-slide tree-marker="probability"}
