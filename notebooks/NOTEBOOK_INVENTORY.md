@@ -74,28 +74,28 @@ notebook's dominant teaching purpose; ambiguous cases are identified below.
 
 ### `AreWeThereYet.ipynb`
 
-- **Status:** Migrated for instructor review; initialization modernized and
-  automated execution validated in the documented course environment.
+- **Status:** Migration and instructor review complete; initialization,
+  mathematical content, plots, and clean execution validated in the
+  documented course environment. Linked from the course notebook page and
+  Introduction slides.
 - **Source:** `MATH565Fall2025/notebooks/AreWeThereYet.ipynb`
 - **Proposed target:**
   `MATH565Fall2026/notebooks/applications/AreWeThereYet.ipynb`
 - **Description:** Uses a waiting-time model to study Monte Carlo estimation,
   convergence rates, root mean squared error, the central limit theorem,
   unknown variance, confidence intervals, and quantiles.
-- **Dependencies:** NumPy, SciPy, Matplotlib, QMCPy, IPython,
-  `classlib.nbviz`, `classlib.distributions.make_zie`, and repository-root
-  path setup. No separate data or image input was found.
+- **Dependencies:** NumPy, SciPy, Matplotlib, QMCPy, IPython, and
+  `classlib.nbviz`. No separate data or image input is required.
 - **Related versions:** `Old_Stuff/AreWeThereYet_VerA.ipynb` has the same
   broad structure and cell count but no saved outputs. Treat it as an earlier
   duplicate unless a cell-by-cell review finds a specific correction.
   Several checkpoints have related names but are not primary sources.
-- **Migration notes:** Removed the stale Fall 2025 Colab bootstrap and fragile
-  repository-path injection. The notebook now follows the current shared
-  initialization pattern (`import classlib as cl`, `cl.nbviz.init`, and
-  `cl.nbviz.TOL_BRIGHT`) and imports only the packages it uses. The
-  zero-inflated exponential example and the notebook's mathematical and
-  pedagogical details still require careful instructor review before the
-  notebook is linked from the course website.
+- **Migration notes:** Removed stale repository and environment assumptions.
+  The notebook follows the current shared initialization pattern
+  (`import classlib as cl`, `cl.nbviz.init`, and `cl.nbviz.TOL_BRIGHT`) and
+  imports only the packages it uses. The completed example distinguishes
+  observed error from RMSE, compares estimates with analytic benchmarks, and
+  previews conditional Monte Carlo and randomized Sobol sampling.
 - **Classification:** Applications. The waiting-time model is the course's
   introductory illustrative application, even though it also introduces
   convergence and error assessment.

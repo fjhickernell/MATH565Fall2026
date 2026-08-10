@@ -175,7 +175,7 @@ You are visiting a friend. The trip requires
 
 - a $5$-minute walk to the train,
 - waiting for a train that arrives every $20$ minutes,
-- a $35$-minute train ride,
+- a $30$-minute train ride,
 - a taxi that is waiting with probability $0.2$,
 - otherwise, a taxi wait with mean $10$ minutes, and
 - a $12$-minute taxi ride.

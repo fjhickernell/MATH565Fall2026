@@ -14,8 +14,9 @@ environment, and validated from a clean setup.
 ::: {.callout-note}
 ## Migration in progress
 
-Notebook content is still being migrated from the previous course offering.
-No Fall 2026 course notebooks are available here yet.
+Notebook content is being migrated from the previous course offering. Each
+notebook is linked here only after it has been updated and validated in the
+Fall 2026 course environment.
 :::
 
 ## Sampling
@@ -26,8 +27,13 @@ sampling methods will appear here.
 
 ## Applications
 
-Notebooks applying Monte Carlo and quasi-Monte Carlo methods to integration,
-financial options, queueing models, and other examples will appear here.
+- [Are We There Yet?](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/AreWeThereYet.ipynb)
+  — use a travel-time model to explore Monte Carlo convergence, error
+  assessment, quantiles, conditional Monte Carlo, and randomized Sobol
+  sampling
+
+Additional notebooks will apply Monte Carlo and quasi-Monte Carlo methods to
+integration, financial options, queueing models, and other examples.
 
 ## Performance
 

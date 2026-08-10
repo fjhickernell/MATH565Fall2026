@@ -78,8 +78,12 @@ appropriate phase rather than appended indiscriminately.
       - [x] Create the Sampling, Applications, and Performance directories.
       - [x] Migrate `AreWeThereYet.ipynb` to Applications with modern minimal
         `classlib`/`nbviz` initialization and validate clean execution.
+      - [x] Complete instructor review of `AreWeThereYet.ipynb` and finalize
+        its mathematical explanations, plots, and method previews.
     - [ ] Add notebook links only after each target exists and passes
       validation.
+      - [x] Link the validated `AreWeThereYet.ipynb` from the Applications
+        section.
     - [x] Validate Quarto rendering and generated page structure.
     - [ ] Inspect the visible page layout in a browser.
   - [ ] Assignments (`pages/homework.qmd`)
@@ -194,7 +198,7 @@ appropriate phase rather than appended indiscriminately.
 - [x] Establish prototype conventions: numbered course-specific sources,
   metadata-driven deck titles and navigation, native Markdown and LaTeX,
   native tables and layouts, and RevealJS fragments for staged builds.
-- [ ] Link the companion `AreWeThereYet` notebook after it has been migrated
+- [x] Link the companion `AreWeThereYet` notebook after it has been migrated
   and validated.
 - [ ] Reassess possible reusable `classlib` improvements after Lecture 2
   demonstrates which patterns genuinely recur.

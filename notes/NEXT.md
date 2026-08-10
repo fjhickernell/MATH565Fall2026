@@ -2,19 +2,20 @@
 
 ## Current task
 
-Finish the migrated `notebooks/applications/AreWeThereYet.ipynb` notebook.
+Finish `slides/01-introduction.qmd`, including its closing and transition.
 
 ## Current state
 
 - The Introduction deck is the rendered and validated prototype; its main
   mathematical sequence and course-logistics links are substantially complete.
-- `notebooks/applications/AreWeThereYet.ipynb` has been migrated, executes
-  cleanly, and is linked from both travel-time slides, but the instructor has
-  not finished reviewing and refining it.
+- `notebooks/applications/AreWeThereYet.ipynb` is complete and
+  instructor-approved. It executes cleanly, has been checked mathematically
+  and visually, and is linked from the course notebook page and both
+  travel-time slides.
 - The closing `Big ideas` slide is a recap whose purpose and wording have not
   yet been approved as the best ending.
-- After the notebook is finished, complete the remaining work on
-  `slides/01-introduction.qmd`, including the closing and transition.
+- The Introduction deck's travel-time example now uses the same 30-minute
+  train ride as the completed notebook.
 - MCTS will be covered in a later slide deck and does not belong in the
   Introduction deck; the specific later deck remains to be chosen.
 - The navigation-control samples now have demonstrated reuse in MATH 332 and
@@ -26,13 +27,13 @@ Finish the migrated `notebooks/applications/AreWeThereYet.ipynb` notebook.
 
 ## Questions to resolve
 
-- What revisions emerge from the instructor's review of `AreWeThereYet`?
 - What should students understand or do after the current `Big ideas` recap,
   and should the lecture close with a more concrete transition?
 
 ## Constraints
 
-- Finish and approve the notebook before treating its migration as complete.
+- Treat the completed `AreWeThereYet.ipynb` as the approved computational
+  companion; do not reopen it without a separate request.
 - Review the proposed Introduction-deck direction with the instructor before
   changing slides.
 - Preserve the substantially complete mathematical and logistics material
@@ -43,10 +44,8 @@ Finish the migrated `notebooks/applications/AreWeThereYet.ipynb` notebook.
 
 ## Done when
 
-- The instructor approves the notebook's content, organization, examples, and
-  student workflow.
-- The notebook executes from a clean kernel without errors and its results are
-  checked.
-- The following task remains explicit: finish
-  `slides/01-introduction.qmd`, including an approved closing and transition;
-  MCTS is reserved for a later deck.
+- The Introduction deck has an approved closing and transition that clarify
+  what students should understand or do next.
+- The complete deck renders cleanly and passes mathematical, navigation, and
+  visible-layout review.
+- MCTS remains reserved for a later deck.
