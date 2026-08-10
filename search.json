@@ -88,7 +88,7 @@
     "href": "pages/notebooks.html#applications",
     "title": "Jupyter Notebooks",
     "section": "Applications",
-    "text": "Applications\nNotebooks applying Monte Carlo and quasi-Monte Carlo methods to integration, financial options, queueing models, and other examples will appear here."
+    "text": "Applications\n\nAre We There Yet? — use a travel-time model to explore Monte Carlo convergence, error assessment, quantiles, conditional Monte Carlo, and randomized Sobol sampling\n\nAdditional notebooks will apply Monte Carlo and quasi-Monte Carlo methods to integration, financial options, queueing models, and other examples."
   },
   {
     "objectID": "pages/notebooks.html#performance",
