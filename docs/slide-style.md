@@ -1,12 +1,9 @@
-# Overall philosophy
+# MATH 565 slide conventions
 
-- Slides are for presentation, not reading.
-- Preserve mathematical correctness and pedagogical flow.
-- Keep slides visually clean.
-- Use punctuation sparingly; short bullets, labels, headings, and standalone slide
-  statements generally do not need terminal punctuation unless it improves clarity
-- Preserve figures whenever practical.
-- Use progressive disclosure only when it improves understanding.
+Follow the authoritative shared presentation guidance in
+`../classlib/AGENTS.md`. This document records MATH 565 structure, navigation,
+implementation details not yet migrated to classlib, and intentional local
+exceptions.
 
 # Slide structure
 

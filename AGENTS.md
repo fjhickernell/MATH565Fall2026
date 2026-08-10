@@ -41,6 +41,24 @@ Fall 2026 course website and course materials.
 - Do not write to any other repository unless the user explicitly changes
   these instructions.
 
+## Shared guidance
+
+This repository uses `classlib` as a shared submodule. The authority chain is:
+
+1. Global operational workflow in `SharedConfigs/codex/AGENTS.md`
+2. Shared teaching, presentation, and infrastructure guidance in
+   `classlib/AGENTS.md`
+3. MATH 565 additions and exceptions in this repository
+
+Before creating or substantially revising slides, webpages, reusable
+components, shared styling, or notebook presentation, read
+`classlib/AGENTS.md`. Local documentation should record only course-specific
+policies, terminology, notation, navigation, validation requirements, and
+intentional exceptions. Do not duplicate universal style guidance locally.
+
+If local guidance conflicts with shared guidance, follow an explicitly
+documented local exception and flag any apparent accidental inconsistency.
+
 ## Before editing
 
 Before substantial work, read these documents when they exist, in this order:
@@ -51,8 +69,11 @@ Before substantial work, read these documents when they exist, in this order:
 4. `AUTHOR_WORKFLOW.md`
 5. `AGENTS.md`
 
-Before making substantial slide changes, also read `docs/slide-style.md`.
-Before making substantial page changes, also read `docs/pages-style.md`.
+Before making substantial slide changes, read `classlib/AGENTS.md` and then
+`docs/slide-style.md`. Before making substantial page changes, read
+`classlib/AGENTS.md` and then `docs/pages-style.md`. The local guides remain
+authoritative for rules not yet migrated to classlib and for documented MATH
+565 exceptions.
 
 Read `notes/NEXT.md` early in each work session. Treat it as the current
 cross-session handoff, not as authorization to begin its task without the

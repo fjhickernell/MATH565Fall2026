@@ -1,18 +1,9 @@
-# Overall philosophy
+# MATH 565 webpage conventions
 
-- Pages are for careful reading, unlike slides, which are for presentation.
-- Favor clarity, consistency, and maintainability.
-- Preserve mathematical correctness.
-- Prefer reusable patterns over one-off formatting.
-- Preserve pedagogical intent during format changes.
-- Keep sources understandable to future instructors.
-- Prefer native Markdown, LaTeX, tables, and other maintainable Quarto
-  structures when converting legacy material.
-- Keep reusable styling and presentation infrastructure in `classlib`, while
-  course-specific content and configuration remain in the course repository.
-- Let the shared website theme control typography, spacing, colors, and other
-  presentation details. Do not add page-local CSS merely to make one page look
-  different.
+Follow the authoritative shared presentation guidance in
+`../classlib/AGENTS.md`. This document records MATH 565 organization, writing
+conventions, implementation details not yet migrated to classlib, and
+intentional local exceptions.
 
 # Page organization
 
