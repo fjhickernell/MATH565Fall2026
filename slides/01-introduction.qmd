@@ -131,7 +131,7 @@ print(
 :::
 
 
-## Why is there uncertainty?
+## Why is there uncertainty? {.tree-marker-slide tree-marker="probability"}
 
 [{{< meta papers.wsj_monte_carlo_2016.full >}}]({{< meta papers.wsj_monte_carlo_2016.publisher_url >}})
 
@@ -157,8 +157,8 @@ Y&=
 \text{neural-network parameter} \\
 \text{service time}
 \end{cases} \\
-& = f(\vX), \text{ where} \\
-\vX & = \text{multivariate random variable that is }\alerttext{easy to sample}
+& = f(\vX)  \\
+\text{where } \vX & = \text{multivariate random variable that is }\alerttext{easy to sample}
 \end{align*}
 
 - Generate [sample]{.alert} versions $Y_1,\ldots,Y_n$
@@ -167,9 +167,9 @@ Y&=
   - variance
   - quantile
   - probability distribution
-  - minumum or maximum
+  - minimum or maximum
 
-## Are we there yet?
+## Are we there yet? {.tree-marker-slide tree-marker="practice"}
 
 You are visiting a friend. The trip requires
 
@@ -407,12 +407,14 @@ Let
 \end{align*}
 
 ### Mean squared error, bias, and variance
+::: {.small}
 If $\vTheta$ is an estimator of a population parameter (mean, variance, median, $\ldots$) $\vtheta$, then
 \begin{align*}
-\bias(\vTheta) &: = \Ex(\vTheta) - \theta \quad \alerttext{unbiased means zero bias} \\
-\mse(\vTheta) & : = \Ex\bigl[ \bigl(\vTheta - \Ex(\vTheta) \bigr)^2 \bigr] \quad \text{is the }\alerttext{mean squared error}\\
+\bias(\vTheta) &:= \Ex(\vTheta) - \vtheta \quad \alerttext{unbiased means zero bias} \\
+\mse(\vTheta) &:= \Ex\bigl[ \bigl(\vTheta - \vtheta \bigr)^2 \bigr] \quad \text{is the }\alerttext{mean squared error}\\
 & \overset{\exstar}{=} [\bias(\vTheta)]^2 + \var(\vTheta)
 \end{align*}
+:::
 
 ## Under random sampling {.tree-marker-slide tree-marker="stat-estim"}
 
@@ -454,7 +456,7 @@ $$
 Monte Carlo error for a sample mean typically decreases like $n^{-1/2}$
 :::
 
-## Monte Carlo estimators of properties of $Y$ {data-state="goldborder" .tree-marker-slide tree-marker="stat-estim"}
+## Monte Carlo estimates of properties of $Y$ {data-state="goldborder"}
 
 | Population quantity | Sample approximation |
 |---|------|
@@ -474,7 +476,7 @@ point estimators
 [Estimate]{.alert} is the numerical result based on observed data
 :::
 
-## Computational counterparts
+## Computational counterparts {.tree-marker-slide tree-marker="stat-estim"}
 
 | Quantity | Python tool |
 |---|---|
@@ -485,18 +487,18 @@ point estimators
 | Histogram | `np.histogram(data, bins="auto")` |
 | Kernel density estimate | `scipy.stats.gaussian_kde(data)` |
 
-## Are we there yet? Revisited
+## Are we there yet? Revisited {.tree-marker-slide tree-marker="stat-estim"}
 
-For the travel-time model,
+For the travel-time model
 
 1. model each uncertain waiting time,
-2. generate independent trip times $Y_1,\ldots,Y_n$,
-3. estimate the mean and relevant upper quantiles, and
-4. report Monte Carlo uncertainty with the estimates.
+2. generate independent trip times $Y_1,\ldots,Y_n$
+3. estimate the mean and relevant upper quantiles
+4. report Monte Carlo uncertainty with the estimates
 
 ::: {.key-point}
 The question "How long should I allow?" is usually a quantile question, not
-only a mean question.
+only a mean question
 :::
 
 [Companion `AreWeThereYet` notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/AreWeThereYet.ipynb)
@@ -509,31 +511,31 @@ only a mean question.
 
 ## Conditional probability {.tree-marker-slide tree-marker="probability"}
 
-For a random vector $(Y,Z)$,
+For a random vector $(Y,Z)$
 
 $$
 \Prob(Y=y\mid Z=z)
 =\frac{\Prob(Y=y,Z=z)}{\Prob(Z=z)}
 =\frac{\Prob(Z=z\mid Y=y)\Prob(Y=y)}
-{\Prob(Z=z)}.
+{\Prob(Z=z)}
 $$
 
 The second equality is [Bayes' theorem]{.alert}. For densities,
 
 $$
-\varrho_{Y\mid Z}(y\mid z)=\frac{\varrho_{Y,Z}(y,z)}{\varrho_Z(z)}.
+\varrho_{Y\mid Z}(y\mid z)=\frac{\varrho_{Y,Z}(y,z)}{\varrho_Z(z)}
 $$
 
 ## Laws of total expectation and variance {.tree-marker-slide tree-marker="probability"}
 
 $$
-\Ex(Y)=\Ex_Z\bigl[\Ex(Y\mid Z)\bigr],
+\Ex(Y)=\Ex_Z\bigl[\Ex(Y\mid Z)\bigr]
 $$
 
 $$
 \var(Y)
 =\Ex_Z\bigl[\var(Y\mid Z)\bigr]
-+\var_Z\bigl(\Ex(Y\mid Z)\bigr).
++\var_Z\bigl(\Ex(Y\mid Z)\bigr)
 $$
 
 ::: {.key-point}
@@ -543,13 +545,13 @@ conditional mean across values of $Z$.
 
 ## Conditional Monte Carlo {.tree-marker-slide tree-marker="prob-est"}
 
-Let $Y=f(X_1,\ldots,X_d)$ and $Z=(X_2,\ldots,X_d)$. If
+Let $Y=f(X_1,\ldots,X_d)$ and $Z=(X_2,\ldots,X_d)$;  if
 
 $$
 g(Z):=\Ex(Y\mid Z)
 $$
 
-is available analytically, then
+is available [analytically]{.alert}, then
 
 $$
 \mu=\Ex(Y)=\Ex_Z[g(Z)],
@@ -557,11 +559,11 @@ $$
 \var_Z(g(Z)) \overset{\exstar}{\le} \var(Y)
 $$
 
-Sampling $g(Z)$ instead of $Y$ can therefore reduce variance
+Sampling $g(Z)$ instead of $Y$ can [reduce variance]{.alert}
 
 &nbsp;
 
-If the conditional density $h(y,Z):=\varrho_{Y\mid Z}(y\mid Z)$ is available
+If the conditional density $h(y,Z):=\varrho_{Y\mid Z}(y\mid Z)$ is available [analytically]{.alert}
 
 $$
 \varrho_Y(y)=\Ex_Z[h(y,Z)]
@@ -569,15 +571,19 @@ $$
 
 so a probability density can itself be expressed as an expectation
 
-# Big ideas {data-state="goldborder"}
+# Big ideas {data-state="goldborder" .tree-marker-slide tree-marker="prob-stat-est"}
 
 - Use sample quantities to estimate properties of a random variable whose
   distribution is difficult to obtain directly
-- Targets include means, variances, covariances, probability mass or density
-  functions, cumulative distribution functions, and quantiles
+- Targets include
+    - means
+    - (co-)variances
+    - probability mass or density functions
+    - cumulative distribution functions
+    - quantiles
 - For means, the CLT provides interval estimates that quantify Monte Carlo
   uncertainty
-- Other properties often begin with point estimates - one approximate value
+- Other properties often begin with point estimates—one approximate value
   for each target
 - Conditioning can turn a difficult random quantity into a lower-variance
   expectation

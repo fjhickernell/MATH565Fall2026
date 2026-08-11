@@ -11,6 +11,11 @@ defaults:
 
 # Add a named entry here as each teaching context is designed.
 markers:
+  practice:
+    font_scale: 3.2
+    group_headings:
+      - practice
+
   probability:
     labels:
       - probability
@@ -37,4 +42,11 @@ markers:
   prob-est:
     labels:
       - probability
+      - estimation
+
+  prob-stat-est:
+    font_scale: 3.0
+    labels:
+      - probability
+      - statistics
       - estimation
