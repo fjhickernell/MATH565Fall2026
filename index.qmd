@@ -60,7 +60,7 @@ Teaching-assistant information for Fall 2026 will be posted when available.
 </details>
 
 <div style="margin-top:1em; margin-bottom:0.4em;">
-<strong>Textbook:</strong> Art B. Owen, [*Monte Carlo Theory, Methods, and Examples*](https://artowen.su.domains/mc/), 2025+
+<strong>Textbook:</strong> [{{< meta texts.owen.full >}}]({{< meta texts.owen.url >}})
 </div>
 
 <details>
