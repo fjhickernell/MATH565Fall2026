@@ -7,6 +7,7 @@ course_title: "MATH 565 — Fall 2026"
 author: "Fred J. Hickernell"
 date: today
 date-format: "MMMM D, YYYY"
+jupyter: qmcpy
 
 reveal-options:
   disableLayout: false

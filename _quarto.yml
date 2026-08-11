@@ -76,7 +76,8 @@ website:
 course_repo: "https://github.com/fjhickernell/MATH565Fall2026"
 course_repo_label: "MATH565Fall2026 on GitHub"
 
+jupyter: qmcpy
+
 execute:
-  kernel: qmcpy
   env:
     RETICULATE_PYTHON: /opt/miniconda3/envs/qmcpy/bin/python

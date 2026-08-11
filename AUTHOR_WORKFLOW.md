@@ -51,7 +51,7 @@ Install:
 
 - Git
 - Quarto
-- Python with the course environment used by the `qmcpy` Jupyter kernel
+- Conda for the standard `qmcpy` Python environment and Jupyter kernel
 - R with `knitr`, `rmarkdown`, and `reticulate`
 
 Install the required R packages when they are not already available:
@@ -60,14 +60,26 @@ Install the required R packages when they are not already available:
 install.packages(c("knitr", "rmarkdown", "reticulate"))
 ```
 
-## Fresh clone and Python packages
+## Fresh clone and Python environment
+
+If the `qmcpy` environment does not already exist, create it once with Python
+3.11 or later:
+
+```bash
+conda create --name qmcpy "python>=3.11"
+```
+
+Then install the course dependencies and register that environment as the
+`qmcpy` kernel:
 
 ```bash
 git clone --recurse-submodules https://github.com/fjhickernell/MATH565Fall2026.git
 cd MATH565Fall2026
 git submodule update --init --recursive
+conda activate qmcpy
 python -m pip install -e classlib
 python -m pip install -e "qmcsoftware/.[class]"
+python -m ipykernel install --user --name qmcpy --display-name "qmcpy"
 ```
 
 Copy `.Renviron.example` to `.Renviron` and adjust the Python path when the

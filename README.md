@@ -14,13 +14,23 @@ course-material reference.
 ## Local setup
 
 See [`AUTHOR_WORKFLOW.md`](AUTHOR_WORKFLOW.md) for the complete author setup,
-preview, rendering, and publishing workflow. A concise initial setup is:
+preview, rendering, and publishing workflow. The course uses the standard
+`qmcpy` Python environment and Jupyter kernel. If the environment does not
+already exist, create it once with Python 3.11 or later:
+
+```bash
+conda create --name qmcpy "python>=3.11"
+```
+
+Then perform the initial course setup:
 
 ```bash
 git clone --recurse-submodules https://github.com/fjhickernell/MATH565Fall2026.git
 cd MATH565Fall2026
+conda activate qmcpy
 python -m pip install -e classlib
 python -m pip install -e "qmcsoftware/.[class]"
+python -m ipykernel install --user --name qmcpy --display-name "qmcpy"
 ```
 
 The deployment workflow renders the website and slides separately, stages the
