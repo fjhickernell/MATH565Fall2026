@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-08-10">
+  <meta name="dcterms.date" content="2026-08-11">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -36,7 +36,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="01-introduction_files/libs/revealjs/dist/theme/quarto-c0baed3fd2333db845c298ccab07586e.css">
+  <link rel="stylesheet" href="01-introduction_files/libs/revealjs/dist/theme/quarto-9fece64726b755d47ccb080a46c1e6c7.css">
   <link href="01-introduction_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="01-introduction_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="01-introduction_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -597,7 +597,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">August 10, 2026</p>
+  <p class="date">August 11, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 center">
 <h1>Course Map</h1>
@@ -766,8 +766,13 @@ Collaboration<br>&amp; Community
 <p><img data-src="assets/images/InNOut.jpg" style="width: 89%;" alt="In-N-Out drive-through queue"></p>
 </div></div>
 </section>
-<section id="why-is-there-uncertainty" class="slide level2">
+<section id="why-is-there-uncertainty" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Why is there uncertainty?</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
 <p><a href="https://www.wsj.com/articles/as-forecasts-go-you-can-bet-on-monte-carlo-1470994203">J. Craven McGinty, As Forecasts Go, You Can Bet on Monte Carlo, <em>Wall Street Journal</em>, August 12, 2016</a></p>
 <ul>
 <li>Finance: <span class="alert">market forces</span> often modeled by stochastic processes driven by Brownian motion</li>
@@ -791,8 +796,8 @@ Y&amp;=
 \text{neural-network parameter} \\
 \text{service time}
 \end{cases} \\
-&amp; = f(\vX), \text{ where} \\
-\vX &amp; = \text{multivariate random variable that is }\alerttext{easy to sample}
+&amp; = f(\vX)  \\
+\text{where } \vX &amp; = \text{multivariate random variable that is }\alerttext{easy to sample}
 \end{align*}\]</span></p>
 <ul>
 <li>Generate <span class="alert">sample</span> versions <span class="math inline">\(Y_1,\ldots,Y_n\)</span></li>
@@ -802,12 +807,17 @@ Y&amp;=
 <li>variance</li>
 <li>quantile</li>
 <li>probability distribution</li>
-<li>minumum or maximum</li>
+<li>minimum or maximum</li>
 </ul></li>
 </ul>
 </section>
-<section id="are-we-there-yet" class="slide level2">
+<section id="are-we-there-yet" class="slide level2 tree-marker-slide" data-tree-marker="practice">
 <h2>Are we there yet?</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
+</div>
+
 <p>You are visiting a friend. The trip requires</p>
 <ul>
 <li>a <span class="math inline">\(5\)</span>-minute walk to the train,</li>
@@ -878,7 +888,7 @@ Y&amp;=
 <li>Contrast examples, nonexamples, and nearby concepts</li>
 <li>Connect intuition, definitions, formulas, representations</li>
 </ul>
-<p><em>“Use Socratic questions, examples, and nonexamples to probe my understanding and connect intuition to the formal definition.”</em></p>
+<p><em>“Use Socratic questions, examples, and nonexamples to probe my understanding and connect intuition to the formal definition”</em></p>
 </div><div class="column" style="width:4%;">
 
 </div><div class="column" style="width:48%;">
@@ -888,7 +898,7 @@ Y&amp;=
 <li>Challenge a proof, derivation, program, or explanation</li>
 <li>Suggest tests or counterexamples without rewriting everything</li>
 </ul>
-<p><em>“Find the weakest step in my argument and explain why.”</em></p>
+<p><em>“Find the weakest step in my argument and explain why”</em></p>
 </div></div>
 <div class="key-point">
 <p>Prefer dialogue: strengthen your thinking before producing finished work</p>
@@ -904,7 +914,7 @@ Y&amp;=
 <li>Compare approaches, tradeoffs, failure modes</li>
 <li>Design an analysis, algorithm, program, workflow</li>
 </ul>
-<p><em>“Propose two approaches, their assumptions, and how I could choose.”</em></p>
+<p><em>“Propose two approaches, their assumptions, and how I could choose”</em></p>
 </div><div class="column" style="width:4%;">
 
 </div><div class="column" style="width:48%;">
@@ -914,7 +924,7 @@ Y&amp;=
 <li>Best with clear inputs, requirements, checks, desired output</li>
 <li>Riskiest when you cannot evaluate the result</li>
 </ul>
-<p><em>“Implement this specification and provide tests for each requirement.”</em></p>
+<p><em>“Implement this specification and provide tests for each requirement”</em></p>
 </div></div>
 <p>Match tool to role: <span class="alert">the best AI for one role may not be the best for another</span>. One AI can help you reason and specify; another execute. You inspect and revise.</p>
 <div class="key-point">
@@ -1163,11 +1173,13 @@ Q(p) \overset{\exstar}{=} -\frac{\log(1-p)}{\lambda}  \quad 0 &lt; p &lt; 1
 :=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\hmu_n)^2 \quad \text{is the }\alerttext{sample variance}\\
 \end{align*}\]</span></p>
 <h3 id="mean-squared-error-bias-and-variance">Mean squared error, bias, and variance</h3>
+<div class="small">
 <p>If <span class="math inline">\(\vTheta\)</span> is an estimator of a population parameter (mean, variance, median, <span class="math inline">\(\ldots\)</span>) <span class="math inline">\(\vtheta\)</span>, then <span class="math display">\[\begin{align*}
-\bias(\vTheta) &amp;: = \Ex(\vTheta) - \theta \quad \alerttext{unbiased means zero bias} \\
-\mse(\vTheta) &amp; : = \Ex\bigl[ \bigl(\vTheta - \Ex(\vTheta) \bigr)^2 \bigr] \quad \text{is the }\alerttext{mean squared error}\\
+\bias(\vTheta) &amp;:= \Ex(\vTheta) - \vtheta \quad \alerttext{unbiased means zero bias} \\
+\mse(\vTheta) &amp;:= \Ex\bigl[ \bigl(\vTheta - \vtheta \bigr)^2 \bigr] \quad \text{is the }\alerttext{mean squared error}\\
 &amp; \overset{\exstar}{=} [\bias(\vTheta)]^2 + \var(\vTheta)
 \end{align*}\]</span></p>
+</div>
 </section>
 <section id="under-random-sampling" class="slide level2 tree-marker-slide" data-tree-marker="stat-estim">
 <h2>Under random sampling</h2>
@@ -1211,14 +1223,8 @@ Q(p) \overset{\exstar}{=} -\frac{\log(1-p)}{\lambda}  \quad 0 &lt; p &lt; 1
 <p>Monte Carlo error for a sample mean typically decreases like <span class="math inline">\(n^{-1/2}\)</span></p>
 </div>
 </section>
-<section id="monte-carlo-estimators-of-properties-of-y" class="slide level2 tree-marker-slide" data-state="goldborder" data-tree-marker="stat-estim">
-<h2>Monte Carlo estimators of properties of <span class="math inline">\(Y\)</span></h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
-</div>
-
+<section id="monte-carlo-estimates-of-properties-of-y" class="slide level2" data-state="goldborder">
+<h2>Monte Carlo estimates of properties of <span class="math inline">\(Y\)</span></h2>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -1262,8 +1268,14 @@ Q(p) \overset{\exstar}{=} -\frac{\log(1-p)}{\lambda}  \quad 0 &lt; p &lt; 1
 <p><span class="alert">Estimate</span> is the numerical result based on observed data</p>
 </div>
 </section>
-<section id="computational-counterparts" class="slide level2">
+<section id="computational-counterparts" class="slide level2 tree-marker-slide" data-tree-marker="stat-estim">
 <h2>Computational counterparts</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
 <table class="caption-top">
 <colgroup>
 <col style="width: 50%">
@@ -1303,17 +1315,23 @@ Q(p) \overset{\exstar}{=} -\frac{\log(1-p)}{\lambda}  \quad 0 &lt; p &lt; 1
 </tbody>
 </table>
 </section>
-<section id="are-we-there-yet-revisited" class="slide level2">
+<section id="are-we-there-yet-revisited" class="slide level2 tree-marker-slide" data-tree-marker="stat-estim">
 <h2>Are we there yet? Revisited</h2>
-<p>For the travel-time model,</p>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>For the travel-time model</p>
 <ol type="1">
 <li>model each uncertain waiting time,</li>
-<li>generate independent trip times <span class="math inline">\(Y_1,\ldots,Y_n\)</span>,</li>
-<li>estimate the mean and relevant upper quantiles, and</li>
-<li>report Monte Carlo uncertainty with the estimates.</li>
+<li>generate independent trip times <span class="math inline">\(Y_1,\ldots,Y_n\)</span></li>
+<li>estimate the mean and relevant upper quantiles</li>
+<li>report Monte Carlo uncertainty with the estimates</li>
 </ol>
 <div class="key-point">
-<p>The question “How long should I allow?” is usually a quantile question, not only a mean question.</p>
+<p>The question “How long should I allow?” is usually a quantile question, not only a mean question</p>
 </div>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/AreWeThereYet.ipynb">Companion <code>AreWeThereYet</code> notebook</a></p>
 </section></section>
@@ -1339,16 +1357,16 @@ Q(p) \overset{\exstar}{=} -\frac{\log(1-p)}{\lambda}  \quad 0 &lt; p &lt; 1
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
-<p>For a random vector <span class="math inline">\((Y,Z)\)</span>,</p>
+<p>For a random vector <span class="math inline">\((Y,Z)\)</span></p>
 <p><span class="math display">\[
 \Prob(Y=y\mid Z=z)
 =\frac{\Prob(Y=y,Z=z)}{\Prob(Z=z)}
 =\frac{\Prob(Z=z\mid Y=y)\Prob(Y=y)}
-{\Prob(Z=z)}.
+{\Prob(Z=z)}
 \]</span></p>
 <p>The second equality is <span class="alert">Bayes’ theorem</span>. For densities,</p>
 <p><span class="math display">\[
-\varrho_{Y\mid Z}(y\mid z)=\frac{\varrho_{Y,Z}(y,z)}{\varrho_Z(z)}.
+\varrho_{Y\mid Z}(y\mid z)=\frac{\varrho_{Y,Z}(y,z)}{\varrho_Z(z)}
 \]</span></p>
 </section>
 <section id="laws-of-total-expectation-and-variance" class="slide level2 tree-marker-slide" data-tree-marker="probability">
@@ -1359,12 +1377,12 @@ Q(p) \overset{\exstar}{=} -\frac{\log(1-p)}{\lambda}  \quad 0 &lt; p &lt; 1
 </div>
 
 <p><span class="math display">\[
-\Ex(Y)=\Ex_Z\bigl[\Ex(Y\mid Z)\bigr],
+\Ex(Y)=\Ex_Z\bigl[\Ex(Y\mid Z)\bigr]
 \]</span></p>
 <p><span class="math display">\[
 \var(Y)
 =\Ex_Z\bigl[\var(Y\mid Z)\bigr]
-+\var_Z\bigl(\Ex(Y\mid Z)\bigr).
++\var_Z\bigl(\Ex(Y\mid Z)\bigr)
 \]</span></p>
 <div class="key-point">
 <p>Conditioning separates variation within a fixed <span class="math inline">\(Z\)</span> from variation in the conditional mean across values of <span class="math inline">\(Z\)</span>.</p>
@@ -1378,31 +1396,45 @@ Q(p) \overset{\exstar}{=} -\frac{\log(1-p)}{\lambda}  \quad 0 &lt; p &lt; 1
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Let <span class="math inline">\(Y=f(X_1,\ldots,X_d)\)</span> and <span class="math inline">\(Z=(X_2,\ldots,X_d)\)</span>. If</p>
+<p>Let <span class="math inline">\(Y=f(X_1,\ldots,X_d)\)</span> and <span class="math inline">\(Z=(X_2,\ldots,X_d)\)</span>; if</p>
 <p><span class="math display">\[
 g(Z):=\Ex(Y\mid Z)
 \]</span></p>
-<p>is available analytically, then</p>
+<p>is available <span class="alert">analytically</span>, then</p>
 <p><span class="math display">\[
 \mu=\Ex(Y)=\Ex_Z[g(Z)],
 \qquad
 \var_Z(g(Z)) \overset{\exstar}{\le} \var(Y)
 \]</span></p>
-<p>Sampling <span class="math inline">\(g(Z)\)</span> instead of <span class="math inline">\(Y\)</span> can therefore reduce variance</p>
+<p>Sampling <span class="math inline">\(g(Z)\)</span> instead of <span class="math inline">\(Y\)</span> can <span class="alert">reduce variance</span></p>
 <p>&nbsp;</p>
-<p>If the conditional density <span class="math inline">\(h(y,Z):=\varrho_{Y\mid Z}(y\mid Z)\)</span> is available</p>
+<p>If the conditional density <span class="math inline">\(h(y,Z):=\varrho_{Y\mid Z}(y\mid Z)\)</span> is available <span class="alert">analytically</span></p>
 <p><span class="math display">\[
 \varrho_Y(y)=\Ex_Z[h(y,Z)]
 \]</span></p>
 <p>so a probability density can itself be expressed as an expectation</p>
 </section></section>
-<section id="big-ideas" class="title-slide slide level1 center" data-state="goldborder">
+<section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="prob-stat-est">
 <h1>Big ideas</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
 <ul>
 <li>Use sample quantities to estimate properties of a random variable whose distribution is difficult to obtain directly</li>
-<li>Targets include means, variances, covariances, probability mass or density functions, cumulative distribution functions, and quantiles</li>
+<li>Targets include
+<ul>
+<li>means</li>
+<li>(co-)variances</li>
+<li>probability mass or density functions</li>
+<li>cumulative distribution functions</li>
+<li>quantiles</li>
+</ul></li>
 <li>For means, the CLT provides interval estimates that quantify Monte Carlo uncertainty</li>
-<li>Other properties often begin with point estimates - one approximate value for each target</li>
+<li>Other properties often begin with point estimates—one approximate value for each target</li>
 <li>Conditioning can turn a difficult random quantity into a lower-variance expectation</li>
 </ul>
 
