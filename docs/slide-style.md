@@ -10,6 +10,11 @@ exceptions.
 - `#` starts a major section.
 - `##` starts an individual slide.
 - `###` may be used as a third-level heading within a `##` slide.
+- Write `#` section headings in title case: capitalize principal words while
+  leaving articles, coordinating conjunctions, and short prepositions
+  lowercase unless they begin or end the heading.
+- Write `##` slide headings and `###` subheadings in sentence case: capitalize
+  only the first word and proper nouns, acronyms, and mathematical notation.
 - Do not place a `###` heading directly after a `#` section heading; start the
   individual slide with `##` first.
 - Use `<h3>` (or our `.h3` helper class if appropriate) when heading-like
@@ -32,7 +37,14 @@ slide headings that belong to that section, in their presentation order. The
 list is a navigational outline for students. It may share the section slide
 with introductory text, a figure, a tree, or other useful content. Update the
 outline whenever a subordinate slide is added, removed, renamed, or reordered.
-A `#` section with no subordinate `##` slides does not need an empty list.
+Do not include `###` subheadings in the outline. A `#` section with no
+subordinate `##` slides does not need an empty list.
+
+When a `#` section slide also contains content, decide its placement case by
+case. By default, put brief framing or motivation above the child-slide links
+and supporting examples, figures, or secondary material below them. Keep the
+links visually prominent and easy to scan; move dense content to a `##` slide
+rather than crowding the section slide.
 
 Use raw `<h3>` elements for the two Course Map column labels. A Markdown `###`
 directly after a `#` heading can alter RevealJS slide structure.
