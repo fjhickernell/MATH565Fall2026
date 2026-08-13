@@ -27,6 +27,8 @@ from tree_markers import render_tree_marker
 from trees import render_tree
 ```
 
+{{< include ../classlib/classlib/quarto/slides/shared/general/illinois-tech-academic-transformation.qmd >}}
+
 # Course Map
 
 ::: {.columns}
@@ -111,21 +113,21 @@ print(
 ::: {.column width="33.33%"}
 [Bayesian inference]{.alert}
 
-![](assets/images/bayesian-inference.jpg){fig-alt="Bayesian inference visualization" style="width: 94%;"}
+[![](assets/images/bayesian-inference.jpg){fig-alt="Bayesian inference visualization"}](https://www.mdpi.com/2220-9964/13/3/97){.image-source target="_blank" rel="noopener" style="width: 94%;" title="View image source"}
 
 :::
 
 ::: {.column width="33.33%"}
 [Neural networks]{.alert}
 
-![](assets/images/neural-network.png){fig-alt="Neural-network diagram" style="width: 71%;"}
+[![](assets/images/neural-network.png){fig-alt="Neural-network diagram"}](https://www.v7labs.com/blog/neural-network-architectures-guide){.image-source target="_blank" rel="noopener" style="width: 71%;" title="View image source"}
 
 :::
 
 ::: {.column width="33.33%"}
 [Queues]{.alert}
 
-![](assets/images/InNOut.jpg){fig-alt="In-N-Out drive-through queue" style="width: 89%;"}
+[![](assets/images/InNOut.jpg){fig-alt="In-N-Out drive-through queue"}](https://www.flickr.com/photos/disneymike/2090890736){.image-source target="_blank" rel="noopener" style="width: 89%;" title="View image source"}
 
 :::
 :::
@@ -162,26 +164,28 @@ Y&=
 \end{align*}
 
 - Generate [sample]{.alert} versions $Y_1,\ldots,Y_n$
-- Use samples to estimate [population parameters]{.alert}:
+- Use samples to estimate [population quantities]{.alert}:
   - mean
   - variance
+  - probability mass or density function
+  - cumulative distribution function
   - quantile
-  - probability distribution
-  - minimum or maximum
 
 ## Are we there yet? {.tree-marker-slide tree-marker="practice"}
 
-You are visiting a friend. The trip requires
+A visit to a friend requires
 
-- a $5$-minute walk to the train,
-- waiting for a train that arrives every $20$ minutes,
-- a $30$-minute train ride,
-- a taxi that is waiting with probability $0.2$,
-- otherwise, a taxi wait with mean $10$ minutes, and
-- a $12$-minute taxi ride.
+- a $5$-minute walk to the train
+- waiting for a train that arrives every $20$ minutes
+- a $30$-minute train ride
+- a taxi that is waiting with probability $0.2$
+- otherwise a taxi wait with mean $10$ minutes
+- a $12$-minute taxi ride
 
 ::: {.key-point}
 How long should you allow for the trip?
+
+What [modeling assumptions]{.alert} are needed?
 :::
 
 [Companion `AreWeThereYet` notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/AreWeThereYet.ipynb)
@@ -199,7 +203,7 @@ How long should you allow for the trip?
 
 - Navigating these slides
 
-    - Each slide deck has a list of decks and list of major sections after the title page
+    - Each slide deck lists course decks and major sections after the title page
 
     - Each major section is headed by a slide that points to minor sections
 
@@ -218,7 +222,7 @@ How long should you allow for the trip?
 
     - Homework assignments are at [Assignments](https://fjhickernell.github.io/MATH565Fall2026/pages/homework.html)
 
-    - Basic course information is on the course website [Welcome page](https://fjhickernell.github.io/MATH565Fall2026/)
+    - Basic course information is on the course website's [Welcome page](https://fjhickernell.github.io/MATH565Fall2026/)
 
 - All materials are in the [Course Repository](https://github.com/fjhickernell/MATH565Fall2026), which is used to build the course website
 
@@ -253,15 +257,15 @@ print(render_tree_marker("probability"))
 
 ## Random variables and distributions {.tree-marker-slide tree-marker="probability"}
 
-Let $Y$ be a [random variable]{.alert} with sample space
-$\mathcal{Y} \subseteq \reals$
+Let $Y:\Omega\to\mathcal{Y}\subseteq\reals$ be a [random variable]{.alert}
+
+For $A\subseteq\mathcal{Y}$, $\Prob(Y\in A)$ is the probability of the
+[event]{.alert} $\{\omega\in\Omega:Y(\omega)\in A\}$
 
 \begin{align*}
-\Prob(Y\in\Omega)
-  &\text{ means probability of the } \alerttext{event }\Omega\\
 F \text{ is the }\alerttext{cumulative distribution function}\text{, } F(y)&:=\Prob(Y\le y), \;  y\in\mathcal{Y}, \quad\text{right continuous}\\
-Q \text{ is the }\alerttext{quantile function}\text{, } Q(p)&:=\inf\{y\in\mathcal{Y}:F(y)\ge p\}, \; 0<p<1, \quad\text{left continuous}\\
-& = F^{-1}(p) \text{ if $F$ is continuous} \\
+Q \text{ is the }\alerttext{quantile function}\text{, } Q(u)&:=\inf\{y\in\mathcal{Y}:F(y)\ge u\}, \; 0<u<1, \quad\text{left continuous}\\
+& = F^{-1}(u) \text{ if $F$ is continuous and strictly increasing} \\
 \Ex[g(Y)]&:=\int_{\mathcal{Y}}g(y)\,\dif F(y)
 \end{align*}
 
@@ -279,12 +283,12 @@ Q \text{ is the }\alerttext{quantile function}\text{, } Q(p)&:=\inf\{y\in\mathca
 :::
 
 ::: {.column width="50%"}
-### Continuous
+### Absolutely continuous
 
 [Probability density function (PDF)]{.alert}, $\varrho$
 
 \begin{gather*}
-\varrho(y):=F'(y)\\
+\varrho(y):=F'(y)\quad\text{almost everywhere}\\
 \Ex[g(Y)]
 =\int_{\mathcal{Y}}g(y)\varrho(y)\,\dif y
 \end{gather*}
@@ -307,25 +311,29 @@ Q \text{ is the }\alerttext{quantile function}\text{, } Q(p)&:=\inf\{y\in\mathca
 & \text{ is the }\alerttext{covariance matrix}\text{ of the $d$-dimensional random vector } \vY
 \end{align*}
 
-$\exstar$ Show that $\displaystyle \mu = \argmin_m \Ex\bigl[ (Y-m)^2 \bigr]$
+$\exstar$ Assuming $\Ex(Y^2)<\infty$, show that
+$\displaystyle \mu = \argmin_m \Ex\bigl[ (Y-m)^2 \bigr]$
 
-$\exstar$ Show that $\displaystyle \med(Y) = \argmin_m \Ex \lvert Y-m \rvert$
+$\exstar$ Show that $\displaystyle \med(Y) \in \argmin_m \Ex \lvert Y-m \rvert$
+
+Medians may be nonunique
 
 $\exstar$ Show that $\cov(\vY)$ is symmetric and has non-negative eigenvalues
 
 ## Binomial distribution {.tree-marker-slide tree-marker="probability"}
 
-For $Y\sim\Bin(n,p)$, (see `scipy.stats.binom(n, p)`)
+For $Y\sim\Bin(n,p)$ (see `scipy.stats.binom(n, p)`)
 
 \begin{gather*}
 \varrho(y)=\Prob(Y=y)
-=\binom{n}{y}p^y(1-p)^{n-y},
+=\binom{n}{y}p^y(1-p)^{n-y}
 \qquad y=0,1,\ldots,n
 \\
 F(y)=\sum_{j=0}^{ y}\binom{n}{j}p^j(1-p)^{n-j}, \qquad y=0,1,\ldots,n \\
-Q(p)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge p\} \quad \text{no simple formula}
+Q(u)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge u\} \quad 0<u<1
+\quad \text{no simple formula}
 \\
-\Ex(Y)=np,
+\Ex(Y)=np
 \qquad
 \var(Y)=np(1-p)
 \end{gather*}
@@ -333,10 +341,10 @@ Q(p)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge p\} \quad \text{no simple formula}
 The [Bernoulli]{.alert} distribution, $\Bern(p)$, is the case $n=1$
 \begin{gather*}
 \varrho(y)=\Prob(Y=y)
-=p^y(1-p)^{1-y},
+=p^y(1-p)^{1-y}
 \qquad y=0,1
 \\
-\Ex(Y)=p,
+\Ex(Y)=p
 \qquad
 \var(Y)=p(1-p)
 \end{gather*}
@@ -346,7 +354,7 @@ The [Bernoulli]{.alert} distribution, $\Bern(p)$, is the case $n=1$
 Models a [memoryless waiting time]{.alert}
 
 For
-$Y\sim\Exp(\lambda)$, (see `scipy.stats.expon(loc=0, scale=1/lambda)`)
+$Y\sim\Exp(\lambda)$ (see `scipy.stats.expon(loc=0, scale=1/lambda)`)
 
 \begin{gather*}
 \varrho(y)=
@@ -355,7 +363,7 @@ $Y\sim\Exp(\lambda)$, (see `scipy.stats.expon(loc=0, scale=1/lambda)`)
 F(y)=
 1-\me^{-\lambda y},  \quad  0 \le y < \infty
 \\
-Q(p) \overset{\exstar}{=} -\frac{\log(1-p)}{\lambda}  \quad 0 < p < 1
+Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 < u < 1
 \\
 \Ex(Y)=\frac{1}{\lambda}
 \\
@@ -365,14 +373,14 @@ Q(p) \overset{\exstar}{=} -\frac{\log(1-p)}{\lambda}  \quad 0 < p < 1
 
 ## Multivariate normal or Gaussian distribution {.tree-marker-slide tree-marker="probability"}
 
-Used in finance and uncertainty quantification, (see `scipy.stats.multivariate_normal(mean=mu, cov=Sigma)`):
+Used in finance and uncertainty quantification (see `scipy.stats.multivariate_normal(mean=mu, cov=Sigma)`)
 
 $$
 \vY\sim\Norm(\vmu,\mSigma)
 $$
 
-where $\vmu$ is the mean vector and $\mSigma$ is the
-covariance matrix
+where $\vmu$ is the mean vector and $\mSigma\succ 0$ is a
+positive-definite covariance matrix
 
 $$
 \varrho(\vy)
@@ -386,6 +394,7 @@ $$
 # Samples and estimates {.tree-marker-slide tree-marker="stat-estim"}
 
 - [Sampling](#sampling)
+- [Mean squared error, bias, and variance](#mean-squared-error-bias-and-variance)
 - [Under random sampling](#under-random-sampling)
 - [Central Limit Theorem](#central-limit-theorem)
 - [Monte Carlo estimates of properties of $Y$](#monte-carlo-estimates-of-properties-of-y)
@@ -406,24 +415,26 @@ Let
 :=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\hmu_n)^2 \quad \text{is the }\alerttext{sample variance}\\
 \end{align*}
 
-### Mean squared error, bias, and variance
-::: {.small}
-If $\vTheta$ is an estimator of a population parameter (mean, variance, median, $\ldots$) $\vtheta$, then
+## Mean squared error, bias, and variance {.tree-marker-slide tree-marker="stat-estim"}
+
+Let $\Theta$ estimate a scalar population parameter $\theta$
 \begin{align*}
-\bias(\vTheta) &:= \Ex(\vTheta) - \vtheta \quad \alerttext{unbiased means zero bias} \\
-\mse(\vTheta) &:= \Ex\bigl[ \bigl(\vTheta - \vtheta \bigr)^2 \bigr] \quad \text{is the }\alerttext{mean squared error}\\
-& \overset{\exstar}{=} [\bias(\vTheta)]^2 + \var(\vTheta)
+\bias(\Theta) &:= \Ex(\Theta) - \theta \quad \alerttext{unbiased means zero bias} \\
+\mse(\Theta) &:= \Ex\bigl[ \bigl(\Theta - \theta \bigr)^2 \bigr] \quad \text{is the }\alerttext{mean squared error}\\
+& \overset{\exstar}{=} [\bias(\Theta)]^2 + \var(\Theta)
 \end{align*}
-:::
+
 
 ## Under random sampling {.tree-marker-slide tree-marker="stat-estim"}
 
-Suppose $Y_1,Y_2,\ldots\sim Y$, where
-$\Ex(Y)=\mu$ and $\var(Y)=\sigma^2$.  Then
+Suppose $Y_1,Y_2,\ldots\sim Y$ with
+$\Ex(Y)=\mu$ and $\var(Y)=\sigma^2$
+
+Then
 $$
 \Ex(\hmu_n)=\mu \quad \text{$\hmu_n$ is an }\alerttext{unbiased}\text{ estimator of }\mu
 $$
-If in addition, $Y_1,Y_2,\ldots$ are [uncorrelated]{.alert}, then 
+If $Y_1,Y_2,\ldots$ are also [uncorrelated]{.alert}
 \begin{gather*}
 \Ex(\hsigma_n^2)=\sigma^2  \quad \text{$\hsigma_n^2$ is an }\alerttext{unbiased}\text{ estimator of }\sigma^2 \\
 \mse(\hmu_n)
@@ -436,7 +447,7 @@ If in addition, $Y_1,Y_2,\ldots$ are [uncorrelated]{.alert}, then
 
 ## Central Limit Theorem {.tree-marker-slide tree-marker="probstat"}
 
-If $Y_1,Y_2,\ldots\IIDsim Y$ and $0<\sigma^2<\infty$,
+If $Y_1,Y_2,\ldots\IIDsim Y$ and $0<\sigma^2<\infty$
 then
 
 $$
@@ -445,7 +456,7 @@ $$
 \qquad\text{as }n\to\infty
 $$
 
-For large $n$,
+For large $n$
 
 $$
 \hmu_n\appxsim
@@ -491,7 +502,7 @@ point estimators
 
 For the travel-time model
 
-1. model each uncertain waiting time,
+1. model each uncertain waiting time
 2. generate independent trip times $Y_1,\ldots,Y_n$
 3. estimate the mean and relevant upper quantiles
 4. report Monte Carlo uncertainty with the estimates
@@ -511,7 +522,8 @@ only a mean question
 
 ## Conditional probability {.tree-marker-slide tree-marker="probability"}
 
-For a random vector $(Y,Z)$
+For discrete random variables $Y,Z$, suppose
+$\Prob(Y=y)>0$ and $\Prob(Z=z)>0$
 
 $$
 \Prob(Y=y\mid Z=z)
@@ -520,7 +532,9 @@ $$
 {\Prob(Z=z)}
 $$
 
-The second equality is [Bayes' theorem]{.alert}. For densities,
+The second equality is [Bayes' theorem]{.alert}
+
+If a joint density exists and $\varrho_Z(z)>0$
 
 $$
 \varrho_{Y\mid Z}(y\mid z)=\frac{\varrho_{Y,Z}(y,z)}{\varrho_Z(z)}
@@ -540,21 +554,23 @@ $$
 
 ::: {.key-point}
 Conditioning separates variation within a fixed $Z$ from variation in the
-conditional mean across values of $Z$.
+conditional mean across values of $Z$
 :::
 
 ## Conditional Monte Carlo {.tree-marker-slide tree-marker="prob-est"}
 
-Let $Y=f(X_1,\ldots,X_d)$ and $Z=(X_2,\ldots,X_d)$;  if
+Let $Y=f(X_1,\ldots,X_d)$ and $Z=(X_2,\ldots,X_d)$
+
+If
 
 $$
 g(Z):=\Ex(Y\mid Z)
 $$
 
-is available [analytically]{.alert}, then
+is available [analytically]{.alert}
 
 $$
-\mu=\Ex(Y)=\Ex_Z[g(Z)],
+\mu=\Ex(Y)=\Ex_Z[g(Z)]
 \qquad
 \var_Z(g(Z)) \overset{\exstar}{\le} \var(Y)
 $$
@@ -563,7 +579,7 @@ Sampling $g(Z)$ instead of $Y$ can [reduce variance]{.alert}
 
 &nbsp;
 
-If the conditional density $h(y,Z):=\varrho_{Y\mid Z}(y\mid Z)$ is available [analytically]{.alert}
+If the conditional density $h(y,z):=\varrho_{Y\mid Z}(y\mid z)$ is available [analytically]{.alert}
 
 $$
 \varrho_Y(y)=\Ex_Z[h(y,Z)]
