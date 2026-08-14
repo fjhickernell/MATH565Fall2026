@@ -18,6 +18,12 @@ HickernellAcademicLib first, then intentionally update the course repository's
 `classlib` pointer. Keep course-specific content and styling in this
 repository, and do not leave course-only modifications in `classlib`.
 
+Whenever a homework, assignment, quiz, or similar assessed item is
+finalized or updated on its course website page, also add or update its
+due-date notice on the title slide of the deck current when the item is
+assigned. Determine the relevant deck from the course schedule and the
+assignment date; remove or replace stale notices as the course advances.
+
 ## Propagating classlib changes
 
 Develop and review a reusable change in the course repository's `classlib`
