@@ -207,6 +207,19 @@ Important idea goes here.
 
 The `.key-point` block is preferred over Quarto callouts.
 
+# Converting Fall 2025 Keynote decks
+
+Use the corresponding Fall 2025 Keynote deck as the initial content and
+pedagogical reference when converting a lecture to Quarto. Preserve its
+mathematical substance, examples, sequence, and emphasis as closely as the new
+format reasonably allows before making intentional revisions during
+instructor review.
+
+Do not carry forward semester-specific logistics or references to Fall 2025
+events. Remove or replace mentions of 2025 homework, assignments, due dates,
+tests, announcements, and other dated course administration rather than
+presenting them as current Fall 2026 information.
+
 # Mathematics
 
 - Prefer displayed equations.

@@ -194,9 +194,18 @@ What [modeling assumptions]{.alert} are needed?
 
 # Course Logistics
 
+- [Complete the Diagnostic Survey](#complete-the-diagnostic-survey)
 - [What is where?](#what-is-where)
 - [Why participate synchronously?](#why-participate-synchronously)
 - [Using AI well](#using-ai-well)
+
+## Complete the Diagnostic Survey
+
+::: {.key-point}
+Complete [Assignment 0 — Diagnostic Survey](https://iit.instructure.com/courses/25777/assignments/95825){.alert} by August 21.
+:::
+
+Complete and submit this assignment individually, not as a group.
 
 ## What is where?
 
