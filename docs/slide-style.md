@@ -10,6 +10,8 @@ exceptions.
 - `#` starts a major section.
 - `##` starts an individual slide.
 - `###` may be used as a third-level heading within a `##` slide.
+- `####` may be used beneath a `###` theme heading for genuinely subordinate
+  labels; do not give the theme and its child labels the same heading level.
 - Write `#` section headings in title case: capitalize principal words while
   leaving articles, coordinating conjunctions, and short prepositions
   lowercase unless they begin or end the heading.

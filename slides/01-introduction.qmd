@@ -259,14 +259,17 @@ Complete and submit this assignment individually, not as a group.
 ::: {.columns}
 ::: {.column width="50%"}
 - [Absolutely continuous random variable](#random-variables-and-distributions)
+- [Acceptance–rejection sampling](02-generating-samples.html#the-acceptancerejection-algorithm)
 - [Bayes' theorem](#conditional-probability)
 - [Bernoulli distribution](#binomial-distribution)
 - [Bias](#mean-squared-error-bias-and-variance)
 - [Binomial distribution](#binomial-distribution)
+- [Brownian motion](02-generating-samples.html#brownian-motion)
 - [Central Limit Theorem](#central-limit-theorem)
 :::
 
 ::: {.column width="50%"}
+- [Cholesky factorization](02-generating-samples.html#cholesky-factorization)
 - [Conditional density](#conditional-probability)
 - [Conditional expectation](#laws-of-total-expectation-and-variance)
 - [Conditional Monte Carlo](#conditional-monte-carlo)
@@ -288,11 +291,14 @@ Complete and submit this assignment individually, not as a group.
 - [Event](#random-variables-and-distributions)
 - [Expectation](#random-variables-and-distributions)
 - [Exponential distribution](#exponential-distribution)
-- [Law of total expectation](#laws-of-total-expectation-and-variance)
-- [Law of total variance](#laws-of-total-expectation-and-variance)
+- [Gaussian process](02-generating-samples.html#gaussian-processes)
 :::
 
 ::: {.column width="50%"}
+- [Geometric Brownian motion](02-generating-samples.html#geometric-brownian-motion)
+- [Law of total expectation](#laws-of-total-expectation-and-variance)
+- [Law of total variance](#laws-of-total-expectation-and-variance)
+- [Low discrepancy](02-generating-samples.html#what-does-low-discrepancy-mean)
 - [Mean](#moments-of-random-variables)
 - [Mean squared error (MSE)](#mean-squared-error-bias-and-variance)
 - [Median](#moments-of-random-variables)
@@ -309,7 +315,8 @@ Complete and submit this assignment individually, not as a group.
 - [Point estimator](#monte-carlo-estimates-of-properties-of-y)
 - [Probability density function (PDF)](#random-variables-and-distributions)
 - [Probability mass function (PMF)](#random-variables-and-distributions)
-- [Quantile function](#random-variables-and-distributions)
+- [Pseudorandom number generator](02-generating-samples.html#where-do-random-variables-come-from)
+- [Quantile function](02-generating-samples.html#the-quantile-transform)
 - [Random variable](#random-variables-and-distributions)
 - [Root mean squared error (RMSE)](#under-random-sampling)
 :::
@@ -318,6 +325,7 @@ Complete and submit this assignment individually, not as a group.
 - [Sample](#sampling)
 - [Sample mean](#sampling)
 - [Sample variance](#sampling)
+- [Shrinkage estimator](02-generating-samples.html#shrinkage-estimators)
 - [Standard deviation](#moments-of-random-variables)
 - [Unbiased estimator](#mean-squared-error-bias-and-variance)
 - [Variance](#moments-of-random-variables)

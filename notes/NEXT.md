@@ -2,8 +2,8 @@
 
 ## Current task
 
-Begin converting `slides/02-generating-samples.qmd` into the second complete
-MATH 565 lecture deck.
+Review the drafted `slides/02-generating-samples.qmd` lecture deck and refine
+its scope, narrative, and mathematical presentation.
 
 ## Current state
 
@@ -17,6 +17,9 @@ MATH 565 lecture deck.
   travel-time slides.
 - The shared AI-guidance slides are included from `classlib`; formal AI-policy
   review remains separate.
+- `slides/02-generating-samples.qmd` now contains a complete initial draft
+  converted from the Fall 2025 Keynote deck; instructor review is still
+  pending.
 - MCTS will be covered in a later slide deck and does not belong in the
   Introduction deck; the specific later deck remains to be chosen.
 - The Fall 2025 Keynote deck is the initial content and pedagogical reference
@@ -25,8 +28,8 @@ MATH 565 lecture deck.
 
 ## Questions to resolve
 
-- None before the initial conversion; refine the inherited scope during
-  instructor review.
+- Which inherited topics and examples should remain, be revised, or move to a
+  later deck during instructor review?
 
 ## Constraints
 
