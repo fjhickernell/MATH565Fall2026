@@ -48,6 +48,7 @@ from trees import render_tree
 
 - [What is Monte Carlo?](#what-is-monte-carlo)
 - [Course Logistics](#course-logistics)
+- [Terms to Know](#terms-to-know)
 - [Probability review](#probability-review)
 - [Samples and estimates](#samples-and-estimates)
 - [Conditioning](#conditioning)
@@ -195,10 +196,7 @@ What [modeling assumptions]{.alert} are needed?
 
 - [What is where?](#what-is-where)
 - [Why participate synchronously?](#why-participate-synchronously)
-- [What role is AI playing?](#what-role-is-ai-playing)
-- [From collaborator to contractor](#from-collaborator-to-contractor)
-- [Verify what AI produces](#verify-what-ai-produces)
-- [Responsibility stays with you](#responsibility-stays-with-you)
+- [Using AI well](#using-ai-well)
 
 ## What is where?
 
@@ -239,6 +237,84 @@ What [modeling assumptions]{.alert} are needed?
 - Build a learning community and get to know one another
 
 {{< include ../classlib/classlib/quarto/slides/shared/general/using-ai-well.qmd >}}
+
+
+# Terms to Know
+
+- [A–C](#terms-a-c)
+- [D–M](#terms-d-m)
+- [P–Z](#terms-p-z)
+
+## A–C {#terms-a-c}
+
+::: {.columns}
+::: {.column width="50%"}
+- [Absolutely continuous random variable](#random-variables-and-distributions)
+- [Bayes' theorem](#conditional-probability)
+- [Bernoulli distribution](#binomial-distribution)
+- [Bias](#mean-squared-error-bias-and-variance)
+- [Binomial distribution](#binomial-distribution)
+- [Central Limit Theorem](#central-limit-theorem)
+:::
+
+::: {.column width="50%"}
+- [Conditional density](#conditional-probability)
+- [Conditional expectation](#laws-of-total-expectation-and-variance)
+- [Conditional Monte Carlo](#conditional-monte-carlo)
+- [Conditional probability](#conditional-probability)
+- [Confidence interval](#monte-carlo-estimates-of-properties-of-y)
+- [Covariance matrix](#moments-of-random-variables)
+- [Cumulative distribution function (CDF)](#random-variables-and-distributions)
+:::
+:::
+
+## D–M {#terms-d-m}
+
+::: {.columns}
+::: {.column width="50%"}
+- [Discrete random variable](#random-variables-and-distributions)
+- [Empirical distribution function](#monte-carlo-estimates-of-properties-of-y)
+- [Empirical quantile function](#monte-carlo-estimates-of-properties-of-y)
+- [Estimate / estimator](#monte-carlo-estimates-of-properties-of-y)
+- [Event](#random-variables-and-distributions)
+- [Expectation](#random-variables-and-distributions)
+- [Exponential distribution](#exponential-distribution)
+- [Law of total expectation](#laws-of-total-expectation-and-variance)
+- [Law of total variance](#laws-of-total-expectation-and-variance)
+:::
+
+::: {.column width="50%"}
+- [Mean](#moments-of-random-variables)
+- [Mean squared error (MSE)](#mean-squared-error-bias-and-variance)
+- [Median](#moments-of-random-variables)
+- [Monte Carlo error](#central-limit-theorem)
+- [Monte Carlo method](#how-is-uncertainty-expressed-quantitatively)
+- [Multivariate normal distribution](#multivariate-normal-or-gaussian-distribution)
+:::
+:::
+
+## P–Z {#terms-p-z}
+
+::: {.columns}
+::: {.column width="50%"}
+- [Point estimator](#monte-carlo-estimates-of-properties-of-y)
+- [Probability density function (PDF)](#random-variables-and-distributions)
+- [Probability mass function (PMF)](#random-variables-and-distributions)
+- [Quantile function](#random-variables-and-distributions)
+- [Random variable](#random-variables-and-distributions)
+- [Root mean squared error (RMSE)](#under-random-sampling)
+:::
+
+::: {.column width="50%"}
+- [Sample](#sampling)
+- [Sample mean](#sampling)
+- [Sample variance](#sampling)
+- [Standard deviation](#moments-of-random-variables)
+- [Unbiased estimator](#mean-squared-error-bias-and-variance)
+- [Variance](#moments-of-random-variables)
+- [Variance reduction](#conditional-monte-carlo)
+:::
+:::
 
 
 # Probability review {.tree-marker-slide tree-marker="probability"}

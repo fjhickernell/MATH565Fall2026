@@ -46,6 +46,16 @@ and supporting examples, figures, or secondary material below them. Keep the
 links visually prominent and easy to scan; move dense content to a `##` slide
 rather than crowding the section slide.
 
+## Cumulative terms index
+
+Maintain the cumulative **Terms to Know** index in Deck 01. After completing
+or substantially revising a lecture deck, audit it for important terminology
+and add appropriate terms alphabetically. Link each term to the slide where it
+first receives substantial treatment, not merely its first mention. Do not
+invent links for topics that have not yet been developed. Split the index into
+alphabetical ranges as needed, and keep the range headings and the Deck 01
+Course Map synchronized with the index structure.
+
 Use raw `<h3>` elements for the two Course Map column labels. A Markdown `###`
 directly after a `#` heading can alter RevealJS slide structure.
 
