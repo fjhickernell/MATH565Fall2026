@@ -601,6 +601,11 @@ Fred J. Hickernell
 </section>
 <section id="course-map" class="title-slide slide level1 center">
 <h1>Course Map</h1>
+<div class="columns">
+<div class="column" style="width:45%;">
+<h3>
+Course decks
+</h3>
 <ul>
 <li><a href="01-introduction.html">Introduction</a></li>
 <li><a href="02-generating-samples.html" class="alert">Generating Samples</a></li>
@@ -608,20 +613,585 @@ Fred J. Hickernell
 <li><a href="04-improving-efficiency.html">Improving Efficiency</a></li>
 <li><a href="05-selected-topics.html">Selected Topics</a></li>
 </ul>
+</div><div class="column" style="width:55%;">
+<h3>
+In this deck
+</h3>
+<ul>
+<li><a href="#/from-uniformity-to-a-target-distribution">From uniformity to a target distribution</a></li>
+<li><a href="#/random-vectors-and-stochastic-processes">Random vectors and stochastic processes</a></li>
+<li><a href="#/low-discrepancy-sampling">Low-discrepancy sampling</a></li>
+<li><a href="#/acceptancerejection-sampling">Acceptance–rejection sampling</a></li>
+<li><a href="#/big-ideas">Big ideas</a></li>
+</ul>
+</div></div>
+<div class="small text-end">
+<p><a href="https://artowen.su.domains/mc/">Owen, Chapters 3–6</a></p>
+</div>
 </section>
 
 <section>
-<section id="generating-samples" class="title-slide slide level1 center">
-<h1>Generating Samples</h1>
+<section id="from-uniformity-to-a-target-distribution" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="probability">
+<h1>From Uniformity to a Target Distribution</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
 <ul>
-<li>Content migration</li>
+<li><a href="#/where-do-random-variables-come-from">Where do random variables come from?</a></li>
+<li><a href="#/the-quantile-transform">The quantile transform</a></li>
+<li><a href="#/binomial-random-numbers">Binomial random numbers</a></li>
+<li><a href="#/zero-inflated-exponential-random-numbers">Zero-inflated exponential random numbers</a></li>
 </ul>
 </section>
-<section id="content-migration" class="slide level2">
-<h2>Content migration</h2>
-<p>This deck is a placeholder for the Fall 2026 Quarto conversion of the Generating Samples lecture.</p>
+<section id="where-do-random-variables-come-from" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<h2>Where do random variables come from?</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
 
+<ul>
+<li>Algorithms generate sequences—typically in <span class="math inline">\([0,1]\)</span>—designed to mimic IID uniform random variables</li>
+<li>Pseudorandom number generators are tested so that their output looks IID random in many demanding ways</li>
+<li>Parallel computation requires special care: streams must not overlap or acquire unintended dependence</li>
+<li><span class="alert">RANDU</span> is a classic warning: simple-looking output can conceal severe higher-dimensional structure</li>
+<li>Physical generators may supply genuine randomness, but do not by themselves guarantee IID samples from the desired distribution</li>
+</ul>
+<div class="key-point">
+<p>Uniform numbers are the raw material; a <span class="alert">transformation</span> produces the target distribution.</p>
+</div>
+</section>
+<section id="the-quantile-transform" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<h2>The quantile transform</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<p>Most generators produce</p>
+<p><span class="math display">\[
+U_1,U_2,\ldots\ \IIDsim\ \Unif[0,1].
+\]</span></p>
+<p>For a target cumulative distribution function <span class="math inline">\(F\)</span>, define</p>
+<p><span class="math display">\[
+Q(u):=\inf\{x\in\reals:F(x)\ge u\}.
+\]</span></p>
+<p>Then <span class="math inline">\(Q(u)\le x \iff u\le F(x)\)</span>, and for <span class="math inline">\(X:=Q(U)\)</span>,</p>
+<p><span class="math display">\[
+\Prob(X\le x)=\Prob\{Q(U)\le x\}
+=\Prob\{U\le F(x)\}=F(x).
+\]</span></p>
+<p>Thus <span class="math inline">\(X\sim F\)</span>, and IID uniform inputs yield IID target samples.</p>
+</section>
+<section id="binomial-random-numbers" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<h2>Binomial random numbers</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<p>Suppose <span class="math inline">\(X\sim\Bin(3,0.6)\)</span>.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;"><span class="math inline">\(x\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(0\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(2\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(3\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(\varrho_X(x)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.064\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.288\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.432\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.216\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\(F(x)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.064\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.352\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.784\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1\)</span></td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Uniform input <span class="math inline">\(u\)</span></th>
+<th style="text-align: center;"><span class="math inline">\((0,0.064]\)</span></th>
+<th style="text-align: center;"><span class="math inline">\((0.064,0.352]\)</span></th>
+<th style="text-align: center;"><span class="math inline">\((0.352,0.784]\)</span></th>
+<th style="text-align: center;"><span class="math inline">\((0.784,1]\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Output <span class="math inline">\(Q(u)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>If <span class="math inline">\(u=0.70\)</span>, what value does the inverse transform produce? What about <span class="math inline">\(u=0.90\)</span>?</span></p>
+</div>
+</section>
+<section id="zero-inflated-exponential-random-numbers" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<h2>Zero-inflated exponential random numbers</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<p>Let <span class="math inline">\(X\)</span> be nonnegative, with probability <span class="math inline">\(p_0\)</span> of being zero and otherwise an exponential distribution with rate <span class="math inline">\(\lambda\)</span>:</p>
+<p><span class="math display">\[
+\Prob(X=0)=p_0,
+\qquad
+X\mid X&gt;0\sim\Exp(\lambda).
+\]</span></p>
+<p>Its CDF is</p>
+<p><span class="math display">\[
+F(x)=
+\begin{cases}
+0, &amp; x&lt;0,\\
+p_0, &amp; x=0,\\
+p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0.
+\end{cases}
+\]</span></p>
+</section>
+<section id="quantile-function-for-a-zero-inflated-exponential" class="slide level2">
+<h2>Quantile function for a zero-inflated exponential</h2>
+<p>Inverting the CDF gives</p>
+<p><span class="math display">\[
+Q(u)=
+\begin{cases}
+0, &amp; 0&lt;u\le p_0,\\[0.4em]
+-\dfrac{1}{\lambda}\log\!\left(\dfrac{1-u}{1-p_0}\right),
+&amp; p_0&lt;u&lt;1.
+\end{cases}
+\]</span></p>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Verify that <span class="math inline">\(F\{Q(u)\}\ge u\)</span> and identify where equality fails.</span></p>
+</div>
+<div class="key-point">
+<p>The generalized inverse handles <span class="alert">atoms and continuous pieces</span> with one definition.</p>
+</div>
 </section></section>
+<section>
+<section id="random-vectors-and-stochastic-processes" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="probability">
+<h1>Random Vectors and Stochastic Processes</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<ul>
+<li><a href="#/independent-marginals">Independent marginals</a></li>
+<li><a href="#/multivariate-normal-sampling">Multivariate normal sampling</a></li>
+<li><a href="#/cholesky-factorization">Cholesky factorization</a></li>
+<li><a href="#/gaussian-processes">Gaussian processes</a></li>
+<li><a href="#/brownian-motion">Brownian motion</a></li>
+<li><a href="#/geometric-brownian-motion">Geometric Brownian motion</a></li>
+<li><a href="#/option-payoffs-and-prices">Option payoffs and prices</a></li>
+</ul>
+</section>
+<section id="independent-marginals" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<h2>Independent marginals</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<p>For <span class="math inline">\(\vX=(X_1,\ldots,X_d)\)</span> with independent marginals,</p>
+<p><span class="math display">\[
+\vX=\bigl(Q_1(U_1),\ldots,Q_d(U_d)\bigr),
+\qquad
+\vU\sim\Unif[0,1]^d,
+\]</span></p>
+<p>where <span class="math inline">\(Q_j\)</span> is the quantile function of <span class="math inline">\(X_j\)</span>.</p>
+<p>Store <span class="math inline">\(n\)</span> sampled vectors as an <span class="math inline">\(n\times d\)</span> array:</p>
+<p><span class="math display">\[
+\mX=
+\begin{pmatrix}
+X_{11} &amp; X_{12} &amp; \cdots &amp; X_{1d}\\
+\vdots &amp; \vdots &amp; &amp; \vdots\\
+X_{n1} &amp; X_{n2} &amp; \cdots &amp; X_{nd}
+\end{pmatrix}.
+\]</span></p>
+<p>Rows are samples; columns are coordinates.</p>
+</section>
+<section id="multivariate-normal-sampling" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<h2>Multivariate normal sampling</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<p>Let <span class="math inline">\(\vZ\sim\Norm(\vzero,\mI_d)\)</span> and define <span class="math inline">\(\vX=\mA\vZ+\vmu\)</span>. Then</p>
+<p><span class="math display">\[\begin{align*}
+\Ex(\vX) &amp;= \vmu,\\
+\cov(\vX) &amp;= \Ex\bigl[(\vX-\vmu)(\vX-\vmu)^\mathsf{T}\bigr]
+=\mA\mA^\mathsf{T}.
+\end{align*}\]</span></p>
+<p>Therefore, if <span class="math inline">\(\mSigma=\mA\mA^\mathsf{T}\)</span>, then</p>
+<p><span class="math display">\[
+\vX=\mA\vZ+\vmu\sim\Norm(\vmu,\mSigma).
+\]</span></p>
+</section>
+<section id="cholesky-factorization" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<h2>Cholesky factorization</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<p>For symmetric positive-definite <span class="math inline">\(\mSigma\)</span>, Cholesky factorization gives a lower-triangular <span class="math inline">\(\mA\)</span> such that <span class="math inline">\(\mSigma=\mA\mA^\mathsf{T}\)</span>.</p>
+<p>For</p>
+<p><span class="math display">\[
+\mSigma=
+\begin{pmatrix}
+\sigma_1^2 &amp; \rho\sigma_1\sigma_2\\
+\rho\sigma_1\sigma_2 &amp; \sigma_2^2
+\end{pmatrix},
+\qquad
+\mA=
+\begin{pmatrix}
+\sigma_1 &amp; 0\\
+\rho\sigma_2 &amp; \sigma_2\sqrt{1-\rho^2}
+\end{pmatrix}.
+\]</span></p>
+<p>Different factorizations generate the same distribution but may behave differently under low-discrepancy sampling.</p>
+</section>
+<section id="gaussian-processes" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<h2>Gaussian processes</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<p>A Gaussian process is a random function whose values at any finite collection of inputs form a multivariate normal random vector.</p>
+<p><span class="math display">\[
+g\sim\GP(\mu,K)
+\]</span></p>
+<p>means</p>
+<p><span class="math display">\[\begin{align*}
+\Ex[g(t)] &amp;= \mu(t),\\
+\Ex\bigl[\{g(t)-\mu(t)\}\{g(x)-\mu(x)\}\bigr] &amp;= K(t,x).
+\end{align*}\]</span></p>
+<p>For inputs <span class="math inline">\(t_1,\ldots,t_d\)</span>,</p>
+<p><span class="math display">\[
+\bigl(g(t_1),\ldots,g(t_d)\bigr)^\mathsf{T}
+\sim\Norm(\vmu,\mSigma),
+\qquad
+\Sigma_{jk}=K(t_j,t_k).
+\]</span></p>
+</section>
+<section id="brownian-motion" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<h2>Brownian motion</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<p>Brownian motion <span class="math inline">\(B\)</span> is the Gaussian process with</p>
+<p><span class="math display">\[
+\mu(t)=0,
+\qquad
+K(t,x)=\min(t,x),
+\qquad t,x\ge0.
+\]</span></p>
+<p>For <span class="math inline">\(0=t_0&lt;t_1&lt;\cdots&lt;t_d\)</span>,</p>
+<p><span class="math display">\[
+\bigl(B(t_1),\ldots,B(t_d)\bigr)^\mathsf{T}
+\sim\Norm(\vzero,\mSigma),
+\qquad
+\Sigma_{jk}=\min(t_j,t_k).
+\]</span></p>
+<p>The covariance structure implies independent normal increments.</p>
+</section>
+<section id="sampling-brownian-motion" class="slide level2">
+<h2>Sampling Brownian motion</h2>
+<p>Let <span class="math inline">\(Z_1,\ldots,Z_d\ \IIDsim\ \Norm(0,1)\)</span>. Starting from <span class="math inline">\(B(t_0)=0\)</span>,</p>
+<p><span class="math display">\[
+B(t_j)=B(t_{j-1})+\sqrt{t_j-t_{j-1}}\,Z_j,
+\qquad j=1,\ldots,d.
+\]</span></p>
+<p>Equivalently,</p>
+<p><span class="math display">\[
+B(t_j)=\sum_{k=1}^j\sqrt{t_k-t_{k-1}}\,Z_k.
+\]</span></p>
+<div class="key-point">
+<p>The Cholesky construction is the familiar <span class="alert">cumulative-sum construction</span> for Brownian motion.</p>
+</div>
+</section>
+<section id="geometric-brownian-motion" class="slide level2 tree-marker-slide" data-tree-marker="practice">
+<h2>Geometric Brownian motion</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
+</div>
+
+<ul>
+<li><span class="math inline">\(S_0\)</span>: initial asset price</li>
+<li><span class="math inline">\(r\)</span>: continuously compounded risk-free rate</li>
+<li><span class="math inline">\(\sigma\)</span>: volatility</li>
+</ul>
+<p>Then</p>
+<p><span class="math display">\[
+S(t)=S_0\exp\!\left[\left(r-\frac{\sigma^2}{2}\right)t+\sigma B(t)\right]
+\]</span></p>
+<p>is a geometric Brownian motion model for the asset price.</p>
+<p>The correction <span class="math inline">\(-\sigma^2/2\)</span> ensures <span class="math inline">\(\Ex[S(t)]=S_0\me^{rt}\)</span> under the risk-neutral model.</p>
+</section>
+<section id="option-payoffs-and-prices" class="slide level2 tree-marker-slide" data-tree-marker="practice">
+<h2>Option payoffs and prices</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
+</div>
+
+<p>Let <span class="math inline">\(K\)</span> be the strike price and <span class="math inline">\(T\)</span> the time to maturity.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Contract</th>
+<th style="text-align: left;">Discounted payoff</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">European call</td>
+<td style="text-align: left;"><span class="math inline">\(\me^{-rT}\max\{S(T)-K,0\}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">European put</td>
+<td style="text-align: left;"><span class="math inline">\(\me^{-rT}\max\{K-S(T),0\}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Arithmetic Asian call</td>
+<td style="text-align: left;"><span class="math inline">\(\me^{-rT}\max\left\{T^{-1}\int_0^T S(t)\,\dif t-K,0\right\}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The fair price is</p>
+<p><span class="math display">\[
+\mu=\Ex(\text{discounted payoff}).
+\]</span></p>
+</section></section>
+<section>
+<section id="low-discrepancy-sampling" class="title-slide slide level1 center">
+<h1>Low-Discrepancy Sampling</h1>
+<ul>
+<li><a href="#/what-does-low-discrepancy-mean">What does low discrepancy mean?</a></li>
+<li><a href="#/low-discrepancy-sequences">Low-discrepancy sequences</a></li>
+<li><a href="#/biasvariance-decomposition">Bias–variance decomposition</a></li>
+<li><a href="#/shrinkage-estimators">Shrinkage estimators</a></li>
+</ul>
+</section>
+<section id="what-does-low-discrepancy-mean" class="slide level2">
+<h2>What does low discrepancy mean?</h2>
+<p>If we relax the requirement that <span class="math inline">\(\vU_1,\ldots,\vU_n\)</span> be IID, carefully constructed samples can cover <span class="math inline">\([0,1]^d\)</span> more evenly.</p>
+<p><span class="math display">\[
+\vU_1,\ldots,\vU_n\ \LDsim\ \Unif[0,1]^d.
+\]</span></p>
+<p>The empirical distribution of the sample is close to the uniform distribution. <span class="alert">Discrepancy</span> quantifies that difference; precise definitions come later.</p>
+<div class="key-point">
+<p>Low discrepancy replaces independent placement by <span class="alert">deliberate coverage</span>.</p>
+</div>
+</section>
+<section id="low-discrepancy-sequences" class="slide level2">
+<h2>Low-discrepancy sequences</h2>
+<p>Important families include</p>
+<ul>
+<li>digital sequences, especially Sobol’ sequences</li>
+<li>lattice sequences</li>
+<li>Halton sequences</li>
+<li>Kronecker sequences</li>
+</ul>
+<p>They are available in deterministic and randomized forms through SciPy and <a href="https://qmcpy.org/">QMCPy</a>.</p>
+<p>In software arrays, rows correspond to samples and columns to coordinates.</p>
+</section>
+<section id="biasvariance-decomposition" class="slide level2 tree-marker-slide" data-tree-marker="stat-estim">
+<h2>Bias–variance decomposition</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>Let <span class="math inline">\(\mu\)</span> be a target quantity and <span class="math inline">\(\hmu\)</span> an estimator. Its mean squared error is</p>
+<p><span class="math display">\[\begin{align*}
+\operatorname{MSE}(\hmu)
+&amp;=\Ex[(\hmu-\mu)^2]\\
+&amp;=\{\Ex(\hmu)-\mu\}^2+\var(\hmu)\\
+&amp;=\operatorname{bias}(\hmu)^2+\var(\hmu).
+\end{align*}\]</span></p>
+<ul>
+<li>An IID sample mean is unbiased and has positive variance</li>
+<li>A deterministic low-discrepancy estimate has no sampling variance, but may have nonzero deterministic error</li>
+<li>Randomized low-discrepancy sampling permits variance estimation and improved space filling</li>
+</ul>
+</section>
+<section id="shrinkage-estimators" class="slide level2 tree-marker-slide" data-tree-marker="stat-estim">
+<h2>Shrinkage estimators</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>Suppose</p>
+<p><span class="math display">\[
+Y_1,\ldots,Y_n\ \IIDsim\ (\mu,\sigma^2),
+\qquad
+\hmu_n=\frac1n\sum_{i=1}^nY_i.
+\]</span></p>
+<p>For the estimator <span class="math inline">\(\alpha\hmu_n\)</span>,</p>
+<p><span class="math display">\[
+\operatorname{MSE}(\alpha\hmu_n)
+=(1-\alpha)^2\mu^2+\alpha^2\frac{\sigma^2}{n}.
+\]</span></p>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Find the value of <span class="math inline">\(\alpha\)</span> that minimizes this MSE. Is the minimizing estimator unbiased?</span></p>
+</div>
+</section></section>
+<section>
+<section id="acceptancerejection-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="probability">
+<h1>Acceptance–Rejection Sampling</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<ul>
+<li><a href="#/the-acceptancerejection-algorithm">The acceptance–rejection algorithm</a></li>
+<li><a href="#/why-acceptancerejection-works">Why acceptance–rejection works</a></li>
+<li><a href="#/efficiency-and-method-comparison">Efficiency and method comparison</a></li>
+</ul>
+</section>
+<section id="the-acceptancerejection-algorithm" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<h2>The acceptance–rejection algorithm</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<p>Suppose</p>
+<ul>
+<li><span class="math inline">\(Z\)</span> is easy to sample, with proposal density <span class="math inline">\(\varrho_Z\)</span></li>
+<li>the target density is <span class="math inline">\(c\varrho\)</span>, where <span class="math inline">\(\varrho\)</span> is known and <span class="math inline">\(c&gt;0\)</span> may be unknown</li>
+<li><span class="math inline">\(\varrho(x)\le M\varrho_Z(x)\)</span> for all <span class="math inline">\(x\)</span></li>
+</ul>
+<p>Repeat until a proposal is accepted:</p>
+<ol type="1">
+<li><p>Generate <span class="math inline">\(Z\sim\varrho_Z\)</span> and <span class="math inline">\(U\sim\Unif[0,1]\)</span> independently</p></li>
+<li><p>Accept <span class="math inline">\(Z\)</span> as <span class="math inline">\(X\)</span> if</p>
+<p><span class="math display">\[
+U\le\frac{\varrho(Z)}{M\varrho_Z(Z)}.
+\]</span></p></li>
+</ol>
+<p>Otherwise reject <span class="math inline">\(Z\)</span> and try again.</p>
+</section>
+<section id="why-acceptancerejection-works" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<h2>Why acceptance–rejection works</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<p>For a small interval <span class="math inline">\(\dif z\)</span> around <span class="math inline">\(z\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+\Prob(Z\in\dif z,\text{ accept})
+&amp;=\varrho_Z(z)\dif z\,
+  \frac{\varrho(z)}{M\varrho_Z(z)}\\
+&amp;=\frac{\varrho(z)}{M}\dif z.
+\end{align*}\]</span></p>
+<p>Conditioning on acceptance gives</p>
+<p><span class="math display">\[
+\varrho_{Z\mid\text{accept}}(z)
+=\frac{\varrho(z)/M}{\Prob(\text{accept})}
+=c\varrho(z),
+\qquad
+\Prob(\text{accept})=\frac{1}{Mc}.
+\]</span></p>
+</section>
+<section id="efficiency-and-method-comparison" class="slide level2">
+<h2>Efficiency and method comparison</h2>
+<p>To obtain <span class="math inline">\(n\)</span> accepted samples, acceptance–rejection requires an average of <span class="math inline">\(nMc\)</span> proposals.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Method</th>
+<th style="text-align: left;">Main requirement</th>
+<th style="text-align: center;">LD friendly?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Quantile transform <span class="math inline">\(X=Q(U)\)</span></td>
+<td style="text-align: left;">Quantile function <span class="math inline">\(Q\)</span></td>
+<td style="text-align: center;">Yes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Normal transform <span class="math inline">\(\vX=\mA\vZ+\vmu\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\mSigma=\mA\mA^\mathsf{T}\)</span></td>
+<td style="text-align: center;">Yes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Acceptance–rejection</td>
+<td style="text-align: left;"><span class="math inline">\(\varrho\le M\varrho_Z\)</span></td>
+<td style="text-align: center;">With care</td>
+</tr>
+</tbody>
+</table>
+<div class="key-point">
+<p>Choose a proposal close to the target so that <span class="math inline">\(Mc\)</span> is near one.</p>
+</div>
+</section></section>
+<section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="prob-stat-est">
+<h1>Big Ideas</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<ul>
+<li>Start with uniform samples and transform them to the desired distribution</li>
+<li>The generalized inverse works for discrete and continuous distributions</li>
+<li>Independent marginal transforms do not create dependence; correlated normal vectors require a matrix factorization</li>
+<li>Gaussian-process sampling reduces finite collections of function values to multivariate normal sampling</li>
+<li>Low-discrepancy points trade independent placement for more even coverage</li>
+<li>Bias and variance are distinct contributions to mean squared error</li>
+<li>Acceptance–rejection samples from an unnormalized density when a suitable proposal envelope is available</li>
+</ul>
+
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
