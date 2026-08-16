@@ -1347,6 +1347,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </div>
 
 <ul>
+<li><a href="#/sampling-schemes">Sampling schemes on <span class="math inline">\([0,1]^6\)</span></a></li>
 <li><a href="#/sampling">Sampling</a></li>
 <li><a href="#/mean-squared-error-bias-and-variance">Mean squared error, bias, and variance</a></li>
 <li><a href="#/under-random-sampling">Under random sampling</a></li>
@@ -1355,6 +1356,77 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <li><a href="#/computational-counterparts">Computational counterparts</a></li>
 <li><a href="#/are-we-there-yet-revisited">Are we there yet? Revisited</a></li>
 </ul>
+</section>
+<section id="sampling-schemes" class="slide level2 tree-marker-slide" data-tree-marker="stat-estim">
+<h2>Sampling schemes on <span class="math inline">\([0,1]^6\)</span></h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>Each design has <span class="math inline">\(n=64\)</span> points; compare how its <span class="math inline">\(x_1\)</span>–<span class="math inline">\(x_2\)</span> projection fills the unit square</p>
+<div id="61945e17" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="01-introduction_files/figure-revealjs/cell-5-output-1.png" class="quarto-figure quarto-figure-center" alt="Two-dimensional projections of grid, orthogonal-array, IID, and scrambled Sobol' samples" width="845" height="654"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="grid">Grid</h3>
+<div id="22b8f8a7" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="01-introduction_files/figure-revealjs/cell-6-output-1.png" class="quarto-figure quarto-figure-center" alt="Five coordinate projections of a 64-point, six-dimensional grid sample" width="1188" height="664"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="orthogonal-array">Orthogonal array</h3>
+<div id="afa506b8" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="01-introduction_files/figure-revealjs/cell-7-output-1.png" class="quarto-figure quarto-figure-center" alt="Five coordinate projections of a 64-point, strength-two orthogonal array" width="1177" height="664"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="iid">IID</h3>
+<div id="a76b0516" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="01-introduction_files/figure-revealjs/cell-8-output-1.png" class="quarto-figure quarto-figure-center" alt="Five coordinate projections of a 64-point IID uniform sample generated with QMCPy" width="1178" height="664"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="scrambled-sobol">Scrambled Sobol’</h3>
+<div id="86565b04" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="01-introduction_files/figure-revealjs/cell-9-output-1.png" class="quarto-figure quarto-figure-center" alt="Five coordinate projections of a 64-point scrambled Sobol' sample generated with QMCPy" width="1178" height="664"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="sampling" class="slide level2 tree-marker-slide" data-tree-marker="stat-estim">
 <h2>Sampling</h2>
