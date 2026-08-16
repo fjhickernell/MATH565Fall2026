@@ -26,6 +26,108 @@ subtitle: |
 
 from tree_markers import render_tree_marker
 from trees import render_tree
+
+import matplotlib.pyplot as plt
+import numpy as np
+import qmcpy as qp
+
+plt.rcParams["mathtext.fontset"] = "stix"
+
+
+def gf8_multiply(a, b):
+    """Multiply in GF(8), represented with the polynomial z^3 + z + 1."""
+    product = 0
+    while b:
+        if b & 1:
+            product ^= a
+        b >>= 1
+        a <<= 1
+        if a & 0b1000:
+            a ^= 0b1011
+    return product
+
+
+def sampling_schemes(n=64, d=6, seed=565):
+    grid = np.array(
+        [[0.25 + 0.5 * ((i >> j) & 1) for j in range(d)] for i in range(n)]
+    )
+
+    # OA(8^2, 6, 8, 2): columns a + c b over GF(8), c = 0,...,5.
+    oa = np.array(
+        [
+            [((a ^ gf8_multiply(c, b)) + 0.5) / 8 for c in range(d)]
+            for a in range(8)
+            for b in range(8)
+        ]
+    )
+
+    iid = qp.IIDStdUniform(d, seed=seed).gen_samples(n)
+    sobol = qp.DigitalNetB2(d, randomize="LMS DS", seed=seed).gen_samples(n)
+    return {
+        "Grid": grid,
+        "Orthogonal array": oa,
+        "IID": iid,
+        "Scrambled Sobol'": sobol,
+    }
+
+
+def style_sampling_axis(ax, x_coordinate, y_coordinate):
+    ax.set(xlim=(0, 1), ylim=(0, 1), xticks=[0, 0.5, 1], yticks=[0, 0.5, 1])
+    ax.set_xlabel(
+        rf"$x_{x_coordinate}$", fontsize=24, labelpad=2, math_fontfamily="stix"
+    )
+    ax.set_ylabel(
+        rf"$x_{y_coordinate}$", fontsize=24, labelpad=2, math_fontfamily="stix"
+    )
+    ax.tick_params(labelsize=15, pad=2)
+    ax.set_aspect("equal")
+    ax.grid(alpha=0.18)
+
+
+def plot_scheme_overview(schemes):
+    fig, axes = plt.subplots(2, 2, figsize=(10.8, 6.7), constrained_layout=True)
+    fig.get_layout_engine().set(hspace=0.08)
+    for ax, (name, points) in zip(axes.flat, schemes.items()):
+        ax.scatter(points[:, 0], points[:, 1], s=32, alpha=0.78)
+        ax.set_title(name, fontsize=19, pad=3)
+        style_sampling_axis(ax, 1, 2)
+    return fig
+
+
+def plot_scheme_pairs(points, message):
+    fig, axes = plt.subplots(2, 3, figsize=(12.4, 6.8), constrained_layout=True)
+    fig.get_layout_engine().set(hspace=0.08)
+    for coordinate, ax in zip(range(2, 7), axes.flat):
+        ax.scatter(points[:, 0], points[:, coordinate - 1], s=30, alpha=0.78)
+        style_sampling_axis(ax, 1, coordinate)
+    axes.flat[-1].axis("off")
+    axes.flat[-1].text(
+        0.5,
+        0.5,
+        message,
+        ha="center",
+        va="center",
+        fontsize=21,
+        linespacing=1.35,
+    )
+    return fig
+
+
+schemes = sampling_schemes()
+
+assert all(np.unique(schemes["Grid"][:, j]).size == 2 for j in range(6))
+assert all(
+    np.unique(schemes["Orthogonal array"][:, j]).size == 8 for j in range(6)
+)
+assert all(np.unique(schemes["IID"][:, j]).size == 64 for j in range(6))
+assert all(
+    np.unique(schemes["Scrambled Sobol'"][:, j]).size == 64 for j in range(6)
+)
+assert all(
+    np.unique(schemes["Orthogonal array"][:, [j, k]], axis=0).shape[0] == 64
+    for j in range(6)
+    for k in range(j + 1, 6)
+)
 ```
 
 {{< include ../classlib/classlib/quarto/slides/shared/general/illinois-tech-academic-transformation.qmd >}}
@@ -487,6 +589,7 @@ $$
 
 # Samples and estimates {.tree-marker-slide tree-marker="stat-estim"}
 
+- [Sampling schemes on $[0,1]^6$](#sampling-schemes)
 - [Sampling](#sampling)
 - [Mean squared error, bias, and variance](#mean-squared-error-bias-and-variance)
 - [Under random sampling](#under-random-sampling)
@@ -494,6 +597,76 @@ $$
 - [Monte Carlo estimates of properties of $Y$](#monte-carlo-estimates-of-properties-of-y)
 - [Computational counterparts](#computational-counterparts)
 - [Are we there yet? Revisited](#are-we-there-yet-revisited)
+
+## Sampling schemes on $[0,1]^6$ {#sampling-schemes .tree-marker-slide tree-marker="stat-estim"}
+
+Each design has $n=64$ points; compare how its $x_1$–$x_2$ projection fills
+the unit square
+
+```{python}
+#| echo: false
+#| fig-align: center
+#| fig-alt: "Two-dimensional projections of grid, orthogonal-array, IID, and scrambled Sobol' samples"
+plot_scheme_overview(schemes)
+plt.show()
+```
+
+---
+
+### Grid
+
+```{python}
+#| echo: false
+#| fig-align: center
+#| fig-alt: "Five coordinate projections of a 64-point, six-dimensional grid sample"
+plot_scheme_pairs(schemes["Grid"], "Only 2 levels\nper coordinate")
+plt.show()
+```
+
+---
+
+### Orthogonal array
+
+```{python}
+#| echo: false
+#| fig-align: center
+#| fig-alt: "Five coordinate projections of a 64-point, strength-two orthogonal array"
+plot_scheme_pairs(
+    schemes["Orthogonal array"],
+    "Every coordinate pair\ncontains all 8 × 8\nlevel combinations\nbut\nonly 8 levels per coordinate",
+)
+plt.show()
+```
+
+---
+
+### IID
+
+```{python}
+#| echo: false
+#| fig-align: center
+#| fig-alt: "Five coordinate projections of a 64-point IID uniform sample generated with QMCPy"
+plot_scheme_pairs(
+    schemes["IID"],
+    "Full 64 levels per coordinate\nbut with\nrandom gaps and clusters",
+)
+plt.show()
+```
+
+---
+
+### Scrambled Sobol'
+
+```{python}
+#| echo: false
+#| fig-align: center
+#| fig-alt: "Five coordinate projections of a 64-point scrambled Sobol' sample generated with QMCPy"
+plot_scheme_pairs(
+    schemes["Scrambled Sobol'"],
+    "Full 64 levels per coordinate\nwith balanced projections",
+)
+plt.show()
+```
 
 ## Sampling {.tree-marker-slide tree-marker="stat-estim"}
 

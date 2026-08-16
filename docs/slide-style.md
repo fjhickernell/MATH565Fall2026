@@ -228,6 +228,9 @@ presenting them as current Fall 2026 information.
 - Keep notation consistent.
 - Avoid overcrowded slides.
 - Preserve mathematical accuracy during conversion.
+- In plots, render mathematical symbol labels in a serif math font consistent
+  with the deck's displayed mathematics; this applies especially to axis
+  labels such as $x_1$ and $x_2$.
 
 ## Shared LaTeX macros
 
