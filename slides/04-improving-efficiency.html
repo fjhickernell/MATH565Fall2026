@@ -587,7 +587,7 @@
 
 <section id="title-slide" data-background-color="#f5f7fb" data-background-image="https://fjhickernell.github.io/MATH565Fall2026/classlib/classlib/quarto/assets/images/normal-scatter.png" data-background-position="top left" data-background-size="55%" class="quarto-title-block center">
   <h1 class="title">MATH 565 — Fall 2026</h1>
-  <p class="subtitle"><span class="deck-title">Improving Efficiency</span></p>
+  <p class="subtitle"><span class="deck-title">Improving Efficiency</span><br> <span class="deck-meta">Owen, Chapters 8–10 and 15–17</span></p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -601,6 +601,11 @@ Fred J. Hickernell
 </section>
 <section id="course-map" class="title-slide slide level1 center">
 <h1>Course Map</h1>
+<div class="columns">
+<div class="column" style="width:45%;">
+<h3>
+Course decks
+</h3>
 <ul>
 <li><a href="01-introduction.html">Introduction</a></li>
 <li><a href="02-generating-samples.html">Generating Samples</a></li>
@@ -608,20 +613,764 @@ Fred J. Hickernell
 <li><a href="04-improving-efficiency.html" class="alert">Improving Efficiency</a></li>
 <li><a href="05-selected-topics.html">Selected Topics</a></li>
 </ul>
+</div><div class="column" style="width:55%;">
+<h3>
+In this deck
+</h3>
+<ul>
+<li><a href="#/transformations-and-importance-sampling">Transformations and importance sampling</a></li>
+<li><a href="#/control-variates-and-conditioning">Control variates and conditioning</a></li>
+<li><a href="#/structured-random-sampling">Structured random sampling</a></li>
+<li><a href="#/low-discrepancy-sampling">Low discrepancy sampling</a></li>
+<li><a href="#/big-ideas">Big ideas</a></li>
+</ul>
+</div></div>
 </section>
 
 <section>
-<section id="improving-efficiency" class="title-slide slide level1 center">
-<h1>Improving Efficiency</h1>
+<section id="transformations-and-importance-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="estimation">
+<h1>Transformations and Importance Sampling</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
 <ul>
-<li>Content migration</li>
+<li><a href="#/variance-reduction">Variance reduction</a></li>
+<li><a href="#/the-keister-example">The Keister example</a></li>
+<li><a href="#/transforming-an-integral">Transforming an integral</a></li>
+<li><a href="#/transforming-a-random-variable">Transforming a random variable</a></li>
+<li><a href="#/importance-sampling">Importance sampling</a></li>
+<li><a href="#/brownian-motion-with-drift">Brownian motion with drift</a></li>
+<li><a href="#/choosing-a-transformation">Choosing a transformation</a></li>
 </ul>
 </section>
-<section id="content-migration" class="slide level2">
-<h2>Content migration</h2>
-<p>This deck is a placeholder for the Fall 2026 Quarto conversion of the Improving Efficiency lecture.</p>
+<section id="variance-reduction" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Variance reduction</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
 
+<p>Suppose</p>
+<p><span class="math display">\[
+\mu=\Ex[f(X)]=\Ex[g(X)],
+\qquad X\sim\Unif[0,1]^d
+\]</span></p>
+<p>Both IID sample means are unbiased:</p>
+<p><span class="math display">\[\begin{align*}
+\hmu_{f,n}&amp;=\frac1n\sum_{i=0}^{n-1}f(X_i),&amp;
+\hmu_{g,n}&amp;=\frac1n\sum_{i=0}^{n-1}g(X_i)
+\end{align*}\]</span></p>
+<p>Their mean squared errors are their variances:</p>
+<p><span class="math display">\[\begin{align*}
+\var(\hmu_{f,n})&amp;=\frac{\var\{f(X)\}}n,&amp;
+\var(\hmu_{g,n})&amp;=\frac{\var\{g(X)\}}n
+\end{align*}\]</span></p>
+<div class="key-point">
+<p>An equivalent expectation can be computationally better when its <span class="alert">integrand has smaller variance</span></p>
+</div>
+</section>
+<section id="the-keister-example" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>The Keister example</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>Consider</p>
+<p><span class="math display">\[
+\mu=\int_{\reals^d}\cos(\norm{t})\exp(-\norm{t}^2)\,\dif t
+\]</span></p>
+<p>Let <span class="math inline">\(x_j=\Phi(at_j)\)</span>, where <span class="math inline">\(\Phi\)</span> is the standard normal CDF</p>
+<p>Then <span class="math inline">\(t_j=\Phi^{-1}(x_j)/a\)</span> and</p>
+<p><span class="math display">\[\begin{multline*}
+\mu=\int_{[0,1]^d}\frac{(2\mpi)^{d/2}}{a^d}
+\cos\!\left(\frac{\norm{\Phi^{-1}(x)}}a\right)\\
+\times\exp\!\left[-\frac{2-a^2}{2a^2}\norm{\Phi^{-1}(x)}^2\right]\,\dif x,
+\qquad a^2\le2
+\end{multline*}\]</span></p>
+<p>The parameter <span class="math inline">\(a\)</span> creates a <span class="alert">family of unbiased estimators</span> with different variances</p>
+</section>
+<section id="transforming-an-integral" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Transforming an integral</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>To approximate <span class="math inline">\(\mu=\int_{\mathcal T}g(t)\,\dif t\)</span>, choose an invertible map</p>
+<p><span class="math display">\[
+t=\psi(x),
+\qquad \psi:\mathcal X\to\mathcal T
+\]</span></p>
+<p>Let <span class="math inline">\(J(x;\psi)=\det\{\partial\psi_i/\partial x_j\}_{i,j=1}^d\)</span></p>
+<p>If <span class="math inline">\(X\)</span> has density <span class="math inline">\(\varrho_X\)</span>, then</p>
+<p><span class="math display">\[\begin{align*}
+\mu
+&amp;=\int_{\mathcal X}g\{\psi(x)\}\abs{J(x;\psi)}\,\dif x\\
+&amp;=\Ex_{X\sim\varrho_X}\!\left[
+\frac{g\{\psi(X)\}\abs{J(X;\psi)}}{\varrho_X(X)}
+\right]
+\end{align*}\]</span></p>
+<p>For <span class="math inline">\(X\sim\Unif[0,1]^d\)</span>, the density in the denominator is one</p>
+</section>
+<section id="transforming-a-random-variable" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>Transforming a random variable</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<p>Let <span class="math inline">\(T=\psi(X)\)</span> for an invertible map <span class="math inline">\(\psi:\mathcal X\to\mathcal T\)</span></p>
+<p>The densities satisfy</p>
+<p><span class="math display">\[\begin{align*}
+\varrho_T(t)
+&amp;=\varrho_X\{\psi^{-1}(t)\}\abs{J(t;\psi^{-1})},\\
+\varrho_T\{\psi(x)\}
+&amp;=\frac{\varrho_X(x)}{\abs{J(x;\psi)}}
+\end{align*}\]</span></p>
+<p>Therefore</p>
+<p><span class="math display">\[
+\Ex_{T\sim\varrho_T}[h(T)]
+=\Ex_{X\sim\varrho_X}[h\{\psi(X)\}]
+\]</span></p>
+<p><span class="alert">A change of variables in an integral</span> and <span class="alert">a transformation of a random variable</span> are the same mechanism viewed from opposite directions</p>
+</section>
+<section id="importance-sampling" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Importance sampling</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>For a target density <span class="math inline">\(\varrho_T\)</span>, choose a proposal density <span class="math inline">\(\varrho_X\)</span> with the same support:</p>
+<p><span class="math display">\[\begin{align*}
+\mu
+&amp;=\int_{\mathcal T}h(t)\varrho_T(t)\,\dif t\\
+&amp;=\Ex_{X\sim\varrho_X}\!\left[
+h(X)\frac{\varrho_T(X)}{\varrho_X(X)}
+\right]
+\end{align*}\]</span></p>
+<p>The ratio <span class="math inline">\(\varrho_T/\varrho_X\)</span> is the <span class="alert">importance weight</span></p>
+<p>For <span class="math inline">\(X_0,\ldots,X_{n-1}\ \IIDsim\ \varrho_X\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+\hmu_{\mathrm{IS},n}
+&amp;=\frac1n\sum_{i=0}^{n-1}h(X_i)\frac{\varrho_T(X_i)}{\varrho_X(X_i)},\\
+\widehat{\var}(\hmu_{\mathrm{IS},n})
+&amp;=\frac1{n(n-1)}\sum_{i=0}^{n-1}
+\left[h(X_i)\frac{\varrho_T(X_i)}{\varrho_X(X_i)}-\hmu_{\mathrm{IS},n}\right]^2
+\end{align*}\]</span></p>
+</section>
+<section id="brownian-motion-with-drift" class="slide level2 tree-marker-slide" data-tree-marker="quant-finance">
+<h2>Brownian motion with drift</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="qf" style="--tree-left: 5%; --tree-top: 33%; --tree-align: center;">Quantitative<br>Finance</div>
+</div>
+
+<p>Positive option payoffs may be rare under a discretized Brownian path</p>
+<p>Let <span class="math inline">\(X\sim\Norm(\vzero,\mSigma)\)</span> with <span class="math inline">\(\Sigma_{jk}=\min(t_j,t_k)\)</span> and target density <span class="math inline">\(\varrho\)</span></p>
+<p>Sample instead from <span class="math inline">\(\Norm(\va,\mSigma)\)</span> with</p>
+<p><span class="math display">\[
+\va=\theta(t_1,\ldots,t_d)^\mathsf T
+\]</span></p>
+<p>The likelihood ratio simplifies to</p>
+<p><span class="math display">\[
+\frac{\varrho(x)}{\varrho_{\mathrm{drift}}(x)}
+=\exp\!\left(-\theta x_d+\frac{\theta^2t_d}{2}\right)
+\]</span></p>
+<ul>
+<li>Drift makes positive payoffs more common</li>
+<li>Importance weights compensate to preserve the target expectation</li>
+<li>A good drift can <span class="alert">reduce estimator variance</span></li>
+</ul>
+</section>
+<section id="choosing-a-transformation" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Choosing a transformation</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<ul>
+<li>Variable transformation and importance sampling are intertwined</li>
+<li>The sampling density changes the variance of the sample mean</li>
+<li>Require
+<ul>
+<li>a finite Jacobian determinant</li>
+<li>a proposal density that does not vanish where the integrand is nonzero</li>
+</ul></li>
+<li>Pilot samples can guide the choice of transformation or proposal</li>
+</ul>
+<div class="key-point">
+<p>Place more samples where the <span class="alert">magnitude of the integrand times the target density</span> is large, without creating extreme weights</p>
+</div>
 </section></section>
+<section>
+<section id="control-variates-and-conditioning" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="prob-est">
+<h1>Control Variates and Conditioning</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<ul>
+<li><a href="#/control-variates">Control variates</a></li>
+<li><a href="#/choosing-coefficients-by-least-squares">Choosing coefficients by least squares</a></li>
+<li><a href="#/practical-control-variate-choices">Practical control-variate choices</a></li>
+<li><a href="#/conditional-monte-carlo">Conditional Monte Carlo</a></li>
+<li><a href="#/conditional-density-estimation">Conditional density estimation</a></li>
+<li><a href="#/density-of-a-sum-of-uniforms">Density of a sum of uniforms</a></li>
+</ul>
+</section>
+<section id="control-variates" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Control variates</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>Let <span class="math inline">\(\eta_1,\ldots,\eta_m\)</span> have known zero means</p>
+<p>For any coefficients <span class="math inline">\(\beta_1,\ldots,\beta_m\)</span>,</p>
+<p><span class="math display">\[
+\mu=\Ex[f(X)]
+=\Ex\!\left[f(X)-\sum_{j=1}^m\beta_j\eta_j(X)\right]
+\]</span></p>
+<p>The estimator</p>
+<p><span class="math display">\[
+\hmu_{\mathrm{CV},n}
+=\frac1n\sum_{i=0}^{n-1}\left[f(X_i)-\sum_{j=1}^m\beta_j\eta_j(X_i)\right]
+\]</span></p>
+<p>is unbiased for fixed <span class="math inline">\(\vbeta\)</span></p>
+<p>Choose <span class="math inline">\(\vbeta\)</span> to make</p>
+<p><span class="math display">\[
+\var\!\left[f(X)-\sum_{j=1}^m\beta_j\eta_j(X)\right]
+\]</span></p>
+<p>as small as possible</p>
+</section>
+<section id="choosing-coefficients-by-least-squares" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Choosing coefficients by least squares</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>Center the response and control values:</p>
+<p><span class="math display">\[\begin{align*}
+y_i&amp;=f(x_i)-\bar f,&amp;
+H_{ij}&amp;=\eta_j(x_i)-\bar\eta_j
+\end{align*}\]</span></p>
+<p>Then</p>
+<p><span class="math display">\[
+\hvbeta=\argmin_{\vb}\norm{\vy-\mH\vb}^2
+\]</span></p>
+<p>When <span class="math inline">\(\mH^\mathsf T\mH\)</span> is nonsingular,</p>
+<p><span class="math display">\[
+\hvbeta=(\mH^\mathsf T\mH)^{-1}\mH^\mathsf T\vy
+\]</span></p>
+<p>The residual is orthogonal to the column space of <span class="math inline">\(\mH\)</span>, so least squares removes the component of <span class="math inline">\(f\)</span> explained by the controls</p>
+</section>
+<section id="practical-control-variate-choices" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Practical control-variate choices</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<ul>
+<li>Good controls are inexpensive, have known means, and are strongly related to <span class="math inline">\(f\)</span></li>
+<li>More controls can reduce the sample size needed for a target accuracy</li>
+<li>Poor controls may increase computation without reducing variance</li>
+<li>For IID sampling, least squares targets variance reduction</li>
+<li>For low discrepancy sampling, choose coefficients to reduce <span class="alert">variation</span>, not sampling variance</li>
+</ul>
+<div class="key-point">
+<p>A control variate turns <span class="alert">known expectations</span> into information about an unknown expectation</p>
+</div>
+</section>
+<section id="conditional-monte-carlo" class="slide level2 tree-marker-slide" data-tree-marker="prob-est">
+<h2>Conditional Monte Carlo</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>Recall</p>
+<p><span class="math display">\[\begin{align*}
+\Ex(Y)&amp;=\Ex_Z\{\Ex(Y\mid Z)\},\\
+\var(Y)&amp;=\Ex_Z\{\var(Y\mid Z)\}+\var_Z\{\Ex(Y\mid Z)\}
+\end{align*}\]</span></p>
+<p>Therefore</p>
+<p><span class="math display">\[
+\var_Z\{\Ex(Y\mid Z)\}\le\var(Y)
+\]</span></p>
+<p>If <span class="math inline">\(Y=f(X_1,\ldots,X_d)\)</span> and</p>
+<p><span class="math display">\[
+g(X_{2:d})=\Ex(Y\mid X_{2:d})
+\]</span></p>
+<p>is analytic, estimate <span class="math inline">\(\mu\)</span> by sampling <span class="math inline">\(g(X_{2:d})\)</span> instead of <span class="math inline">\(Y\)</span></p>
+<p><span class="alert">Analytically averaging over part of the randomness reduces variance</span></p>
+</section>
+<section id="conditional-density-estimation" class="slide level2 tree-marker-slide" data-tree-marker="prob-est">
+<h2>Conditional density estimation</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>Let <span class="math inline">\(Y=f(X)\)</span> with <span class="math inline">\(X\sim\Unif[0,1]^d\)</span></p>
+<p>Suppose <span class="math inline">\(f\)</span> is increasing in <span class="math inline">\(x_1\)</span> and</p>
+<p><span class="math display">\[
+y=f(x_1,x_{2:d})iff x_1=g(y;x_{2:d})
+\]</span></p>
+<p>Then</p>
+<p><span class="math display">\[\begin{align*}
+F_{Y\mid X_{2:d}}(y\mid x_{2:d})
+&amp;=\Prob\{X_1\le g(y;x_{2:d})\}\\
+&amp;=g(y;x_{2:d}),\\
+\varrho_Y(y)
+&amp;=\int_{[0,1]^{d-1}}\frac{\partial g}{\partial y}(y;x)\,\dif x
+\end{align*}\]</span></p>
+<p>Thus a density value becomes an <span class="alert">expectation of a conditional density</span></p>
+</section>
+<section id="density-of-a-sum-of-uniforms" class="slide level2 tree-marker-slide" data-tree-marker="practice">
+<h2>Density of a sum of uniforms</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
+</div>
+
+<p>Let</p>
+<p><span class="math display">\[
+Y=\gamma_1X_1+\cdots+\gamma_dX_d,
+\qquad X\sim\Unif[0,1]^d,
+\qquad \gamma_j&gt;0
+\]</span></p>
+<p>Solving for <span class="math inline">\(x_1\)</span> gives</p>
+<p><span class="math display">\[
+g(y;x_{2:d})=\frac{y-\sum_{j=2}^d\gamma_jx_j}{\gamma_1}
+\]</span></p>
+<p>when <span class="math inline">\(\sum_{j=2}^d\gamma_jx_j\le y\le\gamma_1+\sum_{j=2}^d\gamma_jx_j\)</span></p>
+<p>Hence</p>
+<p><span class="math display">\[
+\varrho_Y(y)=\Ex\!\left[
+\frac1{\gamma_1}\indic\!\left{
+\sum_{j=2}^d\gamma_jX_j\le y\le
+\gamma_1+\sum_{j=2}^d\gamma_jX_j
+\right}\right]
+\]</span></p>
+</section></section>
+<section>
+<section id="structured-random-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="sampling">
+<h1>Structured Random Sampling</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.6; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="pseudorandom-numbers" style="--tree-left: 61%; --tree-top: 70%; --tree-align: center;">Pseudorandom<br>Numbers</div>
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+</div>
+
+<ul>
+<li><a href="#/antithetic-sampling">Antithetic sampling</a></li>
+<li><a href="#/constructing-an-antithetic-variate">Constructing an antithetic variate</a></li>
+<li><a href="#/latin-hypercube-sampling-in-one-dimension">Latin hypercube sampling in one dimension</a></li>
+<li><a href="#/one-dimensional-lhs-variance">One-dimensional LHS variance</a></li>
+<li><a href="#/latin-hypercube-sampling-in-d-dimensions">Latin hypercube sampling in <span class="math inline">\(d\)</span> dimensions</a></li>
+<li><a href="#/comparing-random-designs">Comparing random designs</a></li>
+<li><a href="#/strengths-and-limitations-of-lhs">Strengths and limitations of LHS</a></li>
+</ul>
+</section>
+<section id="antithetic-sampling" class="slide level2 tree-marker-slide" data-tree-marker="sampling">
+<h2>Antithetic sampling</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.6; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="pseudorandom-numbers" style="--tree-left: 61%; --tree-top: 70%; --tree-align: center;">Pseudorandom<br>Numbers</div>
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+</div>
+
+<p>If <span class="math inline">\(T(X)\)</span> has the same distribution as <span class="math inline">\(X\)</span>, pair <span class="math inline">\(f(X_i)\)</span> with <span class="math inline">\(f\{T(X_i)\}\)</span>:</p>
+<p><span class="math display">\[
+\hmu_{\mathrm{Anti},n}
+=\frac1{2n}\sum_{i=0}^{n-1}\left[f(X_i)+f\{T(X_i)\}\right]
+\]</span></p>
+<p>Examples:</p>
+<p><span class="math display">\[\begin{align*}
+T(X)&amp;=1-X,&amp; X&amp;\sim\Unif[0,1]^d,\\
+T(X)&amp;=-X,&amp; X&amp;\sim\Norm(\vzero,\mSigma)
+\end{align*}\]</span></p>
+<p>Although <span class="math inline">\(X_i\)</span> and <span class="math inline">\(T(X_i)\)</span> are dependent, the pairs are independent across <span class="math inline">\(i\)</span></p>
+<p>The variance is</p>
+<p><span class="math display">\[
+\var(\hmu_{\mathrm{Anti},n})
+=\frac{\var\{f(X)\}}{2n}
+\left[1+\corr\{f(X),f(T(X))\}\right]
+\]</span></p>
+<p>Antithetic sampling helps when the paired function values are <span class="alert">negatively correlated</span></p>
+</section>
+<section id="constructing-an-antithetic-variate" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>Constructing an antithetic variate</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<p>If <span class="math inline">\(X\)</span> has continuous CDF <span class="math inline">\(F\)</span>, then</p>
+<p><span class="math display">\[\begin{gather*}
+U=F(X)\sim\Unif[0,1],\\
+1-U\sim\Unif[0,1],\\
+T(X)=F^{-1}\{1-F(X)\}\sim F
+\end{gather*}\]</span></p>
+<p>For a symmetric distribution, this often reduces to reflection about the center</p>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>For which monotone functions <span class="math inline">\(f\)</span> does <span class="math inline">\(f(X)\)</span> become negatively correlated with <span class="math inline">\(f\{T(X)\}\)</span>?</span></p>
+</div>
+</section>
+<section id="latin-hypercube-sampling-in-one-dimension" class="slide level2 tree-marker-slide" data-tree-marker="sampling">
+<h2>Latin hypercube sampling in one dimension</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.6; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="pseudorandom-numbers" style="--tree-left: 61%; --tree-top: 70%; --tree-align: center;">Pseudorandom<br>Numbers</div>
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+</div>
+
+<p>Place one independent uniform point in each of <span class="math inline">\(n\)</span> equal strata:</p>
+<p><span class="math display">\[
+X_i=\frac{i+U_i}{n},
+\qquad U_i\ \IIDsim\ \Unif[0,1],
+\qquad i=0,\ldots,n-1
+\]</span></p>
+<p>Then <span class="math inline">\(X_i\sim\Unif[i/n,(i+1)/n]\)</span> and</p>
+<p><span class="math display">\[\begin{align*}
+\Ex(\hmu_{\mathrm{LHS},n})
+&amp;=\frac1n\sum_{i=0}^{n-1}\Ex\{f(X_i)\}\\
+&amp;=\sum_{i=0}^{n-1}\int_{i/n}^{(i+1)/n}f(x)\,\dif x\\
+&amp;=\int_0^1f(x)\,\dif x
+\end{align*}\]</span></p>
+<p>The <span class="math inline">\(X_i\)</span> are independent but <span class="alert">not identically distributed</span></p>
+</section>
+<section id="one-dimensional-lhs-variance" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>One-dimensional LHS variance</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>Because the strata are independent,</p>
+<p><span class="math display">\[
+\var(\hmu_{\mathrm{LHS},n})
+=\frac1{n^2}\sum_{i=0}^{n-1}\var\{f(X_i)\}
+\]</span></p>
+<p>For differentiable <span class="math inline">\(f\)</span>, the mean value and Taylor theorems imply</p>
+<p><span class="math display">\[\begin{align*}
+\var(\hmu_{\mathrm{LHS},n})
+&amp;\le\frac{\norm{f'}_\infty^2}{n^3},\\
+\rmse(\hmu_{\mathrm{LHS},n})
+&amp;\le\frac{\norm{f'}_\infty}{n^{3/2}}
+\end{align*}\]</span></p>
+<p>In one dimension, stratification can improve the IID <span class="math inline">\(n^{-1/2}\)</span> RMSE rate to <span class="math inline">\(n^{-3/2}\)</span> for smooth <span class="math inline">\(f\)</span></p>
+</section>
+<section id="latin-hypercube-sampling-in-d-dimensions" class="slide level2 tree-marker-slide" data-tree-marker="sampling">
+<h2>Latin hypercube sampling in <span class="math inline">\(d\)</span> dimensions</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.6; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="pseudorandom-numbers" style="--tree-left: 61%; --tree-top: 70%; --tree-align: center;">Pseudorandom<br>Numbers</div>
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+</div>
+
+<p>Let <span class="math inline">\(\pi_1,\ldots,\pi_d\)</span> be independent random permutations of <span class="math inline">\(0,\ldots,n-1\)</span>:</p>
+<p><span class="math display">\[
+X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
+\qquad U_{i\ell}\ \IIDsim\ \Unif[0,1]
+\]</span></p>
+<p>Each coordinate uses every stratum exactly once</p>
+<p>For <span class="math inline">\(R\)</span> independent Latin hypercubes,</p>
+<p><span class="math display">\[\begin{align*}
+\hmu_{\mathrm{LHS},n}^{(r)}
+&amp;=\frac1n\sum_{i=0}^{n-1}f(X_i^{(r)}),\\
+\hmu_{\mathrm{LHS},n,R}
+&amp;=\frac1R\sum_{r=1}^R\hmu_{\mathrm{LHS},n}^{(r)},\\
+\widehat{\var}(\hmu_{\mathrm{LHS},n,R})
+&amp;=\frac1{R(R-1)}\sum_{r=1}^R
+\left(\hmu_{\mathrm{LHS},n}^{(r)}-\hmu_{\mathrm{LHS},n,R}\right)^2
+\end{align*}\]</span></p>
+</section>
+<section id="comparing-random-designs" class="slide level2 tree-marker-slide" data-tree-marker="sampling">
+<h2>Comparing random designs</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.6; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="pseudorandom-numbers" style="--tree-left: 61%; --tree-top: 70%; --tree-align: center;">Pseudorandom<br>Numbers</div>
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+</div>
+
+<p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
+<div id="eaf74cf0" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="04-improving-efficiency_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" alt="IID, Latin hypercube, and scrambled Sobol' point sets with 64 points in the unit square" width="1115" height="385"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="strengths-and-limitations-of-lhs" class="slide level2 tree-marker-slide" data-tree-marker="sampling">
+<h2>Strengths and limitations of LHS</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.6; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="pseudorandom-numbers" style="--tree-left: 61%; --tree-top: 70%; --tree-align: center;">Pseudorandom<br>Numbers</div>
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+</div>
+
+<h3 id="strengths">Strengths</h3>
+<ul>
+<li>No importance density, control variate, or conditional expectation required</li>
+<li>Can converge faster than IID sampling</li>
+<li>Guarantees one point in every one-dimensional stratum</li>
+</ul>
+<h3 id="limitations">Limitations</h3>
+<ul>
+<li>The sample size is fixed when the design is constructed</li>
+<li>Accuracy assessment requires independent replications</li>
+<li>Too many replications can erase the efficiency gain</li>
+<li>The one-dimensional <span class="math inline">\(n^{-3/2}\)</span> RMSE guarantee does not extend automatically to <span class="math inline">\(d&gt;1\)</span></li>
+</ul>
+</section></section>
+<section>
+<section id="low-discrepancy-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="low-discrepancy">
+<h1>Low Discrepancy Sampling</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
+
+<ul>
+<li><a href="#/from-lhs-to-quasi-monte-carlo">From LHS to quasi-Monte Carlo</a></li>
+<li><a href="#/three-interpretations-of-discrepancy">Three interpretations of discrepancy</a></li>
+<li><a href="#/the-van-der-corput-sequence">The van der Corput sequence</a></li>
+<li><a href="#/four-low-discrepancy-families">Four low discrepancy families</a></li>
+<li><a href="#/component-by-component-construction">Component-by-component construction</a></li>
+<li><a href="#/randomized-low-discrepancy-sampling">Randomized low discrepancy sampling</a></li>
+<li><a href="#/why-randomize">Why randomize?</a></li>
+<li><a href="#/stopping-criteria">Stopping criteria</a></li>
+</ul>
+</section>
+<section id="from-lhs-to-quasi-monte-carlo" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<h2>From LHS to quasi-Monte Carlo</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
+
+<p><span class="alert">Low discrepancy sampling</span>, or quasi-Monte Carlo, improves space filling beyond one-dimensional stratification</p>
+<p>For nodes <span class="math inline">\(x_0,\ldots,x_{n-1}\)</span> and target distribution <span class="math inline">\(F\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+D^2(\{x_i\}_{i=0}^{n-1},F;K)
+&amp;=\int_{\mathcal X^2}K(x,x')\,\dif F(x)\,\dif F(x')\\
+&amp;\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,x_i)\,\dif F(x)\\
+&amp;\quad+\frac1{n^2}\sum_{i,j=0}^{n-1}K(x_i,x_j)
+\end{align*}\]</span></p>
+<p>We usually take <span class="math inline">\(\mathcal X=[0,1]^d\)</span> and seek nodes with small discrepancy</p>
+</section>
+<section id="three-interpretations-of-discrepancy" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<h2>Three interpretations of discrepancy</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
+
+<p>For the uniform target on <span class="math inline">\([0,1]^d\)</span>, discrepancy is</p>
+<ul>
+<li><p><span class="alert">worst-case error</span></p>
+<p><span class="math display">\[
+\left\lvert\int f(x)\,\dif x-\frac1n\sum_{i=0}^{n-1}f(x_i)\right\rvert
+\le D\norm{f}_{\mathcal H_K}
+\]</span></p></li>
+<li><p><span class="alert">average-case root mean squared error</span> for <span class="math inline">\(f\)</span> drawn from a Gaussian process with covariance kernel <span class="math inline">\(K\)</span></p></li>
+<li><p><span class="alert">distance between the target distribution and the empirical distribution</span></p></li>
+</ul>
+<p>The kernel specifies the function class and the distributional features being measured</p>
+</section>
+<section id="the-van-der-corput-sequence" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<h2>The van der Corput sequence</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
+
+<p>Write a nonnegative integer in base <span class="math inline">\(b\)</span>:</p>
+<p><span class="math display">\[
+i=(\cdots i_2i_1i_0)_b
+\]</span></p>
+<p>Reverse the digits across the radix point:</p>
+<p><span class="math display">\[
+\phi_b(i)=(0.i_0i_1i_2\cdots)_b
+=\frac{i_0}b+\frac{i_1}{b^2}+\frac{i_2}{b^3}+\cdots
+\]</span></p>
+<ul>
+<li>Usually <span class="math inline">\(b\)</span> is prime; <span class="math inline">\(b=2\)</span> is common</li>
+<li><span class="math inline">\(\{\phi_b(i)\}_{i=0}^{b^m-1}\)</span> contains the same points as <span class="math inline">\(\{i/b^m\}_{i=0}^{b^m-1}\)</span> in a different order</li>
+<li>Earlier points keep their order as the sample grows</li>
+</ul>
+<div class="key-point">
+<p>The van der Corput construction turns a fixed-size grid into an <span class="alert">extensible sequence</span></p>
+</div>
+</section>
+<section id="four-low-discrepancy-families" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<h2>Four low discrepancy families</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
+
+<p>For <span class="math inline">\(i=0,1,\ldots\)</span>:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Family</th>
+<th style="text-align: left;">Construction</th>
+<th style="text-align: left;">Typical preferred size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Kronecker</td>
+<td style="text-align: left;"><span class="math inline">\(x_i=i\vzeta\bmod1\)</span></td>
+<td style="text-align: left;">none</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lattice</td>
+<td style="text-align: left;"><span class="math inline">\(x_i=\phi_b(i)\vzeta\bmod1\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(n=b^m\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Halton</td>
+<td style="text-align: left;"><span class="math inline">\(x_i=\{\phi_2(i),\phi_3(i),\phi_5(i),\ldots\}\)</span></td>
+<td style="text-align: left;">none</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Digital</td>
+<td style="text-align: left;"><span class="math inline">\(x_i=i_0c_0\oplus i_1c_1\oplus\cdots\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(n=b^m\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Here <span class="math inline">\(\oplus\)</span> denotes digitwise addition modulo <span class="math inline">\(b\)</span></p>
+<p>Different families balance <span class="alert">extensibility</span>, <span class="alert">projection quality</span>, and <span class="alert">fast construction</span></p>
+</section>
+<section id="component-by-component-construction" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<h2>Component-by-component construction</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
+
+<p>Generators for lattice rules and digital nets may be chosen by number theory or computer search</p>
+<p>The component-by-component strategy:</p>
+<ol type="1">
+<li>Choose a one-dimensional generator that minimizes a discrepancy criterion over relevant sample sizes</li>
+<li>Freeze the first <span class="math inline">\(\ell\)</span> components</li>
+<li>Search for component <span class="math inline">\(\ell+1\)</span> that minimizes discrepancy</li>
+<li>Increase <span class="math inline">\(\ell\)</span> and repeat until <span class="math inline">\(\ell=d\)</span></li>
+</ol>
+<div class="key-point">
+<p>A high-dimensional design is built by <span class="alert">optimizing one coordinate at a time</span></p>
+</div>
+</section>
+<section id="randomized-low-discrepancy-sampling" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<h2>Randomized low discrepancy sampling</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
+
+<p>Randomization aims for</p>
+<p><span class="math display">\[
+X_{\mathrm{rand},i}\sim\Unif[0,1]^d
+\]</span></p>
+<p>for every <span class="math inline">\(i\)</span>, while preserving low discrepancy jointly</p>
+<ul>
+<li><span class="alert">Random shift</span>: <span class="math inline">\(X_{\mathrm{rand},i}=x_i+\vDelta\bmod1\)</span>, especially for lattices and Kronecker sequences</li>
+<li><span class="alert">Random digital shift</span>: <span class="math inline">\(X_{\mathrm{rand},i}=x_i\oplus\vDelta\)</span>, especially for digital sequences</li>
+<li><span class="alert">Linear matrix or nested uniform scrambling</span>, especially for digital sequences</li>
+</ul>
+<p>Independent randomizations provide replications without reverting to IID point placement</p>
+</section>
+<section id="why-randomize" class="slide level2 tree-marker-slide" data-tree-marker="stat-estim">
+<h2>Why randomize?</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<ul>
+<li><p>The estimator</p>
+<p><span class="math display">\[
+\hmu_n=\frac1n\sum_{i=0}^{n-1}f(X_{\mathrm{rand},i})
+\]</span></p>
+<p>is unbiased for <span class="math inline">\(\Ex[f(X)]\)</span>, <span class="math inline">\(X\sim\Unif[0,1]^d\)</span></p></li>
+<li><p>Randomized nodes almost surely avoid the boundary, so Gaussian quantile transforms remain finite</p></li>
+<li><p>Independent randomizations allow variance and error estimation</p></li>
+<li><p>For smooth integrands, scrambled digital sequences can attain nearly <span class="math inline">\(\Order(n^{-3/2})\)</span> RMSE</p></li>
+</ul>
+<p>Randomization combines <span class="alert">QMC space filling</span> with <span class="alert">Monte Carlo uncertainty quantification</span></p>
+</section>
+<section id="stopping-criteria" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Stopping criteria</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>Two practical questions are</p>
+<p><span class="math display">\[\begin{align*}
+\abs{\mu-\hmu_n}&amp;\le\text{what?}\\
+\abs{\mu-\hmu_n}&amp;\le\varepsilon
+\quad\text{for what $n$?}
+\end{align*}\]</span></p>
+<p>We want answers based only on the computed data <span class="math inline">\(f(x_0),f(x_1),\ldots\)</span></p>
+<ul>
+<li>IID sampling: use a Central Limit Theorem interval when justified</li>
+<li>Randomized low discrepancy sampling: use independent replications</li>
+<li>Deterministic low discrepancy sampling: possible criteria include
+<ul>
+<li>decay of estimated Fourier coefficients</li>
+<li>Bayesian credible intervals based on a kernel model</li>
+</ul></li>
+</ul>
+<div class="key-point">
+<p>An efficient method needs both <span class="alert">fast error decay</span> and a <span class="alert">reliable stopping rule</span></p>
+</div>
+</section></section>
+<section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="prob-stat-est">
+<h1>Big Ideas</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<ul>
+<li>Equivalent expectations can have dramatically different computational variance</li>
+<li>Importance sampling changes the sampling distribution and corrects with likelihood ratios</li>
+<li>Control variates and conditioning remove variability using known structure</li>
+<li>Antithetic sampling and Latin hypercubes introduce useful dependence deliberately</li>
+<li>Low discrepancy sequences replace random clustering with balanced space filling</li>
+<li>Randomization restores unbiasedness and supports error estimation while retaining QMC efficiency</li>
+</ul>
+
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">

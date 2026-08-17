@@ -35,6 +35,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="03-markov-chain-monte-carlo_files/libs/revealjs/dist/theme/quarto-68c7af28fbc94cc6db8a1cd54e912131.css">
   <link href="03-markov-chain-monte-carlo_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -587,7 +653,7 @@
 
 <section id="title-slide" data-background-color="#f5f7fb" data-background-image="https://fjhickernell.github.io/MATH565Fall2026/classlib/classlib/quarto/assets/images/normal-scatter.png" data-background-position="top left" data-background-size="55%" class="quarto-title-block center">
   <h1 class="title">MATH 565 — Fall 2026</h1>
-  <p class="subtitle"><span class="deck-title">Markov Chain Monte Carlo</span></p>
+  <p class="subtitle"><span class="deck-title">Markov Chain Monte Carlo</span><br> <span class="deck-meta">Owen, Chapters 11–12</span></p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -601,6 +667,11 @@ Fred J. Hickernell
 </section>
 <section id="course-map" class="title-slide slide level1 center">
 <h1>Course Map</h1>
+<div class="columns">
+<div class="column" style="width:45%;">
+<h3>
+Course decks
+</h3>
 <ul>
 <li><a href="01-introduction.html">Introduction</a></li>
 <li><a href="02-generating-samples.html">Generating Samples</a></li>
@@ -608,20 +679,752 @@ Fred J. Hickernell
 <li><a href="04-improving-efficiency.html">Improving Efficiency</a></li>
 <li><a href="05-selected-topics.html">Selected Topics</a></li>
 </ul>
+</div><div class="column" style="width:55%;">
+<h3>
+In this deck
+</h3>
+<ul>
+<li><a href="#/from-direct-sampling-to-markov-chains">From direct sampling to Markov chains</a></li>
+<li><a href="#/metropolishastings-sampling">Metropolis–Hastings sampling</a></li>
+<li><a href="#/kernel-discrepancy">Kernel discrepancy</a></li>
+<li><a href="#/discrepancy-as-integration-error">Discrepancy as integration error</a></li>
+<li><a href="#/applications-of-markov-chains">Applications of Markov chains</a></li>
+<li><a href="#/big-ideas">Big ideas</a></li>
+</ul>
+</div></div>
 </section>
 
 <section>
-<section id="markov-chain-monte-carlo" class="title-slide slide level1 center">
-<h1>Markov Chain Monte Carlo</h1>
+<section id="from-direct-sampling-to-markov-chains" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="random-generation">
+<h1>From Direct Sampling to Markov Chains</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
 <ul>
-<li>Content migration</li>
+<li><a href="#/when-direct-sampling-is-difficult">When direct sampling is difficult</a></li>
+<li><a href="#/the-markov-property">The Markov property</a></li>
+<li><a href="#/examples-of-markov-chains">Examples of Markov chains</a></li>
 </ul>
 </section>
-<section id="content-migration" class="slide level2">
-<h2>Content migration</h2>
-<p>This deck is a placeholder for the Fall 2026 Quarto conversion of the Markov Chain Monte Carlo lecture.</p>
+<section id="when-direct-sampling-is-difficult" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>When direct sampling is difficult</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
 
+<ul>
+<li>The quantile transform works directly for distributions with tractable quantiles</li>
+<li>Affine transformations generate correlated Gaussian vectors</li>
+<li>Acceptance–rejection sampling needs a proposal that bounds the target and may reject many proposals</li>
+<li><span class="alert">Markov chain Monte Carlo (MCMC)</span> moves through the sample space using only an unnormalized target density</li>
+</ul>
+<div class="key-point">
+<p>MCMC replaces independent draws by a <span class="alert">dependent sequence</span> whose distribution approaches the target</p>
+</div>
+</section>
+<section id="the-markov-property" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<h2>The Markov property</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<p>Let <span class="math inline">\(\mathcal X\)</span> be the state space for <span class="math inline">\(X_0,X_1,\ldots\)</span></p>
+<p>The sequence is a <span class="alert">Markov chain</span> when, for every measurable <span class="math inline">\(A\subseteq\mathcal X\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+&amp;\Prob(X_{i+1}\in A\mid X_i=x_i,\ldots,X_0=x_0)\\
+&amp;\qquad=\Prob(X_{i+1}\in A\mid X_i=x_i)
+\end{align*}\]</span></p>
+<p><span class="alert">Where the chain goes next depends only on where it is now</span>, not on how it arrived</p>
+<p>We use Markov chains to</p>
+<ul>
+<li>generate samples whose distribution converges to a target</li>
+<li>model systems such as queues</li>
+<li>study long-run or asymptotic behavior</li>
+</ul>
+</section>
+<section id="examples-of-markov-chains" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<h2>Examples of Markov chains</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<p>Assume <span class="math inline">\(Z_0,Z_1,\ldots\ \IIDsim\ \Norm(0,1)\)</span></p>
+<div class="columns">
+<div class="column" style="width:47%;">
+<h3 id="markov">Markov</h3>
+<p><span class="math display">\[\begin{align*}
+X_0&amp;=0,&amp; X_{i+1}&amp;=X_i+Z_i\\
+X_0&amp;=0,&amp; X_{i+1}&amp;=i+Z_i
+\end{align*}\]</span></p>
+<p>The second chain is <span class="alert">not time homogeneous</span>: its transition law changes with <span class="math inline">\(i\)</span></p>
+</div><div class="column" style="width:6%;">
+
+</div><div class="column" style="width:47%;">
+<h3 id="not-markov-as-written">Not Markov as written</h3>
+<p><span class="math display">\[
+X_0=X_1=0,
+\qquad X_{i+1}=X_{i-1}+Z_i
+\]</span></p>
+<p>The pair <span class="math inline">\(Y_i=(X_{i-1},X_i)\)</span> <span class="alert">is Markov</span> because its state retains the needed history</p>
+</div></div>
 </section></section>
+<section>
+<section id="metropolishastings-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="random-generation">
+<h1>Metropolis–Hastings Sampling</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<ul>
+<li><a href="#/the-metropolishastings-algorithm">The Metropolis–Hastings algorithm</a></li>
+<li><a href="#/why-the-acceptance-ratio-works">Why the acceptance ratio works</a></li>
+<li><a href="#/the-metropolis-algorithm">The Metropolis algorithm</a></li>
+<li><a href="#/metropolis-practice">Metropolis practice</a></li>
+<li><a href="#/a-random-walk-metropolis-example">A random-walk Metropolis example</a></li>
+<li><a href="#/tuning-and-diagnostics">Tuning and diagnostics</a></li>
+</ul>
+</section>
+<section id="the-metropolishastings-algorithm" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>The Metropolis–Hastings algorithm</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<p>Suppose</p>
+<ul>
+<li>the target has known, possibly unnormalized density <span class="math inline">\(\varrho\)</span></li>
+<li><span class="math inline">\(\varrho_{\brandnew\mid\mathrm{old}}(z\mid x)\)</span> proposes a new state <span class="math inline">\(z\)</span> from the current state <span class="math inline">\(x\)</span></li>
+</ul>
+<p>Given <span class="math inline">\(X_0\)</span>, repeat for <span class="math inline">\(i=0,\ldots,n-1\)</span>:</p>
+<ol type="1">
+<li><p>Generate <span class="math inline">\(Z\sim\varrho_{\brandnew\mid\mathrm{old}}(\cdot\mid X_i)\)</span> and <span class="math inline">\(U\sim\Unif[0,1]\)</span></p></li>
+<li><p>Compute</p>
+<p><span class="math display">\[
+\alpha(X_i,Z)=\min\!\left\{1,
+\frac{\varrho(Z)\varrho_{\brandnew\mid\mathrm{old}}(X_i\mid Z)}
+{\varrho(X_i)\varrho_{\brandnew\mid\mathrm{old}}(Z\mid X_i)}\right\}
+\]</span></p></li>
+<li><p>Set <span class="math inline">\(X_{i+1}=Z\)</span> if <span class="math inline">\(U\le\alpha(X_i,Z)\)</span>; otherwise set <span class="math inline">\(X_{i+1}=X_i\)</span></p></li>
+</ol>
+<p><span class="alert">Every iteration accepts either the proposal or the current state</span></p>
+</section>
+<section id="why-the-acceptance-ratio-works" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<h2>Why the acceptance ratio works</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<p>The ratio compares the two directions of a proposed transition:</p>
+<p><span class="math display">\[
+\frac{\varrho(Z)\varrho_{\brandnew\mid\mathrm{old}}(X_i\mid Z)}
+{\varrho(X_i)\varrho_{\brandnew\mid\mathrm{old}}(Z\mid X_i)}
+=
+\frac{\text{target weight at $Z$}\times\text{return proposal}}
+{\text{target weight at $X_i$}\times\text{forward proposal}}
+\]</span></p>
+<ul>
+<li>Moves toward higher target density are favored</li>
+<li>Asymmetric proposals are corrected by the proposal-density ratio</li>
+<li>The normalizing constant in <span class="math inline">\(\varrho\)</span> cancels</li>
+</ul>
+<div class="key-point">
+<p>The transition kernel satisfies <span class="alert">detailed balance</span> with the target distribution, making the target invariant under suitable conditions</p>
+</div>
+</section>
+<section id="the-metropolis-algorithm" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>The Metropolis algorithm</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<p>If the proposal is symmetric,</p>
+<p><span class="math display">\[
+\varrho_{\brandnew\mid\mathrm{old}}(z\mid x)
+=\varrho_{\brandnew\mid\mathrm{old}}(x\mid z),
+\]</span></p>
+<p>then the acceptance probability simplifies to</p>
+<p><span class="math display">\[
+\alpha(x,z)=\min\!\left\{1,\frac{\varrho(z)}{\varrho(x)}\right\}
+\]</span></p>
+<p>For a random-walk proposal <span class="math inline">\(Z=X_i+\epsilon_i\)</span> with symmetric <span class="math inline">\(\epsilon_i\)</span>:</p>
+<ul>
+<li>accept every move to a state with at least as much target density</li>
+<li>accept some downhill moves, which keeps the chain from becoming trapped immediately</li>
+<li>repeat <span class="math inline">\(X_i\)</span> when a proposal is rejected</li>
+</ul>
+</section>
+<section id="metropolis-practice" class="slide level2 tree-marker-slide" data-tree-marker="practice">
+<h2>Metropolis practice</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
+</div>
+
+<p>Use the uniform numbers in order and choose a random order of the candidate <span class="math inline">\(x\)</span> values</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+<th style="text-align: right;">5</th>
+<th style="text-align: right;">6</th>
+<th style="text-align: right;">7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(U_i\)</span></td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(x\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(-1.2\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(-0.8\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(-0.5\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(0.6\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(1.1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(1.4\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(2.0\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(2.2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\varrho(x)\)</span></td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">2.6</td>
+<td style="text-align: right;">2.4</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+</tbody>
+</table>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Starting at <span class="math inline">\(x=-1.2\)</span>, follow several Metropolis steps and record each accepted or repeated state</span></p>
+</div>
+</section>
+<section id="a-random-walk-metropolis-example" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>A random-walk Metropolis example</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<p>Target a bimodal Gaussian mixture using the symmetric proposal</p>
+<p><span class="math display">\[
+Z\mid X_i=x\sim\Norm(x,1.4^2)
+\]</span></p>
+<div id="c0db50b0" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="03-markov-chain-monte-carlo_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" alt="Random-walk Metropolis example with the bimodal target density, sampled-state histogram, and Markov-chain trace" width="1115" height="549"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="tuning-and-diagnostics" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
+<h2>Tuning and diagnostics</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+</div>
+
+<p>MCMC is attractive because it</p>
+<ul>
+<li>samples from complicated, unnormalized densities</li>
+<li>is often straightforward to implement</li>
+</ul>
+<p>The proposal and starting point require care:</p>
+<ul>
+<li>proposals that are too small explore slowly and produce highly dependent samples</li>
+<li>proposals that are too large have low acceptance rates and many repeats</li>
+<li>multimodal targets may trap a single chain in one mode</li>
+</ul>
+<p>Useful responses include <span class="alert">pilot runs</span>, <span class="alert">multiple chains</span>, and <span class="alert">parallel tempering</span></p>
+<div class="key-point">
+<p>Diagnose both <span class="alert">exploration</span> of the full state space and <span class="alert">concentration</span> in high-density regions</p>
+</div>
+</section></section>
+<section>
+<section id="kernel-discrepancy" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="low-discrepancy">
+<h1>Kernel Discrepancy</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
+
+<ul>
+<li><a href="#/how-can-we-measure-sample-quality">How can we measure sample quality?</a></li>
+<li><a href="#/what-discrepancy-measures">What discrepancy measures</a></li>
+<li><a href="#/symmetric-positive-definite-kernels">Symmetric positive definite kernels</a></li>
+<li><a href="#/discrepancy-between-distributions">Discrepancy between distributions</a></li>
+<li><a href="#/empirical-distributions">Empirical distributions</a></li>
+<li><a href="#/unbiased-estimates-of-squared-discrepancy">Unbiased estimates of squared discrepancy</a></li>
+</ul>
+</section>
+<section id="how-can-we-measure-sample-quality" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<h2>How can we measure sample quality?</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
+
+<p>For samples <span class="math inline">\(\{x_i\}_{i=0}^{m-1}\)</span> and <span class="math inline">\(\{z_j\}_{j=0}^{n-1}\)</span>, a kernel <span class="math inline">\(K\)</span> defines</p>
+<p><span class="math display">\[\begin{multline*}
+D^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
+=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(x_i,x_j)\\
+-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
++\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)
+\end{multline*}\]</span></p>
+<ul>
+<li>Also called <span class="alert">maximum mean discrepancy (MMD)</span> in machine learning</li>
+<li>Direct computation requires <span class="math inline">\(\Order(\max(m,n)^2)\)</span> kernel evaluations</li>
+<li>The answer depends on the chosen kernel and its parameters</li>
+</ul>
+</section>
+<section id="what-discrepancy-measures" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<h2>What discrepancy measures</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
+
+<p>Kernel discrepancy measures</p>
+<ul>
+<li>the difference between two probability distributions</li>
+<li>the <span class="alert">worst-case integration error</span> over the unit ball of a reproducing kernel Hilbert space</li>
+<li>the <span class="alert">root mean squared integration error</span> when the integrand is modeled as a Gaussian process with covariance kernel <span class="math inline">\(K\)</span></li>
+</ul>
+<div class="key-point">
+<p>The kernel determines which differences between distributions matter most</p>
+</div>
+</section>
+<section id="symmetric-positive-definite-kernels" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
+<h2>Symmetric positive definite kernels</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+</div>
+
+<p>A kernel <span class="math inline">\(K:\mathcal X\times\mathcal X\to\reals\)</span> is <span class="alert">symmetric positive definite</span> when every Gram matrix</p>
+<p><span class="math display">\[
+\mK=(K(x_i,x_j))_{i,j=0}^{n-1}
+\]</span></p>
+<p>is symmetric positive definite for distinct <span class="math inline">\(x_0,\ldots,x_{n-1}\)</span></p>
+<p>Examples include</p>
+<p><span class="math display">\[\begin{align*}
+K(t,x)&amp;=\exp\!\left(-\norm{t-x}^2/h^2\right),
+&amp;&amp;\mathcal X=\reals^d,\\
+K(t,x)&amp;=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
+\left(\abs{t_\ell-\tfrac12}+\abs{x_\ell-\tfrac12}-\abs{t_\ell-x_\ell}\right)\right],
+&amp;&amp;\mathcal X=[0,1]^d
+\end{align*}\]</span></p>
+<p>The first is a squared exponential kernel; the second yields centered discrepancy</p>
+</section>
+<section id="discrepancy-between-distributions" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<h2>Discrepancy between distributions</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
+
+<p>For independent <span class="math inline">\(X,X'\sim F_X\)</span> and <span class="math inline">\(Z,Z'\sim F_Z\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+D^2(F_X,F_Z;K)
+&amp;=\Ex[K(X,X')]-2\Ex[K(X,Z)]+\Ex[K(Z,Z')]\\
+&amp;=\int_{\mathcal X^2}K(x,x')\,\dif(F_X-F_Z)(x)\,\dif(F_X-F_Z)(x')\\
+&amp;\ge0
+\end{align*}\]</span></p>
+<p>If both distributions have densities,</p>
+<p><span class="math display">\[
+D^2(F_X,F_Z;K)
+=\int_{\mathcal X^2}K(x,x')
+\{\varrho_X(x)-\varrho_Z(x)\}
+\{\varrho_X(x')-\varrho_Z(x')\}\,\dif x\,\dif x'
+\]</span></p>
+</section>
+<section id="empirical-distributions" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<h2>Empirical distributions</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
+
+<p>For the empirical distribution of <span class="math inline">\(z_0,\ldots,z_{n-1}\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
+&amp;=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')\\
+&amp;\quad-\frac{2}{n}\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,z_i)\,\dif F_X(x)\\
+&amp;\quad+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)
+\end{align*}\]</span></p>
+<p>The same formula covers <span class="alert">one target distribution and one sample</span> or <span class="alert">two samples</span></p>
+</section>
+<section id="unbiased-estimates-of-squared-discrepancy" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
+<h2>Unbiased estimates of squared discrepancy</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+</div>
+
+<p>The squared discrepancy is nonnegative, but an unbiased estimator may be negative</p>
+<p>Replace within-sample sums by off-diagonal averages:</p>
+<p><span class="math display">\[\begin{multline*}
+D_{\mathrm{unb}}^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
+=\frac{1}{m(m-1)}\sum_{\substack{i,j=0\\i\ne j}}^{m-1}K(x_i,x_j)\\
+-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
++\frac{1}{n(n-1)}\sum_{\substack{i,j=0\\i\ne j}}^{n-1}K(z_i,z_j)
+\end{multline*}\]</span></p>
+<p><span class="alert">Unbiased</span> describes the estimator’s expectation, not the sign of each realization</p>
+</section></section>
+<section>
+<section id="discrepancy-as-integration-error" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="estimation">
+<h1>Discrepancy as Integration Error</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<ul>
+<li><a href="#/a-reproducing-kernel-hilbert-space">A reproducing kernel Hilbert space</a></li>
+<li><a href="#/worst-case-integration-error">Worst-case integration error</a></li>
+<li><a href="#/the-discrepancy-identity">The discrepancy identity</a></li>
+<li><a href="#/average-case-integration-error">Average-case integration error</a></li>
+<li><a href="#/what-the-kernel-controls">What the kernel controls</a></li>
+<li><a href="#/centered-discrepancy-and-smoothness">Centered discrepancy and smoothness</a></li>
+</ul>
+</section>
+<section id="a-reproducing-kernel-hilbert-space" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
+<h2>A reproducing kernel Hilbert space</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+</div>
+
+<p>Every symmetric positive definite kernel <span class="math inline">\(K\)</span> defines a Hilbert space <span class="math inline">\(\mathcal H_K\)</span> of functions on <span class="math inline">\(\mathcal X\)</span> with the <span class="alert">reproducing property</span></p>
+<p><span class="math display">\[
+f(x)=\langle K(\cdot,x),f\rangle_{\mathcal H_K}
+\]</span></p>
+<p>Assume <span class="math inline">\(\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')\)</span> is finite</p>
+<p>Then both</p>
+<p><span class="math display">\[\begin{align*}
+f&amp;\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x),\\
+f&amp;\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)
+\end{align*}\]</span></p>
+<p>are bounded linear functionals on <span class="math inline">\(\mathcal H_K\)</span></p>
+</section>
+<section id="worst-case-integration-error" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Worst-case integration error</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>By the Riesz representation theorem, some <span class="math inline">\(\zeta\in\mathcal H_K\)</span> satisfies</p>
+<p><span class="math display">\[
+\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)
+=\langle\zeta,f\rangle_{\mathcal H_K}
+\]</span></p>
+<p>Therefore, by Cauchy–Schwarz,</p>
+<p><span class="math display">\[
+\left\lvert\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)\right\rvert
+\le\norm{\zeta}_{\mathcal H_K}\norm{f}_{\mathcal H_K}
+\]</span></p>
+<p>This separates <span class="alert">sample quality</span>, <span class="math inline">\(\norm{\zeta}_{\mathcal H_K}\)</span>, from <span class="alert">integrand difficulty</span>, <span class="math inline">\(\norm{f}_{\mathcal H_K}\)</span></p>
+</section>
+<section id="the-discrepancy-identity" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<h2>The discrepancy identity</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
+
+<p>The representer is</p>
+<p><span class="math display">\[
+\zeta(x')=\int_{\mathcal X}K(x,x')\,\dif F_X(x)
+-\frac1n\sum_{i=0}^{n-1}K(z_i,x')
+\]</span></p>
+<p>Its squared norm is exactly the squared discrepancy:</p>
+<p><span class="math display">\[\begin{align*}
+\norm{\zeta}_{\mathcal H_K}^2
+&amp;=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')\\
+&amp;\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,z_i)\,\dif F_X(x)
++\frac1{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)\\
+&amp;=D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
+\end{align*}\]</span></p>
+<p>Thus discrepancy is the <span class="alert">worst-case error over <span class="math inline">\(\norm{f}_{\mathcal H_K}\le1\)</span></span></p>
+</section>
+<section id="average-case-integration-error" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
+<h2>Average-case integration error</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+</div>
+
+<p>Suppose <span class="math inline">\(f\)</span> is modeled as a zero-mean Gaussian process with covariance kernel <span class="math inline">\(K\)</span></p>
+<p>For deterministic <span class="math inline">\(z_0,\ldots,z_{n-1}\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+&amp;\Ex_f\!\left[
+\left\{\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)\right\}^2
+\right]\\
+&amp;\quad=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')
+-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,z_i)\,\dif F_X(x)
++\frac1{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)\\
+&amp;\quad=D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
+\end{align*}\]</span></p>
+<p>Discrepancy is also the <span class="alert">root mean squared error under the Gaussian-process model</span></p>
+</section>
+<section id="what-the-kernel-controls" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
+<h2>What the kernel controls</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+</div>
+
+<ul>
+<li>The numerical value of discrepancy depends on <span class="math inline">\(K\)</span> and its hyperparameters</li>
+<li>Multiplying <span class="math inline">\(K\)</span> by <span class="math inline">\(c^2\)</span> multiplies discrepancy by <span class="math inline">\(\abs{c}\)</span></li>
+<li>Kernel structure encodes assumptions about
+<ul>
+<li>domain and smoothness</li>
+<li>periodicity</li>
+<li>coordinate importance</li>
+</ul></li>
+<li>In the average-case setting, hyperparameters may be estimated by empirical Bayes or maximum likelihood</li>
+</ul>
+<p>For IID <span class="math inline">\(Z_i\sim F_X\)</span>,</p>
+<p><span class="math display">\[
+\Ex\!\left[D^2(F_X,\{Z_i\}_{i=0}^{n-1};K)\right]
+=\frac1n\left\{
+\int K(x,x)\,\dif F_X(x)-\int K(x,x')\,\dif F_X(x)\,\dif F_X(x')
+\right\}
+\]</span></p>
+</section>
+<section id="centered-discrepancy-and-smoothness" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<h2>Centered discrepancy and smoothness</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
+
+<p>For <span class="math inline">\(\mathcal X=[0,1]^d\)</span>, the centered-discrepancy kernel is</p>
+<p><span class="math display">\[
+K(t,x)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
+\left(\abs{t_\ell-\tfrac12}+\abs{x_\ell-\tfrac12}-\abs{t_\ell-x_\ell}\right)\right]
+\]</span></p>
+<p>Its norm combines the function value at the center with weighted square-integrals of mixed derivatives:</p>
+<p><span class="math display">\[\begin{multline*}
+\norm{f}_{\mathcal H_K}^2
+=\abs{f(1/2,\ldots,1/2)}^2
++\norm{\frac{\partial f(x_1,1/2,\ldots)}{\gamma_1\partial x_1}}_2^2\\
++\norm{\frac{\partial^2 f(x_1,x_2,1/2,\ldots)}
+{\gamma_1\gamma_2\partial x_1\partial x_2}}_2^2
++\cdots
++\norm{\frac{\partial^d f(x)}
+{\gamma_1\cdots\gamma_d\partial x_1\cdots\partial x_d}}_2^2
+\end{multline*}\]</span></p>
+<p>The weights <span class="math inline">\(\gamma_\ell\)</span> express <span class="alert">coordinate importance</span></p>
+</section></section>
+<section>
+<section id="applications-of-markov-chains" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="prob-est">
+<h1>Applications of Markov Chains</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<ul>
+<li><a href="#/maximum-likelihood-estimation">Maximum likelihood estimation</a></li>
+<li><a href="#/bayesian-inference">Bayesian inference</a></li>
+<li><a href="#/queueing-systems">Queueing systems</a></li>
+<li><a href="#/event-driven-queue-simulation">Event-driven queue simulation</a></li>
+<li><a href="#/tracking-customer-time">Tracking customer time</a></li>
+</ul>
+</section>
+<section id="maximum-likelihood-estimation" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Maximum likelihood estimation</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>For parameter <span class="math inline">\(\theta\)</span> and observed data <span class="math inline">\(y\)</span>, the likelihood is</p>
+<p><span class="math display">\[
+L(\theta;y)=\varrho_{Y\mid\theta}(y\mid\theta)
+\]</span></p>
+<p>The <span class="alert">maximum likelihood estimator</span> maximizes <span class="math inline">\(L(\theta;y)\)</span></p>
+<p>For <span class="math inline">\(Y_0,\ldots,Y_{n-1}\ \IIDsim\ \Norm(\mu,\sigma^2)\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+L(\mu,\sigma^2;y)
+&amp;=(2\mpi\sigma^2)^{-n/2}
+\exp\!\left[-\frac1{2\sigma^2}\sum_{i=0}^{n-1}(y_i-\mu)^2\right],\\
+\hmu_{\mathrm{MLE}}&amp;=\frac1n\sum_{i=0}^{n-1}y_i,&amp;
+\hsigma^2_{\mathrm{MLE}}&amp;=\frac1n\sum_{i=0}^{n-1}(y_i-\hmu_{\mathrm{MLE}})^2
+\end{align*}\]</span></p>
+</section>
+<section id="bayesian-inference" class="slide level2 tree-marker-slide" data-tree-marker="prob-est">
+<h2>Bayesian inference</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>Combine a prior density with the likelihood:</p>
+<p><span class="math display">\[\begin{align*}
+\varrho_{\mathrm{post}}(\theta\mid y)
+&amp;=\frac{L(\theta;y)\varrho_{\mathrm{prior}}(\theta)}{\varrho_Y(y)}\\
+&amp;\propto L(\theta;y)\varrho_{\mathrm{prior}}(\theta)
+\end{align*}\]</span></p>
+<ul>
+<li>The evidence <span class="math inline">\(\varrho_Y(y)\)</span> depends only on the observed data</li>
+<li>MCMC needs only the <span class="alert">unnormalized posterior</span></li>
+<li>Posterior samples estimate means, quantiles, credible intervals, and other summaries</li>
+<li>Optimization of the unnormalized posterior yields a maximum a posteriori estimate</li>
+</ul>
+<div class="key-point">
+<p>Bayesian inference is a primary reason to sample from complicated unnormalized densities</p>
+</div>
+</section>
+<section id="queueing-systems" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<h2>Queueing systems</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<p>Consider a single-server queue observed at event times</p>
+<p><span class="math display">\[\begin{align*}
+A_i&amp;=\text{time until the next arrival},&amp; A_i&amp;\sim F_A,\\
+N_i&amp;=\text{number of customers in the system},\\
+S_i&amp;=\text{remaining service time},&amp; S_i&amp;\sim F_S
+\end{align*}\]</span></p>
+<p>The state <span class="math inline">\((A_i,N_i,S_i)\)</span> is Markov when arrival and service times are generated independently from their specified laws</p>
+<p>At each event, either</p>
+<ul>
+<li>the next customer arrives before service finishes, or</li>
+<li>the current service finishes before the next arrival</li>
+</ul>
+</section>
+<section id="event-driven-queue-simulation" class="slide level2 tree-marker-slide" data-tree-marker="practice">
+<h2>Event-driven queue simulation</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
+</div>
+
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="" aria-label="1"></a>Initialize A[0] ~ F_A, N[0] = 0, S[0] ~ F_S</span>
+<span id="cb1-2"><a href="" aria-label="2"></a>while the stopping rule is not met:</span>
+<span id="cb1-3"><a href="" aria-label="3"></a>    if N[i] == 0:</span>
+<span id="cb1-4"><a href="" aria-label="4"></a>        advance to the next arrival</span>
+<span id="cb1-5"><a href="" aria-label="5"></a>        N[i+1] = 1</span>
+<span id="cb1-6"><a href="" aria-label="6"></a>        generate A[i+1] ~ F_A</span>
+<span id="cb1-7"><a href="" aria-label="7"></a>    elif A[i] &lt; S[i]:</span>
+<span id="cb1-8"><a href="" aria-label="8"></a>        advance to the next arrival</span>
+<span id="cb1-9"><a href="" aria-label="9"></a>        N[i+1] = N[i] + 1</span>
+<span id="cb1-10"><a href="" aria-label="10"></a>        S[i+1] = S[i] - A[i]</span>
+<span id="cb1-11"><a href="" aria-label="11"></a>        generate A[i+1] ~ F_A</span>
+<span id="cb1-12"><a href="" aria-label="12"></a>    else:</span>
+<span id="cb1-13"><a href="" aria-label="13"></a>        advance to the next service completion</span>
+<span id="cb1-14"><a href="" aria-label="14"></a>        N[i+1] = N[i] - 1</span>
+<span id="cb1-15"><a href="" aria-label="15"></a>        A[i+1] = A[i] - S[i]</span>
+<span id="cb1-16"><a href="" aria-label="16"></a>        generate S[i+1] ~ F_S</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><span class="alert">Events replace fixed time steps</span>, avoiding work when nothing changes</p>
+</section>
+<section id="tracking-customer-time" class="slide level2 tree-marker-slide" data-tree-marker="practice">
+<h2>Tracking customer time</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
+</div>
+
+<p>Add</p>
+<p><span class="math display">\[\begin{align*}
+T_i&amp;=\text{total elapsed time},\\
+W_j&amp;=\text{waiting plus service time for customer $j$}
+\end{align*}\]</span></p>
+<p>At an arrival after elapsed time <span class="math inline">\(\Delta t\)</span>:</p>
+<ul>
+<li>add <span class="math inline">\(\Delta t\)</span> to every customer currently in the system</li>
+<li>initialize the arriving customer’s clock</li>
+<li>update the queue length and residual event times</li>
+</ul>
+<p>At a service completion:</p>
+<ul>
+<li>add the completed service interval to all waiting customers</li>
+<li>record the departing customer’s <span class="math inline">\(W_j\)</span></li>
+<li>begin service for the next customer</li>
+</ul>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Which state variables are needed if service times are not memoryless?</span></p>
+</div>
+</section></section>
+<section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="prob-stat-est">
+<h1>Big Ideas</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<ul>
+<li>A Markov chain’s next-state law depends on its <span class="alert">current state</span></li>
+<li>Metropolis–Hastings corrects a proposal mechanism so that the <span class="alert">target distribution is invariant</span></li>
+<li>MCMC trades independent samples for access to <span class="alert">complicated unnormalized densities</span></li>
+<li>Kernel discrepancy compares distributions and measures both <span class="alert">worst-case</span> and <span class="alert">average-case integration error</span></li>
+<li>The kernel specifies which distributional differences and integrand features matter</li>
+<li>Markov chains model computational algorithms as well as dynamic systems such as queues</li>
+</ul>
+
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
