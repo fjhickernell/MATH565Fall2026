@@ -15,22 +15,623 @@ include-after-body:
       }
       </script>
 
-subtitle: <span class="deck-title">{{< meta deck_title >}}</span>
+subtitle: |
+  <span class="deck-title">{{< meta deck_title >}}</span><br>
+  <span class="deck-meta">{{< meta texts.owen.short >}}, Chapters 11–12</span>
 ---
 
 # Course Map
+
+::: {.columns}
+::: {.column width="45%"}
+<h3>Course decks</h3>
 
 - [{{< meta decks.d01.title >}}]({{< meta decks.d01.file >}})
 - [{{< meta decks.d02.title >}}]({{< meta decks.d02.file >}})
 - [{{< meta decks.d03.title >}}]({{< meta decks.d03.file >}}){.alert}
 - [{{< meta decks.d04.title >}}]({{< meta decks.d04.file >}})
 - [{{< meta decks.d05.title >}}]({{< meta decks.d05.file >}})
+:::
 
-# Markov Chain Monte Carlo
+::: {.column width="55%"}
+<h3>In this deck</h3>
 
-- Content migration
+- [From direct sampling to Markov chains](#from-direct-sampling-to-markov-chains)
+- [Metropolis–Hastings sampling](#metropolishastings-sampling)
+- [Kernel discrepancy](#kernel-discrepancy)
+- [Discrepancy as integration error](#discrepancy-as-integration-error)
+- [Applications of Markov chains](#applications-of-markov-chains)
+- [Big ideas](#big-ideas)
+:::
+:::
 
-## Content migration
+# From Direct Sampling to Markov Chains {.tree-marker-slide tree-marker="random-generation"}
 
-This deck is a placeholder for the Fall 2026 Quarto conversion of the Markov
-Chain Monte Carlo lecture.
+- [When direct sampling is difficult](#when-direct-sampling-is-difficult)
+- [The Markov property](#the-markov-property)
+- [Examples of Markov chains](#examples-of-markov-chains)
+
+## When direct sampling is difficult {.tree-marker-slide tree-marker="random-generation"}
+
+- The quantile transform works directly for distributions with tractable quantiles
+- Affine transformations generate correlated Gaussian vectors
+- Acceptance–rejection sampling needs a proposal that bounds the target and may reject many proposals
+- [Markov chain Monte Carlo (MCMC)]{.alert} moves through the sample space using only an unnormalized target density
+
+::: {.key-point}
+MCMC replaces independent draws by a [dependent sequence]{.alert} whose distribution approaches the target
+:::
+
+## The Markov property {.tree-marker-slide tree-marker="probability"}
+
+Let $\mathcal X$ be the state space for $X_0,X_1,\ldots$
+
+The sequence is a [Markov chain]{.alert} when, for every measurable $A\subseteq\mathcal X$,
+
+\begin{align*}
+&\Prob(X_{i+1}\in A\mid X_i=x_i,\ldots,X_0=x_0)\\
+&\qquad=\Prob(X_{i+1}\in A\mid X_i=x_i)
+\end{align*}
+
+[Where the chain goes next depends only on where it is now]{.alert}, not on how it arrived
+
+We use Markov chains to
+
+- generate samples whose distribution converges to a target
+- model systems such as queues
+- study long-run or asymptotic behavior
+
+## Examples of Markov chains {.tree-marker-slide tree-marker="probability"}
+
+Assume $Z_0,Z_1,\ldots\ \IIDsim\ \Norm(0,1)$
+
+::: {.columns}
+::: {.column width="47%"}
+### Markov
+
+\begin{align*}
+X_0&=0,& X_{i+1}&=X_i+Z_i\\
+X_0&=0,& X_{i+1}&=i+Z_i
+\end{align*}
+
+The second chain is [not time homogeneous]{.alert}: its transition law changes with $i$
+:::
+
+::: {.column width="6%"}
+:::
+
+::: {.column width="47%"}
+### Not Markov as written
+
+$$
+X_0=X_1=0,
+\qquad X_{i+1}=X_{i-1}+Z_i
+$$
+
+The pair $Y_i=(X_{i-1},X_i)$ [is Markov]{.alert} because its state retains the needed history
+:::
+:::
+
+# Metropolis–Hastings Sampling {.tree-marker-slide tree-marker="random-generation"}
+
+- [The Metropolis–Hastings algorithm](#the-metropolishastings-algorithm)
+- [Why the acceptance ratio works](#why-the-acceptance-ratio-works)
+- [The Metropolis algorithm](#the-metropolis-algorithm)
+- [Metropolis practice](#metropolis-practice)
+- [A random-walk Metropolis example](#a-random-walk-metropolis-example)
+- [Tuning and diagnostics](#tuning-and-diagnostics)
+
+## The Metropolis–Hastings algorithm {.tree-marker-slide tree-marker="random-generation"}
+
+Suppose
+
+- the target has known, possibly unnormalized density $\varrho$
+- $\varrho_{\brandnew\mid\mathrm{old}}(z\mid x)$ proposes a new state $z$ from the current state $x$
+
+Given $X_0$, repeat for $i=0,\ldots,n-1$:
+
+1. Generate $Z\sim\varrho_{\brandnew\mid\mathrm{old}}(\cdot\mid X_i)$ and $U\sim\Unif[0,1]$
+2. Compute
+
+   $$
+   \alpha(X_i,Z)=\min\!\left\{1,
+   \frac{\varrho(Z)\varrho_{\brandnew\mid\mathrm{old}}(X_i\mid Z)}
+   {\varrho(X_i)\varrho_{\brandnew\mid\mathrm{old}}(Z\mid X_i)}\right\}
+   $$
+
+3. Set $X_{i+1}=Z$ if $U\le\alpha(X_i,Z)$; otherwise set $X_{i+1}=X_i$
+
+[Every iteration accepts either the proposal or the current state]{.alert}
+
+## Why the acceptance ratio works {.tree-marker-slide tree-marker="probability"}
+
+The ratio compares the two directions of a proposed transition:
+
+$$
+\frac{\varrho(Z)\varrho_{\brandnew\mid\mathrm{old}}(X_i\mid Z)}
+{\varrho(X_i)\varrho_{\brandnew\mid\mathrm{old}}(Z\mid X_i)}
+=
+\frac{\text{target weight at $Z$}\times\text{return proposal}}
+{\text{target weight at $X_i$}\times\text{forward proposal}}
+$$
+
+- Moves toward higher target density are favored
+- Asymmetric proposals are corrected by the proposal-density ratio
+- The normalizing constant in $\varrho$ cancels
+
+::: {.key-point}
+The transition kernel satisfies [detailed balance]{.alert} with the target distribution, making the target invariant under suitable conditions
+:::
+
+## The Metropolis algorithm {.tree-marker-slide tree-marker="random-generation"}
+
+If the proposal is symmetric,
+
+$$
+\varrho_{\brandnew\mid\mathrm{old}}(z\mid x)
+=\varrho_{\brandnew\mid\mathrm{old}}(x\mid z),
+$$
+
+then the acceptance probability simplifies to
+
+$$
+\alpha(x,z)=\min\!\left\{1,\frac{\varrho(z)}{\varrho(x)}\right\}
+$$
+
+For a random-walk proposal $Z=X_i+\epsilon_i$ with symmetric $\epsilon_i$:
+
+- accept every move to a state with at least as much target density
+- accept some downhill moves, which keeps the chain from becoming trapped immediately
+- repeat $X_i$ when a proposal is rejected
+
+## Metropolis practice {.tree-marker-slide tree-marker="practice"}
+
+Use the uniform numbers in order and choose a random order of the candidate $x$ values
+
+| $i$ | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|:---|---:|---:|---:|---:|---:|---:|---:|---:|
+| $U_i$ | 0.6 | 0.1 | 0.3 | 0.5 | 0.9 | 0.2 | 0.1 | 0.4 |
+
+| $x$ | $-1.2$ | $-0.8$ | $-0.5$ | $0.6$ | $1.1$ | $1.4$ | $2.0$ | $2.2$ |
+|:---|---:|---:|---:|---:|---:|---:|---:|---:|
+| $\varrho(x)$ | 0.1 | 0.8 | 2.0 | 1.6 | 0.5 | 2.6 | 2.4 | 1.0 |
+
+::: {.exitem}
+<span class="exbullet">$\exstar$</span>
+<span>Starting at $x=-1.2$, follow several Metropolis steps and record each accepted or repeated state</span>
+:::
+
+## A random-walk Metropolis example {.tree-marker-slide tree-marker="random-generation"}
+
+Target a bimodal Gaussian mixture using the symmetric proposal
+
+$$
+Z\mid X_i=x\sim\Norm(x,1.4^2)
+$$
+
+```{python}
+#| echo: false
+#| fig-align: center
+#| fig-alt: "Random-walk Metropolis example with the bimodal target density, sampled-state histogram, and Markov-chain trace"
+#| fig-width: 11.5
+#| fig-height: 5.6
+#| out-width: 98%
+
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import norm
+
+plt.rcParams["mathtext.fontset"] = "stix"
+rng = np.random.default_rng(56503)
+
+def target_density(x):
+    return 0.35 * norm.pdf(x, -2.2, 0.65) + 0.65 * norm.pdf(x, 1.4, 0.9)
+
+n_steps = 12000
+chain = np.empty(n_steps)
+chain[0] = 0.0
+accepted = 0
+for i in range(n_steps - 1):
+    proposal = chain[i] + rng.normal(0, 1.4)
+    ratio = target_density(proposal) / target_density(chain[i])
+    if rng.random() <= min(1.0, ratio):
+        chain[i + 1] = proposal
+        accepted += 1
+    else:
+        chain[i + 1] = chain[i]
+
+burn = 1500
+x = np.linspace(-5, 5, 700)
+fig, axes = plt.subplots(1, 2, figsize=(11.5, 5.6), constrained_layout=True)
+axes[0].hist(chain[burn:], bins=55, density=True, color="#9bc8c6",
+             edgecolor="white", label="MCMC sample")
+axes[0].plot(x, target_density(x), color="#1f5a91", linewidth=3,
+             label="target density")
+axes[0].set_xlabel(r"$x$", fontsize=20, math_fontfamily="stix")
+axes[0].set_ylabel("density", fontsize=17)
+axes[0].legend(frameon=False, fontsize=14)
+axes[1].plot(np.arange(500), chain[burn:burn + 500], color="#1f5a91", linewidth=1.4)
+axes[1].set_xlabel("iteration", fontsize=17)
+axes[1].set_ylabel(r"$X_i$", fontsize=20, math_fontfamily="stix")
+axes[1].set_title(f"acceptance rate = {accepted / (n_steps - 1):.2f}", fontsize=16)
+for ax in axes:
+    ax.tick_params(labelsize=13)
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.grid(alpha=0.16)
+plt.show()
+```
+
+## Tuning and diagnostics {.tree-marker-slide tree-marker="statistics"}
+
+MCMC is attractive because it
+
+- samples from complicated, unnormalized densities
+- is often straightforward to implement
+
+The proposal and starting point require care:
+
+- proposals that are too small explore slowly and produce highly dependent samples
+- proposals that are too large have low acceptance rates and many repeats
+- multimodal targets may trap a single chain in one mode
+
+Useful responses include [pilot runs]{.alert}, [multiple chains]{.alert}, and [parallel tempering]{.alert}
+
+::: {.key-point}
+Diagnose both [exploration]{.alert} of the full state space and [concentration]{.alert} in high-density regions
+:::
+
+# Kernel Discrepancy {.tree-marker-slide tree-marker="low-discrepancy"}
+
+- [How can we measure sample quality?](#how-can-we-measure-sample-quality)
+- [What discrepancy measures](#what-discrepancy-measures)
+- [Symmetric positive definite kernels](#symmetric-positive-definite-kernels)
+- [Discrepancy between distributions](#discrepancy-between-distributions)
+- [Empirical distributions](#empirical-distributions)
+- [Unbiased estimates of squared discrepancy](#unbiased-estimates-of-squared-discrepancy)
+
+## How can we measure sample quality? {.tree-marker-slide tree-marker="low-discrepancy"}
+
+For samples $\{x_i\}_{i=0}^{m-1}$ and $\{z_j\}_{j=0}^{n-1}$, a kernel $K$ defines
+
+\begin{multline*}
+D^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
+=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(x_i,x_j)\\
+-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
++\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)
+\end{multline*}
+
+- Also called [maximum mean discrepancy (MMD)]{.alert} in machine learning
+- Direct computation requires $\Order(\max(m,n)^2)$ kernel evaluations
+- The answer depends on the chosen kernel and its parameters
+
+## What discrepancy measures {.tree-marker-slide tree-marker="low-discrepancy"}
+
+Kernel discrepancy measures
+
+- the difference between two probability distributions
+- the [worst-case integration error]{.alert} over the unit ball of a reproducing kernel Hilbert space
+- the [root mean squared integration error]{.alert} when the integrand is modeled as a Gaussian process with covariance kernel $K$
+
+::: {.key-point}
+The kernel determines which differences between distributions matter most
+:::
+
+## Symmetric positive definite kernels {.tree-marker-slide tree-marker="statistics"}
+
+A kernel $K:\mathcal X\times\mathcal X\to\reals$ is [symmetric positive definite]{.alert} when every Gram matrix
+
+$$
+\mK=(K(x_i,x_j))_{i,j=0}^{n-1}
+$$
+
+is symmetric positive definite for distinct $x_0,\ldots,x_{n-1}$
+
+Examples include
+
+\begin{align*}
+K(t,x)&=\exp\!\left(-\norm{t-x}^2/h^2\right),
+&&\mathcal X=\reals^d,\\
+K(t,x)&=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
+\left(\abs{t_\ell-\tfrac12}+\abs{x_\ell-\tfrac12}-\abs{t_\ell-x_\ell}\right)\right],
+&&\mathcal X=[0,1]^d
+\end{align*}
+
+The first is a squared exponential kernel; the second yields centered discrepancy
+
+## Discrepancy between distributions {.tree-marker-slide tree-marker="low-discrepancy"}
+
+For independent $X,X'\sim F_X$ and $Z,Z'\sim F_Z$,
+
+\begin{align*}
+D^2(F_X,F_Z;K)
+&=\Ex[K(X,X')]-2\Ex[K(X,Z)]+\Ex[K(Z,Z')]\\
+&=\int_{\mathcal X^2}K(x,x')\,\dif(F_X-F_Z)(x)\,\dif(F_X-F_Z)(x')\\
+&\ge0
+\end{align*}
+
+If both distributions have densities,
+
+$$
+D^2(F_X,F_Z;K)
+=\int_{\mathcal X^2}K(x,x')
+\{\varrho_X(x)-\varrho_Z(x)\}
+\{\varrho_X(x')-\varrho_Z(x')\}\,\dif x\,\dif x'
+$$
+
+## Empirical distributions {.tree-marker-slide tree-marker="low-discrepancy"}
+
+For the empirical distribution of $z_0,\ldots,z_{n-1}$,
+
+\begin{align*}
+D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
+&=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')\\
+&\quad-\frac{2}{n}\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,z_i)\,\dif F_X(x)\\
+&\quad+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)
+\end{align*}
+
+The same formula covers [one target distribution and one sample]{.alert} or [two samples]{.alert}
+
+## Unbiased estimates of squared discrepancy {.tree-marker-slide tree-marker="statistics"}
+
+The squared discrepancy is nonnegative, but an unbiased estimator may be negative
+
+Replace within-sample sums by off-diagonal averages:
+
+\begin{multline*}
+D_{\mathrm{unb}}^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
+=\frac{1}{m(m-1)}\sum_{\substack{i,j=0\\i\ne j}}^{m-1}K(x_i,x_j)\\
+-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
++\frac{1}{n(n-1)}\sum_{\substack{i,j=0\\i\ne j}}^{n-1}K(z_i,z_j)
+\end{multline*}
+
+[Unbiased]{.alert} describes the estimator's expectation, not the sign of each realization
+
+# Discrepancy as Integration Error {.tree-marker-slide tree-marker="estimation"}
+
+- [A reproducing kernel Hilbert space](#a-reproducing-kernel-hilbert-space)
+- [Worst-case integration error](#worst-case-integration-error)
+- [The discrepancy identity](#the-discrepancy-identity)
+- [Average-case integration error](#average-case-integration-error)
+- [What the kernel controls](#what-the-kernel-controls)
+- [Centered discrepancy and smoothness](#centered-discrepancy-and-smoothness)
+
+## A reproducing kernel Hilbert space {.tree-marker-slide tree-marker="statistics"}
+
+Every symmetric positive definite kernel $K$ defines a Hilbert space $\mathcal H_K$ of functions on $\mathcal X$ with the [reproducing property]{.alert}
+
+$$
+f(x)=\langle K(\cdot,x),f\rangle_{\mathcal H_K}
+$$
+
+Assume $\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')$ is finite
+
+Then both
+
+\begin{align*}
+f&\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x),\\
+f&\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)
+\end{align*}
+
+are bounded linear functionals on $\mathcal H_K$
+
+## Worst-case integration error {.tree-marker-slide tree-marker="estimation"}
+
+By the Riesz representation theorem, some $\zeta\in\mathcal H_K$ satisfies
+
+$$
+\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)
+=\langle\zeta,f\rangle_{\mathcal H_K}
+$$
+
+Therefore, by Cauchy–Schwarz,
+
+$$
+\left\lvert\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)\right\rvert
+\le\norm{\zeta}_{\mathcal H_K}\norm{f}_{\mathcal H_K}
+$$
+
+This separates [sample quality]{.alert}, $\norm{\zeta}_{\mathcal H_K}$, from [integrand difficulty]{.alert}, $\norm{f}_{\mathcal H_K}$
+
+## The discrepancy identity {.tree-marker-slide tree-marker="low-discrepancy"}
+
+The representer is
+
+$$
+\zeta(x')=\int_{\mathcal X}K(x,x')\,\dif F_X(x)
+-\frac1n\sum_{i=0}^{n-1}K(z_i,x')
+$$
+
+Its squared norm is exactly the squared discrepancy:
+
+\begin{align*}
+\norm{\zeta}_{\mathcal H_K}^2
+&=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')\\
+&\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,z_i)\,\dif F_X(x)
++\frac1{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)\\
+&=D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
+\end{align*}
+
+Thus discrepancy is the [worst-case error over $\norm{f}_{\mathcal H_K}\le1$]{.alert}
+
+## Average-case integration error {.tree-marker-slide tree-marker="statistics"}
+
+Suppose $f$ is modeled as a zero-mean Gaussian process with covariance kernel $K$
+
+For deterministic $z_0,\ldots,z_{n-1}$,
+
+\begin{align*}
+&\Ex_f\!\left[
+\left\{\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)\right\}^2
+\right]\\
+&\quad=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')
+-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,z_i)\,\dif F_X(x)
++\frac1{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)\\
+&\quad=D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
+\end{align*}
+
+Discrepancy is also the [root mean squared error under the Gaussian-process model]{.alert}
+
+## What the kernel controls {.tree-marker-slide tree-marker="statistics"}
+
+- The numerical value of discrepancy depends on $K$ and its hyperparameters
+- Multiplying $K$ by $c^2$ multiplies discrepancy by $\abs{c}$
+- Kernel structure encodes assumptions about
+  - domain and smoothness
+  - periodicity
+  - coordinate importance
+- In the average-case setting, hyperparameters may be estimated by empirical Bayes or maximum likelihood
+
+For IID $Z_i\sim F_X$,
+
+$$
+\Ex\!\left[D^2(F_X,\{Z_i\}_{i=0}^{n-1};K)\right]
+=\frac1n\left\{
+\int K(x,x)\,\dif F_X(x)-\int K(x,x')\,\dif F_X(x)\,\dif F_X(x')
+\right\}
+$$
+
+## Centered discrepancy and smoothness {.tree-marker-slide tree-marker="low-discrepancy"}
+
+For $\mathcal X=[0,1]^d$, the centered-discrepancy kernel is
+
+$$
+K(t,x)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
+\left(\abs{t_\ell-\tfrac12}+\abs{x_\ell-\tfrac12}-\abs{t_\ell-x_\ell}\right)\right]
+$$
+
+Its norm combines the function value at the center with weighted square-integrals of mixed derivatives:
+
+\begin{multline*}
+\norm{f}_{\mathcal H_K}^2
+=\abs{f(1/2,\ldots,1/2)}^2
++\norm{\frac{\partial f(x_1,1/2,\ldots)}{\gamma_1\partial x_1}}_2^2\\
++\norm{\frac{\partial^2 f(x_1,x_2,1/2,\ldots)}
+{\gamma_1\gamma_2\partial x_1\partial x_2}}_2^2
++\cdots
++\norm{\frac{\partial^d f(x)}
+{\gamma_1\cdots\gamma_d\partial x_1\cdots\partial x_d}}_2^2
+\end{multline*}
+
+The weights $\gamma_\ell$ express [coordinate importance]{.alert}
+
+# Applications of Markov Chains {.tree-marker-slide tree-marker="prob-est"}
+
+- [Maximum likelihood estimation](#maximum-likelihood-estimation)
+- [Bayesian inference](#bayesian-inference)
+- [Queueing systems](#queueing-systems)
+- [Event-driven queue simulation](#event-driven-queue-simulation)
+- [Tracking customer time](#tracking-customer-time)
+
+## Maximum likelihood estimation {.tree-marker-slide tree-marker="estimation"}
+
+For parameter $\theta$ and observed data $y$, the likelihood is
+
+$$
+L(\theta;y)=\varrho_{Y\mid\theta}(y\mid\theta)
+$$
+
+The [maximum likelihood estimator]{.alert} maximizes $L(\theta;y)$
+
+For $Y_0,\ldots,Y_{n-1}\ \IIDsim\ \Norm(\mu,\sigma^2)$,
+
+\begin{align*}
+L(\mu,\sigma^2;y)
+&=(2\mpi\sigma^2)^{-n/2}
+\exp\!\left[-\frac1{2\sigma^2}\sum_{i=0}^{n-1}(y_i-\mu)^2\right],\\
+\hmu_{\mathrm{MLE}}&=\frac1n\sum_{i=0}^{n-1}y_i,&
+\hsigma^2_{\mathrm{MLE}}&=\frac1n\sum_{i=0}^{n-1}(y_i-\hmu_{\mathrm{MLE}})^2
+\end{align*}
+
+## Bayesian inference {.tree-marker-slide tree-marker="prob-est"}
+
+Combine a prior density with the likelihood:
+
+\begin{align*}
+\varrho_{\mathrm{post}}(\theta\mid y)
+&=\frac{L(\theta;y)\varrho_{\mathrm{prior}}(\theta)}{\varrho_Y(y)}\\
+&\propto L(\theta;y)\varrho_{\mathrm{prior}}(\theta)
+\end{align*}
+
+- The evidence $\varrho_Y(y)$ depends only on the observed data
+- MCMC needs only the [unnormalized posterior]{.alert}
+- Posterior samples estimate means, quantiles, credible intervals, and other summaries
+- Optimization of the unnormalized posterior yields a maximum a posteriori estimate
+
+::: {.key-point}
+Bayesian inference is a primary reason to sample from complicated unnormalized densities
+:::
+
+## Queueing systems {.tree-marker-slide tree-marker="probability"}
+
+Consider a single-server queue observed at event times
+
+\begin{align*}
+A_i&=\text{time until the next arrival},& A_i&\sim F_A,\\
+N_i&=\text{number of customers in the system},\\
+S_i&=\text{remaining service time},& S_i&\sim F_S
+\end{align*}
+
+The state $(A_i,N_i,S_i)$ is Markov when arrival and service times are generated independently from their specified laws
+
+At each event, either
+
+- the next customer arrives before service finishes, or
+- the current service finishes before the next arrival
+
+## Event-driven queue simulation {.tree-marker-slide tree-marker="practice"}
+
+```text
+Initialize A[0] ~ F_A, N[0] = 0, S[0] ~ F_S
+while the stopping rule is not met:
+    if N[i] == 0:
+        advance to the next arrival
+        N[i+1] = 1
+        generate A[i+1] ~ F_A
+    elif A[i] < S[i]:
+        advance to the next arrival
+        N[i+1] = N[i] + 1
+        S[i+1] = S[i] - A[i]
+        generate A[i+1] ~ F_A
+    else:
+        advance to the next service completion
+        N[i+1] = N[i] - 1
+        A[i+1] = A[i] - S[i]
+        generate S[i+1] ~ F_S
+```
+
+[Events replace fixed time steps]{.alert}, avoiding work when nothing changes
+
+## Tracking customer time {.tree-marker-slide tree-marker="practice"}
+
+Add
+
+\begin{align*}
+T_i&=\text{total elapsed time},\\
+W_j&=\text{waiting plus service time for customer $j$}
+\end{align*}
+
+At an arrival after elapsed time $\Delta t$:
+
+- add $\Delta t$ to every customer currently in the system
+- initialize the arriving customer's clock
+- update the queue length and residual event times
+
+At a service completion:
+
+- add the completed service interval to all waiting customers
+- record the departing customer's $W_j$
+- begin service for the next customer
+
+::: {.exitem}
+<span class="exbullet">$\exstar$</span>
+<span>Which state variables are needed if service times are not memoryless?</span>
+:::
+
+# Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="prob-stat-est"}
+
+- A Markov chain's next-state law depends on its [current state]{.alert}
+- Metropolis–Hastings corrects a proposal mechanism so that the [target distribution is invariant]{.alert}
+- MCMC trades independent samples for access to [complicated unnormalized densities]{.alert}
+- Kernel discrepancy compares distributions and measures both [worst-case]{.alert} and [average-case integration error]{.alert}
+- The kernel specifies which distributional differences and integrand features matter
+- Markov chains model computational algorithms as well as dynamic systems such as queues

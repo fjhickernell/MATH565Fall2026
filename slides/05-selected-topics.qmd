@@ -20,17 +20,327 @@ subtitle: <span class="deck-title">{{< meta deck_title >}}</span>
 
 # Course Map
 
+::: {.columns}
+::: {.column width="45%"}
+<h3>Course decks</h3>
+
 - [{{< meta decks.d01.title >}}]({{< meta decks.d01.file >}})
 - [{{< meta decks.d02.title >}}]({{< meta decks.d02.file >}})
 - [{{< meta decks.d03.title >}}]({{< meta decks.d03.file >}})
 - [{{< meta decks.d04.title >}}]({{< meta decks.d04.file >}})
 - [{{< meta decks.d05.title >}}]({{< meta decks.d05.file >}}){.alert}
+:::
 
-# Selected Topics
+::: {.column width="55%"}
+<h3>In this deck</h3>
 
-- Content migration
+- [Parallel and stochastic computation](#parallel-and-stochastic-computation)
+- [Two-level Monte Carlo](#two-level-monte-carlo)
+- [Multilevel Monte Carlo](#multilevel-monte-carlo)
+- [Big ideas](#big-ideas)
+:::
+:::
 
-## Content migration
+# Parallel and Stochastic Computation {.tree-marker-slide tree-marker="practice"}
 
-This deck is a placeholder for the Fall 2026 Quarto conversion of the Selected
-Topics lecture.
+- [Parallel computing](#parallel-computing)
+- [Gradient descent](#gradient-descent)
+- [Stochastic gradient descent](#stochastic-gradient-descent)
+- [Gradient and stochastic-gradient paths](#gradient-and-stochastic-gradient-paths)
+
+## Parallel computing {.tree-marker-slide tree-marker="practice"}
+
+Modern CPUs and GPUs can evaluate many operations concurrently
+
+- Monte Carlo function values are often [pleasingly parallel]{.alert}: samples can be evaluated independently
+- Parallel random-number streams must remain nonoverlapping and statistically sound
+- GPU arithmetic is often optimized for 32-bit floating point rather than 64-bit floating point
+- Reduced precision may lose significant digits but can increase throughput substantially
+- GPUs help most when there are [many similar operations]{.alert}; launch and data-transfer costs can dominate small problems
+
+::: {.key-point}
+Parallelism changes computational cost, but it does not repair biased estimators or poor sampling designs
+:::
+
+## Gradient descent {.tree-marker-slide tree-marker="estimation"}
+
+For
+
+$$
+\vtheta_* = \argmin_{\vtheta\in\reals^m}\operatorname{Loss}(\vtheta),
+$$
+
+gradient descent iterates
+
+$$
+\vtheta_{k+1}=\vtheta_k-\eta_k\nabla\operatorname{Loss}(\vtheta_k)
+$$
+
+- $\eta_k$ is the step size or learning rate
+- The loss often decreases toward a local minimum
+- Curvature-aware methods can use second derivatives but make each step more expensive
+- Step sizes that are too large may overshoot; step sizes that are too small converge slowly
+
+[Move downhill using all available data]{.alert}
+
+## Stochastic gradient descent {.tree-marker-slide tree-marker="estimation"}
+
+Suppose
+
+$$
+\operatorname{Loss}(\vtheta)
+=\sum_{i=1}^N\operatorname{loss}_i(\vtheta)
+$$
+
+Computing the full gradient costs $N$ component gradients
+
+Stochastic gradient descent uses an inexpensive random component:
+
+$$
+\vtheta_{k+1}=\vtheta_k-\eta_k\nabla\operatorname{loss}_{I_k}(\vtheta_k),
+\qquad I_k\sim\Unif\{1,\ldots,N\}
+$$
+
+Common variants include
+
+- decaying learning rates
+- mini-batch gradients
+- mini-batches with decay
+
+The stochastic gradient is [cheap but noisy]{.alert}; averaging a mini-batch reduces its variance
+
+## Gradient and stochastic-gradient paths {.tree-marker-slide tree-marker="estimation"}
+
+Both methods minimize the same quadratic loss; stochastic gradients use one randomly selected component at each step
+
+```{python}
+#| echo: false
+#| fig-align: center
+#| fig-alt: "Contour plot of a quadratic loss with smooth gradient-descent and noisy stochastic-gradient trajectories approaching the minimizer"
+#| fig-width: 9.5
+#| fig-height: 5.8
+#| out-width: 82%
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+plt.rcParams["mathtext.fontset"] = "stix"
+rng = np.random.default_rng(56505)
+A = np.array([[3.0, 0.9], [0.9, 1.2]])
+theta_gd = np.array([-3.2, 3.1])
+theta_sgd = theta_gd.copy()
+path_gd = [theta_gd.copy()]
+path_sgd = [theta_sgd.copy()]
+
+for k in range(45):
+    theta_gd -= 0.18 * (A @ theta_gd)
+    noise = rng.normal(size=2) @ np.array([[0.8, 0.0], [0.0, 0.45]])
+    theta_sgd -= 0.12 / np.sqrt(1 + k / 8) * (A @ theta_sgd + noise)
+    path_gd.append(theta_gd.copy())
+    path_sgd.append(theta_sgd.copy())
+
+path_gd = np.array(path_gd)
+path_sgd = np.array(path_sgd)
+x1 = np.linspace(-4, 4, 240)
+x2 = np.linspace(-4, 4, 240)
+X1, X2 = np.meshgrid(x1, x2)
+Z = 0.5 * (A[0, 0] * X1**2 + 2 * A[0, 1] * X1 * X2 + A[1, 1] * X2**2)
+
+fig, ax = plt.subplots(figsize=(9.5, 5.8), constrained_layout=True)
+ax.contour(X1, X2, Z, levels=np.geomspace(0.05, 30, 14), colors="#9cb8c9", linewidths=1.2)
+ax.plot(path_gd[:, 0], path_gd[:, 1], "-o", color="#1f5a91", markersize=3.5,
+        linewidth=2.3, label="gradient descent")
+ax.plot(path_sgd[:, 0], path_sgd[:, 1], "-o", color="#d59b2d", markersize=3.2,
+        linewidth=1.6, label="stochastic gradient descent")
+ax.scatter([0], [0], s=95, marker="*", color="#4f9b8f", zorder=5, label="minimizer")
+ax.set_xlabel(r"$\theta_1$", fontsize=20, math_fontfamily="stix")
+ax.set_ylabel(r"$\theta_2$", fontsize=20, math_fontfamily="stix")
+ax.tick_params(labelsize=12)
+ax.set_aspect("equal")
+ax.legend(frameon=False, fontsize=13, loc="upper right")
+ax.spines[["top", "right"]].set_visible(False)
+plt.show()
+```
+
+# Two-Level Monte Carlo {.tree-marker-slide tree-marker="estimation"}
+
+- [Splitting an expectation](#splitting-an-expectation)
+- [Allocating work optimally](#allocating-work-optimally)
+- [What two levels accomplish](#what-two-levels-accomplish)
+
+## Splitting an expectation {.tree-marker-slide tree-marker="estimation"}
+
+Suppose
+
+$$
+Y=Y_1+Y_2,
+\qquad \mu=\mu_1+\mu_2,
+\qquad \mu_\ell=\Ex(Y_\ell)
+$$
+
+Estimate the two means independently:
+
+\begin{align*}
+\hmu&=\hmu_1+\hmu_2,&
+\hmu_\ell&=\frac1{n_\ell}\sum_{i=0}^{n_\ell-1}Y_{i\ell}
+\end{align*}
+
+If one sample of $Y_\ell$ costs $\$_\ell$, then
+
+\begin{align*}
+\mse(\hmu)
+&=\frac{\var(Y_1)}{n_1}+\frac{\var(Y_2)}{n_2},\\
+\cost(\hmu)&=n_1\$_1+n_2\$_2
+\end{align*}
+
+The sample counts should reflect both [variance]{.alert} and [cost per sample]{.alert}
+
+## Allocating work optimally {.tree-marker-slide tree-marker="estimation"}
+
+For a fixed total cost $C$, minimize
+
+$$
+\frac{V_1}{n_1}+\frac{V_2}{n_2}
+\quad\text{subject to}\quad
+n_1\$_1+n_2\$_2=C,
+\qquad V_\ell=\var(Y_\ell)
+$$
+
+The optimal ratio is
+
+$$
+\frac{n_1}{n_2}
+=\sqrt{\frac{V_1\$_2}{V_2\$_1}}
+$$
+
+and the optimal mean squared error is
+
+$$
+\mse(\hmu)
+=\frac1C\left(\sqrt{V_1\$_1}+\sqrt{V_2\$_2}\right)^2
+$$
+
+Use [more samples]{.alert} at a level with larger variance and [fewer samples]{.alert} at a level with larger cost
+
+## What two levels accomplish {.tree-marker-slide tree-marker="estimation"}
+
+- Larger $\var(Y_\ell)$ implies a larger optimal $n_\ell$
+- Larger cost $\$_\ell$ implies a smaller optimal $n_\ell$
+- Pilot samples can estimate unknown variances and costs
+- Often $\mu=\mu_1+\mu_2$, where
+  - $Y_1$ is a cheap approximation sampled often
+  - $Y_2$ is an expensive correction sampled less often
+
+::: {.key-point}
+The decomposition is useful when the [expensive correction has small variance]{.alert}
+:::
+
+# Multilevel Monte Carlo {.tree-marker-slide tree-marker="estimation"}
+
+- [Many levels](#many-levels)
+- [Optimal multilevel allocation](#optimal-multilevel-allocation)
+- [Infinite-dimensional expectations](#infinite-dimensional-expectations)
+- [Why telescoping helps](#why-telescoping-helps)
+
+## Many levels {.tree-marker-slide tree-marker="estimation"}
+
+Let
+
+$$
+Y=Y_1+\cdots+Y_L,
+\qquad \mu=\sum_{\ell=1}^L\mu_\ell,
+\qquad \mu_\ell=\Ex(Y_\ell)
+$$
+
+With independent samples at each level,
+
+\begin{align*}
+\hmu&=\sum_{\ell=1}^L\hmu_\ell,&
+\hmu_\ell&=\frac1{n_\ell}\sum_{i=0}^{n_\ell-1}Y_{i\ell},\\
+\mse(\hmu)&=\sum_{\ell=1}^L\frac{V_\ell}{n_\ell},&
+\cost(\hmu)&=\sum_{\ell=1}^Ln_\ell\$_\ell
+\end{align*}
+
+The challenge is to choose both the [level decomposition]{.alert} and the [sample allocation]{.alert}
+
+## Optimal multilevel allocation {.tree-marker-slide tree-marker="estimation"}
+
+For total cost $C$, the optimal allocation is proportional to
+
+$$
+n_\ell\propto\sqrt{\frac{V_\ell}{\$_\ell}}
+$$
+
+More explicitly,
+
+$$
+n_\ell
+=\frac{C\sqrt{V_\ell/\$_\ell}}
+{\sum_{k=1}^L\sqrt{V_k\$_k}}
+$$
+
+The resulting mean squared error is
+
+$$
+\mse(\hmu)
+=\frac1C\left(\sum_{\ell=1}^L\sqrt{V_\ell\$_\ell}\right)^2
+$$
+
+[Efficiency depends on keeping $V_\ell\$_\ell$ small]{.alert} across levels
+
+## Infinite-dimensional expectations {.tree-marker-slide tree-marker="estimation"}
+
+Suppose
+
+$$
+\mu=\lim_{d\to\infty}\Ex\{f_d(X_{1:d})\}
+$$
+
+as in an option payoff based on an increasingly fine time discretization
+
+Choose $d_1<\cdots<d_L$ and define coupled differences
+
+\begin{align*}
+Y_1&=f_{d_1}(X_{1:d_1}),\\
+Y_\ell&=f_{d_\ell}(X_{1:d_\ell})
+-f_{d_{\ell-1}}(X_{1:d_{\ell-1}}),
+\qquad \ell\ge2
+\end{align*}
+
+Then
+
+$$
+\Ex\{f_{d_L}(X_{1:d_L})\}
+=\sum_{\ell=1}^L\Ex(Y_\ell)
+$$
+
+with a remaining truncation bias $\mu-\Ex\{f_{d_L}(X_{1:d_L})\}$
+
+## Why telescoping helps {.tree-marker-slide tree-marker="estimation"}
+
+- Fine approximations are expensive
+- Coupling makes adjacent approximations similar
+- Their difference $Y_\ell$ can have rapidly decreasing variance
+- Sample cheap, coarse levels many times and expensive, fine corrections fewer times
+
+If $d_\ell=m^\ell$, $V_\ell\lesssim\beta^\ell$, and $\$_\ell\lesssim m^\ell$, then
+
+$$
+\sum_{\ell=1}^L\sqrt{V_\ell\$_\ell}
+\lesssim\sum_{\ell=1}^L(\beta m)^{\ell/2}
+$$
+
+- If $\beta m<1$, total stochastic cost is governed mainly by coarse levels
+- If $\beta m>1$, the finest corrections dominate
+
+::: {.key-point}
+Multilevel Monte Carlo is effective when [correction variance decays faster than correction cost grows]{.alert}
+:::
+
+# Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="prob-stat-est"}
+
+- Monte Carlo samples are naturally parallel, but random streams and precision still matter
+- Stochastic gradients trade exact directions for cheaper iterations
+- Two-level and multilevel estimators split work according to variance and cost
+- Coupling adjacent approximations creates low-variance corrections
+- A good hierarchy spends most computation where it buys the largest reduction in error

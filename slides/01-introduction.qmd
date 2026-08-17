@@ -353,7 +353,8 @@ Complete and submit this assignment individually, not as a group.
 # Terms to Know
 
 - [A–C](#terms-a-c)
-- [D–M](#terms-d-m)
+- [D–I](#terms-d-i)
+- [K–M](#terms-k-m)
 - [P–Z](#terms-p-z)
 
 ## A–C {#terms-a-c}
@@ -362,6 +363,7 @@ Complete and submit this assignment individually, not as a group.
 ::: {.column width="50%"}
 - [Absolutely continuous random variable](#random-variables-and-distributions)
 - [Acceptance–rejection sampling](02-generating-samples.html#the-acceptancerejection-algorithm)
+- [Antithetic sampling](04-improving-efficiency.html#antithetic-sampling)
 - [Bayes' theorem](#conditional-probability)
 - [Bernoulli distribution](#binomial-distribution)
 - [Bias](#mean-squared-error-bias-and-variance)
@@ -372,20 +374,23 @@ Complete and submit this assignment individually, not as a group.
 
 ::: {.column width="50%"}
 - [Cholesky factorization](02-generating-samples.html#cholesky-factorization)
+- [Component-by-component construction](04-improving-efficiency.html#component-by-component-construction)
 - [Conditional density](#conditional-probability)
 - [Conditional expectation](#laws-of-total-expectation-and-variance)
 - [Conditional Monte Carlo](#conditional-monte-carlo)
 - [Conditional probability](#conditional-probability)
 - [Confidence interval](#monte-carlo-estimates-of-properties-of-y)
+- [Control variate](04-improving-efficiency.html#control-variates)
 - [Covariance matrix](#moments-of-random-variables)
 - [Cumulative distribution function (CDF)](#random-variables-and-distributions)
 :::
 :::
 
-## D–M {#terms-d-m}
+## D–I {#terms-d-i}
 
 ::: {.columns}
 ::: {.column width="50%"}
+- [Detailed balance](03-markov-chain-monte-carlo.html#why-the-acceptance-ratio-works)
 - [Discrete random variable](#random-variables-and-distributions)
 - [Empirical distribution function](#monte-carlo-estimates-of-properties-of-y)
 - [Empirical quantile function](#monte-carlo-estimates-of-properties-of-y)
@@ -393,23 +398,45 @@ Complete and submit this assignment individually, not as a group.
 - [Event](#random-variables-and-distributions)
 - [Expectation](#random-variables-and-distributions)
 - [Exponential distribution](#exponential-distribution)
+:::
+
+::: {.column width="50%"}
 - [Gaussian mixture](02-generating-samples.html#gaussian-mixture-random-numbers)
 - [Gaussian process](02-generating-samples.html#gaussian-processes)
 - [Generalized inverse](02-generating-samples.html#the-quantile-transform)
 - [Geometric Brownian motion](02-generating-samples.html#geometric-brownian-motion)
+- [Gradient descent](05-selected-topics.html#gradient-descent)
 - [Independent marginals](02-generating-samples.html#independent-marginals)
+- [Importance sampling](04-improving-efficiency.html#importance-sampling)
+- [Importance weight](04-improving-efficiency.html#importance-sampling)
+:::
 :::
 
+## K–M {#terms-k-m}
+
+::: {.columns}
 ::: {.column width="50%"}
+- [Kernel discrepancy](03-markov-chain-monte-carlo.html#kernel-discrepancy)
+- [Latin hypercube sampling](04-improving-efficiency.html#latin-hypercube-sampling-in-d-dimensions)
+- [Likelihood](03-markov-chain-monte-carlo.html#maximum-likelihood-estimation)
 - [Law of total expectation](#laws-of-total-expectation-and-variance)
 - [Law of total variance](#laws-of-total-expectation-and-variance)
 - [Low discrepancy](02-generating-samples.html#what-does-low-discrepancy-mean)
 - [Low discrepancy sequence](02-generating-samples.html#low-discrepancy-sequences)
+- [Markov chain](03-markov-chain-monte-carlo.html#the-markov-property)
+- [Markov chain Monte Carlo (MCMC)](03-markov-chain-monte-carlo.html#when-direct-sampling-is-difficult)
+:::
+
+::: {.column width="50%"}
+- [Maximum likelihood estimator](03-markov-chain-monte-carlo.html#maximum-likelihood-estimation)
+- [Maximum mean discrepancy (MMD)](03-markov-chain-monte-carlo.html#how-can-we-measure-sample-quality)
 - [Mean](#moments-of-random-variables)
 - [Mean squared error (MSE)](#mean-squared-error-bias-and-variance)
 - [Median](#moments-of-random-variables)
+- [Metropolis–Hastings algorithm](03-markov-chain-monte-carlo.html#the-metropolishastings-algorithm)
 - [Monte Carlo error](#central-limit-theorem)
 - [Monte Carlo method](#how-is-uncertainty-expressed-quantitatively)
+- [Multilevel Monte Carlo](05-selected-topics.html#multilevel-monte-carlo)
 - [Multivariate normal distribution](#multivariate-normal-or-gaussian-distribution)
 :::
 :::
@@ -418,6 +445,7 @@ Complete and submit this assignment individually, not as a group.
 
 ::: {.columns}
 ::: {.column width="50%"}
+- [Parallel tempering](03-markov-chain-monte-carlo.html#tuning-and-diagnostics)
 - [Point estimator](#monte-carlo-estimates-of-properties-of-y)
 - [Probability density function (PDF)](#random-variables-and-distributions)
 - [Probability mass function (PMF)](#random-variables-and-distributions)
@@ -426,7 +454,8 @@ Complete and submit this assignment individually, not as a group.
 - [Quantile function](02-generating-samples.html#the-quantile-transform)
 - [Quantile transform](02-generating-samples.html#the-quantile-transform)
 - [Random variable](#random-variables-and-distributions)
-- [Randomized low discrepancy sampling](02-generating-samples.html#biasvariance-decomposition)
+- [Randomized low discrepancy sampling](04-improving-efficiency.html#randomized-low-discrepancy-sampling)
+- [Reproducing kernel Hilbert space](03-markov-chain-monte-carlo.html#a-reproducing-kernel-hilbert-space)
 - [Root mean squared error (RMSE)](#under-random-sampling)
 :::
 
@@ -436,8 +465,11 @@ Complete and submit this assignment individually, not as a group.
 - [Sample variance](#sampling)
 - [Shrinkage estimator](02-generating-samples.html#shrinkage-estimators)
 - [Standard deviation](#moments-of-random-variables)
+- [Stochastic gradient descent](05-selected-topics.html#stochastic-gradient-descent)
+- [Symmetric positive definite kernel](03-markov-chain-monte-carlo.html#symmetric-positive-definite-kernels)
 - [Target distribution](02-generating-samples.html#the-acceptancerejection-algorithm)
 - [Unbiased estimator](#mean-squared-error-bias-and-variance)
+- [van der Corput sequence](04-improving-efficiency.html#the-van-der-corput-sequence)
 - [Variance](#moments-of-random-variables)
 - [Variance reduction](#conditional-monte-carlo)
 :::

@@ -209,7 +209,7 @@ appropriate phase rather than appended indiscriminately.
 
 - [ ] Inventory remaining lectures, assignments, policies, schedules,
   assessments, and supporting resources in the course-material reference.
-- [ ] Convert remaining lecture decks in coherent teaching units.
+- [x] Convert remaining lecture decks in coherent teaching units.
   - [x] Draft Lecture 02, Generating Samples, from the Fall 2025 Keynote deck.
   - [x] Complete instructor review of Lecture 02 and refine its scope,
     narrative, and mathematical presentation.
@@ -222,6 +222,15 @@ appropriate phase rather than appended indiscriminately.
     - [ ] Explain chained transformations using transport maps and
       normalizing flows, then develop the Gaussian-to-logistic
       boundary-behavior example suggested by the MCQMC26 plenary material.
+  - [x] Draft Lecture 03, Markov Chain Monte Carlo, from the Fall 2025
+    Keynote deck, including its discrepancy, Bayesian, and queueing material.
+  - [x] Draft Lecture 04, Improving Efficiency, from the Fall 2025 Keynote
+    deck, including executable comparisons of sampling designs.
+  - [x] Draft Lecture 05, Selected Topics, from the Fall 2025 Keynote deck,
+    including parallel computation, stochastic gradient descent, and
+    multilevel Monte Carlo.
+  - [ ] Review Lectures 03–05 individually with the instructor and refine
+    their scope, narrative, examples, and visible layout.
 - [ ] Adapt course pages and policies to the authoritative repository.
 - [ ] Migrate assignments, notebooks, examples, and required static assets.
 - [ ] Review migrated material for obsolete dates, links, software

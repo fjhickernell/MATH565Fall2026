@@ -15,22 +15,671 @@ include-after-body:
       }
       </script>
 
-subtitle: <span class="deck-title">{{< meta deck_title >}}</span>
+subtitle: |
+  <span class="deck-title">{{< meta deck_title >}}</span><br>
+  <span class="deck-meta">{{< meta texts.owen.short >}}, Chapters 8–10 and 15–17</span>
 ---
 
 # Course Map
+
+::: {.columns}
+::: {.column width="45%"}
+<h3>Course decks</h3>
 
 - [{{< meta decks.d01.title >}}]({{< meta decks.d01.file >}})
 - [{{< meta decks.d02.title >}}]({{< meta decks.d02.file >}})
 - [{{< meta decks.d03.title >}}]({{< meta decks.d03.file >}})
 - [{{< meta decks.d04.title >}}]({{< meta decks.d04.file >}}){.alert}
 - [{{< meta decks.d05.title >}}]({{< meta decks.d05.file >}})
+:::
 
-# Improving Efficiency
+::: {.column width="55%"}
+<h3>In this deck</h3>
 
-- Content migration
+- [Transformations and importance sampling](#transformations-and-importance-sampling)
+- [Control variates and conditioning](#control-variates-and-conditioning)
+- [Structured random sampling](#structured-random-sampling)
+- [Low discrepancy sampling](#low-discrepancy-sampling)
+- [Big ideas](#big-ideas)
+:::
+:::
 
-## Content migration
+# Transformations and Importance Sampling {.tree-marker-slide tree-marker="estimation"}
 
-This deck is a placeholder for the Fall 2026 Quarto conversion of the
-Improving Efficiency lecture.
+- [Variance reduction](#variance-reduction)
+- [The Keister example](#the-keister-example)
+- [Transforming an integral](#transforming-an-integral)
+- [Transforming a random variable](#transforming-a-random-variable)
+- [Importance sampling](#importance-sampling)
+- [Brownian motion with drift](#brownian-motion-with-drift)
+- [Choosing a transformation](#choosing-a-transformation)
+
+## Variance reduction {.tree-marker-slide tree-marker="estimation"}
+
+Suppose
+
+$$
+\mu=\Ex[f(X)]=\Ex[g(X)],
+\qquad X\sim\Unif[0,1]^d
+$$
+
+Both IID sample means are unbiased:
+
+\begin{align*}
+\hmu_{f,n}&=\frac1n\sum_{i=0}^{n-1}f(X_i),&
+\hmu_{g,n}&=\frac1n\sum_{i=0}^{n-1}g(X_i)
+\end{align*}
+
+Their mean squared errors are their variances:
+
+\begin{align*}
+\var(\hmu_{f,n})&=\frac{\var\{f(X)\}}n,&
+\var(\hmu_{g,n})&=\frac{\var\{g(X)\}}n
+\end{align*}
+
+::: {.key-point}
+An equivalent expectation can be computationally better when its [integrand has smaller variance]{.alert}
+:::
+
+## The Keister example {.tree-marker-slide tree-marker="estimation"}
+
+Consider
+
+$$
+\mu=\int_{\reals^d}\cos(\norm{t})\exp(-\norm{t}^2)\,\dif t
+$$
+
+Let $x_j=\Phi(at_j)$, where $\Phi$ is the standard normal CDF
+
+Then $t_j=\Phi^{-1}(x_j)/a$ and
+
+\begin{multline*}
+\mu=\int_{[0,1]^d}\frac{(2\mpi)^{d/2}}{a^d}
+\cos\!\left(\frac{\norm{\Phi^{-1}(x)}}a\right)\\
+\times\exp\!\left[-\frac{2-a^2}{2a^2}\norm{\Phi^{-1}(x)}^2\right]\,\dif x,
+\qquad a^2\le2
+\end{multline*}
+
+The parameter $a$ creates a [family of unbiased estimators]{.alert} with different variances
+
+## Transforming an integral {.tree-marker-slide tree-marker="estimation"}
+
+To approximate $\mu=\int_{\mathcal T}g(t)\,\dif t$, choose an invertible map
+
+$$
+t=\psi(x),
+\qquad \psi:\mathcal X\to\mathcal T
+$$
+
+Let $J(x;\psi)=\det\{\partial\psi_i/\partial x_j\}_{i,j=1}^d$
+
+If $X$ has density $\varrho_X$, then
+
+\begin{align*}
+\mu
+&=\int_{\mathcal X}g\{\psi(x)\}\abs{J(x;\psi)}\,\dif x\\
+&=\Ex_{X\sim\varrho_X}\!\left[
+\frac{g\{\psi(X)\}\abs{J(X;\psi)}}{\varrho_X(X)}
+\right]
+\end{align*}
+
+For $X\sim\Unif[0,1]^d$, the density in the denominator is one
+
+## Transforming a random variable {.tree-marker-slide tree-marker="random-generation"}
+
+Let $T=\psi(X)$ for an invertible map $\psi:\mathcal X\to\mathcal T$
+
+The densities satisfy
+
+\begin{align*}
+\varrho_T(t)
+&=\varrho_X\{\psi^{-1}(t)\}\abs{J(t;\psi^{-1})},\\
+\varrho_T\{\psi(x)\}
+&=\frac{\varrho_X(x)}{\abs{J(x;\psi)}}
+\end{align*}
+
+Therefore
+
+$$
+\Ex_{T\sim\varrho_T}[h(T)]
+=\Ex_{X\sim\varrho_X}[h\{\psi(X)\}]
+$$
+
+[A change of variables in an integral]{.alert} and [a transformation of a random variable]{.alert} are the same mechanism viewed from opposite directions
+
+## Importance sampling {.tree-marker-slide tree-marker="estimation"}
+
+For a target density $\varrho_T$, choose a proposal density $\varrho_X$ with the same support:
+
+\begin{align*}
+\mu
+&=\int_{\mathcal T}h(t)\varrho_T(t)\,\dif t\\
+&=\Ex_{X\sim\varrho_X}\!\left[
+h(X)\frac{\varrho_T(X)}{\varrho_X(X)}
+\right]
+\end{align*}
+
+The ratio $\varrho_T/\varrho_X$ is the [importance weight]{.alert}
+
+For $X_0,\ldots,X_{n-1}\ \IIDsim\ \varrho_X$,
+
+\begin{align*}
+\hmu_{\mathrm{IS},n}
+&=\frac1n\sum_{i=0}^{n-1}h(X_i)\frac{\varrho_T(X_i)}{\varrho_X(X_i)},\\
+\widehat{\var}(\hmu_{\mathrm{IS},n})
+&=\frac1{n(n-1)}\sum_{i=0}^{n-1}
+\left[h(X_i)\frac{\varrho_T(X_i)}{\varrho_X(X_i)}-\hmu_{\mathrm{IS},n}\right]^2
+\end{align*}
+
+## Brownian motion with drift {.tree-marker-slide tree-marker="quant-finance"}
+
+Positive option payoffs may be rare under a discretized Brownian path
+
+Let $X\sim\Norm(\vzero,\mSigma)$ with $\Sigma_{jk}=\min(t_j,t_k)$ and target density $\varrho$
+
+Sample instead from $\Norm(\va,\mSigma)$ with
+
+$$
+\va=\theta(t_1,\ldots,t_d)^\mathsf T
+$$
+
+The likelihood ratio simplifies to
+
+$$
+\frac{\varrho(x)}{\varrho_{\mathrm{drift}}(x)}
+=\exp\!\left(-\theta x_d+\frac{\theta^2t_d}{2}\right)
+$$
+
+- Drift makes positive payoffs more common
+- Importance weights compensate to preserve the target expectation
+- A good drift can [reduce estimator variance]{.alert}
+
+## Choosing a transformation {.tree-marker-slide tree-marker="estimation"}
+
+- Variable transformation and importance sampling are intertwined
+- The sampling density changes the variance of the sample mean
+- Require
+  - a finite Jacobian determinant
+  - a proposal density that does not vanish where the integrand is nonzero
+- Pilot samples can guide the choice of transformation or proposal
+
+::: {.key-point}
+Place more samples where the [magnitude of the integrand times the target density]{.alert} is large, without creating extreme weights
+:::
+
+# Control Variates and Conditioning {.tree-marker-slide tree-marker="prob-est"}
+
+- [Control variates](#control-variates)
+- [Choosing coefficients by least squares](#choosing-coefficients-by-least-squares)
+- [Practical control-variate choices](#practical-control-variate-choices)
+- [Conditional Monte Carlo](#conditional-monte-carlo)
+- [Conditional density estimation](#conditional-density-estimation)
+- [Density of a sum of uniforms](#density-of-a-sum-of-uniforms)
+
+## Control variates {.tree-marker-slide tree-marker="estimation"}
+
+Let $\eta_1,\ldots,\eta_m$ have known zero means
+
+For any coefficients $\beta_1,\ldots,\beta_m$,
+
+$$
+\mu=\Ex[f(X)]
+=\Ex\!\left[f(X)-\sum_{j=1}^m\beta_j\eta_j(X)\right]
+$$
+
+The estimator
+
+$$
+\hmu_{\mathrm{CV},n}
+=\frac1n\sum_{i=0}^{n-1}\left[f(X_i)-\sum_{j=1}^m\beta_j\eta_j(X_i)\right]
+$$
+
+is unbiased for fixed $\vbeta$
+
+Choose $\vbeta$ to make
+
+$$
+\var\!\left[f(X)-\sum_{j=1}^m\beta_j\eta_j(X)\right]
+$$
+
+as small as possible
+
+## Choosing coefficients by least squares {.tree-marker-slide tree-marker="estimation"}
+
+Center the response and control values:
+
+\begin{align*}
+y_i&=f(x_i)-\bar f,&
+H_{ij}&=\eta_j(x_i)-\bar\eta_j
+\end{align*}
+
+Then
+
+$$
+\hvbeta=\argmin_{\vb}\norm{\vy-\mH\vb}^2
+$$
+
+When $\mH^\mathsf T\mH$ is nonsingular,
+
+$$
+\hvbeta=(\mH^\mathsf T\mH)^{-1}\mH^\mathsf T\vy
+$$
+
+The residual is orthogonal to the column space of $\mH$, so least squares removes the component of $f$ explained by the controls
+
+## Practical control-variate choices {.tree-marker-slide tree-marker="estimation"}
+
+- Good controls are inexpensive, have known means, and are strongly related to $f$
+- More controls can reduce the sample size needed for a target accuracy
+- Poor controls may increase computation without reducing variance
+- For IID sampling, least squares targets variance reduction
+- For low discrepancy sampling, choose coefficients to reduce [variation]{.alert}, not sampling variance
+
+::: {.key-point}
+A control variate turns [known expectations]{.alert} into information about an unknown expectation
+:::
+
+## Conditional Monte Carlo {.tree-marker-slide tree-marker="prob-est"}
+
+Recall
+
+\begin{align*}
+\Ex(Y)&=\Ex_Z\{\Ex(Y\mid Z)\},\\
+\var(Y)&=\Ex_Z\{\var(Y\mid Z)\}+\var_Z\{\Ex(Y\mid Z)\}
+\end{align*}
+
+Therefore
+
+$$
+\var_Z\{\Ex(Y\mid Z)\}\le\var(Y)
+$$
+
+If $Y=f(X_1,\ldots,X_d)$ and
+
+$$
+g(X_{2:d})=\Ex(Y\mid X_{2:d})
+$$
+
+is analytic, estimate $\mu$ by sampling $g(X_{2:d})$ instead of $Y$
+
+[Analytically averaging over part of the randomness reduces variance]{.alert}
+
+## Conditional density estimation {.tree-marker-slide tree-marker="prob-est"}
+
+Let $Y=f(X)$ with $X\sim\Unif[0,1]^d$
+
+Suppose $f$ is increasing in $x_1$ and
+
+$$
+y=f(x_1,x_{2:d})iff x_1=g(y;x_{2:d})
+$$
+
+Then
+
+\begin{align*}
+F_{Y\mid X_{2:d}}(y\mid x_{2:d})
+&=\Prob\{X_1\le g(y;x_{2:d})\}\\
+&=g(y;x_{2:d}),\\
+\varrho_Y(y)
+&=\int_{[0,1]^{d-1}}\frac{\partial g}{\partial y}(y;x)\,\dif x
+\end{align*}
+
+Thus a density value becomes an [expectation of a conditional density]{.alert}
+
+## Density of a sum of uniforms {.tree-marker-slide tree-marker="practice"}
+
+Let
+
+$$
+Y=\gamma_1X_1+\cdots+\gamma_dX_d,
+\qquad X\sim\Unif[0,1]^d,
+\qquad \gamma_j>0
+$$
+
+Solving for $x_1$ gives
+
+$$
+g(y;x_{2:d})=\frac{y-\sum_{j=2}^d\gamma_jx_j}{\gamma_1}
+$$
+
+when $\sum_{j=2}^d\gamma_jx_j\le y\le\gamma_1+\sum_{j=2}^d\gamma_jx_j$
+
+Hence
+
+$$
+\varrho_Y(y)=\Ex\!\left[
+\frac1{\gamma_1}\indic\!\left{
+\sum_{j=2}^d\gamma_jX_j\le y\le
+\gamma_1+\sum_{j=2}^d\gamma_jX_j
+\right}\right]
+$$
+
+# Structured Random Sampling {.tree-marker-slide tree-marker="sampling"}
+
+- [Antithetic sampling](#antithetic-sampling)
+- [Constructing an antithetic variate](#constructing-an-antithetic-variate)
+- [Latin hypercube sampling in one dimension](#latin-hypercube-sampling-in-one-dimension)
+- [One-dimensional LHS variance](#one-dimensional-lhs-variance)
+- [Latin hypercube sampling in $d$ dimensions](#latin-hypercube-sampling-in-d-dimensions)
+- [Comparing random designs](#comparing-random-designs)
+- [Strengths and limitations of LHS](#strengths-and-limitations-of-lhs)
+
+## Antithetic sampling {.tree-marker-slide tree-marker="sampling"}
+
+If $T(X)$ has the same distribution as $X$, pair $f(X_i)$ with $f\{T(X_i)\}$:
+
+$$
+\hmu_{\mathrm{Anti},n}
+=\frac1{2n}\sum_{i=0}^{n-1}\left[f(X_i)+f\{T(X_i)\}\right]
+$$
+
+Examples:
+
+\begin{align*}
+T(X)&=1-X,& X&\sim\Unif[0,1]^d,\\
+T(X)&=-X,& X&\sim\Norm(\vzero,\mSigma)
+\end{align*}
+
+Although $X_i$ and $T(X_i)$ are dependent, the pairs are independent across $i$
+
+The variance is
+
+$$
+\var(\hmu_{\mathrm{Anti},n})
+=\frac{\var\{f(X)\}}{2n}
+\left[1+\corr\{f(X),f(T(X))\}\right]
+$$
+
+Antithetic sampling helps when the paired function values are [negatively correlated]{.alert}
+
+## Constructing an antithetic variate {.tree-marker-slide tree-marker="random-generation"}
+
+If $X$ has continuous CDF $F$, then
+
+\begin{gather*}
+U=F(X)\sim\Unif[0,1],\\
+1-U\sim\Unif[0,1],\\
+T(X)=F^{-1}\{1-F(X)\}\sim F
+\end{gather*}
+
+For a symmetric distribution, this often reduces to reflection about the center
+
+::: {.exitem}
+<span class="exbullet">$\exstar$</span>
+<span>For which monotone functions $f$ does $f(X)$ become negatively correlated with $f\{T(X)\}$?</span>
+:::
+
+## Latin hypercube sampling in one dimension {.tree-marker-slide tree-marker="sampling"}
+
+Place one independent uniform point in each of $n$ equal strata:
+
+$$
+X_i=\frac{i+U_i}{n},
+\qquad U_i\ \IIDsim\ \Unif[0,1],
+\qquad i=0,\ldots,n-1
+$$
+
+Then $X_i\sim\Unif[i/n,(i+1)/n]$ and
+
+\begin{align*}
+\Ex(\hmu_{\mathrm{LHS},n})
+&=\frac1n\sum_{i=0}^{n-1}\Ex\{f(X_i)\}\\
+&=\sum_{i=0}^{n-1}\int_{i/n}^{(i+1)/n}f(x)\,\dif x\\
+&=\int_0^1f(x)\,\dif x
+\end{align*}
+
+The $X_i$ are independent but [not identically distributed]{.alert}
+
+## One-dimensional LHS variance {.tree-marker-slide tree-marker="estimation"}
+
+Because the strata are independent,
+
+$$
+\var(\hmu_{\mathrm{LHS},n})
+=\frac1{n^2}\sum_{i=0}^{n-1}\var\{f(X_i)\}
+$$
+
+For differentiable $f$, the mean value and Taylor theorems imply
+
+\begin{align*}
+\var(\hmu_{\mathrm{LHS},n})
+&\le\frac{\norm{f'}_\infty^2}{n^3},\\
+\rmse(\hmu_{\mathrm{LHS},n})
+&\le\frac{\norm{f'}_\infty}{n^{3/2}}
+\end{align*}
+
+In one dimension, stratification can improve the IID $n^{-1/2}$ RMSE rate to $n^{-3/2}$ for smooth $f$
+
+## Latin hypercube sampling in $d$ dimensions {.tree-marker-slide tree-marker="sampling"}
+
+Let $\pi_1,\ldots,\pi_d$ be independent random permutations of $0,\ldots,n-1$:
+
+$$
+X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
+\qquad U_{i\ell}\ \IIDsim\ \Unif[0,1]
+$$
+
+Each coordinate uses every stratum exactly once
+
+For $R$ independent Latin hypercubes,
+
+\begin{align*}
+\hmu_{\mathrm{LHS},n}^{(r)}
+&=\frac1n\sum_{i=0}^{n-1}f(X_i^{(r)}),\\
+\hmu_{\mathrm{LHS},n,R}
+&=\frac1R\sum_{r=1}^R\hmu_{\mathrm{LHS},n}^{(r)},\\
+\widehat{\var}(\hmu_{\mathrm{LHS},n,R})
+&=\frac1{R(R-1)}\sum_{r=1}^R
+\left(\hmu_{\mathrm{LHS},n}^{(r)}-\hmu_{\mathrm{LHS},n,R}\right)^2
+\end{align*}
+
+## Comparing random designs {.tree-marker-slide tree-marker="sampling"}
+
+Each design has $n=64$ points in $[0,1]^2$
+
+```{python}
+#| echo: false
+#| fig-align: center
+#| fig-alt: "IID, Latin hypercube, and scrambled Sobol' point sets with 64 points in the unit square"
+#| fig-width: 11.5
+#| fig-height: 4.2
+#| out-width: 96%
+
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import qmc
+
+plt.rcParams["mathtext.fontset"] = "stix"
+n = 64
+rng = np.random.default_rng(56504)
+designs = {
+    "IID": rng.random((n, 2)),
+    "Latin hypercube": qmc.LatinHypercube(d=2, seed=56504).random(n),
+    "Scrambled Sobol'": qmc.Sobol(d=2, scramble=True, seed=56504).random_base2(6),
+}
+
+fig, axes = plt.subplots(1, 3, figsize=(11.5, 4.2), constrained_layout=True)
+for ax, (title, points) in zip(axes, designs.items()):
+    ax.scatter(points[:, 0], points[:, 1], s=24, color="#1f5a91", alpha=0.9)
+    ax.set_title(title, fontsize=17)
+    ax.set_xlabel(r"$x_1$", fontsize=18, math_fontfamily="stix")
+    ax.set_ylabel(r"$x_2$", fontsize=18, math_fontfamily="stix")
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.set_aspect("equal")
+    ax.tick_params(labelsize=11)
+    ax.grid(alpha=0.14)
+plt.show()
+```
+
+## Strengths and limitations of LHS {.tree-marker-slide tree-marker="sampling"}
+
+### Strengths
+
+- No importance density, control variate, or conditional expectation required
+- Can converge faster than IID sampling
+- Guarantees one point in every one-dimensional stratum
+
+### Limitations
+
+- The sample size is fixed when the design is constructed
+- Accuracy assessment requires independent replications
+- Too many replications can erase the efficiency gain
+- The one-dimensional $n^{-3/2}$ RMSE guarantee does not extend automatically to $d>1$
+
+# Low Discrepancy Sampling {.tree-marker-slide tree-marker="low-discrepancy"}
+
+- [From LHS to quasi-Monte Carlo](#from-lhs-to-quasi-monte-carlo)
+- [Three interpretations of discrepancy](#three-interpretations-of-discrepancy)
+- [The van der Corput sequence](#the-van-der-corput-sequence)
+- [Four low discrepancy families](#four-low-discrepancy-families)
+- [Component-by-component construction](#component-by-component-construction)
+- [Randomized low discrepancy sampling](#randomized-low-discrepancy-sampling)
+- [Why randomize?](#why-randomize)
+- [Stopping criteria](#stopping-criteria)
+
+## From LHS to quasi-Monte Carlo {.tree-marker-slide tree-marker="low-discrepancy"}
+
+[Low discrepancy sampling]{.alert}, or quasi-Monte Carlo, improves space filling beyond one-dimensional stratification
+
+For nodes $x_0,\ldots,x_{n-1}$ and target distribution $F$,
+
+\begin{align*}
+D^2(\{x_i\}_{i=0}^{n-1},F;K)
+&=\int_{\mathcal X^2}K(x,x')\,\dif F(x)\,\dif F(x')\\
+&\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,x_i)\,\dif F(x)\\
+&\quad+\frac1{n^2}\sum_{i,j=0}^{n-1}K(x_i,x_j)
+\end{align*}
+
+We usually take $\mathcal X=[0,1]^d$ and seek nodes with small discrepancy
+
+## Three interpretations of discrepancy {.tree-marker-slide tree-marker="low-discrepancy"}
+
+For the uniform target on $[0,1]^d$, discrepancy is
+
+- [worst-case error]{.alert}
+
+  $$
+  \left\lvert\int f(x)\,\dif x-\frac1n\sum_{i=0}^{n-1}f(x_i)\right\rvert
+  \le D\norm{f}_{\mathcal H_K}
+  $$
+
+- [average-case root mean squared error]{.alert} for $f$ drawn from a Gaussian process with covariance kernel $K$
+- [distance between the target distribution and the empirical distribution]{.alert}
+
+The kernel specifies the function class and the distributional features being measured
+
+## The van der Corput sequence {.tree-marker-slide tree-marker="low-discrepancy"}
+
+Write a nonnegative integer in base $b$:
+
+$$
+i=(\cdots i_2i_1i_0)_b
+$$
+
+Reverse the digits across the radix point:
+
+$$
+\phi_b(i)=(0.i_0i_1i_2\cdots)_b
+=\frac{i_0}b+\frac{i_1}{b^2}+\frac{i_2}{b^3}+\cdots
+$$
+
+- Usually $b$ is prime; $b=2$ is common
+- $\{\phi_b(i)\}_{i=0}^{b^m-1}$ contains the same points as $\{i/b^m\}_{i=0}^{b^m-1}$ in a different order
+- Earlier points keep their order as the sample grows
+
+::: {.key-point}
+The van der Corput construction turns a fixed-size grid into an [extensible sequence]{.alert}
+:::
+
+## Four low discrepancy families {.tree-marker-slide tree-marker="low-discrepancy"}
+
+For $i=0,1,\ldots$:
+
+| Family | Construction | Typical preferred size |
+|:---|:---|:---|
+| Kronecker | $x_i=i\vzeta\bmod1$ | none |
+| Lattice | $x_i=\phi_b(i)\vzeta\bmod1$ | $n=b^m$ |
+| Halton | $x_i=\{\phi_2(i),\phi_3(i),\phi_5(i),\ldots\}$ | none |
+| Digital | $x_i=i_0c_0\oplus i_1c_1\oplus\cdots$ | $n=b^m$ |
+
+Here $\oplus$ denotes digitwise addition modulo $b$
+
+Different families balance [extensibility]{.alert}, [projection quality]{.alert}, and [fast construction]{.alert}
+
+## Component-by-component construction {.tree-marker-slide tree-marker="low-discrepancy"}
+
+Generators for lattice rules and digital nets may be chosen by number theory or computer search
+
+The component-by-component strategy:
+
+1. Choose a one-dimensional generator that minimizes a discrepancy criterion over relevant sample sizes
+2. Freeze the first $\ell$ components
+3. Search for component $\ell+1$ that minimizes discrepancy
+4. Increase $\ell$ and repeat until $\ell=d$
+
+::: {.key-point}
+A high-dimensional design is built by [optimizing one coordinate at a time]{.alert}
+:::
+
+## Randomized low discrepancy sampling {.tree-marker-slide tree-marker="low-discrepancy"}
+
+Randomization aims for
+
+$$
+X_{\mathrm{rand},i}\sim\Unif[0,1]^d
+$$
+
+for every $i$, while preserving low discrepancy jointly
+
+- [Random shift]{.alert}: $X_{\mathrm{rand},i}=x_i+\vDelta\bmod1$, especially for lattices and Kronecker sequences
+- [Random digital shift]{.alert}: $X_{\mathrm{rand},i}=x_i\oplus\vDelta$, especially for digital sequences
+- [Linear matrix or nested uniform scrambling]{.alert}, especially for digital sequences
+
+Independent randomizations provide replications without reverting to IID point placement
+
+## Why randomize? {.tree-marker-slide tree-marker="stat-estim"}
+
+- The estimator
+
+  $$
+  \hmu_n=\frac1n\sum_{i=0}^{n-1}f(X_{\mathrm{rand},i})
+  $$
+
+  is unbiased for $\Ex[f(X)]$, $X\sim\Unif[0,1]^d$
+- Randomized nodes almost surely avoid the boundary, so Gaussian quantile transforms remain finite
+- Independent randomizations allow variance and error estimation
+- For smooth integrands, scrambled digital sequences can attain nearly $\Order(n^{-3/2})$ RMSE
+
+Randomization combines [QMC space filling]{.alert} with [Monte Carlo uncertainty quantification]{.alert}
+
+## Stopping criteria {.tree-marker-slide tree-marker="estimation"}
+
+Two practical questions are
+
+\begin{align*}
+\abs{\mu-\hmu_n}&\le\text{what?}\\
+\abs{\mu-\hmu_n}&\le\varepsilon
+\quad\text{for what $n$?}
+\end{align*}
+
+We want answers based only on the computed data $f(x_0),f(x_1),\ldots$
+
+- IID sampling: use a Central Limit Theorem interval when justified
+- Randomized low discrepancy sampling: use independent replications
+- Deterministic low discrepancy sampling: possible criteria include
+  - decay of estimated Fourier coefficients
+  - Bayesian credible intervals based on a kernel model
+
+::: {.key-point}
+An efficient method needs both [fast error decay]{.alert} and a [reliable stopping rule]{.alert}
+:::
+
+# Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="prob-stat-est"}
+
+- Equivalent expectations can have dramatically different computational variance
+- Importance sampling changes the sampling distribution and corrects with likelihood ratios
+- Control variates and conditioning remove variability using known structure
+- Antithetic sampling and Latin hypercubes introduce useful dependence deliberately
+- Low discrepancy sequences replace random clustering with balanced space filling
+- Randomization restores unbiasedness and supports error estimation while retaining QMC efficiency

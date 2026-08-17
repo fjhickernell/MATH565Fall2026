@@ -2,76 +2,83 @@
 
 ## Current task
 
-Continue the instructor-directed Deck 02 refinements one at a time. Next, add
-lookback and barrier examples to the option-payoff discussion.
+Review Deck 03 individually with the instructor, beginning with its scope,
+section sequence, and mathematical emphasis before detailed layout polishing.
 
 ## Current state
 
-- `slides/01-introduction.qmd` is complete and may be treated as the finished
-  prototype for later lecture conversion; future polishing is optional rather
-  than required follow-up.
-- The Introduction deck renders cleanly, has an approved closing recap, and
-  uses sparse course-tree markers to orient the mathematical sequence.
-- `notebooks/applications/AreWeThereYet.ipynb` is complete,
-  instructor-approved, and linked from the course notebook page and both
-  travel-time slides.
-- The shared AI-guidance slides are included from `classlib`; formal AI-policy
-  review remains separate.
-- `slides/02-generating-samples.qmd` has completed its initial instructor-led
-  content review, visible-layout refinement, and guidance audit. It restores
-  the important worked examples from the Fall 2025 Keynote deck, uses the
-  approved course-tree markers and terminology, and links its cumulative terms
-  into Deck 01.
-- Four further refinements are planned, in order: a one-dimensional Gaussian
-  mixture; CDF and quantile plots for the zero-inflated exponential; lookback
-  and barrier option payoffs; and chained transformations, with careful use of
-  transport-map and normalizing-flow terminology and a Gaussian-to-logistic
-  boundary-behavior example informed by the MCQMC26 plenary material.
-- The Gaussian mixture example is complete. It distinguishes the analytic PDF
-  and CDF from the generally non-analytic mixture quantile, samples the
-  discrete component before applying its normal quantile transform, and plots
-  the two weighted component densities together with their mixture.
-- The zero-inflated exponential example now pairs its CDF and quantile formulas
-  with plots for $p_0=0.3$ and $\lambda=1$. The CDF plot marks the jump at zero,
-  while the quantile plot marks the corresponding flat segment through $p_0$.
-- Both Decks 01 and 02 render successfully, and their internal links resolve.
-- The notebook catalog currently describes the intended Deck 02 sampling
-  topics, but the corresponding notebooks still need to be reviewed and
-  curated after the planned deck refinements are complete.
-- MCTS will be covered in a later slide deck and does not belong in the
-  Introduction deck; the specific later deck remains to be chosen.
-- The Fall 2025 Keynote deck is the initial content and pedagogical reference
-  for Lecture 02. Preserve its mathematical substance, examples, sequence,
-  and emphasis as closely as the Quarto format reasonably allows.
+- Decks 01 and 02 remain the approved prototype and substantially reviewed
+  course opening; the batch conversion did not reopen their lecture content.
+- Deck 01's cumulative Terms to Know index now links important terminology
+  introduced in Decks 03–05.
+- `slides/03-markov-chain-monte-carlo.qmd` is a full first-pass conversion of
+  the Fall 2025 Keynote deck. It preserves the Markov-chain examples,
+  Metropolis–Hastings practice, discrepancy development, MLE and Bayesian
+  material, and queueing example; it adds a reproducible random-walk
+  Metropolis figure.
+- `slides/04-improving-efficiency.qmd` is a full first-pass conversion covering
+  transformations, importance sampling, control variates, conditional and
+  antithetic Monte Carlo, Latin hypercube sampling, low discrepancy methods,
+  randomization, and stopping criteria. It adds an executable IID/LHS/Sobol'
+  comparison.
+- `slides/05-selected-topics.qmd` is a full first-pass conversion covering
+  parallel computing, gradient and stochastic-gradient descent, and two-level
+  and multilevel Monte Carlo. It adds an executable gradient-path comparison.
+- All three new decks and the complete five-deck project render successfully
+  with the `qmcpy` kernel, and all local cross-deck links resolve.
+- Fall 2025 dates, tests, assignments, Mentimeter prompts, feedback responses,
+  and other semester-specific logistics were omitted.
+- Deck 02's uncompleted lookback/barrier and transformation-chain extensions
+  remain possible later refinements rather than the current next task.
+- The unresolved review questions and the Fall 2026 improvement backlog
+  recovered from `MATH565Fall2025/MATH565_Improvements.md` are parked in
+  `notes/TODO-LATER.md`; they are not blockers for the Deck 03 review.
 
-## Questions to resolve
+## Cross-machine handoff
 
-- Which lookback and barrier contracts best support the existing geometric
-  Brownian motion narrative without overcrowding the payoff slide?
-- For the later transformation-chain example, which terminology and map
-  direction will be clearest while remaining mathematically precise?
+- The commit containing this handoff is the M5 batch-conversion baseline for
+  Decks 03–05. A remote check immediately before publication found no newer
+  MATH 565 commits from the Mini or Intel.
+- M5 validation completed successfully on August 17, 2026: the root website
+  and all five slide decks rendered, the assembled site contained every deck,
+  local slide links resolved, Decks 03–05 had matching section outlines, and
+  `git diff --check` passed. The recorded `classlib`, `qmcsoftware`, and
+  test-archive submodule pins did not change.
+- The protected `MATH565Fall2025` reference briefly appeared dirty because its
+  clean local `classlib` checkout had moved beyond the parent-recorded pin. The
+  checkout was restored to recorded commit `060d78b`; no Fall 2025 content,
+  commit, or submodule pointer was changed.
+- The iCloud-shared Check-In Dashboard was reconciled separately: Deck 03 is
+  the active MATH 565 task, while the deferred Deck 02, notebook, QMCPy, and
+  MCTS work is Blue. Preserve the user's other same-day dashboard changes.
+- Before synchronizing MATH 565 on the Mini, inspect its current branch,
+  worktree, recent commits, submodule status, stashes, and any unpublished work
+  from the earlier Mini session. Do not pull, reset, run `arrive`, or overwrite
+  files until that work has been identified and compared with this baseline.
+- If the Mini worktree is clean and has no unpublished commits, fast-forward it
+  normally. If it contains separate work, preserve that work and reconcile it
+  explicitly; report overlapping files or divergent commits instead of
+  silently choosing one machine's version.
 
 ## Constraints
 
-- Treat Deck 02 as the authoritative mathematical narrative; notebooks should
-  support computation and exploration without duplicating the slides.
-- Complete the four new deck refinements in the instructor's requested order;
-  do not begin the transformation-chain discussion before the option-payoff
-  examples are approved.
-- Use the completed Introduction deck as the local presentation and navigation
-  prototype without reopening it as unfinished work.
+- Treat the batch versions of Decks 03–05 as first drafts for individual
+  instructor review, not as final approvals of scope or visible layout.
+- Use Decks 01 and 02 as the local presentation and navigation prototypes
+  without reopening their lecture content during review of Deck 03.
 - Strip out Fall 2025-specific logistics, including references to that
   semester's homework, assignments, due dates, tests, announcements, and
   other dated events; do not present them as Fall 2026 information.
 - Keep MATH 565 course content in this repository and promote only genuinely
   reusable infrastructure to `classlib` after demonstrated reuse.
 - Keep `qmcsoftware`, the test archive, and reference repositories read-only.
-- Preserve MCTS for a later deck.
+- Preserve the Fall 2025 examples while improving notation, mathematical
+  layout, punctuation, semantic emphasis, and gaps in visual explanation.
 
 ## Done when
 
-- The option-payoff discussion includes mathematically precise lookback and
-  barrier examples that fit the existing narrative and visible layout.
-- The section outline, Big Ideas recap, and cumulative terms index are updated
-  if the new material requires them.
-- Decks 01 and 02 render cleanly, and all new internal links resolve.
+- Deck 03's content scope and section sequence are instructor-approved.
+- Its mathematical notation, examples, alert emphasis, and visible layout have
+  been reviewed slide by slide and refined.
+- Deck 03 renders cleanly, its internal and cross-deck links resolve, and any
+  remaining questions are recorded for the next review pass.
