@@ -13,10 +13,10 @@
   z-index: 1;
 }
 
-.reveal .slides section.tree-marker-slide > p {
+.reveal .slides section.tree-marker-slide > .course-tree-marker + p {
   max-width: 75%;
 }
 
-.reveal .slides section.tree-marker-slide > ul {
+.reveal .slides section.tree-marker-slide > .course-tree-marker + ul {
   max-width: 75%;
 }

@@ -21,7 +21,7 @@ Fall 2026 course environment.
 
 ## Sampling
 
-Notebooks on random and low-discrepancy sample generation, acceptance-rejection
+Notebooks on random and low discrepancy sample generation, acceptance-rejection
 sampling, conditional Monte Carlo, Markov chain Monte Carlo, and related
 sampling methods will appear here.
 

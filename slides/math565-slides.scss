@@ -4,6 +4,23 @@
 
 @import "tree-markers";
 
+/* The binomial transform table's first row is mathematical data, not a
+   categorical header, so it should not receive the standard header fill. */
+.reveal .binomial-transform-table table thead th {
+  background-color: #f2f2f2;
+  font-weight: normal;
+}
+
+.reveal .binomial-transform-table col:first-child {
+  width: 20% !important;
+}
+
+.reveal .binomial-transform-table th:first-child,
+.reveal .binomial-transform-table td:first-child {
+  text-align: right !important;
+  white-space: nowrap;
+}
+
 .tree-component.monte-carlo-at-a-glance-tree {
   margin-inline: auto !important;
 }

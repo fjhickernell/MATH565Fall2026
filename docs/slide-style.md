@@ -26,7 +26,10 @@ exceptions.
 
 Each deck follows this opening sequence:
 
-1. The generated title slide identifies the course and deck.
+1. The generated title slide identifies the course and deck. Put the deck's
+   principal textbook or other overarching text reference, including the
+   relevant chapter range, in the title-slide metadata beneath the deck title.
+   Do not place this reference on the Course Map slide.
 2. The `# Course Map` slide uses two columns:
    - **Course decks** lists and links every deck in course order, with the
      current deck marked using `.alert`.
@@ -57,6 +60,13 @@ first receives substantial treatment, not merely its first mention. Do not
 invent links for topics that have not yet been developed. Split the index into
 alphabetical ranges as needed, and keep the range headings and the Deck 01
 Course Map synchronized with the index structure.
+
+## Course terminology
+
+Write **low discrepancy** without a hyphen, including when it modifies another
+noun: low discrepancy sampling, low discrepancy sequence, and randomized low
+discrepancy estimator. Preserve hyphens only in technical identifiers, file
+names, URLs, and generated anchors where changing them would break references.
 
 Use raw `<h3>` elements for the two Course Map column labels. A Markdown `###`
 directly after a `#` heading can alter RevealJS slide structure.

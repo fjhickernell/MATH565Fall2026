@@ -151,10 +151,10 @@ assert all(
 - [What is Monte Carlo?](#what-is-monte-carlo)
 - [Course Logistics](#course-logistics)
 - [Terms to Know](#terms-to-know)
-- [Probability review](#probability-review)
-- [Samples and estimates](#samples-and-estimates)
+- [Probability Review](#probability-review)
+- [Samples and Estimates](#samples-and-estimates)
 - [Conditioning](#conditioning)
-- [Big ideas](#big-ideas)
+- [Big Ideas](#big-ideas)
 :::
 :::
 
@@ -315,7 +315,7 @@ Complete and submit this assignment individually, not as a group.
 
     - Each slide deck lists course decks and major sections after the title page
 
-    - Each major section is headed by a slide that points to minor sections
+    - Each major section begins with links to its individual slides
 
     - <span class="controls nav-control-sample" aria-label="Previous major section"><span class="controls-arrow" aria-hidden="true"></span></span> and <span class="controls nav-control-sample nav-control-sample-right" aria-label="Next major section"><span class="controls-arrow" aria-hidden="true"></span></span> jump to the previous and next major sections
 
@@ -394,13 +394,16 @@ Complete and submit this assignment individually, not as a group.
 - [Expectation](#random-variables-and-distributions)
 - [Exponential distribution](#exponential-distribution)
 - [Gaussian process](02-generating-samples.html#gaussian-processes)
+- [Generalized inverse](02-generating-samples.html#the-quantile-transform)
+- [Geometric Brownian motion](02-generating-samples.html#geometric-brownian-motion)
+- [Independent marginals](02-generating-samples.html#independent-marginals)
 :::
 
 ::: {.column width="50%"}
-- [Geometric Brownian motion](02-generating-samples.html#geometric-brownian-motion)
 - [Law of total expectation](#laws-of-total-expectation-and-variance)
 - [Law of total variance](#laws-of-total-expectation-and-variance)
 - [Low discrepancy](02-generating-samples.html#what-does-low-discrepancy-mean)
+- [Low discrepancy sequence](02-generating-samples.html#low-discrepancy-sequences)
 - [Mean](#moments-of-random-variables)
 - [Mean squared error (MSE)](#mean-squared-error-bias-and-variance)
 - [Median](#moments-of-random-variables)
@@ -417,9 +420,12 @@ Complete and submit this assignment individually, not as a group.
 - [Point estimator](#monte-carlo-estimates-of-properties-of-y)
 - [Probability density function (PDF)](#random-variables-and-distributions)
 - [Probability mass function (PMF)](#random-variables-and-distributions)
+- [Proposal distribution](02-generating-samples.html#the-acceptancerejection-algorithm)
 - [Pseudorandom number generator](02-generating-samples.html#where-do-random-variables-come-from)
 - [Quantile function](02-generating-samples.html#the-quantile-transform)
+- [Quantile transform](02-generating-samples.html#the-quantile-transform)
 - [Random variable](#random-variables-and-distributions)
+- [Randomized low discrepancy sampling](02-generating-samples.html#biasvariance-decomposition)
 - [Root mean squared error (RMSE)](#under-random-sampling)
 :::
 
@@ -429,6 +435,7 @@ Complete and submit this assignment individually, not as a group.
 - [Sample variance](#sampling)
 - [Shrinkage estimator](02-generating-samples.html#shrinkage-estimators)
 - [Standard deviation](#moments-of-random-variables)
+- [Target distribution](02-generating-samples.html#the-acceptancerejection-algorithm)
 - [Unbiased estimator](#mean-squared-error-bias-and-variance)
 - [Variance](#moments-of-random-variables)
 - [Variance reduction](#conditional-monte-carlo)
@@ -436,7 +443,7 @@ Complete and submit this assignment individually, not as a group.
 :::
 
 
-# Probability review {.tree-marker-slide tree-marker="probability"}
+# Probability Review {.tree-marker-slide tree-marker="probability"}
 
 - [Random variables and distributions](#random-variables-and-distributions)
 - [Moments of random variables](#moments-of-random-variables)
@@ -459,8 +466,8 @@ For $A\subseteq\mathcal{Y}$, $\Prob(Y\in A)$ is the probability of the
 [event]{.alert} $\{\omega\in\Omega:Y(\omega)\in A\}$
 
 \begin{align*}
-F \text{ is the }\alerttext{cumulative distribution function}\text{, } F(y)&:=\Prob(Y\le y), \;  y\in\mathcal{Y}, \quad\text{right continuous}\\
-Q \text{ is the }\alerttext{quantile function}\text{, } Q(u)&:=\inf\{y\in\mathcal{Y}:F(y)\ge u\}, \; 0<u<1, \quad\text{left continuous}\\
+F \text{ is the }\alerttext{cumulative distribution function}\text{, } F(y)&:=\Prob(Y\le y), \;  y\in\mathcal{Y}, \quad\text{right-continuous}\\
+Q \text{ is the }\alerttext{quantile function}\text{, } Q(u)&:=\inf\{y\in\mathcal{Y}:F(y)\ge u\}, \; 0<u<1, \quad\text{left-continuous}\\
 & = F^{-1}(u) \text{ if $F$ is continuous and strictly increasing} \\
 \Ex[g(Y)]&:=\int_{\mathcal{Y}}g(y)\,\dif F(y)
 \end{align*}
@@ -514,7 +521,7 @@ $\exstar$ Show that $\displaystyle \med(Y) \in \argmin_m \Ex \lvert Y-m \rvert$
 
 Medians may be nonunique
 
-$\exstar$ Show that $\cov(\vY)$ is symmetric and has non-negative eigenvalues
+$\exstar$ Show that $\cov(\vY)$ is symmetric and has nonnegative eigenvalues
 
 ## Binomial distribution {.tree-marker-slide tree-marker="probability"}
 
@@ -587,7 +594,7 @@ $$
 \right), \qquad \vy \in \reals^d
 $$
 
-# Samples and estimates {.tree-marker-slide tree-marker="stat-estim"}
+# Samples and Estimates {.tree-marker-slide tree-marker="stat-estim"}
 
 - [Sampling schemes on $[0,1]^6$](#sampling-schemes)
 - [Sampling](#sampling)
@@ -598,7 +605,7 @@ $$
 - [Computational counterparts](#computational-counterparts)
 - [Are we there yet? Revisited](#are-we-there-yet-revisited)
 
-## Sampling schemes on $[0,1]^6$ {#sampling-schemes .tree-marker-slide tree-marker="stat-estim"}
+## Sampling schemes on $[0,1]^6$ {#sampling-schemes .tree-marker-slide tree-marker="sampling"}
 
 Each design has $n=64$ points; compare how its $x_1$–$x_2$ projection fills
 the unit square
@@ -694,7 +701,7 @@ Let $\Theta$ estimate a scalar population parameter $\theta$
 
 ## Under random sampling {.tree-marker-slide tree-marker="stat-estim"}
 
-Suppose $Y_1,Y_2,\ldots\sim Y$ with
+Suppose $Y_1,Y_2,\ldots$ have the same distribution as $Y$, where
 $\Ex(Y)=\mu$ and $\var(Y)=\sigma^2$
 
 Then
@@ -854,7 +861,7 @@ $$
 
 so a probability density can itself be expressed as an expectation
 
-# Big ideas {data-state="goldborder" .tree-marker-slide tree-marker="prob-stat-est"}
+# Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="prob-stat-est"}
 
 - Use sample quantities to estimate properties of a random variable whose
   distribution is difficult to obtain directly

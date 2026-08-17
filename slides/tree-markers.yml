@@ -11,6 +11,26 @@ defaults:
 
 # Add a named entry here as each teaching context is designed.
 markers:
+  sampling:
+    font_scale: 2.6
+    labels:
+      - pseudorandom-numbers
+      - low-discrepancy
+
+  random-generation:
+    labels:
+      - random-generation
+
+  low-discrepancy:
+    font_scale: 3.3
+    labels:
+      - low-discrepancy
+      - discrepancy
+
+  quant-finance:
+    labels:
+      - qf
+
   practice:
     font_scale: 3.2
     group_headings:

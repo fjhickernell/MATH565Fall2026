@@ -211,7 +211,7 @@ appropriate phase rather than appended indiscriminately.
   assessments, and supporting resources in the course-material reference.
 - [ ] Convert remaining lecture decks in coherent teaching units.
   - [x] Draft Lecture 02, Generating Samples, from the Fall 2025 Keynote deck.
-  - [ ] Complete instructor review of Lecture 02 and refine its scope,
+  - [x] Complete instructor review of Lecture 02 and refine its scope,
     narrative, and mathematical presentation.
 - [ ] Adapt course pages and policies to the authoritative repository.
 - [ ] Migrate assignments, notebooks, examples, and required static assets.

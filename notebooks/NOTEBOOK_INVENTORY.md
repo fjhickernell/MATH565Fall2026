@@ -220,7 +220,7 @@ notebook's dominant teaching purpose; ambiguous cases are identified below.
   `MATH565Fall2026/notebooks/sampling/GeneratingSamples.ipynb`
 - **Description:** Covers IID binomial samples, a zero-inflated exponential
   model, multivariate normal sampling, Gaussian processes, Brownian motion,
-  stock prices, option pricing, and low-discrepancy sampling.
+  stock prices, option pricing, and low discrepancy sampling.
 - **Dependencies:** NumPy, SciPy, statsmodels, Matplotlib, QMCPy, IPython,
   `classlib.distributions`, `classlib.plots`, `classlib.nbviz`, and
   repository-root path setup. No separate input data was found.
@@ -279,7 +279,7 @@ notebook's dominant teaching purpose; ambiguous cases are identified below.
 - **Proposed target:**
   `MATH565Fall2026/notebooks/sampling/QMCPy_Introduction.ipynb`
 - **Description:** Provides a broad hands-on tour of QMCPy discrete
-  distributions, low-discrepancy projections, true measures, integrands,
+  distributions, low discrepancy projections, true measures, integrands,
   stopping criteria, and financial-option examples.
 - **Dependencies:** NumPy, SciPy, pandas, Matplotlib, tqdm, QMCPy, `classlib`,
   IPython, and LaTeX support. It writes a `QMCPy_Intro_figures` directory.
