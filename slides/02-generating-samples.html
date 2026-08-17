@@ -640,6 +640,7 @@ In this deck
 <li><a href="#/the-quantile-transform">The quantile transform</a></li>
 <li><a href="#/binomial-random-numbers">Binomial random numbers</a></li>
 <li><a href="#/zero-inflated-exponential-random-numbers">Zero-inflated exponential random numbers</a></li>
+<li><a href="#/gaussian-mixture-random-numbers">Gaussian mixture random numbers</a></li>
 </ul>
 </section>
 <section id="where-do-random-variables-come-from" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
@@ -769,6 +770,8 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </div>
 
 <h3 id="cdf">CDF</h3>
+<div class="columns">
+<div class="column" style="width:47%;">
 <p>Let <span class="math inline">\(X\)</span> be nonnegative with probability <span class="math inline">\(p_0\)</span> of being zero and otherwise an exponential distribution with rate <span class="math inline">\(\lambda\)</span>:</p>
 <p><span class="math display">\[
 \Prob(X=0)=p_0,
@@ -784,10 +787,26 @@ p_0, &amp; x=0,\\
 p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 \end{cases}
 \]</span></p>
+</div><div class="column" style="width:6%;">
+
+</div><div class="column" style="width:47%;">
+<p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
+<div id="ea5c1d54" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="02-generating-samples_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" alt="CDF of a zero-inflated exponential distribution, showing a jump of size p zero at x equals zero" width="626" height="472"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
 </section>
 <section class="slide level2">
 
 <h3 id="quantile">Quantile</h3>
+<div class="columns">
+<div class="column" style="width:47%;">
 <p>Inverting the CDF gives</p>
 <p><span class="math display">\[
 Q(u)=
@@ -800,12 +819,104 @@ Q(u)=
 <div class="exitem">
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Verify that <span class="math inline">\(F\{Q(u)\}\ge u\)</span> and identify where equality fails</span></p>
 </div>
+</div><div class="column" style="width:6%;">
+
+</div><div class="column" style="width:47%;">
+<p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
+<div id="914c871e" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="02-generating-samples_files/figure-revealjs/cell-3-output-1.png" class="quarto-figure quarto-figure-center" alt="Quantile function of a zero-inflated exponential distribution, showing a flat segment from zero to p zero" width="626" height="472"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="an-alternative-transform">An alternative transform</h3>
 <div class="exitem">
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Define <span class="math inline">\(T(u):=Q(1-u)\)</span>. Simplify <span class="math inline">\(T\)</span> and explain why <span class="math inline">\(T(U)\)</span> has the desired distribution for <span class="math inline">\(U\sim\Unif(0,1)\)</span> even though <span class="math inline">\(T\)</span> is not the quantile function. Why might <span class="math inline">\(T\)</span> be preferred to <span class="math inline">\(Q\)</span>?</span></p>
 </div>
 <div class="key-point">
 <p>The generalized inverse handles <span class="alert">atoms and continuous pieces</span> with one definition</p>
 </div>
+</section>
+<section id="gaussian-mixture-random-numbers" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>Gaussian mixture random numbers</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<p>Let the one-dimensional target be a <span class="alert">Gaussian mixture</span>:</p>
+<p><span class="math display">\[
+X\sim p\Norm(\mu_1,\sigma_1^2)+(1-p)\Norm(\mu_2,\sigma_2^2),
+\qquad 0&lt;p&lt;1
+\]</span></p>
+<p>Writing <span class="math inline">\(\phi\)</span> and <span class="math inline">\(\Phi\)</span> for the standard normal PDF and CDF,</p>
+<p><span class="math display">\[\begin{align*}
+\varrho_X(x)
+&amp;=\frac{p}{\sigma_1}\phi\!\left(\frac{x-\mu_1}{\sigma_1}\right)
++\frac{1-p}{\sigma_2}\phi\!\left(\frac{x-\mu_2}{\sigma_2}\right),\\
+F_X(x)
+&amp;=p\Phi\!\left(\frac{x-\mu_1}{\sigma_1}\right)
++(1-p)\Phi\!\left(\frac{x-\mu_2}{\sigma_2}\right)
+\end{align*}\]</span></p>
+<div class="key-point">
+<p>The PDF and CDF have analytic formulas, but the mixture quantile <span class="math inline">\(Q=F_X^{-1}\)</span> generally has <span class="alert">no analytic closed form</span></p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="sampling-without-the-mixture-quantile">Sampling without the mixture quantile</h3>
+<p>Numerically inverting <span class="math inline">\(F_X\)</span> would work, but a hierarchical construction avoids solving <span class="math inline">\(F_X(x)=u\)</span></p>
+<p>Generate <span class="math inline">\(U_1,U_2\ \IIDsim\ \Unif(0,1)\)</span> and define</p>
+<p><span class="math display">\[
+C=\begin{cases}1,&amp;U_1\le p,\\2,&amp;U_1&gt;p,\end{cases}
+\qquad
+X=\mu_C+\sigma_C\Phi^{-1}(U_2)
+\]</span></p>
+<p>Then <span class="math inline">\(\Prob(C=1)=p\)</span> and <span class="math inline">\(X\mid C=k\sim\Norm(\mu_k,\sigma_k^2)\)</span></p>
+<div class="key-point">
+<p>A mixture chains a <span class="alert">discrete component choice</span> with a <span class="alert">within-component transform</span></p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="a-concrete-mixture">A concrete mixture</h3>
+<div class="columns">
+<div class="column" style="width:47%;">
+<p>Take</p>
+<p><span class="math display">\[\begin{align*}
+p&amp;=0.3,\\
+(\mu_1,\sigma_1)&amp;=(-2,0.5),\\
+(\mu_2,\sigma_2)&amp;=(1,1)
+\end{align*}\]</span></p>
+<p>For <span class="math inline">\(U_1=0.24\)</span> and <span class="math inline">\(U_2=0.90\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+C&amp;=1,\\
+X&amp;=-2+0.5\Phi^{-1}(0.90)\\
+&amp;\approx -1.36
+\end{align*}\]</span></p>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Use <span class="math inline">\(U_1=0.70\)</span> and <span class="math inline">\(U_2=0.25\)</span>. Which component is selected, and what value of <span class="math inline">\(X\)</span> is generated?</span></p>
+</div>
+</div><div class="column" style="width:6%;">
+
+</div><div class="column" style="width:47%;">
+<div id="83207f4d" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="02-generating-samples_files/figure-revealjs/cell-4-output-1.png" class="quarto-figure quarto-figure-center" alt="Density of a two-component Gaussian mixture with both weighted component densities shown" width="626" height="472"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
 </section></section>
 <section>
 <section id="random-vectors-and-stochastic-processes" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="random-generation">
@@ -1289,6 +1400,7 @@ U\le\frac{\varrho(Z)}{M\varrho_Z(Z)}
 <ul>
 <li>Start with uniform samples and transform them to the desired distribution</li>
 <li>The generalized inverse works for discrete and continuous distributions</li>
+<li>Mixtures combine a discrete component choice with a conditional transform</li>
 <li>Independent marginal transforms do not create dependence; correlated normal vectors require a matrix factorization</li>
 <li>Gaussian-process sampling reduces finite collections of function values to multivariate normal sampling</li>
 <li>Low discrepancy points trade independent placement for more even coverage</li>
