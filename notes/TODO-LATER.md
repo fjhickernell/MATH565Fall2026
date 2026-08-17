@@ -11,3 +11,6 @@ state why the work was deferred when that context will matter later.
   refinements are complete. Decide which inherited notebooks to retain,
   revise, combine, or omit; then validate each retained notebook with the
   `qmcpy` kernel and update the notebook page and deck links.
+- Add a reusable mixture-distribution feature to QMCPy. Design and implement
+  it in the standalone QMCSoftware repository rather than modifying the
+  course repository's pinned `qmcsoftware` submodule.
