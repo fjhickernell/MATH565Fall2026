@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-08-16">
+  <meta name="dcterms.date" content="2026-08-17">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -36,7 +36,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="01-introduction_files/libs/revealjs/dist/theme/quarto-9fece64726b755d47ccb080a46c1e6c7.css">
+  <link rel="stylesheet" href="01-introduction_files/libs/revealjs/dist/theme/quarto-68c7af28fbc94cc6db8a1cd54e912131.css">
   <link href="01-introduction_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="01-introduction_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="01-introduction_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -597,7 +597,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">August 16, 2026</p>
+  <p class="date">August 17, 2026</p>
 </section>
 <section id="we-begin-this-semester-amid-significant-change" class="slide level2">
 <h2>We begin this semester amid significant change</h2>
@@ -720,10 +720,10 @@ In this deck
 <li><a href="#/what-is-monte-carlo">What is Monte Carlo?</a></li>
 <li><a href="#/course-logistics">Course Logistics</a></li>
 <li><a href="#/terms-to-know">Terms to Know</a></li>
-<li><a href="#/probability-review">Probability review</a></li>
-<li><a href="#/samples-and-estimates">Samples and estimates</a></li>
+<li><a href="#/probability-review">Probability Review</a></li>
+<li><a href="#/samples-and-estimates">Samples and Estimates</a></li>
 <li><a href="#/conditioning">Conditioning</a></li>
-<li><a href="#/big-ideas">Big ideas</a></li>
+<li><a href="#/big-ideas">Big Ideas</a></li>
 </ul>
 </div></div>
 </section>
@@ -773,15 +773,15 @@ Domain<br>Knowledge
 (Quasi-)Random<br>Number Generation
 </div>
 <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">
-Low Discrepancy<br>Sequences
+Low<br>Discrepancy
 </div>
 <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">
 Estimation
 </div>
-<div class="tree-component__label" data-label-id="pseudorandom-numbers" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">
+<div class="tree-component__label" data-label-id="pseudorandom-numbers" style="--tree-left: 61%; --tree-top: 70%; --tree-align: center;">
 Pseudorandom<br>Numbers
 </div>
-<div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 61%; --tree-top: 70%; --tree-align: center;">
+<div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">
 Error<br>Assessment
 </div>
 <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">
@@ -956,7 +956,7 @@ Y&amp;=
 <li><p>Navigating these slides</p>
 <ul>
 <li><p>Each slide deck lists course decks and major sections after the title page</p></li>
-<li><p>Each major section is headed by a slide that points to minor sections</p></li>
+<li><p>Each major section begins with links to its individual slides</p></li>
 <li><p><span class="controls nav-control-sample" aria-label="Previous major section"><span class="controls-arrow" aria-hidden="true"></span></span> and <span class="controls nav-control-sample nav-control-sample-right" aria-label="Next major section"><span class="controls-arrow" aria-hidden="true"></span></span> jump to the previous and next major sections</p></li>
 <li><p><span class="controls nav-control-sample nav-control-sample-up" aria-label="Previous slide"><span class="controls-arrow" aria-hidden="true"></span></span> and <span class="controls nav-control-sample nav-control-sample-down" aria-label="Next slide"><span class="controls-arrow" aria-hidden="true"></span></span> jump to the previous and next slide</p></li>
 <li><p><span class="deck-nav-sample" aria-label="Previous slide deck">«</span> and <span class="deck-nav-sample" aria-label="Next slide deck">»</span> at the bottom jump to the previous and next decks</p></li>
@@ -1139,13 +1139,16 @@ Y&amp;=
 <li><a href="#/random-variables-and-distributions">Expectation</a></li>
 <li><a href="#/exponential-distribution">Exponential distribution</a></li>
 <li><a href="02-generating-samples.html#gaussian-processes">Gaussian process</a></li>
+<li><a href="02-generating-samples.html#the-quantile-transform">Generalized inverse</a></li>
+<li><a href="02-generating-samples.html#geometric-brownian-motion">Geometric Brownian motion</a></li>
+<li><a href="02-generating-samples.html#independent-marginals">Independent marginals</a></li>
 </ul>
 </div><div class="column" style="width:50%;">
 <ul>
-<li><a href="02-generating-samples.html#geometric-brownian-motion">Geometric Brownian motion</a></li>
 <li><a href="#/laws-of-total-expectation-and-variance">Law of total expectation</a></li>
 <li><a href="#/laws-of-total-expectation-and-variance">Law of total variance</a></li>
 <li><a href="02-generating-samples.html#what-does-low-discrepancy-mean">Low discrepancy</a></li>
+<li><a href="02-generating-samples.html#low-discrepancy-sequences">Low discrepancy sequence</a></li>
 <li><a href="#/moments-of-random-variables">Mean</a></li>
 <li><a href="#/mean-squared-error-bias-and-variance">Mean squared error (MSE)</a></li>
 <li><a href="#/moments-of-random-variables">Median</a></li>
@@ -1163,9 +1166,12 @@ Y&amp;=
 <li><a href="#/monte-carlo-estimates-of-properties-of-y">Point estimator</a></li>
 <li><a href="#/random-variables-and-distributions">Probability density function (PDF)</a></li>
 <li><a href="#/random-variables-and-distributions">Probability mass function (PMF)</a></li>
+<li><a href="02-generating-samples.html#the-acceptancerejection-algorithm">Proposal distribution</a></li>
 <li><a href="02-generating-samples.html#where-do-random-variables-come-from">Pseudorandom number generator</a></li>
 <li><a href="02-generating-samples.html#the-quantile-transform">Quantile function</a></li>
+<li><a href="02-generating-samples.html#the-quantile-transform">Quantile transform</a></li>
 <li><a href="#/random-variables-and-distributions">Random variable</a></li>
+<li><a href="02-generating-samples.html#biasvariance-decomposition">Randomized low discrepancy sampling</a></li>
 <li><a href="#/under-random-sampling">Root mean squared error (RMSE)</a></li>
 </ul>
 </div><div class="column" style="width:50%;">
@@ -1175,6 +1181,7 @@ Y&amp;=
 <li><a href="#/sampling">Sample variance</a></li>
 <li><a href="02-generating-samples.html#shrinkage-estimators">Shrinkage estimator</a></li>
 <li><a href="#/moments-of-random-variables">Standard deviation</a></li>
+<li><a href="02-generating-samples.html#the-acceptancerejection-algorithm">Target distribution</a></li>
 <li><a href="#/mean-squared-error-bias-and-variance">Unbiased estimator</a></li>
 <li><a href="#/moments-of-random-variables">Variance</a></li>
 <li><a href="#/conditional-monte-carlo">Variance reduction</a></li>
@@ -1183,7 +1190,7 @@ Y&amp;=
 </section></section>
 <section>
 <section id="probability-review" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="probability">
-<h1>Probability review</h1>
+<h1>Probability Review</h1>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
@@ -1213,8 +1220,8 @@ Probability
 <p>Let <span class="math inline">\(Y:\Omega\to\mathcal{Y}\subseteq\reals\)</span> be a <span class="alert">random variable</span></p>
 <p>For <span class="math inline">\(A\subseteq\mathcal{Y}\)</span>, <span class="math inline">\(\Prob(Y\in A)\)</span> is the probability of the <span class="alert">event</span> <span class="math inline">\(\{\omega\in\Omega:Y(\omega)\in A\}\)</span></p>
 <p><span class="math display">\[\begin{align*}
-F \text{ is the }\alerttext{cumulative distribution function}\text{, } F(y)&amp;:=\Prob(Y\le y), \;  y\in\mathcal{Y}, \quad\text{right continuous}\\
-Q \text{ is the }\alerttext{quantile function}\text{, } Q(u)&amp;:=\inf\{y\in\mathcal{Y}:F(y)\ge u\}, \; 0&lt;u&lt;1, \quad\text{left continuous}\\
+F \text{ is the }\alerttext{cumulative distribution function}\text{, } F(y)&amp;:=\Prob(Y\le y), \;  y\in\mathcal{Y}, \quad\text{right-continuous}\\
+Q \text{ is the }\alerttext{quantile function}\text{, } Q(u)&amp;:=\inf\{y\in\mathcal{Y}:F(y)\ge u\}, \; 0&lt;u&lt;1, \quad\text{left-continuous}\\
 &amp; = F^{-1}(u) \text{ if $F$ is continuous and strictly increasing} \\
 \Ex[g(Y)]&amp;:=\int_{\mathcal{Y}}g(y)\,\dif F(y)
 \end{align*}\]</span></p>
@@ -1260,7 +1267,7 @@ Q \text{ is the }\alerttext{quantile function}\text{, } Q(u)&amp;:=\inf\{y\in\ma
 <p><span class="math inline">\(\exstar\)</span> Assuming <span class="math inline">\(\Ex(Y^2)&lt;\infty\)</span>, show that <span class="math inline">\(\displaystyle \mu = \argmin_m \Ex\bigl[ (Y-m)^2 \bigr]\)</span></p>
 <p><span class="math inline">\(\exstar\)</span> Show that <span class="math inline">\(\displaystyle \med(Y) \in \argmin_m \Ex \lvert Y-m \rvert\)</span></p>
 <p>Medians may be nonunique</p>
-<p><span class="math inline">\(\exstar\)</span> Show that <span class="math inline">\(\cov(\vY)\)</span> is symmetric and has non-negative eigenvalues</p>
+<p><span class="math inline">\(\exstar\)</span> Show that <span class="math inline">\(\cov(\vY)\)</span> is symmetric and has nonnegative eigenvalues</p>
 </section>
 <section id="binomial-distribution" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Binomial distribution</h2>
@@ -1339,7 +1346,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </section></section>
 <section>
 <section id="samples-and-estimates" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="stat-estim">
-<h1>Samples and estimates</h1>
+<h1>Samples and Estimates</h1>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
@@ -1357,16 +1364,16 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <li><a href="#/are-we-there-yet-revisited">Are we there yet? Revisited</a></li>
 </ul>
 </section>
-<section id="sampling-schemes" class="slide level2 tree-marker-slide" data-tree-marker="stat-estim">
+<section id="sampling-schemes" class="slide level2 tree-marker-slide" data-tree-marker="sampling">
 <h2>Sampling schemes on <span class="math inline">\([0,1]^6\)</span></h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.6; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+  <div class="tree-component__label" data-label-id="pseudorandom-numbers" style="--tree-left: 61%; --tree-top: 70%; --tree-align: center;">Pseudorandom<br>Numbers</div>
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points; compare how its <span class="math inline">\(x_1\)</span>–<span class="math inline">\(x_2\)</span> projection fills the unit square</p>
-<div id="61945e17" class="cell" data-execution_count="4">
+<div id="376693da" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1379,7 +1386,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="grid">Grid</h3>
-<div id="22b8f8a7" class="cell" data-execution_count="5">
+<div id="b49f3f6b" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1392,7 +1399,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="orthogonal-array">Orthogonal array</h3>
-<div id="afa506b8" class="cell" data-execution_count="6">
+<div id="edb0d53a" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1405,7 +1412,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="iid">IID</h3>
-<div id="a76b0516" class="cell" data-execution_count="7">
+<div id="5b1a6d2c" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1418,7 +1425,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="scrambled-sobol">Scrambled Sobol’</h3>
-<div id="86565b04" class="cell" data-execution_count="8">
+<div id="1e2eca0e" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1469,7 +1476,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Suppose <span class="math inline">\(Y_1,Y_2,\ldots\sim Y\)</span> with <span class="math inline">\(\Ex(Y)=\mu\)</span> and <span class="math inline">\(\var(Y)=\sigma^2\)</span></p>
+<p>Suppose <span class="math inline">\(Y_1,Y_2,\ldots\)</span> have the same distribution as <span class="math inline">\(Y\)</span>, where <span class="math inline">\(\Ex(Y)=\mu\)</span> and <span class="math inline">\(\var(Y)=\sigma^2\)</span></p>
 <p>Then <span class="math display">\[
 \Ex(\hmu_n)=\mu \quad \text{$\hmu_n$ is an }\alerttext{unbiased}\text{ estimator of }\mu
 \]</span> If <span class="math inline">\(Y_1,Y_2,\ldots\)</span> are also <span class="alert">uncorrelated</span> <span class="math display">\[\begin{gather*}
@@ -1698,7 +1705,7 @@ g(Z):=\Ex(Y\mid Z)
 <p>so a probability density can itself be expressed as an expectation</p>
 </section></section>
 <section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="prob-stat-est">
-<h1>Big ideas</h1>
+<h1>Big Ideas</h1>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>

@@ -81,7 +81,7 @@
     "href": "pages/notebooks.html#sampling",
     "title": "Jupyter Notebooks",
     "section": "Sampling",
-    "text": "Sampling\nNotebooks on random and low-discrepancy sample generation, acceptance-rejection sampling, conditional Monte Carlo, Markov chain Monte Carlo, and related sampling methods will appear here."
+    "text": "Sampling\nNotebooks on random and low discrepancy sample generation, acceptance-rejection sampling, conditional Monte Carlo, Markov chain Monte Carlo, and related sampling methods will appear here."
   },
   {
     "objectID": "pages/notebooks.html#applications",
