@@ -213,6 +213,15 @@ appropriate phase rather than appended indiscriminately.
   - [x] Draft Lecture 02, Generating Samples, from the Fall 2025 Keynote deck.
   - [x] Complete instructor review of Lecture 02 and refine its scope,
     narrative, and mathematical presentation.
+  - [ ] Extend Lecture 02 with additional instructor-directed examples and
+    transformation context.
+    - [x] Add a one-dimensional Gaussian mixture example with analytic PDF and
+      CDF formulas, hierarchical sampling, and a density plot.
+    - [x] Add CDF and quantile plots for the zero-inflated exponential.
+    - [ ] Add lookback and barrier option-payoff examples.
+    - [ ] Explain chained transformations using transport maps and
+      normalizing flows, then develop the Gaussian-to-logistic
+      boundary-behavior example suggested by the MCQMC26 plenary material.
 - [ ] Adapt course pages and policies to the authoritative repository.
 - [ ] Migrate assignments, notebooks, examples, and required static assets.
 - [ ] Review migrated material for obsolete dates, links, software

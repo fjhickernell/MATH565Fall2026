@@ -393,6 +393,7 @@ Complete and submit this assignment individually, not as a group.
 - [Event](#random-variables-and-distributions)
 - [Expectation](#random-variables-and-distributions)
 - [Exponential distribution](#exponential-distribution)
+- [Gaussian mixture](02-generating-samples.html#gaussian-mixture-random-numbers)
 - [Gaussian process](02-generating-samples.html#gaussian-processes)
 - [Generalized inverse](02-generating-samples.html#the-quantile-transform)
 - [Geometric Brownian motion](02-generating-samples.html#geometric-brownian-motion)

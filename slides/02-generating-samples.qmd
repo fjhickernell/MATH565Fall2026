@@ -50,6 +50,7 @@ subtitle: |
 - [The quantile transform](#the-quantile-transform)
 - [Binomial random numbers](#binomial-random-numbers)
 - [Zero-inflated exponential random numbers](#zero-inflated-exponential-random-numbers)
+- [Gaussian mixture random numbers](#gaussian-mixture-random-numbers)
 
 ## Where do random variables come from? {.tree-marker-slide tree-marker="random-generation"}
 
@@ -132,6 +133,8 @@ E.g., $U_1=0.63$, $U_2=0.02$, and $U_3=0.47$ produce $X_1=2$, $X_2=0$, and $X_3=
 
 ### CDF
 
+::: {.columns}
+::: {.column width="47%"}
 Let $X$ be nonnegative with probability $p_0$ of being zero and otherwise an
 exponential distribution with rate $\lambda$:
 
@@ -151,11 +154,60 @@ p_0, & x=0,\\
 p_0+(1-p_0)(1-\me^{-\lambda x}), & x>0
 \end{cases}
 $$
+:::
+
+::: {.column width="6%"}
+:::
+
+::: {.column width="47%"}
+For the plot, $p_0=0.3$ and $\lambda=1$
+
+```{python}
+#| echo: false
+#| fig-align: center
+#| fig-alt: "CDF of a zero-inflated exponential distribution, showing a jump of size p zero at x equals zero"
+#| fig-width: 6.4
+#| fig-height: 4.8
+#| out-width: 100%
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+plt.rcParams["mathtext.fontset"] = "stix"
+
+p_0 = 0.3
+rate = 1.0
+x_negative = np.linspace(-1, 0, 150, endpoint=False)
+x_positive = np.linspace(0, 5, 600)
+cdf_positive = p_0 + (1 - p_0) * (1 - np.exp(-rate * x_positive))
+
+fig, ax = plt.subplots(figsize=(6.4, 4.8), constrained_layout=True)
+ax.plot(x_negative, np.zeros_like(x_negative), color="#1f5a91", linewidth=3)
+ax.plot(x_positive, cdf_positive, color="#1f5a91", linewidth=3)
+ax.scatter([0], [0], s=95, facecolor="white", edgecolor="#1f5a91",
+           linewidth=2.2, zorder=5)
+ax.scatter([0], [p_0], s=85, color="#1f5a91", zorder=6)
+ax.axhline(p_0, color="#d59b2d", linewidth=1.8, linestyle="--", alpha=0.9)
+ax.text(-0.92, p_0 + 0.035, r"$p_0$", color="#b27a13", fontsize=18,
+        math_fontfamily="stix")
+ax.set_xlabel(r"$x$", fontsize=22, math_fontfamily="stix")
+ax.set_ylabel(r"$F(x)$", fontsize=20, math_fontfamily="stix")
+ax.set_xlim(-1, 5)
+ax.set_ylim(-0.04, 1.04)
+ax.tick_params(labelsize=14)
+ax.spines[["top", "right"]].set_visible(False)
+ax.grid(alpha=0.18)
+plt.show()
+```
+:::
+:::
 
 ---
 
 ### Quantile
 
+::: {.columns}
+::: {.column width="47%"}
 Inverting the CDF gives
 
 $$
@@ -171,6 +223,55 @@ $$
 <span class="exbullet">$\exstar$</span>
 <span>Verify that $F\{Q(u)\}\ge u$ and identify where equality fails</span>
 :::
+:::
+
+::: {.column width="6%"}
+:::
+
+::: {.column width="47%"}
+For the plot, $p_0=0.3$ and $\lambda=1$
+
+```{python}
+#| echo: false
+#| fig-align: center
+#| fig-alt: "Quantile function of a zero-inflated exponential distribution, showing a flat segment from zero to p zero"
+#| fig-width: 6.4
+#| fig-height: 4.8
+#| out-width: 100%
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+plt.rcParams["mathtext.fontset"] = "stix"
+
+p_0 = 0.3
+rate = 1.0
+u_flat = np.linspace(0.001, p_0, 250)
+u_tail = np.linspace(p_0, 0.995, 600)
+quantile_tail = -np.log((1 - u_tail) / (1 - p_0)) / rate
+
+fig, ax = plt.subplots(figsize=(6.4, 4.8), constrained_layout=True)
+ax.plot(u_flat, np.zeros_like(u_flat), color="#1f5a91", linewidth=3)
+ax.plot(u_tail, quantile_tail, color="#1f5a91", linewidth=3)
+ax.axvline(p_0, color="#d59b2d", linewidth=1.8, linestyle="--", alpha=0.9)
+ax.scatter([p_0], [0], s=85, color="#1f5a91", zorder=5)
+ax.text(p_0 + 0.025, 4.5, r"$p_0$", color="#b27a13", fontsize=18,
+        math_fontfamily="stix")
+ax.set_xlabel(r"$u$", fontsize=22, math_fontfamily="stix")
+ax.set_ylabel(r"$Q(u)$", fontsize=20, math_fontfamily="stix")
+ax.set_xlim(0, 1)
+ax.set_ylim(-0.2, 5.2)
+ax.tick_params(labelsize=14)
+ax.spines[["top", "right"]].set_visible(False)
+ax.grid(alpha=0.18)
+plt.show()
+```
+:::
+:::
+
+---
+
+### An alternative transform
 
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>
@@ -179,6 +280,126 @@ $$
 
 ::: {.key-point}
 The generalized inverse handles [atoms and continuous pieces]{.alert} with one definition
+:::
+
+## Gaussian mixture random numbers {.tree-marker-slide tree-marker="random-generation"}
+
+Let the one-dimensional target be a [Gaussian mixture]{.alert}:
+
+$$
+X\sim p\Norm(\mu_1,\sigma_1^2)+(1-p)\Norm(\mu_2,\sigma_2^2),
+\qquad 0<p<1
+$$
+
+Writing $\phi$ and $\Phi$ for the standard normal PDF and CDF,
+
+\begin{align*}
+\varrho_X(x)
+&=\frac{p}{\sigma_1}\phi\!\left(\frac{x-\mu_1}{\sigma_1}\right)
+ +\frac{1-p}{\sigma_2}\phi\!\left(\frac{x-\mu_2}{\sigma_2}\right),\\
+F_X(x)
+&=p\Phi\!\left(\frac{x-\mu_1}{\sigma_1}\right)
+ +(1-p)\Phi\!\left(\frac{x-\mu_2}{\sigma_2}\right)
+\end{align*}
+
+::: {.key-point}
+The PDF and CDF have analytic formulas, but the mixture quantile
+$Q=F_X^{-1}$ generally has [no analytic closed form]{.alert}
+:::
+
+---
+
+### Sampling without the mixture quantile
+
+Numerically inverting $F_X$ would work, but a hierarchical construction avoids
+solving $F_X(x)=u$
+
+Generate $U_1,U_2\ \IIDsim\ \Unif(0,1)$ and define
+
+$$
+C=\begin{cases}1,&U_1\le p,\\2,&U_1>p,\end{cases}
+\qquad
+X=\mu_C+\sigma_C\Phi^{-1}(U_2)
+$$
+
+Then $\Prob(C=1)=p$ and $X\mid C=k\sim\Norm(\mu_k,\sigma_k^2)$
+
+::: {.key-point}
+A mixture chains a [discrete component choice]{.alert} with a
+[within-component transform]{.alert}
+:::
+
+---
+
+### A concrete mixture
+
+::: {.columns}
+::: {.column width="47%"}
+Take
+
+\begin{align*}
+p&=0.3,\\
+(\mu_1,\sigma_1)&=(-2,0.5),\\
+(\mu_2,\sigma_2)&=(1,1)
+\end{align*}
+
+For $U_1=0.24$ and $U_2=0.90$,
+
+\begin{align*}
+C&=1,\\
+X&=-2+0.5\Phi^{-1}(0.90)\\
+ &\approx -1.36
+\end{align*}
+
+::: {.exitem}
+<span class="exbullet">$\exstar$</span>
+<span>Use $U_1=0.70$ and $U_2=0.25$. Which component is selected, and what value of $X$ is generated?</span>
+:::
+:::
+
+::: {.column width="6%"}
+:::
+
+::: {.column width="47%"}
+```{python}
+#| echo: false
+#| fig-align: center
+#| fig-alt: "Density of a two-component Gaussian mixture with both weighted component densities shown"
+#| fig-width: 6.4
+#| fig-height: 4.8
+#| out-width: 100%
+
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import norm
+
+plt.rcParams["mathtext.fontset"] = "stix"
+
+p = 0.3
+mu_1, sigma_1 = -2, 0.5
+mu_2, sigma_2 = 1, 1
+x = np.linspace(-4.5, 4.5, 700)
+
+weighted_density_1 = p * norm.pdf(x, loc=mu_1, scale=sigma_1)
+weighted_density_2 = (1 - p) * norm.pdf(x, loc=mu_2, scale=sigma_2)
+mixture_density = weighted_density_1 + weighted_density_2
+
+fig, ax = plt.subplots(figsize=(6.4, 4.8), constrained_layout=True)
+ax.plot(x, mixture_density, color="#1f5a91", linewidth=3.2,
+        label=r"$\varrho_X(x)$")
+ax.plot(x, weighted_density_1, color="#d59b2d", linewidth=2.2,
+        linestyle="--", label=r"$p\,\varrho_1(x)$")
+ax.plot(x, weighted_density_2, color="#4f9b8f", linewidth=2.2,
+        linestyle="--", label=r"$(1-p)\,\varrho_2(x)$")
+ax.set_xlabel(r"$x$", fontsize=22, math_fontfamily="stix")
+ax.set_ylabel("density", fontsize=18)
+ax.tick_params(labelsize=14)
+ax.spines[["top", "right"]].set_visible(False)
+ax.grid(alpha=0.18)
+ax.legend(frameon=False, fontsize=15)
+plt.show()
+```
+:::
 :::
 
 # Random Vectors and Stochastic Processes {.tree-marker-slide tree-marker="random-generation"}
@@ -584,6 +805,7 @@ Choose a [proposal distribution]{.alert} close to the
 
 - Start with uniform samples and transform them to the desired distribution
 - The generalized inverse works for discrete and continuous distributions
+- Mixtures combine a discrete component choice with a conditional transform
 - Independent marginal transforms do not create dependence; correlated normal
   vectors require a matrix factorization
 - Gaussian-process sampling reduces finite collections of function values to
