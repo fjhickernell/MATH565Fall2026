@@ -36,6 +36,10 @@ Fall 2026 course website and course materials.
 - The most recent MATH 332 repository is a separate active course repository.
   Do not modify it during MATH 565 work unless the task explicitly includes
   MATH 332.
+- `MATH565Fall2025` is a permanently read-only historical reference. Never
+  perform any write operation there—including editing files, restoring files,
+  committing, or pushing—and never include it in a checkpoint. If it is dirty,
+  report the condition and stop rather than modifying it.
 - The architecture and course-material reference repositories named in
   `PLAN.md` are read-only.
 - Do not write to any other repository unless the user explicitly changes
