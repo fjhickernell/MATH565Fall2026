@@ -59,7 +59,7 @@ appropriate phase rather than appended indiscriminately.
     - [x] Verify the August 18 start date and December 3 final regular
       meeting.
     - [x] Mark Thanksgiving Day, November 26, as no class.
-    - [x] Record the classroom as TBA.
+    - [x] Record the classroom as PH 108.
     - [x] Add a TBA final-exam entry for the following week.
     - [x] Leave unknown topics, materials, and additional dates blank.
     - [x] Validate Quarto rendering and generated page structure.
@@ -134,8 +134,8 @@ appropriate phase rather than appended indiscriminately.
       policy links are current for Fall 2026.
   - [ ] Accessing repo
     (`classlib/classlib/quarto/pages/git-clone-update-with-submodules.qmd`)
-    - [ ] Replace or resolve generic `REPO_URL` and `MATHXXXSpring20YY`
-      placeholders for a self-contained MATH 565 student workflow.
+    - [x] Confirm that generic `REPO_URL` and `MATHXXXSpring20YY` placeholders
+      are intentional because this is a reusable `classlib` page.
   - [x] Interesting articles & links
     (`classlib/classlib/quarto/pages/interesting-articles-links.qmd`)
   - [x] IMS Student Membership
@@ -231,6 +231,7 @@ appropriate phase rather than appended indiscriminately.
     multilevel Monte Carlo.
   - [ ] Review Lectures 03–05 individually with the instructor and refine
     their scope, narrative, examples, and visible layout.
+  - [ ] Include Markov chain tree search (MCTS) in Deck 05, Selected Topics.
 - [ ] Adapt course pages and policies to the authoritative repository.
 - [ ] Migrate assignments, notebooks, examples, and required static assets.
 - [ ] Review migrated material for obsolete dates, links, software

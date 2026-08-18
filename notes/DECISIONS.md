@@ -6,11 +6,14 @@ would benefit from understanding why a choice was made.
 
 ## Decision log
 
-### 2026-08-08 — Place MCTS in a later slide deck
+### 2026-08-08 — Place MCTS in Selected Topics
 
 - **Decision:** Do not add Markov chain tree search (MCTS) to the Introduction
-  deck; cover it in a later MATH 565 slide deck.
-- **Rationale:** The instructor selected a later placement in the course.
+  deck; cover it in Deck 05, Selected Topics, the final deck.
+- **Rationale:** MCTS is a tree-search and sequential-decision method that uses
+  exploration and exploitation; it is not an MCMC method for sampling a target
+  distribution. Selected Topics preserves that distinction and allows the
+  module to connect naturally to stochastic optimization or an optional
+  project.
 - **Consequences:** Finish `slides/01-introduction.qmd` without an MCTS
-  example. Choose the specific later deck when planning that portion of the
-  lecture sequence.
+  example and include MCTS when developing `slides/05-selected-topics.qmd`.

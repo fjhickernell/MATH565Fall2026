@@ -155,6 +155,7 @@ assert all(
 - [Samples and Estimates](#samples-and-estimates)
 - [Conditioning](#conditioning)
 - [Big Ideas](#big-ideas)
+- [Next: Generating Samples](#next-generating-samples)
 :::
 :::
 
@@ -910,3 +911,38 @@ so a probability density can itself be expressed as an expectation
   for each target
 - Conditioning can turn a difficult random quantity into a lower-variance
   expectation
+
+# Next: Generating Samples {.tree-marker-slide tree-marker="random-generation"}
+
+::: {.columns}
+::: {.column width="46%"}
+Most simulations begin with
+
+$$
+\vU\sim\Unif[0,1]^d
+$$
+
+and construct
+
+$$
+\vX=T(\vU)
+$$
+
+with the distribution required by the model
+:::
+
+::: {.column width="39%"}
+- Where do [uniform samples]{.alert} come from?
+- How do we transform them to a [target distribution]{.alert}?
+- How do we generate [dependent random vectors and stochastic
+  processes]{.alert}?
+- Can [more even coverage]{.alert} improve Monte Carlo estimates?
+:::
+
+::: {.column width="15%"}
+:::
+:::
+
+::: {.key-point}
+Next: turn [uniform inputs]{.alert} into samples from the models we need
+:::

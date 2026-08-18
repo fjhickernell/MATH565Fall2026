@@ -7,10 +7,15 @@ section sequence, and mathematical emphasis before detailed layout polishing.
 
 ## Current state
 
-- Decks 01 and 02 remain the approved prototype and substantially reviewed
-  course opening; the batch conversion did not reopen their lecture content.
-- Deck 01's cumulative Terms to Know index now links important terminology
-  introduced in Decks 03–05.
+- Deck 01 is complete and instructor-approved. Its cumulative Terms to Know
+  index links terminology introduced in Decks 02–05, and its approved closing
+  transition previews Generating Samples using the transformation
+  $\vX=T(\vU)$.
+- Deck 02 has completed its initial instructor-led content and visible-layout
+  review. Its optional lookback/barrier and transformation-chain extensions
+  are parked for later rather than blocking Deck 03 review.
+- `notebooks/applications/AreWeThereYet.ipynb` is instructor-approved, executes
+  cleanly, and is linked from the notebook page and both travel-time slides.
 - `slides/03-markov-chain-monte-carlo.qmd` is a full first-pass conversion of
   the Fall 2025 Keynote deck. It preserves the Markov-chain examples,
   Metropolis–Hastings practice, discrepancy development, MLE and Bayesian
@@ -24,56 +29,39 @@ section sequence, and mathematical emphasis before detailed layout polishing.
 - `slides/05-selected-topics.qmd` is a full first-pass conversion covering
   parallel computing, gradient and stochastic-gradient descent, and two-level
   and multilevel Monte Carlo. It adds an executable gradient-path comparison.
-- All three new decks and the complete five-deck project render successfully
-  with the `qmcpy` kernel, and all local cross-deck links resolve.
+- Decks 03–05 are converted first drafts, not instructor-reviewed final decks.
+- MCTS is assigned to Deck 05, Selected Topics. It remains parked until that
+  deck's review.
+- The root website and all five decks render with the `qmcpy` kernel, and the
+  assembled site's local links resolve.
 - Fall 2025 dates, tests, assignments, Mentimeter prompts, feedback responses,
-  and other semester-specific logistics were omitted.
-- Deck 02's uncompleted lookback/barrier and transformation-chain extensions
-  remain possible later refinements rather than the current next task.
-- The unresolved review questions and the Fall 2026 improvement backlog
-  recovered from `MATH565Fall2025/MATH565_Improvements.md` are parked in
-  `notes/TODO-LATER.md`; they are not blockers for the Deck 03 review.
+  and other semester-specific logistics were omitted during conversion.
+- The M5 batch-conversion commit has been incorporated on the Mini together
+  with the Mini's Deck 01 transition, PH 108 schedule correction, MCTS
+  decision, and deferred-work notes. A read-only Intel audit found no
+  unpublished work, commits, stashes, or dirty submodules there.
 
-## Cross-machine handoff
+## Questions to resolve
 
-- The commit containing this handoff is the M5 batch-conversion baseline for
-  Decks 03–05. A remote check immediately before publication found no newer
-  MATH 565 commits from the Mini or Intel.
-- M5 validation completed successfully on August 17, 2026: the root website
-  and all five slide decks rendered, the assembled site contained every deck,
-  local slide links resolved, Decks 03–05 had matching section outlines, and
-  `git diff --check` passed. The recorded `classlib`, `qmcsoftware`, and
-  test-archive submodule pins did not change.
-- The protected `MATH565Fall2025` reference briefly appeared dirty because its
-  clean local `classlib` checkout had moved beyond the parent-recorded pin. The
-  checkout was restored to recorded commit `060d78b`; no Fall 2025 content,
-  commit, or submodule pointer was changed.
-- The iCloud-shared Check-In Dashboard was reconciled separately: Deck 03 is
-  the active MATH 565 task, while the deferred Deck 02, notebook, QMCPy, and
-  MCTS work is Blue. Preserve the user's other same-day dashboard changes.
-- Before synchronizing MATH 565 on the Mini, inspect its current branch,
-  worktree, recent commits, submodule status, stashes, and any unpublished work
-  from the earlier Mini session. Do not pull, reset, run `arrive`, or overwrite
-  files until that work has been identified and compared with this baseline.
-- If the Mini worktree is clean and has no unpublished commits, fast-forward it
-  normally. If it contains separate work, preserve that work and reconcile it
-  explicitly; report overlapping files or divergent commits instead of
-  silently choosing one machine's version.
+- Does Deck 03 have the right scope, section sequence, and mathematical
+  emphasis for Fall 2026?
+- Should the Hickernell (1998) and Gretton et al. (2012) discrepancy references
+  be added to shared `classlib` metadata and cited in Deck 03?
 
 ## Constraints
 
-- Treat the batch versions of Decks 03–05 as first drafts for individual
-  instructor review, not as final approvals of scope or visible layout.
+- Treat Decks 03–05 as first drafts for individual instructor review, not as
+  final approvals of scope or visible layout.
 - Use Decks 01 and 02 as the local presentation and navigation prototypes
-  without reopening their lecture content during review of Deck 03.
+  without reopening their approved lecture content during Deck 03 review.
 - Strip out Fall 2025-specific logistics, including references to that
-  semester's homework, assignments, due dates, tests, announcements, and
-  other dated events; do not present them as Fall 2026 information.
-- Keep MATH 565 course content in this repository and promote only genuinely
+  semester's assignments, tests, announcements, and dated events.
+- Keep course-specific content in this repository and promote only genuinely
   reusable infrastructure to `classlib` after demonstrated reuse.
 - Keep `qmcsoftware`, the test archive, and reference repositories read-only.
 - Preserve the Fall 2025 examples while improving notation, mathematical
-  layout, punctuation, semantic emphasis, and gaps in visual explanation.
+  layout, semantic emphasis, and gaps in visual explanation.
+- Keep MCTS in Deck 05, Selected Topics, rather than the MCMC deck.
 
 ## Done when
 

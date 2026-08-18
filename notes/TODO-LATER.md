@@ -4,75 +4,87 @@ This file tracks deferred work and lower-priority tasks that should remain
 visible without crowding the active project plan or status. Entries should
 state why the work was deferred when that context will matter later.
 
-## Deferred work
-
-- Revisit the optional Deck 02 extensions after Decks 03–05 have completed
-  individual instructor review: add selected lookback and barrier option
-  payoffs, then decide whether the planned transport-map and normalizing-flow
-  discussion belongs in the deck. These were deferred when the instructor
-  directed the batch conversion to start with Deck 03.
-- Review the notebooks associated with Deck 02 and align them with the final
-  lecture narrative after the planned instructor-directed deck
-  refinements are complete. Decide which inherited notebooks to retain,
-  revise, combine, or omit; then validate each retained notebook with the
-  `qmcpy` kernel and update the notebook page and deck links.
-- Add a reusable mixture-distribution feature to QMCPy. Design and implement
-  it in the standalone QMCSoftware repository rather than modifying the
-  course repository's pinned `qmcsoftware` submodule.
-
 ## Parked review questions
 
-- Decide during the Deck 05 review whether to add Monte Carlo tree search,
-  which was planned for Fall 2026 but does not appear in the Fall 2025
-  Selected Topics deck.
 - Choose an overarching text or chapter reference for Deck 05; the Fall 2025
   title slide says only `Owen, Chapters ???`.
 - Decide during the Deck 03 review whether to add the Hickernell (1998) and
   Gretton et al. (2012) discrepancy references to shared `classlib` metadata
   and cite them in the deck.
-- When the optional Deck 02 extensions resume, choose the lookback and barrier
-  contracts and the clearest transformation-map direction for the chained
-  transformation example.
 
-## Fall 2026 improvement backlog recovered from Fall 2025
+## Deck 02 — Generating Samples
 
-The following ideas were preserved from the read-only
-`MATH565Fall2025/MATH565_Improvements.md`, version 2025.11.28. They are a
-backlog for later prioritization, not commitments for the current Deck 03
-review.
+- After Decks 03–05 complete individual review, revisit selected lookback and
+  barrier option payoffs, then decide whether the planned transport-map and
+  normalizing-flow discussion belongs in Deck 02. Choose the contracts and map
+  direction during that review rather than in advance.
+- Review the Deck 02 notebooks against the final lecture narrative. Decide
+  which inherited notebooks to retain, revise, combine, or omit; validate each
+  retained notebook with the `qmcpy` kernel and update the notebook page and
+  deck links.
+- Refactor the Asian-option sampling code so path construction and payoff
+  interfaces can be reused for importance sampling and control variates in
+  Deck 04.
+- Reconsider a modern queueing simulation using SimPy. It may support the
+  stochastic-process narrative here or become a larger selected application in
+  Deck 05.
+- If QMCPy's kernel abstraction has matured, consider using covariance kernels
+  in the Gaussian-process material. Keep reusable implementation work in the
+  standalone QMCSoftware repository.
+- Add a reusable mixture-distribution feature to QMCPy in the standalone
+  QMCSoftware repository, not the course repository's pinned submodule.
 
-### Curriculum
+## Deck 03 — Markov Chain Monte Carlo
 
-- Add an accessible Monte Carlo tree search introduction covering exploration
-  versus exploitation, UCT, and connections to stochastic optimization;
-  consider it as a short module or optional project.
-- Expand MCMC coverage with ensemble sampling (`emcee`), NUTS demonstrations
-  in PyMC, and Langevin or Hamiltonian MCMC; decide whether these supplement or
-  partly replace Metropolis and parallel tempering.
+- Expand the sampler progression beyond basic Metropolis methods as time and
+  narrative permit: ensemble sampling with `emcee`, Langevin MCMC,
+  Hamiltonian Monte Carlo, and PyMC/NUTS as an automatic HMC demonstration.
+- Decide whether those methods supplement or replace inherited
+  parallel-tempering material. Preserve a coherent conceptual progression
+  rather than accumulating a catalog of packages.
 - Reconsider the queueing examples using SimPy, possibly with a small shim for
   a consistent course interface.
 
-### Notebooks and code
+## Deck 04 — Improving Efficiency
 
-- Modernize inherited notebooks to use the current `classlib` workflow,
-  especially GPU/CPU timing, gradient versus stochastic-gradient descent,
-  stopping criteria, and Asian-option examples.
-- Extend the introductory QMCPy Asian-option example with importance sampling
-  and control variates, together with clearer `nbviz` styling and explanatory
-  overlays.
-- Develop a fuller reusable QMCPy kernel abstraction for covariance kernels,
-  kernel herding, and Bayesian cubature demonstrations. Do this in the
-  standalone QMCPy repository, not the pinned course submodule.
+- Expand the Asian-option example with importance sampling and control
+  variates, building on reusable sampling/payoff architecture from Deck 02.
+- Improve `nbviz` styling and explanatory overlays when modernizing that
+  example.
+- Modernize inherited GPU/CPU timing, stopping-criteria, and performance
+  notebooks. Separate algorithmic efficiency from hardware timing and avoid
+  claims tied to obsolete machines.
+- Consider kernel herding and Bayesian cubature demonstrations if the QMCPy
+  kernel abstraction is sufficiently complete and these topics support the
+  efficiency narrative.
 
-### Workflow
+## Deck 05 — Selected Topics
 
-- Add periodic full-repository notebook execution to catch breakage before the
-  semester.
-- Test the student installation workflow with a clean macOS user and simplify
-  the Conda and QMCPy setup instructions based on the result.
+- Add an accessible introduction to Monte Carlo tree search (MCTS), including
+  exploration versus exploitation, upper confidence bounds for trees (UCT),
+  and connections to stochastic optimization. It may be a short module or
+  support an optional project.
+- Modernize the inherited gradient/stochastic-gradient notebook and clarify
+  its connection to Monte Carlo methods.
+- Consider queueing simulation here if developed as a substantial application
+  rather than a sampling example in Deck 02 or an MCMC example in Deck 03.
+- Consider kernel herding and Bayesian cubature here if they are better framed
+  as selected modern methods than as efficiency techniques in Deck 04.
 
-### Publishing
+## Cross-course notebooks and workflow
 
-- Continue the unified Quarto visual style for figures, code, and exposition.
-  The Fall 2026 repository has adopted Quarto, so the earlier Quarto versus
-  Jupyter Book platform evaluation is no longer an open migration decision.
+- Align retained older notebooks with the current `classlib`/`nbviz` workflow,
+  notation, and visual conventions rather than mechanically porting them.
+- Add periodic full-repository notebook execution to detect dependency and
+  runtime breakage before students encounter it.
+- Test the documented student installation workflow in a clean macOS user or
+  fresh environment and simplify the Conda/QMCPy instructions based on the
+  result.
+- Continue the established Quarto architecture and unified visual style;
+  reevaluate Jupyter Book only if it offers a concrete capability the current
+  workflow lacks.
+
+These items incorporate the durable ideas from the read-only Fall 2025
+planning document `MATH565Fall2025/MATH565_Improvements.md`, version
+2025.11.28. They are prompts for later deck development, not commitments to
+include every item.
