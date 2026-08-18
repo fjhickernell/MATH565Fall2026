@@ -130,7 +130,7 @@
     "href": "index.html#assessment",
     "title": "Welcome to MATH 565",
     "section": "Assessment",
-    "text": "Assessment\n\nAssignments: 15%\nProject: 25%\nMidterm Tests: 20%\nFinal Exam (Take-Home (35%) + In-Class (65%)): 40%\n\nIn-Class on the date assigned by the registrar\n\nExtra Credit: up to 10% if you are the first to find an error in\n\nMy lecture slides, Jupyter notebooks, or assignments at least 24 hours after I have presented them in class, or\nArt Owen’s book.\n\nI will award 0.5 or 1 extra-credit points, up to a maximum of 10 points. The last day for submitting an error is December 6.\nTo report an error, create an issue in the course repository. Extra-credit points are added to your final weighted total. The weighted total may not correctly reflect extra credit until grades are recorded for all categories."
+    "text": "Assessment\n\nAssignments: 15%\nProject: 25%\nMidterm Tests: 20%\nFinal Exam (Take-Home (35%) + In-Class (65%)): 40%\n\nIn-Class on the date assigned by the registrar\n\nExtra Credit: From August 24 through December 6, you may earn extra credit by being the first student to report a previously unreported error in\n\nmy lecture slides, Jupyter notebooks, or assignments at least 24 hours after the material was presented or posted; or\nthe textbook.\n\nReport each error by creating an issue in the course repository. Each confirmed error earns 0.5 or 1 percentage point, depending on the severity of the error, up to 10 percentage points total.\nExtra credit is added to your final weighted course total. Canvas may not display the weighted total correctly until grades have been recorded in every assessment category."
   },
   {
     "objectID": "classlib/website/software.html",
