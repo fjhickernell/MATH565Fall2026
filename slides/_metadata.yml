@@ -1,4 +1,5 @@
 metadata-files:
+  - ../course-metadata.yml
   - ../classlib/classlib/quarto/slides/hickernell-slides.yml
   - ../classlib/classlib/quarto/metadata/hickernell-texts.yml
   - ../classlib/classlib/quarto/metadata/hickernell-papers.yml

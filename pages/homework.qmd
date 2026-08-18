@@ -27,5 +27,5 @@ Assignment details and due dates will be added as they are finalized.
 
 | Assignment | Due Date |
 |---|---|
-| [Assignment 0 — Diagnostic Survey](https://iit.instructure.com/courses/25777/assignments/95825)<br>**Complete and submit this assignment individually, not as a group.** | August 21, 2026 |
+| [Assignment 0 — Diagnostic Survey]({{< meta canvas.assignment_0 >}})<br>**Complete and submit this assignment individually, not as a group.** | August 21, 2026 |
 | Assignment 1 — TBA | TBA |

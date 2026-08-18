@@ -19,6 +19,7 @@ metadata:
   instructor_photo: classlib/classlib/quarto/assets/images/fredplaidshirtcropped.jpg
 
 metadata-files:
+  - course-metadata.yml
   - classlib/classlib/quarto/metadata/hickernell-texts.yml
 
 # Navigation must live here (cannot be delegated via metadata-files).
@@ -40,6 +41,8 @@ website:
         text: Assignments
       - href: pages/tests.qmd
         text: Tests
+      - href: "{{< meta canvas.course >}}"
+        text: Canvas
       - text: Project
         menu:
           - href: pages/project.qmd

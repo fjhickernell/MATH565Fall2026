@@ -305,7 +305,7 @@ What [modeling assumptions]{.alert} are needed?
 ## Complete the Diagnostic Survey
 
 ::: {.key-point}
-Complete [Assignment 0 — Diagnostic Survey](https://iit.instructure.com/courses/25777/assignments/95825){.alert} by August 21.
+Complete [Assignment 0 — Diagnostic Survey]({{< meta canvas.assignment_0 >}}){.alert} by August 21.
 :::
 
 Complete and submit this assignment individually, not as a group.
@@ -337,7 +337,7 @@ Complete and submit this assignment individually, not as a group.
 
 - All materials are in the [Course Repository](https://github.com/fjhickernell/MATH565Fall2026), which is used to build the course website
 
-- Grades are in [Canvas](https://iit.instructure.com)
+- Grades are in [Canvas]({{< meta canvas.course >}})
 
 
 ## Why participate synchronously? {data-state="goldborder"}

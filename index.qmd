@@ -86,7 +86,7 @@ By the end of this course, students will be able to:
 <details>
 <summary><strong>Where to Find It</strong></summary>
 
-| **This course website** | **Canvas website** |
+| **This course website** | [**Canvas website**]({{< meta canvas.course >}}) |
 |---|---|
 | [Syllabus](index.qmd) | Grades |
 | [Schedule and Lecture Notes](pages/schedule.qmd) | Announcements |
