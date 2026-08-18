@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-08-17">
+  <meta name="dcterms.date" content="2026-08-18">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -597,7 +597,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">August 17, 2026</p>
+  <p class="date">August 18, 2026</p>
 </section>
 <section id="we-begin-this-semester-amid-significant-change" class="slide level2">
 <h2>We begin this semester amid significant change</h2>
@@ -724,6 +724,7 @@ In this deck
 <li><a href="#/samples-and-estimates">Samples and Estimates</a></li>
 <li><a href="#/conditioning">Conditioning</a></li>
 <li><a href="#/big-ideas">Big Ideas</a></li>
+<li><a href="#/next-generating-samples">Next: Generating Samples</a></li>
 </ul>
 </div></div>
 </section>
@@ -1407,7 +1408,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points; compare how its <span class="math inline">\(x_1\)</span>–<span class="math inline">\(x_2\)</span> projection fills the unit square</p>
-<div id="a3a18f0b" class="cell" data-execution_count="4">
+<div id="bdea4a76" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1420,7 +1421,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="grid">Grid</h3>
-<div id="69534728" class="cell" data-execution_count="5">
+<div id="937d24cf" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1433,7 +1434,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="orthogonal-array">Orthogonal array</h3>
-<div id="d8fe4483" class="cell" data-execution_count="6">
+<div id="64c934ed" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1446,7 +1447,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="iid">IID</h3>
-<div id="eac4d789" class="cell" data-execution_count="7">
+<div id="2875a0a0" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1459,7 +1460,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="scrambled-sobol">Scrambled Sobol’</h3>
-<div id="37b25ad0" class="cell" data-execution_count="8">
+<div id="69b9442f" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1761,6 +1762,39 @@ g(Z):=\Ex(Y\mid Z)
 <li>Other properties often begin with point estimates—one approximate value for each target</li>
 <li>Conditioning can turn a difficult random quantity into a lower-variance expectation</li>
 </ul>
+</section>
+
+<section id="next-generating-samples" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="random-generation">
+<h1>Next: Generating Samples</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<div class="columns">
+<div class="column" style="width:46%;">
+<p>Most simulations begin with</p>
+<p><span class="math display">\[
+\vU\sim\Unif[0,1]^d
+\]</span></p>
+<p>and construct</p>
+<p><span class="math display">\[
+\vX=T(\vU)
+\]</span></p>
+<p>with the distribution required by the model</p>
+</div><div class="column" style="width:39%;">
+<ul>
+<li>Where do <span class="alert">uniform samples</span> come from?</li>
+<li>How do we transform them to a <span class="alert">target distribution</span>?</li>
+<li>How do we generate <span class="alert">dependent random vectors and stochastic processes</span>?</li>
+<li>Can <span class="alert">more even coverage</span> improve Monte Carlo estimates?</li>
+</ul>
+</div><div class="column" style="width:15%;">
+
+</div></div>
+<div class="key-point">
+<p>Next: turn <span class="alert">uniform inputs</span> into samples from the models we need</p>
+</div>
 
 </section>
     </div>
