@@ -62,7 +62,7 @@ subtitle: |
   random]{.alert} in many demanding ways
 - Parallel computation requires special care: streams must not overlap or
   [acquire unintended dependence]{.alert}
-- [RANDU]{.alert} is a classic warning: simple-looking output can conceal
+- [RANDU](https://en.wikipedia.org/wiki/RANDU) is a classic warning: simple-looking output can conceal
   severe higher-dimensional structure
 - Physical generators may supply genuine randomness, but do not by themselves
   guarantee IID samples from the desired distribution
@@ -83,19 +83,21 @@ target distribution
 
 ## The quantile transform {.tree-marker-slide tree-marker="random-generation"}
 
-Most generators produce
+A sampling design supplies
 
 $$
-U_0,U_1,\ldots\ \IIDsim\ \Unif[0,1]
+U_i\sim\Unif[0,1],\qquad i=0,1,\ldots
 $$
 
-For a target cumulative distribution function $F$, define
+The design may be IID, Latin hypercube, low discrepancy, or something else. For a target cumulative distribution function $F$, define
 
 $$
 Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 $$
 
 Then $Q(u)\le x \iff u\le F(x)$
+
+&nbsp;
 
 For $X:=Q(U)$
 
@@ -104,7 +106,10 @@ $$
 =\Prob\{U\le F(x)\}=F(x)
 $$
 
-Thus $X\sim F$ and [IID uniform inputs yield IID target samples]{.alert}
+Thus each $X_i:=Q(U_i)\sim F$
+
+[IID inputs yield IID targets; other designs retain their dependence
+structure]{.alert}
 
 ## Binomial random numbers {.tree-marker-slide tree-marker="random-generation"}
 
@@ -120,8 +125,6 @@ Suppose $X\sim\Bin(3,0.6)$
 | Quantile $Q(u)$ | $0$ | $1$ | $2$ | $3$ |
 :::
 
-$F$ is [right-continuous]{.alert}; $Q$ is [left-continuous]{.alert}
-
 E.g., $U_0=0.63$, $U_1=0.02$, and $U_2=0.47$ produce $X_0=2$, $X_1=0$, and $X_2=2$
 
 ::: {.exitem}
@@ -129,14 +132,79 @@ E.g., $U_0=0.63$, $U_1=0.02$, and $U_2=0.47$ produce $X_0=2$, $X_1=0$, and $X_2=
 <span>If $u=0.70$, what value does the inverse transform produce? What about $u=0.90$?</span>
 :::
 
+---
+
+```{python}
+#| echo: false
+#| fig-align: center
+#| fig-alt: "CDF and quantile function for a binomial distribution with three trials and success probability 0.6, showing right-continuous CDF steps and left-continuous quantile steps"
+#| fig-width: 12
+#| fig-height: 4.8
+#| out-width: 94%
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+plt.rcParams["mathtext.fontset"] = "stix"
+
+support = np.array([0, 1, 2, 3])
+cdf = np.array([0.064, 0.352, 0.784, 1.0])
+blue = "#1f5a91"
+
+fig, (ax_cdf, ax_quantile) = plt.subplots(
+    1, 2, figsize=(12, 4.8), constrained_layout=True
+)
+
+# Right-continuous CDF: [left endpoint, right endpoint)
+cdf_left = np.array([-0.5, 0, 1, 2, 3])
+cdf_right = np.array([0, 1, 2, 3, 3.5])
+cdf_levels = np.array([0, *cdf])
+for left, right, level in zip(cdf_left, cdf_right, cdf_levels):
+    ax_cdf.hlines(level, left, right, color=blue, linewidth=3)
+for x_value, lower, upper in zip(support, [0, *cdf[:-1]], cdf):
+    ax_cdf.scatter(x_value, lower, s=70, facecolor="white", edgecolor=blue,
+                   linewidth=2, zorder=5)
+    ax_cdf.scatter(x_value, upper, s=65, color=blue, zorder=6)
+ax_cdf.set(xlabel=r"$x$", ylabel=r"$F(x)$", xlim=(-0.5, 3.5),
+           ylim=(-0.04, 1.04), xticks=support,
+           title=r"CDF of $X\sim\operatorname{Bin}(3,0.6)$")
+
+# Left-continuous quantile: (left endpoint, right endpoint]
+u_left = np.array([0, *cdf[:-1]])
+u_right = cdf
+for left, right, level in zip(u_left, u_right, support):
+    ax_quantile.hlines(level, left, right, color=blue, linewidth=3)
+    ax_quantile.scatter(left, level, s=70, facecolor="white", edgecolor=blue,
+                        linewidth=2, zorder=5)
+    ax_quantile.scatter(right, level, s=65, color=blue, zorder=6)
+ax_quantile.set(xlabel=r"$u$", ylabel=r"$Q(u)$", xlim=(-0.02, 1.02),
+                ylim=(-0.18, 3.18), yticks=support,
+                title="Quantile function")
+
+for ax in (ax_cdf, ax_quantile):
+    ax.tick_params(labelsize=14)
+    ax.xaxis.label.set_size(22)
+    ax.yaxis.label.set_size(20)
+    ax.title.set_size(18)
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.grid(alpha=0.18)
+
+plt.show()
+```
+
+$F$ is [right-continuous]{.alert}; $Q$ is [left-continuous]{.alert}
+
 ## Zero-inflated exponential random numbers {.tree-marker-slide tree-marker="random-generation"}
 
 ### CDF
 
 ::: {.columns}
 ::: {.column width="47%"}
-Let $X$ be nonnegative with probability $p_0$ of being zero and otherwise an
-exponential distribution with rate $\lambda$:
+Let $X$ be nonnegative with
+
+- Probability $p_0$ of being zero and
+- Otherwise an
+exponential distribution with rate (mean${}^{-1}$) $\lambda$
 
 $$
 \Prob(X=0)=p_0,
@@ -814,3 +882,5 @@ Choose a [proposal distribution]{.alert} close to the
 - Bias and variance are distinct contributions to mean squared error
 - Acceptance–rejection samples from an unnormalized density when a suitable
   proposal envelope is available
+
+[Companion GeneratingSamples notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb)

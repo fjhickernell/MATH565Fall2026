@@ -18,10 +18,6 @@ state why the work was deferred when that context will matter later.
   barrier option payoffs, then decide whether the planned transport-map and
   normalizing-flow discussion belongs in Deck 02. Choose the contracts and map
   direction during that review rather than in advance.
-- Review the Deck 02 notebooks against the final lecture narrative. Decide
-  which inherited notebooks to retain, revise, combine, or omit; validate each
-  retained notebook with the `qmcpy` kernel and update the notebook page and
-  deck links.
 - Refactor the Asian-option sampling code so path construction and payoff
   interfaces can be reused for importance sampling and control variates in
   Deck 04.

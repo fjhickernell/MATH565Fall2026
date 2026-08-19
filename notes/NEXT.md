@@ -2,8 +2,34 @@
 
 ## Current task
 
-Review Deck 03 individually with the instructor, beginning with its scope,
-section sequence, and mathematical emphasis before detailed layout polishing.
+Focus has switched to MATH 332. When MATH 565 work resumes, finish the Deck 02
+notebooks and polish Deck 02 before beginning Deck 03.
+
+## Next MATH 565 work
+
+1. Review `notebooks/sampling/GeneratingSamples.ipynb` with the instructor and
+   make any requested pedagogical or presentation refinements.
+2. Finish the Deck 02 notebook migration: use the completed lecture narrative
+   to decide which inherited companion notebooks to retain, revise, combine,
+   or omit; migrate and validate every retained notebook.
+3. Give Deck 02 a final instructor-led polish pass, including its notebook
+   links and the relationship between the lecture and retained notebooks.
+4. Review Deck 03 individually, beginning with its scope, section sequence,
+   and mathematical emphasis before detailed layout polishing.
+5. Review Deck 04 and then Deck 05 using the same instructor-led process.
+6. After Decks 03–05 are reviewed, return to the deliberately deferred Deck 02
+   extensions, including possible lookback and barrier examples.
+7. Complete the remaining Fall 2026 logistics and student-facing page details,
+   including the seminar link, assignments, tests, project dates, and visible
+   browser review.
+
+The first 565 work after the course switch is therefore to finish the Deck 02
+notebooks and polish Deck 02. Deck 03 follows that completed unit.
+
+## Deck 02 completion target
+
+Review `GeneratingSamples.ipynb`, finish the retained Deck 02 notebook
+migrations, and give Deck 02 a final polish pass before beginning Deck 03.
 
 ## Current state
 
@@ -16,6 +42,11 @@ section sequence, and mathematical emphasis before detailed layout polishing.
   are parked for later rather than blocking Deck 03 review.
 - `notebooks/applications/AreWeThereYet.ipynb` is instructor-approved, executes
   cleanly, and is linked from the notebook page and both travel-time slides.
+- `notebooks/sampling/GeneratingSamples.ipynb` has been migrated with current
+  QMCPy distribution, stochastic-process, and financial-option APIs. It
+  executes cleanly, has inspected saved outputs, and is linked from the
+  notebook page and Deck 02. Its simulations are intentionally unseeded so
+  reruns produce different realizations.
 - `slides/03-markov-chain-monte-carlo.qmd` is a full first-pass conversion of
   the Fall 2025 Keynote deck. It preserves the Markov-chain examples,
   Metropolis–Hastings practice, discrepancy development, MLE and Bayesian
@@ -41,7 +72,7 @@ section sequence, and mathematical emphasis before detailed layout polishing.
   decision, and deferred-work notes. A read-only Intel audit found no
   unpublished work, commits, stashes, or dirty submodules there.
 
-## Questions to resolve
+## Later questions for Deck 03
 
 - Does Deck 03 have the right scope, section sequence, and mathematical
   emphasis for Fall 2026?
@@ -65,8 +96,9 @@ section sequence, and mathematical emphasis before detailed layout polishing.
 
 ## Done when
 
-- Deck 03's content scope and section sequence are instructor-approved.
-- Its mathematical notation, examples, alert emphasis, and visible layout have
-  been reviewed slide by slide and refined.
-- Deck 03 renders cleanly, its internal and cross-deck links resolve, and any
-  remaining questions are recorded for the next review pass.
+- `GeneratingSamples.ipynb` is instructor-approved.
+- Every retained Deck 02 companion notebook is migrated, validated with the
+  `qmcpy` kernel, and linked appropriately; decisions to combine or omit other
+  inherited notebooks are recorded.
+- Deck 02 has received its final polish pass, renders cleanly, and is ready to
+  hand off before Deck 03 review begins.

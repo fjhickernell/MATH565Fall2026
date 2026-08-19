@@ -214,23 +214,29 @@ notebook's dominant teaching purpose; ambiguous cases are identified below.
 
 ### `GeneratingSamples.ipynb`
 
-- **Status:** Not migrated.
+- **Status:** Migration complete. Modernized initialization and current QMCPy
+  APIs, clean execution, and saved outputs have been validated. The notebook
+  is linked from the course notebook page and Deck 02. Instructor review is
+  still pending.
 - **Source:** `MATH565Fall2025/notebooks/GeneratingSamples.ipynb`
 - **Proposed target:**
   `MATH565Fall2026/notebooks/sampling/GeneratingSamples.ipynb`
 - **Description:** Covers IID binomial samples, a zero-inflated exponential
   model, multivariate normal sampling, Gaussian processes, Brownian motion,
   stock prices, option pricing, and low discrepancy sampling.
-- **Dependencies:** NumPy, SciPy, statsmodels, Matplotlib, QMCPy, IPython,
-  `classlib.distributions`, `classlib.plots`, `classlib.nbviz`, and
-  repository-root path setup. No separate input data was found.
+- **Dependencies:** NumPy, SciPy, statsmodels, Matplotlib, QMCPy,
+  `classlib.distributions`, `classlib.plots`, and `classlib.nbviz`. No
+  separate input data or repository-root path setup is required.
 - **Related versions:** `Old_Stuff` contains `GeneratingSamples_Ver.ipynb`,
   `GeneratingSamples_Ver_A.ipynb`, and `GeneratingSamples_Ver_B.ipynb`.
   These appear to be predecessors. Use the principal notebook unless a
   focused comparison finds a correction worth carrying forward.
-- **Migration concerns:** Colab and setup code refer to Fall 2025 and QMCPy
-  `develop`. The notebook is broad and relatively large; migrate it after
-  smaller sampling notebooks establish the Fall 2026 conventions.
+- **Migration notes:** Removed stale Colab, Fall 2025, path-discovery, and
+  moving-branch installation code. Current QMCPy `Gaussian`,
+  `ZeroInflatedExpUniform`, `BrownianMotion`, `GeometricBrownianMotion`, and
+  `FinancialOption` abstractions replace hand-built transformations and the
+  duplicate Asian-option payoff. Samples intentionally have no fixed seeds so
+  students see different realizations when they rerun the simulation.
 - **Classification:** Sampling is unambiguous, although several examples are
   application-oriented.
 

@@ -25,6 +25,11 @@ Notebooks on random and low discrepancy sample generation, acceptance-rejection
 sampling, conditional Monte Carlo, Markov chain Monte Carlo, and related
 sampling methods will appear here.
 
+- [Generating Samples](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb)
+  — construct and transform IID and low discrepancy samples, including
+  binomial, zero-inflated exponential, Gaussian-process, Brownian-motion, and
+  financial-option examples
+
 ## Applications
 
 - [Are We There Yet?](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/AreWeThereYet.ipynb)

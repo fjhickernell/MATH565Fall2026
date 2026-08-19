@@ -80,10 +80,15 @@ appropriate phase rather than appended indiscriminately.
         `classlib`/`nbviz` initialization and validate clean execution.
       - [x] Complete instructor review of `AreWeThereYet.ipynb` and finalize
         its mathematical explanations, plots, and method previews.
+      - [x] Migrate `GeneratingSamples.ipynb` to Sampling using current QMCPy
+        distribution, stochastic-process, and financial-option APIs; validate
+        clean execution and saved outputs.
     - [ ] Add notebook links only after each target exists and passes
       validation.
       - [x] Link the validated `AreWeThereYet.ipynb` from the Applications
         section.
+      - [x] Link the validated `GeneratingSamples.ipynb` from the Sampling
+        section and Deck 02.
     - [x] Validate Quarto rendering and generated page structure.
     - [ ] Inspect the visible page layout in a browser.
   - [ ] Assignments (`pages/homework.qmd`)
@@ -200,6 +205,8 @@ appropriate phase rather than appended indiscriminately.
   native tables and layouts, and RevealJS fragments for staged builds.
 - [x] Link the companion `AreWeThereYet` notebook after it has been migrated
   and validated.
+- [x] Link the companion `GeneratingSamples` notebook after it has been
+  migrated and validated.
 - [ ] Reassess possible reusable `classlib` improvements after Lecture 2
   demonstrates which patterns genuinely recur.
 - [x] Confirm that the prototype requires no change to the documented author
