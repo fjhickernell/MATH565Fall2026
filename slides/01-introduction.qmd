@@ -138,7 +138,7 @@ assert all(
 ::: {.column width="45%"}
 <h3>Course decks</h3>
 
-- [{{< meta decks.d01.title >}}]({{< meta decks.d01.file >}}){.alert}
+- [{{< meta decks.d01.title >}}]({{< meta decks.d01.file >}}) — [current]{.alert}
 - [{{< meta decks.d02.title >}}]({{< meta decks.d02.file >}})
 - [{{< meta decks.d03.title >}}]({{< meta decks.d03.file >}})
 - [{{< meta decks.d04.title >}}]({{< meta decks.d04.file >}})
@@ -305,7 +305,7 @@ What [modeling assumptions]{.alert} are needed?
 ## Complete the Diagnostic Survey
 
 ::: {.key-point}
-Complete [Assignment 0 — Diagnostic Survey]({{< meta canvas.assignment_0 >}}){.alert} by August 21.
+[Complete by August 21]{.alert}: [Assignment 0 — Diagnostic Survey]({{< meta canvas.assignment_0 >}})
 :::
 
 Complete and submit this assignment individually, not as a group.
@@ -343,9 +343,12 @@ Complete and submit this assignment individually, not as a group.
 ## Why participate synchronously? {data-state="goldborder"}
 
 - Keep pace with the course
-- Ask questions and receive answers in real time
+- Learn to ask questions that reveal
+  - Assumptions hidden in a model, method, or theorem
+  - Missing steps in an argument or gaps in your own understanding
+- Hear questions you would not have thought to ask
 - Influence the pace and direction of discussion
-- Help classmates learn and benefit from their questions
+- Help classmates learn by contributing your own questions
 - Build a learning community and get to know one another
 
 {{< include ../classlib/classlib/quarto/slides/shared/general/using-ai-well.qmd >}}

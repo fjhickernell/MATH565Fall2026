@@ -27,7 +27,7 @@ subtitle: |
 <h3>Course decks</h3>
 
 - [{{< meta decks.d01.title >}}]({{< meta decks.d01.file >}})
-- [{{< meta decks.d02.title >}}]({{< meta decks.d02.file >}}){.alert}
+- [{{< meta decks.d02.title >}}]({{< meta decks.d02.file >}}) — [current]{.alert}
 - [{{< meta decks.d03.title >}}]({{< meta decks.d03.file >}})
 - [{{< meta decks.d04.title >}}]({{< meta decks.d04.file >}})
 - [{{< meta decks.d05.title >}}]({{< meta decks.d05.file >}})
@@ -883,4 +883,4 @@ Choose a [proposal distribution]{.alert} close to the
 - Acceptance–rejection samples from an unnormalized density when a suitable
   proposal envelope is available
 
-[Companion GeneratingSamples notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb)
+[Companion `GeneratingSamples` notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb)

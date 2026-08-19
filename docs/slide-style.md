@@ -32,7 +32,8 @@ Each deck follows this opening sequence:
    Do not place this reference on the Course Map slide.
 2. The `# Course Map` slide uses two columns:
    - **Course decks** lists and links every deck in course order, with the
-     current deck marked using `.alert`.
+     current deck marked by an adjacent `.alert` label outside the link so the
+     link retains its own styling.
    - **In this deck** lists and links every `#` section in the current deck,
      in presentation order.
 3. The deck's instructional sections follow.
@@ -78,7 +79,7 @@ directly after a `#` heading can alter RevealJS slide structure.
 ::: {.column width="45%"}
 <h3>Course decks</h3>
 
-- [Current deck](current-deck.html){.alert}
+- [Current deck](current-deck.html) — [current]{.alert}
 - [Next deck](next-deck.html)
 :::
 
