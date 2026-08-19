@@ -901,7 +901,7 @@ Y&amp;=
 \text{where } \vX &amp; = \text{multivariate random variable that is }\alerttext{easy to sample}
 \end{align*}\]</span></p>
 <ul>
-<li>Generate <span class="alert">sample</span> versions <span class="math inline">\(Y_1,\ldots,Y_n\)</span></li>
+<li>Generate <span class="alert">sample</span> versions <span class="math inline">\(Y_0,\ldots,Y_{n-1}\)</span></li>
 <li>Use samples to estimate <span class="alert">population quantities</span>:
 <ul>
 <li>mean</li>
@@ -1408,7 +1408,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points; compare how its <span class="math inline">\(x_1\)</span>–<span class="math inline">\(x_2\)</span> projection fills the unit square</p>
-<div id="dfecde0f" class="cell" data-execution_count="4">
+<div id="237cbcf1" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1420,8 +1420,8 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </section>
 <section class="slide level2">
 
-<h3 id="grid">Grid</h3>
-<div id="d3a3a34f" class="cell" data-execution_count="5">
+<h3 id="grid-n64">Grid, <span class="math inline">\(n=64\)</span></h3>
+<div id="1b7bd93a" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1433,8 +1433,8 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </section>
 <section class="slide level2">
 
-<h3 id="orthogonal-array">Orthogonal array</h3>
-<div id="06f88e70" class="cell" data-execution_count="6">
+<h3 id="orthogonal-array-n64">Orthogonal array, <span class="math inline">\(n=64\)</span></h3>
+<div id="a13b660a" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1446,8 +1446,8 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </section>
 <section class="slide level2">
 
-<h3 id="iid">IID</h3>
-<div id="3a801fb7" class="cell" data-execution_count="7">
+<h3 id="iid-n64">IID, <span class="math inline">\(n=64\)</span></h3>
+<div id="da1b7f50" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1459,8 +1459,8 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </section>
 <section class="slide level2">
 
-<h3 id="scrambled-sobol">Scrambled Sobol’</h3>
-<div id="c02c573c" class="cell" data-execution_count="8">
+<h3 id="scrambled-sobol-n64">Scrambled Sobol’, <span class="math inline">\(n=64\)</span></h3>
+<div id="3673a838" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1478,15 +1478,15 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Let</p>
+<p>Normally, we want something more than <span class="math inline">\(\vX_0, \vX_1, \ldots \sim \Unif[0,1]^d\)</span>; let</p>
 <ul>
 <li><p><span class="math inline">\(Y\)</span> be a random variable, often <span class="math inline">\(Y=f(\vX)\)</span></p></li>
-<li><p><span class="math inline">\(Y_1,\ldots,Y_n\)</span> be a sample—not necessarily random or IID</p></li>
+<li><p><span class="math inline">\(Y_0,\ldots,Y_{n-1}\)</span> be a sample—not necessarily random or IID</p></li>
 </ul>
 <p><span class="math display">\[\begin{align*}
-\hmu_n &amp; :=\frac{1}{n}\sum_{i=1}^nY_i \quad \text{is the }\alerttext{sample mean}\\
+\hmu_n &amp; :=\frac{1}{n}\sum_{i=0}^{n-1}Y_i \quad \text{is the }\alerttext{sample mean}\\
 \hsigma_n^2 &amp;
-:=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\hmu_n)^2 \quad \text{is the }\alerttext{sample variance}\\
+:=\frac{1}{n-1}\sum_{i=0}^{n-1}(Y_i-\hmu_n)^2 \quad \text{is the }\alerttext{sample variance}\\
 \end{align*}\]</span></p>
 </section>
 <section id="mean-squared-error-bias-and-variance" class="slide level2 tree-marker-slide" data-tree-marker="stat-estim">
@@ -1511,17 +1511,16 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Suppose <span class="math inline">\(Y_1,Y_2,\ldots\)</span> have the same distribution as <span class="math inline">\(Y\)</span>, where <span class="math inline">\(\Ex(Y)=\mu\)</span> and <span class="math inline">\(\var(Y)=\sigma^2\)</span></p>
-<p>Then <span class="math display">\[
+<p>Suppose <span class="math inline">\(Y_0,Y_1,\ldots\)</span> have the same distribution as <span class="math inline">\(Y\)</span>, where <span class="math inline">\(\Ex(Y)=\mu\)</span> and <span class="math inline">\(\var(Y)=\sigma^2\)</span>. Then <span class="math display">\[
 \Ex(\hmu_n)=\mu \quad \text{$\hmu_n$ is an }\alerttext{unbiased}\text{ estimator of }\mu
-\]</span> If <span class="math inline">\(Y_1,Y_2,\ldots\)</span> are also <span class="alert">uncorrelated</span> <span class="math display">\[\begin{gather*}
-\Ex(\hsigma_n^2)=\sigma^2  \quad \text{$\hsigma_n^2$ is an }\alerttext{unbiased}\text{ estimator of }\sigma^2 \\
+\]</span> If <span class="math inline">\(Y_0,Y_1,\ldots\)</span> are also <span class="alert">uncorrelated</span> <span class="math display">\[\begin{align*}
+\Ex(\hsigma_n^2)&amp;=\sigma^2  \quad \text{$\hsigma_n^2$ is an }\alerttext{unbiased}\text{ estimator of }\sigma^2 \\
 \mse(\hmu_n)
-=\Ex\left[(\mu-\hmu_n)^2\right]
+&amp;:=\Ex\left[(\mu-\hmu_n)^2\right]
 =\frac{\sigma^2}{n}
 \\
-\rmse(\hmu_n)=\frac{\sigma}{\sqrt{n}}
-\end{gather*}\]</span></p>
+\rmse(\hmu_n)&amp; =\frac{\sigma}{\sqrt{n}}
+\end{align*}\]</span></p>
 </section>
 <section id="central-limit-theorem" class="slide level2 tree-marker-slide" data-tree-marker="probstat">
 <h2>Central Limit Theorem</h2>
@@ -1531,7 +1530,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
   <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
 </div>
 
-<p>If <span class="math inline">\(Y_1,Y_2,\ldots\IIDsim Y\)</span> and <span class="math inline">\(0&lt;\sigma^2&lt;\infty\)</span> then</p>
+<p>If <span class="math inline">\(Y_0,Y_1,\ldots\IIDsim Y\)</span> and <span class="math inline">\(0&lt;\sigma^2&lt;\infty\)</span> then</p>
 <p><span class="math display">\[
 \frac{\hmu_n-\mu}{\sigma/\sqrt{n}}
 \dto\Norm(0,1)
@@ -1570,7 +1569,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </tr>
 <tr class="odd">
 <td>CDF, <span class="math inline">\(F\)</span></td>
-<td>Empirical distribution function, <span class="math inline">\(\displaystyle  \hF_n(y) := \frac 1n \sum_{i=1}^n \indic(Y_i \le y)\)</span></td>
+<td>Empirical distribution function, <span class="math inline">\(\displaystyle  \hF_n(y) := \frac 1n \sum_{i=0}^{n-1} \indic(Y_i \le y)\)</span></td>
 </tr>
 <tr class="even">
 <td>Quantile function, <span class="math inline">\(Q\)</span></td>
@@ -1649,7 +1648,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <p>For the travel-time model</p>
 <ol type="1">
 <li>model each uncertain waiting time</li>
-<li>generate independent trip times <span class="math inline">\(Y_1,\ldots,Y_n\)</span></li>
+<li>generate independent trip times <span class="math inline">\(Y_0,\ldots,Y_{n-1}\)</span></li>
 <li>estimate the mean and relevant upper quantiles</li>
 <li>report Monte Carlo uncertainty with the estimates</li>
 </ol>
@@ -1700,14 +1699,13 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
-<p><span class="math display">\[
-\Ex(Y)=\Ex_Z\bigl[\Ex(Y\mid Z)\bigr]
-\]</span></p>
-<p><span class="math display">\[
+<p><span class="math display">\[\begin{align*}
+\Ex(Y)&amp;=\Ex_Z\bigl[\Ex(Y\mid Z)\bigr]
+\\
 \var(Y)
-=\Ex_Z\bigl[\var(Y\mid Z)\bigr]
+&amp;=\Ex_Z\bigl[\var(Y\mid Z)\bigr]
 +\var_Z\bigl(\Ex(Y\mid Z)\bigr)
-\]</span></p>
+\end{align*}\]</span></p>
 <div class="key-point">
 <p>Conditioning separates variation within a fixed <span class="math inline">\(Z\)</span> from variation in the conditional mean across values of <span class="math inline">\(Z\)</span></p>
 </div>

@@ -677,7 +677,7 @@ In this deck
 
 <p>Most generators produce</p>
 <p><span class="math display">\[
-U_1,U_2,\ldots\ \IIDsim\ \Unif[0,1]
+U_0,U_1,\ldots\ \IIDsim\ \Unif[0,1]
 \]</span></p>
 <p>For a target cumulative distribution function <span class="math inline">\(F\)</span>, define</p>
 <p><span class="math display">\[
@@ -757,7 +757,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </table>
 </div>
 <p><span class="math inline">\(F\)</span> is <span class="alert">right-continuous</span>; <span class="math inline">\(Q\)</span> is <span class="alert">left-continuous</span></p>
-<p>E.g., <span class="math inline">\(U_1=0.63\)</span>, <span class="math inline">\(U_2=0.02\)</span>, and <span class="math inline">\(U_3=0.47\)</span> produce <span class="math inline">\(X_1=2\)</span>, <span class="math inline">\(X_2=0\)</span>, and <span class="math inline">\(X_3=2\)</span></p>
+<p>E.g., <span class="math inline">\(U_0=0.63\)</span>, <span class="math inline">\(U_1=0.02\)</span>, and <span class="math inline">\(U_2=0.47\)</span> produce <span class="math inline">\(X_0=2\)</span>, <span class="math inline">\(X_1=0\)</span>, and <span class="math inline">\(X_2=2\)</span></p>
 <div class="exitem">
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>If <span class="math inline">\(u=0.70\)</span>, what value does the inverse transform produce? What about <span class="math inline">\(u=0.90\)</span>?</span></p>
 </div>
@@ -791,7 +791,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="2bae1ba7" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="1">
+<div id="2bedd1d6" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -823,7 +823,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="c3f7375f" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="10bc4d0f" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -907,7 +907,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="482c22cc" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="6774b2a6" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1211,9 +1211,9 @@ S(t)=S_0\exp\!\left[\left(r-\frac{\sigma^2}{2}\right)t+\sigma B(t)\right]
   <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
 </div>
 
-<p>Relaxing the requirement that <span class="math inline">\(\vU_1,\ldots,\vU_n\)</span> be IID allows carefully constructed samples to cover <span class="math inline">\([0,1]^d\)</span> more evenly</p>
+<p>Relaxing the requirement that <span class="math inline">\(\vU_0,\ldots,\vU_{n-1}\)</span> be IID allows carefully constructed samples to cover <span class="math inline">\([0,1]^d\)</span> more evenly</p>
 <p><span class="math display">\[
-\vU_1,\ldots,\vU_n\ \LDsim\ \Unif[0,1]^d
+\vU_0,\ldots,\vU_{n-1}\ \LDsim\ \Unif[0,1]^d
 \]</span></p>
 <p>The empirical distribution of the sample is close to the uniform distribution</p>
 <p><span class="alert">Discrepancy</span> quantifies that difference; precise definitions come later</p>
@@ -1268,12 +1268,12 @@ S(t)=S_0\exp\!\left[\left(r-\frac{\sigma^2}{2}\right)t+\sigma B(t)\right]
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Suppose <span class="math inline">\(Y_1,\ldots,Y_n\ \IIDsim\ Y\)</span>, where</p>
+<p>Suppose <span class="math inline">\(Y_0,\ldots,Y_{n-1}\ \IIDsim\ Y\)</span>, where</p>
 <p><span class="math display">\[
 \Ex(Y)=\mu,
 \qquad \var(Y)=\sigma^2,
 \qquad
-\hmu_n=\frac1n\sum_{i=1}^nY_i
+\hmu_n=\frac1n\sum_{i=0}^{n-1}Y_i
 \]</span></p>
 <p>For the estimator <span class="math inline">\(\alpha\hmu_n\)</span></p>
 <p><span class="math display">\[
