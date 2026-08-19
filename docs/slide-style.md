@@ -236,6 +236,10 @@ presenting them as current Fall 2026 information.
 
 - Prefer displayed equations.
 - Keep notation consistent.
+- Use Python-style zero-based indexing for samples, observations, Markov-chain
+  states, and low discrepancy sequences: a sample of size $n$ is indexed from
+  $0$ through $n-1$. Keep coordinate indices $1,\ldots,d$ and multilevel
+  indices $1,\ldots,L$ one-based.
 - Avoid overcrowded slides.
 - Preserve mathematical accuracy during conversion.
 - In plots, render mathematical symbol labels in a serif math font consistent

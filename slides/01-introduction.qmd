@@ -268,7 +268,7 @@ Y&=
 \text{where } \vX & = \text{multivariate random variable that is }\alerttext{easy to sample}
 \end{align*}
 
-- Generate [sample]{.alert} versions $Y_1,\ldots,Y_n$
+- Generate [sample]{.alert} versions $Y_0,\ldots,Y_{n-1}$
 - Use samples to estimate [population quantities]{.alert}:
   - mean
   - variance
@@ -654,7 +654,7 @@ plt.show()
 
 ---
 
-### Grid
+### Grid, $n=64$
 
 ```{python}
 #| echo: false
@@ -666,7 +666,7 @@ plt.show()
 
 ---
 
-### Orthogonal array
+### Orthogonal array, $n=64$
 
 ```{python}
 #| echo: false
@@ -681,7 +681,7 @@ plt.show()
 
 ---
 
-### IID
+### IID, $n=64$
 
 ```{python}
 #| echo: false
@@ -696,7 +696,7 @@ plt.show()
 
 ---
 
-### Scrambled Sobol'
+### Scrambled Sobol', $n=64$
 
 ```{python}
 #| echo: false
@@ -711,16 +711,16 @@ plt.show()
 
 ## Sampling {.tree-marker-slide tree-marker="stat-estim"}
 
-Let 
+Normally, we want something more than $\vX_0, \vX_1, \ldots \sim \Unif[0,1]^d$; let
 
 - $Y$ be a random variable, often $Y=f(\vX)$
 
-- $Y_1,\ldots,Y_n$ be a sample—not necessarily random or IID
+- $Y_0,\ldots,Y_{n-1}$ be a sample—not necessarily random or IID
 
 \begin{align*}
-\hmu_n & :=\frac{1}{n}\sum_{i=1}^nY_i \quad \text{is the }\alerttext{sample mean}\\
+\hmu_n & :=\frac{1}{n}\sum_{i=0}^{n-1}Y_i \quad \text{is the }\alerttext{sample mean}\\
 \hsigma_n^2 &
-:=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\hmu_n)^2 \quad \text{is the }\alerttext{sample variance}\\
+:=\frac{1}{n-1}\sum_{i=0}^{n-1}(Y_i-\hmu_n)^2 \quad \text{is the }\alerttext{sample variance}\\
 \end{align*}
 
 ## Mean squared error, bias, and variance {.tree-marker-slide tree-marker="stat-estim"}
@@ -735,27 +735,25 @@ Let $\Theta$ estimate a scalar population parameter $\theta$
 
 ## Under random sampling {.tree-marker-slide tree-marker="stat-estim"}
 
-Suppose $Y_1,Y_2,\ldots$ have the same distribution as $Y$, where
-$\Ex(Y)=\mu$ and $\var(Y)=\sigma^2$
-
-Then
+Suppose $Y_0,Y_1,\ldots$ have the same distribution as $Y$, where
+$\Ex(Y)=\mu$ and $\var(Y)=\sigma^2$. Then
 $$
 \Ex(\hmu_n)=\mu \quad \text{$\hmu_n$ is an }\alerttext{unbiased}\text{ estimator of }\mu
 $$
-If $Y_1,Y_2,\ldots$ are also [uncorrelated]{.alert}
-\begin{gather*}
-\Ex(\hsigma_n^2)=\sigma^2  \quad \text{$\hsigma_n^2$ is an }\alerttext{unbiased}\text{ estimator of }\sigma^2 \\
+If $Y_0,Y_1,\ldots$ are also [uncorrelated]{.alert}
+\begin{align*}
+\Ex(\hsigma_n^2)&=\sigma^2  \quad \text{$\hsigma_n^2$ is an }\alerttext{unbiased}\text{ estimator of }\sigma^2 \\
 \mse(\hmu_n)
-=\Ex\left[(\mu-\hmu_n)^2\right]
+&:=\Ex\left[(\mu-\hmu_n)^2\right]
 =\frac{\sigma^2}{n}
 \\
-\rmse(\hmu_n)=\frac{\sigma}{\sqrt{n}}
-\end{gather*}
+\rmse(\hmu_n)& =\frac{\sigma}{\sqrt{n}}
+\end{align*}
 
 
 ## Central Limit Theorem {.tree-marker-slide tree-marker="probstat"}
 
-If $Y_1,Y_2,\ldots\IIDsim Y$ and $0<\sigma^2<\infty$
+If $Y_0,Y_1,\ldots\IIDsim Y$ and $0<\sigma^2<\infty$
 then
 
 $$
@@ -781,7 +779,7 @@ Monte Carlo error for a sample mean typically decreases like $n^{-1/2}$
 |---|------|
 | Mean, $\mu$ | [point estimator]{.alert} $\hmu_n$ <br>approximate 99% [confidence interval]{.alert} $\hmu_n\pm2.58\hsigma_n/\sqrt n$ |
 | Variance, $\sigma^2$ | $\hsigma_n^2$ |
-| CDF, $F$ | Empirical distribution function, $\displaystyle  \hF_n(y) := \frac 1n \sum_{i=1}^n \indic(Y_i \le y)$ |
+| CDF, $F$ | Empirical distribution function, $\displaystyle  \hF_n(y) := \frac 1n \sum_{i=0}^{n-1} \indic(Y_i \le y)$ |
 | Quantile function, $Q$ | Empirical quantile function, $\widehat Q_n$ |
 | Density or mass function, $\varrho$ | Histogram or kernel density estimator |
 
@@ -811,7 +809,7 @@ point estimators
 For the travel-time model
 
 1. model each uncertain waiting time
-2. generate independent trip times $Y_1,\ldots,Y_n$
+2. generate independent trip times $Y_0,\ldots,Y_{n-1}$
 3. estimate the mean and relevant upper quantiles
 4. report Monte Carlo uncertainty with the estimates
 
@@ -850,15 +848,13 @@ $$
 
 ## Laws of total expectation and variance {.tree-marker-slide tree-marker="probability"}
 
-$$
-\Ex(Y)=\Ex_Z\bigl[\Ex(Y\mid Z)\bigr]
-$$
-
-$$
+\begin{align*}
+\Ex(Y)&=\Ex_Z\bigl[\Ex(Y\mid Z)\bigr]
+\\
 \var(Y)
-=\Ex_Z\bigl[\var(Y\mid Z)\bigr]
+&=\Ex_Z\bigl[\var(Y\mid Z)\bigr]
 +\var_Z\bigl(\Ex(Y\mid Z)\bigr)
-$$
+\end{align*}
 
 ::: {.key-point}
 Conditioning separates variation within a fixed $Z$ from variation in the

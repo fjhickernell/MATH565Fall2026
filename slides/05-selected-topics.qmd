@@ -89,7 +89,7 @@ Suppose
 
 $$
 \operatorname{Loss}(\vtheta)
-=\sum_{i=1}^N\operatorname{loss}_i(\vtheta)
+=\sum_{i=0}^{N-1}\operatorname{loss}_i(\vtheta)
 $$
 
 Computing the full gradient costs $N$ component gradients
