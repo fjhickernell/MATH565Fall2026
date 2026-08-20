@@ -83,6 +83,9 @@ appropriate phase rather than appended indiscriminately.
       - [x] Migrate `GeneratingSamples.ipynb` to Sampling using current QMCPy
         distribution, stochastic-process, and financial-option APIs; validate
         clean execution and saved outputs.
+      - [x] Record a cross-deck notebook plan that keeps survey, sampling
+        method, application, and performance narratives coherent while
+        allowing topics and notebook calls to span multiple decks.
     - [ ] Add notebook links only after each target exists and passes
       validation.
       - [x] Link the validated `AreWeThereYet.ipynb` from the Applications
@@ -228,9 +231,11 @@ appropriate phase rather than appended indiscriminately.
     - [x] Add lookback and barrier option-payoff examples.
     - [x] Separate general geometric Brownian motion from risk-neutral discrete
       asset paths and add American-put optimal stopping.
-    - [ ] Explain chained transformations using transport maps and
-      normalizing flows, then develop the Gaussian-to-logistic
-      boundary-behavior example suggested by the MCQMC26 plenary material.
+    - [x] Draft a compact transport-map and normalizing-flow explanation before
+      acceptance--rejection, using an explicit triangular flow to create curved
+      dependence and distinguishing transport from importance sampling.
+    - [ ] Complete instructor review of the transport-map draft and its
+      companion notebook treatment.
   - [x] Draft Lecture 03, Markov Chain Monte Carlo, from the Fall 2025
     Keynote deck, including its discrepancy, Bayesian, and queueing material.
   - [x] Draft Lecture 04, Improving Efficiency, from the Fall 2025 Keynote

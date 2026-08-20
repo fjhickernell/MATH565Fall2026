@@ -4,6 +4,10 @@ This file tracks deferred work and lower-priority tasks that should remain
 visible without crowding the active project plan or status. Entries should
 state why the work was deferred when that context will matter later.
 
+Deck headings identify the current main development, not exclusive ownership.
+A topic or notebook may be previewed, developed, revisited, or extended across
+multiple decks.
+
 ## Parked review questions
 
 - Choose an overarching text or chapter reference for Deck 05; the Fall 2025
@@ -14,15 +18,16 @@ state why the work was deferred when that context will matter later.
 
 ## Deck 02 — Generating Samples
 
-- After Decks 03–05 complete individual review, decide whether the planned
-  transport-map and normalizing-flow discussion belongs in Deck 02. Choose the
-  map direction during that review rather than in advance.
+- Review and finalize the drafted transport-map and normalizing-flow sequence,
+  including the triangular-flow example before acceptance--rejection. Create
+  the corresponding `MixturesAndTransportMaps.ipynb` according to
+  `notebooks/NOTEBOOK_INVENTORY.md` rather than enlarging
+  `GeneratingSamples.ipynb`.
 - Refactor the Asian-option sampling code so path construction and payoff
   interfaces can be reused for importance sampling and control variates in
-  Deck 04.
-- Reconsider a modern queueing simulation using SimPy. It may support the
-  stochastic-process narrative here or become a larger selected application in
-  Deck 05.
+  Deck 04. Follow the documented division of labor between
+  `FinancialOptionPayoffs.ipynb` and `AsianOptionVarianceReduction.ipynb`,
+  while allowing both Decks 02 and 04 to call either notebook where useful.
 - If QMCPy's kernel abstraction has matured, consider using covariance kernels
   in the Gaussian-process material. Keep reusable implementation work in the
   standalone QMCSoftware repository.
@@ -31,24 +36,26 @@ state why the work was deferred when that context will matter later.
 
 ## Deck 03 — Markov Chain Monte Carlo
 
-- Expand the sampler progression beyond basic Metropolis methods as time and
-  narrative permit: ensemble sampling with `emcee`, Langevin MCMC,
-  Hamiltonian Monte Carlo, and PyMC/NUTS as an automatic HMC demonstration.
-- Decide whether those methods supplement or replace inherited
-  parallel-tempering material. Preserve a coherent conceptual progression
-  rather than accumulating a catalog of packages.
-- Reconsider the queueing examples using SimPy, possibly with a small shim for
-  a consistent course interface.
+- Keep a transparent NumPy/SciPy Metropolis--Hastings notebook as the core
+  computational treatment. For one separate Bayesian application, prefer
+  PyMC/NUTS with ArviZ if its dependency burden is acceptable; use `emcee` as
+  a lighter fallback, not an additional core requirement.
+- Decide whether Langevin MCMC, hand-built Hamiltonian Monte Carlo, or
+  inherited parallel tempering adds enough to the narrative to retain as an
+  optional extension. Do not accumulate a catalog of packages. Follow the
+  notebook splits in `notebooks/NOTEBOOK_INVENTORY.md`.
+- Modernize the queueing example as its own Deck 03 application notebook and
+  evaluate SimPy, possibly with a small shim for a consistent course interface.
 
 ## Deck 04 — Improving Efficiency
 
-- Expand the Asian-option example with importance sampling and control
-  variates, building on reusable sampling/payoff architecture from Deck 02.
+- Create `AsianOptionVarianceReduction.ipynb` with importance sampling and
+  control variates, building on reusable sampling/payoff architecture from
+  Deck 02 `FinancialOptionPayoffs.ipynb`.
 - Improve `nbviz` styling and explanatory overlays when modernizing that
   example.
-- Modernize inherited GPU/CPU timing, stopping-criteria, and performance
-  notebooks. Separate algorithmic efficiency from hardware timing and avoid
-  claims tied to obsolete machines.
+- Modernize retained stopping-criteria notebook material and keep algorithmic
+  efficiency distinct from hardware timing.
 - Consider kernel herding and Bayesian cubature demonstrations if the QMCPy
   kernel abstraction is sufficiently complete and these topics support the
   efficiency narrative.
@@ -61,8 +68,11 @@ state why the work was deferred when that context will matter later.
   support an optional project.
 - Modernize the inherited gradient/stochastic-gradient notebook and clarify
   its connection to Monte Carlo methods.
+- Modernize the inherited GPU/CPU timing notebook as a separate selected-topic
+  demonstration. Qualify backend, synchronization, precision, and
+  machine-specific timing results.
 - Consider queueing simulation here if developed as a substantial application
-  rather than a sampling example in Deck 02 or an MCMC example in Deck 03.
+  rather than the current Markov-chain application in Deck 03.
 - Consider kernel herding and Bayesian cubature here if they are better framed
   as selected modern methods than as efficiency techniques in Deck 04.
 

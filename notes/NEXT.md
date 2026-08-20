@@ -2,29 +2,31 @@
 
 ## Current task
 
-Focus has switched to MATH 332. When MATH 565 work resumes, finish the Deck 02
-notebooks and polish Deck 02 before beginning Deck 03.
+Finish the first Deck 02 companion-notebook stage and polish its current calls
+before beginning Deck 03 review. Preserve flexibility for later decks to call
+or extend the same notebooks.
 
 ## Next MATH 565 work
 
 1. Review `notebooks/sampling/GeneratingSamples.ipynb` with the instructor and
    make any requested pedagogical or presentation refinements.
 2. Finish the Deck 02 notebook migration: use the completed lecture narrative
-   to decide which inherited companion notebooks to retain, revise, combine,
-   or omit; migrate and validate every retained notebook.
-3. Give Deck 02 a final instructor-led polish pass, including its notebook
+   and the deck-to-notebook plan in `notebooks/NOTEBOOK_INVENTORY.md` to build
+   the focused mixture/transport, acceptance--rejection, and financial-payoff
+   companions; migrate and validate every retained notebook.
+3. Review the drafted transport-map and normalizing-flow extension, its
+   triangular-flow example, and its treatment in the companion notebook.
+4. Give Deck 02 a final instructor-led polish pass, including its notebook
    links and the relationship between the lecture and retained notebooks.
-4. Review Deck 03 individually, beginning with its scope, section sequence,
+5. Review Deck 03 individually, beginning with its scope, section sequence,
    and mathematical emphasis before detailed layout polishing.
-5. Review Deck 04 and then Deck 05 using the same instructor-led process.
-6. After Decks 03–05 are reviewed, return to the deliberately deferred Deck 02
-   transport-map and normalizing-flow extension.
+6. Review Deck 04 and then Deck 05 using the same instructor-led process.
 7. Complete the remaining Fall 2026 logistics and student-facing page details,
    including the seminar link, assignments, tests, project dates, and visible
    browser review.
 
-The first 565 work after the course switch is therefore to finish the Deck 02
-notebooks and polish Deck 02. Deck 03 follows that completed unit.
+The immediate 565 work is therefore to finish the Deck 02 notebooks and polish
+Deck 02. Deck 03 follows that completed unit.
 
 ## Deck 02 completion target
 
@@ -42,8 +44,9 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   arithmetic-Asian discretizations together with discretely monitored lookback
   and barrier payoffs, plus an American-put optimal-stopping formulation. The
   preceding material now separates general geometric Brownian motion from its
-  risk-neutral discrete asset-path specialization. The transformation-chain
-  extension remains parked for later rather than blocking Deck 03 review.
+  risk-neutral discrete asset-path specialization. A compact transport-map and
+  normalizing-flow sequence with a triangular-flow example is now drafted
+  immediately before acceptance--rejection and awaits instructor review.
 - `notebooks/applications/AreWeThereYet.ipynb` is instructor-approved, executes
   cleanly, and is linked from the notebook page and both travel-time slides.
 - `notebooks/sampling/GeneratingSamples.ipynb` has been migrated with current
@@ -51,6 +54,13 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   executes cleanly, has inspected saved outputs, and is linked from the
   notebook page and Deck 02. Its simulations are intentionally unseeded so
   reruns produce different realizations.
+- `notebooks/NOTEBOOK_INVENTORY.md` now records the deck-to-notebook plan. It
+  keeps `GeneratingSamples.ipynb` as a survey, adds focused Deck 02 companions
+  for mixtures/transports, acceptance--rejection, and financial payoffs, and
+  splits the inherited Asian-option and MCMC omnibus material across Decks
+  02--04 by teaching purpose. Deck assignments identify previews, main
+  developments, continuations, and retrospective calls rather than exclusive
+  ownership; topics and notebooks may span decks.
 - `slides/03-markov-chain-monte-carlo.qmd` is a full first-pass conversion of
   the Fall 2025 Keynote deck. It preserves the Markov-chain examples,
   Metropolis–Hastings practice, discrepancy development, MLE and Bayesian
@@ -104,5 +114,6 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
 - Every retained Deck 02 companion notebook is migrated, validated with the
   `qmcpy` kernel, and linked appropriately; decisions to combine or omit other
   inherited notebooks are recorded.
-- Deck 02 has received its final polish pass, renders cleanly, and is ready to
-  hand off before Deck 03 review begins.
+- Deck 02 has received its polish pass for the current stage, renders cleanly,
+  and is ready to advance to Deck 03 review; later decks may add calls to the
+  same notebooks or motivate coherent extensions.

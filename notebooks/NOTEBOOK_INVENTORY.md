@@ -4,8 +4,10 @@
 
 This document is the durable project memory for migrating Jupyter notebooks
 from the read-only MATH 565 Fall 2025 course-material reference into the
-authoritative MATH 565 Fall 2026 repository. It records what each principal
-notebook does, where it should go, what it depends on, and what must be
+authoritative MATH 565 Fall 2026 repository and for designing the focused
+notebook family that accompanies the Fall 2026 decks. It records what each
+principal inherited notebook does, where retained material should go, which
+deck calls each resulting notebook, what it depends on, and what must be
 resolved before publication.
 
 The inventory covers the 14 `.ipynb` files directly under
@@ -14,8 +16,8 @@ files, and virtual documents as primary sources. Related files in
 `Old_Stuff` and `.ipynb_checkpoints` are noted only when they clarify
 duplication, provenance, or a possible alternative version.
 
-No notebook was copied, moved, renamed, or edited while preparing this
-inventory.
+No notebook was copied, moved, renamed, or edited during the initial inventory
+audit. The status entries below record migrations completed afterward.
 
 ## Repository boundaries
 
@@ -48,6 +50,205 @@ notebooks/
 
 Some notebooks span more than one category. The proposed target reflects the
 notebook's dominant teaching purpose; ambiguous cases are identified below.
+
+## Deck-to-notebook teaching plan
+
+### Organizing principle
+
+Use one notebook for one coherent computational or applied narrative, not one
+notebook per deck. Topics intentionally recur as the course spirals from a
+preview to a fuller development and then to applications or performance
+questions. A lecture deck may call more than one notebook, and a notebook may
+be called from several decks or contain sections whose natural teaching points
+occur in different decks. The Sampling, Applications, and Performance
+directories describe each notebook's dominant purpose; they are not curricular
+boundaries. In particular:
+
+- keep `GeneratingSamples.ipynb` as a survey and foundation notebook rather
+  than adding every later sampling method or financial example to it;
+- separate the inherited Asian-option material into a coherent payoff notebook
+  and a coherent variance-reduction notebook while allowing Decks 02 and 04 to
+  call both when useful;
+- split the inherited MCMC omnibus notebook into basic Metropolis--Hastings,
+  Bayesian computation, discrepancy, and queueing notebooks;
+- use a recurring target distribution only when it creates continuity, and
+  refer back to its definition rather than duplicating a long derivation; and
+- allow brief previews such as low discrepancy in an earlier deck and return
+  to the same notebook or example when the topic receives its main treatment;
+  and
+- add a notebook link to any relevant deck and `pages/notebooks.qmd` only after
+  the notebook exists, runs cleanly in the course environment, and has been
+  reviewed.
+
+A notebook call may be a **preview**, a **main development**, a
+**continuation/application**, or a **retrospective reference**. Link the
+notebook near the relevant section when students should use it there; a deck
+need not wait until its closing slide, and a notebook need not have one
+exclusive owning deck. The table below records the current expected call
+pattern, not a permanent ownership contract.
+
+### Planned calls by deck
+
+| Deck | Planned notebook calls | Role in this deck |
+|:---|:---|:---|
+| Deck 01, Introduction | `applications/AreWeThereYet.ipynb` | Main introductory Monte Carlo application; preview of randomized Sobol sampling and later efficiency ideas |
+| Deck 02, Generating Samples | `sampling/GeneratingSamples.ipynb`; `sampling/MixturesAndTransportMaps.ipynb`; `sampling/AcceptanceRejection.ipynb`; `applications/FinancialOptionPayoffs.ipynb` | Main direct-sampling development; early low discrepancy and financial-option examples intentionally prepare later decks |
+| Deck 03, Markov Chain Monte Carlo | `sampling/AcceptanceRejection.ipynb`; `sampling/MetropolisHastings.ipynb`; `applications/BayesianMCMC.ipynb`; `performance/Discrepancy.ipynb`; `applications/QueueSimulation.ipynb` | Return to acceptance--rejection as motivation; main MCMC, distribution-comparison, Bayesian, and queueing development |
+| Deck 04, Improving Efficiency | `sampling/GeneratingSamples.ipynb`; `sampling/MixturesAndTransportMaps.ipynb`; `applications/FinancialOptionPayoffs.ipynb`; `applications/KeisterExample.ipynb`; `sampling/ConditionalMonteCarlo.ipynb`; `performance/AsianOptionVarianceReduction.ipynb`; `performance/Discrepancy.ipynb` | Return to earlier low discrepancy, transport, and option examples; main importance-sampling, variance-reduction, discrepancy, and QMC development |
+| Deck 05, Selected Topics | A consolidated gradient/stochastic-gradient notebook and the GPU Monte Carlo notebook, if retained after review; earlier application notebooks when a selected topic extends them | Flexible continuation into selected methods; queueing may recur if it becomes a substantial application, and future MCTS or multilevel notebooks should remain coherent rather than omnibus |
+
+The broad inherited `QMCPy_Introduction.ipynb` has no required deck call. It
+should be retained only if it becomes a concise software orientation rather
+than a second survey notebook. Likewise, no deck should call a separate
+American-option notebook unless optimal stopping is developed computationally.
+
+## Planned notebook specifications
+
+### `sampling/GeneratingSamples.ipynb` — Deck 02, with returns in Deck 04
+
+Keep the existing notebook as the broad executable companion to Deck 02. Its
+job is to show direct construction and transformation of IID and low
+discrepancy samples, multivariate Gaussian samples, Brownian motion, geometric
+Brownian motion, and one arithmetic-Asian option preview. Instructor review
+may trim or clarify examples. Deck 04 may call its low discrepancy and option
+sections again, but the notebook need not absorb the full mixture, transport,
+acceptance--rejection, financial-payoff, or MCMC developments below.
+
+### `sampling/MixturesAndTransportMaps.ipynb` — Deck 02, with Decks 03–04 returns
+
+Create a focused notebook answering one question: how do simple reference
+samples become more complicated target distributions? Its preferred sequence
+is:
+
+1. hierarchical sampling from a Gaussian mixture;
+2. the one-dimensional quantile transform as a transport;
+3. the multivariate change-of-variables formula;
+4. the triangular flow from Deck 02,
+   \(X_1=Z_1\), \(X_2=Z_2+b(Z_1^2-1)\), with its explicit inverse,
+   unit Jacobian determinant, density, conditional mean, and banana-shaped
+   sample plot; and
+5. a direct comparison between transport and importance sampling: transport
+   moves every sample and keeps equal weights, whereas importance sampling
+   retains proposal samples and assigns unequal weights.
+
+Keep this to two or three substantive examples. Do not turn it into a catalog
+of normalizing-flow architectures or machine-learning packages. The mixture
+and transport topics belong together because both construct complicated
+distributions from simple random inputs.
+
+Deck 03 may return to this notebook when contrasting exact transport with
+MCMC, and Deck 04 may return to it when contrasting transport with importance
+sampling. Those later calls should reuse or extend the same examples rather
+than create parallel notebooks solely because the deck number changed.
+
+The inherited acceptance--rejection notebook uses a different bounded
+banana-shaped density. Either retain the two examples with clearly different
+names and domains, or later choose one canonical target. Do not silently
+present the bounded acceptance--rejection target and the Gaussian triangular
+flow as the same distribution.
+
+### `sampling/AcceptanceRejection.ipynb` — Decks 02 and 03
+
+Migrate and narrow the inherited notebook. Use normal sampling with an
+exponential proposal as the transparent one-dimensional example, followed by
+one nonlinear target and explicit acceptance-rate or envelope-efficiency
+diagnostics. End by explaining why a poor or unavailable global envelope
+motivates MCMC. Do not repeat the full MCMC algorithm or Bayesian application
+inside this notebook.
+
+### `applications/FinancialOptionPayoffs.ipynb` — Decks 02 and 04
+
+Create a dedicated notebook for discrete risk-neutral geometric-Brownian
+paths and payoff definitions. It should contain:
+
+- European call and put payoffs, with Black--Scholes values as benchmarks
+  where applicable;
+- arithmetic-Asian calls using both right-rectangle and trapezoidal
+  approximations to the continuous average;
+- lookback call and put payoffs;
+- a meaningful pair of discretely monitored barrier options, preferably
+  down-and-out and down-and-in calls, together with an in--out parity check
+  under the same monitoring convention;
+- a small collection of plotted paths annotated by the feature that controls
+  each payoff: terminal value, time average, running minimum or maximum, or
+  barrier crossing; and
+- one final IID-versus-scrambled-Sobol comparison across two or three
+  contracts.
+
+Use QMCPy's `FinancialOption` support for European, Asian, lookback, and
+barrier contracts so the code matches the Deck 02 notation and conventions.
+The notebook should establish reusable path-construction and payoff interfaces
+for Deck 04 without teaching all variance-reduction methods here.
+
+Do not include an American put merely as another payoff row. A computational
+American option requires an optimal-stopping method, likely Longstaff--Schwartz
+regression. If that material is eventually taught, create a separate advanced
+`applications/AmericanPutOptimalStopping.ipynb`; otherwise retain only the
+conceptual formulation in the slides.
+
+### `sampling/MetropolisHastings.ipynb` — Deck 03
+
+Replace the algorithmic core of the inherited omnibus MCMC notebook with a
+transparent NumPy/SciPy implementation. Use one well-defined bimodal or
+otherwise challenging target, then examine proposal scale, acceptance rate,
+burn-in, trace behavior, autocorrelation, effective sample information, and
+multiple chains. Refer back briefly to acceptance--rejection instead of
+repeating that notebook.
+
+The purpose is to understand MCMC mechanics, not to survey packages. A common
+target may be used later in `BayesianMCMC.ipynb` or `Discrepancy.ipynb` for a
+short comparison, provided its definition remains consistent.
+
+### `applications/BayesianMCMC.ipynb` — Deck 03
+
+Use one genuine posterior example to demonstrate a modern sampler and modern
+diagnostics. The preferred package choice is PyMC/NUTS with ArviZ if the
+dependency and clean-install burden is acceptable. `emcee` is the lighter
+fallback, not a second core requirement. Keep the statistical model and
+posterior interpretation central; do not make this a package tour.
+
+Langevin MCMC, hand-built Hamiltonian Monte Carlo, and parallel tempering may
+be mentioned or developed later if the Deck 03 narrative needs them. They
+should not all be accumulated in this notebook. Retain parallel tempering only
+as an optional multimodality extension if it contributes more than the chosen
+modern sampler.
+
+### `performance/Discrepancy.ipynb` — Decks 03 and 04
+
+Keep discrepancy and maximum mean discrepancy in their own sample-quality
+notebook instead of embedding them in the Metropolis notebook. Deck 03 calls
+it for comparing empirical and target distributions; Deck 04 may call it for
+the integration-error and low-discrepancy interpretations. Preserve that
+single teaching purpose even though two decks use it.
+
+### `applications/QueueSimulation.ipynb` — Deck 03, possible Deck 05 return
+
+Modernize the inherited queue quick start as a separate application notebook.
+Because the current Deck 03 treats queues as Markov-chain and event-driven
+systems, Deck 03 is its current main-development caller. Evaluate SimPy as the
+implementation package, possibly through a small course-facing interface, but
+do not place queue code in the MCMC notebook. Deck 05 may call and extend the
+same queue notebook if queueing becomes a larger selected application during
+deck review; that later use does not require moving or renaming it.
+
+### `performance/AsianOptionVarianceReduction.ipynb` — Deck 04, continuing Deck 02
+
+Build this from the variance-reduction portions of the inherited
+`AsianOptionExample.ipynb`. Reuse the path and payoff definitions established
+for Deck 02, then compare IID and low discrepancy sampling, importance
+sampling through drift, a European option as a control variate, and the
+combined drift-plus-control method. Keep the performance comparison and its
+diagnostics here rather than expanding `GeneratingSamples.ipynb` or
+`FinancialOptionPayoffs.ipynb`.
+
+### Deck 05 performance notebooks
+
+Consolidate the inherited gradient and stochastic-gradient variants into one
+focused notebook if that material survives Deck 05 review. Keep the GPU Monte
+Carlo demonstration separate because hardware, backend, synchronization, and
+precision caveats are its principal teaching job. Any future MCTS or
+multilevel Monte Carlo notebook should also be independent rather than folded
+into either performance notebook.
 
 ## Principal Fall 2025 notebooks
 
@@ -102,10 +303,15 @@ notebook's dominant teaching purpose; ambiguous cases are identified below.
 
 ### `AsianOptionExample.ipynb`
 
-- **Status:** Not migrated.
+- **Status:** Not migrated; split rather than one-for-one migration is now
+  recommended.
 - **Source:** `MATH565Fall2025/notebooks/AsianOptionExample.ipynb`
-- **Proposed target:**
-  `MATH565Fall2026/notebooks/applications/AsianOptionExample.ipynb`
+- **Proposed targets:** Use its path and basic payoff material when creating
+  `MATH565Fall2026/notebooks/applications/FinancialOptionPayoffs.ipynb` for
+  Deck 02, and migrate its drift importance sampling and European control
+  variate material into
+  `MATH565Fall2026/notebooks/performance/AsianOptionVarianceReduction.ipynb`
+  for Deck 04.
 - **Description:** Prices an arithmetic-mean Asian option and compares
   sampling schemes, importance sampling through drift, and a European option
   as a control variate.
@@ -117,9 +323,8 @@ notebook's dominant teaching purpose; ambiguous cases are identified below.
 - **Migration concerns:** The Colab badge incorrectly targets
   `KeisterExample.ipynb`. Confirm the current `classlib` option-pricing API
   and replace stale repository, environment, and nested-path assumptions.
-- **Classification:** Applications is recommended because option pricing is
-  the organizing problem, although the notebook also teaches performance
-  improvements.
+- **Classification:** Split by dominant teaching purpose: Applications for
+  payoff construction and Performance for variance reduction.
 
 ### `ConditionalMonteCarlo.ipynb`
 
@@ -262,10 +467,15 @@ notebook's dominant teaching purpose; ambiguous cases are identified below.
 
 ### `MarkovChainMonteCarlo.ipynb`
 
-- **Status:** Not migrated.
+- **Status:** Not migrated; split rather than one-for-one migration is now
+  recommended.
 - **Source:** `MATH565Fall2025/notebooks/MarkovChainMonteCarlo.ipynb`
-- **Proposed target:**
-  `MATH565Fall2026/notebooks/sampling/MarkovChainMonteCarlo.ipynb`
+- **Proposed targets:** Use the Metropolis material in
+  `MATH565Fall2026/notebooks/sampling/MetropolisHastings.ipynb`, the Bayesian
+  material as a starting point for
+  `MATH565Fall2026/notebooks/applications/BayesianMCMC.ipynb`, and the sample
+  comparison material only where it supports
+  `MATH565Fall2026/notebooks/performance/Discrepancy.ipynb`.
 - **Description:** Connects acceptance-rejection sampling, Metropolis
   sampling, maximum mean discrepancy, Bayesian inference, random-walk
   Metropolis, and parallel tempering.
@@ -275,8 +485,12 @@ notebook's dominant teaching purpose; ambiguous cases are identified below.
   Checkpoints are not migration sources.
 - **Migration concerns:** Colab setup installs QMCPy but does not directly
   install `classlib`, despite relying heavily on it. Confirm sampling and
-  discrepancy APIs, then update repository-root and environment logic.
-- **Classification:** Sampling is unambiguous.
+  discrepancy APIs, then update repository-root and environment logic. Avoid
+  repeating the inherited acceptance--rejection development, and treat
+  parallel tempering as an optional multimodality extension rather than part
+  of the basic Metropolis notebook.
+- **Classification:** Split among Sampling, Applications, and Performance by
+  the principal teaching purpose of each new notebook.
 
 ### `QMCPy_Introduction.ipynb`
 
@@ -343,7 +557,7 @@ notebook's dominant teaching purpose; ambiguous cases are identified below.
 - **Status:** Not migrated.
 - **Source:** `MATH565Fall2025/notebooks/queuesim_quick_start.ipynb`
 - **Proposed target:**
-  `MATH565Fall2026/notebooks/applications/queuesim_quick_start.ipynb`
+  `MATH565Fall2026/notebooks/applications/QueueSimulation.ipynb`
 - **Description:** Demonstrates a single-server exponential/uniform queue and
   a drive-through model with downstream blocking.
 - **Dependencies:** NumPy, SciPy, Matplotlib, QMCPy, IPython,
@@ -354,8 +568,10 @@ notebook's dominant teaching purpose; ambiguous cases are identified below.
   absent from the principal quick-start notebook. Related checkpoints are not
   primary sources.
 - **Migration concerns:** The Colab link misspells the notebook as
-  `quesim_quick_start.ipynb`. Confirm the current `classlib.queuesim` API and
-  replace the direct `Path.cwd().parent` assumption.
+  `quesim_quick_start.ipynb`. Confirm the current `classlib.queuesim` API,
+  replace the direct `Path.cwd().parent` assumption, and evaluate SimPy as the
+  modern implementation package without coupling queue code to the MCMC
+  notebook.
 - **Classification:** Applications is recommended because queueing systems
   are the organizing models, although the notebook also illustrates
   simulation construction.
@@ -493,26 +709,38 @@ execution time, warnings, and hidden state.
 
 ## Recommended migration and validation order
 
-The sequence begins with focused notebooks having relatively few
-platform-specific requirements and progresses toward broader, more tightly
-coupled, or hardware-dependent material.
+Proceed by deck so each notebook is shaped by the reviewed lecture narrative,
+not by the accidental boundaries of the inherited files.
 
-1. `KeisterExample.ipynb`
-2. `AcceptanceRejection.ipynb`
-3. `AreWeThereYet.ipynb`
-4. `ConditionalMonteCarlo.ipynb`
-5. `AsianOptionExample.ipynb`
-6. `GeneratingSamples.ipynb`
-7. `Discrepancy.ipynb`
-8. `MarkovChainMonteCarlo.ipynb`
-9. `QMCPy_Introduction.ipynb`
-10. `queuesim_quick_start.ipynb`
-11. `GD_SGD_Rosenbrock_Logistic_Timing.ipynb`
-12. `GPU_MonteCarlo_Demo.ipynb`
+1. Complete instructor review of the already migrated
+   `sampling/GeneratingSamples.ipynb`.
+2. Create and validate `sampling/MixturesAndTransportMaps.ipynb` from the new
+   Deck 02 mixture and transport sequence.
+3. Migrate and narrow `sampling/AcceptanceRejection.ipynb`.
+4. Create and validate `applications/FinancialOptionPayoffs.ipynb`, drawing
+   only the basic path and payoff material needed from the inherited Asian
+   option notebook.
+5. Add the validated notebook calls needed for Deck 02 and give that stage of
+   the deck--notebook sequence its initial polish. Later decks may add further
+   calls or motivate revisions without changing notebook identity merely to
+   match a deck boundary.
+6. Review Deck 03, then create or migrate `sampling/MetropolisHastings.ipynb`,
+   `applications/BayesianMCMC.ipynb`, `performance/Discrepancy.ipynb`, and
+   `applications/QueueSimulation.ipynb` in the order established by that
+   review.
+7. During Deck 04 review, migrate `applications/KeisterExample.ipynb` and
+   `sampling/ConditionalMonteCarlo.ipynb`, then create
+   `performance/AsianOptionVarianceReduction.ipynb` from the retained
+   variance-reduction parts of the inherited Asian notebook.
+8. During Deck 05 review, consolidate the gradient/stochastic-gradient
+   variants and decide whether to migrate the separate GPU notebook.
+9. Reconsider the broad `QMCPy_Introduction.ipynb` only after the focused
+   course notebook family exists; omit it if it would duplicate the survey
+   role of `GeneratingSamples.ipynb`.
 
-Before step 11, review `SGD_Rosenbrock_nbviz.ipynb` for unique material to
-merge into the broader gradient-descent notebook. Do not migrate
-`TemplateNotebook.ipynb` as student-facing content.
+Do not migrate `TemplateNotebook.ipynb` as student-facing content. Before the
+Deck 05 gradient notebook is created, review `SGD_Rosenbrock_nbviz.ipynb` for
+unique material to merge rather than publishing overlapping versions.
 
 For each migrated notebook:
 

@@ -845,6 +845,7 @@ $$
 - [Low discrepancy sequences](#low-discrepancy-sequences)
 - [Bias–variance decomposition](#biasvariance-decomposition)
 - [Shrinkage estimators](#shrinkage-estimators)
+- [Transport maps and normalizing flows](#transport-maps-and-normalizing-flows)
 
 ## What does low discrepancy mean? {.tree-marker-slide tree-marker="low-discrepancy"}
 
@@ -919,6 +920,71 @@ $$
 <span>Find the value of $\alpha$ that minimizes this MSE. Is the minimizing estimator unbiased?</span>
 :::
 
+## Transport maps and normalizing flows {.tree-marker-slide tree-marker="random-generation"}
+
+The quantile transform is a [one-dimensional transport]{.alert}. In $d$
+dimensions, start with an easy reference density $\varrho_0$ and an invertible,
+differentiable map $T:\reals^d\to\reals^d$:
+
+$$
+\vZ\sim\varrho_0,
+\qquad
+\vX=T(\vZ)
+$$
+
+The change-of-variables formula gives
+
+$$
+\varrho_X(\vx)
+=\varrho_0\!\left(T^{-1}(\vx)\right)
+\left|\det \nabla T^{-1}(\vx)\right|
+$$
+
+A [normalizing flow]{.alert} composes manageable maps
+$T=T_m\circ\cdots\circ T_1$, often tuning their parameters to fit a target
+
+::: {.key-point}
+A transport [moves every sample and keeps equal weights]{.alert}; importance
+sampling keeps proposal samples and assigns unequal weights
+:::
+
+---
+
+### A triangular flow creates curved dependence
+
+Let $Z_1,Z_2\ \IIDsim\ \Norm(0,1)$ and, for $b>0$, define
+
+$$
+X_1=Z_1,
+\qquad
+X_2=Z_2+b(Z_1^2-1)
+$$
+
+This nonlinear map is easy to invert and has a simple Jacobian:
+
+$$
+T_b^{-1}(\vx)
+=\begin{pmatrix}x_1\\x_2-b(x_1^2-1)\end{pmatrix},
+\qquad
+\nabla T_b(\vz)
+=\begin{pmatrix}1&0\\2bz_1&1\end{pmatrix},
+\qquad
+\det\nabla T_b=1
+$$
+
+Thus, with $\phi$ the standard normal density,
+
+$$
+\varrho_X(x_1,x_2)
+=\phi(x_1)\phi\!\left(x_2-b(x_1^2-1)\right),
+\qquad
+\Ex(X_2\mid X_1=x_1)=b(x_1^2-1)
+$$
+
+One layer turns independent Gaussian coordinates into a curved, dependent
+target. If no useful invertible map is available, [acceptance–rejection]{.alert}
+offers another route from an easy proposal to the target
+
 # Acceptance–Rejection Sampling {.tree-marker-slide tree-marker="random-generation"}
 
 - [The acceptance–rejection algorithm](#the-acceptancerejection-algorithm)
@@ -974,6 +1040,7 @@ Obtaining $n$ accepted samples requires an [average of $nMc$ proposals]{.alert}
 |:---|:---|:---:|
 | Quantile transform $X=Q(U)$ | Quantile function $Q$ | Yes |
 | Normal transform $\vX=\mA\vZ+\vmu$ | $\mSigma=\mA\mA^\mathsf{T}$ | Yes |
+| Transport map $\vX=T(\vZ)$ | Invertible $T$ and its Jacobian | Yes |
 | Acceptance–rejection | $\varrho\le M\varrho_Z$ | With care |
 
 ::: {.key-point}
