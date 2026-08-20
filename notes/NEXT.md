@@ -18,7 +18,7 @@ notebooks and polish Deck 02 before beginning Deck 03.
    and mathematical emphasis before detailed layout polishing.
 5. Review Deck 04 and then Deck 05 using the same instructor-led process.
 6. After Decks 03–05 are reviewed, return to the deliberately deferred Deck 02
-   extensions, including possible lookback and barrier examples.
+   transport-map and normalizing-flow extension.
 7. Complete the remaining Fall 2026 logistics and student-facing page details,
    including the seminar link, assignments, tests, project dates, and visible
    browser review.
@@ -38,8 +38,12 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   transition previews Generating Samples using the transformation
   $\vX=T(\vU)$.
 - Deck 02 has completed its initial instructor-led content and visible-layout
-  review. Its optional lookback/barrier and transformation-chain extensions
-  are parked for later rather than blocking Deck 03 review.
+  review. Its option-payoff section now includes QMCPy's right and trapezoidal
+  arithmetic-Asian discretizations together with discretely monitored lookback
+  and barrier payoffs, plus an American-put optimal-stopping formulation. The
+  preceding material now separates general geometric Brownian motion from its
+  risk-neutral discrete asset-path specialization. The transformation-chain
+  extension remains parked for later rather than blocking Deck 03 review.
 - `notebooks/applications/AreWeThereYet.ipynb` is instructor-approved, executes
   cleanly, and is linked from the notebook page and both travel-time slides.
 - `notebooks/sampling/GeneratingSamples.ipynb` has been migrated with current

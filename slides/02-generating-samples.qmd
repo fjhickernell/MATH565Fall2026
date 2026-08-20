@@ -694,38 +694,150 @@ $$
 The Cholesky construction is the familiar [cumulative-sum construction]{.alert} for Brownian motion
 :::
 
-## Geometric Brownian motion {.tree-marker-slide tree-marker="quant-finance"}
+## Geometric Brownian motion {.tree-marker-slide tree-marker="probability"}
 
-- $S_0$: initial asset price
-- $r$: continuously compounded risk-free rate
-- $\sigma$: volatility
-
-Then
+For $S_0>0$, drift $\gamma$, and volatility $\sigma>0$, define
 
 $$
-S(t)=S_0\exp\!\left[\left(r-\frac{\sigma^2}{2}\right)t+\sigma B(t)\right]
+S(t)=S_0\exp\!\left[
+\left(\gamma-\frac{\sigma^2}{2}\right)t+\sigma B(t)
+\right]
 $$
 
-is a geometric Brownian motion model for the asset price
+Then $S(t)>0$, its multiplicative increments are lognormal, and
 
-The correction [$-\sigma^2/2$]{.alert} ensures $\Ex[S(t)]=S_0\me^{rt}$ under the
-risk-neutral model
+$$
+\Ex[S(t)]=S_0\me^{\gamma t}
+$$
+
+The correction [$-\sigma^2/2$]{.alert} makes $\gamma$ the mean growth rate
+rather than the median growth rate
+
+---
+
+### Risk-neutral asset-price paths
+
+For a non-dividend-paying asset, the [risk-neutral model]{.alert} sets
+$\gamma=r$
+
+On $0=t_0<t_1<\cdots<t_d=T$, define $\Delta t_j:=t_j-t_{j-1}$. For
+$Z_1,\ldots,Z_d\ \IIDsim\ \Norm(0,1)$,
+
+$$
+S_j=S_{j-1}\exp\!\left[
+\left(r-\frac{\sigma^2}{2}\right)\Delta t_j
++\sigma\sqrt{\Delta t_j}\,Z_j
+\right],
+\qquad j=1,\ldots,d
+$$
+
+For equally spaced monitoring times, $\Delta t_j=T/d$
+
+The simulated vector $(S_1,\ldots,S_d)$ is the [discrete asset path]{.alert}
+used to evaluate option payoffs
 
 ## Option payoffs and prices {.tree-marker-slide tree-marker="quant-finance"}
-
-Let $K$ be the strike price and $T$ the time to maturity
-
-| Contract | Discounted payoff |
-|:---|:---|
-| European call | $\me^{-rT}\max\{S(T)-K,0\}$ |
-| European put | $\me^{-rT}\max\{K-S(T),0\}$ |
-| Arithmetic Asian call | $\me^{-rT}\max\left\{T^{-1}\int_0^T S(t)\,\dif t-K,0\right\}$ |
 
 The fair price is the [expected discounted payoff]{.alert}
 
 $$
 \mu=\Ex(\text{discounted payoff})
 $$
+
+\begin{align*}
+K &= \text{the }\alert{\text{strike price}},
+& T &= \text{the }\alert{\text{time to maturity}},\\
+t_j &= jT/d,
+& S_j &= S(t_j), \qquad j=0,\ldots,d
+\end{align*}
+
+::: {.option-payoff-table}
+| Contract | Discounted payoff |
+|:---|:---|
+| [European]{.alert} call | $\me^{-rT}\max\{S_d-K,0\}$ |
+| [European]{.alert} put | $\me^{-rT}\max\{K-S_d,0\}$ |
+| [Arithmetic Asian]{.alert} call | $\displaystyle \me^{-rT}\max\left\{\frac1T\int_0^T S(t)\,\dif t-K,0\right\}\approx \me^{-rT}\max\{A_d-K,0\}$ |
+:::
+
+QMCPy `FinancialOption` offers the [right]{.alert} and
+[trapezoidal]{.alert} rules:
+
+$$
+\begin{aligned}
+A_d^{\mathrm{right}}
+&=\frac1d\sum_{j=1}^d S_j,
+&
+A_d^{\mathrm{trap}}
+&=\frac1d\left(\frac{S_0}{2}+\sum_{j=1}^{d-1}S_j+\frac{S_d}{2}\right)
+\end{aligned}
+$$
+
+---
+
+### Path-dependent contracts
+
+Asian, lookback, and barrier payoffs depend on the monitored path, not only
+the terminal price $S_d$
+
+At the monitoring times define
+
+$$
+m_d:=\min_{0\le j\le d}S_j,
+\qquad
+M_d:=\max_{0\le j\le d}S_j
+$$
+
+For a barrier $B$, let $\mathcal A_B$ be the event that the discretely
+monitored path activates the option
+
+QMCPy takes $S_0<B$ for an [up]{.alert} barrier and $S_0>B$ for a
+[down]{.alert} barrier
+
+$$
+\begin{array}{ll}
+\text{up-in}: \mathcal A_B=\{M_d\ge B\},
+& \text{up-out}: \mathcal A_B=\{M_d<B\},\\
+\text{down-in}: \mathcal A_B=\{m_d\le B\},
+& \text{down-out}: \mathcal A_B=\{m_d>B\}
+\end{array}
+$$
+
+---
+
+### Lookback and barrier payoffs
+
+Using $m_d$, $M_d$, and $\mathcal A_B$ from the preceding slide:
+
+::: {.option-payoff-table}
+| Contract | Discounted payoff |
+|:---|:---|
+| [Lookback]{.alert} call | $\me^{-rT}(S_d-m_d)$ |
+| [Lookback]{.alert} put | $\me^{-rT}(M_d-S_d)$ |
+| [Barrier]{.alert} call | $\me^{-rT}\max\{S_d-K,0\}\indic(\mathcal A_B)$ |
+| [Barrier]{.alert} put | $\me^{-rT}\max\{K-S_d,0\}\indic(\mathcal A_B)$ |
+:::
+
+---
+
+### American put: optimal stopping
+
+At the exercise times $t_0,\ldots,t_d$, the holder chooses a stopping index
+$J$ using only prices observed through $t_J$
+
+Let $\mathcal T_d$ be the set of these stopping indices. The fair price is
+
+$$
+\mu_{\mathrm{AmPut}}
+=\sup_{J\in\mathcal T_d}
+\Ex\!\left[
+\me^{-rt_J}\max\{K-S_J,0\}
+\right]
+$$
+
+- A [European put]{.alert} restricts exercise to $J=d$
+- An [American put]{.alert} may exercise earlier when doing so is more valuable
+- With no dividends and $r\ge0$, early exercise does not improve an American
+  call, so we omit it here
 
 # Low Discrepancy Sampling {.tree-marker-slide tree-marker="low-discrepancy"}
 

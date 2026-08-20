@@ -14,10 +14,9 @@ state why the work was deferred when that context will matter later.
 
 ## Deck 02 — Generating Samples
 
-- After Decks 03–05 complete individual review, revisit selected lookback and
-  barrier option payoffs, then decide whether the planned transport-map and
-  normalizing-flow discussion belongs in Deck 02. Choose the contracts and map
-  direction during that review rather than in advance.
+- After Decks 03–05 complete individual review, decide whether the planned
+  transport-map and normalizing-flow discussion belongs in Deck 02. Choose the
+  map direction during that review rather than in advance.
 - Refactor the Asian-option sampling code so path construction and payoff
   interfaces can be reused for importance sampling and control variates in
   Deck 04.

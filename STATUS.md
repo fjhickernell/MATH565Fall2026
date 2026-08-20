@@ -225,7 +225,9 @@ appropriate phase rather than appended indiscriminately.
     - [x] Add a one-dimensional Gaussian mixture example with analytic PDF and
       CDF formulas, hierarchical sampling, and a density plot.
     - [x] Add CDF and quantile plots for the zero-inflated exponential.
-    - [ ] Add lookback and barrier option-payoff examples.
+    - [x] Add lookback and barrier option-payoff examples.
+    - [x] Separate general geometric Brownian motion from risk-neutral discrete
+      asset paths and add American-put optimal stopping.
     - [ ] Explain chained transformations using transport maps and
       normalizing flows, then develop the Gaussian-to-logistic
       boundary-behavior example suggested by the MCQMC26 plenary material.
