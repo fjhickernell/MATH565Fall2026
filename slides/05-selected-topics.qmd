@@ -43,13 +43,10 @@ subtitle: <span class="deck-title">{{< meta deck_title >}}</span>
 
 # Parallel and Stochastic Computation {.tree-marker-slide tree-marker="practice"}
 
-- [From calculation aids to AI](#from-calculation-aids-to-ai)
 - [Parallel computing](#parallel-computing)
 - [Gradient descent](#gradient-descent)
 - [Stochastic gradient descent](#stochastic-gradient-descent)
 - [Gradient and stochastic-gradient paths](#gradient-and-stochastic-gradient-paths)
-
-{{< include ../classlib/classlib/quarto/slides/shared/general/computing-technology-timeline.qmd >}}
 
 ## Parallel computing {.tree-marker-slide tree-marker="practice"}
 

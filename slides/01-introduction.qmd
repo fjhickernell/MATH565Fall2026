@@ -300,6 +300,7 @@ What [modeling assumptions]{.alert} are needed?
 - [Complete the Diagnostic Survey](#complete-the-diagnostic-survey)
 - [What is where?](#what-is-where)
 - [Why participate synchronously?](#why-participate-synchronously)
+- [From calculation aids to AI](#from-calculation-aids-to-ai)
 - [Using AI well](#using-ai-well)
 
 ## Complete the Diagnostic Survey
@@ -350,6 +351,8 @@ Complete and submit this assignment individually, not as a group.
 - Influence the pace and direction of discussion
 - Help classmates learn by contributing your own questions
 - Build a learning community and get to know one another
+
+{{< include ../classlib/classlib/quarto/slides/shared/general/computing-technology-timeline.qmd >}}
 
 {{< include ../classlib/classlib/quarto/slides/shared/general/using-ai-well.qmd >}}
 
