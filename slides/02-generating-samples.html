@@ -36,7 +36,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="02-generating-samples_files/libs/revealjs/dist/theme/quarto-68c7af28fbc94cc6db8a1cd54e912131.css">
+  <link rel="stylesheet" href="02-generating-samples_files/libs/revealjs/dist/theme/quarto-ff7f97ac4c4f2ced961d7329047492a5.css">
   <link href="02-generating-samples_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="02-generating-samples_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="02-generating-samples_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -765,7 +765,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="de49203c" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="0781edaa" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -809,7 +809,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="352bbc78" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="d247e218" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -841,7 +841,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="99dcc9c8" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="d9c10bf6" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -925,7 +925,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="8a88a9c2" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="a5b0f7b3" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1147,24 +1147,39 @@ B(t_j)=\sum_{k=1}^j\sqrt{t_k-t_{k-1}}\,Z_k
 <p>The Cholesky construction is the familiar <span class="alert">cumulative-sum construction</span> for Brownian motion</p>
 </div>
 </section>
-<section id="geometric-brownian-motion" class="slide level2 tree-marker-slide" data-tree-marker="quant-finance">
+<section id="geometric-brownian-motion" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Geometric Brownian motion</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="qf" style="--tree-left: 5%; --tree-top: 33%; --tree-align: center;">Quantitative<br>Finance</div>
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
-<ul>
-<li><span class="math inline">\(S_0\)</span>: initial asset price</li>
-<li><span class="math inline">\(r\)</span>: continuously compounded risk-free rate</li>
-<li><span class="math inline">\(\sigma\)</span>: volatility</li>
-</ul>
-<p>Then</p>
+<p>For <span class="math inline">\(S_0&gt;0\)</span>, drift <span class="math inline">\(\gamma\)</span>, and volatility <span class="math inline">\(\sigma&gt;0\)</span>, define</p>
 <p><span class="math display">\[
-S(t)=S_0\exp\!\left[\left(r-\frac{\sigma^2}{2}\right)t+\sigma B(t)\right]
+S(t)=S_0\exp\!\left[
+\left(\gamma-\frac{\sigma^2}{2}\right)t+\sigma B(t)
+\right]
 \]</span></p>
-<p>is a geometric Brownian motion model for the asset price</p>
-<p>The correction <span class="alert"><span class="math inline">\(-\sigma^2/2\)</span></span> ensures <span class="math inline">\(\Ex[S(t)]=S_0\me^{rt}\)</span> under the risk-neutral model</p>
+<p>Then <span class="math inline">\(S(t)&gt;0\)</span>, its multiplicative increments are lognormal, and</p>
+<p><span class="math display">\[
+\Ex[S(t)]=S_0\me^{\gamma t}
+\]</span></p>
+<p>The correction <span class="alert"><span class="math inline">\(-\sigma^2/2\)</span></span> makes <span class="math inline">\(\gamma\)</span> the mean growth rate rather than the median growth rate</p>
+</section>
+<section class="slide level2">
+
+<h3 id="risk-neutral-asset-price-paths">Risk-neutral asset-price paths</h3>
+<p>For a non-dividend-paying asset, the <span class="alert">risk-neutral model</span> sets <span class="math inline">\(\gamma=r\)</span></p>
+<p>On <span class="math inline">\(0=t_0&lt;t_1&lt;\cdots&lt;t_d=T\)</span>, define <span class="math inline">\(\Delta t_j:=t_j-t_{j-1}\)</span>. For <span class="math inline">\(Z_1,\ldots,Z_d\ \IIDsim\ \Norm(0,1)\)</span>,</p>
+<p><span class="math display">\[
+S_j=S_{j-1}\exp\!\left[
+\left(r-\frac{\sigma^2}{2}\right)\Delta t_j
++\sigma\sqrt{\Delta t_j}\,Z_j
+\right],
+\qquad j=1,\ldots,d
+\]</span></p>
+<p>For equally spaced monitoring times, <span class="math inline">\(\Delta t_j=T/d\)</span></p>
+<p>The simulated vector <span class="math inline">\((S_1,\ldots,S_d)\)</span> is the <span class="alert">discrete asset path</span> used to evaluate option payoffs</p>
 </section>
 <section id="option-payoffs-and-prices" class="slide level2 tree-marker-slide" data-tree-marker="quant-finance">
 <h2>Option payoffs and prices</h2>
@@ -1173,7 +1188,17 @@ S(t)=S_0\exp\!\left[\left(r-\frac{\sigma^2}{2}\right)t+\sigma B(t)\right]
   <div class="tree-component__label" data-label-id="qf" style="--tree-left: 5%; --tree-top: 33%; --tree-align: center;">Quantitative<br>Finance</div>
 </div>
 
-<p>Let <span class="math inline">\(K\)</span> be the strike price and <span class="math inline">\(T\)</span> the time to maturity</p>
+<p>The fair price is the <span class="alert">expected discounted payoff</span></p>
+<p><span class="math display">\[
+\mu=\Ex(\text{discounted payoff})
+\]</span></p>
+<p><span class="math display">\[\begin{align*}
+K &amp;= \text{the }\alert{\text{strike price}},
+&amp; T &amp;= \text{the }\alert{\text{time to maturity}},\\
+t_j &amp;= jT/d,
+&amp; S_j &amp;= S(t_j), \qquad j=0,\ldots,d
+\end{align*}\]</span></p>
+<div class="option-payoff-table">
 <table class="caption-top">
 <colgroup>
 <col style="width: 50%">
@@ -1187,23 +1212,106 @@ S(t)=S_0\exp\!\left[\left(r-\frac{\sigma^2}{2}\right)t+\sigma B(t)\right]
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">European call</td>
-<td style="text-align: left;"><span class="math inline">\(\me^{-rT}\max\{S(T)-K,0\}\)</span></td>
+<td style="text-align: left;"><span class="alert">European</span> call</td>
+<td style="text-align: left;"><span class="math inline">\(\me^{-rT}\max\{S_d-K,0\}\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">European put</td>
-<td style="text-align: left;"><span class="math inline">\(\me^{-rT}\max\{K-S(T),0\}\)</span></td>
+<td style="text-align: left;"><span class="alert">European</span> put</td>
+<td style="text-align: left;"><span class="math inline">\(\me^{-rT}\max\{K-S_d,0\}\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Arithmetic Asian call</td>
-<td style="text-align: left;"><span class="math inline">\(\me^{-rT}\max\left\{T^{-1}\int_0^T S(t)\,\dif t-K,0\right\}\)</span></td>
+<td style="text-align: left;"><span class="alert">Arithmetic Asian</span> call</td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle \me^{-rT}\max\left\{\frac1T\int_0^T S(t)\,\dif t-K,0\right\}\approx \me^{-rT}\max\{A_d-K,0\}\)</span></td>
 </tr>
 </tbody>
 </table>
-<p>The fair price is the <span class="alert">expected discounted payoff</span></p>
+</div>
+<p>QMCPy <code>FinancialOption</code> offers the <span class="alert">right</span> and <span class="alert">trapezoidal</span> rules:</p>
 <p><span class="math display">\[
-\mu=\Ex(\text{discounted payoff})
+\begin{aligned}
+A_d^{\mathrm{right}}
+&amp;=\frac1d\sum_{j=1}^d S_j,
+&amp;
+A_d^{\mathrm{trap}}
+&amp;=\frac1d\left(\frac{S_0}{2}+\sum_{j=1}^{d-1}S_j+\frac{S_d}{2}\right)
+\end{aligned}
 \]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="path-dependent-contracts">Path-dependent contracts</h3>
+<p>Asian, lookback, and barrier payoffs depend on the monitored path, not only the terminal price <span class="math inline">\(S_d\)</span></p>
+<p>At the monitoring times define</p>
+<p><span class="math display">\[
+m_d:=\min_{0\le j\le d}S_j,
+\qquad
+M_d:=\max_{0\le j\le d}S_j
+\]</span></p>
+<p>For a barrier <span class="math inline">\(B\)</span>, let <span class="math inline">\(\mathcal A_B\)</span> be the event that the discretely monitored path activates the option</p>
+<p>QMCPy takes <span class="math inline">\(S_0&lt;B\)</span> for an <span class="alert">up</span> barrier and <span class="math inline">\(S_0&gt;B\)</span> for a <span class="alert">down</span> barrier</p>
+<p><span class="math display">\[
+\begin{array}{ll}
+\text{up-in}: \mathcal A_B=\{M_d\ge B\},
+&amp; \text{up-out}: \mathcal A_B=\{M_d&lt;B\},\\
+\text{down-in}: \mathcal A_B=\{m_d\le B\},
+&amp; \text{down-out}: \mathcal A_B=\{m_d&gt;B\}
+\end{array}
+\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="lookback-and-barrier-payoffs">Lookback and barrier payoffs</h3>
+<p>Using <span class="math inline">\(m_d\)</span>, <span class="math inline">\(M_d\)</span>, and <span class="math inline">\(\mathcal A_B\)</span> from the preceding slide:</p>
+<div class="option-payoff-table">
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Contract</th>
+<th style="text-align: left;">Discounted payoff</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="alert">Lookback</span> call</td>
+<td style="text-align: left;"><span class="math inline">\(\me^{-rT}(S_d-m_d)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="alert">Lookback</span> put</td>
+<td style="text-align: left;"><span class="math inline">\(\me^{-rT}(M_d-S_d)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="alert">Barrier</span> call</td>
+<td style="text-align: left;"><span class="math inline">\(\me^{-rT}\max\{S_d-K,0\}\indic(\mathcal A_B)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="alert">Barrier</span> put</td>
+<td style="text-align: left;"><span class="math inline">\(\me^{-rT}\max\{K-S_d,0\}\indic(\mathcal A_B)\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="american-put-optimal-stopping">American put: optimal stopping</h3>
+<p>At the exercise times <span class="math inline">\(t_0,\ldots,t_d\)</span>, the holder chooses a stopping index <span class="math inline">\(J\)</span> using only prices observed through <span class="math inline">\(t_J\)</span></p>
+<p>Let <span class="math inline">\(\mathcal T_d\)</span> be the set of these stopping indices. The fair price is</p>
+<p><span class="math display">\[
+\mu_{\mathrm{AmPut}}
+=\sup_{J\in\mathcal T_d}
+\Ex\!\left[
+\me^{-rt_J}\max\{K-S_J,0\}
+\right]
+\]</span></p>
+<ul>
+<li>A <span class="alert">European put</span> restricts exercise to <span class="math inline">\(J=d\)</span></li>
+<li>An <span class="alert">American put</span> may exercise earlier when doing so is more valuable</li>
+<li>With no dividends and <span class="math inline">\(r\ge0\)</span>, early exercise does not improve an American call, so we omit it here</li>
+</ul>
 </section></section>
 <section>
 <section id="low-discrepancy-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="low-discrepancy">
