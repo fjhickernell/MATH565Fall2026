@@ -22,13 +22,6 @@ experience using popular programming languages for Monte Carlo computations.
 
 {{< include classlib/classlib/quarto/snippets/fred-hickernell-bio.qmd >}}
 
-<details>
-<summary><strong>Teaching Assistant:</strong> TBA</summary>
-
-Teaching-assistant information for Fall 2026 will be posted when available.
-
-</details>
-
 <div style="margin-top:1em; margin-bottom:0.4em;">
 <strong>Textbook:</strong> [{{< meta texts.owen.full >}}]({{< meta texts.owen.url >}})
 </div>

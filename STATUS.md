@@ -39,8 +39,6 @@ appropriate phase rather than appended indiscriminately.
     - [x] Verify course title, semester, and course identity.
     - [x] Review and update the course description.
     - [x] Verify instructor information, photograph, and links.
-    - [ ] Verify teaching-assistant information or clearly mark unknown
-      details.
     - [x] Review textbook and recommended resources.
     - [x] Review prerequisites and requirements.
     - [x] Review course objectives and outline.
