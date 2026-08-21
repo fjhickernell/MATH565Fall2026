@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-08-20">
+  <meta name="dcterms.date" content="2026-08-21">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -597,7 +597,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">August 20, 2026</p>
+  <p class="date">August 21, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 center">
 <h1>Course Map</h1>
@@ -765,7 +765,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="0781edaa" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="ef0ffd87" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -809,7 +809,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="d247e218" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="1fe62ac8" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -841,7 +841,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="d9c10bf6" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="8716b034" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -925,7 +925,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="a5b0f7b3" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="c2f2bad9" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1327,6 +1327,7 @@ M_d:=\max_{0\le j\le d}S_j
 <li><a href="#/low-discrepancy-sequences">Low discrepancy sequences</a></li>
 <li><a href="#/biasvariance-decomposition">Bias–variance decomposition</a></li>
 <li><a href="#/shrinkage-estimators">Shrinkage estimators</a></li>
+<li><a href="#/transport-maps-and-normalizing-flows">Transport maps and normalizing flows</a></li>
 </ul>
 </section>
 <section id="what-does-low-discrepancy-mean" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
@@ -1409,6 +1410,58 @@ M_d:=\max_{0\le j\le d}S_j
 <div class="exitem">
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Find the value of <span class="math inline">\(\alpha\)</span> that minimizes this MSE. Is the minimizing estimator unbiased?</span></p>
 </div>
+</section>
+<section id="transport-maps-and-normalizing-flows" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>Transport maps and normalizing flows</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<p>The quantile transform is a <span class="alert">one-dimensional transport</span>. In <span class="math inline">\(d\)</span> dimensions, start with an easy reference density <span class="math inline">\(\varrho_0\)</span> and an invertible, differentiable map <span class="math inline">\(T:\reals^d\to\reals^d\)</span>:</p>
+<p><span class="math display">\[
+\vZ\sim\varrho_0,
+\qquad
+\vX=T(\vZ)
+\]</span></p>
+<p>The change-of-variables formula gives</p>
+<p><span class="math display">\[
+\varrho_X(\vx)
+=\varrho_0\!\left(T^{-1}(\vx)\right)
+\left|\det \nabla T^{-1}(\vx)\right|
+\]</span></p>
+<p>A <span class="alert">normalizing flow</span> composes manageable maps <span class="math inline">\(T=T_m\circ\cdots\circ T_1\)</span>, often tuning their parameters to fit a target</p>
+<div class="key-point">
+<p>A transport <span class="alert">moves every sample and keeps equal weights</span>; importance sampling keeps proposal samples and assigns unequal weights</p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="a-triangular-flow-creates-curved-dependence">A triangular flow creates curved dependence</h3>
+<p>Let <span class="math inline">\(Z_1,Z_2\ \IIDsim\ \Norm(0,1)\)</span> and, for <span class="math inline">\(b&gt;0\)</span>, define</p>
+<p><span class="math display">\[
+X_1=Z_1,
+\qquad
+X_2=Z_2+b(Z_1^2-1)
+\]</span></p>
+<p>This nonlinear map is easy to invert and has a simple Jacobian:</p>
+<p><span class="math display">\[
+T_b^{-1}(\vx)
+=\begin{pmatrix}x_1\\x_2-b(x_1^2-1)\end{pmatrix},
+\qquad
+\nabla T_b(\vz)
+=\begin{pmatrix}1&amp;0\\2bz_1&amp;1\end{pmatrix},
+\qquad
+\det\nabla T_b=1
+\]</span></p>
+<p>Thus, with <span class="math inline">\(\phi\)</span> the standard normal density,</p>
+<p><span class="math display">\[
+\varrho_X(x_1,x_2)
+=\phi(x_1)\phi\!\left(x_2-b(x_1^2-1)\right),
+\qquad
+\Ex(X_2\mid X_1=x_1)=b(x_1^2-1)
+\]</span></p>
+<p>One layer turns independent Gaussian coordinates into a curved, dependent target. If no useful invertible map is available, <span class="alert">acceptance–rejection</span> offers another route from an easy proposal to the target</p>
 </section></section>
 <section>
 <section id="acceptancerejection-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="random-generation">
@@ -1504,6 +1557,11 @@ U\le\frac{\varrho(Z)}{M\varrho_Z(Z)}
 <td style="text-align: center;">Yes</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">Transport map <span class="math inline">\(\vX=T(\vZ)\)</span></td>
+<td style="text-align: left;">Invertible <span class="math inline">\(T\)</span> and its Jacobian</td>
+<td style="text-align: center;">Yes</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">Acceptance–rejection</td>
 <td style="text-align: left;"><span class="math inline">\(\varrho\le M\varrho_Z\)</span></td>
 <td style="text-align: center;">With care</td>
