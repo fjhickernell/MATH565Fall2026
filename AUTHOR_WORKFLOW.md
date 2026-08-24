@@ -41,8 +41,10 @@ revised:
 6. Determine from the schedule which RevealJS deck is current when the
    assignment is assigned. Add or update the due-date notice on that deck's
    title slide and, when useful, a brief linked logistics slide describing the
-   assignment and group-submission expectations. Remove or replace stale
-   notices as the course advances.
+   assignment and group-submission expectations. Because `slides/` is an
+   independent Quarto project, link from a deck to a root-site assignment page
+   using its published `.html` path rather than its `.qmd` source path. Remove
+   or replace stale notices as the course advances.
 7. Render the root website and the independent slide project, assemble the
    complete site, and verify the assignment page, assignments table, schedule,
    Canvas links, deck notice, and internal links. Inspect the visible assignment

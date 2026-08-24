@@ -149,18 +149,18 @@ assert all(
 ::: {.column width="55%"}
 <h3>In this deck</h3>
 
-- [What is Monte Carlo?](#what-is-monte-carlo)
+- [What Is Monte Carlo?](#what-is-monte-carlo)
 - [Course Logistics](#course-logistics)
 - [Terms to Know](#terms-to-know)
 - [Probability Review](#probability-review)
-- [Samples and Estimates](#samples-and-estimates)
+- [Samples, Estimators, and Estimates](#samples-estimators-and-estimates)
 - [Conditioning](#conditioning)
 - [Big Ideas](#big-ideas)
 - [Next: Generating Samples](#next-generating-samples)
 :::
 :::
 
-# What is Monte Carlo?
+# What Is Monte Carlo?
 
 ::: {.columns}
 ::: {.column width="36%"}
@@ -316,7 +316,7 @@ Complete and submit this assignment individually, not as a group.
 ## Complete Assignment 1
 
 ::: {.key-point}
-[Complete by September 2]{.alert}: [Assignment 1 — {{< meta texts.owen.short >}} Exercises 1.2 and 2.1](../assignments/assignment_1.qmd)
+[Complete by September 2]{.alert}: [Assignment 1 — {{< meta texts.owen.short >}} Exercises 1.2 and 2.1](../assignments/assignment_1.html)
 :::
 
 You may work individually or with one partner. Join an Assignment 1 group in
@@ -645,7 +645,7 @@ $$
 \right), \qquad \vy \in \reals^d
 $$
 
-# Samples and Estimates {.tree-marker-slide tree-marker="stat-estim"}
+# Samples, Estimators, and Estimates {.tree-marker-slide tree-marker="stat-estim"}
 
 - [Sampling schemes on $[0,1]^6$](#sampling-schemes)
 - [Sampling](#sampling)

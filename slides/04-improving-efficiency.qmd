@@ -36,11 +36,11 @@ subtitle: |
 ::: {.column width="55%"}
 <h3>In this deck</h3>
 
-- [Transformations and importance sampling](#transformations-and-importance-sampling)
-- [Control variates and conditioning](#control-variates-and-conditioning)
-- [Structured random sampling](#structured-random-sampling)
-- [Low discrepancy sampling](#low-discrepancy-sampling)
-- [Big ideas](#big-ideas)
+- [Transformations and Importance Sampling](#transformations-and-importance-sampling)
+- [Control Variates and Conditioning](#control-variates-and-conditioning)
+- [Structured Random Sampling](#structured-random-sampling)
+- [Low Discrepancy Sampling](#low-discrepancy-sampling)
+- [Big Ideas](#big-ideas)
 :::
 :::
 

@@ -12,9 +12,9 @@ holidays, and examination details are finalized.
 | Week | Date | Topic | Slides / Materials |
 |---:|---|---|---|
 | 1 | Tue Aug 18 | Introduction | [Introduction](../slides/01-introduction.html) |
-| | Thu Aug 20 | Probability review | |
+| | Thu Aug 20 | Probability review; Samples, Estimators, and Estimates | |
 | | Fri Aug 21 | **Diagnostic Survey due** | [Assignment 0 — Diagnostic Survey]({{< meta canvas.assignment_0 >}}) |
-| 2 | Tue Aug 25 | | |
+| 2 | Tue Aug 25 | Uniformity to target distribution | [Generating Samples](../slides/02-generating-samples.html) |
 | | Thu Aug 27 | | |
 
 ### September

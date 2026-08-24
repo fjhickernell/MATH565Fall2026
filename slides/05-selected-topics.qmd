@@ -34,10 +34,10 @@ subtitle: <span class="deck-title">{{< meta deck_title >}}</span>
 ::: {.column width="55%"}
 <h3>In this deck</h3>
 
-- [Parallel and stochastic computation](#parallel-and-stochastic-computation)
-- [Two-level Monte Carlo](#two-level-monte-carlo)
+- [Parallel and Stochastic Computation](#parallel-and-stochastic-computation)
+- [Two-Level Monte Carlo](#two-level-monte-carlo)
 - [Multilevel Monte Carlo](#multilevel-monte-carlo)
-- [Big ideas](#big-ideas)
+- [Big Ideas](#big-ideas)
 :::
 :::
 

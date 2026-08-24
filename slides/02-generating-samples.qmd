@@ -36,11 +36,11 @@ subtitle: |
 ::: {.column width="55%"}
 <h3>In this deck</h3>
 
-- [From uniformity to a target distribution](#from-uniformity-to-a-target-distribution)
-- [Random vectors and stochastic processes](#random-vectors-and-stochastic-processes)
-- [Low discrepancy sampling](#low-discrepancy-sampling)
-- [Acceptance–rejection sampling](#acceptancerejection-sampling)
-- [Big ideas](#big-ideas)
+- [From Uniformity to a Target Distribution](#from-uniformity-to-a-target-distribution)
+- [Random Vectors and Stochastic Processes](#random-vectors-and-stochastic-processes)
+- [Low Discrepancy Sampling](#low-discrepancy-sampling)
+- [Acceptance–Rejection Sampling](#acceptancerejection-sampling)
+- [Big Ideas](#big-ideas)
 :::
 :::
 

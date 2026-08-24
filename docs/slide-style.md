@@ -15,6 +15,8 @@ exceptions.
 - Write `#` section headings in title case: capitalize principal words while
   leaving articles, coordinating conjunctions, and short prepositions
   lowercase unless they begin or end the heading.
+- In the Course Map's **In this deck** list, repeat each linked `#` section
+  heading exactly, including its title capitalization and punctuation.
 - Write `##` slide headings and `###` subheadings in sentence case: capitalize
   only the first word and proper nouns, acronyms, and mathematical notation.
 - Do not place a `###` heading directly after a `#` section heading; start the

@@ -36,12 +36,12 @@ subtitle: |
 ::: {.column width="55%"}
 <h3>In this deck</h3>
 
-- [From direct sampling to Markov chains](#from-direct-sampling-to-markov-chains)
-- [Metropolis–Hastings sampling](#metropolishastings-sampling)
-- [Kernel discrepancy](#kernel-discrepancy)
-- [Discrepancy as integration error](#discrepancy-as-integration-error)
-- [Applications of Markov chains](#applications-of-markov-chains)
-- [Big ideas](#big-ideas)
+- [From Direct Sampling to Markov Chains](#from-direct-sampling-to-markov-chains)
+- [Metropolis–Hastings Sampling](#metropolishastings-sampling)
+- [Kernel Discrepancy](#kernel-discrepancy)
+- [Discrepancy as Integration Error](#discrepancy-as-integration-error)
+- [Applications of Markov Chains](#applications-of-markov-chains)
+- [Big Ideas](#big-ideas)
 :::
 :::
 
