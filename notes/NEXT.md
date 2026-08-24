@@ -38,7 +38,9 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
 - Assignment 1 is published in Canvas for 20 points, due September 2 at 11:59
   PM. It uses a 20-group self-sign-up set with at most two students per group.
   Its Owen Exercises 1.2 and 2.1, due date, and links appear on the Assignments
-  page, Schedule, and Lecture 1; a Canvas announcement has been posted.
+  page, Schedule, and Lecture 1. The course-hosted detail page is authoritative;
+  Canvas links to it and the course Assignments page without repeating the
+  exercise details, and a Canvas announcement has been posted.
 - Deck 01 is complete and instructor-approved. Its cumulative Terms to Know
   index links terminology introduced in Decks 02–05, and its approved closing
   transition previews Generating Samples using the transformation

@@ -18,11 +18,50 @@ HickernellAcademicLib first, then intentionally update the course repository's
 `classlib` pointer. Keep course-specific content and styling in this
 repository, and do not leave course-only modifications in `classlib`.
 
-Whenever a homework, assignment, quiz, or similar assessed item is
-finalized or updated on its course website page, also add or update its
-due-date notice on the title slide of the deck current when the item is
-assigned. Determine the relevant deck from the course schedule and the
-assignment date; remove or replace stale notices as the course advances.
+## Adding or updating an assignment
+
+Use the following workflow whenever an assignment is finalized or materially
+revised:
+
+1. Confirm the assignment content, coverage, due date and time, point value,
+   submission requirements, and Canvas settings. Do not invent unresolved
+   details.
+2. If course sources need a stable Canvas assignment URL, create only an
+   unpublished Canvas draft at this stage and record its URL as
+   `canvas.assignment_N` in `course-metadata.yml`. Do not publish the Canvas
+   assignment or announce it while its course-website links are unavailable.
+3. Create or update `assignments/assignment_N.qmd` when the assignment needs a
+   course-hosted detail page. State the due date, assignment, and submission
+   requirements, and link back to the ground rules in `pages/homework.qmd`.
+4. Add or update the assignment in the table in `pages/homework.qmd`, with its
+   descriptive title, coverage, and due date. Link to the course-hosted detail
+   page when one exists; otherwise link directly to Canvas.
+5. Add or update the due-date entry in `pages/schedule.qmd`, linking to the
+   same authoritative assignment details.
+6. Determine from the schedule which RevealJS deck is current when the
+   assignment is assigned. Add or update the due-date notice on that deck's
+   title slide and, when useful, a brief linked logistics slide describing the
+   assignment and group-submission expectations. Remove or replace stale
+   notices as the course advances.
+7. Render the root website and the independent slide project, assemble the
+   complete site, and verify the assignment page, assignments table, schedule,
+   Canvas links, deck notice, and internal links. Inspect the visible assignment
+   page and affected deck at the standard RevealJS viewport. Checkpoint and
+   push the website changes, then verify that the public assignment and
+   Assignments-page URLs are live. This publication check is a hard gate before
+   publishing the Canvas assignment.
+8. Finish and publish the Canvas assignment only after the website is live.
+   Unless the assignment explicitly requires individual work, create a
+   separate self-sign-up group set named `Assignment N Groups` for that
+   assignment so students may choose a new partner each time. Limit groups to
+   pairs, and configure Canvas so that one submission is shared by both group
+   members. Keep the assignment-specific details authoritative on the
+   course-hosted detail page; the Canvas description should link to that page
+   and to the course Assignments page rather than repeat instructions that
+   could later diverge. Verify the published assignment, then announce it in
+   Canvas by linking to the live course pages and providing only the operational
+   group and submission information students need. Do not repeat the assignment
+   content or due date in the announcement.
 
 ## Propagating classlib changes
 
