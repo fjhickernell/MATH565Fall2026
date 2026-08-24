@@ -1,5 +1,5 @@
 ---
-title: "Assignment 1: Nagel–Schreckenberg Traffic Model"
+title: "Assignment 1: Owen Exercises 1.2 and 2.1"
 metadata-files:
   - ../classlib/classlib/quarto/website/hickernell-website.yml
 format:
@@ -12,17 +12,12 @@ format:
 
 ## Due date
 
-**Due:** TBA
+**Due:** Wednesday, September 2, 2026, at 11:59 PM Chicago Time
 
 ## Assignment
 
-Section 1.1 of Art Owen's
-[*Monte Carlo Theory, Methods and Examples*](https://artowen.su.domains/mc/)
-discusses the Nagel–Schreckenberg traffic model. Read this section, and then:
-
-1. Complete Exercise 1.1 in the text.
-2. Add a paragraph describing which parts of the exercise were challenging
-   for you.
+Complete Exercises 1.2 and 2.1 in
+[{{< meta texts.owen.short >}}]({{< meta texts.owen.url >}}).
 
 ## Submission
 

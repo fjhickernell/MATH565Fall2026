@@ -2,35 +2,31 @@
 
 ## Current task
 
-Prepare and assign Assignment 1 by Monday, August 24, 2026. Then finish the
-first Deck 02 companion-notebook stage and polish its current calls before
-beginning Deck 03 review. Preserve flexibility for later decks to call or
-extend the same notebooks.
+Finish the first Deck 02 companion-notebook stage and polish its current calls
+before beginning Deck 03 review. Preserve flexibility for later decks to call
+or extend the same notebooks.
 
 ## Next MATH 565 work
 
-1. Finalize the existing Assignment 1 draft, choose its student due date, add
-   it to the assignments page and Canvas, and assign it by Monday, August 24.
-2. Review `notebooks/sampling/GeneratingSamples.ipynb` with the instructor and
+1. Review `notebooks/sampling/GeneratingSamples.ipynb` with the instructor and
    make any requested pedagogical or presentation refinements.
-3. Finish the Deck 02 notebook migration: use the completed lecture narrative
+2. Finish the Deck 02 notebook migration: use the completed lecture narrative
    and the deck-to-notebook plan in `notebooks/NOTEBOOK_INVENTORY.md` to build
    the focused mixture/transport, acceptance--rejection, and financial-payoff
    companions; migrate and validate every retained notebook.
-4. Review the drafted transport-map and normalizing-flow extension, its
+3. Review the drafted transport-map and normalizing-flow extension, its
    triangular-flow example, and its treatment in the companion notebook.
-5. Give Deck 02 a final instructor-led polish pass, including its notebook
+4. Give Deck 02 a final instructor-led polish pass, including its notebook
    links and the relationship between the lecture and retained notebooks.
-6. Review Deck 03 individually, beginning with its scope, section sequence,
+5. Review Deck 03 individually, beginning with its scope, section sequence,
    and mathematical emphasis before detailed layout polishing.
-7. Review Deck 04 and then Deck 05 using the same instructor-led process.
-8. Complete the remaining Fall 2026 logistics and student-facing page details,
+6. Review Deck 04 and then Deck 05 using the same instructor-led process.
+7. Complete the remaining Fall 2026 logistics and student-facing page details,
    including the seminar link, assignments, tests, project dates, and visible
    browser review.
 
-The immediate 565 work is therefore to assign Assignment 1 by August 24, then
-finish the Deck 02 notebooks and polish Deck 02. Deck 03 follows that completed
-unit.
+The immediate 565 work is therefore to finish the Deck 02 notebooks and polish
+Deck 02. Deck 03 follows that completed unit.
 
 ## Deck 02 completion target
 
@@ -39,6 +35,10 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
 
 ## Current state
 
+- Assignment 1 is published in Canvas for 20 points, due September 2 at 11:59
+  PM. It uses a 20-group self-sign-up set with at most two students per group.
+  Its Owen Exercises 1.2 and 2.1, due date, and links appear on the Assignments
+  page, Schedule, and Lecture 1; a Canvas announcement has been posted.
 - Deck 01 is complete and instructor-approved. Its cumulative Terms to Know
   index links terminology introduced in Decks 02–05, and its approved closing
   transition previews Generating Samples using the transformation

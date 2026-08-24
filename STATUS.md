@@ -100,6 +100,9 @@ appropriate phase rather than appended indiscriminately.
     - [x] Record the currently established assignment ground rules.
     - [x] Leave assignment details and due dates pending rather than inventing
       them.
+    - [x] Finalize Assignment 1 as Owen Exercises 1.2 and 2.1, due September
+      2; publish it in Canvas with its group set; and add the deadline to the
+      assignments page, Schedule, and Lecture 1.
     - [ ] Add assignment entries and due dates as they are finalized.
     - [x] Validate Quarto rendering and generated page structure.
     - [ ] Inspect the visible page layout in a browser.
