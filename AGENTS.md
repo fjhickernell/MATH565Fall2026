@@ -28,7 +28,7 @@ Fall 2026 course website and course materials.
   change in `HickernellAcademicLib` first, then intentionally update the
   `classlib` pointer in this repository. Never advance the pointer merely
   because a newer `classlib` commit exists.
-- `qmcsoftware` and `assets/tests/archive` (`HickernellTestArchive`) are
+- `qmcpy` and `assets/tests/archive` (`HickernellTestArchive`) are
   read-only pinned dependencies unless the user explicitly authorizes a
   change.
 - Routine builds and deployment must initialize the recorded submodule commits
@@ -198,7 +198,7 @@ accurately describes the complete set of changes.
 10. Report the commit hash, confirmation that the push succeeded, whether
     documentation was updated and where, and any remaining follow-up items.
 
-Never include changes from `qmcsoftware`, `assets/tests/archive`, or either
+Never include changes from `qmcpy`, `assets/tests/archive`, or either
 reference repository in this checkpoint workflow. If any protected read-only
 repository is dirty, do not discard or silently omit its work and do not claim
 the checkpoint is complete; report the blocker and obtain user direction.

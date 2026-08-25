@@ -10,7 +10,7 @@ These project-specific values define the repositories used by this plan:
 
 The authoritative repository is the writable home of the completed course.
 The two reference repositories are read-only. `classlib` is the writable
-shared academic library, while `qmcsoftware` is a read-only pinned dependency
+shared academic library, while `qmcpy` is a read-only pinned dependency
 whose checked-out commit and submodule pointer must remain unchanged.
 `HickernellTestArchive` is a permanent read-only pinned submodule mounted at
 `assets/tests/archive`; it supports references to archived material without
@@ -77,7 +77,7 @@ The completed repository is organized around these layers:
   `classlib`.
 - **Reusable infrastructure:** `classlib/` supplies common Quarto styling,
   layouts, metadata, pages, snippets, notebooks, and teaching utilities.
-  `qmcsoftware/` remains a pinned software dependency.
+  `qmcpy/` remains a pinned software dependency.
 - **Supporting documentation:** `README.md`, `PLAN.md`, `STATUS.md`,
   `AUTHOR_WORKFLOW.md`, and `AGENTS.md` preserve project purpose, direction,
   construction history, author procedures, and agent behavior.

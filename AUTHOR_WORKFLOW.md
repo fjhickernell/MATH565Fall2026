@@ -10,7 +10,7 @@ the root of the `gh-pages` branch by GitHub Actions.
 - `slides/*.qmd` — RevealJS slide decks
 - `assets/` — course assets
 - `classlib/` — shared styling, metadata, snippets, and notebooks (submodule)
-- `qmcsoftware/` — QMCPy source and course dependencies (submodule)
+- `qmcpy/` — QMCPy source and course dependencies (submodule)
 
 Make genuinely reusable shared-style or presentation-infrastructure changes in
 the `classlib` submodule. Validate, commit, and push those changes to
@@ -125,7 +125,7 @@ cd MATH565Fall2026
 git submodule update --init --recursive
 conda activate qmcpy
 python -m pip install -e classlib
-python -m pip install -e "qmcsoftware/.[class]"
+python -m pip install -e "qmcpy/.[class]"
 python -m ipykernel install --user --name qmcpy --display-name "qmcpy"
 ```
 

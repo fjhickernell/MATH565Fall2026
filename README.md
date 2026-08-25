@@ -29,7 +29,7 @@ git clone --recurse-submodules https://github.com/fjhickernell/MATH565Fall2026.g
 cd MATH565Fall2026
 conda activate qmcpy
 python -m pip install -e classlib
-python -m pip install -e "qmcsoftware/.[class]"
+python -m pip install -e "qmcpy/.[class]"
 python -m ipykernel install --user --name qmcpy --display-name "qmcpy"
 ```
 

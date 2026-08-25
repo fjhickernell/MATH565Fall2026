@@ -1,6 +1,6 @@
-[submodule "qmcsoftware"]
-	path = qmcsoftware
-	url = git@github.com:QMCSoftware/QMCSoftware.git
+[submodule "qmcpy"]
+	path = qmcpy
+	url = git@github.com:QMCSoftware/qmcpy.git
 	branch = develop
 [submodule "classlib"]
 	path = classlib

@@ -25,7 +25,7 @@ audit. The status entries below record migrations completed afterward.
 - `MATH565Fall2025` is the read-only course-material reference.
 - `MATH563Spring2026` is the read-only architecture reference.
 - `classlib` is writable only for genuinely reusable shared infrastructure.
-- `qmcsoftware` and its pinned submodule pointer are read-only.
+- `qmcpy` and its pinned submodule pointer are read-only.
 
 All initial Fall 2026 notebook migrations should remain course-specific in
 the authoritative repository. A notebook may be considered for later

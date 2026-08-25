@@ -9,7 +9,7 @@ appropriate phase rather than appended indiscriminately.
 
 - [x] Create the authoritative course repository.
 - [x] Establish the root Quarto website skeleton.
-- [x] Add the `classlib` and `qmcsoftware` submodules.
+- [x] Add the `classlib` and `qmcpy` submodules.
 - [x] Create the core `pages/`, `slides/`, and `assets/` directories.
 - [x] Add the course landing page and basic website navigation.
 - [x] Add `README.md` with the course purpose and local setup instructions.

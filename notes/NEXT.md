@@ -109,7 +109,7 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   semester's assignments, tests, announcements, and dated events.
 - Keep course-specific content in this repository and promote only genuinely
   reusable infrastructure to `classlib` after demonstrated reuse.
-- Keep `qmcsoftware`, the test archive, and reference repositories read-only.
+- Keep `qmcpy`, the test archive, and reference repositories read-only.
 - Preserve the Fall 2025 examples while improving notation, mathematical
   layout, semantic emphasis, and gaps in visual explanation.
 - Keep MCTS in Deck 05, Selected Topics, rather than the MCMC deck.
