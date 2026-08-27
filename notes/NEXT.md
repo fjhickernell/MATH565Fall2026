@@ -3,8 +3,10 @@
 ## Current task
 
 Finish the first Deck 02 companion-notebook stage and polish its current calls
-before beginning Deck 03 review. Preserve flexibility for later decks to call
-or extend the same notebooks.
+before beginning Deck 03 review. First test the two published current notebooks
+in clean Google Colab runtimes using the course's recorded `classlib` and
+`qmcpy` commits. Preserve flexibility for later decks to call or extend the
+same notebooks.
 
 ## Next MATH 565 work
 
@@ -35,6 +37,17 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
 
 ## Current state
 
+- `AreWeThereYet.ipynb` and `GeneratingSamples.ipynb` now have consistent
+  Colab badges and conditional setup cells. In Colab they clone the current
+  course and install the repository's exact recorded `classlib` and `qmcpy`
+  commits through public HTTPS submodule URLs; they do not depend on PyPI or a
+  moving QMCPy `develop` branch. This preserves access to newer QMCPy work and
+  interim `nbviz` support recorded by the course. Both notebooks execute
+  cleanly with the local `qmcpy` kernel, and the root site, all five decks, and
+  assembled site render cleanly. The shared lazy-import fix is tested and
+  published as HickernellAcademicLib commit `615b402`; this course pins that
+  commit in course commit `7fb7886`, which is also published on `origin/main`.
+  Clean live-Colab validation remains pending.
 - Assignment 1 is published in Canvas for 20 points, due September 2 at 11:59
   PM. It uses a 20-group self-sign-up set with at most two students per group.
   Its Owen Exercises 1.2 and 2.1, due date, and links appear on the Assignments
@@ -109,6 +122,8 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   semester's assignments, tests, announcements, and dated events.
 - Keep course-specific content in this repository and promote only genuinely
   reusable infrastructure to `classlib` after demonstrated reuse.
+- In Colab, install the course's recorded `classlib` and `qmcpy` commits rather
+  than assuming PyPI or a moving QMCPy branch contains every required feature.
 - Keep `qmcpy`, the test archive, and reference repositories read-only.
 - Preserve the Fall 2025 examples while improving notation, mathematical
   layout, semantic emphasis, and gaps in visual explanation.
@@ -116,6 +131,9 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
 
 ## Done when
 
+- Clean current Colab runtimes install the recorded `classlib` and `qmcpy`
+  commits and execute both `AreWeThereYet.ipynb` and
+  `GeneratingSamples.ipynb` end to end without an import or setup failure.
 - `GeneratingSamples.ipynb` is instructor-approved.
 - Every retained Deck 02 companion notebook is migrated, validated with the
   `qmcpy` kernel, and linked appropriately; decisions to combine or omit other
