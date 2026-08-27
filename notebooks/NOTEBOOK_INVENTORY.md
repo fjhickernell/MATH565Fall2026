@@ -598,7 +598,13 @@ Many notebooks contain one or more of the following:
 
 Replace these with Fall 2026 links and the documented course dependency
 workflow. Do not publish a Colab badge until its complete setup has been
-tested.
+tested. A Colab setup must clone the current course repository, initialize
+only the recorded `classlib` and `qmcpy` submodules through their public HTTPS
+URLs, and install those exact checkouts. Do not substitute PyPI releases or a
+moving QMCPy `develop` branch: the course may temporarily rely on pinned
+QMCPy work or teaching support in `classlib.nbviz` before the corresponding
+upstream feature is merged. Keep the setup conditional on Colab and do not
+change the notebook's working directory.
 
 ### Packages and APIs
 
@@ -682,11 +688,15 @@ cl.nbviz.configure(
 )
 ```
 
-Do not add package-install commands, repository cloning, `sys.path` changes,
-or working-directory discovery to a new notebook. Its dependencies come from
-the documented repository setup. Before adding it to `pages/notebooks.qmd`,
-restart the kernel, run all cells in order, inspect the results and runtime,
-and confirm that any generated files follow the repository output policy.
+For local Jupyter use, do not add unconditional package-install commands,
+repository cloning, `sys.path` changes, or working-directory discovery to a
+new notebook. Its dependencies come from the documented repository setup. A
+notebook intentionally published for Colab may place the tested conditional
+setup described above before its import cell; that setup must be a no-op in
+the local `qmcpy` environment. Before adding the notebook to
+`pages/notebooks.qmd`, restart the kernel, run all cells in order, inspect the
+results and runtime, and confirm that any generated files follow the
+repository output policy.
 
 ### Data, images, and generated files
 
