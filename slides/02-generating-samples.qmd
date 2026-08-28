@@ -108,7 +108,7 @@ $$
 
 Thus each $X_i:=Q(U_i)\sim F$
 
-[IID inputs yield IID targets; other designs retain their dependence
+[IID inputs yield IID targets <br>Other designs (Latin hypercube, low discrepancy, ...) retain their dependence
 structure]{.alert}
 
 ## Binomial random numbers {.tree-marker-slide tree-marker="random-generation"}
@@ -382,7 +382,7 @@ $Q=F_X^{-1}$ generally has [no analytic closed form]{.alert}
 Numerically inverting $F_X$ would work, but a hierarchical construction avoids
 solving $F_X(x)=u$
 
-Generate $U_1,U_2\ \IIDsim\ \Unif(0,1)$ and define
+Generate $U_1,U_2\ \sim\ \Unif(0,1)$ and define
 
 $$
 C=\begin{cases}1,&U_1\le p,\\2,&U_1>p,\end{cases}
@@ -503,7 +503,7 @@ X_{n1} & X_{n2} & \cdots & X_{nd}
 \end{pmatrix}
 $$
 
-[Rows are samples; columns are coordinates]{.alert}
+[Rows are samples<br>Columns are coordinates]{.alert}
 
 ## Multivariate normal sampling {.tree-marker-slide tree-marker="random-generation"}
 
@@ -526,7 +526,7 @@ Define $\vX=\mA\vZ+\vmu$. Then
  =\mA\mA^\mathsf{T}
 \end{align*}
 
-Every [linear combination]{.alert} of the components of $\vX$ is normal. Therefore,
+Every [linear combination]{.alert} of the components of $\vX$ is normal; thus,
 if $\mSigma=\mA\mA^\mathsf{T}$,
 
 $$
