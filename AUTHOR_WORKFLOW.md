@@ -132,6 +132,16 @@ python -m ipykernel install --user --name qmcpy --display-name "qmcpy"
 Copy `.Renviron.example` to `.Renviron` and adjust the Python path when the
 local `qmcpy` environment is not in the default location.
 
+## Notebook execution timing
+
+Every course notebook must set
+`NOTEBOOK_START_TIME = time.perf_counter()` in its initial setup cell, before
+Colab detection and setup, and keep a final code cell with the ID
+`notebook-runtime` that reports `Total execution time for this notebook is …
+min … sec.` The runtime cell must remain the notebook's last cell. Validate the
+complete run and its timing output with the `qmcpy` kernel before publication;
+clean-Colab validation remains a separate publication requirement.
+
 ## Preview and render
 
 Preview the website with:
