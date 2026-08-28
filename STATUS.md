@@ -212,8 +212,9 @@ appropriate phase rather than appended indiscriminately.
   and validated.
 - [x] Link the companion `GeneratingSamples` notebook after it has been
   migrated and validated.
-- [ ] Reassess possible reusable `classlib` improvements after Lecture 2
-  demonstrates which patterns genuinely recur.
+- [x] Reassess possible reusable `classlib` improvements after Lecture 2;
+  promote precomputed-replication median/IQR bands and optional fitted log--log
+  trends to `cl.nbviz.plot_replication_band`.
 - [x] Confirm that the prototype requires no change to the documented author
   workflow.
 
