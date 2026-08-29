@@ -6,11 +6,6 @@ site_libs/
 **/*.quarto_ipynb
 .quarto-watch-logs/
 
-# Course-specific generated documentation
-docs/*
-!docs/pages-style.md
-!docs/slide-style.md
-
 # macOS and local environment files
 .DS_Store
 **/.DS_Store
@@ -21,9 +16,6 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
-
-# Local symlink for slide preview
-slides/classlib
 
 # Jupyter checkpoints and JupyterLab Desktop project state
 **/.ipynb_checkpoints/

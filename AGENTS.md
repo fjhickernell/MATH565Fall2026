@@ -73,11 +73,12 @@ Before substantial work, read these documents when they exist, in this order:
 4. `AUTHOR_WORKFLOW.md`
 5. `AGENTS.md`
 
-Before making substantial slide changes, read `classlib/AGENTS.md` and then
-`docs/slide-style.md`. Before making substantial page changes, read
-`classlib/AGENTS.md` and then `docs/pages-style.md`. The local guides remain
-authoritative for rules not yet migrated to classlib and for documented MATH
-565 exceptions.
+Before making substantial slide changes, read `classlib/AGENTS.md`,
+`classlib/docs/slide-style.md`, and then `docs/slide-style.md`. Before making
+substantial page changes, read `classlib/AGENTS.md`,
+`classlib/docs/webpage-style.md`, and then `docs/pages-style.md`. The shared
+guides are authoritative for universal conventions; the local guides contain
+only MATH 565 additions and explicit exceptions.
 
 Read `notes/NEXT.md` early in each work session. Treat it as the current
 cross-session handoff, not as authorization to begin its task without the
@@ -202,3 +203,23 @@ Never include changes from `qmcpy`, `assets/tests/archive`, or either
 reference repository in this checkpoint workflow. If any protected read-only
 repository is dirty, do not discard or silently omit its work and do not claim
 the checkpoint is complete; report the blocker and obtain user direction.
+
+<!-- classlib-consumer-contract:start -->
+## Shared classlib guidance
+
+This repository consumes `classlib` as a pinned submodule. Initialize the
+recorded submodule commit before substantive work; do not replace it with a
+moving branch tip during routine setup or validation.
+
+Before substantive work involving shared teaching, presentation, webpage,
+content, component, or infrastructure conventions, read
+`classlib/AGENTS.md`. Guidance applies in this order:
+
+1. applicable global instructions;
+2. shared guidance in the pinned `classlib/AGENTS.md`;
+3. explicit consumer-local instructions and exceptions.
+
+Keep universal guidance in `classlib` rather than copying it locally. Record a
+genuine local exception explicitly, including its scope and reason. Flag an
+apparent accidental conflict for review instead of silently resolving it.
+<!-- classlib-consumer-contract:end -->

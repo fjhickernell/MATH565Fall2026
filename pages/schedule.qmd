@@ -56,7 +56,8 @@ holidays, and examination details are finalized.
 | | Thu Nov 12 | | |
 | 14 | Tue Nov 17 | | |
 | | Thu Nov 19 | | |
-| 15 | Tue Nov 24 | | |
+| 15 | Mon Nov 23 | **Project presentations** | [Project information](project.qmd) |
+| | Tue Nov 24 | **Project presentations** | [Project information](project.qmd) |
 | | Thu Nov 26 | **No Class — Thanksgiving holiday** | |
 
 ### December

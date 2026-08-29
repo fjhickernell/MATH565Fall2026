@@ -45,15 +45,22 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   interim `nbviz` support recorded by the course. Both notebooks execute
   cleanly with the local `qmcpy` kernel, and the root site, all five decks, and
   assembled site render cleanly. The shared lazy-import fix is tested and
-  published as HickernellAcademicLib commit `615b402`; this course pins that
-  commit in course commit `7fb7886`, which is also published on `origin/main`.
-  Clean live-Colab validation remains pending.
+  published in HickernellAcademicLib commit `615b402`. The current `classlib`
+  pin advances to commit `22a02a4`, which retains that repair and adds the
+  authoritative shared slide and webpage style guides. Clean live-Colab
+  validation remains pending.
 - Assignment 1 is published in Canvas for 20 points, due September 2 at 11:59
   PM. It uses a 20-group self-sign-up set with at most two students per group.
   Its Owen Exercises 1.2 and 2.1, due date, and links appear on the Assignments
   page, Schedule, and Lecture 1. The course-hosted detail page is authoritative;
   Canvas links to it and the course Assignments page without repeating the
   exercise details, and a Canvas announcement has been posted.
+- The Fall 2026 project page now records proposed October 1 topic submissions,
+  November 23--24 presentations, November 11 and 18 presenter and observer
+  sign-ups, a November 25 assessment deadline, presentation lengths, and
+  conference-style logistics. The submission form, scheduling tools, location,
+  and detailed procedures remain to be finalized; dates that are not yet final
+  remain visibly labeled as proposed.
 - Deck 01 is complete and instructor-approved. Its cumulative Terms to Know
   index links terminology introduced in Decks 02–05, and its approved closing
   transition previews Generating Samples using the transformation

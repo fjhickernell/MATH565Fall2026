@@ -15,7 +15,7 @@ Choose one of the following project types.
   Monte Carlo methods or their applications. This is an individual project,
   and each student must choose a different article. The topic should not
   substantially duplicate material discussed in class. In general, the
-  article should have been published at least fifteen years ago.
+  article should have been published less than fifteen years ago.
 - **QMCPy feature:** Create a new feature for `qmcpy` and a blog post that
   illustrates it. This project may be completed individually or by a team of
   two. Discuss the proposed feature with the instructor to ensure that its
@@ -30,7 +30,7 @@ Choose one of the following project types.
 
 | Topic-selection item | Fall 2026 information |
 |---|---|
-| Topic submission deadline | **TBA** |
+| Proposed topic submission deadline | **Thursday, October 1** |
 | Topic submission form | **TBA** |
 | Approved-topic list | **TBA** |
 
@@ -58,23 +58,37 @@ Detailed feedback questions and assessment guidance are on the
 
 ## Presentation scheduling and observations
 
-Presentation and observation logistics will be finalized during Fall 2026.
+Project presentations will take place on **Monday, November 23, and Tuesday,
+November 24**, immediately before Thanksgiving. The deadlines below are
+proposed; links, location, and submission procedures will be added when they
+are finalized.
 
 | Planning item | Fall 2026 information |
 |---|---|
-| Presentation dates and times | **TBA** |
+| Presentation dates | **Monday–Tuesday, November 23–24** |
+| Individual presentation length | **15 minutes**, followed by **5 minutes for questions and answers** |
+| Two-person QMCPy feature presentation length | **30 minutes**, followed by **10 minutes for questions and answers** |
 | Presentation location and format | **TBA** |
-| Presenter sign-up deadline | **TBA** |
+| Proposed presenter sign-up deadline | **Wednesday, November 11** |
 | Presenter scheduling tool | **TBA** |
 | Presentation schedule | **TBA** |
+| Proposed observer sign-up deadline | **Wednesday, November 18** |
 | Observer sign-up process | **TBA** |
 | Equipment and connection requirements | **TBA** |
+| Proposed assessment submission deadline | **Wednesday, November 25, at 11:59 PM** |
 | Assessment submission procedure | **TBA** |
 
 Each student is expected to observe and assess **two** other presentations.
 Arrive on time for both presentations and observations, be prepared, and give
 substantive feedback. The final observation and submission procedures will be
 posted when the schedule is available.
+
+Presentations will be conducted like colloquium or conference talks. Arrive
+early enough to set up without delaying the schedule. The instructor will
+introduce each speaker, give time warnings, end the presentation when its
+allotted time expires, and chair the question period. At the end of the talk,
+conclude with “Thank you” or a similar closing and allow the chair to invite
+questions.
 
 ## Presentation guidance
 
@@ -86,8 +100,11 @@ posted when the schedule is available.
   audience.
 - Use your own words and give appropriate credit; do not plagiarize.
 - Aim for roughly one slide per minute and avoid overloading slides.
+- Dress business casual unless the final session instructions say otherwise.
 - Look at the audience rather than reading notes.
 - Practice beforehand, obtain feedback, and stay within the allotted time.
+- Bring the laptop and adapters needed for the presentation, test the display
+  connection in advance, and bring at least three copies of any handout.
 - Review the [Project Assessment](project-assessment.qmd) questions while
   preparing the presentation.
 
