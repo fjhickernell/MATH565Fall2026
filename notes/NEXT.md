@@ -10,20 +10,23 @@ same notebooks.
 
 ## Next MATH 565 work
 
-1. Review `notebooks/sampling/GeneratingSamples.ipynb` with the instructor and
+1. Create or adapt the Microsoft Bookings pages for Fall 2026 presenter and
+   observer sign-ups, following the separate-page workflow used in Fall 2025,
+   and add the finalized links and procedures to the project page.
+2. Review `notebooks/sampling/GeneratingSamples.ipynb` with the instructor and
    make any requested pedagogical or presentation refinements.
-2. Finish the Deck 02 notebook migration: use the completed lecture narrative
+3. Finish the Deck 02 notebook migration: use the completed lecture narrative
    and the deck-to-notebook plan in `notebooks/NOTEBOOK_INVENTORY.md` to build
    the focused mixture/transport, acceptance--rejection, and financial-payoff
    companions; migrate and validate every retained notebook.
-3. Review the drafted transport-map and normalizing-flow extension, its
+4. Review the drafted transport-map and normalizing-flow extension, its
    triangular-flow example, and its treatment in the companion notebook.
-4. Give Deck 02 a final instructor-led polish pass, including its notebook
+5. Give Deck 02 a final instructor-led polish pass, including its notebook
    links and the relationship between the lecture and retained notebooks.
-5. Review Deck 03 individually, beginning with its scope, section sequence,
+6. Review Deck 03 individually, beginning with its scope, section sequence,
    and mathematical emphasis before detailed layout polishing.
-6. Review Deck 04 and then Deck 05 using the same instructor-led process.
-7. Complete the remaining Fall 2026 logistics and student-facing page details,
+7. Review Deck 04 and then Deck 05 using the same instructor-led process.
+8. Complete the remaining Fall 2026 logistics and student-facing page details,
    including the seminar link, assignments, tests, project dates, and visible
    browser review.
 
@@ -55,12 +58,13 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   page, Schedule, and Lecture 1. The course-hosted detail page is authoritative;
   Canvas links to it and the course Assignments page without repeating the
   exercise details, and a Canvas announcement has been posted.
-- The Fall 2026 project page now records proposed October 1 topic submissions,
-  November 23--24 presentations, November 11 and 18 presenter and observer
-  sign-ups, a November 25 assessment deadline, presentation lengths, and
-  conference-style logistics. The submission form, scheduling tools, location,
-  and detailed procedures remain to be finalized; dates that are not yet final
-  remain visibly labeled as proposed.
+- The Fall 2026 project-selection deadline is Friday, September 18. A live
+  Illinois-Tech-only Microsoft Form records students' names, A-numbers, project
+  type, article citation and PDF or proposed QMCPy feature, and optional QMCPy
+  teammate. The course page links the form and correctly states that a review
+  article must have been published less than fifteen years ago. Presenter and
+  observer scheduling still needs separate Microsoft Bookings pages adapted
+  from the Fall 2025 workflow; no tracked 2025 Python sign-up checker exists.
 - Deck 01 is complete and instructor-approved. Its cumulative Terms to Know
   index links terminology introduced in Decks 02–05, and its approved closing
   transition previews Generating Samples using the transformation

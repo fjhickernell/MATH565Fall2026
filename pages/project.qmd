@@ -30,8 +30,8 @@ Choose one of the following project types.
 
 | Topic-selection item | Fall 2026 information |
 |---|---|
-| Proposed topic submission deadline | **Thursday, October 1** |
-| Topic submission form | **TBA** |
+| Topic submission deadline | **Friday, September 18** |
+| Topic submission form | [Submit the Fall 2026 Project Selection form](https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=PmWQ2gIeCEK2imIkiRvqYx5C7GZcajFJvSlbTido5G1UQjJTS0VFUE5VRlJLNUpDUDFMM1VER0FDSS4u) |
 | Approved-topic list | **TBA** |
 
 For an article review, identify the main idea, illustrate it with examples of
