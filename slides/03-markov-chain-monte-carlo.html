@@ -473,6 +473,7 @@
           mW: "{\\mathsf{W}}",
           mP: "{\\mathsf{P}}",
           mQ: "{\\mathsf{Q}}",
+          mV: "{\\mathsf{V}}",
           mR: "{\\mathsf{R}}",
           mI: "{\\mathsf{I}}",
           mzero: "{\\mathsf{0}}",
@@ -717,9 +718,8 @@ In this deck
 </div>
 
 <ul>
-<li>The quantile transform works directly for distributions with tractable quantiles</li>
-<li>Affine transformations generate correlated Gaussian vectors</li>
-<li>Acceptance–rejection sampling needs a proposal that bounds the target and may reject many proposals</li>
+<li>Quantile, affine, and exact transport maps produce independent, equally weighted target samples—but require a usable global map</li>
+<li>Acceptance–rejection also produces independent target samples—but requires a global proposal envelope and may reject many proposals</li>
 <li><span class="alert">Markov chain Monte Carlo (MCMC)</span> moves through the sample space using only an unnormalized target density</li>
 </ul>
 <div class="key-point">
@@ -800,17 +800,17 @@ X_0=X_1=0,
 
 <p>Suppose</p>
 <ul>
-<li>the target has known, possibly unnormalized density <span class="math inline">\(\varrho\)</span></li>
-<li><span class="math inline">\(\varrho_{\brandnew\mid\mathrm{old}}(z\mid x)\)</span> proposes a new state <span class="math inline">\(z\)</span> from the current state <span class="math inline">\(x\)</span></li>
+<li>the target has known, possibly unnormalized density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span></li>
+<li><span class="math inline">\(\varrho_{\mathrm{prop}}(z\mid x)\)</span> proposes a new state <span class="math inline">\(z\)</span> from the current state <span class="math inline">\(x\)</span></li>
 </ul>
 <p>Given <span class="math inline">\(X_0\)</span>, repeat for <span class="math inline">\(i=0,\ldots,n-1\)</span>:</p>
 <ol type="1">
-<li><p>Generate <span class="math inline">\(Z\sim\varrho_{\brandnew\mid\mathrm{old}}(\cdot\mid X_i)\)</span> and <span class="math inline">\(U\sim\Unif[0,1]\)</span></p></li>
+<li><p>Generate <span class="math inline">\(Z\sim\varrho_{\mathrm{prop}}(\cdot\mid X_i)\)</span> and <span class="math inline">\(U\sim\Unif[0,1]\)</span></p></li>
 <li><p>Compute</p>
 <p><span class="math display">\[
 \alpha(X_i,Z)=\min\!\left\{1,
-\frac{\varrho(Z)\varrho_{\brandnew\mid\mathrm{old}}(X_i\mid Z)}
-{\varrho(X_i)\varrho_{\brandnew\mid\mathrm{old}}(Z\mid X_i)}\right\}
+\frac{\varrho_{\mathrm{tar}}(Z)\varrho_{\mathrm{prop}}(X_i\mid Z)}
+{\varrho_{\mathrm{tar}}(X_i)\varrho_{\mathrm{prop}}(Z\mid X_i)}\right\}
 \]</span></p></li>
 <li><p>Set <span class="math inline">\(X_{i+1}=Z\)</span> if <span class="math inline">\(U\le\alpha(X_i,Z)\)</span>; otherwise set <span class="math inline">\(X_{i+1}=X_i\)</span></p></li>
 </ol>
@@ -825,8 +825,8 @@ X_0=X_1=0,
 
 <p>The ratio compares the two directions of a proposed transition:</p>
 <p><span class="math display">\[
-\frac{\varrho(Z)\varrho_{\brandnew\mid\mathrm{old}}(X_i\mid Z)}
-{\varrho(X_i)\varrho_{\brandnew\mid\mathrm{old}}(Z\mid X_i)}
+\frac{\varrho_{\mathrm{tar}}(Z)\varrho_{\mathrm{prop}}(X_i\mid Z)}
+{\varrho_{\mathrm{tar}}(X_i)\varrho_{\mathrm{prop}}(Z\mid X_i)}
 =
 \frac{\text{target weight at $Z$}\times\text{return proposal}}
 {\text{target weight at $X_i$}\times\text{forward proposal}}
@@ -834,7 +834,7 @@ X_0=X_1=0,
 <ul>
 <li>Moves toward higher target density are favored</li>
 <li>Asymmetric proposals are corrected by the proposal-density ratio</li>
-<li>The normalizing constant in <span class="math inline">\(\varrho\)</span> cancels</li>
+<li>The normalizing constant in <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span> cancels</li>
 </ul>
 <div class="key-point">
 <p>The transition kernel satisfies <span class="alert">detailed balance</span> with the target distribution, making the target invariant under suitable conditions</p>
@@ -849,12 +849,13 @@ X_0=X_1=0,
 
 <p>If the proposal is symmetric,</p>
 <p><span class="math display">\[
-\varrho_{\brandnew\mid\mathrm{old}}(z\mid x)
-=\varrho_{\brandnew\mid\mathrm{old}}(x\mid z),
+\varrho_{\mathrm{prop}}(z\mid x)
+=\varrho_{\mathrm{prop}}(x\mid z),
 \]</span></p>
 <p>then the acceptance probability simplifies to</p>
 <p><span class="math display">\[
-\alpha(x,z)=\min\!\left\{1,\frac{\varrho(z)}{\varrho(x)}\right\}
+\alpha(x,z)=\min\!\left\{1,
+\frac{\varrho_{\mathrm{tar}}(z)}{\varrho_{\mathrm{tar}}(x)}\right\}
 \]</span></p>
 <p>For a random-walk proposal <span class="math inline">\(Z=X_i+\epsilon_i\)</span> with symmetric <span class="math inline">\(\epsilon_i\)</span>:</p>
 <ul>
@@ -926,7 +927,7 @@ X_0=X_1=0,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(\varrho(x)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\varrho_{\mathrm{tar}}(x)\)</span></td>
 <td style="text-align: right;">0.1</td>
 <td style="text-align: right;">0.8</td>
 <td style="text-align: right;">2.0</td>
@@ -953,7 +954,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="227f6f84" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="224ac258" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>

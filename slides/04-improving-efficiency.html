@@ -407,6 +407,7 @@
           mW: "{\\mathsf{W}}",
           mP: "{\\mathsf{P}}",
           mQ: "{\\mathsf{Q}}",
+          mV: "{\\mathsf{V}}",
           mR: "{\\mathsf{R}}",
           mI: "{\\mathsf{I}}",
           mzero: "{\\mathsf{0}}",
@@ -641,6 +642,7 @@ In this deck
 <li><a href="#/the-keister-example">The Keister example</a></li>
 <li><a href="#/transforming-an-integral">Transforming an integral</a></li>
 <li><a href="#/transforming-a-random-variable">Transforming a random variable</a></li>
+<li><a href="#/transport-makes-importance-weights-constant">Transport makes importance weights constant</a></li>
 <li><a href="#/importance-sampling">Importance sampling</a></li>
 <li><a href="#/brownian-motion-with-drift">Brownian motion with drift</a></li>
 <li><a href="#/choosing-a-transformation">Choosing a transformation</a></li>
@@ -669,7 +671,7 @@ In this deck
 \var(\hmu_{g,n})&amp;=\frac{\var\{g(X)\}}n
 \end{align*}\]</span></p>
 <div class="key-point">
-<p>An equivalent expectation can be computationally better when its <span class="alert">integrand has smaller variance</span></p>
+<p>Deck 01 showed that accepting some bias can reduce MSE. Here both estimators are unbiased, so an equivalent expectation is better when its <span class="alert">integrand has smaller variance</span></p>
 </div>
 </section>
 <section id="the-keister-example" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
@@ -723,20 +725,50 @@ t=\psi(x),
   <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
 </div>
 
-<p>Let <span class="math inline">\(T=\psi(X)\)</span> for an invertible map <span class="math inline">\(\psi:\mathcal X\to\mathcal T\)</span></p>
+<p>Let <span class="math inline">\(\vZ\)</span> have proposal density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span> and define <span class="math inline">\(\vX=T(\vZ)\)</span> for an invertible map <span class="math inline">\(T:\mathcal Z\to\mathcal X\)</span></p>
 <p>The densities satisfy</p>
 <p><span class="math display">\[\begin{align*}
-\varrho_T(t)
-&amp;=\varrho_X\{\psi^{-1}(t)\}\abs{J(t;\psi^{-1})},\\
-\varrho_T\{\psi(x)\}
-&amp;=\frac{\varrho_X(x)}{\abs{J(x;\psi)}}
+\varrho_{\mathrm{tar}}(\vx)
+&amp;=\varrho_{\mathrm{prop}}\{T^{-1}(\vx)\}
+  \left|\det\nabla T^{-1}(\vx)\right|,\\
+\varrho_{\mathrm{tar}}\{T(\vz)\}
+&amp;=\frac{\varrho_{\mathrm{prop}}(\vz)}
+{\left|\det\nabla T(\vz)\right|}
 \end{align*}\]</span></p>
 <p>Therefore</p>
 <p><span class="math display">\[
-\Ex_{T\sim\varrho_T}[h(T)]
-=\Ex_{X\sim\varrho_X}[h\{\psi(X)\}]
+\Ex_{\mathrm{tar}}[h(\vX)]
+=\Ex_{\mathrm{prop}}[h\{T(\vZ)\}]
 \]</span></p>
 <p><span class="alert">A change of variables in an integral</span> and <span class="alert">a transformation of a random variable</span> are the same mechanism viewed from opposite directions</p>
+</section>
+<section id="transport-makes-importance-weights-constant" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Transport makes importance weights constant</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>For any invertible map <span class="math inline">\(T\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+\mu
+&amp;=\int h(\vx)\varrho_{\mathrm{tar}}(\vx)\,\dif \vx\\
+&amp;=\Ex_{\mathrm{prop}}\!\left[
+h\{T(\vZ)\}
+\underbrace{
+\frac{\varrho_{\mathrm{tar}}\{T(\vZ)\}
+\left|\det\nabla T(\vZ)\right|}
+{\varrho_{\mathrm{prop}}(\vZ)}}_{W_T(\vZ)}
+\right]
+\end{align*}\]</span></p>
+<ul>
+<li><span class="alert">Exact transport</span>: choose <span class="math inline">\(T\)</span> so that <span class="math inline">\(W_T(\vz)=1\)</span> everywhere</li>
+<li><span class="alert">Importance sampling</span>: choose <span class="math inline">\(T(\vz)=\vz\)</span> and retain the varying weight <span class="math inline">\(W_T(\vz)=\varrho_{\mathrm{tar}}(\vz)/
+\varrho_{\mathrm{prop}}(\vz)\)</span></li>
+</ul>
+<div class="key-point">
+<p>Transport absorbs the density correction into the map; importance sampling carries the correction as a weight</p>
+</div>
 </section>
 <section id="importance-sampling" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
 <h2>Importance sampling</h2>
@@ -745,23 +777,92 @@ t=\psi(x),
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>For a target density <span class="math inline">\(\varrho_T\)</span>, choose a proposal density <span class="math inline">\(\varrho_X\)</span> with the same support:</p>
+<p>Choose a proposal density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span> that is positive wherever <span class="math inline">\(h\varrho_{\mathrm{tar}}\)</span> is nonzero:</p>
 <p><span class="math display">\[\begin{align*}
 \mu
-&amp;=\int_{\mathcal T}h(t)\varrho_T(t)\,\dif t\\
-&amp;=\Ex_{X\sim\varrho_X}\!\left[
-h(X)\frac{\varrho_T(X)}{\varrho_X(X)}
+&amp;=\int h(x)\varrho_{\mathrm{tar}}(x)\,\dif x\\
+&amp;=\Ex_{Z\sim\varrho_{\mathrm{prop}}}\!\left[
+h(Z)\frac{\varrho_{\mathrm{tar}}(Z)}
+{\varrho_{\mathrm{prop}}(Z)}
 \right]
 \end{align*}\]</span></p>
-<p>The ratio <span class="math inline">\(\varrho_T/\varrho_X\)</span> is the <span class="alert">importance weight</span></p>
-<p>For <span class="math inline">\(X_0,\ldots,X_{n-1}\ \IIDsim\ \varrho_X\)</span>,</p>
-<p><span class="math display">\[\begin{align*}
+<p>The ratio <span class="math inline">\(\varrho_{\mathrm{tar}}/\varrho_{\mathrm{prop}}\)</span> is the <span class="alert">importance weight</span></p>
+<p>For <span class="math inline">\(Z_0,\ldots,Z_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}\)</span>,</p>
+<p><span class="math display">\[
 \hmu_{\mathrm{IS},n}
-&amp;=\frac1n\sum_{i=0}^{n-1}h(X_i)\frac{\varrho_T(X_i)}{\varrho_X(X_i)},\\
-\widehat{\var}(\hmu_{\mathrm{IS},n})
-&amp;=\frac1{n(n-1)}\sum_{i=0}^{n-1}
-\left[h(X_i)\frac{\varrho_T(X_i)}{\varrho_X(X_i)}-\hmu_{\mathrm{IS},n}\right]^2
-\end{align*}\]</span></p>
+=\frac1n\sum_{i=0}^{n-1}h(Z_i)
+\frac{\varrho_{\mathrm{tar}}(Z_i)}
+{\varrho_{\mathrm{prop}}(Z_i)}
+\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="one-integral-two-estimators">One integral, two estimators</h3>
+<p>Let</p>
+<p><span class="math display">\[
+\varrho_{\mathrm{tar}}(x)=\exp(-x),
+\qquad
+\mu=\int_0^\infty x^2\varrho_{\mathrm{tar}}(x)\,\dif x=2,
+\qquad
+Z_i\ \IIDsim\ \Exp(1/2)
+\]</span></p>
+<div class="columns">
+<div class="column" style="width:47%;">
+<h4 id="transport">Transport</h4>
+<p>Move every proposal point using <span class="math inline">\(T(z)=z/2\)</span>:</p>
+<p><span class="math display">\[
+\hmu_{\mathrm{T},n}
+=\frac1n\sum_{i=0}^{n-1}
+\left(\frac{Z_i}{2}\right)^2
+\]</span></p>
+<p>The transformed points are equally weighted <span class="math inline">\(\Exp(1)\)</span> target samples</p>
+</div><div class="column" style="width:6%;">
+
+</div><div class="column" style="width:47%;">
+<h4 id="importance-sampling-1">Importance sampling</h4>
+<p>Keep every proposal point and use</p>
+<p><span class="math display">\[
+\frac{\varrho_{\mathrm{tar}}(z)}
+{\varrho_{\mathrm{prop}}(z)}
+=2\exp(-z/2)
+\]</span></p>
+<p><span class="math display">\[
+\hmu_{\mathrm{IS},n}
+=\frac1n\sum_{i=0}^{n-1}2Z_i^2\exp(-Z_i/2)
+\]</span></p>
+</div></div>
+</section>
+<section class="slide level2">
+
+<h3 id="proposal-choice-depends-on-the-integrand">Proposal choice depends on the integrand</h3>
+<p>For the same <span class="math inline">\(Z\sim\Exp(1/2)\)</span> proposal,</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Estimator contribution</th>
+<th style="text-align: right;">Variance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Transport: <span class="math inline">\((Z/2)^2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(20\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Importance sampling: <span class="math inline">\(2Z^2\exp(-Z/2)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(188/81\approx2.32\)</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The heavier-tailed proposal visits large <span class="math inline">\(x\)</span>, where <span class="math inline">\(x^2\varrho_{\mathrm{tar}}(x)\)</span> is important</li>
+<li>The importance proposal is tailored to this <span class="math inline">\(h(x)=x^2\)</span></li>
+<li>Transport produces target samples that can be reused for any integrand</li>
+<li>A poor importance proposal can instead create extreme weights</li>
+</ul>
+<div class="key-point">
+<p>Transport primarily builds <span class="alert">reusable target samples</span>; importance sampling can instead tailor its proposal and weights to a <span class="alert">particular integral</span></p>
+</div>
 </section>
 <section id="brownian-motion-with-drift" class="slide level2 tree-marker-slide" data-tree-marker="quant-finance">
 <h2>Brownian motion with drift</h2>
@@ -771,14 +872,14 @@ h(X)\frac{\varrho_T(X)}{\varrho_X(X)}
 </div>
 
 <p>Positive option payoffs may be rare under a discretized Brownian path</p>
-<p>Let <span class="math inline">\(X\sim\Norm(\vzero,\mSigma)\)</span> with <span class="math inline">\(\Sigma_{jk}=\min(t_j,t_k)\)</span> and target density <span class="math inline">\(\varrho\)</span></p>
-<p>Sample instead from <span class="math inline">\(\Norm(\va,\mSigma)\)</span> with</p>
+<p>Let <span class="math inline">\(X\sim\Norm(\vzero,\mSigma)\)</span> with <span class="math inline">\(\Sigma_{jk}=\min(t_j,t_k)\)</span> and target density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span></p>
+<p>Use the proposal <span class="math inline">\(\Norm(\va,\mSigma)\)</span> with density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span> and</p>
 <p><span class="math display">\[
 \va=\theta(t_1,\ldots,t_d)^\mathsf T
 \]</span></p>
 <p>The likelihood ratio simplifies to</p>
 <p><span class="math display">\[
-\frac{\varrho(x)}{\varrho_{\mathrm{drift}}(x)}
+\frac{\varrho_{\mathrm{tar}}(x)}{\varrho_{\mathrm{prop}}(x)}
 =\exp\!\left(-\theta x_d+\frac{\theta^2t_d}{2}\right)
 \]</span></p>
 <ul>
@@ -1107,7 +1208,7 @@ X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="ee4ab218" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="1">
+<div id="e667e02c" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1364,7 +1465,8 @@ X_{\mathrm{rand},i}\sim\Unif[0,1]^d
 
 <ul>
 <li>Equivalent expectations can have dramatically different computational variance</li>
-<li>Importance sampling changes the sampling distribution and corrects with likelihood ratios</li>
+<li>Exact transport chooses a map that makes the target-to-proposal correction constant; importance sampling retains the correction as unequal weights</li>
+<li>Importance proposals may be tailored to a particular integrand, while transported target samples can be reused for many integrands</li>
 <li>Control variates and conditioning remove variability using known structure</li>
 <li>Antithetic sampling and Latin hypercubes introduce useful dependence deliberately</li>
 <li>Low discrepancy sequences replace random clustering with balanced space filling</li>

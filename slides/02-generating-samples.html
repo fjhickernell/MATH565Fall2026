@@ -407,6 +407,7 @@
           mW: "{\\mathsf{W}}",
           mP: "{\\mathsf{P}}",
           mQ: "{\\mathsf{Q}}",
+          mV: "{\\mathsf{V}}",
           mR: "{\\mathsf{R}}",
           mI: "{\\mathsf{I}}",
           mzero: "{\\mathsf{0}}",
@@ -622,7 +623,7 @@ In this deck
 <li><a href="#/from-uniformity-to-a-target-distribution">From Uniformity to a Target Distribution</a></li>
 <li><a href="#/random-vectors-and-stochastic-processes">Random Vectors and Stochastic Processes</a></li>
 <li><a href="#/low-discrepancy-sampling">Low Discrepancy Sampling</a></li>
-<li><a href="#/acceptancerejection-sampling">Acceptance–Rejection Sampling</a></li>
+<li><a href="#/more-advanced-direct-sampling">More Advanced Direct Sampling</a></li>
 <li><a href="#/big-ideas">Big Ideas</a></li>
 </ul>
 </div></div>
@@ -767,7 +768,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="1ad8cd0d" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="1ce7fa2f" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -811,7 +812,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="b32a2586" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="9a857844" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -843,7 +844,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="1f03f955" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="eb646b7b" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -927,7 +928,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="60cea9e1" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="d0d2e0b4" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1071,21 +1072,21 @@ a_{11}=\sqrt3,
 \]</span></p>
 <p>let <span class="math inline">\(c=\cos(\mpi/8)\)</span> and <span class="math inline">\(s=\sin(\mpi/8)\)</span>. The ordered eigendecomposition is</p>
 <p><span class="math display">\[
-\mQ=(\vq_1\ \vq_2)=
+\mV=(\vv_1\ \vv_2)=
 \begin{pmatrix}c&amp;s\\-s&amp;c\end{pmatrix},
 \qquad
 \mLambda=\operatorname{diag}(2+\sqrt2,\,2-\sqrt2)
 \]</span></p>
 <p>The PCA factor simplifies to</p>
 <p><span class="math display">\[
-\mA_{\mathrm{PCA}}=\mQ\mLambda^{1/2}
+\mA_{\mathrm{PCA}}=\mV\mLambda^{1/2}
 =\begin{pmatrix}
 1+1/\sqrt2&amp;1-1/\sqrt2\\
 -1/\sqrt2&amp;1/\sqrt2
 \end{pmatrix}
 \]</span></p>
 <p>Thus <span class="math inline">\(\mA_{\mathrm{PCA}}\mA_{\mathrm{PCA}}^\mathsf{T}
-=\mQ\mLambda\mQ^\mathsf{T}=\mSigma\)</span>, just as for the Cholesky factor</p>
+=\mV\mLambda\mV^\mathsf{T}=\mSigma\)</span>, just as for the Cholesky factor</p>
 </section>
 <section id="gaussian-processes" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Gaussian processes</h2>
@@ -1373,9 +1374,7 @@ M_d:=\max_{0\le j\le d}S_j
 <ul>
 <li><a href="#/what-does-low-discrepancy-mean">What does low discrepancy mean?</a></li>
 <li><a href="#/low-discrepancy-sequences">Low discrepancy sequences</a></li>
-<li><a href="#/biasvariance-decomposition">Bias–variance decomposition</a></li>
-<li><a href="#/shrinkage-estimators">Shrinkage estimators</a></li>
-<li><a href="#/transport-maps-and-normalizing-flows">Transport maps and normalizing flows</a></li>
+<li><a href="#/why-coordinate-order-matters">Why coordinate order matters</a></li>
 </ul>
 </section>
 <section id="what-does-low-discrepancy-mean" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
@@ -1414,14 +1413,19 @@ M_d:=\max_{0\le j\le d}S_j
 <p>They are available in deterministic and randomized forms through SciPy and <a href="https://qmcpy.org/">QMCPy</a></p>
 <p>In software arrays rows correspond to samples and columns to coordinates</p>
 </section>
-<section class="slide level2">
+<section id="why-coordinate-order-matters" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<h2>Why coordinate order matters</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
 
-<h3 id="why-coordinate-order-matters">Why coordinate order matters</h3>
 <p>Return to the <a href="#/principal-component-factorization">PCA factorization</a>:</p>
 <p><span class="math display">\[
 \vX-\vmu
-=\sqrt{2+\sqrt2}\,\vq_1\Phi^{-1}(U_1)
-+\sqrt{2-\sqrt2}\,\vq_2\Phi^{-1}(U_2)
+=\sqrt{2+\sqrt2}\,\vv_1\Phi^{-1}(U_1)
++\sqrt{2-\sqrt2}\,\vv_2\Phi^{-1}(U_2)
 \]</span></p>
 <p>so <span class="math inline">\(U_1\)</span> drives <span class="math inline">\(\lambda_1/(\lambda_1+\lambda_2)=(2+\sqrt2)/4\approx85.4\%\)</span> of the total marginal variance</p>
 <ul>
@@ -1431,75 +1435,75 @@ M_d:=\max_{0\le j\le d}S_j
 <div class="key-point">
 <p>Put the largest eigenvalues first so dominant directions use the low-numbered coordinates, where many low discrepancy constructions are strongest</p>
 </div>
-</section>
-<section id="biasvariance-decomposition" class="slide level2 tree-marker-slide" data-tree-marker="stat-estim">
-<h2>Bias–variance decomposition</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
-</div>
-
-<p>Recall the <a href="01-introduction.html#mean-squared-error-bias-and-variance">bias–variance decomposition from Deck 01</a>: for an estimator <span class="math inline">\(\Theta\)</span> of <span class="math inline">\(\theta\)</span>,</p>
-<p><span class="math display">\[\begin{align*}
-\mse(\Theta)
-&amp;=\Ex[(\Theta-\theta)^2]\\
-&amp;=[\bias(\Theta)]^2+\var(\Theta)
-\end{align*}\]</span></p>
-<p>The identity is unchanged; the <span class="alert">source of randomness</span> changes:</p>
-<ul>
-<li>An IID sample-mean estimator is unbiased and has positive variance</li>
-<li>A deterministic low discrepancy estimator has <span class="alert">no sampling variance</span>, but its deterministic error may be nonzero</li>
-<li>A randomized low discrepancy estimator has a sampling distribution, enabling <span class="alert">variance estimation</span> while retaining improved space filling</li>
-</ul>
-</section>
-<section id="shrinkage-estimators" class="slide level2 tree-marker-slide" data-tree-marker="stat-estim">
-<h2>Shrinkage estimators</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
-</div>
-
-<p>Suppose <span class="math inline">\(Y_0,\ldots,Y_{n-1}\ \IIDsim\ Y\)</span>, where</p>
-<p><span class="math display">\[
-\Ex(Y)=\mu,
-\qquad \var(Y)=\sigma^2,
-\qquad
-\hmu_n=\frac1n\sum_{i=0}^{n-1}Y_i
-\]</span></p>
-<p>For the estimator <span class="math inline">\(\alpha\hmu_n\)</span></p>
-<p><span class="math display">\[
-\mse(\alpha\hmu_n)
-=(1-\alpha)^2\mu^2+\alpha^2\frac{\sigma^2}{n}
-\]</span></p>
-<div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Find the value of <span class="math inline">\(\alpha\)</span> that minimizes this MSE. Is the minimizing estimator unbiased?</span></p>
-</div>
-</section>
-<section id="transport-maps-and-normalizing-flows" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
-<h2>Transport maps and normalizing flows</h2>
+</section></section>
+<section>
+<section id="more-advanced-direct-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="random-generation">
+<h1>More Advanced Direct Sampling</h1>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
 </div>
 
-<p>The quantile transform is a <span class="alert">one-dimensional transport</span>. In <span class="math inline">\(d\)</span> dimensions, start with an easy reference density <span class="math inline">\(\varrho_0\)</span> and an invertible, differentiable map <span class="math inline">\(T:\reals^d\to\reals^d\)</span>:</p>
+<ul>
+<li><a href="#/transport-maps">Transport maps</a></li>
+<li><a href="#/acceptancerejection-sampling">Acceptance–rejection sampling</a></li>
+</ul>
+</section>
+<section id="transport-maps" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>Transport maps</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<p>The quantile transform is a <span class="alert">one-dimensional transport</span>. In <span class="math inline">\(d\)</span> dimensions, start with an easy proposal density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span> and seek the target density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span> through an invertible, differentiable map <span class="math inline">\(T:\reals^d\to\reals^d\)</span>:</p>
 <p><span class="math display">\[
-\vZ\sim\varrho_0,
+\vZ\sim\varrho_{\mathrm{prop}},
 \qquad
 \vX=T(\vZ)
 \]</span></p>
-<p>The change-of-variables formula gives</p>
+<p>The map transports the proposal to the target when</p>
 <p><span class="math display">\[
-\varrho_X(\vx)
-=\varrho_0\!\left(T^{-1}(\vx)\right)
-\left|\det \nabla T^{-1}(\vx)\right|
+\varrho_{\mathrm{tar}}\{T(\vz)\}
+\left|\det\nabla T(\vz)\right|
+=\varrho_{\mathrm{prop}}(\vz)
 \]</span></p>
-<p>A <span class="alert">normalizing flow</span> composes manageable maps <span class="math inline">\(T=T_m\circ\cdots\circ T_1\)</span>, often tuning their parameters to fit a target</p>
+<p>Then, for every integrand <span class="math inline">\(h\)</span>,</p>
+<p><span class="math display">\[
+\Ex_{\mathrm{tar}}[h(\vX)]
+=\Ex_{\mathrm{prop}}[h\{T(\vZ)\}]
+\]</span></p>
 <div class="key-point">
-<p>A transport <span class="alert">moves every sample and keeps equal weights</span>; importance sampling keeps proposal samples and assigns unequal weights</p>
+<p>An exact transport <span class="alert">moves every proposal sample</span> and makes the correction weight equal to one</p>
 </div>
+<p>A <span class="alert">normalizing flow</span> builds a flexible transport by composing manageable invertible maps, <span class="math inline">\(T=T_m\circ\cdots\circ T_1\)</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="one-integral-one-exact-transport">One integral, one exact transport</h3>
+<p>Consider the target density and target expectation</p>
+<p><span class="math display">\[
+\varrho_{\mathrm{tar}}(x)=\exp(-x),\quad x\ge0,
+\qquad
+\mu=\Ex_{\mathrm{tar}}(X^2)=\int_0^\infty x^2\exp(-x)\,\dif x=2
+\]</span></p>
+<p>Choose the easy proposal density and map</p>
+<p><span class="math display">\[
+\varrho_{\mathrm{prop}}(z)=\frac12\exp(-z/2),
+\qquad
+T(z)=\frac z2
+\]</span></p>
+<p>Indeed,</p>
+<p><span class="math display">\[
+\varrho_{\mathrm{tar}}\{T(z)\}T'(z)
+=\exp(-z/2)\frac12
+=\varrho_{\mathrm{prop}}(z)
+\]</span></p>
+<p>For <span class="math inline">\(Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Exp(1/2)\)</span>,</p>
+<p><span class="math display">\[
+\hmu_{\mathrm{T},n}
+=\frac1n\sum_{i=0}^{n-1}\left(\frac{Z_i}{2}\right)^2
+\]</span></p>
 </section>
 <section class="slide level2">
 
@@ -1522,29 +1526,15 @@ T_b^{-1}(\vx)
 \]</span></p>
 <p>Thus, with <span class="math inline">\(\phi\)</span> the standard normal density,</p>
 <p><span class="math display">\[
-\varrho_X(x_1,x_2)
+\varrho_{\mathrm{tar}}(x_1,x_2)
 =\phi(x_1)\phi\!\left(x_2-b(x_1^2-1)\right),
 \qquad
 \Ex(X_2\mid X_1=x_1)=b(x_1^2-1)
 \]</span></p>
-<p>One layer turns independent Gaussian coordinates into a curved, dependent target. If no useful invertible map is available, <span class="alert">acceptance–rejection</span> offers another route from an easy proposal to the target</p>
-</section></section>
-<section>
-<section id="acceptancerejection-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="random-generation">
-<h1>Acceptance–Rejection Sampling</h1>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
-</div>
-
-<ul>
-<li><a href="#/the-acceptancerejection-algorithm">The acceptance–rejection algorithm</a></li>
-<li><a href="#/why-acceptancerejection-works">Why acceptance–rejection works</a></li>
-<li><a href="#/efficiency-and-method-comparison">Efficiency and method comparison</a></li>
-</ul>
+<p>One flow layer turns independent Gaussian coordinates into a curved, dependent target. If no useful map is available, <span class="alert">acceptance–rejection sampling</span> offers another direct route</p>
 </section>
-<section id="the-acceptancerejection-algorithm" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
-<h2>The acceptance–rejection algorithm</h2>
+<section id="acceptancerejection-sampling" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>Acceptance–rejection sampling</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
@@ -1552,90 +1542,79 @@ T_b^{-1}(\vx)
 
 <p>Suppose</p>
 <ul>
-<li><span class="alert">Proposal distribution</span>: <span class="math inline">\(Z\)</span> is easy to sample with density <span class="math inline">\(\varrho_Z\)</span></li>
-<li><span class="alert">Target distribution</span>: density <span class="math inline">\(c\varrho\)</span>, with known <span class="math inline">\(\varrho\)</span> and possibly unknown <span class="math inline">\(c&gt;0\)</span></li>
-<li><span class="math inline">\(\varrho(x)\le M\varrho_Z(x)\)</span> <span class="alert">for all <span class="math inline">\(x\)</span></span></li>
+<li><span class="alert">Proposal distribution</span>: <span class="math inline">\(Z\)</span> is easy to sample with density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span></li>
+<li><span class="alert">Target distribution</span>: density <span class="math inline">\(c\varrho_{\mathrm{tar}}\)</span>, with known <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span> and possibly unknown <span class="math inline">\(c&gt;0\)</span></li>
+<li><span class="math inline">\(\varrho_{\mathrm{tar}}(x)\le
+M\varrho_{\mathrm{prop}}(x)\)</span> <span class="alert">for all <span class="math inline">\(x\)</span></span></li>
 </ul>
 <p>Repeat until a proposal is accepted:</p>
 <ol type="1">
-<li><p>Generate <span class="math inline">\(Z\sim\varrho_Z\)</span> and <span class="math inline">\(U\sim\Unif[0,1]\)</span> independently</p></li>
+<li><p>Generate <span class="math inline">\(Z\sim\varrho_{\mathrm{prop}}\)</span> and <span class="math inline">\(U\sim\Unif[0,1]\)</span> independently</p></li>
 <li><p>Accept <span class="math inline">\(Z\)</span> as <span class="math inline">\(X\)</span> if</p>
 <p><span class="math display">\[
-U\le\frac{\varrho(Z)}{M\varrho_Z(Z)}
+U\le\frac{\varrho_{\mathrm{tar}}(Z)}
+{M\varrho_{\mathrm{prop}}(Z)}
 \]</span></p></li>
 </ol>
 <p>Otherwise reject <span class="math inline">\(Z\)</span> and try again</p>
 </section>
-<section id="why-acceptancerejection-works" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
-<h2>Why acceptance–rejection works</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
-</div>
+<section class="slide level2">
 
+<h3 id="why-acceptancerejection-works">Why acceptance–rejection works</h3>
 <p>For a small interval <span class="math inline">\(\dif z\)</span> around <span class="math inline">\(z\)</span></p>
 <p><span class="math display">\[\begin{align*}
 \Prob(Z\in\dif z,\text{ accept})
-&amp;=\varrho_Z(z)\dif z\,
-  \frac{\varrho(z)}{M\varrho_Z(z)}\\
-&amp;=\frac{\varrho(z)}{M}\dif z
+&amp;=\varrho_{\mathrm{prop}}(z)\dif z\,
+  \frac{\varrho_{\mathrm{tar}}(z)}
+  {M\varrho_{\mathrm{prop}}(z)}\\
+&amp;=\frac{\varrho_{\mathrm{tar}}(z)}{M}\dif z
 \end{align*}\]</span></p>
 <p><span class="alert">Conditioning on acceptance</span> gives the <span class="alert">target density</span></p>
 <p><span class="math display">\[
 \varrho_{Z\mid\text{accept}}(z)
-=\frac{\varrho(z)/M}{\Prob(\text{accept})}
-=c\varrho(z),
+=\frac{\varrho_{\mathrm{tar}}(z)/M}{\Prob(\text{accept})}
+=c\varrho_{\mathrm{tar}}(z),
 \qquad
 \Prob(\text{accept})=\frac{1}{Mc}
 \]</span></p>
 </section>
-<section id="efficiency-and-method-comparison" class="slide level2 tree-marker-slide" data-tree-marker="sampling">
-<h2>Efficiency and method comparison</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.6; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="pseudorandom-numbers" style="--tree-left: 61%; --tree-top: 70%; --tree-align: center;">Pseudorandom<br>Numbers</div>
-  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-</div>
+<section class="slide level2">
 
+<h3 id="efficiency-and-direct-method-comparison">Efficiency and direct-method comparison</h3>
 <p>Obtaining <span class="math inline">\(n\)</span> accepted samples requires an <span class="alert">average of <span class="math inline">\(nMc\)</span> proposals</span></p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 30%">
-<col style="width: 38%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Method</th>
+<th style="text-align: left;">What happens to a proposal</th>
 <th style="text-align: left;">Main requirement</th>
-<th style="text-align: center;">Compatible with low discrepancy?</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Quantile transform <span class="math inline">\(X=Q(U)\)</span></td>
-<td style="text-align: left;">Quantile function <span class="math inline">\(Q\)</span></td>
-<td style="text-align: center;">Yes</td>
+<td style="text-align: left;">Quantile or affine transform</td>
+<td style="text-align: left;">move every point</td>
+<td style="text-align: left;">known transform</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Normal transform <span class="math inline">\(\vX=\mA\vZ+\vmu\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\mSigma=\mA\mA^\mathsf{T}\)</span></td>
-<td style="text-align: center;">Yes</td>
+<td style="text-align: left;">Exact transport map</td>
+<td style="text-align: left;">move every point</td>
+<td style="text-align: left;">usable map <span class="math inline">\(T\)</span> and Jacobian</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Transport map <span class="math inline">\(\vX=T(\vZ)\)</span></td>
-<td style="text-align: left;">Invertible <span class="math inline">\(T\)</span> and its Jacobian</td>
-<td style="text-align: center;">Yes</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">Acceptance–rejection</td>
-<td style="text-align: left;"><span class="math inline">\(\varrho\le M\varrho_Z\)</span></td>
-<td style="text-align: center;">With care</td>
+<td style="text-align: left;">keep or discard the point</td>
+<td style="text-align: left;">global envelope <span class="math inline">\(\varrho_{\mathrm{tar}}\le M\varrho_{\mathrm{prop}}\)</span></td>
 </tr>
 </tbody>
 </table>
 <div class="key-point">
-<p>Choose a <span class="alert">proposal distribution</span> close to the <span class="alert">target distribution</span> so that <span class="math inline">\(Mc\)</span> is near one</p>
+<p>Transport invests in constructing a map; acceptance–rejection pays through discarded proposals when the envelope is loose</p>
 </div>
 </section></section>
 <section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="prob-stat-est">
@@ -1654,7 +1633,7 @@ U\le\frac{\varrho(Z)}{M\varrho_Z(Z)}
 <li>Independent marginal transforms do not create dependence; correlated normal vectors require a matrix factorization, and PCA can concentrate variation in early coordinates for low discrepancy sampling</li>
 <li>Gaussian-process sampling reduces finite collections of function values to multivariate normal sampling</li>
 <li>Low discrepancy points trade independent placement for more even coverage</li>
-<li>Bias and variance are distinct contributions to mean squared error</li>
+<li>An exact transport moves every proposal point to the target and makes the correction weight equal to one</li>
 <li>Acceptance–rejection samples from an unnormalized density when a suitable proposal envelope is available</li>
 </ul>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb">Companion <code>GeneratingSamples</code> notebook</a></p>

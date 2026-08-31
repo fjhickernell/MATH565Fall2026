@@ -407,6 +407,7 @@
           mW: "{\\mathsf{W}}",
           mP: "{\\mathsf{P}}",
           mQ: "{\\mathsf{Q}}",
+          mV: "{\\mathsf{V}}",
           mR: "{\\mathsf{R}}",
           mI: "{\\mathsf{I}}",
           mzero: "{\\mathsf{0}}",
@@ -1364,7 +1365,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <ul>
 <li><a href="#/terms-a-c">A–C</a></li>
 <li><a href="#/terms-d-i">D–I</a></li>
-<li><a href="#/terms-k-m">K–M</a></li>
+<li><a href="#/terms-k-o">K–O</a></li>
 <li><a href="#/terms-p-z">P–Z</a></li>
 </ul>
 </section>
@@ -1374,7 +1375,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <div class="column" style="width:50%;">
 <ul>
 <li><a href="#/random-variables-and-distributions">Absolutely continuous random variable</a></li>
-<li><a href="02-generating-samples.html#the-acceptancerejection-algorithm">Acceptance–rejection sampling</a></li>
+<li><a href="02-generating-samples.html#acceptancerejection-sampling">Acceptance–rejection sampling</a></li>
 <li><a href="04-improving-efficiency.html#antithetic-sampling">Antithetic sampling</a></li>
 <li><a href="#/conditional-probability">Bayes’ theorem</a></li>
 <li><a href="#/binomial-distribution">Bernoulli distribution</a></li>
@@ -1425,8 +1426,8 @@ Dates mark representative introductions or inflection points; adoption overlappe
 </ul>
 </div></div>
 </section>
-<section id="terms-k-m" class="slide level2">
-<h2>K–M</h2>
+<section id="terms-k-o" class="slide level2">
+<h2>K–O</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
@@ -1452,6 +1453,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="#/how-is-uncertainty-expressed-quantitatively">Monte Carlo method</a></li>
 <li><a href="05-selected-topics.html#multilevel-monte-carlo">Multilevel Monte Carlo</a></li>
 <li><a href="#/multivariate-normal-or-gaussian-distribution">Multivariate normal distribution</a></li>
+<li><a href="02-generating-samples.html#transport-maps">Normalizing flow</a></li>
 </ul>
 </div></div>
 </section>
@@ -1465,7 +1467,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="02-generating-samples.html#principal-component-factorization">Principal-component (PCA) factorization</a></li>
 <li><a href="#/random-variables-and-distributions">Probability density function (PDF)</a></li>
 <li><a href="#/random-variables-and-distributions">Probability mass function (PMF)</a></li>
-<li><a href="02-generating-samples.html#the-acceptancerejection-algorithm">Proposal distribution</a></li>
+<li><a href="02-generating-samples.html#transport-maps">Proposal distribution</a></li>
 <li><a href="02-generating-samples.html#where-do-random-variables-come-from">Pseudorandom number generator</a></li>
 <li><a href="02-generating-samples.html#the-quantile-transform">Quantile function</a></li>
 <li><a href="02-generating-samples.html#the-quantile-transform">Quantile transform</a></li>
@@ -1479,11 +1481,12 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="#/sampling">Sample</a></li>
 <li><a href="#/sampling">Sample mean</a></li>
 <li><a href="#/sampling">Sample variance</a></li>
-<li><a href="02-generating-samples.html#shrinkage-estimators">Shrinkage estimator</a></li>
+<li><a href="#/shrinkage-estimators">Shrinkage estimator</a></li>
 <li><a href="#/moments-of-random-variables">Standard deviation</a></li>
 <li><a href="05-selected-topics.html#stochastic-gradient-descent">Stochastic gradient descent</a></li>
 <li><a href="03-markov-chain-monte-carlo.html#symmetric-positive-definite-kernels">Symmetric positive definite kernel</a></li>
-<li><a href="02-generating-samples.html#the-acceptancerejection-algorithm">Target distribution</a></li>
+<li><a href="02-generating-samples.html#transport-maps">Target distribution</a></li>
+<li><a href="02-generating-samples.html#transport-maps">Transport map</a></li>
 <li><a href="#/mean-squared-error-bias-and-variance">Unbiased estimator</a></li>
 <li><a href="04-improving-efficiency.html#the-van-der-corput-sequence">van der Corput sequence</a></li>
 <li><a href="#/moments-of-random-variables">Variance</a></li>
@@ -1661,6 +1664,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <li><a href="#/sampling">Sampling</a></li>
 <li><a href="#/mean-squared-error-bias-and-variance">Mean squared error, bias, and variance</a></li>
 <li><a href="#/under-random-sampling">Under random sampling</a></li>
+<li><a href="#/shrinkage-estimators">Shrinkage can reduce MSE</a></li>
 <li><a href="#/central-limit-theorem">Central Limit Theorem</a></li>
 <li><a href="#/monte-carlo-estimates-of-properties-of-y">Monte Carlo estimates of properties of <span class="math inline">\(Y\)</span></a></li>
 <li><a href="#/computational-counterparts">Computational counterparts</a></li>
@@ -1676,7 +1680,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points; compare how its <span class="math inline">\(x_1\)</span>–<span class="math inline">\(x_2\)</span> projection fills the unit square</p>
-<div id="a7b402ab" class="cell" data-execution_count="4">
+<div id="2138fe64" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1689,7 +1693,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="grid-n64">Grid, <span class="math inline">\(n=64\)</span></h3>
-<div id="1f25e0e1" class="cell" data-execution_count="5">
+<div id="c0be626f" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1702,7 +1706,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="orthogonal-array-n64">Orthogonal array, <span class="math inline">\(n=64\)</span></h3>
-<div id="53f8c70d" class="cell" data-execution_count="6">
+<div id="3c8fbeb3" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1715,7 +1719,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="iid-n64">IID, <span class="math inline">\(n=64\)</span></h3>
-<div id="82a8f3d9" class="cell" data-execution_count="7">
+<div id="b1817637" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1728,7 +1732,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="scrambled-sobol-n64">Scrambled Sobol’, <span class="math inline">\(n=64\)</span></h3>
-<div id="0e963774" class="cell" data-execution_count="8">
+<div id="2a975a6f" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1789,6 +1793,30 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 \\
 \rmse(\hmu_n)&amp; =\frac{\sigma}{\sqrt{n}}
 \end{align*}\]</span></p>
+</section>
+<section id="shrinkage-estimators" class="slide level2 tree-marker-slide" data-tree-marker="stat-estim">
+<h2>Shrinkage can reduce MSE</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>For <span class="math inline">\(Y_0,\ldots,Y_{n-1}\ \IIDsim\ Y\)</span>, suppose</p>
+<p><span class="math display">\[
+\Ex(Y)=\mu,
+\qquad \var(Y)=\sigma^2,
+\qquad
+\hmu_n=\frac1n\sum_{i=0}^{n-1}Y_i
+\]</span></p>
+<p>The shrunken estimator <span class="math inline">\(\alpha\hmu_n\)</span> has</p>
+<p><span class="math display">\[
+\mse(\alpha\hmu_n)
+=(1-\alpha)^2\mu^2+\alpha^2\frac{\sigma^2}{n}
+\]</span></p>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Find the value of <span class="math inline">\(\alpha\)</span> that minimizes this MSE. Is the minimizing estimator unbiased?</span></p>
+</div>
 </section>
 <section id="central-limit-theorem" class="slide level2 tree-marker-slide" data-tree-marker="probstat">
 <h2>Central Limit Theorem</h2>
