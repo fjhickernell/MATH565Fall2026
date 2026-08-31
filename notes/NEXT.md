@@ -49,8 +49,9 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   cleanly with the local `qmcpy` kernel, and the root site, all five decks, and
   assembled site render cleanly. The shared lazy-import fix is tested and
   published in HickernellAcademicLib commit `615b402`. The current `classlib`
-  pin advances to commit `22a02a4`, which retains that repair and adds the
-  authoritative shared slide and webpage style guides. Clean live-Colab
+  pin advances to commit `526eecf`, which retains that repair and the
+  authoritative shared style guides, adds the shared heading-hierarchy
+  convention, and supplies the `\mLambda` slide macro. Clean live-Colab
   validation remains pending.
 - Assignment 1 is published in Canvas for 20 points, due September 2 at 11:59
   PM. It uses a 20-group self-sign-up set with at most two students per group.
@@ -70,7 +71,12 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   transition previews Generating Samples using the transformation
   $\vX=T(\vU)$.
 - Deck 02 has completed its initial instructor-led content and visible-layout
-  review. Its option-payoff section now includes QMCPy's right and trapezoidal
+  review. Its multivariate-normal development now compares Cholesky and PCA
+  factorizations for the same covariance matrix and explains why PCA places
+  dominant variance in early coordinates for low discrepancy sampling. Its
+  geometric-Brownian-motion sequence now distinguishes mean from median
+  growth before specializing to risk-neutral paths. Its option-payoff section
+  now includes QMCPy's right and trapezoidal
   arithmetic-Asian discretizations together with discretely monitored lookback
   and barrier payoffs, plus an American-put optimal-stopping formulation. The
   preceding material now separates general geometric Brownian motion from its
@@ -81,9 +87,12 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   cleanly, and is linked from the notebook page and both travel-time slides.
 - `notebooks/sampling/GeneratingSamples.ipynb` has been migrated with current
   QMCPy distribution, stochastic-process, and financial-option APIs. It
+  now presents separate Asian arithmetic-mean and floating-strike lookback
+  call subsections, including an IID replication diagnostic for each. It
   executes cleanly, has inspected saved outputs, and is linked from the
-  notebook page and Deck 02. Its simulations are intentionally unseeded so
-  reruns produce different realizations.
+  notebook page, the quantile-transform portion of Deck 02, and Deck 02's Big
+  Ideas slide. Its simulations are intentionally unseeded so reruns produce
+  different realizations.
 - `notebooks/NOTEBOOK_INVENTORY.md` now records the deck-to-notebook plan. It
   keeps `GeneratingSamples.ipynb` as a survey, adds focused Deck 02 companions
   for mixtures/transports, acceptance--rejection, and financial payoffs, and

@@ -111,6 +111,9 @@ Thus each $X_i:=Q(U_i)\sim F$
 [IID inputs yield IID targets <br>Other designs (Latin hypercube, low discrepancy, ...) retain their dependence
 structure]{.alert}
 
+[Try the quantile-transform examples in the companion `GeneratingSamples`
+notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb)
+
 ## Binomial random numbers {.tree-marker-slide tree-marker="random-generation"}
 
 Suppose $X\sim\Bin(3,0.6)$
@@ -475,6 +478,7 @@ plt.show()
 - [Independent marginals](#independent-marginals)
 - [Multivariate normal sampling](#multivariate-normal-sampling)
 - [Cholesky factorization](#cholesky-factorization)
+- [Principal-component (PCA) factorization](#principal-component-factorization)
 - [Gaussian processes](#gaussian-processes)
 - [Brownian motion](#brownian-motion)
 - [Geometric Brownian motion](#geometric-brownian-motion)
@@ -563,7 +567,8 @@ a_{11}=\sqrt3,
 \qquad a_{21}=-\frac1{\sqrt3},
 \qquad a_{22}=\sqrt{\frac23},
 \qquad
-\mA=\begin{pmatrix}\sqrt3&0\\-1/\sqrt3&\sqrt{2/3}\end{pmatrix}
+\mA_{\mathrm{Chol}}
+=\begin{pmatrix}\sqrt3&0\\-1/\sqrt3&\sqrt{2/3}\end{pmatrix}
 $$
 
 ---
@@ -588,6 +593,37 @@ $$
 
 Different factorizations generate the [same distribution]{.alert} but may behave
 [differently under low discrepancy sampling]{.alert}
+
+## Principal-component (PCA) factorization {#principal-component-factorization .tree-marker-slide tree-marker="random-generation"}
+
+For the [same covariance matrix as in the Cholesky example](#cholesky-factorization),
+
+$$
+\mSigma=\begin{pmatrix}3&-1\\-1&1\end{pmatrix},
+$$
+
+let $c=\cos(\mpi/8)$ and $s=\sin(\mpi/8)$. The ordered eigendecomposition is
+
+$$
+\mQ=(\vq_1\ \vq_2)=
+\begin{pmatrix}c&s\\-s&c\end{pmatrix},
+\qquad
+\mLambda=\operatorname{diag}(2+\sqrt2,\,2-\sqrt2)
+$$
+
+The PCA factor simplifies to
+
+$$
+\mA_{\mathrm{PCA}}=\mQ\mLambda^{1/2}
+=\begin{pmatrix}
+1+1/\sqrt2&1-1/\sqrt2\\
+-1/\sqrt2&1/\sqrt2
+\end{pmatrix}
+$$
+
+Thus
+$\mA_{\mathrm{PCA}}\mA_{\mathrm{PCA}}^\mathsf{T}
+=\mQ\mLambda\mQ^\mathsf{T}=\mSigma$, just as for the Cholesky factor
 
 ## Gaussian processes {.tree-marker-slide tree-marker="probability"}
 
@@ -704,21 +740,46 @@ S(t)=S_0\exp\!\left[
 \right]
 $$
 
-Then $S(t)>0$, its multiplicative increments are lognormal, and
+Then $S(t)>0$ and its multiplicative increments are lognormal
+
+::: {.exitem}
+<span class="exbullet">$\exstar$</span>
+<span>Using $B(t)\sim\Norm(0,t)$ and the normal moment-generating function,
+show that $\Ex[S(t)]=S_0\me^{\gamma t}$. Hence determine $\gamma$ so that
+$\Ex[S(t)]=S_0\me^{rt}$.</span>
+:::
+
+The correction [$-\sigma^2/2$]{.alert} makes $\gamma$ the mean growth rate;
+the median growth rate is $\gamma-\sigma^2/2$
+
+---
+
+### Why the mean exceeds the median
+
+Let
 
 $$
-\Ex[S(t)]=S_0\me^{\gamma t}
+m(t)=S_0\me^{(\gamma-\sigma^2/2)t},
 $$
 
-The correction [$-\sigma^2/2$]{.alert} makes $\gamma$ the mean growth rate
-rather than the median growth rate
+the median of $S(t)$
+
+::: {.exitem}
+<span class="exbullet">$\exstar$</span>
+<span>The normal density weights the shocks $b$ and $-b$ equally. Show that
+$$
+\frac{m(t)\me^{\sigma b}+m(t)\me^{-\sigma b}}{2}
+=m(t)\cosh(\sigma b)>m(t),\qquad b\ne0.
+$$
+Why do equal and opposite log shocks not cancel in price?</span>
+:::
 
 ---
 
 ### Risk-neutral asset-price paths
 
-For a non-dividend-paying asset, the [risk-neutral model]{.alert} sets
-$\gamma=r$
+For a non-dividend-paying asset with continuously compounded risk-free rate
+$r$, the [risk-neutral model]{.alert} sets $\gamma=r$
 
 On $0=t_0<t_1<\cdots<t_d=T$, define $\Delta t_j:=t_j-t_{j-1}$. For
 $Z_1,\ldots,Z_d\ \IIDsim\ \Norm(0,1)$,
@@ -877,6 +938,31 @@ They are available in deterministic and randomized forms through SciPy and
 [QMCPy](https://qmcpy.org/)
 
 In software arrays rows correspond to samples and columns to coordinates
+
+---
+
+### Why coordinate order matters
+
+Return to the [PCA factorization](#principal-component-factorization):
+
+$$
+\vX-\vmu
+=\sqrt{2+\sqrt2}\,\vq_1\Phi^{-1}(U_1)
++\sqrt{2-\sqrt2}\,\vq_2\Phi^{-1}(U_2)
+$$
+
+so $U_1$ drives
+$\lambda_1/(\lambda_1+\lambda_2)=(2+\sqrt2)/4\approx85.4\%$
+of the total marginal variance
+
+- [IID inputs]{.alert}: column order does not change the distribution
+- [Low discrepancy inputs]{.alert}: column order changes which coordinate
+  drives each principal direction
+
+::: {.key-point}
+Put the largest eigenvalues first so dominant directions use the low-numbered
+coordinates, where many low discrepancy constructions are strongest
+:::
 
 ## Bias–variance decomposition {.tree-marker-slide tree-marker="stat-estim"}
 
@@ -1054,7 +1140,8 @@ Choose a [proposal distribution]{.alert} close to the
 - The generalized inverse works for discrete and continuous distributions
 - Mixtures combine a discrete component choice with a conditional transform
 - Independent marginal transforms do not create dependence; correlated normal
-  vectors require a matrix factorization
+  vectors require a matrix factorization, and PCA can concentrate variation in
+  early coordinates for low discrepancy sampling
 - Gaussian-process sampling reduces finite collections of function values to
   multivariate normal sampling
 - Low discrepancy points trade independent placement for more even coverage

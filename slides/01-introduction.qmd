@@ -465,6 +465,7 @@ Canvas; only one person per group submits the assignment.
 ::: {.column width="50%"}
 - [Parallel tempering](03-markov-chain-monte-carlo.html#tuning-and-diagnostics)
 - [Point estimator](#monte-carlo-estimates-of-properties-of-y)
+- [Principal-component (PCA) factorization](02-generating-samples.html#principal-component-factorization)
 - [Probability density function (PDF)](#random-variables-and-distributions)
 - [Probability mass function (PMF)](#random-variables-and-distributions)
 - [Proposal distribution](02-generating-samples.html#the-acceptancerejection-algorithm)

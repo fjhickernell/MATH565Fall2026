@@ -62,6 +62,13 @@ Add a preset using `.tree-marker-slide` and `tree-marker`:
 ## Random variables and distributions {.tree-marker-slide tree-marker="probability"}
 ```
 
+Use tree markers on major-section (`#`) and regular slide (`##`) headings.
+Continuation slides created with `---`, including those with a visible `###`
+subheading, intentionally omit the navigation tree. Do not add an empty or
+hidden heading solely to place a tree on a continuation slide. If a future
+request would add one, remind the author of this convention before making the
+change.
+
 The `tree-marker.lua` filter resolves the preset and stops on an unknown name.
 Add or tune presets rather than copying full rendering calls. Position the
 marker element rather than changing RevealJS's slide positioning model.

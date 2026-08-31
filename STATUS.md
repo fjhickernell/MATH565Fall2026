@@ -231,9 +231,17 @@ appropriate phase rather than appended indiscriminately.
     - [x] Add a one-dimensional Gaussian mixture example with analytic PDF and
       CDF formulas, hierarchical sampling, and a density plot.
     - [x] Add CDF and quantile plots for the zero-inflated exponential.
+    - [x] Compare Cholesky and PCA factorizations for one covariance matrix and
+      explain the importance of coordinate ordering for low discrepancy
+      sampling.
     - [x] Add lookback and barrier option-payoff examples.
     - [x] Separate general geometric Brownian motion from risk-neutral discrete
       asset paths and add American-put optimal stopping.
+    - [x] Distinguish geometric-Brownian-motion mean and median growth through
+      a student exercise and paired-shock explanation.
+    - [x] Add separate Asian and lookback call subsections to the
+      `GeneratingSamples` survey notebook and link it from the quantile
+      transform material as well as the closing summary.
     - [x] Draft a compact transport-map and normalizing-flow explanation before
       acceptance--rejection, using an explicit triangular flow to create curved
       dependence and distinguishing transport from importance sampling.
