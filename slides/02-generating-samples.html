@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-08-29">
+  <meta name="dcterms.date" content="2026-08-31">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -36,7 +36,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="02-generating-samples_files/libs/revealjs/dist/theme/quarto-ff7f97ac4c4f2ced961d7329047492a5.css">
+  <link rel="stylesheet" href="02-generating-samples_files/libs/revealjs/dist/theme/quarto-6e2a8a6e2954dea89eba65cb18b8ac44.css">
   <link href="02-generating-samples_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="02-generating-samples_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="02-generating-samples_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -459,6 +459,7 @@
           mpi: "{\\mathrm{\\pi}}",
           mK: "{\\mathsf{K}}",
           tmK: "{\\widetilde{\\mathsf{K}}}",
+          mLambda: "{\\mathsf{\\Lambda}}",
           mSigma: "{\\mathsf{\\Sigma}}",
 
           dif: "{\\mathrm{d}}",
@@ -597,7 +598,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">August 29, 2026</p>
+  <p class="date">August 31, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 center">
 <h1>Course Map</h1>
@@ -692,6 +693,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 \]</span></p>
 <p>Thus each <span class="math inline">\(X_i:=Q(U_i)\sim F\)</span></p>
 <p><span class="alert">IID inputs yield IID targets <br>Other designs (Latin hypercube, low discrepancy, …) retain their dependence structure</span></p>
+<p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb">Try the quantile-transform examples in the companion <code>GeneratingSamples</code> notebook</a></p>
 </section>
 <section id="binomial-random-numbers" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
 <h2>Binomial random numbers</h2>
@@ -765,7 +767,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="6b90d3f7" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="1ad8cd0d" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -809,7 +811,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="3cfe9dc0" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="b32a2586" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -841,7 +843,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="2625953c" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="1f03f955" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -925,7 +927,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="e0329ace" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="60cea9e1" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -948,6 +950,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 <li><a href="#/independent-marginals">Independent marginals</a></li>
 <li><a href="#/multivariate-normal-sampling">Multivariate normal sampling</a></li>
 <li><a href="#/cholesky-factorization">Cholesky factorization</a></li>
+<li><a href="#/principal-component-factorization">Principal-component (PCA) factorization</a></li>
 <li><a href="#/gaussian-processes">Gaussian processes</a></li>
 <li><a href="#/brownian-motion">Brownian motion</a></li>
 <li><a href="#/geometric-brownian-motion">Geometric Brownian motion</a></li>
@@ -1032,7 +1035,8 @@ a_{11}=\sqrt3,
 \qquad a_{21}=-\frac1{\sqrt3},
 \qquad a_{22}=\sqrt{\frac23},
 \qquad
-\mA=\begin{pmatrix}\sqrt3&amp;0\\-1/\sqrt3&amp;\sqrt{2/3}\end{pmatrix}
+\mA_{\mathrm{Chol}}
+=\begin{pmatrix}\sqrt3&amp;0\\-1/\sqrt3&amp;\sqrt{2/3}\end{pmatrix}
 \]</span></p>
 </section>
 <section class="slide level2">
@@ -1053,6 +1057,35 @@ a_{11}=\sqrt3,
 \end{pmatrix}
 \]</span></p>
 <p>Different factorizations generate the <span class="alert">same distribution</span> but may behave <span class="alert">differently under low discrepancy sampling</span></p>
+</section>
+<section id="principal-component-factorization" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>Principal-component (PCA) factorization</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<p>For the <a href="#/cholesky-factorization">same covariance matrix as in the Cholesky example</a>,</p>
+<p><span class="math display">\[
+\mSigma=\begin{pmatrix}3&amp;-1\\-1&amp;1\end{pmatrix},
+\]</span></p>
+<p>let <span class="math inline">\(c=\cos(\mpi/8)\)</span> and <span class="math inline">\(s=\sin(\mpi/8)\)</span>. The ordered eigendecomposition is</p>
+<p><span class="math display">\[
+\mQ=(\vq_1\ \vq_2)=
+\begin{pmatrix}c&amp;s\\-s&amp;c\end{pmatrix},
+\qquad
+\mLambda=\operatorname{diag}(2+\sqrt2,\,2-\sqrt2)
+\]</span></p>
+<p>The PCA factor simplifies to</p>
+<p><span class="math display">\[
+\mA_{\mathrm{PCA}}=\mQ\mLambda^{1/2}
+=\begin{pmatrix}
+1+1/\sqrt2&amp;1-1/\sqrt2\\
+-1/\sqrt2&amp;1/\sqrt2
+\end{pmatrix}
+\]</span></p>
+<p>Thus <span class="math inline">\(\mA_{\mathrm{PCA}}\mA_{\mathrm{PCA}}^\mathsf{T}
+=\mQ\mLambda\mQ^\mathsf{T}=\mSigma\)</span>, just as for the Cholesky factor</p>
 </section>
 <section id="gaussian-processes" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Gaussian processes</h2>
@@ -1160,16 +1193,31 @@ S(t)=S_0\exp\!\left[
 \left(\gamma-\frac{\sigma^2}{2}\right)t+\sigma B(t)
 \right]
 \]</span></p>
-<p>Then <span class="math inline">\(S(t)&gt;0\)</span>, its multiplicative increments are lognormal, and</p>
+<p>Then <span class="math inline">\(S(t)&gt;0\)</span> and its multiplicative increments are lognormal</p>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Using <span class="math inline">\(B(t)\sim\Norm(0,t)\)</span> and the normal moment-generating function, show that <span class="math inline">\(\Ex[S(t)]=S_0\me^{\gamma t}\)</span>. Hence determine <span class="math inline">\(\gamma\)</span> so that <span class="math inline">\(\Ex[S(t)]=S_0\me^{rt}\)</span>.</span></p>
+</div>
+<p>The correction <span class="alert"><span class="math inline">\(-\sigma^2/2\)</span></span> makes <span class="math inline">\(\gamma\)</span> the mean growth rate; the median growth rate is <span class="math inline">\(\gamma-\sigma^2/2\)</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="why-the-mean-exceeds-the-median">Why the mean exceeds the median</h3>
+<p>Let</p>
 <p><span class="math display">\[
-\Ex[S(t)]=S_0\me^{\gamma t}
+m(t)=S_0\me^{(\gamma-\sigma^2/2)t},
 \]</span></p>
-<p>The correction <span class="alert"><span class="math inline">\(-\sigma^2/2\)</span></span> makes <span class="math inline">\(\gamma\)</span> the mean growth rate rather than the median growth rate</p>
+<p>the median of <span class="math inline">\(S(t)\)</span></p>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>The normal density weights the shocks <span class="math inline">\(b\)</span> and <span class="math inline">\(-b\)</span> equally. Show that <span class="math display">\[
+\frac{m(t)\me^{\sigma b}+m(t)\me^{-\sigma b}}{2}
+=m(t)\cosh(\sigma b)&gt;m(t),\qquad b\ne0.
+\]</span> Why do equal and opposite log shocks not cancel in price?</span></p>
+</div>
 </section>
 <section class="slide level2">
 
 <h3 id="risk-neutral-asset-price-paths">Risk-neutral asset-price paths</h3>
-<p>For a non-dividend-paying asset, the <span class="alert">risk-neutral model</span> sets <span class="math inline">\(\gamma=r\)</span></p>
+<p>For a non-dividend-paying asset with continuously compounded risk-free rate <span class="math inline">\(r\)</span>, the <span class="alert">risk-neutral model</span> sets <span class="math inline">\(\gamma=r\)</span></p>
 <p>On <span class="math inline">\(0=t_0&lt;t_1&lt;\cdots&lt;t_d=T\)</span>, define <span class="math inline">\(\Delta t_j:=t_j-t_{j-1}\)</span>. For <span class="math inline">\(Z_1,\ldots,Z_d\ \IIDsim\ \Norm(0,1)\)</span>,</p>
 <p><span class="math display">\[
 S_j=S_{j-1}\exp\!\left[
@@ -1365,6 +1413,24 @@ M_d:=\max_{0\le j\le d}S_j
 </ul>
 <p>They are available in deterministic and randomized forms through SciPy and <a href="https://qmcpy.org/">QMCPy</a></p>
 <p>In software arrays rows correspond to samples and columns to coordinates</p>
+</section>
+<section class="slide level2">
+
+<h3 id="why-coordinate-order-matters">Why coordinate order matters</h3>
+<p>Return to the <a href="#/principal-component-factorization">PCA factorization</a>:</p>
+<p><span class="math display">\[
+\vX-\vmu
+=\sqrt{2+\sqrt2}\,\vq_1\Phi^{-1}(U_1)
++\sqrt{2-\sqrt2}\,\vq_2\Phi^{-1}(U_2)
+\]</span></p>
+<p>so <span class="math inline">\(U_1\)</span> drives <span class="math inline">\(\lambda_1/(\lambda_1+\lambda_2)=(2+\sqrt2)/4\approx85.4\%\)</span> of the total marginal variance</p>
+<ul>
+<li><span class="alert">IID inputs</span>: column order does not change the distribution</li>
+<li><span class="alert">Low discrepancy inputs</span>: column order changes which coordinate drives each principal direction</li>
+</ul>
+<div class="key-point">
+<p>Put the largest eigenvalues first so dominant directions use the low-numbered coordinates, where many low discrepancy constructions are strongest</p>
+</div>
 </section>
 <section id="biasvariance-decomposition" class="slide level2 tree-marker-slide" data-tree-marker="stat-estim">
 <h2>Bias–variance decomposition</h2>
@@ -1585,7 +1651,7 @@ U\le\frac{\varrho(Z)}{M\varrho_Z(Z)}
 <li>Start with uniform samples and transform them to the desired distribution</li>
 <li>The generalized inverse works for discrete and continuous distributions</li>
 <li>Mixtures combine a discrete component choice with a conditional transform</li>
-<li>Independent marginal transforms do not create dependence; correlated normal vectors require a matrix factorization</li>
+<li>Independent marginal transforms do not create dependence; correlated normal vectors require a matrix factorization, and PCA can concentrate variation in early coordinates for low discrepancy sampling</li>
 <li>Gaussian-process sampling reduces finite collections of function values to multivariate normal sampling</li>
 <li>Low discrepancy points trade independent placement for more even coverage</li>
 <li>Bias and variance are distinct contributions to mean squared error</li>

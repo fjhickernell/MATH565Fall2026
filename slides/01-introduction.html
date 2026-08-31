@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-08-29">
+  <meta name="dcterms.date" content="2026-08-31">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -36,7 +36,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="01-introduction_files/libs/revealjs/dist/theme/quarto-ff7f97ac4c4f2ced961d7329047492a5.css">
+  <link rel="stylesheet" href="01-introduction_files/libs/revealjs/dist/theme/quarto-6e2a8a6e2954dea89eba65cb18b8ac44.css">
   <link href="01-introduction_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="01-introduction_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="01-introduction_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -459,6 +459,7 @@
           mpi: "{\\mathrm{\\pi}}",
           mK: "{\\mathsf{K}}",
           tmK: "{\\widetilde{\\mathsf{K}}}",
+          mLambda: "{\\mathsf{\\Lambda}}",
           mSigma: "{\\mathsf{\\Sigma}}",
 
           dif: "{\\mathrm{d}}",
@@ -597,7 +598,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">August 29, 2026</p>
+  <p class="date">August 31, 2026</p>
 </section>
 <section id="we-begin-this-semester-amid-significant-change" class="slide level2">
 <h2>We begin this semester amid significant change</h2>
@@ -1461,6 +1462,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <ul>
 <li><a href="03-markov-chain-monte-carlo.html#tuning-and-diagnostics">Parallel tempering</a></li>
 <li><a href="#/monte-carlo-estimates-of-properties-of-y">Point estimator</a></li>
+<li><a href="02-generating-samples.html#principal-component-factorization">Principal-component (PCA) factorization</a></li>
 <li><a href="#/random-variables-and-distributions">Probability density function (PDF)</a></li>
 <li><a href="#/random-variables-and-distributions">Probability mass function (PMF)</a></li>
 <li><a href="02-generating-samples.html#the-acceptancerejection-algorithm">Proposal distribution</a></li>
@@ -1674,7 +1676,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points; compare how its <span class="math inline">\(x_1\)</span>–<span class="math inline">\(x_2\)</span> projection fills the unit square</p>
-<div id="2df11e45" class="cell" data-execution_count="4">
+<div id="a7b402ab" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1687,7 +1689,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="grid-n64">Grid, <span class="math inline">\(n=64\)</span></h3>
-<div id="ae40b110" class="cell" data-execution_count="5">
+<div id="1f25e0e1" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1700,7 +1702,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="orthogonal-array-n64">Orthogonal array, <span class="math inline">\(n=64\)</span></h3>
-<div id="37a22c2a" class="cell" data-execution_count="6">
+<div id="53f8c70d" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1713,7 +1715,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="iid-n64">IID, <span class="math inline">\(n=64\)</span></h3>
-<div id="6b598427" class="cell" data-execution_count="7">
+<div id="82a8f3d9" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1726,7 +1728,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="scrambled-sobol-n64">Scrambled Sobol’, <span class="math inline">\(n=64\)</span></h3>
-<div id="6986a99d" class="cell" data-execution_count="8">
+<div id="0e963774" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
