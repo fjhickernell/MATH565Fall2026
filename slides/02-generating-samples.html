@@ -768,7 +768,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="1ce7fa2f" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="074db00c" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -812,7 +812,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="9a857844" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="27f4e187" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -844,7 +844,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="eb646b7b" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="c4f7c6f1" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -928,7 +928,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="d0d2e0b4" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="e5fc9c34" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1480,6 +1480,37 @@ M_d:=\max_{0\le j\le d}S_j
 </section>
 <section class="slide level2">
 
+<h3 id="how-is-t-chosen">How is <span class="math inline">\(T\)</span> chosen?</h3>
+<div class="columns">
+<div class="column" style="width:47%;">
+<h3>
+Mechanics
+</h3>
+<ul>
+<li>Choose a tractable family <span class="math inline">\(T_\theta\)</span>: affine, triangular, or a composition of simple invertible maps</li>
+<li>Determine <span class="math inline">\(\theta\)</span> analytically when possible; otherwise fit it so the density-matching equation holds approximately</li>
+<li>Add an optimality criterion when needed; quadratic-cost transport leads to a Monge–Ampère PDE</li>
+<li>Validate the transformed samples and the Jacobian calculation</li>
+</ul>
+</div><div class="column" style="width:6%;">
+
+</div><div class="column" style="width:47%;">
+<h3>
+The art
+</h3>
+<ul>
+<li>In <span class="math inline">\(d&gt;1\)</span>, the proposal and target densities do <span class="alert">not identify a unique map</span></li>
+<li>Match the map family to the target’s support, dependence, and geometry</li>
+<li>Choose coordinate ordering and the structure to preserve or simplify</li>
+<li>Balance accuracy against fitting, inversion, Jacobian, and sampling costs</li>
+</ul>
+</div></div>
+<div class="key-point">
+<p>The density equation supplies the constraint; the designer supplies the structure that makes the map solvable and useful</p>
+</div>
+</section>
+<section class="slide level2">
+
 <h3 id="one-integral-one-exact-transport">One integral, one exact transport</h3>
 <p>Consider the target density and target expectation</p>
 <p><span class="math display">\[
@@ -1614,7 +1645,8 @@ U\le\frac{\varrho_{\mathrm{tar}}(Z)}
 </tbody>
 </table>
 <div class="key-point">
-<p>Transport invests in constructing a map; acceptance–rejection pays through discarded proposals when the envelope is loose</p>
+<p><span class="alert">Transport</span> invests in constructing a map</p>
+<p><span class="alert">Acceptance–rejection</span> pays through discarded proposals when the envelope is loose</p>
 </div>
 </section></section>
 <section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="prob-stat-est">
