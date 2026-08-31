@@ -1003,6 +1003,42 @@ manageable invertible maps, $T=T_m\circ\cdots\circ T_1$
 
 ---
 
+### How is $T$ chosen?
+
+::: {.columns}
+::: {.column width="47%"}
+<h3>Mechanics</h3>
+
+- Choose a tractable family $T_\theta$: affine, triangular, or a composition
+  of simple invertible maps
+- Determine $\theta$ analytically when possible; otherwise fit it so the
+  density-matching equation holds approximately
+- Add an optimality criterion when needed; quadratic-cost transport leads to
+  a Monge--Ampère PDE
+- Validate the transformed samples and the Jacobian calculation
+:::
+
+::: {.column width="6%"}
+:::
+
+::: {.column width="47%"}
+<h3>The art</h3>
+
+- In $d>1$, the proposal and target densities do [not identify a unique
+  map]{.alert}
+- Match the map family to the target's support, dependence, and geometry
+- Choose coordinate ordering and the structure to preserve or simplify
+- Balance accuracy against fitting, inversion, Jacobian, and sampling costs
+:::
+:::
+
+::: {.key-point}
+The density equation supplies the constraint; the designer supplies the
+structure that makes the map solvable and useful
+:::
+
+---
+
 ### One integral, one exact transport
 
 Consider the target density and target expectation
@@ -1134,8 +1170,10 @@ Obtaining $n$ accepted samples requires an [average of $nMc$ proposals]{.alert}
 | Acceptance–rejection | keep or discard the point | global envelope $\varrho_{\mathrm{tar}}\le M\varrho_{\mathrm{prop}}$ |
 
 ::: {.key-point}
-Transport invests in constructing a map; acceptance–rejection pays through
-discarded proposals when the envelope is loose
+[Transport]{.alert} invests in constructing a map
+
+[Acceptance–rejection]{.alert} pays through discarded proposals when the
+envelope is loose
 :::
 
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="prob-stat-est"}
