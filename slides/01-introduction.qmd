@@ -372,7 +372,7 @@ Canvas; only one person per group submits the assignment.
 
 - [A–C](#terms-a-c)
 - [D–I](#terms-d-i)
-- [K–M](#terms-k-m)
+- [K–O](#terms-k-o)
 - [P–Z](#terms-p-z)
 
 ## A–C {#terms-a-c}
@@ -380,7 +380,7 @@ Canvas; only one person per group submits the assignment.
 ::: {.columns}
 ::: {.column width="50%"}
 - [Absolutely continuous random variable](#random-variables-and-distributions)
-- [Acceptance–rejection sampling](02-generating-samples.html#the-acceptancerejection-algorithm)
+- [Acceptance–rejection sampling](02-generating-samples.html#acceptancerejection-sampling)
 - [Antithetic sampling](04-improving-efficiency.html#antithetic-sampling)
 - [Bayes' theorem](#conditional-probability)
 - [Bernoulli distribution](#binomial-distribution)
@@ -430,7 +430,7 @@ Canvas; only one person per group submits the assignment.
 :::
 :::
 
-## K–M {#terms-k-m}
+## K–O {#terms-k-o}
 
 ::: {.columns}
 ::: {.column width="50%"}
@@ -456,6 +456,7 @@ Canvas; only one person per group submits the assignment.
 - [Monte Carlo method](#how-is-uncertainty-expressed-quantitatively)
 - [Multilevel Monte Carlo](05-selected-topics.html#multilevel-monte-carlo)
 - [Multivariate normal distribution](#multivariate-normal-or-gaussian-distribution)
+- [Normalizing flow](02-generating-samples.html#transport-maps)
 :::
 :::
 
@@ -468,7 +469,7 @@ Canvas; only one person per group submits the assignment.
 - [Principal-component (PCA) factorization](02-generating-samples.html#principal-component-factorization)
 - [Probability density function (PDF)](#random-variables-and-distributions)
 - [Probability mass function (PMF)](#random-variables-and-distributions)
-- [Proposal distribution](02-generating-samples.html#the-acceptancerejection-algorithm)
+- [Proposal distribution](02-generating-samples.html#transport-maps)
 - [Pseudorandom number generator](02-generating-samples.html#where-do-random-variables-come-from)
 - [Quantile function](02-generating-samples.html#the-quantile-transform)
 - [Quantile transform](02-generating-samples.html#the-quantile-transform)
@@ -482,11 +483,12 @@ Canvas; only one person per group submits the assignment.
 - [Sample](#sampling)
 - [Sample mean](#sampling)
 - [Sample variance](#sampling)
-- [Shrinkage estimator](02-generating-samples.html#shrinkage-estimators)
+- [Shrinkage estimator](#shrinkage-estimators)
 - [Standard deviation](#moments-of-random-variables)
 - [Stochastic gradient descent](05-selected-topics.html#stochastic-gradient-descent)
 - [Symmetric positive definite kernel](03-markov-chain-monte-carlo.html#symmetric-positive-definite-kernels)
-- [Target distribution](02-generating-samples.html#the-acceptancerejection-algorithm)
+- [Target distribution](02-generating-samples.html#transport-maps)
+- [Transport map](02-generating-samples.html#transport-maps)
 - [Unbiased estimator](#mean-squared-error-bias-and-variance)
 - [van der Corput sequence](04-improving-efficiency.html#the-van-der-corput-sequence)
 - [Variance](#moments-of-random-variables)
@@ -652,6 +654,7 @@ $$
 - [Sampling](#sampling)
 - [Mean squared error, bias, and variance](#mean-squared-error-bias-and-variance)
 - [Under random sampling](#under-random-sampling)
+- [Shrinkage can reduce MSE](#shrinkage-estimators)
 - [Central Limit Theorem](#central-limit-theorem)
 - [Monte Carlo estimates of properties of $Y$](#monte-carlo-estimates-of-properties-of-y)
 - [Computational counterparts](#computational-counterparts)
@@ -767,6 +770,29 @@ If $Y_0,Y_1,\ldots$ are also [uncorrelated]{.alert}
 \\
 \rmse(\hmu_n)& =\frac{\sigma}{\sqrt{n}}
 \end{align*}
+
+## Shrinkage can reduce MSE {#shrinkage-estimators .tree-marker-slide tree-marker="stat-estim"}
+
+For $Y_0,\ldots,Y_{n-1}\ \IIDsim\ Y$, suppose
+
+$$
+\Ex(Y)=\mu,
+\qquad \var(Y)=\sigma^2,
+\qquad
+\hmu_n=\frac1n\sum_{i=0}^{n-1}Y_i
+$$
+
+The shrunken estimator $\alpha\hmu_n$ has
+
+$$
+\mse(\alpha\hmu_n)
+=(1-\alpha)^2\mu^2+\alpha^2\frac{\sigma^2}{n}
+$$
+
+::: {.exitem}
+<span class="exbullet">$\exstar$</span>
+<span>Find the value of $\alpha$ that minimizes this MSE. Is the minimizing estimator unbiased?</span>
+:::
 
 
 ## Central Limit Theorem {.tree-marker-slide tree-marker="probstat"}

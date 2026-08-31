@@ -19,8 +19,12 @@ same notebooks.
    and the deck-to-notebook plan in `notebooks/NOTEBOOK_INVENTORY.md` to build
    the focused mixture/transport, acceptance--rejection, and financial-payoff
    companions; migrate and validate every retained notebook.
-4. Review the drafted transport-map and normalizing-flow extension, its
-   triangular-flow example, and its treatment in the companion notebook.
+4. Review the revised advanced-direct-sampling sequence: transport maps,
+   acceptance--rejection, the exponential integration example, and the
+   proposed companion-notebook treatment. Confirm that the target/proposal
+   roles and their $\varrho_{\mathrm{tar}}$ and
+   $\varrho_{\mathrm{prop}}$ notation read consistently across transport,
+   importance sampling, and MCMC.
 5. Give Deck 02 a final instructor-led polish pass, including its notebook
    links and the relationship between the lecture and retained notebooks.
 6. Review Deck 03 individually, beginning with its scope, section sequence,
@@ -49,10 +53,11 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   cleanly with the local `qmcpy` kernel, and the root site, all five decks, and
   assembled site render cleanly. The shared lazy-import fix is tested and
   published in HickernellAcademicLib commit `615b402`. The current `classlib`
-  pin advances to commit `526eecf`, which retains that repair and the
-  authoritative shared style guides, adds the shared heading-hierarchy
-  convention, and supplies the `\mLambda` slide macro. Clean live-Colab
-  validation remains pending.
+  pin advances to commit `fa6673a`, which retains that repair, the
+  authoritative shared style guides, the shared heading-hierarchy convention,
+  and the `\mLambda` slide macro, while adding the missing RevealJS `\mV`
+  macro already present in the TeX registry. Clean live-Colab validation
+  remains pending.
 - Assignment 1 is published in Canvas for 20 points, due September 2 at 11:59
   PM. It uses a 20-group self-sign-up set with at most two students per group.
   Its Owen Exercises 1.2 and 2.1, due date, and links appear on the Assignments
@@ -80,9 +85,20 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   arithmetic-Asian discretizations together with discretely monitored lookback
   and barrier payoffs, plus an American-put optimal-stopping formulation. The
   preceding material now separates general geometric Brownian motion from its
-  risk-neutral discrete asset-path specialization. A compact transport-map and
-  normalizing-flow sequence with a triangular-flow example is now drafted
-  immediately before acceptance--rejection and awaits instructor review.
+  risk-neutral discrete asset-path specialization. Transport maps no longer
+  sit under low discrepancy; transport and acceptance--rejection are the two
+  children of More Advanced Direct Sampling. The transport sequence now uses
+  an exponential integration example before the triangular flow, and Deck 04
+  returns to the same integral to show that exact transport makes the common
+  correction weight constant whereas importance sampling retains a varying
+  weight. Deck 03 uses the same target/proposal roles in Metropolis--Hastings.
+  The notation $\varrho_{\mathrm{tar}}$ and $\varrho_{\mathrm{prop}}$ is
+  intentionally course-wide even where the literature uses other symbols.
+  Shrinkage now immediately follows Deck 01's first bias--variance and random
+  sampling development, where it demonstrates that accepting bias can reduce
+  MSE. Deck 04 refers back to that lesson while keeping its opening sequence
+  focused on variance reduction. The revised sequence awaits instructor
+  review.
 - `notebooks/applications/AreWeThereYet.ipynb` is instructor-approved, executes
   cleanly, and is linked from the notebook page and both travel-time slides.
 - `notebooks/sampling/GeneratingSamples.ipynb` has been migrated with current
@@ -106,10 +122,12 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   material, and queueing example; it adds a reproducible random-walk
   Metropolis figure.
 - `slides/04-improving-efficiency.qmd` is a full first-pass conversion covering
-  transformations, importance sampling, control variates, conditional and
-  antithetic Monte Carlo, Latin hypercube sampling, low discrepancy methods,
-  randomization, and stopping criteria. It adds an executable IID/LHS/Sobol'
-  comparison.
+  transformations, importance sampling, control
+  variates, conditional and antithetic Monte Carlo, Latin hypercube sampling,
+  low discrepancy methods, randomization, and stopping criteria. It now gives
+  exact transport and importance sampling a common correction-weight formula
+  and compares them on one exponential integration problem. It adds an
+  executable IID/LHS/Sobol' comparison.
 - `slides/05-selected-topics.qmd` is a full first-pass conversion covering
   parallel computing, gradient and stochastic-gradient descent, and two-level
   and multilevel Monte Carlo. It adds an executable gradient-path comparison.

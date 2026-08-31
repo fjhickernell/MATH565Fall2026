@@ -50,6 +50,7 @@ subtitle: |
 - [The Keister example](#the-keister-example)
 - [Transforming an integral](#transforming-an-integral)
 - [Transforming a random variable](#transforming-a-random-variable)
+- [Transport makes importance weights constant](#transport-makes-importance-weights-constant)
 - [Importance sampling](#importance-sampling)
 - [Brownian motion with drift](#brownian-motion-with-drift)
 - [Choosing a transformation](#choosing-a-transformation)
@@ -78,7 +79,9 @@ Their mean squared errors are their variances:
 \end{align*}
 
 ::: {.key-point}
-An equivalent expectation can be computationally better when its [integrand has smaller variance]{.alert}
+Deck 01 showed that accepting some bias can reduce MSE. Here both estimators
+are unbiased, so an equivalent expectation is better when its
+[integrand has smaller variance]{.alert}
 :::
 
 ## The Keister example {.tree-marker-slide tree-marker="estimation"}
@@ -127,57 +130,163 @@ For $X\sim\Unif[0,1]^d$, the density in the denominator is one
 
 ## Transforming a random variable {.tree-marker-slide tree-marker="random-generation"}
 
-Let $T=\psi(X)$ for an invertible map $\psi:\mathcal X\to\mathcal T$
+Let $\vZ$ have proposal density $\varrho_{\mathrm{prop}}$ and define
+$\vX=T(\vZ)$ for an invertible map $T:\mathcal Z\to\mathcal X$
 
 The densities satisfy
 
 \begin{align*}
-\varrho_T(t)
-&=\varrho_X\{\psi^{-1}(t)\}\abs{J(t;\psi^{-1})},\\
-\varrho_T\{\psi(x)\}
-&=\frac{\varrho_X(x)}{\abs{J(x;\psi)}}
+\varrho_{\mathrm{tar}}(\vx)
+&=\varrho_{\mathrm{prop}}\{T^{-1}(\vx)\}
+  \left|\det\nabla T^{-1}(\vx)\right|,\\
+\varrho_{\mathrm{tar}}\{T(\vz)\}
+&=\frac{\varrho_{\mathrm{prop}}(\vz)}
+{\left|\det\nabla T(\vz)\right|}
 \end{align*}
 
 Therefore
 
 $$
-\Ex_{T\sim\varrho_T}[h(T)]
-=\Ex_{X\sim\varrho_X}[h\{\psi(X)\}]
+\Ex_{\mathrm{tar}}[h(\vX)]
+=\Ex_{\mathrm{prop}}[h\{T(\vZ)\}]
 $$
 
 [A change of variables in an integral]{.alert} and [a transformation of a random variable]{.alert} are the same mechanism viewed from opposite directions
 
-## Importance sampling {.tree-marker-slide tree-marker="estimation"}
+## Transport makes importance weights constant {.tree-marker-slide tree-marker="estimation"}
 
-For a target density $\varrho_T$, choose a proposal density $\varrho_X$ with the same support:
+For any invertible map $T$,
 
 \begin{align*}
 \mu
-&=\int_{\mathcal T}h(t)\varrho_T(t)\,\dif t\\
-&=\Ex_{X\sim\varrho_X}\!\left[
-h(X)\frac{\varrho_T(X)}{\varrho_X(X)}
+&=\int h(\vx)\varrho_{\mathrm{tar}}(\vx)\,\dif \vx\\
+&=\Ex_{\mathrm{prop}}\!\left[
+h\{T(\vZ)\}
+\underbrace{
+\frac{\varrho_{\mathrm{tar}}\{T(\vZ)\}
+\left|\det\nabla T(\vZ)\right|}
+{\varrho_{\mathrm{prop}}(\vZ)}}_{W_T(\vZ)}
 \right]
 \end{align*}
 
-The ratio $\varrho_T/\varrho_X$ is the [importance weight]{.alert}
+- [Exact transport]{.alert}: choose $T$ so that $W_T(\vz)=1$ everywhere
+- [Importance sampling]{.alert}: choose $T(\vz)=\vz$ and retain the varying
+  weight $W_T(\vz)=\varrho_{\mathrm{tar}}(\vz)/
+  \varrho_{\mathrm{prop}}(\vz)$
 
-For $X_0,\ldots,X_{n-1}\ \IIDsim\ \varrho_X$,
+::: {.key-point}
+Transport absorbs the density correction into the map; importance sampling
+carries the correction as a weight
+:::
+
+## Importance sampling {.tree-marker-slide tree-marker="estimation"}
+
+Choose a proposal density $\varrho_{\mathrm{prop}}$ that is positive wherever
+$h\varrho_{\mathrm{tar}}$ is nonzero:
 
 \begin{align*}
-\hmu_{\mathrm{IS},n}
-&=\frac1n\sum_{i=0}^{n-1}h(X_i)\frac{\varrho_T(X_i)}{\varrho_X(X_i)},\\
-\widehat{\var}(\hmu_{\mathrm{IS},n})
-&=\frac1{n(n-1)}\sum_{i=0}^{n-1}
-\left[h(X_i)\frac{\varrho_T(X_i)}{\varrho_X(X_i)}-\hmu_{\mathrm{IS},n}\right]^2
+\mu
+&=\int h(x)\varrho_{\mathrm{tar}}(x)\,\dif x\\
+&=\Ex_{Z\sim\varrho_{\mathrm{prop}}}\!\left[
+h(Z)\frac{\varrho_{\mathrm{tar}}(Z)}
+{\varrho_{\mathrm{prop}}(Z)}
+\right]
 \end{align*}
+
+The ratio $\varrho_{\mathrm{tar}}/\varrho_{\mathrm{prop}}$ is the
+[importance weight]{.alert}
+
+For $Z_0,\ldots,Z_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}$,
+
+$$
+\hmu_{\mathrm{IS},n}
+=\frac1n\sum_{i=0}^{n-1}h(Z_i)
+\frac{\varrho_{\mathrm{tar}}(Z_i)}
+{\varrho_{\mathrm{prop}}(Z_i)}
+$$
+
+---
+
+### One integral, two estimators
+
+Let
+
+$$
+\varrho_{\mathrm{tar}}(x)=\exp(-x),
+\qquad
+\mu=\int_0^\infty x^2\varrho_{\mathrm{tar}}(x)\,\dif x=2,
+\qquad
+Z_i\ \IIDsim\ \Exp(1/2)
+$$
+
+::: {.columns}
+::: {.column width="47%"}
+#### Transport
+
+Move every proposal point using $T(z)=z/2$:
+
+$$
+\hmu_{\mathrm{T},n}
+=\frac1n\sum_{i=0}^{n-1}
+\left(\frac{Z_i}{2}\right)^2
+$$
+
+The transformed points are equally weighted $\Exp(1)$ target samples
+:::
+
+::: {.column width="6%"}
+:::
+
+::: {.column width="47%"}
+#### Importance sampling
+
+Keep every proposal point and use
+
+$$
+\frac{\varrho_{\mathrm{tar}}(z)}
+{\varrho_{\mathrm{prop}}(z)}
+=2\exp(-z/2)
+$$
+
+$$
+\hmu_{\mathrm{IS},n}
+=\frac1n\sum_{i=0}^{n-1}2Z_i^2\exp(-Z_i/2)
+$$
+:::
+:::
+
+---
+
+### Proposal choice depends on the integrand
+
+For the same $Z\sim\Exp(1/2)$ proposal,
+
+| Estimator contribution | Variance |
+|:---|---:|
+| Transport: $(Z/2)^2$ | $20$ |
+| Importance sampling: $2Z^2\exp(-Z/2)$ | $188/81\approx2.32$ |
+
+- The heavier-tailed proposal visits large $x$, where
+  $x^2\varrho_{\mathrm{tar}}(x)$ is important
+- The importance proposal is tailored to this $h(x)=x^2$
+- Transport produces target samples that can be reused for any integrand
+- A poor importance proposal can instead create extreme weights
+
+::: {.key-point}
+Transport primarily builds [reusable target samples]{.alert}; importance
+sampling can instead tailor its proposal and weights to a
+[particular integral]{.alert}
+:::
 
 ## Brownian motion with drift {.tree-marker-slide tree-marker="quant-finance"}
 
 Positive option payoffs may be rare under a discretized Brownian path
 
-Let $X\sim\Norm(\vzero,\mSigma)$ with $\Sigma_{jk}=\min(t_j,t_k)$ and target density $\varrho$
+Let $X\sim\Norm(\vzero,\mSigma)$ with $\Sigma_{jk}=\min(t_j,t_k)$ and
+target density $\varrho_{\mathrm{tar}}$
 
-Sample instead from $\Norm(\va,\mSigma)$ with
+Use the proposal $\Norm(\va,\mSigma)$ with density
+$\varrho_{\mathrm{prop}}$ and
 
 $$
 \va=\theta(t_1,\ldots,t_d)^\mathsf T
@@ -186,7 +295,7 @@ $$
 The likelihood ratio simplifies to
 
 $$
-\frac{\varrho(x)}{\varrho_{\mathrm{drift}}(x)}
+\frac{\varrho_{\mathrm{tar}}(x)}{\varrho_{\mathrm{prop}}(x)}
 =\exp\!\left(-\theta x_d+\frac{\theta^2t_d}{2}\right)
 $$
 
@@ -678,7 +787,10 @@ An efficient method needs both [fast error decay]{.alert} and a [reliable stoppi
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="prob-stat-est"}
 
 - Equivalent expectations can have dramatically different computational variance
-- Importance sampling changes the sampling distribution and corrects with likelihood ratios
+- Exact transport chooses a map that makes the target-to-proposal correction
+  constant; importance sampling retains the correction as unequal weights
+- Importance proposals may be tailored to a particular integrand, while
+  transported target samples can be reused for many integrands
 - Control variates and conditioning remove variability using known structure
 - Antithetic sampling and Latin hypercubes introduce useful dependence deliberately
 - Low discrepancy sequences replace random clustering with balanced space filling

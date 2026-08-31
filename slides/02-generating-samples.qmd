@@ -39,7 +39,7 @@ subtitle: |
 - [From Uniformity to a Target Distribution](#from-uniformity-to-a-target-distribution)
 - [Random Vectors and Stochastic Processes](#random-vectors-and-stochastic-processes)
 - [Low Discrepancy Sampling](#low-discrepancy-sampling)
-- [Acceptance–Rejection Sampling](#acceptancerejection-sampling)
+- [More Advanced Direct Sampling](#more-advanced-direct-sampling)
 - [Big Ideas](#big-ideas)
 :::
 :::
@@ -605,7 +605,7 @@ $$
 let $c=\cos(\mpi/8)$ and $s=\sin(\mpi/8)$. The ordered eigendecomposition is
 
 $$
-\mQ=(\vq_1\ \vq_2)=
+\mV=(\vv_1\ \vv_2)=
 \begin{pmatrix}c&s\\-s&c\end{pmatrix},
 \qquad
 \mLambda=\operatorname{diag}(2+\sqrt2,\,2-\sqrt2)
@@ -614,7 +614,7 @@ $$
 The PCA factor simplifies to
 
 $$
-\mA_{\mathrm{PCA}}=\mQ\mLambda^{1/2}
+\mA_{\mathrm{PCA}}=\mV\mLambda^{1/2}
 =\begin{pmatrix}
 1+1/\sqrt2&1-1/\sqrt2\\
 -1/\sqrt2&1/\sqrt2
@@ -623,7 +623,7 @@ $$
 
 Thus
 $\mA_{\mathrm{PCA}}\mA_{\mathrm{PCA}}^\mathsf{T}
-=\mQ\mLambda\mQ^\mathsf{T}=\mSigma$, just as for the Cholesky factor
+=\mV\mLambda\mV^\mathsf{T}=\mSigma$, just as for the Cholesky factor
 
 ## Gaussian processes {.tree-marker-slide tree-marker="probability"}
 
@@ -904,9 +904,7 @@ $$
 
 - [What does low discrepancy mean?](#what-does-low-discrepancy-mean)
 - [Low discrepancy sequences](#low-discrepancy-sequences)
-- [Bias–variance decomposition](#biasvariance-decomposition)
-- [Shrinkage estimators](#shrinkage-estimators)
-- [Transport maps and normalizing flows](#transport-maps-and-normalizing-flows)
+- [Why coordinate order matters](#why-coordinate-order-matters)
 
 ## What does low discrepancy mean? {.tree-marker-slide tree-marker="low-discrepancy"}
 
@@ -939,16 +937,14 @@ They are available in deterministic and randomized forms through SciPy and
 
 In software arrays rows correspond to samples and columns to coordinates
 
----
-
-### Why coordinate order matters
+## Why coordinate order matters {.tree-marker-slide tree-marker="low-discrepancy"}
 
 Return to the [PCA factorization](#principal-component-factorization):
 
 $$
 \vX-\vmu
-=\sqrt{2+\sqrt2}\,\vq_1\Phi^{-1}(U_1)
-+\sqrt{2-\sqrt2}\,\vq_2\Phi^{-1}(U_2)
+=\sqrt{2+\sqrt2}\,\vv_1\Phi^{-1}(U_1)
++\sqrt{2-\sqrt2}\,\vv_2\Phi^{-1}(U_2)
 $$
 
 so $U_1$ drives
@@ -964,75 +960,81 @@ Put the largest eigenvalues first so dominant directions use the low-numbered
 coordinates, where many low discrepancy constructions are strongest
 :::
 
-## Bias–variance decomposition {.tree-marker-slide tree-marker="stat-estim"}
+# More Advanced Direct Sampling {.tree-marker-slide tree-marker="random-generation"}
 
-Recall the [bias–variance decomposition from Deck 01](01-introduction.html#mean-squared-error-bias-and-variance):
-for an estimator $\Theta$ of $\theta$,
+- [Transport maps](#transport-maps)
+- [Acceptance–rejection sampling](#acceptancerejection-sampling)
 
-\begin{align*}
-\mse(\Theta)
-&=\Ex[(\Theta-\theta)^2]\\
-&=[\bias(\Theta)]^2+\var(\Theta)
-\end{align*}
-
-The identity is unchanged; the [source of randomness]{.alert} changes:
-
-- An IID sample-mean estimator is unbiased and has positive variance
-- A deterministic low discrepancy estimator has [no sampling variance]{.alert},
-  but its deterministic error may be nonzero
-- A randomized low discrepancy estimator has a sampling distribution, enabling
-  [variance estimation]{.alert} while retaining improved space filling
-
-## Shrinkage estimators {.tree-marker-slide tree-marker="stat-estim"}
-
-Suppose $Y_0,\ldots,Y_{n-1}\ \IIDsim\ Y$, where
-
-$$
-\Ex(Y)=\mu,
-\qquad \var(Y)=\sigma^2,
-\qquad
-\hmu_n=\frac1n\sum_{i=0}^{n-1}Y_i
-$$
-
-For the estimator $\alpha\hmu_n$
-
-$$
-\mse(\alpha\hmu_n)
-=(1-\alpha)^2\mu^2+\alpha^2\frac{\sigma^2}{n}
-$$
-
-::: {.exitem}
-<span class="exbullet">$\exstar$</span>
-<span>Find the value of $\alpha$ that minimizes this MSE. Is the minimizing estimator unbiased?</span>
-:::
-
-## Transport maps and normalizing flows {.tree-marker-slide tree-marker="random-generation"}
+## Transport maps {.tree-marker-slide tree-marker="random-generation"}
 
 The quantile transform is a [one-dimensional transport]{.alert}. In $d$
-dimensions, start with an easy reference density $\varrho_0$ and an invertible,
+dimensions, start with an easy proposal density $\varrho_{\mathrm{prop}}$ and
+seek the target density $\varrho_{\mathrm{tar}}$ through an invertible,
 differentiable map $T:\reals^d\to\reals^d$:
 
 $$
-\vZ\sim\varrho_0,
+\vZ\sim\varrho_{\mathrm{prop}},
 \qquad
 \vX=T(\vZ)
 $$
 
-The change-of-variables formula gives
+The map transports the proposal to the target when
 
 $$
-\varrho_X(\vx)
-=\varrho_0\!\left(T^{-1}(\vx)\right)
-\left|\det \nabla T^{-1}(\vx)\right|
+\varrho_{\mathrm{tar}}\{T(\vz)\}
+\left|\det\nabla T(\vz)\right|
+=\varrho_{\mathrm{prop}}(\vz)
 $$
 
-A [normalizing flow]{.alert} composes manageable maps
-$T=T_m\circ\cdots\circ T_1$, often tuning their parameters to fit a target
+Then, for every integrand $h$,
+
+$$
+\Ex_{\mathrm{tar}}[h(\vX)]
+=\Ex_{\mathrm{prop}}[h\{T(\vZ)\}]
+$$
 
 ::: {.key-point}
-A transport [moves every sample and keeps equal weights]{.alert}; importance
-sampling keeps proposal samples and assigns unequal weights
+An exact transport [moves every proposal sample]{.alert} and makes the
+correction weight equal to one
 :::
+
+A [normalizing flow]{.alert} builds a flexible transport by composing
+manageable invertible maps, $T=T_m\circ\cdots\circ T_1$
+
+---
+
+### One integral, one exact transport
+
+Consider the target density and target expectation
+
+$$
+\varrho_{\mathrm{tar}}(x)=\exp(-x),\quad x\ge0,
+\qquad
+\mu=\Ex_{\mathrm{tar}}(X^2)=\int_0^\infty x^2\exp(-x)\,\dif x=2
+$$
+
+Choose the easy proposal density and map
+
+$$
+\varrho_{\mathrm{prop}}(z)=\frac12\exp(-z/2),
+\qquad
+T(z)=\frac z2
+$$
+
+Indeed,
+
+$$
+\varrho_{\mathrm{tar}}\{T(z)\}T'(z)
+=\exp(-z/2)\frac12
+=\varrho_{\mathrm{prop}}(z)
+$$
+
+For $Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Exp(1/2)$,
+
+$$
+\hmu_{\mathrm{T},n}
+=\frac1n\sum_{i=0}^{n-1}\left(\frac{Z_i}{2}\right)^2
+$$
 
 ---
 
@@ -1061,77 +1063,79 @@ $$
 Thus, with $\phi$ the standard normal density,
 
 $$
-\varrho_X(x_1,x_2)
+\varrho_{\mathrm{tar}}(x_1,x_2)
 =\phi(x_1)\phi\!\left(x_2-b(x_1^2-1)\right),
 \qquad
 \Ex(X_2\mid X_1=x_1)=b(x_1^2-1)
 $$
 
-One layer turns independent Gaussian coordinates into a curved, dependent
-target. If no useful invertible map is available, [acceptance–rejection]{.alert}
-offers another route from an easy proposal to the target
+One flow layer turns independent Gaussian coordinates into a curved,
+dependent target. If no useful map is available,
+[acceptance–rejection sampling]{.alert} offers another direct route
 
-# Acceptance–Rejection Sampling {.tree-marker-slide tree-marker="random-generation"}
-
-- [The acceptance–rejection algorithm](#the-acceptancerejection-algorithm)
-- [Why acceptance–rejection works](#why-acceptancerejection-works)
-- [Efficiency and method comparison](#efficiency-and-method-comparison)
-
-## The acceptance–rejection algorithm {.tree-marker-slide tree-marker="random-generation"}
+## Acceptance–rejection sampling {#acceptancerejection-sampling .tree-marker-slide tree-marker="random-generation"}
 
 Suppose
 
-- [Proposal distribution]{.alert}: $Z$ is easy to sample with density $\varrho_Z$
-- [Target distribution]{.alert}: density $c\varrho$, with known $\varrho$ and
-  possibly unknown $c>0$
-- $\varrho(x)\le M\varrho_Z(x)$ [for all $x$]{.alert}
+- [Proposal distribution]{.alert}: $Z$ is easy to sample with density
+  $\varrho_{\mathrm{prop}}$
+- [Target distribution]{.alert}: density $c\varrho_{\mathrm{tar}}$, with known
+  $\varrho_{\mathrm{tar}}$ and possibly unknown $c>0$
+- $\varrho_{\mathrm{tar}}(x)\le
+  M\varrho_{\mathrm{prop}}(x)$ [for all $x$]{.alert}
 
 Repeat until a proposal is accepted:
 
-1. Generate $Z\sim\varrho_Z$ and $U\sim\Unif[0,1]$ independently
+1. Generate $Z\sim\varrho_{\mathrm{prop}}$ and $U\sim\Unif[0,1]$
+   independently
 2. Accept $Z$ as $X$ if
 
    $$
-   U\le\frac{\varrho(Z)}{M\varrho_Z(Z)}
+   U\le\frac{\varrho_{\mathrm{tar}}(Z)}
+   {M\varrho_{\mathrm{prop}}(Z)}
    $$
 
 Otherwise reject $Z$ and try again
 
-## Why acceptance–rejection works {.tree-marker-slide tree-marker="random-generation"}
+---
+
+### Why acceptance–rejection works
 
 For a small interval $\dif z$ around $z$
 
 \begin{align*}
 \Prob(Z\in\dif z,\text{ accept})
-&=\varrho_Z(z)\dif z\,
-  \frac{\varrho(z)}{M\varrho_Z(z)}\\
-&=\frac{\varrho(z)}{M}\dif z
+&=\varrho_{\mathrm{prop}}(z)\dif z\,
+  \frac{\varrho_{\mathrm{tar}}(z)}
+  {M\varrho_{\mathrm{prop}}(z)}\\
+&=\frac{\varrho_{\mathrm{tar}}(z)}{M}\dif z
 \end{align*}
 
 [Conditioning on acceptance]{.alert} gives the [target density]{.alert}
 
 $$
 \varrho_{Z\mid\text{accept}}(z)
-=\frac{\varrho(z)/M}{\Prob(\text{accept})}
-=c\varrho(z),
+=\frac{\varrho_{\mathrm{tar}}(z)/M}{\Prob(\text{accept})}
+=c\varrho_{\mathrm{tar}}(z),
 \qquad
 \Prob(\text{accept})=\frac{1}{Mc}
 $$
 
-## Efficiency and method comparison {.tree-marker-slide tree-marker="sampling"}
+---
+
+### Efficiency and direct-method comparison
 
 Obtaining $n$ accepted samples requires an [average of $nMc$ proposals]{.alert}
 
-| Method | Main requirement | Compatible with low discrepancy? |
-|:---|:---|:---:|
-| Quantile transform $X=Q(U)$ | Quantile function $Q$ | Yes |
-| Normal transform $\vX=\mA\vZ+\vmu$ | $\mSigma=\mA\mA^\mathsf{T}$ | Yes |
-| Transport map $\vX=T(\vZ)$ | Invertible $T$ and its Jacobian | Yes |
-| Acceptance–rejection | $\varrho\le M\varrho_Z$ | With care |
+| Method | What happens to a proposal | Main requirement |
+|:---|:---|:---|
+| Quantile or affine transform | move every point | known transform |
+| Exact transport map | move every point | usable map $T$ and Jacobian |
+| Acceptance–rejection | keep or discard the point | global envelope $\varrho_{\mathrm{tar}}\le M\varrho_{\mathrm{prop}}$ |
 
 ::: {.key-point}
-Choose a [proposal distribution]{.alert} close to the
-[target distribution]{.alert} so that $Mc$ is near one
+Transport invests in constructing a map; acceptance–rejection pays through
+discarded proposals when the envelope is loose
 :::
 
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="prob-stat-est"}
@@ -1145,7 +1149,8 @@ Choose a [proposal distribution]{.alert} close to the
 - Gaussian-process sampling reduces finite collections of function values to
   multivariate normal sampling
 - Low discrepancy points trade independent placement for more even coverage
-- Bias and variance are distinct contributions to mean squared error
+- An exact transport moves every proposal point to the target and makes the
+  correction weight equal to one
 - Acceptance–rejection samples from an unnormalized density when a suitable
   proposal envelope is available
 

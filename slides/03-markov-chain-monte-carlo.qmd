@@ -53,9 +53,10 @@ subtitle: |
 
 ## When direct sampling is difficult {.tree-marker-slide tree-marker="random-generation"}
 
-- The quantile transform works directly for distributions with tractable quantiles
-- Affine transformations generate correlated Gaussian vectors
-- Acceptance–rejection sampling needs a proposal that bounds the target and may reject many proposals
+- Quantile, affine, and exact transport maps produce independent, equally
+  weighted target samples—but require a usable global map
+- Acceptance–rejection also produces independent target samples—but requires a
+  global proposal envelope and may reject many proposals
 - [Markov chain Monte Carlo (MCMC)]{.alert} moves through the sample space using only an unnormalized target density
 
 ::: {.key-point}
@@ -125,18 +126,21 @@ The pair $Y_i=(X_{i-1},X_i)$ [is Markov]{.alert} because its state retains the n
 
 Suppose
 
-- the target has known, possibly unnormalized density $\varrho$
-- $\varrho_{\brandnew\mid\mathrm{old}}(z\mid x)$ proposes a new state $z$ from the current state $x$
+- the target has known, possibly unnormalized density
+  $\varrho_{\mathrm{tar}}$
+- $\varrho_{\mathrm{prop}}(z\mid x)$ proposes a new state $z$ from the
+  current state $x$
 
 Given $X_0$, repeat for $i=0,\ldots,n-1$:
 
-1. Generate $Z\sim\varrho_{\brandnew\mid\mathrm{old}}(\cdot\mid X_i)$ and $U\sim\Unif[0,1]$
+1. Generate $Z\sim\varrho_{\mathrm{prop}}(\cdot\mid X_i)$ and
+   $U\sim\Unif[0,1]$
 2. Compute
 
    $$
    \alpha(X_i,Z)=\min\!\left\{1,
-   \frac{\varrho(Z)\varrho_{\brandnew\mid\mathrm{old}}(X_i\mid Z)}
-   {\varrho(X_i)\varrho_{\brandnew\mid\mathrm{old}}(Z\mid X_i)}\right\}
+   \frac{\varrho_{\mathrm{tar}}(Z)\varrho_{\mathrm{prop}}(X_i\mid Z)}
+   {\varrho_{\mathrm{tar}}(X_i)\varrho_{\mathrm{prop}}(Z\mid X_i)}\right\}
    $$
 
 3. Set $X_{i+1}=Z$ if $U\le\alpha(X_i,Z)$; otherwise set $X_{i+1}=X_i$
@@ -148,8 +152,8 @@ Given $X_0$, repeat for $i=0,\ldots,n-1$:
 The ratio compares the two directions of a proposed transition:
 
 $$
-\frac{\varrho(Z)\varrho_{\brandnew\mid\mathrm{old}}(X_i\mid Z)}
-{\varrho(X_i)\varrho_{\brandnew\mid\mathrm{old}}(Z\mid X_i)}
+\frac{\varrho_{\mathrm{tar}}(Z)\varrho_{\mathrm{prop}}(X_i\mid Z)}
+{\varrho_{\mathrm{tar}}(X_i)\varrho_{\mathrm{prop}}(Z\mid X_i)}
 =
 \frac{\text{target weight at $Z$}\times\text{return proposal}}
 {\text{target weight at $X_i$}\times\text{forward proposal}}
@@ -157,7 +161,7 @@ $$
 
 - Moves toward higher target density are favored
 - Asymmetric proposals are corrected by the proposal-density ratio
-- The normalizing constant in $\varrho$ cancels
+- The normalizing constant in $\varrho_{\mathrm{tar}}$ cancels
 
 ::: {.key-point}
 The transition kernel satisfies [detailed balance]{.alert} with the target distribution, making the target invariant under suitable conditions
@@ -168,14 +172,15 @@ The transition kernel satisfies [detailed balance]{.alert} with the target distr
 If the proposal is symmetric,
 
 $$
-\varrho_{\brandnew\mid\mathrm{old}}(z\mid x)
-=\varrho_{\brandnew\mid\mathrm{old}}(x\mid z),
+\varrho_{\mathrm{prop}}(z\mid x)
+=\varrho_{\mathrm{prop}}(x\mid z),
 $$
 
 then the acceptance probability simplifies to
 
 $$
-\alpha(x,z)=\min\!\left\{1,\frac{\varrho(z)}{\varrho(x)}\right\}
+\alpha(x,z)=\min\!\left\{1,
+\frac{\varrho_{\mathrm{tar}}(z)}{\varrho_{\mathrm{tar}}(x)}\right\}
 $$
 
 For a random-walk proposal $Z=X_i+\epsilon_i$ with symmetric $\epsilon_i$:
@@ -194,7 +199,7 @@ Use the uniform numbers in order and choose a random order of the candidate $x$ 
 
 | $x$ | $-1.2$ | $-0.8$ | $-0.5$ | $0.6$ | $1.1$ | $1.4$ | $2.0$ | $2.2$ |
 |:---|---:|---:|---:|---:|---:|---:|---:|---:|
-| $\varrho(x)$ | 0.1 | 0.8 | 2.0 | 1.6 | 0.5 | 2.6 | 2.4 | 1.0 |
+| $\varrho_{\mathrm{tar}}(x)$ | 0.1 | 0.8 | 2.0 | 1.6 | 0.5 | 2.6 | 2.4 | 1.0 |
 
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>

@@ -242,11 +242,14 @@ appropriate phase rather than appended indiscriminately.
     - [x] Add separate Asian and lookback call subsections to the
       `GeneratingSamples` survey notebook and link it from the quantile
       transform material as well as the closing summary.
-    - [x] Draft a compact transport-map and normalizing-flow explanation before
-      acceptance--rejection, using an explicit triangular flow to create curved
-      dependence and distinguishing transport from importance sampling.
-    - [ ] Complete instructor review of the transport-map draft and its
-      companion notebook treatment.
+    - [x] Recast transport maps and acceptance--rejection as two advanced
+      direct-sampling methods, add exponential and triangular-flow transport
+      examples, and connect exact transport to importance sampling through a
+      common correction weight. Use target/proposal as recurring roles, with
+      densities denoted by $\varrho_{\mathrm{tar}}$ and
+      $\varrho_{\mathrm{prop}}$, across Decks 02--04.
+    - [ ] Complete instructor review of the revised transport-map sequence and
+      its companion notebook treatment.
   - [x] Draft Lecture 03, Markov Chain Monte Carlo, from the Fall 2025
     Keynote deck, including its discrepancy, Bayesian, and queueing material.
   - [x] Draft Lecture 04, Improving Efficiency, from the Fall 2025 Keynote

@@ -116,20 +116,29 @@ acceptance--rejection, financial-payoff, or MCMC developments below.
 
 ### `sampling/MixturesAndTransportMaps.ipynb` — Deck 02, with Decks 03–04 returns
 
-Create a focused notebook answering one question: how do simple reference
+Create a focused notebook answering one question: how do simple proposal
 samples become more complicated target distributions? Its preferred sequence
 is:
 
 1. hierarchical sampling from a Gaussian mixture;
 2. the one-dimensional quantile transform as a transport;
-3. the multivariate change-of-variables formula;
-4. the triangular flow from Deck 02,
+3. the exponential integration example from Decks 02 and 04, using the same
+   \(\operatorname{Exp}(1/2)\) proposal first with the exact transport
+   \(T(z)=z/2\) and then with importance weights;
+4. the multivariate change-of-variables formula and the unified correction
+   \[
+   W_T(z)=
+   \frac{\varrho_{\mathrm{tar}}\{T(z)\}|\det\nabla T(z)|}
+   {\varrho_{\mathrm{prop}}(z)},
+   \]
+   emphasizing that an exact transport makes \(W_T\equiv1\);
+5. the triangular flow from Deck 02,
    \(X_1=Z_1\), \(X_2=Z_2+b(Z_1^2-1)\), with its explicit inverse,
    unit Jacobian determinant, density, conditional mean, and banana-shaped
    sample plot; and
-5. a direct comparison between transport and importance sampling: transport
-   moves every sample and keeps equal weights, whereas importance sampling
-   retains proposal samples and assigns unequal weights.
+6. the practical distinction that transport produces reusable target samples,
+   while an importance proposal may be tailored to one integrand and may
+   either reduce variance or create extreme weights.
 
 Keep this to two or three substantive examples. Do not turn it into a catalog
 of normalizing-flow architectures or machine-learning packages. The mixture
