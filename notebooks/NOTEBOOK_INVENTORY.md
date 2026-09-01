@@ -76,6 +76,11 @@ boundaries. In particular:
 - allow brief previews such as low discrepancy in an earlier deck and return
   to the same notebook or example when the topic receives its main treatment;
   and
+- follow the course-wide simulation notation in `AUTHOR_WORKFLOW.md`, using
+  the uniform-driver, transformed-input, and black-box-output flow
+  \(\boldsymbol U\to\boldsymbol X\to Y=f(\boldsymbol X)\), with an explicitly
+  defined \(\boldsymbol Z\) when a nonuniform proposal or intermediate is
+  needed; and
 - add a notebook link to any relevant deck and `pages/notebooks.qmd` only after
   the notebook exists, runs cleanly in the course environment, and has been
   reviewed.

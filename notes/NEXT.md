@@ -53,11 +53,12 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   cleanly with the local `qmcpy` kernel, and the root site, all five decks, and
   assembled site render cleanly. The shared lazy-import fix is tested and
   published in HickernellAcademicLib commit `615b402`. The current `classlib`
-  pin advances to commit `fa6673a`, which retains that repair, the
+  pin advances to commit `f566b4d`, which retains that repair, the
   authoritative shared style guides, the shared heading-hierarchy convention,
-  and the `\mLambda` slide macro, while adding the missing RevealJS `\mV`
-  macro already present in the TeX registry. Clean live-Colab validation
-  remains pending.
+  and the RevealJS `\mLambda` and `\mV` macros, while recording the preference
+  for standalone `amsmath` display environments in notebooks and slides over
+  nesting `aligned` inside `$$ ... $$`. Clean live-Colab validation remains
+  pending.
 - Assignment 1 is published in Canvas for 20 points, due September 2 at 11:59
   PM. It uses a 20-group self-sign-up set with at most two students per group.
   Its Owen Exercises 1.2 and 2.1, due date, and links appear on the Assignments
@@ -107,6 +108,9 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   review.
 - `notebooks/applications/AreWeThereYet.ipynb` is instructor-approved, executes
   cleanly, and is linked from the notebook page and both travel-time slides.
+  Its multiline displays use standalone `align` environments, and its
+  standard-deviation results use rich mathematical display rather than
+  printing visible dollar-sign delimiters.
 - `notebooks/sampling/GeneratingSamples.ipynb` has been migrated with current
   QMCPy distribution, stochastic-process, and financial-option APIs. It
   now presents separate Asian arithmetic-mean and floating-strike lookback

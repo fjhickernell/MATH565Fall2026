@@ -155,6 +155,39 @@ python -m ipykernel install --user --name qmcpy --display-name "qmcpy"
 Copy `.Renviron.example` to `.Renviron` and adjust the Python path when the
 local `qmcpy` environment is not in the default location.
 
+## Course-wide simulation notation
+
+Use the following default data flow in new or substantially revised course
+notebooks, slides, and related explanations:
+
+\[
+\boldsymbol U \sim \mathcal U([0,1]^d), \qquad
+\boldsymbol X = T(\boldsymbol U), \qquad
+Y = f(\boldsymbol X).
+\]
+
+- Use the vector `\vU` in course source for the underlying uniform random
+  input, whether its points are IID or low discrepancy. In a one-dimensional
+  example, a scalar \(U\) is acceptable when the dimension matters
+  pedagogically.
+- Use `\vX` for the sample obtained after a quantile transformation, transport
+  map, stochastic-process construction, or other transformation of the
+  uniform input. State the transformation \(T\) when students first need it.
+- Use \(Y=f(\boldsymbol X)\) for the output of an integrand, option payoff,
+  simulator, or other potentially complicated black box. Use
+  \(\boldsymbol Y=f(\boldsymbol X)\) only when the output is genuinely
+  vector-valued.
+- When an example naturally introduces a nonuniform proposal or intermediate
+  variable, use \(\boldsymbol Z=S(\boldsymbol U)\) and then
+  \(\boldsymbol X=T(\boldsymbol Z)\). Do not call a nonuniform proposal
+  \(\boldsymbol U\). Define any example-specific exception explicitly and
+  return to the default notation when the distinction is no longer needed.
+
+Keep this notation consistent across the mathematical explanation, Python
+variables, plots, captions, and links between decks and notebooks. Apply it
+prospectively as materials are created or substantially revised; do not make a
+mechanical notation-only rewrite of otherwise untouched material.
+
 ## Notebook execution timing
 
 Every course notebook must set

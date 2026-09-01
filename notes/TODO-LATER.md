@@ -20,9 +20,11 @@ multiple decks.
 
 - Review and finalize the drafted transport-map and normalizing-flow sequence,
   including the triangular-flow example before acceptance--rejection. Create
-  the corresponding `MixturesAndTransportMaps.ipynb` according to
-  `notebooks/NOTEBOOK_INVENTORY.md` rather than enlarging
-  `GeneratingSamples.ipynb`.
+  a separate, focused `MixturesAndTransportMaps.ipynb` according to
+  `notebooks/NOTEBOOK_INVENTORY.md`; do not enlarge `GeneratingSamples.ipynb`
+  or fold the transport development into `AcceptanceRejection.ipynb`. Keep the
+  latter focused on envelopes, acceptance efficiency, discarded proposals,
+  and the transition to MCMC.
 - Refactor the Asian-option sampling code so path construction and payoff
   interfaces can be reused for importance sampling and control variates in
   Deck 04. Follow the documented division of labor between
