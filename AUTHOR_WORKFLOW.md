@@ -38,13 +38,15 @@ revised:
    page when one exists; otherwise link directly to Canvas.
 5. Add or update the due-date entry in `pages/schedule.qmd`, linking to the
    same authoritative assignment details.
-6. Determine from the schedule which RevealJS deck is current when the
-   assignment is assigned. Add or update the due-date notice on that deck's
-   title slide and, when useful, a brief linked logistics slide describing the
-   assignment and group-submission expectations. Because `slides/` is an
-   independent Quarto project, link from a deck to a root-site assignment page
-   using its published `.html` path rather than its `.qmd` source path. Remove
-   or replace stale notices as the course advances.
+6. Determine from the assignment coverage which RevealJS deck contains the
+   relevant notes. Put the assignment name and due date on exactly one deck's
+   title slide. If the appropriate deck is ambiguous, choose one suitable deck
+   rather than duplicating the reminder. When useful, add a brief linked
+   logistics slide describing the assignment and group-submission
+   expectations. Because `slides/` is an independent Quarto project, link from
+   a deck to a root-site assignment page using its published `.html` path
+   rather than its `.qmd` source path. Remove or replace stale notices as the
+   course advances.
 7. Render the root website and the independent slide project, assemble the
    complete site, and verify the assignment page, assignments table, schedule,
    Canvas links, deck notice, and internal links. Inspect the visible assignment
@@ -64,6 +66,27 @@ revised:
    Canvas by linking to the live course pages and providing only the operational
    group and submission information students need. Do not repeat the assignment
    content or due date in the announcement.
+
+## Adding or updating a test or examination
+
+Use the following workflow whenever a test or final-examination detail is
+finalized or materially revised:
+
+1. Confirm the assessment name, date, duration, coverage, room, current PDF,
+   and Canvas status. Leave unresolved details explicitly marked TBA.
+2. Maintain `pages/tests.qmd` as the authoritative location for the assessment
+   schedule, coverage, and course-wide testing rules.
+3. Add the assessment to `pages/schedule.qmd`. Put only its name in the class
+   event column. In the materials column, link to every covered deck by its
+   full title, placing each link on its own line with `<br>`. The Tests page is
+   available through the site navigation and should not be linked redundantly
+   from an assessment's schedule row.
+4. Add the assessment name and date to the title slide of the latest deck
+   included in its coverage. Do not put the coverage or duration on the title
+   slide, and remove or replace stale notices as the course advances.
+5. Render the root website and independent slide project, assemble the complete
+   site, and verify the Tests page, schedule links, assessment notice, internal
+   navigation, and affected deck at the standard RevealJS viewport.
 
 ## Propagating classlib changes
 

@@ -61,9 +61,15 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
 - Assignment 1 is published in Canvas for 20 points, due September 2 at 11:59
   PM. It uses a 20-group self-sign-up set with at most two students per group.
   Its Owen Exercises 1.2 and 2.1, due date, and links appear on the Assignments
-  page, Schedule, and Lecture 1. The course-hosted detail page is authoritative;
-  Canvas links to it and the course Assignments page without repeating the
-  exercise details, and a Canvas announcement has been posted.
+  page, Schedule, and Lecture 1. Its title-slide reminder appears only on Deck
+  01 because that deck contains the assignment's coverage. The course-hosted
+  detail page is authoritative; Canvas links to it and the course Assignments
+  page without repeating the exercise details, and a Canvas announcement has
+  been posted.
+- Test 1 is scheduled for the full class period on September 15 and covers
+  **Introduction** and **Generating Samples**. Its date and coverage appear on
+  the Schedule, Tests page, and Deck 02 title slide. The room, current test PDF,
+  and Canvas entry remain to be finalized.
 - The Fall 2026 project-selection deadline is Friday, September 18. A live
   Illinois-Tech-only Microsoft Form records students' names, A-numbers, project
   type, article citation and PDF or proposed QMCPy feature, and optional QMCPy

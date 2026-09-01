@@ -33,7 +33,7 @@ finalized.
 
 | Date | Assessment | Coverage or notes | PDF |
 |---|---------|---------|---------|
-| TBA | Test 1 | Coverage TBA; room TBA | TBA |
+| September 15, 2026 | Test 1 | [Introduction](../slides/01-introduction.html)<br>[Generating Samples](../slides/02-generating-samples.html)<br>Room TBA | TBA |
 | TBA | Test 2 | Coverage TBA; room TBA | TBA |
 | TBA | Final Exam—Take-Home and In-Class | Date, time, location, and coverage TBA<br>**No arrangements to take in-class earlier** | TBA |
 
