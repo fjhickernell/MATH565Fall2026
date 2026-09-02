@@ -2,34 +2,38 @@
 
 ## Current task
 
-Finish the first Deck 02 companion-notebook stage and polish its current calls
-before beginning Deck 03 review. First test the two published current notebooks
-in clean Google Colab runtimes using the course's recorded `classlib` and
-`qmcpy` commits. Preserve flexibility for later decks to call or extend the
-same notebooks.
+Resume the Deck 02 notebook work after the machine move without reopening the
+notebook-organization decision. Add a compact Gaussian-mixture section to
+`notebooks/sampling/GeneratingSamples.ipynb`, then create the focused combined
+`notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb`. First test
+`notebooks/applications/AreWeThereYet.ipynb` and the current
+`GeneratingSamples.ipynb` in clean Google Colab runtimes using the course's
+recorded `classlib` and `qmcpy` commits. Do not draft either notebook until the
+working tree and the handoff below have been reviewed.
 
 ## Next MATH 565 work
 
-1. Create or adapt the Microsoft Bookings pages for Fall 2026 presenter and
-   observer sign-ups, following the separate-page workflow used in Fall 2025,
-   and add the finalized links and procedures to the project page.
-2. Review `notebooks/sampling/GeneratingSamples.ipynb` with the instructor and
-   make any requested pedagogical or presentation refinements.
-3. Finish the Deck 02 notebook migration: use the completed lecture narrative
-   and the deck-to-notebook plan in `notebooks/NOTEBOOK_INVENTORY.md` to build
-   the focused mixture/transport, acceptance--rejection, and financial-payoff
-   companions; migrate and validate every retained notebook.
-4. Review the revised advanced-direct-sampling sequence: transport maps,
-   acceptance--rejection, the exponential integration example, and the
-   proposed companion-notebook treatment. Confirm that the target/proposal
+1. Validate `notebooks/applications/AreWeThereYet.ipynb` and the current
+   `notebooks/sampling/GeneratingSamples.ipynb` in clean Google Colab runtimes.
+2. Add the compact Gaussian-mixture section to `GeneratingSamples.ipynb`, then
+   create and validate the combined
+   `sampling/TransportMapsAndAcceptanceRejection.ipynb` according to the
+   handoff below and `notebooks/NOTEBOOK_INVENTORY.md`.
+3. Review the revised advanced-direct-sampling sequence: transport maps,
+   acceptance--rejection, the reusable \(\operatorname{Beta}(2,1)\) scalar
+   example, and the proposed companion-notebook treatment. Confirm that the
+   target/proposal
    roles and their $\varrho_{\mathrm{tar}}$ and
    $\varrho_{\mathrm{prop}}$ notation read consistently across transport,
    importance sampling, and MCMC.
-5. Give Deck 02 a final instructor-led polish pass, including its notebook
+4. Give Deck 02 a final instructor-led polish pass, including its notebook
    links and the relationship between the lecture and retained notebooks.
-6. Review Deck 03 individually, beginning with its scope, section sequence,
+5. Review Deck 03 individually, beginning with its scope, section sequence,
    and mathematical emphasis before detailed layout polishing.
-7. Review Deck 04 and then Deck 05 using the same instructor-led process.
+6. Review Deck 04 and then Deck 05 using the same instructor-led process.
+7. Create or adapt the Microsoft Bookings pages for Fall 2026 presenter and
+   observer sign-ups, following the separate-page workflow used in Fall 2025,
+   and add the finalized links and procedures to the project page.
 8. Complete the remaining Fall 2026 logistics and student-facing page details,
    including the seminar link, assignments, tests, project dates, and visible
    browser review.
@@ -37,10 +41,81 @@ same notebooks.
 The immediate 565 work is therefore to finish the Deck 02 notebooks and polish
 Deck 02. Deck 03 follows that completed unit.
 
-## Deck 02 completion target
+## Immediate machine handoff target
 
-Review `GeneratingSamples.ipynb`, finish the retained Deck 02 notebook
-migrations, and give Deck 02 a final polish pass before beginning Deck 03.
+Validate the two currently published notebooks in clean Colab, add and validate
+the compact Gaussian-mixture section in `GeneratingSamples.ipynb`, and create
+and validate the combined transport-map and acceptance--rejection notebook.
+Do not expand this immediate handoff to the still-separate
+`FinancialOptionPayoffs.ipynb` migration.
+
+The broader Deck 02 milestone also includes the financial-payoff notebook, an
+instructor review of every retained companion, and the deck's final polish pass
+before Deck 03 review begins.
+
+## Machine handoff — Deck 02 notebooks
+
+The notebook organization is decided:
+
+- Keep `GeneratingSamples.ipynb` as the broad survey and add only the Gaussian
+  mixture already taught in Deck 02: $p=0.3$,
+  $(\mu_1,\sigma_1)=(-2,0.5)$, and
+  $(\mu_2,\sigma_2)=(1,1)$. Place it immediately after the zero-inflated
+  exponential. Aim for one short explanatory cell and one executable cell
+  showing generated samples against the analytic mixture density.
+- Create one focused
+  `notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb`; do not create
+  the previously proposed `MixturesAndTransportMaps.ipynb` or a standalone
+  `AcceptanceRejection.ipynb`.
+- Use the recurring $\operatorname{Beta}(2,1)$ target and
+  $\operatorname{Uniform}(0,1)$ proposal to compare the exact transport
+  $T(z)=\sqrt z$ with acceptance--rejection using $M=2$ and $U\le Z$.
+  Continue with the Deck 02 triangular flow, then adapt one bounded nonlinear
+  target, its proposal, and its diagnostics from the read-only Fall 2025
+  `AcceptanceRejection.ipynb`. Run it with the existing
+  `cl.sampling.accept_reject`; do not copy the inherited sampler into the
+  course notebook. The scalar example makes the method transparent; omit the
+  inherited half-normal/exponential example unless instructor review
+  establishes that it adds something distinct.
+- Treat the triangular-flow target on $\mathbb R^2$ and the bounded
+  banana-shaped acceptance--rejection target as different examples, with
+  explicit names and domains.
+- In the acceptance--rejection explanation, allow the desired density to be
+  $c\varrho_{\mathrm{tar}}$, use $U$ for the independent uniform decision
+  draw and $W$ for the acceptance indicator, and use the 2025 Bayes
+  conditional-density derivation rather than a small-$dz$ argument.
+- Use $f$ for a function of the sample, not $h$. Write density evaluations
+  with ordinary or sized parentheses, such as
+  $\varrho_{\mathrm{tar}}(x)$, never braces around the argument.
+- Let Deck 03 call back to the combined notebook instead of repeating its
+  inherited acceptance--rejection review. Let Deck 04 return to the same
+  scalar pair for the importance weight $2z$.
+
+The detailed content sequence, inherited-source inventory, and validation
+order are authoritative in `notebooks/NOTEBOOK_INVENTORY.md`. Use
+`slides/02-generating-samples.qmd` as the source of truth for the current
+mixture, transport, and acceptance--rejection exposition; use
+`slides/04-improving-efficiency.qmd` for the later transport/importance
+sampling comparison; use the sibling Fall 2025 repository only as a read-only
+source for inherited notebook code. When later editing slides, retain punch
+points rather than prose sentences and omit terminal periods. Do not add
+student-facing links until a notebook exists, runs from a clean kernel, and
+has been reviewed.
+
+If `cl.sampling.accept_reject` exposes a genuine reusable defect, repair and
+validate it in `classlib` through the documented submodule workflow before
+updating the course pin; do not hide a reusable fix in course-only code.
+
+For Deck 03, retain transparent NumPy/SciPy Metropolis--Hastings as the core
+MCMC notebook. For a separate Bayesian application, first evaluate PyMC/NUTS
+with ArviZ; use `emcee` only as the lighter fallback if dependency or clean
+Colab setup is too burdensome. ArviZ is already in QMCPy's `[class]` extra;
+PyMC and `emcee` are not current course dependencies.
+
+Before handing back the notebook work, restart and run every edited notebook
+with the `qmcpy` kernel, inspect saved output size and warnings, test the
+recorded-commit setup in a clean Colab runtime, and render affected pages and
+decks after adding links.
 
 ## Current state
 
@@ -53,12 +128,11 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   cleanly with the local `qmcpy` kernel, and the root site, all five decks, and
   assembled site render cleanly. The shared lazy-import fix is tested and
   published in HickernellAcademicLib commit `615b402`. The current `classlib`
-  pin advances to commit `f566b4d`, which retains that repair, the
-  authoritative shared style guides, the shared heading-hierarchy convention,
-  and the RevealJS `\mLambda` and `\mV` macros, while recording the preference
-  for standalone `amsmath` display environments in notebooks and slides over
-  nesting `aligned` inside `$$ ... $$`. Clean live-Colab validation remains
-  pending.
+  pin advances to published commit `e886ee0`, which includes the MathJax 3
+  loader from the 332 checkpoint, retains the shared repairs, guides,
+  heading-hierarchy convention, and RevealJS `\mLambda` and `\mV` macros, and
+  records the standalone-`amsmath`, punch-point, terminal-period, and
+  function-delimiter guidance. Clean live-Colab validation remains pending.
 - Assignment 1 is published in Canvas for 20 points, due September 2 at 11:59
   PM. It uses a 20-group self-sign-up set with at most two students per group.
   Its Owen Exercises 1.2 and 2.1, due date, and links appear on the Assignments
@@ -95,10 +169,14 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   risk-neutral discrete asset-path specialization. Transport maps no longer
   sit under low discrepancy; transport and acceptance--rejection are the two
   children of More Advanced Direct Sampling. The transport sequence now uses
-  an exponential integration example before the triangular flow, and Deck 04
-  returns to the same integral to show that exact transport makes the common
-  correction weight constant whereas importance sampling retains a varying
-  weight. Deck 03 uses the same target/proposal roles in Metropolis--Hastings.
+  a \(\operatorname{Beta}(2,1)\) target with a
+  \(\operatorname{Uniform}(0,1)\) proposal before the triangular flow.
+  Acceptance--rejection reuses the same pair by keeping \(Z\) with probability
+  \(Z\). Its general derivation follows the 2025 acceptance-indicator \(W\)
+  and Bayes' theorem argument and explicitly allows an unnormalized target.
+  Deck 04 returns to the pair to contrast the exact transport
+  \(T(z)=\sqrt z\) with the varying importance weight \(2z\). Deck 03 uses the
+  same target/proposal roles in Metropolis--Hastings.
   The notation $\varrho_{\mathrm{tar}}$ and $\varrho_{\mathrm{prop}}$ is
   intentionally course-wide even where the literature uses other symbols.
   Shrinkage now immediately follows Deck 01's first bias--variance and random
@@ -120,12 +198,15 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   Ideas slide. Its simulations are intentionally unseeded so reruns produce
   different realizations.
 - `notebooks/NOTEBOOK_INVENTORY.md` now records the deck-to-notebook plan. It
-  keeps `GeneratingSamples.ipynb` as a survey, adds focused Deck 02 companions
-  for mixtures/transports, acceptance--rejection, and financial payoffs, and
-  splits the inherited Asian-option and MCMC omnibus material across Decks
-  02--04 by teaching purpose. Deck assignments identify previews, main
-  developments, continuations, and retrospective calls rather than exclusive
-  ownership; topics and notebooks may span decks.
+  keeps `GeneratingSamples.ipynb` as a survey with a compact mixture section,
+  combines transport maps and acceptance--rejection in one focused companion,
+  retains a separate financial-payoff companion, and splits the inherited
+  Asian-option and MCMC omnibus material across Decks 02--04 by teaching
+  purpose. Deck assignments identify previews, main developments,
+  continuations, and retrospective calls rather than exclusive ownership;
+  topics and notebooks may span decks.
+- This handoff records the agreed notebook design only. The Gaussian-mixture
+  addition and the combined notebook have not yet been implemented.
 - `slides/03-markov-chain-monte-carlo.qmd` is a full first-pass conversion of
   the Fall 2025 Keynote deck. It preserves the Markov-chain examples,
   Metropolis–Hastings practice, discrepancy development, MLE and Bayesian
@@ -136,8 +217,9 @@ migrations, and give Deck 02 a final polish pass before beginning Deck 03.
   variates, conditional and antithetic Monte Carlo, Latin hypercube sampling,
   low discrepancy methods, randomization, and stopping criteria. It now gives
   exact transport and importance sampling a common correction-weight formula
-  and compares them on one exponential integration problem. It adds an
-  executable IID/LHS/Sobol' comparison.
+  and compares them with the recurring \(\operatorname{Beta}(2,1)\) scalar
+  example, including a reversal in their variance ranking for two choices of
+  \(f\). It adds an executable IID/LHS/Sobol' comparison.
 - `slides/05-selected-topics.qmd` is a full first-pass conversion covering
   parallel computing, gradient and stochastic-gradient descent, and two-level
   and multilevel Monte Carlo. It adds an executable gradient-path comparison.

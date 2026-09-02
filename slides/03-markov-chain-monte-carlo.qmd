@@ -298,12 +298,12 @@ Diagnose both [exploration]{.alert} of the full state space and [concentration]{
 
 For samples $\{x_i\}_{i=0}^{m-1}$ and $\{z_j\}_{j=0}^{n-1}$, a kernel $K$ defines
 
-\begin{multline*}
+\begin{align*}
 D^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
-=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(x_i,x_j)\\
--\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
+&=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(x_i,x_j)\\
+&\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
 +\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)
-\end{multline*}
+\end{align*}
 
 - Also called [maximum mean discrepancy (MMD)]{.alert} in machine learning
 - Direct computation requires $\Order(\max(m,n)^2)$ kernel evaluations
@@ -382,12 +382,12 @@ The squared discrepancy is nonnegative, but an unbiased estimator may be negativ
 
 Replace within-sample sums by off-diagonal averages:
 
-\begin{multline*}
+\begin{align*}
 D_{\mathrm{unb}}^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
-=\frac{1}{m(m-1)}\sum_{\substack{i,j=0\\i\ne j}}^{m-1}K(x_i,x_j)\\
--\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
+&=\frac{1}{m(m-1)}\sum_{\substack{i,j=0\\i\ne j}}^{m-1}K(x_i,x_j)\\
+&\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
 +\frac{1}{n(n-1)}\sum_{\substack{i,j=0\\i\ne j}}^{n-1}K(z_i,z_j)
-\end{multline*}
+\end{align*}
 
 [Unbiased]{.alert} describes the estimator's expectation, not the sign of each realization
 
@@ -506,16 +506,16 @@ $$
 
 Its norm combines the function value at the center with weighted square-integrals of mixed derivatives:
 
-\begin{multline*}
+\begin{align*}
 \norm{f}_{\mathcal H_K}^2
-=\abs{f(1/2,\ldots,1/2)}^2
+&=\abs{f(1/2,\ldots,1/2)}^2
 +\norm{\frac{\partial f(x_1,1/2,\ldots)}{\gamma_1\partial x_1}}_2^2\\
-+\norm{\frac{\partial^2 f(x_1,x_2,1/2,\ldots)}
+&\quad+\norm{\frac{\partial^2 f(x_1,x_2,1/2,\ldots)}
 {\gamma_1\gamma_2\partial x_1\partial x_2}}_2^2
 +\cdots
 +\norm{\frac{\partial^d f(x)}
 {\gamma_1\cdots\gamma_d\partial x_1\cdots\partial x_d}}_2^2
-\end{multline*}
+\end{align*}
 
 The weights $\gamma_\ell$ express [coordinate importance]{.alert}
 

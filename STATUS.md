@@ -84,6 +84,15 @@ appropriate phase rather than appended indiscriminately.
       - [x] Record a cross-deck notebook plan that keeps survey, sampling
         method, application, and performance narratives coherent while
         allowing topics and notebook calls to span multiple decks.
+      - [x] Decide the Deck 02 notebook split: a compact Gaussian-mixture
+        addition to `GeneratingSamples.ipynb` and one combined
+        `TransportMapsAndAcceptanceRejection.ipynb` companion.
+      - [ ] Add and validate the compact Gaussian-mixture section in
+        `GeneratingSamples.ipynb`.
+      - [ ] Create and validate
+        `TransportMapsAndAcceptanceRejection.ipynb` from the Deck 02 transport
+        sequence and a narrowed migration of the inherited
+        acceptance--rejection notebook.
     - [ ] Add notebook links only after each target exists and passes
       validation.
       - [x] Link the validated `AreWeThereYet.ipynb` from the Applications
@@ -243,11 +252,14 @@ appropriate phase rather than appended indiscriminately.
       `GeneratingSamples` survey notebook and link it from the quantile
       transform material as well as the closing summary.
     - [x] Recast transport maps and acceptance--rejection as two advanced
-      direct-sampling methods, add exponential and triangular-flow transport
-      examples, and connect exact transport to importance sampling through a
-      common correction weight. Use target/proposal as recurring roles, with
+      direct-sampling methods, add a reusable $\operatorname{Beta}(2,1)$
+      scalar example and a triangular-flow transport example, and connect
+      exact transport to acceptance--rejection and importance sampling
+      through the common target/proposal pair and correction weight. Use
       densities denoted by $\varrho_{\mathrm{tar}}$ and
-      $\varrho_{\mathrm{prop}}$, across Decks 02--04.
+      $\varrho_{\mathrm{prop}}$ across Decks 02--04, and retain the 2025
+      acceptance-indicator and Bayes' theorem explanation for an unnormalized
+      target.
     - [ ] Complete instructor review of the revised transport-map sequence and
       its companion notebook treatment.
   - [x] Draft Lecture 03, Markov Chain Monte Carlo, from the Fall 2025

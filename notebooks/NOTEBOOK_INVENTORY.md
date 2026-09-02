@@ -97,9 +97,9 @@ pattern, not a permanent ownership contract.
 | Deck | Planned notebook calls | Role in this deck |
 |:---|:---|:---|
 | Deck 01, Introduction | `applications/AreWeThereYet.ipynb` | Main introductory Monte Carlo application; preview of randomized Sobol sampling and later efficiency ideas |
-| Deck 02, Generating Samples | `sampling/GeneratingSamples.ipynb`; `sampling/MixturesAndTransportMaps.ipynb`; `sampling/AcceptanceRejection.ipynb`; `applications/FinancialOptionPayoffs.ipynb` | Main direct-sampling development; early low discrepancy and financial-option examples intentionally prepare later decks |
-| Deck 03, Markov Chain Monte Carlo | `sampling/AcceptanceRejection.ipynb`; `sampling/MetropolisHastings.ipynb`; `applications/BayesianMCMC.ipynb`; `performance/Discrepancy.ipynb`; `applications/QueueSimulation.ipynb` | Return to acceptance--rejection as motivation; main MCMC, distribution-comparison, Bayesian, and queueing development |
-| Deck 04, Improving Efficiency | `sampling/GeneratingSamples.ipynb`; `sampling/MixturesAndTransportMaps.ipynb`; `applications/FinancialOptionPayoffs.ipynb`; `applications/KeisterExample.ipynb`; `sampling/ConditionalMonteCarlo.ipynb`; `performance/AsianOptionVarianceReduction.ipynb`; `performance/Discrepancy.ipynb` | Return to earlier low discrepancy, transport, and option examples; main importance-sampling, variance-reduction, discrepancy, and QMC development |
+| Deck 02, Generating Samples | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb`; `applications/FinancialOptionPayoffs.ipynb` | Main direct-sampling development; early low discrepancy and financial-option examples intentionally prepare later decks |
+| Deck 03, Markov Chain Monte Carlo | `sampling/TransportMapsAndAcceptanceRejection.ipynb`; `sampling/MetropolisHastings.ipynb`; `applications/BayesianMCMC.ipynb`; `performance/Discrepancy.ipynb`; `applications/QueueSimulation.ipynb` | Return to acceptance--rejection as motivation; main MCMC, distribution-comparison, Bayesian, and queueing development |
+| Deck 04, Improving Efficiency | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb`; `applications/FinancialOptionPayoffs.ipynb`; `applications/KeisterExample.ipynb`; `sampling/ConditionalMonteCarlo.ipynb`; `performance/AsianOptionVarianceReduction.ipynb`; `performance/Discrepancy.ipynb` | Return to earlier low discrepancy, transport, and option examples; main importance-sampling, variance-reduction, discrepancy, and QMC development |
 | Deck 05, Selected Topics | A consolidated gradient/stochastic-gradient notebook and the GPU Monte Carlo notebook, if retained after review; earlier application notebooks when a selected topic extends them | Flexible continuation into selected methods; queueing may recur if it becomes a substantial application, and future MCTS or multilevel notebooks should remain coherent rather than omnibus |
 
 The broad inherited `QMCPy_Introduction.ipynb` has no required deck call. It
@@ -113,62 +113,69 @@ American-option notebook unless optimal stopping is developed computationally.
 
 Keep the existing notebook as the broad executable companion to Deck 02. Its
 job is to show direct construction and transformation of IID and low
-discrepancy samples, multivariate Gaussian samples, Brownian motion, geometric
-Brownian motion, and one arithmetic-Asian option preview. Instructor review
-may trim or clarify examples. Deck 04 may call its low discrepancy and option
-sections again, but the notebook need not absorb the full mixture, transport,
-acceptance--rejection, financial-payoff, or MCMC developments below.
+discrepancy samples, a compact Gaussian-mixture construction, multivariate
+Gaussian samples, Brownian motion, geometric Brownian motion, and one
+arithmetic-Asian option preview.
 
-### `sampling/MixturesAndTransportMaps.ipynb` — Deck 02, with Decks 03–04 returns
+Add the Deck 02 Gaussian mixture immediately after the zero-inflated
+exponential as a deliberately small section: one explanatory cell for the
+component draw and conditional normal draw, followed by one executable cell
+with a density-and-sample diagnostic. Match the deck's example:
+$p=0.3$, $(\mu_1,\sigma_1)=(-2,0.5)$, and
+$(\mu_2,\sigma_2)=(1,1)$. Do not add an extended mixture survey. Instructor
+review may trim or clarify other examples. Deck 04 may call the low discrepancy
+and option sections again, but this already-full survey notebook should not
+absorb transport maps, acceptance--rejection, or MCMC.
 
-Create a focused notebook answering one question: how do simple proposal
-samples become more complicated target distributions? Its preferred sequence
-is:
+### `sampling/TransportMapsAndAcceptanceRejection.ipynb` — Deck 02, with Decks 03–04 returns
 
-1. hierarchical sampling from a Gaussian mixture;
-2. the one-dimensional quantile transform as a transport;
-3. the exponential integration example from Decks 02 and 04, using the same
-   \(\operatorname{Exp}(1/2)\) proposal first with the exact transport
-   \(T(z)=z/2\) and then with importance weights;
-4. the multivariate change-of-variables formula and the unified correction
-   \[
-   W_T(z)=
-   \frac{\varrho_{\mathrm{tar}}\{T(z)\}|\det\nabla T(z)|}
-   {\varrho_{\mathrm{prop}}(z)},
-   \]
-   emphasizing that an exact transport makes \(W_T\equiv1\);
-5. the triangular flow from Deck 02,
-   \(X_1=Z_1\), \(X_2=Z_2+b(Z_1^2-1)\), with its explicit inverse,
-   unit Jacobian determinant, density, conditional mean, and banana-shaped
-   sample plot; and
-6. the practical distinction that transport produces reusable target samples,
-   while an importance proposal may be tailored to one integrand and may
-   either reduce variance or create extreme weights.
+Create one focused notebook answering a common question: how can easy proposal
+draws become unweighted target samples by moving every draw or by accepting
+selected draws? Its preferred sequence is:
 
-Keep this to two or three substantive examples. Do not turn it into a catalog
-of normalizing-flow architectures or machine-learning packages. The mixture
-and transport topics belong together because both construct complicated
-distributions from simple random inputs.
+1. introduce the recurring \(\operatorname{Beta}(2,1)\) target and
+   \(\operatorname{Uniform}(0,1)\) proposal;
+2. construct the exact scalar transport \(T(z)=\sqrt z\), verify the
+   density--Jacobian identity, and compare transformed samples with the target;
+3. develop the triangular flow from Deck 02,
+   \(X_1=Z_1\), \(X_2=Z_2+b(Z_1^2-1)\), including its inverse, unit Jacobian
+   determinant, density, conditional mean, and sample plot;
+4. introduce acceptance--rejection for a possibly unnormalized
+   \(\varrho_{\mathrm{tar}}\), using proposal density
+   \(\varrho_{\mathrm{prop}}\), acceptance indicator \(W\), and the Bayes'
+   theorem derivation from Deck 02;
+5. return to the scalar example with \(M=2\), acceptance rule \(U\le Z\),
+   acceptance probability \(1/2\), and a direct comparison with transport; and
+6. adapt one bounded nonlinear target, its proposal, and its diagnostics from
+   the inherited acceptance--rejection notebook; use the existing
+   `cl.sampling.accept_reject` implementation rather than copying the
+   inherited sampler, then motivate MCMC when no useful map or global envelope
+   is available.
 
-Deck 03 may return to this notebook when contrasting exact transport with
-MCMC, and Deck 04 may return to it when contrasting transport with importance
-sampling. Those later calls should reuse or extend the same examples rather
-than create parallel notebooks solely because the deck number changed.
+For the possibly unnormalized target, define
+\(c^{-1}=\int\varrho_{\mathrm{tar}}(x)\,dx\), require
+\(\varrho_{\mathrm{tar}}(x)\le
+M\varrho_{\mathrm{prop}}(x)\), and accept when
+\(U\le\varrho_{\mathrm{tar}}(Z)/
+[M\varrho_{\mathrm{prop}}(Z)]\). Then
+\(\Prob(W=1)=1/(Mc)\) and the accepted density is
+\(c\varrho_{\mathrm{tar}}\); the sampler does not need to know \(c\).
 
-The inherited acceptance--rejection notebook uses a different bounded
-banana-shaped density. Either retain the two examples with clearly different
-names and domains, or later choose one canonical target. Do not silently
-present the bounded acceptance--rejection target and the Gaussian triangular
-flow as the same distribution.
+Keep the shared scalar example, one multivariate transport, and one nonlinear
+acceptance--rejection example. The triangular-flow target on
+\(\mathbb R^2\) and the inherited bounded banana-shaped target are distinct;
+name and plot them so students cannot confuse them. Do not teach a catalog of
+flow architectures or repeat the full MCMC algorithm. The shared scalar
+example already provides the transparent one-dimensional acceptance rule, so
+omit the inherited half-normal/exponential example unless instructor review
+finds a distinct pedagogical role for it. If the reusable classlib sampler has
+a genuine API defect, fix and validate `classlib` through the documented
+submodule workflow rather than adding a course-local replacement.
 
-### `sampling/AcceptanceRejection.ipynb` — Decks 02 and 03
-
-Migrate and narrow the inherited notebook. Use normal sampling with an
-exponential proposal as the transparent one-dimensional example, followed by
-one nonlinear target and explicit acceptance-rate or envelope-efficiency
-diagnostics. End by explaining why a poor or unavailable global envelope
-motivates MCMC. Do not repeat the full MCMC algorithm or Bayesian application
-inside this notebook.
+Deck 03 should call back to this notebook rather than repeat the inherited
+acceptance--rejection development. Deck 04 may return to the scalar example to
+contrast the exact transport with the importance weight \(2z\), while keeping
+the full importance-sampling treatment in Deck 04.
 
 ### `applications/FinancialOptionPayoffs.ipynb` — Decks 02 and 04
 
@@ -271,10 +278,12 @@ into either performance notebook.
 - **Status:** Not migrated.
 - **Source:** `MATH565Fall2025/notebooks/AcceptanceRejection.ipynb`
 - **Proposed target:**
-  `MATH565Fall2026/notebooks/sampling/AcceptanceRejection.ipynb`
-- **Description:** Demonstrates acceptance-rejection sampling, including
-  normal sampling with an exponential proposal and a banana-shaped
-  unnormalized density.
+  `MATH565Fall2026/notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb`
+- **Description:** Supplies the bounded banana-shaped unnormalized target,
+  proposal, and diagnostics for the acceptance--rejection half of the combined
+  notebook. Use `cl.sampling.accept_reject` rather than copying its inherited
+  sampler. The inherited half-normal/exponential example is a reference, not a
+  required second scalar development.
 - **Dependencies:** NumPy, SciPy, Matplotlib, QMCPy, IPython,
   `classlib.nbviz`, and repository-root path setup. No separate data or image
   input was found.
@@ -736,18 +745,22 @@ execution time, warnings, and hidden state.
 Proceed by deck so each notebook is shaped by the reviewed lecture narrative,
 not by the accidental boundaries of the inherited files.
 
-1. Complete instructor review of the already migrated
-   `sampling/GeneratingSamples.ipynb`.
-2. Create and validate `sampling/MixturesAndTransportMaps.ipynb` from the new
-   Deck 02 mixture and transport sequence.
-3. Migrate and narrow `sampling/AcceptanceRejection.ipynb`.
+1. Validate `applications/AreWeThereYet.ipynb` and the current
+   `sampling/GeneratingSamples.ipynb` in clean Google Colab runtimes using the
+   course's recorded dependency commits.
+2. Add and validate only the compact Gaussian-mixture section described above
+   in `sampling/GeneratingSamples.ipynb`.
+3. Create and validate
+   `sampling/TransportMapsAndAcceptanceRejection.ipynb` by combining the new
+   Deck 02 transport development with a narrowed migration of the inherited
+   acceptance--rejection notebook.
 4. Create and validate `applications/FinancialOptionPayoffs.ipynb`, drawing
    only the basic path and payoff material needed from the inherited Asian
    option notebook.
-5. Add the validated notebook calls needed for Deck 02 and give that stage of
-   the deck--notebook sequence its initial polish. Later decks may add further
-   calls or motivate revisions without changing notebook identity merely to
-   match a deck boundary.
+5. Complete instructor review of the retained Deck 02 companions, add the
+   validated notebook calls, and give that stage of the deck--notebook sequence
+   its initial polish. Later decks may add further calls or motivate revisions
+   without changing notebook identity merely to match a deck boundary.
 6. Review Deck 03, then create or migrate `sampling/MetropolisHastings.ipynb`,
    `applications/BayesianMCMC.ipynb`, `performance/Discrepancy.ipynb`, and
    `applications/QueueSimulation.ipynb` in the order established by that
