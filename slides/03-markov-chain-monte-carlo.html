@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-09-01">
+  <meta name="dcterms.date" content="2026-09-02">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -543,6 +543,57 @@
       }
     };
   </script>
+  <script>
+    // Quarto 1.10 emits Reveal's MathJax 2 plugin even when html-math-method
+    // points to MathJax 3. Replace that plugin before Reveal.initialize() so
+    // the shared MathJax 3 configuration can load without a MathJax.Hub error.
+    (() => {
+      const defaultMathJax3Url =
+        "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js";
+
+      const mathJax3Plugin = {
+        id: "mathjax3",
+        init(deck) {
+          const configuredUrl = deck.getConfig().math?.mathjax;
+          const script = document.createElement("script");
+          script.id = "MathJax-script";
+          script.src = configuredUrl || defaultMathJax3Url;
+          script.async = true;
+
+          return new Promise((resolve, reject) => {
+            script.addEventListener(
+              "load",
+              () => {
+                const startup = window.MathJax?.startup?.promise;
+                if (startup && typeof startup.then === "function") {
+                  startup.then(resolve, reject);
+                } else {
+                  resolve();
+                }
+              },
+              { once: true }
+            );
+            script.addEventListener("error", reject, { once: true });
+            document.head.appendChild(script);
+          });
+        }
+      };
+
+      let revealMath;
+      Object.defineProperty(window, "RevealMath", {
+        configurable: true,
+        get() {
+          return revealMath;
+        },
+        set(pluginBundle) {
+          revealMath =
+            pluginBundle && typeof pluginBundle.MathJax3 === "function"
+              ? mathJax3Plugin
+              : pluginBundle;
+        }
+      });
+    })();
+  </script>
   <script id="course-website-meta" type="application/json">
   {
     "course_website": "https://fjhickernell.github.io/MATH565Fall2026/",
@@ -665,7 +716,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">September 1, 2026</p>
+  <p class="date">September 2, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 center">
 <h1>Course Map</h1>
@@ -954,7 +1005,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="445f254d" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="de7e2e13" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1014,12 +1065,12 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>For samples <span class="math inline">\(\{x_i\}_{i=0}^{m-1}\)</span> and <span class="math inline">\(\{z_j\}_{j=0}^{n-1}\)</span>, a kernel <span class="math inline">\(K\)</span> defines</p>
-<p><span class="math display">\[\begin{multline*}
+<p><span class="math display">\[\begin{align*}
 D^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
-=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(x_i,x_j)\\
--\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
+&amp;=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(x_i,x_j)\\
+&amp;\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
 +\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)
-\end{multline*}\]</span></p>
+\end{align*}\]</span></p>
 <ul>
 <li>Also called <span class="alert">maximum mean discrepancy (MMD)</span> in machine learning</li>
 <li>Direct computation requires <span class="math inline">\(\Order(\max(m,n)^2)\)</span> kernel evaluations</li>
@@ -1115,12 +1166,12 @@ D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
 
 <p>The squared discrepancy is nonnegative, but an unbiased estimator may be negative</p>
 <p>Replace within-sample sums by off-diagonal averages:</p>
-<p><span class="math display">\[\begin{multline*}
+<p><span class="math display">\[\begin{align*}
 D_{\mathrm{unb}}^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
-=\frac{1}{m(m-1)}\sum_{\substack{i,j=0\\i\ne j}}^{m-1}K(x_i,x_j)\\
--\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
+&amp;=\frac{1}{m(m-1)}\sum_{\substack{i,j=0\\i\ne j}}^{m-1}K(x_i,x_j)\\
+&amp;\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
 +\frac{1}{n(n-1)}\sum_{\substack{i,j=0\\i\ne j}}^{n-1}K(z_i,z_j)
-\end{multline*}\]</span></p>
+\end{align*}\]</span></p>
 <p><span class="alert">Unbiased</span> describes the estimator’s expectation, not the sign of each realization</p>
 </section></section>
 <section>
@@ -1261,16 +1312,16 @@ K(t,x)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 \left(\abs{t_\ell-\tfrac12}+\abs{x_\ell-\tfrac12}-\abs{t_\ell-x_\ell}\right)\right]
 \]</span></p>
 <p>Its norm combines the function value at the center with weighted square-integrals of mixed derivatives:</p>
-<p><span class="math display">\[\begin{multline*}
+<p><span class="math display">\[\begin{align*}
 \norm{f}_{\mathcal H_K}^2
-=\abs{f(1/2,\ldots,1/2)}^2
+&amp;=\abs{f(1/2,\ldots,1/2)}^2
 +\norm{\frac{\partial f(x_1,1/2,\ldots)}{\gamma_1\partial x_1}}_2^2\\
-+\norm{\frac{\partial^2 f(x_1,x_2,1/2,\ldots)}
+&amp;\quad+\norm{\frac{\partial^2 f(x_1,x_2,1/2,\ldots)}
 {\gamma_1\gamma_2\partial x_1\partial x_2}}_2^2
 +\cdots
 +\norm{\frac{\partial^d f(x)}
 {\gamma_1\cdots\gamma_d\partial x_1\cdots\partial x_d}}_2^2
-\end{multline*}\]</span></p>
+\end{align*}\]</span></p>
 <p>The weights <span class="math inline">\(\gamma_\ell\)</span> express <span class="alert">coordinate importance</span></p>
 </section></section>
 <section>

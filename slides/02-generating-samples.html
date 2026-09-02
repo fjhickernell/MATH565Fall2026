@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-09-01">
+  <meta name="dcterms.date" content="2026-09-02">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -477,6 +477,57 @@
       }
     };
   </script>
+  <script>
+    // Quarto 1.10 emits Reveal's MathJax 2 plugin even when html-math-method
+    // points to MathJax 3. Replace that plugin before Reveal.initialize() so
+    // the shared MathJax 3 configuration can load without a MathJax.Hub error.
+    (() => {
+      const defaultMathJax3Url =
+        "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js";
+
+      const mathJax3Plugin = {
+        id: "mathjax3",
+        init(deck) {
+          const configuredUrl = deck.getConfig().math?.mathjax;
+          const script = document.createElement("script");
+          script.id = "MathJax-script";
+          script.src = configuredUrl || defaultMathJax3Url;
+          script.async = true;
+
+          return new Promise((resolve, reject) => {
+            script.addEventListener(
+              "load",
+              () => {
+                const startup = window.MathJax?.startup?.promise;
+                if (startup && typeof startup.then === "function") {
+                  startup.then(resolve, reject);
+                } else {
+                  resolve();
+                }
+              },
+              { once: true }
+            );
+            script.addEventListener("error", reject, { once: true });
+            document.head.appendChild(script);
+          });
+        }
+      };
+
+      let revealMath;
+      Object.defineProperty(window, "RevealMath", {
+        configurable: true,
+        get() {
+          return revealMath;
+        },
+        set(pluginBundle) {
+          revealMath =
+            pluginBundle && typeof pluginBundle.MathJax3 === "function"
+              ? mathJax3Plugin
+              : pluginBundle;
+        }
+      });
+    })();
+  </script>
   <script id="course-website-meta" type="application/json">
   {
     "course_website": "https://fjhickernell.github.io/MATH565Fall2026/",
@@ -599,7 +650,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">September 1, 2026</p>
+  <p class="date">September 2, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 center">
 <h1>Course Map</h1>
@@ -768,7 +819,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="682097eb" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="cef5e639" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -812,7 +863,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="10594a08" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="a9d5cbdf" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -838,13 +889,13 @@ Q(u)=
 \end{cases}
 \]</span></p>
 <div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Verify that <span class="math inline">\(F\{Q(u)\}\ge u\)</span> and identify where equality fails</span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Verify that <span class="math inline">\(F\bigl(Q(u)\bigr)\ge u\)</span> and identify where equality fails</span></p>
 </div>
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="a950d66e" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="b84ed7dc" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -928,7 +979,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="9e133c26" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="b41508ad" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1456,27 +1507,27 @@ M_d:=\max_{0\le j\le d}S_j
   <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
 </div>
 
-<p>The quantile transform is a <span class="alert">one-dimensional transport</span>. In <span class="math inline">\(d\)</span> dimensions, start with an easy proposal density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span> and seek the target density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span> through an invertible, differentiable map <span class="math inline">\(T:\reals^d\to\reals^d\)</span>:</p>
-<p><span class="math display">\[
-\vZ\sim\varrho_{\mathrm{prop}},
-\qquad
-\vX=T(\vZ)
-\]</span></p>
-<p>The map transports the proposal to the target when</p>
-<p><span class="math display">\[
-\varrho_{\mathrm{tar}}\{T(\vz)\}
+<p>The quantile transform is a <span class="alert">one-dimensional transport</span></p>
+<p>In <span class="math inline">\(d\)</span> dimensions</p>
+<ul>
+<li>Start with an easy <span class="alert">proposal</span> density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span></li>
+<li>Seek the <span class="alert">target</span> density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span> through an invertible, differentiable map <span class="math inline">\(T:\reals^d\to\reals^d\)</span>, where <span class="math inline">\(\vZ\sim\varrho_{\mathrm{prop}}\)</span> and <span class="math inline">\(\vX=T(\vZ)\)</span></li>
+</ul>
+<p>The map transports the proposal to the target when <span class="math inline">\(\varrho_{\mathrm{tar}}\bigl(T(\vz)\bigr)
 \left|\det\nabla T(\vz)\right|
-=\varrho_{\mathrm{prop}}(\vz)
-\]</span></p>
-<p>Then, for every integrand <span class="math inline">\(h\)</span>,</p>
-<p><span class="math display">\[
-\Ex_{\mathrm{tar}}[h(\vX)]
-=\Ex_{\mathrm{prop}}[h\{T(\vZ)\}]
-\]</span></p>
+=\varrho_{\mathrm{prop}}(\vz)\)</span></p>
+<p>Then, for every integrable function <span class="math inline">\(f\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+\Ex_{\mathrm{tar}}[f(\vX)]
+&amp;=\Ex_{\mathrm{prop}}[f\bigl(T(\vZ)\bigr)]\\
+&amp;\approx \frac1n\sum_{i=0}^{n-1}f\bigl(T(\vZ_i)\bigr),
+\qquad
+\vZ_0,\ldots,\vZ_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}
+\end{align*}\]</span></p>
 <div class="key-point">
 <p>An exact transport <span class="alert">moves every proposal sample</span> and makes the correction weight equal to one</p>
 </div>
-<p>A <span class="alert">normalizing flow</span> builds a flexible transport by composing manageable invertible maps, <span class="math inline">\(T=T_m\circ\cdots\circ T_1\)</span></p>
+<p><span class="alert">Normalizing flow</span> builds a flexible transport by composing manageable invertible maps, <span class="math inline">\(T=T_m\circ\cdots\circ T_1\)</span></p>
 </section>
 <section class="slide level2">
 
@@ -1511,29 +1562,30 @@ The art
 </section>
 <section class="slide level2">
 
-<h3 id="one-integral-one-exact-transport">One integral, one exact transport</h3>
-<p>Consider the target density and target expectation</p>
+<h3 id="a-uniform-proposal-becomes-a-triangular-target">A uniform proposal becomes a triangular target</h3>
+<p>Let the proposal and target densities be</p>
 <p><span class="math display">\[
-\varrho_{\mathrm{tar}}(x)=\exp(-x),\quad x\ge0,
+\varrho_{\mathrm{prop}}(z)=1,\quad 0&lt;z&lt;1,
 \qquad
-\mu=\Ex_{\mathrm{tar}}(X^2)=\int_0^\infty x^2\exp(-x)\,\dif x=2
+\varrho_{\mathrm{tar}}(x)=2x,\quad 0&lt;x&lt;1
 \]</span></p>
-<p>Choose the easy proposal density and map</p>
+<p>The target is <span class="math inline">\(\operatorname{Beta}(2,1)\)</span> with <span class="math inline">\(F_{\mathrm{tar}}(x)=x^2\)</span>, so its quantile transport is</p>
 <p><span class="math display">\[
-\varrho_{\mathrm{prop}}(z)=\frac12\exp(-z/2),
+T(z)=F_{\mathrm{tar}}^{-1}(z)=\sqrt z,
 \qquad
-T(z)=\frac z2
+X=T(Z),\quad Z\sim\Unif(0,1)
 \]</span></p>
-<p>Indeed,</p>
+<p>Indeed, for <span class="math inline">\(0&lt;z&lt;1\)</span>,</p>
 <p><span class="math display">\[
-\varrho_{\mathrm{tar}}\{T(z)\}T'(z)
-=\exp(-z/2)\frac12
+\varrho_{\mathrm{tar}}\bigl(T(z)\bigr)T'(z)
+=2\sqrt z\,\frac{1}{2\sqrt z}
+=1
 =\varrho_{\mathrm{prop}}(z)
 \]</span></p>
-<p>For <span class="math inline">\(Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Exp(1/2)\)</span>,</p>
+<p>Thus, for every integrable <span class="math inline">\(f\)</span>,</p>
 <p><span class="math display">\[
-\hmu_{\mathrm{T},n}
-=\frac1n\sum_{i=0}^{n-1}\left(\frac{Z_i}{2}\right)^2
+\Ex_{\mathrm{tar}}[f(X)]
+=\Ex_{\mathrm{prop}}\!\left[f\bigl(\sqrt Z\bigr)\right]
 \]</span></p>
 </section>
 <section class="slide level2">
@@ -1562,7 +1614,10 @@ T_b^{-1}(\vx)
 \qquad
 \Ex(X_2\mid X_1=x_1)=b(x_1^2-1)
 \]</span></p>
-<p>One flow layer turns independent Gaussian coordinates into a curved, dependent target. If no useful map is available, <span class="alert">acceptance–rejection sampling</span> offers another direct route</p>
+<ul>
+<li>One flow layer: independent Gaussian coordinates <span class="math inline">\(\longrightarrow\)</span> curved, dependent target</li>
+<li>No useful map: <span class="alert">acceptance–rejection sampling</span> as another direct route</li>
+</ul>
 </section>
 <section id="acceptancerejection-sampling" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
 <h2>Acceptance–rejection sampling</h2>
@@ -1571,83 +1626,88 @@ T_b^{-1}(\vx)
   <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
 </div>
 
-<p>Suppose</p>
+<p>Ingredients</p>
 <ul>
-<li><span class="alert">Proposal distribution</span>: <span class="math inline">\(Z\)</span> is easy to sample with density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span></li>
-<li><span class="alert">Target distribution</span>: density <span class="math inline">\(c\varrho_{\mathrm{tar}}\)</span>, with known <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span> and possibly unknown <span class="math inline">\(c&gt;0\)</span></li>
-<li><span class="math inline">\(\varrho_{\mathrm{tar}}(x)\le
-M\varrho_{\mathrm{prop}}(x)\)</span> <span class="alert">for all <span class="math inline">\(x\)</span></span></li>
+<li><span class="alert">Proposal</span>: sample <span class="math inline">\(Z\)</span> from known density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span></li>
+<li><span class="alert">Possibly unnormalized target</span>: known <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span>; desired <span class="math inline">\(X\)</span> density <span class="math inline">\(c\varrho_{\mathrm{tar}}\)</span> for some <span class="math inline">\(c&gt;0\)</span></li>
+<li><span class="alert">Global envelope</span>: known <span class="math inline">\(M\)</span> with <span class="math inline">\(\varrho_{\mathrm{tar}}(x)\le M\varrho_{\mathrm{prop}}(x)\)</span> for all <span class="math inline">\(x\)</span></li>
 </ul>
-<p>Repeat until a proposal is accepted:</p>
-<ol type="1">
-<li><p>Generate <span class="math inline">\(Z\sim\varrho_{\mathrm{prop}}\)</span> and <span class="math inline">\(U\sim\Unif[0,1]\)</span> independently</p></li>
-<li><p>Accept <span class="math inline">\(Z\)</span> as <span class="math inline">\(X\)</span> if</p>
+<p>Sampler for <span class="math inline">\(X_0,\ldots,X_{n-1}\)</span></p>
 <p><span class="math display">\[
-U\le\frac{\varrho_{\mathrm{tar}}(Z)}
-{M\varrho_{\mathrm{prop}}(Z)}
-\]</span></p></li>
-</ol>
-<p>Otherwise reject <span class="math inline">\(Z\)</span> and try again</p>
+\begin{aligned}
+&amp;i\leftarrow0\\[-0.2em]
+&amp;\texttt{repeat}\\[-0.2em]
+&amp;\qquad \texttt{repeat}\quad
+  Z\sim\varrho_{\mathrm{prop}},\quad U\sim\Unif[0,1]
+  \quad\text{independently}\\[-0.2em]
+&amp;\qquad \texttt{until}\quad
+  U\le\frac{\varrho_{\mathrm{tar}}(Z)}
+  {M\varrho_{\mathrm{prop}}(Z)}\\[-0.2em]
+&amp;\qquad X_i\leftarrow Z,\quad i\leftarrow i+1\\[-0.2em]
+&amp;\texttt{until}\quad i=n
+\end{aligned}
+\]</span></p>
+<p><span class="alert">No normalizing constant <span class="math inline">\(c\)</span> needed</span></p>
 </section>
 <section class="slide level2">
 
 <h3 id="why-acceptancerejection-works">Why acceptance–rejection works</h3>
-<p>For a small interval <span class="math inline">\(\dif z\)</span> around <span class="math inline">\(z\)</span></p>
-<p><span class="math display">\[\begin{align*}
-\Prob(Z\in\dif z,\text{ accept})
-&amp;=\varrho_{\mathrm{prop}}(z)\dif z\,
-  \frac{\varrho_{\mathrm{tar}}(z)}
-  {M\varrho_{\mathrm{prop}}(z)}\\
-&amp;=\frac{\varrho_{\mathrm{tar}}(z)}{M}\dif z
-\end{align*}\]</span></p>
-<p><span class="alert">Conditioning on acceptance</span> gives the <span class="alert">target density</span></p>
+<p><span class="alert">Acceptance indicator</span></p>
 <p><span class="math display">\[
-\varrho_{Z\mid\text{accept}}(z)
-=\frac{\varrho_{\mathrm{tar}}(z)/M}{\Prob(\text{accept})}
-=c\varrho_{\mathrm{tar}}(z),
-\qquad
-\Prob(\text{accept})=\frac{1}{Mc}
+W:=
+\begin{cases}
+1, &amp; U\le \varrho_{\mathrm{tar}}(Z)/
+           \bigl[M\varrho_{\mathrm{prop}}(Z)\bigr],\\
+0, &amp; \text{otherwise}
+\end{cases}
 \]</span></p>
+<p><span class="alert">Density of an accepted proposal</span></p>
+<p><span class="math display">\[\begin{align*}
+\varrho_X(z)
+&amp;=\varrho_{Z\mid W}(z\mid1)\\
+&amp;=\frac{\Prob(W=1\mid Z=z)\varrho_{\mathrm{prop}}(z)}
+        {\Prob(W=1)}
+&amp;&amp;\text{by Bayes' theorem}\\
+&amp;=\frac{\left(\varrho_{\mathrm{tar}}(z)/
+        \bigl[M\varrho_{\mathrm{prop}}(z)\bigr]\right)
+        \varrho_{\mathrm{prop}}(z)}
+        {\Prob(W=1)}
+&amp;&amp;\text{by the acceptance rule}\\
+&amp;=\frac{\varrho_{\mathrm{tar}}(z)}{M\Prob(W=1)}
+=c\varrho_{\mathrm{tar}}(z)
+&amp;&amp;\text{since }c\varrho_{\mathrm{tar}}\text{ is a density}
+\end{align*}\]</span></p>
+<ul>
+<li><span class="alert">Acceptance probability</span>: <span class="math inline">\(\Prob(\text{acceptance})=\Prob(W=1)=1/(Mc)\)</span></li>
+<li><span class="alert">Expected proposal cost</span>: <span class="math inline">\(n(Mc)\)</span> samples of <span class="math inline">\(Z\)</span> for <span class="math inline">\(n\)</span> samples of <span class="math inline">\(X\)</span></li>
+</ul>
 </section>
 <section class="slide level2">
 
-<h3 id="efficiency-and-direct-method-comparison">Efficiency and direct-method comparison</h3>
-<p>Obtaining <span class="math inline">\(n\)</span> accepted samples requires an <span class="alert">average of <span class="math inline">\(nMc\)</span> proposals</span></p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Method</th>
-<th style="text-align: left;">What happens to a proposal</th>
-<th style="text-align: left;">Main requirement</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Quantile or affine transform</td>
-<td style="text-align: left;">move every point</td>
-<td style="text-align: left;">known transform</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Exact transport map</td>
-<td style="text-align: left;">move every point</td>
-<td style="text-align: left;">usable map <span class="math inline">\(T\)</span> and Jacobian</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Acceptance–rejection</td>
-<td style="text-align: left;">keep or discard the point</td>
-<td style="text-align: left;">global envelope <span class="math inline">\(\varrho_{\mathrm{tar}}\le M\varrho_{\mathrm{prop}}\)</span></td>
-</tr>
-</tbody>
-</table>
-<div class="key-point">
-<p><span class="alert">Transport</span> invests in constructing a map</p>
-<p><span class="alert">Acceptance–rejection</span> pays through discarded proposals when the envelope is loose</p>
-</div>
+<h3 id="the-same-target-by-acceptancerejection">The same target by acceptance–rejection</h3>
+<p>Uniform proposal and triangular target</p>
+<p><span class="math display">\[
+\frac{\varrho_{\mathrm{tar}}(z)}
+{\varrho_{\mathrm{prop}}(z)}
+=2z\le2
+\]</span></p>
+<ul>
+<li><span class="alert">Smallest envelope constant</span>: <span class="math inline">\(M=2\)</span></li>
+<li>Generate independent <span class="math inline">\(Z,U\sim\Unif(0,1)\)</span></li>
+<li>Accept <span class="math inline">\(X=Z\)</span> when</li>
+</ul>
+<p><span class="math display">\[
+U\le
+\frac{\varrho_{\mathrm{tar}}(Z)}
+{M\varrho_{\mathrm{prop}}(Z)}
+=Z
+\]</span></p>
+<ul>
+<li><span class="alert">Acceptance probability</span>: <span class="math inline">\(\Prob(\text{accept})=\Ex(Z)=1/2\)</span></li>
+<li><span class="alert">Proposal cost</span>: average <span class="math inline">\(2n\)</span> proposals for <span class="math inline">\(n\)</span> target samples</li>
+<li><span class="alert">Exact transport</span>: move every <span class="math inline">\(Z\)</span> to <span class="math inline">\(\sqrt Z\)</span></li>
+<li><span class="alert">Acceptance–rejection</span>: keep <span class="math inline">\(Z\)</span> with probability <span class="math inline">\(Z\)</span></li>
+</ul>
 </section></section>
 <section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="prob-stat-est">
 <h1>Big Ideas</h1>

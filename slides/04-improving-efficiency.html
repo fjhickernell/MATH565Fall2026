@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-09-01">
+  <meta name="dcterms.date" content="2026-09-02">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -477,6 +477,57 @@
       }
     };
   </script>
+  <script>
+    // Quarto 1.10 emits Reveal's MathJax 2 plugin even when html-math-method
+    // points to MathJax 3. Replace that plugin before Reveal.initialize() so
+    // the shared MathJax 3 configuration can load without a MathJax.Hub error.
+    (() => {
+      const defaultMathJax3Url =
+        "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js";
+
+      const mathJax3Plugin = {
+        id: "mathjax3",
+        init(deck) {
+          const configuredUrl = deck.getConfig().math?.mathjax;
+          const script = document.createElement("script");
+          script.id = "MathJax-script";
+          script.src = configuredUrl || defaultMathJax3Url;
+          script.async = true;
+
+          return new Promise((resolve, reject) => {
+            script.addEventListener(
+              "load",
+              () => {
+                const startup = window.MathJax?.startup?.promise;
+                if (startup && typeof startup.then === "function") {
+                  startup.then(resolve, reject);
+                } else {
+                  resolve();
+                }
+              },
+              { once: true }
+            );
+            script.addEventListener("error", reject, { once: true });
+            document.head.appendChild(script);
+          });
+        }
+      };
+
+      let revealMath;
+      Object.defineProperty(window, "RevealMath", {
+        configurable: true,
+        get() {
+          return revealMath;
+        },
+        set(pluginBundle) {
+          revealMath =
+            pluginBundle && typeof pluginBundle.MathJax3 === "function"
+              ? mathJax3Plugin
+              : pluginBundle;
+        }
+      });
+    })();
+  </script>
   <script id="course-website-meta" type="application/json">
   {
     "course_website": "https://fjhickernell.github.io/MATH565Fall2026/",
@@ -599,7 +650,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">September 1, 2026</p>
+  <p class="date">September 2, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 center">
 <h1>Course Map</h1>
@@ -687,12 +738,13 @@ In this deck
 \]</span></p>
 <p>Let <span class="math inline">\(x_j=\Phi(at_j)\)</span>, where <span class="math inline">\(\Phi\)</span> is the standard normal CDF</p>
 <p>Then <span class="math inline">\(t_j=\Phi^{-1}(x_j)/a\)</span> and</p>
-<p><span class="math display">\[\begin{multline*}
-\mu=\int_{[0,1]^d}\frac{(2\mpi)^{d/2}}{a^d}
+<p><span class="math display">\[\begin{align*}
+\mu
+&amp;=\int_{[0,1]^d}\frac{(2\mpi)^{d/2}}{a^d}
 \cos\!\left(\frac{\norm{\Phi^{-1}(x)}}a\right)\\
-\times\exp\!\left[-\frac{2-a^2}{2a^2}\norm{\Phi^{-1}(x)}^2\right]\,\dif x,
+&amp;\quad\times\exp\!\left[-\frac{2-a^2}{2a^2}\norm{\Phi^{-1}(x)}^2\right]\,\dif x,
 \qquad a^2\le2
-\end{multline*}\]</span></p>
+\end{align*}\]</span></p>
 <p>The parameter <span class="math inline">\(a\)</span> creates a <span class="alert">family of unbiased estimators</span> with different variances</p>
 </section>
 <section id="transforming-an-integral" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
@@ -711,9 +763,9 @@ t=\psi(x),
 <p>If <span class="math inline">\(X\)</span> has density <span class="math inline">\(\varrho_X\)</span>, then</p>
 <p><span class="math display">\[\begin{align*}
 \mu
-&amp;=\int_{\mathcal X}g\{\psi(x)\}\abs{J(x;\psi)}\,\dif x\\
+&amp;=\int_{\mathcal X}g\bigl(\psi(x)\bigr)\abs{J(x;\psi)}\,\dif x\\
 &amp;=\Ex_{X\sim\varrho_X}\!\left[
-\frac{g\{\psi(X)\}\abs{J(X;\psi)}}{\varrho_X(X)}
+\frac{g\bigl(\psi(X)\bigr)\abs{J(X;\psi)}}{\varrho_X(X)}
 \right]
 \end{align*}\]</span></p>
 <p>For <span class="math inline">\(X\sim\Unif[0,1]^d\)</span>, the density in the denominator is one</p>
@@ -729,16 +781,16 @@ t=\psi(x),
 <p>The densities satisfy</p>
 <p><span class="math display">\[\begin{align*}
 \varrho_{\mathrm{tar}}(\vx)
-&amp;=\varrho_{\mathrm{prop}}\{T^{-1}(\vx)\}
+&amp;=\varrho_{\mathrm{prop}}\bigl(T^{-1}(\vx)\bigr)
   \left|\det\nabla T^{-1}(\vx)\right|,\\
-\varrho_{\mathrm{tar}}\{T(\vz)\}
+\varrho_{\mathrm{tar}}\bigl(T(\vz)\bigr)
 &amp;=\frac{\varrho_{\mathrm{prop}}(\vz)}
 {\left|\det\nabla T(\vz)\right|}
 \end{align*}\]</span></p>
 <p>Therefore</p>
 <p><span class="math display">\[
-\Ex_{\mathrm{tar}}[h(\vX)]
-=\Ex_{\mathrm{prop}}[h\{T(\vZ)\}]
+\Ex_{\mathrm{tar}}[f(\vX)]
+=\Ex_{\mathrm{prop}}[f\bigl(T(\vZ)\bigr)]
 \]</span></p>
 <p><span class="alert">A change of variables in an integral</span> and <span class="alert">a transformation of a random variable</span> are the same mechanism viewed from opposite directions</p>
 </section>
@@ -752,11 +804,11 @@ t=\psi(x),
 <p>For any invertible map <span class="math inline">\(T\)</span>,</p>
 <p><span class="math display">\[\begin{align*}
 \mu
-&amp;=\int h(\vx)\varrho_{\mathrm{tar}}(\vx)\,\dif \vx\\
+&amp;=\int f(\vx)\varrho_{\mathrm{tar}}(\vx)\,\dif \vx\\
 &amp;=\Ex_{\mathrm{prop}}\!\left[
-h\{T(\vZ)\}
+f\bigl(T(\vZ)\bigr)
 \underbrace{
-\frac{\varrho_{\mathrm{tar}}\{T(\vZ)\}
+\frac{\varrho_{\mathrm{tar}}\bigl(T(\vZ)\bigr)
 \left|\det\nabla T(\vZ)\right|}
 {\varrho_{\mathrm{prop}}(\vZ)}}_{W_T(\vZ)}
 \right]
@@ -777,12 +829,12 @@ h\{T(\vZ)\}
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Choose a proposal density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span> that is positive wherever <span class="math inline">\(h\varrho_{\mathrm{tar}}\)</span> is nonzero:</p>
+<p>Choose a proposal density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span> that is positive wherever <span class="math inline">\(f\varrho_{\mathrm{tar}}\)</span> is nonzero:</p>
 <p><span class="math display">\[\begin{align*}
 \mu
-&amp;=\int h(x)\varrho_{\mathrm{tar}}(x)\,\dif x\\
+&amp;=\int f(x)\varrho_{\mathrm{tar}}(x)\,\dif x\\
 &amp;=\Ex_{Z\sim\varrho_{\mathrm{prop}}}\!\left[
-h(Z)\frac{\varrho_{\mathrm{tar}}(Z)}
+f(Z)\frac{\varrho_{\mathrm{tar}}(Z)}
 {\varrho_{\mathrm{prop}}(Z)}
 \right]
 \end{align*}\]</span></p>
@@ -790,78 +842,104 @@ h(Z)\frac{\varrho_{\mathrm{tar}}(Z)}
 <p>For <span class="math inline">\(Z_0,\ldots,Z_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}\)</span>,</p>
 <p><span class="math display">\[
 \hmu_{\mathrm{IS},n}
-=\frac1n\sum_{i=0}^{n-1}h(Z_i)
+=\frac1n\sum_{i=0}^{n-1}f(Z_i)
 \frac{\varrho_{\mathrm{tar}}(Z_i)}
 {\varrho_{\mathrm{prop}}(Z_i)}
 \]</span></p>
 </section>
 <section class="slide level2">
 
-<h3 id="one-integral-two-estimators">One integral, two estimators</h3>
-<p>Let</p>
-<p><span class="math display">\[
-\varrho_{\mathrm{tar}}(x)=\exp(-x),
+<h3 id="one-proposal-two-unbiased-estimators">One proposal, two unbiased estimators</h3>
+<p><span class="math display">\[\begin{gather*}
+\varrho_{\mathrm{prop}}(z)=1,
 \qquad
-\mu=\int_0^\infty x^2\varrho_{\mathrm{tar}}(x)\,\dif x=2,
+\varrho_{\mathrm{tar}}(x)=2x,
+\qquad 0&lt;x,z&lt;1,\\
+\mu=\int_0^1 f(x)\varrho_{\mathrm{tar}}(x)\,\dif x,
 \qquad
-Z_i\ \IIDsim\ \Exp(1/2)
-\]</span></p>
-<div class="columns">
-<div class="column" style="width:47%;">
-<h4 id="transport">Transport</h4>
-<p>Move every proposal point using <span class="math inline">\(T(z)=z/2\)</span>:</p>
-<p><span class="math display">\[
-\hmu_{\mathrm{T},n}
-=\frac1n\sum_{i=0}^{n-1}
-\left(\frac{Z_i}{2}\right)^2
-\]</span></p>
-<p>The transformed points are equally weighted <span class="math inline">\(\Exp(1)\)</span> target samples</p>
-</div><div class="column" style="width:6%;">
-
-</div><div class="column" style="width:47%;">
-<h4 id="importance-sampling-1">Importance sampling</h4>
-<p>Keep every proposal point and use</p>
-<p><span class="math display">\[
-\frac{\varrho_{\mathrm{tar}}(z)}
-{\varrho_{\mathrm{prop}}(z)}
-=2\exp(-z/2)
-\]</span></p>
-<p><span class="math display">\[
-\hmu_{\mathrm{IS},n}
-=\frac1n\sum_{i=0}^{n-1}2Z_i^2\exp(-Z_i/2)
-\]</span></p>
-</div></div>
-</section>
-<section class="slide level2">
-
-<h3 id="proposal-choice-depends-on-the-integrand">Proposal choice depends on the integrand</h3>
-<p>For the same <span class="math inline">\(Z\sim\Exp(1/2)\)</span> proposal,</p>
+Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1)
+\end{gather*}\]</span></p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Estimator contribution</th>
-<th style="text-align: right;">Variance</th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Exact transport</th>
+<th style="text-align: left;">Importance sampling</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Transport: <span class="math inline">\((Z/2)^2\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(20\)</span></td>
+<td style="text-align: left;">Correction</td>
+<td style="text-align: left;"><span class="math inline">\(T(z)=\sqrt z\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(w(z)=\varrho_{\mathrm{tar}}(z)/\varrho_{\mathrm{prop}}(z)=2z\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Importance sampling: <span class="math inline">\(2Z^2\exp(-Z/2)\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(188/81\approx2.32\)</span></td>
+<td style="text-align: left;">Estimator</td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle \hmu_{\mathrm{T},n}=\frac1n\sum_{i=0}^{n-1}f\bigl(\sqrt{Z_i}\bigr)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle \hmu_{\mathrm{IS},n}=\frac1n\sum_{i=0}^{n-1}2Z_i f(Z_i)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Contribution</td>
+<td style="text-align: left;">Unweighted target sample</td>
+<td style="text-align: left;">Weighted proposal sample</td>
 </tr>
 </tbody>
 </table>
-<ul>
-<li>The heavier-tailed proposal visits large <span class="math inline">\(x\)</span>, where <span class="math inline">\(x^2\varrho_{\mathrm{tar}}(x)\)</span> is important</li>
-<li>The importance proposal is tailored to this <span class="math inline">\(h(x)=x^2\)</span></li>
-<li>Transport produces target samples that can be reused for any integrand</li>
-<li>A poor importance proposal can instead create extreme weights</li>
-</ul>
+<p><span class="alert">Deck 02 acceptance–rejection</span>: same proposal, keep <span class="math inline">\(Z\)</span> with probability <span class="math inline">\(Z\)</span></p>
 <div class="key-point">
-<p>Transport primarily builds <span class="alert">reusable target samples</span>; importance sampling can instead tailor its proposal and weights to a <span class="alert">particular integral</span></p>
+<p>Transport changes samples; importance sampling changes contributions</p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="variance-depends-on-the-function">Variance depends on the function</h3>
+<ul>
+<li><span class="alert">Displayed variances</span>: one estimator contribution</li>
+<li><span class="alert">Sample-mean variances</span>: divide by <span class="math inline">\(n\)</span></li>
+</ul>
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(f(x)\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\mu\)</span></th>
+<th style="text-align: right;">Transport: <span class="math inline">\(\var\!\left[f(\sqrt Z)\right]\)</span></th>
+<th style="text-align: right;">Importance sampling: <span class="math inline">\(\var[2Zf(Z)]\)</span></th>
+<th style="text-align: left;">Smaller</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(x\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(2/3\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1/18\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(16/45\)</span></td>
+<td style="text-align: left;">transport</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(1-x\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1/3\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1/18\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1/45\)</span></td>
+<td style="text-align: left;">importance sampling</td>
+</tr>
+</tbody>
+</table>
+<div class="key-point">
+<p><span class="alert">No universal variance winner</span></p>
+<p>Target samples <span class="math inline">\(\longrightarrow\)</span> ordinary averages for every <span class="math inline">\(f\)</span></p>
+<p>Weighted proposal <span class="math inline">\(\longrightarrow\)</span> better or worse for a particular <span class="math inline">\(f\)</span></p>
 </div>
 </section>
 <section id="brownian-motion-with-drift" class="slide level2 tree-marker-slide" data-tree-marker="quant-finance">
@@ -1093,10 +1171,10 @@ g(y;x_{2:d})=\frac{y-\sum_{j=2}^d\gamma_jx_j}{\gamma_1}
   <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
 </div>
 
-<p>If <span class="math inline">\(T(X)\)</span> has the same distribution as <span class="math inline">\(X\)</span>, pair <span class="math inline">\(f(X_i)\)</span> with <span class="math inline">\(f\{T(X_i)\}\)</span>:</p>
+<p>If <span class="math inline">\(T(X)\)</span> has the same distribution as <span class="math inline">\(X\)</span>, pair <span class="math inline">\(f(X_i)\)</span> with <span class="math inline">\(f\bigl(T(X_i)\bigr)\)</span>:</p>
 <p><span class="math display">\[
 \hmu_{\mathrm{Anti},n}
-=\frac1{2n}\sum_{i=0}^{n-1}\left[f(X_i)+f\{T(X_i)\}\right]
+=\frac1{2n}\sum_{i=0}^{n-1}\left[f(X_i)+f\bigl(T(X_i)\bigr)\right]
 \]</span></p>
 <p>Examples:</p>
 <p><span class="math display">\[\begin{align*}
@@ -1123,11 +1201,11 @@ T(X)&amp;=-X,&amp; X&amp;\sim\Norm(\vzero,\mSigma)
 <p><span class="math display">\[\begin{gather*}
 U=F(X)\sim\Unif[0,1],\\
 1-U\sim\Unif[0,1],\\
-T(X)=F^{-1}\{1-F(X)\}\sim F
+T(X)=F^{-1}\bigl(1-F(X)\bigr)\sim F
 \end{gather*}\]</span></p>
 <p>For a symmetric distribution, this often reduces to reflection about the center</p>
 <div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>For which monotone functions <span class="math inline">\(f\)</span> does <span class="math inline">\(f(X)\)</span> become negatively correlated with <span class="math inline">\(f\{T(X)\}\)</span>?</span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>For which monotone functions <span class="math inline">\(f\)</span> does <span class="math inline">\(f(X)\)</span> become negatively correlated with <span class="math inline">\(f\bigl(T(X)\bigr)\)</span>?</span></p>
 </div>
 </section>
 <section id="latin-hypercube-sampling-in-one-dimension" class="slide level2 tree-marker-slide" data-tree-marker="sampling">
@@ -1208,7 +1286,7 @@ X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="c205824e" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="1">
+<div id="acb69d7c" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
