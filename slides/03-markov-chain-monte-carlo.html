@@ -780,8 +780,8 @@ In this deck
 </div>
 
 <ul>
-<li>Quantile, affine, and exact transport maps produce independent, equally weighted target samples—but require a usable global map</li>
-<li>Acceptance–rejection also produces independent target samples—but requires a global proposal envelope and may reject many proposals</li>
+<li>Quantile, affine, and exact transport maps produce independent, equally weighted target samples<br>They require a usable global map</li>
+<li>Acceptance–rejection also produces independent target samples<br>It requires a global proposal envelope and may reject many proposals</li>
 <li><span class="alert">Markov chain Monte Carlo (MCMC)</span> moves through the sample space using only an unnormalized target density</li>
 </ul>
 <div class="key-point">
@@ -874,7 +874,7 @@ X_0=X_1=0,
 \frac{\varrho_{\mathrm{tar}}(Z)\varrho_{\mathrm{prop}}(X_i\mid Z)}
 {\varrho_{\mathrm{tar}}(X_i)\varrho_{\mathrm{prop}}(Z\mid X_i)}\right\}
 \]</span></p></li>
-<li><p>Set <span class="math inline">\(X_{i+1}=Z\)</span> if <span class="math inline">\(U\le\alpha(X_i,Z)\)</span>; otherwise set <span class="math inline">\(X_{i+1}=X_i\)</span></p></li>
+<li><p>Set <span class="math inline">\(X_{i+1}=Z\)</span> if <span class="math inline">\(U\le\alpha(X_i,Z)\)</span><br>Otherwise set <span class="math inline">\(X_{i+1}=X_i\)</span></p></li>
 </ol>
 <p><span class="alert">Every iteration accepts either the proposal or the current state</span></p>
 </section>
@@ -1016,7 +1016,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="fadc8932" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="d60e76b5" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>

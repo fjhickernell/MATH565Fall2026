@@ -727,7 +727,8 @@ Y_i = f(\vX_i)
 <p><img data-src="assets/images/random-variables-not-from-stork.png" style="width: 100%; clip-path: inset(7.9% 0 7.9% 0); margin: -7.9% 0;" alt="A stork carrying a bag labeled random variable, crossed out with a large red X"></p>
 </div></div>
 <div class="key-point">
-<p><span class="alert">Uniform</span> numbers are the raw material; a transformation produces the <span class="alert">target</span> distribution</p>
+<p><span class="alert">Uniform</span> numbers are the raw material</p>
+<p>A transformation produces the <span class="alert">target</span> distribution</p>
 </div>
 </section>
 <section id="the-quantile-transform" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
@@ -741,7 +742,8 @@ Y_i = f(\vX_i)
 <p><span class="math display">\[
 U_i\sim\Unif[0,1],\qquad i=0,1,\ldots
 \]</span></p>
-<p>The design may be IID, Latin hypercube, low discrepancy, or something else. For a <span class="alert">target</span> cumulative distribution function <span class="math inline">\(F\)</span>, define</p>
+<p>The design may be IID, Latin hypercube, low discrepancy, or something else</p>
+<p>For a <span class="alert">target</span> cumulative distribution function <span class="math inline">\(F\)</span>, define</p>
 <p><span class="math display">\[
 Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 \]</span></p>
@@ -828,7 +830,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="f85f8251" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="e3404f19" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -872,7 +874,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="518e4f04" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="eab90375" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -904,7 +906,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="ecc5bafe" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="913362c6" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -919,7 +921,7 @@ Q(u)=
 
 <h3 id="an-alternative-transform">An alternative transform</h3>
 <div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Define <span class="math inline">\(T(u):=Q(1-u)\)</span>. Simplify <span class="math inline">\(T\)</span> and explain why <span class="math inline">\(T(U)\)</span> has the desired distribution for <span class="math inline">\(U\sim\Unif(0,1)\)</span> even though <span class="math inline">\(T\)</span> is not the quantile function. Why might <span class="math inline">\(T\)</span> be preferred to <span class="math inline">\(Q\)</span>?</span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Define <span class="math inline">\(T(u):=Q(1-u)\)</span>.<br>Simplify <span class="math inline">\(T\)</span> and explain why <span class="math inline">\(T(U)\)</span> has the desired distribution for <span class="math inline">\(U\sim\Unif(0,1)\)</span> even though <span class="math inline">\(T\)</span> is not the quantile function.<br>Why might <span class="math inline">\(T\)</span> be preferred to <span class="math inline">\(Q\)</span>?</span></p>
 </div>
 <div class="key-point">
 <p>The generalized inverse handles <span class="alert">atoms and continuous pieces</span> with one definition</p>
@@ -983,12 +985,12 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 &amp;\approx -1.36
 \end{align*}\]</span></p>
 <div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Use <span class="math inline">\(U_1=0.70\)</span> and <span class="math inline">\(U_2=0.25\)</span>. Which component is selected, and what value of <span class="math inline">\(X\)</span> is generated?</span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Use <span class="math inline">\(U_1=0.70\)</span> and <span class="math inline">\(U_2=0.25\)</span>.<br>Which component is selected?<br>What value of <span class="math inline">\(X\)</span> is generated?</span></p>
 </div>
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="26d2b9ac" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="ba00e96a" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1064,7 +1066,8 @@ X_{n1} &amp; X_{n2} &amp; \cdots &amp; X_{nd}
 &amp;=\mA\Ex(\vZ\vZ^\mathsf{T})\mA^\mathsf{T}
 =\mA\mA^\mathsf{T}
 \end{align*}\]</span></p>
-<p>Every <span class="alert">linear combination</span> of the components of <span class="math inline">\(\vX\)</span> is normal; thus, if <span class="math inline">\(\mSigma=\mA\mA^\mathsf{T}\)</span>,</p>
+<p>Every <span class="alert">linear combination</span> of the components of <span class="math inline">\(\vX\)</span> is normal</p>
+<p>Thus, if <span class="math inline">\(\mSigma=\mA\mA^\mathsf{T}\)</span>,</p>
 <p><span class="math display">\[
 \vX=\mA\vZ+\vmu\sim\Norm(\vmu,\mSigma)
 \]</span></p>
@@ -1117,7 +1120,7 @@ a_{11}=\sqrt3,
 \rho\sigma_2 &amp; \sigma_2\sqrt{1-\rho^2}
 \end{pmatrix}
 \]</span></p>
-<p>Different factorizations generate the <span class="alert">same distribution</span> but may behave <span class="alert">differently under low discrepancy sampling</span></p>
+<p>Different factorizations generate the <span class="alert">same distribution</span><br>They may behave <span class="alert">differently under low discrepancy sampling</span></p>
 </section>
 <section id="principal-component-factorization" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
 <h2>Principal-component (PCA) factorization</h2>
@@ -1130,7 +1133,8 @@ a_{11}=\sqrt3,
 <p><span class="math display">\[
 \mSigma=\begin{pmatrix}3&amp;-1\\-1&amp;1\end{pmatrix},
 \]</span></p>
-<p>let <span class="math inline">\(c=\cos(\mpi/8)\)</span> and <span class="math inline">\(s=\sin(\mpi/8)\)</span>. The ordered eigendecomposition is</p>
+<p>let <span class="math inline">\(c=\cos(\mpi/8)\)</span> and <span class="math inline">\(s=\sin(\mpi/8)\)</span></p>
+<p>The ordered eigendecomposition is</p>
 <p><span class="math display">\[
 \mV=(\vv_1\ \vv_2)=
 \begin{pmatrix}c&amp;s\\-s&amp;c\end{pmatrix},
@@ -1256,9 +1260,9 @@ S(t)=S_0\exp\!\left[
 \]</span></p>
 <p>Then <span class="math inline">\(S(t)&gt;0\)</span> and its multiplicative increments are lognormal</p>
 <div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Using <span class="math inline">\(B(t)\sim\Norm(0,t)\)</span> and the normal moment-generating function, show that <span class="math inline">\(\Ex[S(t)]=S_0\me^{\gamma t}\)</span>. Hence determine <span class="math inline">\(\gamma\)</span> so that <span class="math inline">\(\Ex[S(t)]=S_0\me^{rt}\)</span>.</span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Using <span class="math inline">\(B(t)\sim\Norm(0,t)\)</span> and the normal moment-generating function, show that <span class="math inline">\(\Ex[S(t)]=S_0\me^{\gamma t}\)</span>.<br>Hence determine <span class="math inline">\(\gamma\)</span> so that <span class="math inline">\(\Ex[S(t)]=S_0\me^{rt}\)</span>.</span></p>
 </div>
-<p>The correction <span class="alert"><span class="math inline">\(-\sigma^2/2\)</span></span> makes <span class="math inline">\(\gamma\)</span> the mean growth rate; the median growth rate is <span class="math inline">\(\gamma-\sigma^2/2\)</span></p>
+<p>The correction <span class="alert"><span class="math inline">\(-\sigma^2/2\)</span></span> makes <span class="math inline">\(\gamma\)</span> the mean growth rate<br>The median growth rate is <span class="math inline">\(\gamma-\sigma^2/2\)</span></p>
 </section>
 <section class="slide level2">
 
@@ -1279,7 +1283,8 @@ m(t)=S_0\me^{(\gamma-\sigma^2/2)t},
 
 <h3 id="risk-neutral-asset-price-paths">Risk-neutral asset-price paths</h3>
 <p>For a non-dividend-paying asset with continuously compounded risk-free rate <span class="math inline">\(r\)</span>, the <span class="alert">risk-neutral model</span> sets <span class="math inline">\(\gamma=r\)</span></p>
-<p>On <span class="math inline">\(0=t_0&lt;t_1&lt;\cdots&lt;t_d=T\)</span>, define <span class="math inline">\(\Delta t_j:=t_j-t_{j-1}\)</span>. For <span class="math inline">\(Z_1,\ldots,Z_d\ \IIDsim\ \Norm(0,1)\)</span>,</p>
+<p>On <span class="math inline">\(0=t_0&lt;t_1&lt;\cdots&lt;t_d=T\)</span>, define <span class="math inline">\(\Delta t_j:=t_j-t_{j-1}\)</span></p>
+<p>For <span class="math inline">\(Z_1,\ldots,Z_d\ \IIDsim\ \Norm(0,1)\)</span>,</p>
 <p><span class="math display">\[
 S_j=S_{j-1}\exp\!\left[
 \left(r-\frac{\sigma^2}{2}\right)\Delta t_j
@@ -1521,7 +1526,7 @@ M_d:=\max_{0\le j\le d}S_j
 <p>In <span class="math inline">\(d\)</span> dimensions</p>
 <ul>
 <li>Start with an easy <span class="alert">proposal</span> density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span></li>
-<li>Seek the <span class="alert">target</span> density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span> through an invertible, differentiable map <span class="math inline">\(T:\reals^d\to\reals^d\)</span>, where <span class="math inline">\(\vZ\sim\varrho_{\mathrm{prop}}\)</span> and <span class="math inline">\(\vX=T(\vZ)\)</span></li>
+<li>Seek the <span class="alert">target</span> density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span> through an invertible, differentiable map <span class="math inline">\(T:\reals^d\to\reals^d\)</span><br>Let <span class="math inline">\(\vZ\sim\varrho_{\mathrm{prop}}\)</span> and <span class="math inline">\(\vX=T(\vZ)\)</span></li>
 </ul>
 <p>The map transports the proposal to the target when <span class="math inline">\(\varrho_{\mathrm{tar}}\bigl(T(\vz)\bigr)
 \left|\det\nabla T(\vz)\right|
@@ -1549,8 +1554,8 @@ Mechanics
 </h3>
 <ul>
 <li>Choose a tractable family <span class="math inline">\(T_\theta\)</span>: affine, triangular, or a composition of simple invertible maps</li>
-<li>Determine <span class="math inline">\(\theta\)</span> analytically when possible; otherwise fit it so the density-matching equation holds approximately</li>
-<li>Add an optimality criterion when needed; quadratic-cost transport leads to a Monge–Ampère PDE</li>
+<li>Determine <span class="math inline">\(\theta\)</span> analytically when possible<br>Otherwise fit it so the density-matching equation holds approximately</li>
+<li>Add an optimality criterion when needed<br>Quadratic-cost transport leads to a Monge–Ampère PDE</li>
 <li>Validate the transformed samples and the Jacobian calculation</li>
 </ul>
 </div><div class="column" style="width:6%;">
@@ -1567,7 +1572,8 @@ The art
 </ul>
 </div></div>
 <div class="key-point">
-<p>The density equation supplies the constraint; the designer supplies the structure that makes the map solvable and useful</p>
+<p>The density equation supplies the constraint</p>
+<p>The designer supplies the structure that makes the map solvable and useful</p>
 </div>
 </section>
 <section class="slide level2">
@@ -1639,7 +1645,7 @@ T_b^{-1}(\vx)
 <p>Ingredients</p>
 <ul>
 <li><span class="alert">Proposal</span>: sample <span class="math inline">\(Z\)</span> from known density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span></li>
-<li><span class="alert">Possibly unnormalized target</span>: known <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span>; desired <span class="math inline">\(X\)</span> density <span class="math inline">\(c\varrho_{\mathrm{tar}}\)</span> for some <span class="math inline">\(c&gt;0\)</span></li>
+<li><span class="alert">Possibly unnormalized target</span>: known <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span><br>The desired <span class="math inline">\(X\)</span> density is <span class="math inline">\(c\varrho_{\mathrm{tar}}\)</span> for some <span class="math inline">\(c&gt;0\)</span></li>
 <li><span class="alert">Global envelope</span>: known <span class="math inline">\(M\)</span> with <span class="math inline">\(\varrho_{\mathrm{tar}}(x)\le M\varrho_{\mathrm{prop}}(x)\)</span> for all <span class="math inline">\(x\)</span></li>
 </ul>
 <p>Sampler for <span class="math inline">\(X_0,\ldots,X_{n-1}\)</span></p>
@@ -1732,7 +1738,7 @@ U\le
 <li>Start with <span class="alert">uniform</span> samples and transform them to the <span class="alert">target</span> distribution</li>
 <li>The generalized inverse works for discrete and continuous distributions</li>
 <li>Mixtures combine a discrete component choice with a conditional transform</li>
-<li>Independent marginal transforms do not create dependence; correlated normal vectors require a matrix factorization, and PCA can concentrate variation in early coordinates for low discrepancy sampling</li>
+<li>Independent marginal transforms do not create dependence<br>Correlated normal vectors require a matrix factorization<br>PCA can concentrate variation in early coordinates for low discrepancy sampling</li>
 <li>Gaussian-process sampling reduces finite collections of function values to multivariate normal sampling</li>
 <li>Low discrepancy points trade independent placement for more even coverage</li>
 <li>An exact transport moves every proposal point to the target and makes the correction weight equal to one</li>

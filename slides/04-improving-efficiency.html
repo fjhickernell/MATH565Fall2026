@@ -724,7 +724,8 @@ In this deck
 \var(\hmu_{g,n})&amp;=\frac{\var\{g(X)\}}n
 \end{align*}\]</span></p>
 <div class="key-point">
-<p>Deck 01 showed that accepting some bias can reduce MSE. Here both estimators are unbiased, so an equivalent expectation is better when its <span class="alert">integrand has smaller variance</span></p>
+<p>Deck 01 showed that accepting some bias can reduce MSE</p>
+<p>Here both estimators are unbiased, so an equivalent expectation is better when its <span class="alert">integrand has smaller variance</span></p>
 </div>
 </section>
 <section id="the-keister-example" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
@@ -821,7 +822,8 @@ f\bigl(T(\vZ)\bigr)
 \varrho_{\mathrm{prop}}(\vz)\)</span></li>
 </ul>
 <div class="key-point">
-<p>Transport absorbs the density correction into the map; importance sampling carries the correction as a weight</p>
+<p>Transport absorbs the density correction into the map</p>
+<p>Importance sampling carries the correction as a weight</p>
 </div>
 </section>
 <section id="importance-sampling" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
@@ -1288,7 +1290,7 @@ X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="5f47455e" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="1">
+<div id="4d6cd5cf" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1545,8 +1547,8 @@ X_{\mathrm{rand},i}\sim\Unif[0,1]^d
 
 <ul>
 <li>Equivalent expectations can have dramatically different computational variance</li>
-<li>Exact transport chooses a map that makes the target-to-proposal correction constant; importance sampling retains the correction as unequal weights</li>
-<li>Importance proposals may be tailored to a particular integrand, while transported target samples can be reused for many integrands</li>
+<li>Exact transport chooses a map that makes the target-to-proposal correction constant<br>Importance sampling retains the correction as unequal weights</li>
+<li>Importance proposals may be tailored to a particular integrand<br>Transported target samples can be reused for many integrands</li>
 <li>Control variates and conditioning remove variability using known structure</li>
 <li>Antithetic sampling and Latin hypercubes introduce useful dependence deliberately</li>
 <li>Low discrepancy sequences replace random clustering with balanced space filling</li>

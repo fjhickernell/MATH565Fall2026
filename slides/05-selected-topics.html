@@ -709,10 +709,11 @@ In this deck
 <li>Parallel random-number streams must remain nonoverlapping and statistically sound</li>
 <li>GPU arithmetic is often optimized for 32-bit floating point rather than 64-bit floating point</li>
 <li>Reduced precision may lose significant digits but can increase throughput substantially</li>
-<li>GPUs help most when there are <span class="alert">many similar operations</span>; launch and data-transfer costs can dominate small problems</li>
+<li>GPUs help most when there are <span class="alert">many similar operations</span><br>Launch and data-transfer costs can dominate small problems</li>
 </ul>
 <div class="key-point">
-<p>Parallelism changes computational cost, but it does not repair biased estimators or poor sampling designs</p>
+<p>Parallelism changes computational cost</p>
+<p>It does not repair biased estimators or poor sampling designs</p>
 </div>
 </section>
 <section id="gradient-descent" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
@@ -733,8 +734,8 @@ In this deck
 <ul>
 <li><span class="math inline">\(\eta_k\)</span> is the step size or learning rate</li>
 <li>The loss often decreases toward a local minimum</li>
-<li>Curvature-aware methods can use second derivatives but make each step more expensive</li>
-<li>Step sizes that are too large may overshoot; step sizes that are too small converge slowly</li>
+<li>Curvature-aware methods can use second derivatives<br>Each step becomes more expensive</li>
+<li>Step sizes that are too large may overshoot<br>Step sizes that are too small converge slowly</li>
 </ul>
 <p><span class="alert">Move downhill using all available data</span></p>
 </section>
@@ -762,7 +763,7 @@ In this deck
 <li>mini-batch gradients</li>
 <li>mini-batches with decay</li>
 </ul>
-<p>The stochastic gradient is <span class="alert">cheap but noisy</span>; averaging a mini-batch reduces its variance</p>
+<p>The stochastic gradient is <span class="alert">cheap but noisy</span><br>Averaging a mini-batch reduces its variance</p>
 </section>
 <section id="gradient-and-stochastic-gradient-paths" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
 <h2>Gradient and stochastic-gradient paths</h2>
@@ -771,8 +772,8 @@ In this deck
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Both methods minimize the same quadratic loss; stochastic gradients use one randomly selected component at each step</p>
-<div id="22dcc320" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
+<p>Both methods minimize the same quadratic loss<br>Stochastic gradients use one randomly selected component at each step</p>
+<div id="6ecd9538" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
