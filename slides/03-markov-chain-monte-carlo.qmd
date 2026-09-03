@@ -67,9 +67,9 @@ subtitle: |
 ## When direct sampling is difficult {.tree-marker-slide tree-marker="random-generation"}
 
 - Quantile, affine, and exact transport maps produce independent, equally
-  weighted target samples—but require a usable global map
-- Acceptance–rejection also produces independent target samples—but requires a
-  global proposal envelope and may reject many proposals
+  weighted target samples<br>They require a usable global map
+- Acceptance–rejection also produces independent target samples<br>It requires
+  a global proposal envelope and may reject many proposals
 - [Markov chain Monte Carlo (MCMC)]{.alert} moves through the sample space using only an unnormalized target density
 
 ::: {.key-point}
@@ -156,7 +156,8 @@ Given $X_0$, repeat for $i=0,\ldots,n-1$:
    {\varrho_{\mathrm{tar}}(X_i)\varrho_{\mathrm{prop}}(Z\mid X_i)}\right\}
    $$
 
-3. Set $X_{i+1}=Z$ if $U\le\alpha(X_i,Z)$; otherwise set $X_{i+1}=X_i$
+3. Set $X_{i+1}=Z$ if $U\le\alpha(X_i,Z)$<br>Otherwise set
+   $X_{i+1}=X_i$
 
 [Every iteration accepts either the proposal or the current state]{.alert}
 

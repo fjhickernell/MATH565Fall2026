@@ -59,10 +59,13 @@ Modern CPUs and GPUs can evaluate many operations concurrently
 - Parallel random-number streams must remain nonoverlapping and statistically sound
 - GPU arithmetic is often optimized for 32-bit floating point rather than 64-bit floating point
 - Reduced precision may lose significant digits but can increase throughput substantially
-- GPUs help most when there are [many similar operations]{.alert}; launch and data-transfer costs can dominate small problems
+- GPUs help most when there are [many similar operations]{.alert}<br>Launch and
+  data-transfer costs can dominate small problems
 
 ::: {.key-point}
-Parallelism changes computational cost, but it does not repair biased estimators or poor sampling designs
+Parallelism changes computational cost
+
+It does not repair biased estimators or poor sampling designs
 :::
 
 ## Gradient descent {.tree-marker-slide tree-marker="estimation"}
@@ -81,8 +84,10 @@ $$
 
 - $\eta_k$ is the step size or learning rate
 - The loss often decreases toward a local minimum
-- Curvature-aware methods can use second derivatives but make each step more expensive
-- Step sizes that are too large may overshoot; step sizes that are too small converge slowly
+- Curvature-aware methods can use second derivatives<br>Each step becomes more
+  expensive
+- Step sizes that are too large may overshoot<br>Step sizes that are too small
+  converge slowly
 
 [Move downhill using all available data]{.alert}
 
@@ -110,11 +115,13 @@ Common variants include
 - mini-batch gradients
 - mini-batches with decay
 
-The stochastic gradient is [cheap but noisy]{.alert}; averaging a mini-batch reduces its variance
+The stochastic gradient is [cheap but noisy]{.alert}<br>Averaging a mini-batch
+reduces its variance
 
 ## Gradient and stochastic-gradient paths {.tree-marker-slide tree-marker="estimation"}
 
-Both methods minimize the same quadratic loss; stochastic gradients use one randomly selected component at each step
+Both methods minimize the same quadratic loss<br>Stochastic gradients use one
+randomly selected component at each step
 
 ```{python}
 #| echo: false

@@ -326,8 +326,8 @@ Complete and submit this assignment individually, not as a group.
 [Complete by September 2]{.alert}: [Assignment 1 — {{< meta texts.owen.short >}} Exercises 1.2 and 2.1](../assignments/assignment_1.html)
 :::
 
-You may work individually or with one partner. Join an Assignment 1 group in
-Canvas; only one person per group submits the assignment.
+You may work individually or with one partner<br>Join an Assignment 1 group in
+Canvas<br>Only one person per group submits the assignment
 
 ## What is where?
 
@@ -669,7 +669,7 @@ $$
 
 ## Sampling schemes on $[0,1]^6$ {#sampling-schemes .tree-marker-slide tree-marker="sampling"}
 
-Each design has $n=64$ points; compare how its $x_1$–$x_2$ projection fills
+Each design has $n=64$ points<br>Compare how its $x_1$–$x_2$ projection fills
 the unit square
 
 ```{python}
@@ -739,7 +739,10 @@ plt.show()
 
 ## Sampling {.tree-marker-slide tree-marker="stat-estim"}
 
-Normally, we want something more than $\vX_0, \vX_1, \ldots \sim \Unif[0,1]^d$; let
+Normally, we want something more than
+$\vX_0, \vX_1, \ldots \sim \Unif[0,1]^d$
+
+Let
 
 - $Y$ be a random variable, often $Y=f(\vX)$
 
@@ -798,7 +801,8 @@ $$
 
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>
-<span>Find the value of $\alpha$ that minimizes this MSE. Is the minimizing estimator unbiased?</span>
+<span>Find the value of $\alpha$ that minimizes this MSE.<br>Is the minimizing
+estimator unbiased?</span>
 :::
 
 

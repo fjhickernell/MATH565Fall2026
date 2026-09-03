@@ -82,8 +82,9 @@ Their mean squared errors are their variances:
 \end{align*}
 
 ::: {.key-point}
-Deck 01 showed that accepting some bias can reduce MSE. Here both estimators
-are unbiased, so an equivalent expectation is better when its
+Deck 01 showed that accepting some bias can reduce MSE
+
+Here both estimators are unbiased, so an equivalent expectation is better when its
 [integrand has smaller variance]{.alert}
 :::
 
@@ -179,8 +180,9 @@ f\bigl(T(\vZ)\bigr)
   \varrho_{\mathrm{prop}}(\vz)$
 
 ::: {.key-point}
-Transport absorbs the density correction into the map; importance sampling
-carries the correction as a weight
+Transport absorbs the density correction into the map
+
+Importance sampling carries the correction as a weight
 :::
 
 ## Importance sampling {.tree-marker-slide tree-marker="estimation"}
@@ -768,9 +770,9 @@ An efficient method needs both [fast error decay]{.alert} and a [reliable stoppi
 
 - Equivalent expectations can have dramatically different computational variance
 - Exact transport chooses a map that makes the target-to-proposal correction
-  constant; importance sampling retains the correction as unequal weights
-- Importance proposals may be tailored to a particular integrand, while
-  transported target samples can be reused for many integrands
+  constant<br>Importance sampling retains the correction as unequal weights
+- Importance proposals may be tailored to a particular integrand<br>Transported
+  target samples can be reused for many integrands
 - Control variates and conditioning remove variability using known structure
 - Antithetic sampling and Latin hypercubes introduce useful dependence deliberately
 - Low discrepancy sequences replace random clustering with balanced space filling
