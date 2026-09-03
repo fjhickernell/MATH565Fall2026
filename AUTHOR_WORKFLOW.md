@@ -161,11 +161,17 @@ Use the following default data flow in new or substantially revised course
 notebooks, slides, and related explanations:
 
 \[
-\boldsymbol U \sim \mathcal U([0,1]^d), \qquad
+\boldsymbol U \sim \operatorname{Unif}([0,1]^d), \qquad
 \boldsymbol X = T(\boldsymbol U), \qquad
 Y = f(\boldsymbol X).
 \]
 
+- Write the uniform and normal distribution names as `\operatorname{Unif}`
+  and `\operatorname{Norm}` in notebooks, matching the slides' `\Unif` and
+  `\Norm` macros. Do not use calligraphic U or N for these distributions.
+- Use \(n\) for sample size consistently in explanations, code, and plot
+  labels. Give distribution parameters such as a binomial trial count
+  distinct descriptive names when needed to avoid a collision.
 - Use the vector `\vU` in course source for the underlying uniform random
   input, whether its points are IID or low discrepancy. In a one-dimensional
   example, a scalar \(U\) is acceptable when the dimension matters

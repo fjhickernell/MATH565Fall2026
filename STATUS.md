@@ -87,12 +87,18 @@ appropriate phase rather than appended indiscriminately.
       - [x] Decide the Deck 02 notebook split: a compact Gaussian-mixture
         addition to `GeneratingSamples.ipynb` and one combined
         `TransportMapsAndAcceptanceRejection.ipynb` companion.
-      - [ ] Add and validate the compact Gaussian-mixture section in
+      - [x] Add and validate the compact Gaussian-mixture section in
         `GeneratingSamples.ipynb`.
-      - [ ] Create and validate
+      - [x] Draft and locally validate
         `TransportMapsAndAcceptanceRejection.ipynb` from the Deck 02 transport
         sequence and a narrowed migration of the inherited
         acceptance--rejection notebook.
+      - [x] Complete instructor review of the combined transport/acceptance--rejection
+        notebook and add its Colab badge and Deck 02 links.
+      - [ ] Validate the combined notebook in clean Colab and add its
+        course notebook-page link.
+      - [x] Confirm successful Colab execution of `AreWeThereYet.ipynb` and
+        `GeneratingSamples.ipynb` (reported by the instructor).
     - [ ] Add notebook links only after each target exists and passes
       validation.
       - [x] Link the validated `AreWeThereYet.ipynb` from the Applications

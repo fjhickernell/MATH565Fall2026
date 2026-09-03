@@ -966,6 +966,8 @@ coordinates, where many low discrepancy constructions are strongest
 - [Transport maps](#transport-maps)
 - [Acceptance–rejection sampling](#acceptancerejection-sampling)
 
+[Transport maps and acceptance–rejection notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb)
+
 ## Transport maps {.tree-marker-slide tree-marker="random-generation"}
 
 The quantile transform is a [one-dimensional transport]{.alert}
@@ -1183,7 +1185,7 @@ $$
 
 ### The same target by acceptance–rejection
 
-Uniform proposal and triangular target
+Uniform proposal and triangular target · [Notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb)
 
 $$
 \frac{\varrho_{\mathrm{tar}}(z)}

@@ -2,23 +2,21 @@
 
 ## Current task
 
-Resume the Deck 02 notebook work after the machine move without reopening the
-notebook-organization decision. Add a compact Gaussian-mixture section to
-`notebooks/sampling/GeneratingSamples.ipynb`, then create the focused combined
-`notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb`. First test
-`notebooks/applications/AreWeThereYet.ipynb` and the current
-`GeneratingSamples.ipynb` in clean Google Colab runtimes using the course's
-recorded `classlib` and `qmcpy` commits. Do not draft either notebook until the
-working tree and the handoff below have been reviewed.
+Validate the instructor-approved
+`notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb` in a clean
+Google Colab runtime using its badge after publication.
+The instructor reports that `AreWeThereYet.ipynb` and `GeneratingSamples.ipynb`
+both ran successfully in Colab. The Gaussian-mixture addition, IID/Sobol'
+comparison, fitted error trends, and sample-size notation harmonization are
+implemented. Keep the agreed combined notebook organization.
 
 ## Next MATH 565 work
 
-1. Validate `notebooks/applications/AreWeThereYet.ipynb` and the current
-   `notebooks/sampling/GeneratingSamples.ipynb` in clean Google Colab runtimes.
-2. Add the compact Gaussian-mixture section to `GeneratingSamples.ipynb`, then
-   create and validate the combined
-   `sampling/TransportMapsAndAcceptanceRejection.ipynb` according to the
-   handoff below and `notebooks/NOTEBOOK_INVENTORY.md`.
+1. Review the Gaussian-mixture section and IID/Sobol' comparison in
+   `GeneratingSamples.ipynb` with the instructor.
+2. Test the approved `sampling/TransportMapsAndAcceptanceRejection.ipynb`
+   in clean Colab. Deck 02 already links it; add the course notebook-page link
+   after Colab validation, following `notebooks/NOTEBOOK_INVENTORY.md`.
 3. Review the revised advanced-direct-sampling sequence: transport maps,
    acceptance--rejection, the reusable \(\operatorname{Beta}(2,1)\) scalar
    example, and the proposed companion-notebook treatment. Confirm that the
@@ -43,9 +41,8 @@ Deck 02. Deck 03 follows that completed unit.
 
 ## Immediate machine handoff target
 
-Validate the two currently published notebooks in clean Colab, add and validate
-the compact Gaussian-mixture section in `GeneratingSamples.ipynb`, and create
-and validate the combined transport-map and acceptance--rejection notebook.
+Complete the GeneratingSamples instructor review and validate the approved
+combined transport-map and acceptance--rejection notebook in Colab.
 Do not expand this immediate handoff to the still-separate
 `FinancialOptionPayoffs.ipynb` migration.
 
@@ -68,7 +65,7 @@ The notebook organization is decided:
   the previously proposed `MixturesAndTransportMaps.ipynb` or a standalone
   `AcceptanceRejection.ipynb`.
 - Use the recurring $\operatorname{Beta}(2,1)$ target and
-  $\operatorname{Uniform}(0,1)$ proposal to compare the exact transport
+  $\operatorname{Unif}(0,1)$ proposal to compare the exact transport
   $T(z)=\sqrt z$ with acceptance--rejection using $M=2$ and $U\le Z$.
   Continue with the Deck 02 triangular flow, then adapt one bounded nonlinear
   target, its proposal, and its diagnostics from the read-only Fall 2025
@@ -132,7 +129,8 @@ decks after adding links.
   loader from the 332 checkpoint, retains the shared repairs, guides,
   heading-hierarchy convention, and RevealJS `\mLambda` and `\mV` macros, and
   records the standalone-`amsmath`, punch-point, terminal-period, and
-  function-delimiter guidance. Clean live-Colab validation remains pending.
+  function-delimiter guidance. The instructor reports successful Colab
+  execution of both current notebooks.
 - Assignment 1 is published in Canvas for 20 points, due September 2 at 11:59
   PM. It uses a 20-group self-sign-up set with at most two students per group.
   Its Owen Exercises 1.2 and 2.1, due date, and links appear on the Assignments
@@ -170,7 +168,7 @@ decks after adding links.
   sit under low discrepancy; transport and acceptance--rejection are the two
   children of More Advanced Direct Sampling. The transport sequence now uses
   a \(\operatorname{Beta}(2,1)\) target with a
-  \(\operatorname{Uniform}(0,1)\) proposal before the triangular flow.
+  \(\operatorname{Unif}(0,1)\) proposal before the triangular flow.
   Acceptance--rejection reuses the same pair by keeping \(Z\) with probability
   \(Z\). Its general derivation follows the 2025 acceptance-indicator \(W\)
   and Bayes' theorem argument and explicitly allows an unnormalized target.
@@ -205,8 +203,25 @@ decks after adding links.
   purpose. Deck assignments identify previews, main developments,
   continuations, and retrospective calls rather than exclusive ownership;
   topics and notebooks may span decks.
-- This handoff records the agreed notebook design only. The Gaussian-mixture
-  addition and the combined notebook have not yet been implemented.
+- The compact Gaussian-mixture section has been added immediately after the
+  zero-inflated exponential in `GeneratingSamples.ipynb`, with a component
+  choice, conditional normal transform, and sample histogram against the
+  analytic density. Its low discrepancy section now compares IID and
+  randomized Sobol' sampling using CDF errors and 32 independent repetitions,
+  with fitted power-law trends for the median maximum CDF errors.
+  Instructor review remains pending; the instructor reports successful Colab
+  execution of the notebook.
+- `TransportMapsAndAcceptanceRejection.ipynb` is now drafted with transport
+  first: the Beta(2,1) map, the unbounded triangular flow, the Bayes
+  acceptance-indicator derivation, and the same Beta target by rejection.
+  The bounded 2025 banana example uses `cl.sampling.accept_reject` in general
+  mode with a proved uniform envelope; quadrature supplies marginal-density
+  and acceptance-probability benchmarks. Local clean-kernel validation is
+  complete, and the instructor has approved the draft. The Colab badge now
+  targets its Fall 2026 repository path.
+  Deck 02 links it from More Advanced Direct Sampling and the scalar
+  acceptance--rejection comparison. Live-Colab validation and the course-page
+  link remain pending.
 - `slides/03-markov-chain-monte-carlo.qmd` is a full first-pass conversion of
   the Fall 2025 Keynote deck. It preserves the Markov-chain examples,
   Metropolis–Hastings practice, discrepancy development, MLE and Bayesian

@@ -129,6 +129,13 @@ absorb transport maps, acceptance--rejection, or MCMC.
 
 ### `sampling/TransportMapsAndAcceptanceRejection.ipynb` — Deck 02, with Decks 03–04 returns
 
+**Draft implemented:** Local clean-kernel execution and plots are validated.
+The draft includes the inverse-map and density checks, a Beta target
+comparison, and quadrature-based marginals and acceptance diagnostics for
+the bounded banana. The instructor has approved the notebook; its Colab badge
+and Deck 02 links are added. Live-Colab validation and the notebook-page link
+remain pending.
+
 Create one focused notebook answering a common question: how can easy proposal
 draws become unweighted target samples by moving every draw or by accepting
 selected draws? Its preferred sequence is:
@@ -275,7 +282,11 @@ into either performance notebook.
 
 ### `AcceptanceRejection.ipynb`
 
-- **Status:** Not migrated.
+- **Status:** The bounded banana target and diagnostics have been adapted into
+  the combined transport/acceptance--rejection draft. The new notebook runs
+  locally with the `qmcpy` kernel and is instructor-approved. Its Colab badge
+  and Deck 02 links are added; live-Colab validation remains pending. The
+  inherited sampler and half-normal example were not copied.
 - **Source:** `MATH565Fall2025/notebooks/AcceptanceRejection.ipynb`
 - **Proposed target:**
   `MATH565Fall2026/notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb`
@@ -301,7 +312,7 @@ into either performance notebook.
 - **Status:** Migration and instructor review complete; initialization,
   mathematical content, plots, and clean execution validated in the
   documented course environment. Linked from the course notebook page and
-  Introduction slides.
+  Introduction slides. The instructor reports successful Colab execution.
 - **Source:** `MATH565Fall2025/notebooks/AreWeThereYet.ipynb`
 - **Proposed target:**
   `MATH565Fall2026/notebooks/applications/AreWeThereYet.ipynb`
@@ -445,7 +456,12 @@ into either performance notebook.
 - **Status:** Migration complete. Modernized initialization and current QMCPy
   APIs, clean execution, and saved outputs have been validated. The notebook
   is linked from the course notebook page and Deck 02. Instructor review is
-  still pending.
+  still pending. The compact Deck 02 Gaussian-mixture section is now included
+  after the zero-inflated exponential. The low discrepancy section compares
+  IID and randomized Sobol' mixture samples using maximum CDF error across
+  32 independent repetitions. The full notebook executes cleanly
+  with the local `qmcpy` kernel. The instructor reports successful Colab
+  execution.
 - **Source:** `MATH565Fall2025/notebooks/GeneratingSamples.ipynb`
 - **Proposed target:**
   `MATH565Fall2026/notebooks/sampling/GeneratingSamples.ipynb`
@@ -745,15 +761,13 @@ execution time, warnings, and hidden state.
 Proceed by deck so each notebook is shaped by the reviewed lecture narrative,
 not by the accidental boundaries of the inherited files.
 
-1. Validate `applications/AreWeThereYet.ipynb` and the current
-   `sampling/GeneratingSamples.ipynb` in clean Google Colab runtimes using the
-   course's recorded dependency commits.
-2. Add and validate only the compact Gaussian-mixture section described above
-   in `sampling/GeneratingSamples.ipynb`.
-3. Create and validate
-   `sampling/TransportMapsAndAcceptanceRejection.ipynb` by combining the new
-   Deck 02 transport development with a narrowed migration of the inherited
-   acceptance--rejection notebook.
+1. Colab execution of `applications/AreWeThereYet.ipynb` and
+   `sampling/GeneratingSamples.ipynb` is confirmed by the instructor.
+2. Complete instructor review of the implemented Gaussian-mixture section
+   and IID/Sobol' comparison in `sampling/GeneratingSamples.ipynb`.
+3. Validate the instructor-approved
+   `sampling/TransportMapsAndAcceptanceRejection.ipynb` in clean Colab; its
+   local execution and Deck 02 links are already checked.
 4. Create and validate `applications/FinancialOptionPayoffs.ipynb`, drawing
    only the basic path and payoff material needed from the inherited Asian
    option notebook.
