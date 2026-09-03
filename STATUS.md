@@ -95,6 +95,8 @@ appropriate phase rather than appended indiscriminately.
         acceptance--rejection notebook.
       - [x] Complete instructor review of the combined transport/acceptance--rejection
         notebook and add its Colab badge and Deck 02 links.
+      - [x] Use pinned QMCPy-native acceptance--rejection for both targets;
+        validate all ten code cells locally and inspect all six saved plots.
       - [ ] Validate the combined notebook in clean Colab and add its
         course notebook-page link.
       - [x] Confirm successful Colab execution of `AreWeThereYet.ipynb` and
@@ -201,6 +203,11 @@ appropriate phase rather than appended indiscriminately.
 - [x] Add placeholder Quarto sources for decks awaiting conversion.
 - [x] Connect previous/next deck navigation across all five decks.
 - [x] Establish the Course Map and per-section outline conventions.
+- [x] Standardize all Course Maps at 36% course decks, 4% gutter, and 60%
+  deck contents; add Teaser Trailer to Introduction and the sampling pipeline
+  to Generating Samples beneath In this deck.
+- [x] Add the vector uniform-input, conditional-proposal, and accept-or-stay
+  theme to the MCMC Course Map, identifying the target law at stationarity.
 - [x] Load course-wide slide styling consistently across every deck.
 - [x] Validate shared slide styling, metadata, navigation, and assets from
   `classlib`.

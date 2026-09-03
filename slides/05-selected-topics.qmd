@@ -21,7 +21,7 @@ subtitle: <span class="deck-title">{{< meta deck_title >}}</span>
 # Course Map
 
 ::: {.columns}
-::: {.column width="45%"}
+::: {.column width="36%"}
 <h3>Course decks</h3>
 
 - [{{< meta decks.d01.title >}}]({{< meta decks.d01.file >}})
@@ -31,7 +31,10 @@ subtitle: <span class="deck-title">{{< meta deck_title >}}</span>
 - [{{< meta decks.d05.title >}}]({{< meta decks.d05.file >}}){.alert}
 :::
 
-::: {.column width="55%"}
+::: {.column width="4%"}
+:::
+
+::: {.column width="60%"}
 <h3>In this deck</h3>
 
 - [Parallel and Stochastic Computation](#parallel-and-stochastic-computation)

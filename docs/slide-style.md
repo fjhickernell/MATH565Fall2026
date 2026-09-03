@@ -20,6 +20,11 @@ Each MATH 565 deck follows this opening sequence:
      order, repeating its capitalization and punctuation exactly.
 3. The instructional sections follow the shared section-outline convention.
 
+Follow the [shared Course Map theme convention](../classlib/docs/slide-style.md#course-map-themes).
+MATH 565 uses 36% for Course decks, a 4% empty gutter, and 60% for In this
+deck throughout the course. Center phrase-only themes at `1.5em`;
+Introduction uses a 🎬 clapperboard beside `[Teaser Trailer]{.alert}`.
+
 Use raw `<h3>` elements for the Course Map column labels so they do not change
 RevealJS hierarchy. Register every deck in `slides/_metadata.yml` with its
 file, full title, and short footer title. Each deck supplies `deck-nav-meta`
@@ -43,6 +48,11 @@ Deck 01 Course Map synchronized.
   $1,\ldots,L$ one-based.
 - Keep notation consistent with the shared macro registry and course
   notebooks.
+- Keep the [uniform-input, target-sample, and output roles](../AUTHOR_WORKFLOW.md#course-wide-simulation-notation)
+  visible when explaining a sampling method. Use `[target]{.alert}` at its
+  first definition and key conclusions, with selective reinforcement in
+  examples. Keep proposal and target roles distinct; do not highlight every
+  occurrence mechanically.
 
 ## Course-wide styling
 

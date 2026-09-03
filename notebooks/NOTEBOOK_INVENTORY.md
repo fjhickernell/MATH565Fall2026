@@ -129,7 +129,8 @@ absorb transport maps, acceptance--rejection, or MCMC.
 
 ### `sampling/TransportMapsAndAcceptanceRejection.ipynb` — Deck 02, with Decks 03–04 returns
 
-**Draft implemented:** Local clean-kernel execution and plots are validated.
+**Draft implemented:** Both rejection examples use the pinned
+`qmcpy.AcceptanceRejection`; local clean-kernel execution and plots are validated.
 The draft includes the inverse-map and density checks, a Beta target
 comparison, and quadrature-based marginals and acceptance diagnostics for
 the bounded banana. The instructor has approved the notebook; its Colab badge
@@ -154,10 +155,10 @@ selected draws? Its preferred sequence is:
 5. return to the scalar example with \(M=2\), acceptance rule \(U\le Z\),
    acceptance probability \(1/2\), and a direct comparison with transport; and
 6. adapt one bounded nonlinear target, its proposal, and its diagnostics from
-   the inherited acceptance--rejection notebook; use the existing
-   `cl.sampling.accept_reject` implementation rather than copying the
-   inherited sampler, then motivate MCMC when no useful map or global envelope
-   is available.
+   the inherited acceptance--rejection notebook; use
+   `qmcpy.AcceptanceRejection` with an IID uniform driver and the correct
+   density integral, then motivate MCMC when no useful map or global envelope
+   is available. Do not copy the inherited sampler.
 
 For the possibly unnormalized target, define
 \(c^{-1}=\int\varrho_{\mathrm{tar}}(x)\,dx\), require
@@ -166,7 +167,10 @@ M\varrho_{\mathrm{prop}}(x)\), and accept when
 \(U\le\varrho_{\mathrm{tar}}(Z)/
 [M\varrho_{\mathrm{prop}}(Z)]\). Then
 \(\Prob(W=1)=1/(Mc)\) and the accepted density is
-\(c\varrho_{\mathrm{tar}}\); the sampler does not need to know \(c\).
+\(c\varrho_{\mathrm{tar}}\). The mathematical acceptance decision does not
+need \(c\), although the current QMCPy API requires the density integral for
+batch sizing and its theoretical acceptance rate. Keep this distinction
+explicit; see `notes/TECHNICAL-NOTES.md` for implementation details.
 
 Keep the shared scalar example, one multivariate transport, and one nonlinear
 acceptance--rejection example. The triangular-flow target on
@@ -175,9 +179,9 @@ name and plot them so students cannot confuse them. Do not teach a catalog of
 flow architectures or repeat the full MCMC algorithm. The shared scalar
 example already provides the transparent one-dimensional acceptance rule, so
 omit the inherited half-normal/exponential example unless instructor review
-finds a distinct pedagogical role for it. If the reusable classlib sampler has
-a genuine API defect, fix and validate `classlib` through the documented
-submodule workflow rather than adding a course-local replacement.
+finds a distinct pedagogical role for it. Report a genuine QMCPy API defect
+for upstream repair rather than adding a course-local replacement. Keep the
+more general classlib sampler unchanged by this notebook's API choice.
 
 Deck 03 should call back to this notebook rather than repeat the inherited
 acceptance--rejection development. Deck 04 may return to the scalar example to
@@ -292,7 +296,7 @@ into either performance notebook.
   `MATH565Fall2026/notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb`
 - **Description:** Supplies the bounded banana-shaped unnormalized target,
   proposal, and diagnostics for the acceptance--rejection half of the combined
-  notebook. Use `cl.sampling.accept_reject` rather than copying its inherited
+  notebook. Use `qmcpy.AcceptanceRejection` rather than copying its inherited
   sampler. The inherited half-normal/exponential example is a reference, not a
   required second scalar development.
 - **Dependencies:** NumPy, SciPy, Matplotlib, QMCPy, IPython,

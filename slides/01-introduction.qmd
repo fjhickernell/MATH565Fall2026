@@ -136,7 +136,7 @@ assert all(
 # Course Map
 
 ::: {.columns}
-::: {.column width="45%"}
+::: {.column width="36%"}
 <h3>Course decks</h3>
 
 - [{{< meta decks.d01.title >}}]({{< meta decks.d01.file >}}) — [current]{.alert}
@@ -146,8 +146,15 @@ assert all(
 - [{{< meta decks.d05.title >}}]({{< meta decks.d05.file >}})
 :::
 
-::: {.column width="55%"}
+::: {.column width="4%"}
+:::
+
+::: {.column width="60%"}
 <h3>In this deck</h3>
+
+::: {style="text-align: center; font-size: 1.5em;"}
+<span role="img" aria-label="Clapperboard">🎬</span> [Teaser Trailer]{.alert}
+:::
 
 - [What Is Monte Carlo?](#what-is-monte-carlo)
 - [Course Logistics](#course-logistics)

@@ -4,9 +4,9 @@
 
 Validate the instructor-approved
 `notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb` in a clean
-Google Colab runtime using its badge after first replacing the current
-`cl.sampling.accept_reject` calls with the pinned QMCPy-native implementation
-as described below.
+Google Colab runtime using its badge. Both acceptance--rejection examples now
+use the pinned QMCPy-native implementation and pass local clean-kernel
+validation; clean-Colab validation is the remaining execution check.
 The instructor reports that `AreWeThereYet.ipynb` and `GeneratingSamples.ipynb`
 both ran successfully in Colab. The Gaussian-mixture addition, IID/Sobol'
 comparison, fitted error trends, and sample-size notation harmonization are
@@ -16,10 +16,9 @@ implemented. Keep the agreed combined notebook organization.
 
 1. Review the Gaussian-mixture section and IID/Sobol' comparison in
    `GeneratingSamples.ipynb` with the instructor.
-2. Replace `cl.sampling.accept_reject` in the approved
-   `sampling/TransportMapsAndAcceptanceRejection.ipynb` with the pinned
-   `qmcpy.AcceptanceRejection`, then test the revised notebook locally and in
-   clean Colab. Deck 02 already links it; add the course notebook-page link
+2. Validate the revised
+   `sampling/TransportMapsAndAcceptanceRejection.ipynb` in clean Colab.
+   Deck 02 already links it; add the course notebook-page link
    after Colab validation, following `notebooks/NOTEBOOK_INVENTORY.md`.
 3. Review the revised advanced-direct-sampling sequence: transport maps,
    acceptance--rejection, the reusable \(\operatorname{Beta}(2,1)\) scalar
@@ -45,10 +44,10 @@ Deck 02. Deck 03 follows that completed unit.
 
 ## Immediate machine handoff target
 
-Complete the GeneratingSamples instructor review. Before the final clean-Colab
+Complete the GeneratingSamples instructor review and the clean-Colab
 validation of the approved combined transport-map and acceptance--rejection
-notebook, resolve and implement the pending QMCPy-native sampler substitution
-described below, then rerun the notebook locally and in Colab.
+notebook. The QMCPy-native sampler substitution and local validation are
+complete.
 Do not expand this immediate handoff to the still-separate
 `FinancialOptionPayoffs.ipynb` migration.
 
@@ -56,59 +55,19 @@ The broader Deck 02 milestone also includes the financial-payoff notebook, an
 instructor review of every retained companion, and the deck's final polish pass
 before Deck 03 review begins.
 
-## Pending QMCPy-native acceptance--rejection substitution
+## QMCPy acceptance--rejection state
 
-The instructor asked whether
-`notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb` should replace
-`cl.sampling.accept_reject` with QMCPy's native implementation. A read-only
-review on September 3 established the following:
+Both the Beta$(2,1)$ and bounded banana examples now use
+`qmcpy.AcceptanceRejection` from the existing pinned QMCPy commit `d8fec003`,
+with IID uniform drivers, ordinary densities, and the required density
+integrals. All ten code cells pass local clean-kernel execution with the
+recorded dependencies; all six saved plots have been inspected. Fixed-proposal
+experiments retain the acceptance diagnostics without confusing batching
+overhead with intrinsic acceptance probability.
 
-- The course's pinned QMCPy commit `d8fec003` already exports
-  `AcceptanceRejection` and `AcceptanceRejectionReal`; no submodule update is
-  needed. The feature was included in the QMCPy 2.3 release.
-- Both current notebook targets fit `qmcpy.AcceptanceRejection`: the
-  Beta$(2,1)$ target is on $[0,1]$, and the bounded banana target is on
-  $[0,1]^2$, both with uniform proposals.
-- Prefer `IIDStdUniform` as the driver so the notebook's present IID
-  acceptance--rejection narrative remains correct. Its dimension must be
-  target dimension plus one: 2 for Beta$(2,1)$ and 3 for the banana. A
-  `DigitalNetB2` driver would instead introduce deterministic/QMC
-  acceptance--rejection and should be a separately motivated extension, not a
-  silent substitution.
-- For Beta$(2,1)$, pass the ordinary density `2 * x[:, 0]`,
-  `upper_bound=2`, and `density_integral=1`.
-- For the banana, pass `np.exp(log_banana(x))`, `upper_bound=1`, and the
-  quadrature-computed `banana_mass`. Move the mass calculation before sampler
-  construction. Explain that the mathematical acceptance decision does not
-  require the target normalizing constant, although the present QMCPy API
-  requires its integral to size power-of-two driver batches and report the
-  theoretical acceptance rate. Do not pass a dummy integral.
-- QMCPy accepts ordinary densities rather than log densities and does not
-  return the `proposed`, `batches`, or elapsed-time diagnostics supplied by the
-  classlib helper. Retain the notebook's fixed-proposal experiments for
-  empirical acceptance diagnostics; do not expose QMCPy's private
-  `_driver_offset` merely to recover a proposal count.
-- The QMCPy implementation deliberately works in power-of-two driver batches
-  and may overgenerate. In a seed-7 smoke test it consumed 16,384 driver points
-  to return 4,096 IID Beta samples and 65,536 driver points to return 5,000
-  banana samples. This is an implementation/batching cost, not the intrinsic
-  acceptance probability.
-- Read-only smoke tests succeeded: the 4,096 Beta samples had mean `0.66513`
-  versus $2/3$, and the 5,000 banana samples lay in $[0,1]^2$ with quadrature
-  mass `0.12571`.
-
-Recommendation: use `qmcpy.AcceptanceRejection` for both examples because it
-is the subject-matter package and the current targets match its unit-cube
-interface. Retain `classlib` for `nbviz`; replacing this sampler does not remove
-the notebook's broader classlib dependency. The existing classlib sampler is
-more general because it supports arbitrary proposal samplers, log densities,
-and richer diagnostics, so do not remove that shared utility solely as part of
-the notebook substitution.
-
-This substitution has not yet been made. After making it, reconcile the older
-`cl.sampling.accept_reject` instructions in this file and
-`notebooks/NOTEBOOK_INVENTORY.md`, restart and run the notebook, inspect its
-saved output and wording, and only then perform the clean-Colab validation.
+Clean-Colab validation remains pending. After it succeeds, add the course
+notebook-page link. API choices and maintenance details are recorded in
+`notes/TECHNICAL-NOTES.md`; the more general classlib sampler remains unchanged.
 
 ## Machine handoff — Deck 02 notebooks
 
@@ -129,10 +88,9 @@ The notebook organization is decided:
   $T(z)=\sqrt z$ with acceptance--rejection using $M=2$ and $U\le Z$.
   Continue with the Deck 02 triangular flow, then adapt one bounded nonlinear
   target, its proposal, and its diagnostics from the read-only Fall 2025
-  `AcceptanceRejection.ipynb`. The current draft runs it with
-  `cl.sampling.accept_reject`; before final validation, replace that helper
-  with `qmcpy.AcceptanceRejection` according to the pending-substitution
-  guidance above. Do not copy the inherited sampler into the course notebook.
+  `AcceptanceRejection.ipynb`. Both rejection examples now use
+  `qmcpy.AcceptanceRejection`. Do not copy the inherited sampler into the
+  course notebook.
   The scalar example makes the method transparent; omit the inherited
   half-normal/exponential example unless instructor review establishes that it
   adds something distinct.
@@ -161,7 +119,7 @@ points rather than prose sentences and omit terminal periods. Do not add
 student-facing links until a notebook exists, runs from a clean kernel, and
 has been reviewed.
 
-If the QMCPy substitution exposes a genuine reusable QMCPy defect, report it
+If the QMCPy sampler exposes a genuine reusable QMCPy defect, report it
 for upstream repair rather than hiding a workaround in course-only code. Do
 not remove or alter the more general `classlib` utility merely because this
 notebook no longer needs it.
@@ -188,11 +146,12 @@ decks after adding links.
   cleanly with the local `qmcpy` kernel, and the root site, all five decks, and
   assembled site render cleanly. The shared lazy-import fix is tested and
   published in HickernellAcademicLib commit `615b402`. The current `classlib`
-  pin advances to published commit `e886ee0`, which includes the MathJax 3
+  pin includes the published MathJax 3
   loader from the 332 checkpoint, retains the shared repairs, guides,
   heading-hierarchy convention, and RevealJS `\mLambda` and `\mV` macros, and
   records the standalone-`amsmath`, punch-point, terminal-period, and
-  function-delimiter guidance. The instructor reports successful Colab
+  function-delimiter guidance, together with the shared Course Map theme
+  guidance. The instructor reports successful Colab
   execution of both current notebooks.
 - Assignment 1 is published in Canvas for 20 points, due September 2 at 11:59
   PM. It uses a 20-group self-sign-up set with at most two students per group.
@@ -277,10 +236,12 @@ decks after adding links.
 - `TransportMapsAndAcceptanceRejection.ipynb` is now drafted with transport
   first: the Beta(2,1) map, the unbounded triangular flow, the Bayes
   acceptance-indicator derivation, and the same Beta target by rejection.
-  The bounded 2025 banana example uses `cl.sampling.accept_reject` in general
-  mode with a proved uniform envelope; quadrature supplies marginal-density
-  and acceptance-probability benchmarks. Local clean-kernel validation is
-  complete, and the instructor has approved the draft. The Colab badge now
+  Both rejection examples use `qmcpy.AcceptanceRejection` with uniform
+  proposals. The bounded 2025 banana example has a proved envelope;
+  quadrature supplies the API's density integral, marginal densities, and
+  acceptance-probability benchmarks. Local clean-kernel validation of the
+  revised notebook is complete, and the instructor has approved the draft.
+  The Colab badge now
   targets its Fall 2026 repository path.
   Deck 02 links it from More Advanced Direct Sampling and the scalar
   acceptance--rejection comparison. Live-Colab validation and the course-page

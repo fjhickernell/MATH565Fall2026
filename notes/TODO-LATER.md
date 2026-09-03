@@ -10,6 +10,8 @@ multiple decks.
 
 ## Parked review questions
 
+- Add Course Map themes to Improving Efficiency and Selected Topics during
+  their instructor-led deck reviews, following the shared theme convention.
 - Choose an overarching text or chapter reference for Deck 05; the Fall 2025
   title slide says only `Owen, Chapters ???`.
 - Decide during the Deck 03 review whether to add the Hickernell (1998) and

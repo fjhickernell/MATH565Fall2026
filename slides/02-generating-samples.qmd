@@ -24,7 +24,7 @@ subtitle: |
 # Course Map
 
 ::: {.columns}
-::: {.column width="45%"}
+::: {.column width="36%"}
 <h3>Course decks</h3>
 
 - [{{< meta decks.d01.title >}}]({{< meta decks.d01.file >}})
@@ -34,8 +34,19 @@ subtitle: |
 - [{{< meta decks.d05.title >}}]({{< meta decks.d05.file >}})
 :::
 
-::: {.column width="55%"}
+::: {.column width="4%"}
+:::
+
+::: {.column width="60%"}
 <h3>In this deck</h3>
+
+$$
+\vU_i \sim \Unif[0,1]^d
+\;\longrightarrow\;
+\vX_i \sim \varrho_{\mathrm{tar}}
+\;\longrightarrow\;
+Y_i = f(\vX_i)
+$$
 
 - [From Uniformity to a Target Distribution](#from-uniformity-to-a-target-distribution)
 - [Random Vectors and Stochastic Processes](#random-vectors-and-stochastic-processes)
@@ -78,8 +89,8 @@ subtitle: |
 :::
 
 ::: {.key-point}
-Uniform numbers are the raw material; a [transformation]{.alert} produces the
-target distribution
+[Uniform]{.alert} numbers are the raw material; a transformation produces the
+[target]{.alert} distribution
 :::
 
 ## The quantile transform {.tree-marker-slide tree-marker="random-generation"}
@@ -90,7 +101,7 @@ $$
 U_i\sim\Unif[0,1],\qquad i=0,1,\ldots
 $$
 
-The design may be IID, Latin hypercube, low discrepancy, or something else. For a target cumulative distribution function $F$, define
+The design may be IID, Latin hypercube, low discrepancy, or something else. For a [target]{.alert} cumulative distribution function $F$, define
 
 $$
 Q(u):=\inf\{x\in\reals:F(x)\ge u\}
@@ -107,7 +118,7 @@ $$
 =\Prob\{U\le F(x)\}=F(x)
 $$
 
-Thus each $X_i:=Q(U_i)\sim F$
+Thus each $X_i:=Q(U_i)$ has the [target]{.alert} CDF $F$
 
 [IID inputs yield IID targets <br>Other designs (Latin hypercube, low discrepancy, ...) retain their dependence
 structure]{.alert}
@@ -356,7 +367,7 @@ The generalized inverse handles [atoms and continuous pieces]{.alert} with one d
 
 ## Gaussian mixture random numbers {.tree-marker-slide tree-marker="random-generation"}
 
-Let the one-dimensional target be a [Gaussian mixture]{.alert}:
+Let the one-dimensional [target]{.alert} be a [Gaussian mixture]{.alert}:
 
 $$
 X\sim p\Norm(\mu_1,\sigma_1^2)+(1-p)\Norm(\mu_2,\sigma_2^2),
@@ -495,7 +506,7 @@ $$
 \vU\sim\Unif[0,1]^d
 $$
 
-where $Q_j$ is the quantile function of $X_j$
+where $Q_j$ is the quantile function for the [target]{.alert} distribution of $X_j$
 
 Store $n$ sampled vectors as an $n\times d$ array:
 
@@ -1050,7 +1061,7 @@ $$
 \varrho_{\mathrm{tar}}(x)=2x,\quad 0<x<1
 $$
 
-The target is $\operatorname{Beta}(2,1)$ with
+The [target]{.alert} is $\operatorname{Beta}(2,1)$ with
 $F_{\mathrm{tar}}(x)=x^2$, so its quantile transport is
 
 $$
@@ -1185,7 +1196,7 @@ $$
 
 ### The same target by acceptance–rejection
 
-Uniform proposal and triangular target · [Notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb)
+Uniform proposal and triangular [target]{.alert} · [Notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb)
 
 $$
 \frac{\varrho_{\mathrm{tar}}(z)}
@@ -1211,7 +1222,7 @@ $$
 
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="prob-stat-est"}
 
-- Start with uniform samples and transform them to the desired distribution
+- Start with [uniform]{.alert} samples and transform them to the [target]{.alert} distribution
 - The generalized inverse works for discrete and continuous distributions
 - Mixtures combine a discrete component choice with a conditional transform
 - Independent marginal transforms do not create dependence; correlated normal
