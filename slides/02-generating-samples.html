@@ -655,7 +655,7 @@ Fred J. Hickernell
 <section id="course-map" class="title-slide slide level1 center">
 <h1>Course Map</h1>
 <div class="columns">
-<div class="column" style="width:45%;">
+<div class="column" style="width:36%;">
 <h3>
 Course decks
 </h3>
@@ -666,10 +666,19 @@ Course decks
 <li><a href="04-improving-efficiency.html">Improving Efficiency</a></li>
 <li><a href="05-selected-topics.html">Selected Topics</a></li>
 </ul>
-</div><div class="column" style="width:55%;">
+</div><div class="column" style="width:4%;">
+
+</div><div class="column" style="width:60%;">
 <h3>
 In this deck
 </h3>
+<p><span class="math display">\[
+\vU_i \sim \Unif[0,1]^d
+\;\longrightarrow\;
+\vX_i \sim \varrho_{\mathrm{tar}}
+\;\longrightarrow\;
+Y_i = f(\vX_i)
+\]</span></p>
 <ul>
 <li><a href="#/from-uniformity-to-a-target-distribution">From Uniformity to a Target Distribution</a></li>
 <li><a href="#/random-vectors-and-stochastic-processes">Random Vectors and Stochastic Processes</a></li>
@@ -718,7 +727,7 @@ In this deck
 <p><img data-src="assets/images/random-variables-not-from-stork.png" style="width: 100%; clip-path: inset(7.9% 0 7.9% 0); margin: -7.9% 0;" alt="A stork carrying a bag labeled random variable, crossed out with a large red X"></p>
 </div></div>
 <div class="key-point">
-<p>Uniform numbers are the raw material; a <span class="alert">transformation</span> produces the target distribution</p>
+<p><span class="alert">Uniform</span> numbers are the raw material; a transformation produces the <span class="alert">target</span> distribution</p>
 </div>
 </section>
 <section id="the-quantile-transform" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
@@ -732,7 +741,7 @@ In this deck
 <p><span class="math display">\[
 U_i\sim\Unif[0,1],\qquad i=0,1,\ldots
 \]</span></p>
-<p>The design may be IID, Latin hypercube, low discrepancy, or something else. For a target cumulative distribution function <span class="math inline">\(F\)</span>, define</p>
+<p>The design may be IID, Latin hypercube, low discrepancy, or something else. For a <span class="alert">target</span> cumulative distribution function <span class="math inline">\(F\)</span>, define</p>
 <p><span class="math display">\[
 Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 \]</span></p>
@@ -743,7 +752,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 \Prob(X\le x)=\Prob\{Q(U)\le x\}
 =\Prob\{U\le F(x)\}=F(x)
 \]</span></p>
-<p>Thus each <span class="math inline">\(X_i:=Q(U_i)\sim F\)</span></p>
+<p>Thus each <span class="math inline">\(X_i:=Q(U_i)\)</span> has the <span class="alert">target</span> CDF <span class="math inline">\(F\)</span></p>
 <p><span class="alert">IID inputs yield IID targets <br>Other designs (Latin hypercube, low discrepancy, …) retain their dependence structure</span></p>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb">Try the quantile-transform examples in the companion <code>GeneratingSamples</code> notebook</a></p>
 </section>
@@ -819,7 +828,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="9ae9f9cc" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="f85f8251" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -863,7 +872,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="86cde30a" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="518e4f04" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -895,7 +904,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="79320297" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="ecc5bafe" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -923,7 +932,7 @@ Q(u)=
   <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
 </div>
 
-<p>Let the one-dimensional target be a <span class="alert">Gaussian mixture</span>:</p>
+<p>Let the one-dimensional <span class="alert">target</span> be a <span class="alert">Gaussian mixture</span>:</p>
 <p><span class="math display">\[
 X\sim p\Norm(\mu_1,\sigma_1^2)+(1-p)\Norm(\mu_2,\sigma_2^2),
 \qquad 0&lt;p&lt;1
@@ -979,7 +988,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="2fe74102" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="26d2b9ac" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1022,7 +1031,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 \qquad
 \vU\sim\Unif[0,1]^d
 \]</span></p>
-<p>where <span class="math inline">\(Q_j\)</span> is the quantile function of <span class="math inline">\(X_j\)</span></p>
+<p>where <span class="math inline">\(Q_j\)</span> is the quantile function for the <span class="alert">target</span> distribution of <span class="math inline">\(X_j\)</span></p>
 <p>Store <span class="math inline">\(n\)</span> sampled vectors as an <span class="math inline">\(n\times d\)</span> array:</p>
 <p><span class="math display">\[
 \mX=
@@ -1570,7 +1579,7 @@ The art
 \qquad
 \varrho_{\mathrm{tar}}(x)=2x,\quad 0&lt;x&lt;1
 \]</span></p>
-<p>The target is <span class="math inline">\(\operatorname{Beta}(2,1)\)</span> with <span class="math inline">\(F_{\mathrm{tar}}(x)=x^2\)</span>, so its quantile transport is</p>
+<p>The <span class="alert">target</span> is <span class="math inline">\(\operatorname{Beta}(2,1)\)</span> with <span class="math inline">\(F_{\mathrm{tar}}(x)=x^2\)</span>, so its quantile transport is</p>
 <p><span class="math display">\[
 T(z)=F_{\mathrm{tar}}^{-1}(z)=\sqrt z,
 \qquad
@@ -1686,7 +1695,7 @@ W:=
 <section class="slide level2">
 
 <h3 id="the-same-target-by-acceptancerejection">The same target by acceptance–rejection</h3>
-<p>Uniform proposal and triangular target · <a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb">Notebook</a></p>
+<p>Uniform proposal and triangular <span class="alert">target</span> · <a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb">Notebook</a></p>
 <p><span class="math display">\[
 \frac{\varrho_{\mathrm{tar}}(z)}
 {\varrho_{\mathrm{prop}}(z)}
@@ -1720,7 +1729,7 @@ U\le
 </div>
 
 <ul>
-<li>Start with uniform samples and transform them to the desired distribution</li>
+<li>Start with <span class="alert">uniform</span> samples and transform them to the <span class="alert">target</span> distribution</li>
 <li>The generalized inverse works for discrete and continuous distributions</li>
 <li>Mixtures combine a discrete component choice with a conditional transform</li>
 <li>Independent marginal transforms do not create dependence; correlated normal vectors require a matrix factorization, and PCA can concentrate variation in early coordinates for low discrepancy sampling</li>
