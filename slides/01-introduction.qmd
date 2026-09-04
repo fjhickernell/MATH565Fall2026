@@ -18,8 +18,8 @@ include-after-body:
 subtitle: |
   <span class="deck-title">{{< meta deck_title >}}</span><br>
   <span class="deck-meta">{{< meta texts.owen.short >}}, Chapters 1 and 2 <br>
-  Diagnostic Survey due 8/21<br>
-  Assignment 1 due 9/2</span>
+  Diagnostic Survey due Aug 21<br>
+  Assignment 1 due Sep 2</span>
 ---
 
 ```{python}
@@ -315,7 +315,7 @@ What [modeling assumptions]{.alert} are needed?
 ## Complete the Diagnostic Survey
 
 ::: {.key-point}
-[Complete by August 21]{.alert}: [Assignment 0 — Diagnostic Survey]({{< meta canvas.assignment_0 >}})
+[Complete by Aug 21]{.alert}: [Assignment 0 — Diagnostic Survey]({{< meta canvas.assignment_0 >}})
 :::
 
 Complete and submit this assignment individually, not as a group.
@@ -323,7 +323,7 @@ Complete and submit this assignment individually, not as a group.
 ## Complete Assignment 1
 
 ::: {.key-point}
-[Complete by September 2]{.alert}: [Assignment 1 — {{< meta texts.owen.short >}} Exercises 1.2 and 2.1](../assignments/assignment_1.html)
+[Complete by Sep 2]{.alert}: [Assignment 1 — {{< meta texts.owen.short >}} Exercises 1.2 and 2.1](../assignments/assignment_1.html)
 :::
 
 You may work individually or with one partner<br>Join an Assignment 1 group in

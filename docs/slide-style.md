@@ -93,6 +93,12 @@ MATH 565 loads `hickernell-texts.yml` and `hickernell-papers.yml` through
 `../classlib/classlib/quarto/slides/hickernell-slides.yml`. Use their metadata
 shortcodes rather than repeating citation text or publisher URLs.
 
+## Calendar dates
+
+Format calendar dates on slides as a three-letter English month abbreviation
+followed by an unpadded day, such as `Sep 15`. Do not use numeric month/day
+forms such as `9/15` or full month names such as `September 15`.
+
 ## Fall 2025 conversion policy
 
 Use the corresponding Fall 2025 Keynote deck as the initial content and
