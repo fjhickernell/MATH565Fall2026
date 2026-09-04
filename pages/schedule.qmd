@@ -26,6 +26,7 @@ holidays, and examination details are finalized.
 | | Thu Sep 3 | | |
 | 4 | Tue Sep 8 | | |
 | | Thu Sep 10 | | |
+| | Fri Sep 11 | **Assignment 2 due** | [{{< meta texts.owen.short >}} Exercises 4.5 and 4.19](../assignments/assignment_2.qmd) |
 | 5 | Tue Sep 15 | **Test 1** | [Introduction](../slides/01-introduction.html)<br>[Generating Samples](../slides/02-generating-samples.html) |
 | | Thu Sep 17 | | |
 | 6 | Tue Sep 22 | | |

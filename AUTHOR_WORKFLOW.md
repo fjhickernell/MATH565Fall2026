@@ -45,8 +45,9 @@ revised:
    logistics slide describing the assignment and group-submission
    expectations. Because `slides/` is an independent Quarto project, link from
    a deck to a root-site assignment page using its published `.html` path
-   rather than its `.qmd` source path. Remove or replace stale notices as the
-   course advances.
+   rather than its `.qmd` source path. Retain past assignment reminders on their
+   original decks as a chronological record; do not remove or replace them
+   merely because their due dates have passed.
 7. Render the root website and the independent slide project, assemble the
    complete site, and verify the assignment page, assignments table, schedule,
    Canvas links, deck notice, and internal links. Inspect the visible assignment

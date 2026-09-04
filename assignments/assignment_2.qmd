@@ -1,0 +1,26 @@
+---
+title: "Assignment 2: Owen Exercises 4.5 and 4.19"
+metadata-files:
+  - ../classlib/classlib/quarto/website/hickernell-website.yml
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    include-in-header:
+      - ../classlib/classlib/quarto/slides/hickernell-latex-macros.js
+---
+
+## Due date
+
+**Due:** Friday, September 11, 2026, at 11:59 PM Chicago Time
+
+## Assignment
+
+Complete Exercises 4.5 and 4.19 in
+[{{< meta texts.owen.short >}}]({{< meta texts.owen.url >}}).
+
+## Submission
+
+Follow the submission requirements on the [Assignments](../pages/homework.qmd)
+page. Your work should include enough explanation and supporting code for
+another reader to reproduce and understand your results.

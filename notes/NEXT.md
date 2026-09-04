@@ -2,52 +2,61 @@
 
 ## Current task
 
-Validate the instructor-approved
+Publish Assignment 2 after its prepared course-website changes are
+checkpointed and live. It consists of Owen Exercises 4.5 and 4.19 and is due
+Friday, September 11, 2026, at 11:59 PM Chicago Time. Then validate the
+instructor-approved
 `notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb` in a clean
 Google Colab runtime using its badge. Both acceptance--rejection examples now
 use the pinned QMCPy-native implementation and pass local clean-kernel
-validation; clean-Colab validation is the remaining execution check.
-The instructor reports that `AreWeThereYet.ipynb` and `GeneratingSamples.ipynb`
+validation; clean-Colab validation is the remaining execution check. The
+instructor reports that `AreWeThereYet.ipynb` and `GeneratingSamples.ipynb`
 both ran successfully in Colab. The Gaussian-mixture addition, IID/Sobol'
 comparison, fitted error trends, and sample-size notation harmonization are
 implemented. Keep the agreed combined notebook organization.
 
 ## Next MATH 565 work
 
-1. Review the Gaussian-mixture section and IID/Sobol' comparison in
+1. Checkpoint the prepared Assignment 2 sources; verify the public assignment,
+   Assignments-page and Schedule links and the Deck 02 reminder; then publish
+   the Canvas assignment for 20 points with an assignment-specific pair group
+   set and post its announcement.
+2. Review the Gaussian-mixture section and IID/Sobol' comparison in
    `GeneratingSamples.ipynb` with the instructor.
-2. Validate the revised
+3. Validate the revised
    `sampling/TransportMapsAndAcceptanceRejection.ipynb` in clean Colab.
    Deck 02 already links it; add the course notebook-page link
    after Colab validation, following `notebooks/NOTEBOOK_INVENTORY.md`.
-3. Review the revised advanced-direct-sampling sequence: transport maps,
+4. Review the revised advanced-direct-sampling sequence: transport maps,
    acceptance--rejection, the reusable \(\operatorname{Beta}(2,1)\) scalar
    example, and the proposed companion-notebook treatment. Confirm that the
    target/proposal
    roles and their $\varrho_{\mathrm{tar}}$ and
    $\varrho_{\mathrm{prop}}$ notation read consistently across transport,
    importance sampling, and MCMC.
-4. Give Deck 02 a final instructor-led polish pass, including its notebook
+5. Give Deck 02 a final instructor-led polish pass, including its notebook
    links and the relationship between the lecture and retained notebooks.
-5. Review Deck 03 individually, beginning with its scope, section sequence,
+6. Review Deck 03 individually, beginning with its scope, section sequence,
    and mathematical emphasis before detailed layout polishing.
-6. Review Deck 04 and then Deck 05 using the same instructor-led process.
-7. Create or adapt the Microsoft Bookings pages for Fall 2026 presenter and
+7. Review Deck 04 and then Deck 05 using the same instructor-led process.
+8. Create or adapt the Microsoft Bookings pages for Fall 2026 presenter and
    observer sign-ups, following the separate-page workflow used in Fall 2025,
    and add the finalized links and procedures to the project page.
-8. Complete the remaining Fall 2026 logistics and student-facing page details,
+9. Complete the remaining Fall 2026 logistics and student-facing page details,
    including the seminar link, assignments, tests, project dates, and visible
    browser review.
 
-The immediate 565 work is therefore to finish the Deck 02 notebooks and polish
-Deck 02. Deck 03 follows that completed unit.
+The immediate 565 work is therefore to publish Assignment 2 after the website
+changes are live, then finish the Deck 02 notebooks and polish Deck 02. Deck 03
+follows that completed unit.
 
 ## Immediate machine handoff target
 
-Complete the GeneratingSamples instructor review and the clean-Colab
-validation of the approved combined transport-map and acceptance--rejection
-notebook. The QMCPy-native sampler substitution and local validation are
-complete.
+First complete Assignment 2 publication in Canvas after verifying the public
+course-website pages. Then complete the GeneratingSamples instructor review
+and the clean-Colab validation of the approved combined transport-map and
+acceptance--rejection notebook. The QMCPy-native sampler substitution and local
+validation are complete.
 Do not expand this immediate handoff to the still-separate
 `FinancialOptionPayoffs.ipynb` migration.
 
@@ -161,6 +170,11 @@ decks after adding links.
   detail page is authoritative; Canvas links to it and the course Assignments
   page without repeating the exercise details, and a Canvas announcement has
   been posted.
+- Assignment 2 is prepared in course source as Owen Exercises 4.5 and 4.19,
+  due September 11 at 11:59 PM Chicago Time, for 20 points. Its detail page,
+  Assignments-page entry, Schedule entry, and Deck 02 title reminder are ready.
+  Canvas setup and announcement remain gated on checkpointing the course
+  changes and verifying their public URLs.
 - Test 1 is scheduled for the full class period on September 15 and covers
   **Introduction** and **Generating Samples**. Its date and coverage appear on
   the Schedule, Tests page, and Deck 02 title slide. The room, current test PDF,

@@ -121,6 +121,13 @@ appropriate phase rather than appended indiscriminately.
       2; publish it in Canvas with its assignment-specific pair group set and
       website-only linked description; add the deadline to the assignments
       page, Schedule, and Lecture 1; and post the Canvas announcement.
+    - [x] Finalize Assignment 2 as Owen Exercises 4.5 and 4.19, due September
+      11, and add the deadline to its detail page, the assignments page,
+      Schedule, and Lecture 2.
+    - [ ] Publish Assignment 2 in Canvas for 20 points with its
+      assignment-specific pair group set and website-only linked description,
+      then post its Canvas announcement after the course website changes are
+      live.
     - [ ] Add assignment entries and due dates as they are finalized.
     - [x] Validate Quarto rendering and generated page structure.
     - [ ] Inspect the visible page layout in a browser.
