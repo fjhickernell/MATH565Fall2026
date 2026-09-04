@@ -93,6 +93,28 @@ active repositories, `MATH332Fall2026` and `MATH565Fall2026`. Interpret
 files each time rather than relying on conversation memory. Reporting a next
 task does not authorize beginning it.
 
+### Assignment request shorthand
+
+When the user asks to create, set up, or materially revise an assignment,
+including a minimal “here is an assignment” request, treat it as authorization
+to carry out the complete
+[`AUTHOR_WORKFLOW.md`](AUTHOR_WORKFLOW.md#adding-or-updating-an-assignment)
+assignment workflow unless the user explicitly limits its scope. Start with a
+compact checklist that distinguishes supplied details, standing course
+defaults, and genuinely unresolved decisions. Ask only one bundled question
+when required information cannot be discovered or defaulted safely.
+
+Complete all authorized local work, validation, duplicate checks, and draft
+preparation before pausing. Remind the user when the exact `Checkpoint` command
+is needed to deploy the website. After the public links are verified, summarize
+the prepared Canvas group set, assignment, and announcement and request one
+combined publication confirmation. Once confirmed, finish the Canvas sequence
+without asking again unless Canvas reveals a material conflict. If interrupted,
+resume from the latest verified repository and Canvas state and do not create
+duplicates. After final Canvas verification and tracked handoff updates, request
+one closeout `Checkpoint` when needed to preserve the completed state; do not
+treat it as another Canvas confirmation.
+
 ### Dashboard reconciliation at Checkpoint
 
 As part of every Checkpoint, read `notes/NEXT.md` from both active teaching

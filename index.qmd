@@ -22,6 +22,10 @@ experience using popular programming languages for Monte Carlo computations.
 
 {{< include classlib/classlib/quarto/snippets/fred-hickernell-bio.qmd >}}
 
+**Math Tutoring Center:** Fall 2026 tutoring is available in **RE 129** and
+online. Enrolled students can find the current tutoring schedule and Zoom link
+on the course [Canvas website]({{< meta canvas.course >}}).
+
 <div style="margin-top:1em; margin-bottom:0.4em;">
 <strong>Textbook:</strong> [{{< meta texts.owen.full >}}]({{< meta texts.owen.url >}})
 </div>

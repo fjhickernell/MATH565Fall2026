@@ -24,6 +24,8 @@ appropriate phase rather than appended indiscriminately.
   development strategy.
 - [x] Add `AUTHOR_WORKFLOW.md` with author setup, preview, render, and
   publishing procedures.
+- [x] Document the minimal-input assignment workflow, standing Canvas defaults,
+  consolidated publication confirmation, and end-to-end verification steps.
 - [x] Add `STATUS.md` as the permanent phase-organized construction record.
 - [x] Reconcile project documentation and style guides after establishing the
   prototype course conventions.
@@ -39,6 +41,8 @@ appropriate phase rather than appended indiscriminately.
     - [x] Verify course title, semester, and course identity.
     - [x] Review and update the course description.
     - [x] Verify instructor information, photograph, and links.
+    - [x] Add a public-safe Math Tutoring Center notice that routes enrolled
+      students through Canvas to the live coordinator-maintained schedule.
     - [x] Review textbook and recommended resources.
     - [x] Review prerequisites and requirements.
     - [x] Review course objectives and outline.
@@ -124,10 +128,10 @@ appropriate phase rather than appended indiscriminately.
     - [x] Finalize Assignment 2 as Owen Exercises 4.5 and 4.19, due September
       11, and add the deadline to its detail page, the assignments page,
       Schedule, and Lecture 2.
-    - [ ] Publish Assignment 2 in Canvas for 20 points with its
-      assignment-specific pair group set and website-only linked description,
-      then post its Canvas announcement after the course website changes are
-      live.
+    - [x] Publish Assignment 2 in Canvas for 20 points with its
+      assignment-specific pair group set and a description linking only the
+      assignment detail page and Assignments page, then post its Canvas
+      announcement after the course website changes are live.
     - [ ] Add assignment entries and due dates as they are finalized.
     - [x] Validate Quarto rendering and generated page structure.
     - [ ] Inspect the visible page layout in a browser.

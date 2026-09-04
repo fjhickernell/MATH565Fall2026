@@ -29,6 +29,7 @@ holidays, and examination details are finalized.
 | | Fri Sep 11 | **Assignment 2 due** | [{{< meta texts.owen.short >}} Exercises 4.5 and 4.19](../assignments/assignment_2.qmd) |
 | 5 | Tue Sep 15 | **Test 1** | [Introduction](../slides/01-introduction.html)<br>[Generating Samples](../slides/02-generating-samples.html) |
 | | Thu Sep 17 | | |
+| | Fri Sep 18 | **Project topic submission deadline** | [Topic Selection & Presentation Scheduling](project.qmd#topic-selection-and-approval) |
 | 6 | Tue Sep 22 | | |
 | | Thu Sep 24 | | |
 | 7 | Tue Sep 29 | | |

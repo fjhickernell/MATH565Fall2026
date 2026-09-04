@@ -6,6 +6,24 @@ would benefit from understanding why a choice was made.
 
 ## Decision log
 
+### 2026-09-04 — Route the mutable tutoring schedule through Canvas
+
+- **Decision:** The public course website tells enrolled students that Fall
+  2026 Math Tutoring Center support is available in RE 129 and online, then
+  routes them to Canvas. The Canvas Welcome page links directly to the faculty
+  coordinator's original Google Drive PDF; do not upload or copy the PDF into
+  Canvas or the course repository.
+- **Rationale:** The coordinator may revise the schedule in place, and the PDF
+  contains an online-tutoring Zoom link with its passcode. Referencing the
+  original file preserves updates, while keeping its URL off the public course
+  website reduces public discovery.
+- **Consequences:** Do not add the Google Drive or Zoom URL to public course
+  sources or metadata. Canvas authentication limits casual public exposure but
+  cannot prevent students from forwarding an anyone-with-the-link file. The
+  coordinator should restrict the Drive file to the intended Illinois Tech
+  audience, and the Zoom meeting should use appropriate authentication or a
+  waiting room, when feasible.
+
 ### 2026-09-02 — Put mixtures in the survey and combine transport with acceptance--rejection
 
 - **Decision:** Add one compact Gaussian-mixture section to

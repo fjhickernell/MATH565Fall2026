@@ -20,16 +20,60 @@ repository, and do not leave course-only modifications in `classlib`.
 
 ## Adding or updating an assignment
 
-Use the following workflow whenever an assignment is finalized or materially
-revised:
+Use this workflow whenever the instructor asks to create, set up, or materially
+revise an assignment, including a minimal “here is an assignment” request. A
+minimal request normally needs only the assignment number, assigned content,
+and due date. Unless the instructor says otherwise, ordinary MATH 565
+assignments use these standing defaults:
 
-1. Confirm the assignment content, coverage, due date and time, point value,
-   submission requirements, and Canvas settings. Do not invent unresolved
-   details.
-2. If course sources need a stable Canvas assignment URL, create only an
-   unpublished Canvas draft at this stage and record its URL as
-   `canvas.assignment_N` in `course-metadata.yml`. Do not publish the Canvas
-   assignment or announce it while its course-website links are unavailable.
+- `Assignment N` as the Canvas assignment title;
+- 20 points, due at 11:59 PM America/Chicago on the stated date;
+- individual work or one partner, using 20 assignment-specific self-sign-up
+  groups limited to two students;
+- one shared group grade from one group submission using Canvas's file-upload
+  submission type, with unlimited attempts; and
+- a Canvas description that links to the authoritative course-hosted assignment
+  page and the course Assignments page, followed by an all-sections Canvas
+  announcement after publication.
+
+At intake, give the instructor one compact checklist covering the assignment
+page, Assignments table, Schedule, deck reminder, rendering and deployment,
+Canvas groups and assignment, announcement, and final verification. Identify
+the details supplied by the instructor, the standing defaults being applied,
+and only the unresolved decisions that would materially change the result. Do
+not pause for a value covered by these defaults or one that can be established
+from authoritative course sources. Never invent the assigned content or the due
+date.
+
+Complete every safe, reversible, and local step before asking for input. The
+workflow has two publication gates:
+
+1. After local validation, request the exact `Checkpoint` command if the
+   instructor has not already issued it. The public website must be deployed
+   and verified before Canvas publication.
+2. After the public links are live and the Canvas changes are completely
+   prepared, present one combined summary of the group set, assignment, and
+   announcement and request one final Canvas publication confirmation. Once
+   confirmed, finish those Canvas actions in order without another pause unless
+   Canvas exposes a material conflict or unexpected setting.
+
+After Canvas publication and verification, update the tracked handoff and
+status files and request one closeout `Checkpoint` if those completion updates
+are uncommitted. This preserves the finished external state and is not another
+Canvas confirmation.
+
+Then carry out the following steps:
+
+1. Audit the repository and Canvas for an existing assignment page, assignment
+   item, group set, or announcement. Resume and verify valid existing work
+   rather than creating duplicates. Confirm any nonstandard content, coverage,
+   date, points, submission requirements, or Canvas settings.
+2. Create only an unpublished Canvas draft at this stage when one does not
+   already exist, and record every Canvas assignment URL as
+   `canvas.assignment_N` in `course-metadata.yml`. The saved URL supports site
+   links, later verification, and duplicate prevention even when no current
+   page consumes the metadata key. Do not publish the Canvas assignment or
+   announce it while its course-website links are unavailable.
 3. Create or update `assignments/assignment_N.qmd` when the assignment needs a
    course-hosted detail page. State the due date, assignment, and submission
    requirements, and link back to the ground rules in `pages/homework.qmd`.
@@ -51,22 +95,37 @@ revised:
 7. Render the root website and the independent slide project, assemble the
    complete site, and verify the assignment page, assignments table, schedule,
    Canvas links, deck notice, and internal links. Inspect the visible assignment
-   page and affected deck at the standard RevealJS viewport. Checkpoint and
-   push the website changes, then verify that the public assignment and
-   Assignments-page URLs are live. This publication check is a hard gate before
-   publishing the Canvas assignment.
-8. Finish and publish the Canvas assignment only after the website is live.
-   Unless the assignment explicitly requires individual work, create a
-   separate self-sign-up group set named `Assignment N Groups` for that
-   assignment so students may choose a new partner each time. Limit groups to
-   pairs, and configure Canvas so that one submission is shared by both group
-   members. Keep the assignment-specific details authoritative on the
-   course-hosted detail page; the Canvas description should link to that page
-   and to the course Assignments page rather than repeat instructions that
-   could later diverge. Verify the published assignment, then announce it in
-   Canvas by linking to the live course pages and providing only the operational
-   group and submission information students need. Do not repeat the assignment
-   content or due date in the announcement.
+   page and affected deck at the standard RevealJS viewport. After the
+   instructor issues the exact `Checkpoint` command, checkpoint and push the
+   website changes, then verify that the public assignment and Assignments-page
+   URLs are live. This publication check is a hard gate before publishing the
+   Canvas assignment.
+8. Finish the Canvas configuration only after the website is live. Unless the
+   assignment explicitly requires individual work, first create or verify a
+   separate self-sign-up group set named `Assignment N Groups` with 20 groups
+   limited to two students, so students may choose a new partner each time.
+   Configure the unpublished assignment against that group set so one
+   submission and grade are shared by both group members. Keep the
+   assignment-specific details authoritative on the course-hosted detail page;
+   the Canvas description should link only to that page and to the course
+   Assignments page rather than repeat instructions that could later diverge.
+   Publish and verify the assignment, then post and verify an all-sections
+   Canvas announcement linking to the live course pages and providing only the
+   operational group and submission information students need. Do not repeat
+   the assignment content or due date in the announcement.
+9. Re-open the published Canvas assignment and announcement and verify their
+   titles, points, due date and time, file-upload submission type, unlimited
+   attempts, publication status, and all-sections audience. Verify that the
+   assignment uses its 20-group self-sign-up set with a two-student limit and a
+   shared group grade; that its description contains both intended course-page
+   links and no duplicated assignment details; and that the announcement links
+   to the live pages without repeating the assignment content or due date.
+   Update the appropriate project handoff and status files so a later session
+   does not repeat completed work. If the workflow is interrupted, preserve any
+   draft, report the last verified step, and resume by auditing current
+   repository and Canvas state rather than relying on conversational memory.
+   Request the exact `Checkpoint` command to publish any post-Canvas completion
+   updates still uncommitted in the repository.
 
 ## Adding or updating a test or examination
 
