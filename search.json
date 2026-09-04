@@ -189,6 +189,34 @@
     "text": "This page collects optional articles, essays, videos, and interactive resources that connect probability, statistics, and data science to real applications, historical context, or broader ideas.\n\nStatistical Inference and Data Science\n\nThe Lady Tasting Tea\n\nA famous experiment conducted by Ronald Fisher to test whether a woman could distinguish between tea poured before or after milk\nThis experiment is often cited as an example of a randomized controlled trial and the basis for Fisher’s exact test\n\nStatistical Modeling: The Two Cultures\n\nAn influential paper by Leo Breiman that discusses the differences between traditional statistical modeling and algorithmic modeling in data science\nBreiman argues that the algorithmic modeling culture, which focuses on predictive accuracy, is often more effective than the traditional statistical modeling culture, which focuses on inference and understanding\n\nAs Forecasts Go, You Can Bet on Monte Carlo\n\nAn article from the Wall Street Journal that discusses the use of Monte Carlo simulations in financial forecasting and risk management\nThe article highlights how Monte Carlo methods can help quantify uncertainty and improve decision-making in finance\n\n\n\n\nSoftware and Libraries\n\nqmcpy.org: A Python Library for Quasi-Monte Carlo Methods\n\nA Python library for quasi-Monte Carlo methods, which are used to improve the efficiency of numerical integration and simulation\n\nRankings of Computer Languages\n\nA ranking of programming languages based on their popularity and usage in the industry\nStatistical questions include: What are the errors in the percentages? What is the significance of a change in rank?"
   },
   {
+    "objectID": "assignments/assignment_2.html",
+    "href": "assignments/assignment_2.html",
+    "title": "Assignment 2: Owen Exercises 4.5 and 4.19",
+    "section": "",
+    "text": "Due: Friday, September 11, 2026, at 11:59 PM Chicago Time"
+  },
+  {
+    "objectID": "assignments/assignment_2.html#due-date",
+    "href": "assignments/assignment_2.html#due-date",
+    "title": "Assignment 2: Owen Exercises 4.5 and 4.19",
+    "section": "",
+    "text": "Due: Friday, September 11, 2026, at 11:59 PM Chicago Time"
+  },
+  {
+    "objectID": "assignments/assignment_2.html#assignment",
+    "href": "assignments/assignment_2.html#assignment",
+    "title": "Assignment 2: Owen Exercises 4.5 and 4.19",
+    "section": "Assignment",
+    "text": "Assignment\nComplete Exercises 4.5 and 4.19 in Owen."
+  },
+  {
+    "objectID": "assignments/assignment_2.html#submission",
+    "href": "assignments/assignment_2.html#submission",
+    "title": "Assignment 2: Owen Exercises 4.5 and 4.19",
+    "section": "Submission",
+    "text": "Submission\nFollow the submission requirements on the Assignments page. Your work should include enough explanation and supporting code for another reader to reproduce and understand your results."
+  },
+  {
     "objectID": "assignments/assignment_1.html",
     "href": "assignments/assignment_1.html",
     "title": "Assignment 1: Owen Exercises 1.2 and 2.1",
@@ -368,7 +396,7 @@
     "href": "pages/homework.html#list-of-assignments",
     "title": "Assignments",
     "section": "List of assignments",
-    "text": "List of assignments\nAssignment details and due dates will be added as they are finalized.\n\n\n\nAssignment\nDue Date\n\n\n\n\nAssignment 0 — Diagnostic SurveyComplete and submit this assignment individually, not as a group.\nAugust 21, 2026\n\n\nAssignment 1 — Owen Exercises 1.2 and 2.1\nSeptember 2, 2026"
+    "text": "List of assignments\nAssignment details and due dates will be added as they are finalized.\n\n\n\nAssignment\nDue Date\n\n\n\n\nAssignment 0 — Diagnostic SurveyComplete and submit this assignment individually, not as a group.\nAugust 21, 2026\n\n\nAssignment 1 — Owen Exercises 1.2 and 2.1\nSeptember 2, 2026\n\n\nAssignment 2 — Owen Exercises 4.5 and 4.19\nSeptember 11, 2026"
   },
   {
     "objectID": "pages/project-assessment.html",
@@ -382,6 +410,6 @@
     "href": "pages/schedule.html",
     "title": "Schedule",
     "section": "",
-    "text": "Classes normally meet Tuesdays and Thursdays at 10:00 AM in PH 108.\nThis schedule is provisional and will be updated as topics, assignments, holidays, and examination details are finalized.\n\nAugust\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n1\nTue Aug 18\nIntroduction\nIntroduction\n\n\n\nThu Aug 20\nProbability review; Samples, Estimators, and Estimates\n\n\n\n\nFri Aug 21\nDiagnostic Survey due\nAssignment 0 — Diagnostic Survey\n\n\n2\nTue Aug 25\nUniformity to target distribution\nGenerating Samples\n\n\n\nThu Aug 27\nMixture distributionsRandom vectors and functions\n\n\n\n\n\n\nSeptember\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n3\nTue Sep 1\n\n\n\n\n\nWed Sep 2\nAssignment 1 due\nOwen Exercises 1.2 and 2.1\n\n\n\nThu Sep 3\n\n\n\n\n4\nTue Sep 8\n\n\n\n\n\nThu Sep 10\n\n\n\n\n5\nTue Sep 15\nTest 1\nIntroductionGenerating Samples\n\n\n\nThu Sep 17\n\n\n\n\n6\nTue Sep 22\n\n\n\n\n\nThu Sep 24\n\n\n\n\n7\nTue Sep 29\n\n\n\n\n\n\n\nOctober\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n7\nThu Oct 1\n\n\n\n\n8\nTue Oct 6\n\n\n\n\n\nThu Oct 8\n\n\n\n\n9\nTue Oct 13\n\n\n\n\n\nThu Oct 15\n\n\n\n\n10\nTue Oct 20\n\n\n\n\n\nThu Oct 22\n\n\n\n\n11\nTue Oct 27\n\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n\nNovember\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n12\nTue Nov 3\n\n\n\n\n\nThu Nov 5\n\n\n\n\n13\nTue Nov 10\n\n\n\n\n\nThu Nov 12\n\n\n\n\n14\nTue Nov 17\n\n\n\n\n\nThu Nov 19\n\n\n\n\n15\nMon Nov 23\nProject presentations\nProject information\n\n\n\nTue Nov 24\nProject presentations\nProject information\n\n\n\nThu Nov 26\nNo Class — Thanksgiving holiday\n\n\n\n\n\n\nDecember\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n16\nTue Dec 1\n\n\n\n\n\nThu Dec 3\n\n\n\n\n\nThe official last day of classes is Saturday, December 5. Because the course meets on Tuesdays and Thursdays, Thursday, December 3 is the final regular class meeting.\n\n\nFinal examinations\nFinal examinations occur during the following week.\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n17\nTBA\nFinal Exam — time and location TBA"
+    "text": "Classes normally meet Tuesdays and Thursdays at 10:00 AM in PH 108.\nThis schedule is provisional and will be updated as topics, assignments, holidays, and examination details are finalized.\n\nAugust\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n1\nTue Aug 18\nIntroduction\nIntroduction\n\n\n\nThu Aug 20\nProbability review; Samples, Estimators, and Estimates\n\n\n\n\nFri Aug 21\nDiagnostic Survey due\nAssignment 0 — Diagnostic Survey\n\n\n2\nTue Aug 25\nUniformity to target distribution\nGenerating Samples\n\n\n\nThu Aug 27\nMixture distributionsRandom vectors and functions\n\n\n\n\n\n\nSeptember\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n3\nTue Sep 1\n\n\n\n\n\nWed Sep 2\nAssignment 1 due\nOwen Exercises 1.2 and 2.1\n\n\n\nThu Sep 3\n\n\n\n\n4\nTue Sep 8\n\n\n\n\n\nThu Sep 10\n\n\n\n\n\nFri Sep 11\nAssignment 2 due\nOwen Exercises 4.5 and 4.19\n\n\n5\nTue Sep 15\nTest 1\nIntroductionGenerating Samples\n\n\n\nThu Sep 17\n\n\n\n\n6\nTue Sep 22\n\n\n\n\n\nThu Sep 24\n\n\n\n\n7\nTue Sep 29\n\n\n\n\n\n\n\nOctober\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n7\nThu Oct 1\n\n\n\n\n8\nTue Oct 6\n\n\n\n\n\nThu Oct 8\n\n\n\n\n9\nTue Oct 13\n\n\n\n\n\nThu Oct 15\n\n\n\n\n10\nTue Oct 20\n\n\n\n\n\nThu Oct 22\n\n\n\n\n11\nTue Oct 27\n\n\n\n\n\nThu Oct 29\n\n\n\n\n\n\n\nNovember\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n12\nTue Nov 3\n\n\n\n\n\nThu Nov 5\n\n\n\n\n13\nTue Nov 10\n\n\n\n\n\nThu Nov 12\n\n\n\n\n14\nTue Nov 17\n\n\n\n\n\nThu Nov 19\n\n\n\n\n15\nMon Nov 23\nProject presentations\nProject information\n\n\n\nTue Nov 24\nProject presentations\nProject information\n\n\n\nThu Nov 26\nNo Class — Thanksgiving holiday\n\n\n\n\n\n\nDecember\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n16\nTue Dec 1\n\n\n\n\n\nThu Dec 3\n\n\n\n\n\nThe official last day of classes is Saturday, December 5. Because the course meets on Tuesdays and Thursdays, Thursday, December 3 is the final regular class meeting.\n\n\nFinal examinations\nFinal examinations occur during the following week.\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n17\nTBA\nFinal Exam — time and location TBA"
   }
 ]
