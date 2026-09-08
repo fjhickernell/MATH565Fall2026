@@ -359,7 +359,7 @@ plt.show()
 
 MCMC is attractive because it
 
-- samples from complicated, unnormalized densities
+- samples from complicated, unnormalized target densities
 - is often straightforward to implement
 
 The proposal and starting point require care:
@@ -369,6 +369,8 @@ The proposal and starting point require care:
 - multimodal targets may trap a single chain in one mode
 
 Useful responses include [pilot runs]{.alert}, [multiple chains]{.alert}, and [parallel tempering]{.alert}
+
+[`MetropolisHastings` companion notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/MetropolisHastings.ipynb)
 
 ::: {.key-point}
 Diagnose both [exploration]{.alert} of the full state space and [concentration]{.alert} in high-density regions
@@ -405,6 +407,8 @@ Kernel discrepancy measures
 - the difference between two probability distributions
 - the [worst-case integration error]{.alert} over the unit ball of a reproducing kernel Hilbert space
 - the [root mean squared integration error]{.alert} when the integrand is modeled as a Gaussian process with covariance kernel $K$
+
+[`Discrepancy` companion notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/Discrepancy.ipynb)
 
 ::: {.key-point}
 The kernel determines which differences between distributions matter most
@@ -654,6 +658,8 @@ Combine a prior density with the likelihood:
 ::: {.key-point}
 Bayesian inference is a primary reason to sample from complicated unnormalized densities
 :::
+
+[`BayesianMCMC` companion notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/BayesianMCMC.ipynb)
 
 ## Queueing systems {.tree-marker-slide tree-marker="probability"}
 

@@ -110,8 +110,10 @@ appropriate phase rather than appended indiscriminately.
         Include the existing acceptance--rejection comparison, separated-mode
         trapping, parallel tempering, exact posterior benchmarks, and MMD.
         Validate all three in clean local `qmcpy` kernels and inspect saved figures.
+      - [x] Link the three locally validated MCMC notebooks from their matching
+        Metropolis--Hastings, discrepancy, and Bayesian sections in Deck 03.
       - [ ] Complete instructor review and clean-Colab validation of the three
-        MCMC notebooks, then add their Deck 03 and notebook-page links.
+        MCMC notebooks, then add their notebook-page links.
     - [ ] Add notebook links only after each target exists and passes
       validation.
       - [x] Link the validated `AreWeThereYet.ipynb` from the Applications

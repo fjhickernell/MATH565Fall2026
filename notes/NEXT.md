@@ -16,7 +16,8 @@ been inspected. Mathematical checks cover target normalization, rejected-state
 retention, swap ratios, exact posterior algebra, and kernel identities. The
 source map and corrections are recorded in `notes/MCMC-MIGRATION.md`.
 
-After instructor review, validate in clean Colab, then add Deck 03 and
+Deck 03 now links each notebook from its matching instructional section.
+After instructor review, validate in clean Colab, then add the
 `pages/notebooks.qmd` links. The Colab setup needs the course-owned
 `notebooks/mcmc_examples.py` published with the notebooks; local execution is
 not live-Colab validation. The official PyMC API quickstart is linked as an
@@ -329,8 +330,8 @@ decks after adding links.
 ## Current notebook handoff complete when
 
 - All three MCMC notebooks are instructor-reviewed and validated in clean Colab.
-- Their Deck 03 and notebook-page links are added, rendered, and published through
-  the normal Checkpoint workflow.
+- Their notebook-page links are added; those links and the existing Deck 03
+  links are rendered and published through the normal Checkpoint workflow.
 
 ## Remaining Deck 02 completion criteria
 
