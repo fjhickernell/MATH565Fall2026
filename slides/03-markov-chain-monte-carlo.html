@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-09-05">
+  <meta name="dcterms.date" content="2026-09-08">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -716,7 +716,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">September 5, 2026</p>
+  <p class="date">September 8, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 center">
 <h1>Course Map</h1>
@@ -780,15 +780,26 @@ In this deck
 </div>
 
 <ul>
-<li>Quantile, affine, and exact transport maps produce independent, equally weighted target samples<br>They require a usable global map</li>
-<li>Acceptance–rejection also produces independent target samples<br>It requires a global proposal envelope and may reject many proposals</li>
-<li><span class="alert">Markov chain Monte Carlo (MCMC)</span> moves through the sample space using only an unnormalized target density</li>
+<li>Quantile, affine, and exact transport maps
+<ul>
+<li><span class="alert">Global construction</span>: a map that produces the target distribution</li>
+</ul></li>
+<li>Acceptance–rejection
+<ul>
+<li><span class="alert">Global bound</span>: a proposal envelope valid throughout the target support</li>
+</ul></li>
+<li><span class="alert">Markov chain Monte Carlo (MCMC)</span>, via Metropolis–Hastings
+<ul>
+<li><span class="alert">Local decision</span>: density ratios at the current and proposed states</li>
+<li>No global envelope; proposed moves need not be nearby</li>
+</ul></li>
 </ul>
 <div class="key-point">
-<p>MCMC replaces independent draws by a <span class="alert">dependent sequence</span> whose distribution approaches the target</p>
+<p>From a global sampling construction to a <span class="alert">target-preserving transition</span></p>
+<p>Under suitable conditions, the distribution of <span class="math inline">\(X_i\)</span> approaches the target as <span class="math inline">\(i\to\infty\)</span></p>
 </div>
 </section>
-<section id="the-markov-property" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<section id="the-markov-property" class="slide level2 tree-marker-slide" data-state="goldborder" data-tree-marker="probability">
 <h2>The Markov property</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
@@ -797,16 +808,14 @@ In this deck
 
 <p>Let <span class="math inline">\(\mathcal X\)</span> be the state space for <span class="math inline">\(X_0,X_1,\ldots\)</span></p>
 <p>The sequence is a <span class="alert">Markov chain</span> when, for every measurable <span class="math inline">\(A\subseteq\mathcal X\)</span>,</p>
-<p><span class="math display">\[\begin{align*}
-&amp;\Prob(X_{i+1}\in A\mid X_i=x_i,\ldots,X_0=x_0)\\
-&amp;\qquad=\Prob(X_{i+1}\in A\mid X_i=x_i)
-\end{align*}\]</span></p>
+<p><span class="math display">\[\begin{equation*}
+\Prob(X_{i+1}\in A\mid X_i=x_i,\ldots,X_0=x_0)\\
+=\Prob(X_{i+1}\in A\mid X_i=x_i)
+\end{equation*}\]</span></p>
 <p><span class="alert">Where the chain goes next depends only on where it is now</span>, not on how it arrived</p>
-<p>We use Markov chains to</p>
+<p>We are interested in the <span class="alert">asymptotic behavior of <span class="math inline">\(X_i\)</span></span></p>
 <ul>
-<li>generate samples whose distribution converges to a target</li>
-<li>model systems such as queues</li>
-<li>study long-run or asymptotic behavior</li>
+<li>In MCMC, construct the chain so that, under suitable conditions, the <span class="alert">distribution of <span class="math inline">\(X_i\)</span> approaches the target</span> as <span class="math inline">\(i\to\infty\)</span></li>
 </ul>
 </section>
 <section id="examples-of-markov-chains" class="slide level2 tree-marker-slide" data-tree-marker="probability">
@@ -835,6 +844,7 @@ X_0=X_1=0,
 \]</span></p>
 <p>The pair <span class="math inline">\(Y_i=(X_{i-1},X_i)\)</span> <span class="alert">is Markov</span> because its state retains the needed history</p>
 </div></div>
+<p>Only the first is a <span class="alert">martingale</span>: its expected next value, given the history, equals its current value</p>
 </section></section>
 <section>
 <section id="metropolishastings-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="random-generation">
@@ -850,6 +860,7 @@ X_0=X_1=0,
 <li><a href="#/the-metropolis-algorithm">The Metropolis algorithm</a></li>
 <li><a href="#/metropolis-practice">Metropolis practice</a></li>
 <li><a href="#/a-random-walk-metropolis-example">A random-walk Metropolis example</a></li>
+<li><a href="#/separated-modes-can-trap-a-chain">Separated modes can trap a chain</a></li>
 <li><a href="#/tuning-and-diagnostics">Tuning and diagnostics</a></li>
 </ul>
 </section>
@@ -873,10 +884,13 @@ X_0=X_1=0,
 \alpha(X_i,Z)=\min\!\left\{1,
 \frac{\varrho_{\mathrm{tar}}(Z)\varrho_{\mathrm{prop}}(X_i\mid Z)}
 {\varrho_{\mathrm{tar}}(X_i)\varrho_{\mathrm{prop}}(Z\mid X_i)}\right\}
+=\min\!\left\{1,
+\frac{\text{joint density of first $Z$, then $X_i$}}
+{\text{joint density of first $X_i$, then $Z$}}\right\}
 \]</span></p></li>
 <li><p>Set <span class="math inline">\(X_{i+1}=Z\)</span> if <span class="math inline">\(U\le\alpha(X_i,Z)\)</span><br>Otherwise set <span class="math inline">\(X_{i+1}=X_i\)</span></p></li>
 </ol>
-<p><span class="alert">Every iteration accepts either the proposal or the current state</span></p>
+<p><span class="alert">Every iteration accepts either the proposal or the current state</span><br>Nothing is discarded</p>
 </section>
 <section id="why-the-acceptance-ratio-works" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Why the acceptance ratio works</h2>
@@ -1016,7 +1030,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="7471a4b0" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="7756b9d9" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1025,6 +1039,25 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 </div>
 </div>
+</section>
+<section id="separated-modes-can-trap-a-chain" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>Separated modes can trap a chain</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
+<div id="b40f3fef" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="03-markov-chain-monte-carlo_files/figure-revealjs/cell-3-output-1.png" class="quarto-figure quarto-figure-center" alt="Two Metropolis chains started in opposite, widely separated Gaussian modes remain in their starting modes, despite moderate acceptance rates" width="1115" height="434"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span class="alert">Acceptance within a mode does not establish exploration of both modes</span></p>
 </section>
 <section id="tuning-and-diagnostics" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
 <h2>Tuning and diagnostics</h2>
