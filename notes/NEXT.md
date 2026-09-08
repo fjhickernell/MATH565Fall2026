@@ -23,6 +23,19 @@ After instructor review, validate in clean Colab, then add the
 not live-Colab validation. The official PyMC API quickstart is linked as an
 optional external Bayesian supplement. Queueing remains deferred.
 
+The Deck 03 discrepancy section and its companion notebook now clarify that
+the off-diagonal IID estimator targets the nonnegative population MMD squared:
+its expectation is zero when the two distributions agree, but a more negative
+realization is only a larger downward sampling fluctuation, not a better match.
+The deck includes a starred roman-numbered exercise on these properties and
+on the dependence obstruction for successive Metropolis states. Shared
+`classlib` exercise subparts now support documented `.lettered`, `.numbered`,
+and `.roman` modifiers while retaining the default en-dash marker.
+`MetropolisHastings.ipynb` now also reports consecutive-repeat counts,
+transition denominators, and percentages throughout, distinguishes whole-run
+from retained-state summaries, and explains why repeated states must remain in
+the empirical distribution.
+
 Continue the instructor-led Deck 03 review. The September 8 schedule now names
 Markov chain Monte Carlo and links Deck 03. Recent slide revisions include the
 global construction/local decision contrast, gold-border Markov definition,

@@ -112,6 +112,10 @@ appropriate phase rather than appended indiscriminately.
         Validate all three in clean local `qmcpy` kernels and inspect saved figures.
       - [x] Link the three locally validated MCMC notebooks from their matching
         Metropolis--Hastings, discrepancy, and Bayesian sections in Deck 03.
+      - [x] Highlight MH consecutive-repeat counts and their acceptance-rate
+        complement; validate whole-run, retained-run, and tempering accounting.
+      - [x] Clarify negative off-diagonal MMD estimates in Deck 03 and its
+        companion notebook, with an exercise distinguishing IID and MCMC pairs.
       - [ ] Complete instructor review and clean-Colab validation of the three
         MCMC notebooks, then add their notebook-page links.
     - [ ] Add notebook links only after each target exists and passes

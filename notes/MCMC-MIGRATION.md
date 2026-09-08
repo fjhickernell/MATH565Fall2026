@@ -29,6 +29,12 @@ which that API does not expose. No historical repository was modified.
   different construction and must not use the whole-posterior swap ratio.
 - Retain repeated states on Metropolis rejection. Compare tempering and a
   plain chain at equal target-evaluation budgets, including initialization.
+- Display consecutive-repeat counts, transition denominators, and percentages
+  in the Metropolis notebook's banana, mixture, proposal-scale, independence-MH,
+  and tempering comparisons. Ordinary MH acceptance and repeats use all `n-1`
+  transitions; the tempering comparison counts pairs within retained samples.
+  Explain the continuous-proposal identity (repeat rate = 1 - acceptance rate),
+  why repeats retain their weights, and why cold-slot swaps require direct counts.
 - Derive the exact Gaussian-mixture posterior for a sampling benchmark.
   Preserve confidence-interval versus credible-interval interpretations.
 - Correct the inherited MMD summation indices and explain the IID conditions

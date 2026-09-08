@@ -434,7 +434,9 @@ K(t,x)&=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 &&\mathcal X=[0,1]^d
 \end{align*}
 
-The first is a squared exponential kernel; the second yields centered discrepancy
+- First is a squared exponential kernel; second yields centered discrepancy
+
+- Kernels usually have [parameters]{.alert} to be chosen or estimated
 
 ## Discrepancy between distributions {.tree-marker-slide tree-marker="low-discrepancy"}
 
@@ -471,7 +473,9 @@ The same formula covers [one target distribution and one sample]{.alert} or [two
 
 ## Unbiased estimates of squared discrepancy {.tree-marker-slide tree-marker="statistics"}
 
-The squared discrepancy is nonnegative, but an unbiased estimator may be negative
+The squared discrepancy is nonnegative
+
+But an unbiased estimator [may be negative]{.alert}
 
 Replace within-sample sums by off-diagonal averages:
 
@@ -483,6 +487,23 @@ D_{\mathrm{unb}}^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
 \end{align*}
 
 [Unbiased]{.alert} describes the estimator's expectation, not the sign of each realization
+
+A more negative realization is [not a better match]{.alert}; it is a larger downward sampling fluctuation
+
+---
+
+### What does unbiased mean?
+
+::: {.exitem .roman}
+<span class="exbullet">$\exstar$</span>
+<span>
+Let $\{X_i\}_{i=0}^{m-1}$ and $\{Z_j\}_{j=0}^{n-1}$ be independent IID samples from $F_X$ and $F_Z$
+<span class="exsub">Take expectations term by term to show $\Ex[D_{\mathrm{unb}}^2]=D^2(F_X,F_Z;K)$</span>
+<span class="exsub">What is the expectation when $F_X=F_Z$?</span>
+<span class="exsub">Why may a realization be negative, and does more negative mean a better match?</span>
+<span class="exsub">Which step fails when the $X_i$ are successive Metropolis states?</span>
+</span>
+:::
 
 # Discrepancy as Integration Error {.tree-marker-slide tree-marker="estimation"}
 
