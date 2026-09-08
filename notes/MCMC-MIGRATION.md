@@ -21,6 +21,12 @@ with the identical bounded target. Its density integral is computed by
 quadrature. Expected proposal cost is distinguished from an observed count,
 which that API does not expose. No historical repository was modified.
 
+The scalar Metropolis experiments use 120,000 stored states per run, including
+the initial state, with separated-mode distance 10 and 1,500 burn-in states.
+The five-replica tempering comparison therefore uses 600,000 target evaluations
+for each method. Saved notebook outputs were regenerated end to end at these
+settings; the separate bounded-banana comparison retains its existing settings.
+
 ## Mathematical corrections and additions
 
 - Correct the Gaussian prior’s missing negative exponent signs.
