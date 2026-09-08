@@ -102,7 +102,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="03-markov-chain-monte-carlo_files/libs/revealjs/dist/theme/quarto-6e2a8a6e2954dea89eba65cb18b8ac44.css">
+  <link rel="stylesheet" href="03-markov-chain-monte-carlo_files/libs/revealjs/dist/theme/quarto-6873a23780672be33fc26734594de2fe.css">
   <link href="03-markov-chain-monte-carlo_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="03-markov-chain-monte-carlo_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="03-markov-chain-monte-carlo_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -1030,7 +1030,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="a9d29cf2" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="96a0a4d0" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1048,7 +1048,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="fd9fc86d" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="44617c6d" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1161,7 +1161,10 @@ K(t,x)&amp;=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 \left(\abs{t_\ell-\tfrac12}+\abs{x_\ell-\tfrac12}-\abs{t_\ell-x_\ell}\right)\right],
 &amp;&amp;\mathcal X=[0,1]^d
 \end{align*}\]</span></p>
-<p>The first is a squared exponential kernel; the second yields centered discrepancy</p>
+<ul>
+<li><p>First is a squared exponential kernel; second yields centered discrepancy</p></li>
+<li><p>Kernels usually have <span class="alert">parameters</span> to be chosen or estimated</p></li>
+</ul>
 </section>
 <section id="discrepancy-between-distributions" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
 <h2>Discrepancy between distributions</h2>
@@ -1210,7 +1213,8 @@ D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
   <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
 </div>
 
-<p>The squared discrepancy is nonnegative, but an unbiased estimator may be negative</p>
+<p>The squared discrepancy is nonnegative</p>
+<p>But an unbiased estimator <span class="alert">may be negative</span></p>
 <p>Replace within-sample sums by off-diagonal averages:</p>
 <p><span class="math display">\[\begin{align*}
 D_{\mathrm{unb}}^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
@@ -1219,6 +1223,14 @@ D_{\mathrm{unb}}^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
 +\frac{1}{n(n-1)}\sum_{\substack{i,j=0\\i\ne j}}^{n-1}K(z_i,z_j)
 \end{align*}\]</span></p>
 <p><span class="alert">Unbiased</span> describes the estimator’s expectation, not the sign of each realization</p>
+<p>A more negative realization is <span class="alert">not a better match</span>; it is a larger downward sampling fluctuation</p>
+</section>
+<section class="slide level2">
+
+<h3 id="what-does-unbiased-mean">What does unbiased mean?</h3>
+<div class="exitem roman">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span> Let <span class="math inline">\(\{X_i\}_{i=0}^{m-1}\)</span> and <span class="math inline">\(\{Z_j\}_{j=0}^{n-1}\)</span> be independent IID samples from <span class="math inline">\(F_X\)</span> and <span class="math inline">\(F_Z\)</span> <span class="exsub">Take expectations term by term to show <span class="math inline">\(\Ex[D_{\mathrm{unb}}^2]=D^2(F_X,F_Z;K)\)</span></span> <span class="exsub">What is the expectation when <span class="math inline">\(F_X=F_Z\)</span>?</span> <span class="exsub">Why may a realization be negative, and does more negative mean a better match?</span> <span class="exsub">Which step fails when the <span class="math inline">\(X_i\)</span> are successive Metropolis states?</span> </span></p>
+</div>
 </section></section>
 <section>
 <section id="discrepancy-as-integration-error" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="estimation">
