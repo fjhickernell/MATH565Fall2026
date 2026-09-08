@@ -2,17 +2,33 @@
 
 ## Current task
 
-Validate the instructor-approved
-`notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb` in a clean
-Google Colab runtime using its badge. Both acceptance--rejection examples now
-use the pinned QMCPy-native implementation and pass local clean-kernel
-validation; clean-Colab validation is the remaining execution check. The
-instructor reports that `AreWeThereYet.ipynb` and `GeneratingSamples.ipynb`
-both ran successfully in Colab. The Gaussian-mixture addition, IID/Sobol'
-comparison, fitted error trends, and sample-size notation harmonization are
-implemented. Keep the agreed combined notebook organization.
+Review the complete non-queueing MCMC notebook family for Deck 03:
 
-## Next MATH 565 work
+- `notebooks/sampling/MetropolisHastings.ipynb`: compare with the already taught
+  acceptance--rejection method; study trapping and then parallel tempering.
+- `notebooks/applications/BayesianMCMC.ipynb`: retain the 2025 inference example
+  with exact posterior benchmarks, multiple-chain diagnostics, and tempering.
+- `notebooks/performance/Discrepancy.ipynb`: compare empirical distributions
+  using MMD, kernel scales, and the witness function.
+
+All three execute from clean local `qmcpy` kernels and their saved figures have
+been inspected. Mathematical checks cover target normalization, rejected-state
+retention, swap ratios, exact posterior algebra, and kernel identities. The
+source map and corrections are recorded in `notes/MCMC-MIGRATION.md`.
+
+After instructor review, validate in clean Colab, then add Deck 03 and
+`pages/notebooks.qmd` links. The Colab setup needs the course-owned
+`notebooks/mcmc_examples.py` published with the notebooks; local execution is
+not live-Colab validation. The official PyMC API quickstart is linked as an
+optional external Bayesian supplement. Queueing remains deferred.
+
+Continue the instructor-led Deck 03 review. The September 8 schedule now names
+Markov chain Monte Carlo and links Deck 03. Recent slide revisions include the
+global construction/local decision contrast, gold-border Markov definition,
+asymptotic-distribution motivation, compact martingale note, joint-density
+acceptance interpretation, and separated-mode trapping demonstration.
+
+## Other pending MATH 565 work
 
 1. Review the Gaussian-mixture section and IID/Sobol' comparison in
    `GeneratingSamples.ipynb` with the instructor.
@@ -39,15 +55,16 @@ implemented. Keep the agreed combined notebook organization.
    including the seminar link, assignments, tests, project dates, and visible
    browser review.
 
-The immediate 565 work is therefore to finish the Deck 02 notebooks and polish
-Deck 02. Deck 03 follows that completed unit.
+Deck 03 review and its new Metropolis--Hastings companion are now active for
+September 8. The remaining Deck 02 notebook review and polish work stays pending;
+starting Deck 03 does not establish completion of those earlier items.
 
-## Immediate machine handoff target
+## Pending Deck 02 notebook work
 
 Complete the GeneratingSamples instructor review and the clean-Colab validation
 of the approved combined transport-map and acceptance--rejection notebook. The
 QMCPy-native sampler substitution and local validation are complete.
-Do not expand this immediate handoff to the still-separate
+Keep this Deck 02 work separate from the still-separate
 `FinancialOptionPayoffs.ipynb` migration.
 
 The broader Deck 02 milestone also includes the financial-payoff notebook, an
@@ -123,11 +140,16 @@ for upstream repair rather than hiding a workaround in course-only code. Do
 not remove or alter the more general `classlib` utility merely because this
 notebook no longer needs it.
 
-For Deck 03, retain transparent NumPy/SciPy Metropolis--Hastings as the core
-MCMC notebook. For a separate Bayesian application, first evaluate PyMC/NUTS
-with ArviZ; use `emcee` only as the lighter fallback if dependency or clean
-Colab setup is too burdensome. ArviZ is already in QMCPy's `[class]` extra;
-PyMC and `emcee` are not current course dependencies.
+For Deck 03, the three course-owned notebooks retain the non-queueing MCMC
+material. Parallel tempering is implemented. The Bayesian notebook uses ArviZ
+and links the external PyMC quickstart as an optional supplement; a course-owned
+PyMC/NUTS example is only a possible later extension. Do not add emcee now.
+
+The discrepancy notebook's current saved parameters are 1,000 candidate states,
+10,000 independent AR reference points, and 1,000 burn-in states. Kernel sums
+use exact blocks and cache the reference self-comparison for each length scale.
+The candidate/reference draws are independent. A scatter plot can hide repeated
+states, and a single-run MMD ranking does not establish an optimal proposal scale.
 
 Before handing back the notebook work, restart and run every edited notebook
 with the `qmcpy` kernel, inspect saved output size and warnings, test the
@@ -304,7 +326,13 @@ decks after adding links.
   layout, semantic emphasis, and gaps in visual explanation.
 - Keep MCTS in Deck 05, Selected Topics, rather than the MCMC deck.
 
-## Done when
+## Current notebook handoff complete when
+
+- All three MCMC notebooks are instructor-reviewed and validated in clean Colab.
+- Their Deck 03 and notebook-page links are added, rendered, and published through
+  the normal Checkpoint workflow.
+
+## Remaining Deck 02 completion criteria
 
 - Clean current Colab runtimes install the recorded `classlib` and `qmcpy`
   commits and execute both `AreWeThereYet.ipynb` and

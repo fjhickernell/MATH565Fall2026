@@ -220,41 +220,54 @@ conceptual formulation in the slides.
 
 ### `sampling/MetropolisHastings.ipynb` — Deck 03
 
-Replace the algorithmic core of the inherited omnibus MCMC notebook with a
-transparent NumPy/SciPy implementation. Use one well-defined bimodal or
-otherwise challenging target, then examine proposal scale, acceptance rate,
-burn-in, trace behavior, autocorrelation, effective sample information, and
-multiple chains. Refer back briefly to acceptance--rejection instead of
-repeating that notebook.
+**Migration state:** All non-queueing sections of the 2025
+`MarkovChainMonteCarlo.ipynb` are now retained across three course-owned
+notebooks. All three execute from clean local `qmcpy` kernels and their saved
+figures have been inspected. Instructor review and clean-Colab validation
+remain before student-facing links are added. See
+[`notes/MCMC-MIGRATION.md`](../notes/MCMC-MIGRATION.md) for the source map and
+mathematical corrections.
 
-The purpose is to understand MCMC mechanics, not to survey packages. A common
-target may be used later in `BayesianMCMC.ipynb` or `Discrepancy.ipynb` for a
-short comparison, provided its definition remains consistent.
+The notebook begins with a direct comparison of Metropolis and the already
+taught QMCPy acceptance--rejection method on the same bounded banana target.
+It then develops the separated Gaussian-mixture example, multiple starts,
+proposal scales, autocorrelation, limited within-chain ESS heuristics,
+independence proposals with the Hastings correction, and direct-IID benchmarks.
+Parallel tempering follows trapping as its computational remedy, including the
+joint-density swap ratio, hot/cold traces, and an equal-target-evaluation-budget
+comparison. All replicas temper the whole target; the cold slot targets the
+original density. Finite-run trapping is distinct from inability to cross in
+principle.
 
 ### `applications/BayesianMCMC.ipynb` — Deck 03
 
-Use one genuine posterior example to demonstrate a modern sampler and modern
-diagnostics. The preferred package choice is PyMC/NUTS with ArviZ if the
-dependency and clean-install burden is acceptable. `emcee` is the lighter
-fallback, not a second core requirement. Keep the statistical model and
-posterior interpretation central; do not make this a package tour.
+**Draft implemented and locally validated.** Preserve the 2025 normal-data
+example with a bimodal Gaussian-mixture prior, frequentist confidence interval,
+likelihood, and posterior. An exact Gaussian-mixture posterior supplies a
+benchmark for the Metropolis and parallel-tempering samples. Compare narrow
+and wide proposals from multiple starts, report ArviZ diagnostics, and distinguish
+posterior uncertainty from Monte Carlo error.
 
-Langevin MCMC, hand-built Hamiltonian Monte Carlo, and parallel tempering may
-be mentioned or developed later if the Deck 03 narrative needs them. They
-should not all be accumulated in this notebook. Retain parallel tempering only
-as an optional multimodality extension if it contributes more than the chosen
-modern sampler.
+The course-owned example is the core Bayesian treatment. Link the official
+[PyMC API quickstart](https://www.pymc.io/projects/examples/en/latest/introductory/api_quickstart.html)
+as an optional external notebook for modern Bayesian computation. PyMC is not
+a required dependency of this notebook. ArviZ is installed by the Colab setup;
+the conversion code supports both the 0.x and 1.x data APIs. A future course-owned
+PyMC/NUTS extension requires its own dependency, execution, and teaching review.
 
 ### `performance/Discrepancy.ipynb` — Decks 03 and 04
 
-Keep discrepancy and maximum mean discrepancy in their own sample-quality
-notebook instead of embedding them in the Metropolis notebook. Deck 03 calls
-it for comparing empirical and target distributions; Deck 04 may call it for
-the integration-error and low-discrepancy interpretations. Preserve that
-single teaching purpose even though two decks use it.
+**Draft implemented and locally validated.** Compare the same banana-target
+Metropolis samples with an independent QMCPy acceptance--rejection reference.
+Retain the inherited empirical MMD and off-diagonal formulas, kernel-scale
+comparisons, and add the RKHS witness and an IID reference baseline. Explicitly
+state that the off-diagonal estimator's unbiasedness requires independent IID
+samples and does not carry over to dependent chain states. Deck 04 can return
+to its integration-error interpretation.
 
 ### `applications/QueueSimulation.ipynb` — Deck 03, possible Deck 05 return
 
+Deferred at the instructor’s request; migrate after the current MCMC family.
 Modernize the inherited queue quick start as a separate application notebook.
 Because the current Deck 03 treats queues as Markov-chain and event-driven
 systems, Deck 03 is its current main-development caller. Evaluate SimPy as the
@@ -510,8 +523,9 @@ into either performance notebook.
 
 ### `MarkovChainMonteCarlo.ipynb`
 
-- **Status:** Not migrated; split rather than one-for-one migration is now
-  recommended.
+- **Status:** All non-queueing sections migrated to the Metropolis, Bayesian,
+  and discrepancy companions and validated locally. Instructor review and
+  clean-Colab validation remain pending.
 - **Source:** `MATH565Fall2025/notebooks/MarkovChainMonteCarlo.ipynb`
 - **Proposed targets:** Use the Metropolis material in
   `MATH565Fall2026/notebooks/sampling/MetropolisHastings.ipynb`, the Bayesian

@@ -66,34 +66,37 @@ subtitle: |
 
 ## When direct sampling is difficult {.tree-marker-slide tree-marker="random-generation"}
 
-- Quantile, affine, and exact transport maps produce independent, equally
-  weighted target samples<br>They require a usable global map
-- Acceptance–rejection also produces independent target samples<br>It requires
-  a global proposal envelope and may reject many proposals
-- [Markov chain Monte Carlo (MCMC)]{.alert} moves through the sample space using only an unnormalized target density
+- Quantile, affine, and exact transport maps
+    - [Global construction]{.alert}: a map that produces the target distribution
+- Acceptance–rejection
+    - [Global bound]{.alert}: a proposal envelope valid throughout the target support
+- [Markov chain Monte Carlo (MCMC)]{.alert}, via Metropolis–Hastings
+    - [Local decision]{.alert}: density ratios at the current and proposed states
+    - No global envelope; proposed moves need not be nearby
 
 ::: {.key-point}
-MCMC replaces independent draws by a [dependent sequence]{.alert} whose distribution approaches the target
+From a global sampling construction to a [target-preserving transition]{.alert}
+
+Under suitable conditions, the distribution of $X_i$ approaches the target as $i\to\infty$
 :::
 
-## The Markov property {.tree-marker-slide tree-marker="probability"}
+## The Markov property {data-state="goldborder" .tree-marker-slide tree-marker="probability"}
 
 Let $\mathcal X$ be the state space for $X_0,X_1,\ldots$
 
 The sequence is a [Markov chain]{.alert} when, for every measurable $A\subseteq\mathcal X$,
 
-\begin{align*}
-&\Prob(X_{i+1}\in A\mid X_i=x_i,\ldots,X_0=x_0)\\
-&\qquad=\Prob(X_{i+1}\in A\mid X_i=x_i)
-\end{align*}
+\begin{equation*}
+\Prob(X_{i+1}\in A\mid X_i=x_i,\ldots,X_0=x_0)\\
+=\Prob(X_{i+1}\in A\mid X_i=x_i)
+\end{equation*}
 
 [Where the chain goes next depends only on where it is now]{.alert}, not on how it arrived
 
-We use Markov chains to
+We are interested in the [asymptotic behavior of $X_i$]{.alert}
 
-- generate samples whose distribution converges to a target
-- model systems such as queues
-- study long-run or asymptotic behavior
+- In MCMC, construct the chain so that, under suitable conditions, the
+  [distribution of $X_i$ approaches the target]{.alert} as $i\to\infty$
 
 ## Examples of Markov chains {.tree-marker-slide tree-marker="probability"}
 
@@ -126,6 +129,8 @@ The pair $Y_i=(X_{i-1},X_i)$ [is Markov]{.alert} because its state retains the n
 :::
 :::
 
+Only the first is a [martingale]{.alert}: its expected next value, given the history, equals its current value
+
 # Metropolis–Hastings Sampling {.tree-marker-slide tree-marker="random-generation"}
 
 - [The Metropolis–Hastings algorithm](#the-metropolishastings-algorithm)
@@ -133,6 +138,7 @@ The pair $Y_i=(X_{i-1},X_i)$ [is Markov]{.alert} because its state retains the n
 - [The Metropolis algorithm](#the-metropolis-algorithm)
 - [Metropolis practice](#metropolis-practice)
 - [A random-walk Metropolis example](#a-random-walk-metropolis-example)
+- [Separated modes can trap a chain](#separated-modes-can-trap-a-chain)
 - [Tuning and diagnostics](#tuning-and-diagnostics)
 
 ## The Metropolis–Hastings algorithm {.tree-marker-slide tree-marker="random-generation"}
@@ -154,12 +160,16 @@ Given $X_0$, repeat for $i=0,\ldots,n-1$:
    \alpha(X_i,Z)=\min\!\left\{1,
    \frac{\varrho_{\mathrm{tar}}(Z)\varrho_{\mathrm{prop}}(X_i\mid Z)}
    {\varrho_{\mathrm{tar}}(X_i)\varrho_{\mathrm{prop}}(Z\mid X_i)}\right\}
+   =\min\!\left\{1,
+\frac{\text{joint density of first $Z$, then $X_i$}}
+{\text{joint density of first $X_i$, then $Z$}}\right\}
    $$
 
 3. Set $X_{i+1}=Z$ if $U\le\alpha(X_i,Z)$<br>Otherwise set
    $X_{i+1}=X_i$
 
-[Every iteration accepts either the proposal or the current state]{.alert}
+[Every iteration accepts either the proposal or the current state]{.alert}<br>Nothing is discarded
+
 
 ## Why the acceptance ratio works {.tree-marker-slide tree-marker="probability"}
 
@@ -279,6 +289,71 @@ for ax in axes:
     ax.grid(alpha=0.16)
 plt.show()
 ```
+
+## Separated modes can trap a chain {.tree-marker-slide tree-marker="random-generation"}
+
+Same mixture weights and widths; move the means to $-5$ and $5$<br>
+Keep $Z\mid X_i=x\sim\Norm(x,1.4^2)$; start one chain in each mode
+
+```{python}
+#| echo: false
+#| fig-align: center
+#| fig-alt: "Two Metropolis chains started in opposite, widely separated Gaussian modes remain in their starting modes, despite moderate acceptance rates"
+#| fig-width: 11.5
+#| fig-height: 4.4
+#| out-width: 95%
+
+from scipy.special import logsumexp
+
+def separated_log_density(x):
+    return logsumexp([
+        np.log(0.35) + norm.logpdf(x, -5.0, 0.65),
+        np.log(0.65) + norm.logpdf(x, 5.0, 0.9),
+    ], axis=0)
+
+separated_rng = np.random.default_rng(565031)
+separated_runs = []
+for initial in (-5.0, 5.0):
+    states = np.empty(12000)
+    states[0] = initial
+    log_current = separated_log_density(initial)
+    n_accept = 0
+    for i in range(len(states) - 1):
+        candidate = states[i] + separated_rng.normal(0, 1.4)
+        log_candidate = separated_log_density(candidate)
+        if np.log(separated_rng.random()) <= min(0.0, log_candidate - log_current):
+            states[i + 1] = candidate
+            log_current = log_candidate
+            n_accept += 1
+        else:
+            states[i + 1] = states[i]
+    separated_runs.append((initial, states, n_accept / (len(states) - 1)))
+
+fig, axes = plt.subplots(1, 2, figsize=(11.5, 4.4), constrained_layout=True)
+grid = np.linspace(-8, 8, 800)
+axes[0].plot(grid, np.exp(separated_log_density(grid)), color="#1f5a91",
+             linewidth=3, label="target density")
+for (initial, states, rate), color in zip(separated_runs, ["#228833", "#cc6677"]):
+    retained = states[1500:]
+    crossings = np.count_nonzero(np.diff(states > 0))
+    axes[0].hist(retained, bins=np.linspace(-8, 8, 90), density=True,
+                 histtype="step", linewidth=2, color=color,
+                 label=rf"start $X_0={initial:g}$")
+    axes[1].plot(np.arange(len(states)), states, color=color, linewidth=0.6,
+                 label=f"accept {rate:.0%}; crossings {crossings}")
+axes[0].set_xlabel(r"$x$", fontsize=20, math_fontfamily="stix")
+axes[0].set_ylabel("density", fontsize=17)
+axes[1].set_xlabel("iteration", fontsize=17)
+axes[1].set_ylabel(r"$X_i$", fontsize=20, math_fontfamily="stix")
+axes[1].axhline(0, color="gray", linewidth=0.8, linestyle="--")
+for ax in axes:
+    ax.legend(frameon=False, fontsize=12)
+    ax.tick_params(labelsize=12)
+    ax.spines[["top", "right"]].set_visible(False)
+plt.show()
+```
+
+[Acceptance within a mode does not establish exploration of both modes]{.alert}
 
 ## Tuning and diagnostics {.tree-marker-slide tree-marker="statistics"}
 

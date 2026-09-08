@@ -33,14 +33,13 @@ multiple decks.
 
 ## Deck 03 — Markov Chain Monte Carlo
 
-- Keep a transparent NumPy/SciPy Metropolis--Hastings notebook as the core
-  computational treatment. For one separate Bayesian application, prefer
-  PyMC/NUTS with ArviZ if its dependency burden is acceptable; use `emcee` as
-  a lighter fallback, not an additional core requirement.
-- Decide whether Langevin MCMC, hand-built Hamiltonian Monte Carlo, or
-  inherited parallel tempering adds enough to the narrative to retain as an
-  optional extension. Do not accumulate a catalog of packages. Follow the
-  notebook splits in `notebooks/NOTEBOOK_INVENTORY.md`.
+- The course-owned Metropolis, Bayesian, and discrepancy notebooks now retain
+  the non-queueing 2025 material. Parallel tempering follows mode trapping in
+  Metropolis and recurs in the Bayesian application; it is no longer deferred.
+- The Bayesian notebook links the official PyMC API quickstart as an optional
+  supplement. Consider a course-owned PyMC/NUTS extension only after assessing
+  dependency burden and a distinct teaching purpose. Langevin and hand-built
+  Hamiltonian Monte Carlo remain possible later extensions.
 - Modernize the queueing example as its own Deck 03 application notebook and
   evaluate SimPy, possibly with a small shim for a consistent course interface.
 

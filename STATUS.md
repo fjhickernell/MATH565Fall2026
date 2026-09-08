@@ -105,6 +105,13 @@ appropriate phase rather than appended indiscriminately.
         course notebook-page link.
       - [x] Confirm successful Colab execution of `AreWeThereYet.ipynb` and
         `GeneratingSamples.ipynb` (reported by the instructor).
+      - [x] Migrate the complete non-queueing 2025 MCMC material into
+        `MetropolisHastings.ipynb`, `BayesianMCMC.ipynb`, and `Discrepancy.ipynb`.
+        Include the existing acceptance--rejection comparison, separated-mode
+        trapping, parallel tempering, exact posterior benchmarks, and MMD.
+        Validate all three in clean local `qmcpy` kernels and inspect saved figures.
+      - [ ] Complete instructor review and clean-Colab validation of the three
+        MCMC notebooks, then add their Deck 03 and notebook-page links.
     - [ ] Add notebook links only after each target exists and passes
       validation.
       - [x] Link the validated `AreWeThereYet.ipynb` from the Applications
