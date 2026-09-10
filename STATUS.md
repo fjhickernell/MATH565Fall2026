@@ -312,6 +312,11 @@ appropriate phase rather than appended indiscriminately.
   - [x] Add a gold-border applications comparison of direct finance sampling,
     Bayesian MCMC, and event-driven queue simulation, with a multilevel Monte
     Carlo preview and qualifications in speaker notes.
+  - [x] Clarify the frequentist–Fisherian–Bayesian transition with the shared
+    Efron–Hastie citation; distinguish general likelihood from the normal
+    worked example and demote supporting Bayesian/queueing headings.
+  - [x] Add four queue-notebook callouts emphasizing residual times, finite-run
+    averages, blocking, and the distinction between capacity and service rate.
   - [x] Draft Lecture 04, Improving Efficiency, from the Fall 2025 Keynote
     deck, including executable comparisons of sampling designs.
   - [x] Draft Lecture 05, Selected Topics, from the Fall 2025 Keynote deck,

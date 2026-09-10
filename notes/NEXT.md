@@ -53,6 +53,15 @@ applications section now opens with a gold-border comparison of direct finance
 sampling, Bayesian MCMC, and event-driven queue simulation; detailed
 qualifications and optional examples remain in speaker notes.
 
+The instructor-approved inference transition distinguishes frequentist,
+Fisherian/likelihood, and Bayesian perspectives using the shared Efron–Hastie
+reference. MLE is not a prerequisite for Bayes, and normal observations are
+only a worked example in speaker notes. Bayesian and queueing topics each
+retain one level-two heading with supporting continuation slides. The queue
+notebook now highlights residual times, finite-run averages, blocking, and
+capacity versus service rate. Continue the remaining instructor review; these
+edits do not establish approval of the full deck or all four companions.
+
 ## Other pending MATH 565 work
 
 1. Review the Gaussian-mixture section and IID/Sobol' comparison in

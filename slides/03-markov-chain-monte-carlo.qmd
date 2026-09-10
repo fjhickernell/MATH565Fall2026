@@ -638,10 +638,7 @@ The weights $\gamma_\ell$ express [coordinate importance]{.alert}
 - [Direct sampling, MCMC, and event simulation](#direct-sampling-mcmc-and-event-simulation)
 - [Maximum likelihood estimation](#maximum-likelihood-estimation)
 - [Bayesian inference](#bayesian-inference)
-- [Computing posterior summaries](#computing-posterior-summaries)
 - [Queueing systems](#queueing-systems)
-- [Event-driven queue simulation](#event-driven-queue-simulation)
-- [Tracking customer time](#tracking-customer-time)
 
 ## Direct sampling, MCMC, and event simulation {data-state="goldborder"}
 
@@ -695,13 +692,70 @@ Reference for the multilevel preview and payoff-dependent refinement:
 
 ## Maximum likelihood estimation {.tree-marker-slide tree-marker="estimation"}
 
-For parameter $\theta$ and observed data $y$, the likelihood is
+Our Monte Carlo error assessments so far have used a [frequentist perspective]{.alert}
+
+- [Frequentist:]{.alert} assess estimators by repeated-sampling bias, variance, and coverage; no likelihood is required
+- [Fisherian / likelihood:]{.alert} compare parameter values through how well they explain the observed data
+- [Bayesian:]{.alert} combine a sampling model with a prior to describe posterior uncertainty
+
+::: {.key-point}
+These perspectives overlap: MLE can be assessed frequentist-wise, and Bayesian inference also uses likelihood
+:::
+
+[{{< meta references.eh.full >}}]({{< meta references.eh.url >}}), Chapters 2–4
+
+::: {.notes}
+Efron and Hastie distinguish frequentist, Fisherian, and Bayesian traditions in
+[{{< meta references.eh.full >}}]({{< meta references.eh.url >}}),
+Chapters 2–4. The bullets emphasize the aspects relevant to this course, rather
+than giving an exhaustive account of each tradition.
+
+Our sample means, standard errors, and confidence intervals have been evaluated
+through their behavior under repeated sampling. This does not require specifying
+or maximizing a parametric likelihood. For example, a central limit theorem can
+justify an approximate confidence interval without assuming the observations
+themselves are normal.
+
+We now introduce likelihood to explain the ingredients of Bayesian inference.
+Maximizing it is one possible use; multiplying it by a prior is another.
+An MLE is not a prerequisite for Bayes.
+:::
+
+---
+
+### Likelihood and maximum likelihood estimation
+
+The [likelihood]{.alert} is the shared starting point for MLE and Bayesian inference
+
+For observed data $y$ and parameter $\theta$,
 
 $$
 L(\theta;y)=\varrho_{Y\mid\theta}(y\mid\theta)
 $$
 
-The [maximum likelihood estimator]{.alert} maximizes $L(\theta;y)$
+- Use the sampling model's density or probability mass function; [no normality assumption]{.alert}
+- Hold $y$ fixed and compare candidate parameter values $\theta$
+
+The [maximum likelihood estimator]{.alert} selects a maximizer:
+
+$$
+\htheta_{\mathrm{MLE}}\in\operatorname*{arg\,max}_{\theta}L(\theta;y)
+$$
+
+::: {.key-point}
+[MLE:]{.alert} maximize the likelihood for a point estimate<br>
+[Bayesian inference:]{.alert} combine the same likelihood with a prior for a posterior distribution
+:::
+
+::: {.notes}
+MLE is an alternative method of inference, not a required step before Bayes.
+The likelihood is the precursor common to both. Frequentist inference can add
+confidence intervals and other uncertainty assessments; it is not limited to
+point estimation. Bayesian inference can also report point summaries.
+
+The normal model below is one worked example, not an assumption of the general
+likelihood definition. The Bayesian notebook uses a normal observation model
+with known variance to make an exact posterior benchmark available.
 
 For $Y_0,\ldots,Y_{n-1}\ \IIDsim\ \Norm(\mu,\sigma^2)$,
 
@@ -712,6 +766,7 @@ L(\mu,\sigma^2;y)
 \hmu_{\mathrm{MLE}}&=\frac1n\sum_{i=0}^{n-1}y_i,&
 \hsigma^2_{\mathrm{MLE}}&=\frac1n\sum_{i=0}^{n-1}(y_i-\hmu_{\mathrm{MLE}})^2
 \end{align*}
+:::
 
 ## Bayesian inference {.tree-marker-slide tree-marker="prob-est"}
 
@@ -719,7 +774,7 @@ L(\mu,\sigma^2;y)
 - Prior knowledge supplements the data; weak data call for checking sensitivity to the prior
 - Also useful with abundant data
 
-Combine a prior density with the likelihood:
+Keep the sampling likelihood; now add prior information about $\theta$:
 
 \begin{align*}
 \varrho_{\mathrm{post}}(\theta\mid y)
@@ -727,7 +782,9 @@ Combine a prior density with the likelihood:
 &\propto L(\theta;y)\varrho_{\mathrm{prior}}(\theta)
 \end{align*}
 
-## Computing posterior summaries {.tree-marker-slide tree-marker="prob-est"}
+---
+
+### Computing posterior summaries
 
 - The evidence $\varrho_Y(y)$ depends only on the observed data
 - MCMC needs only the [unnormalized posterior]{.alert}
@@ -761,7 +818,9 @@ At each event, either
 - the next customer arrives before service finishes, or
 - the current service finishes before the next arrival
 
-## Event-driven queue simulation {.tree-marker-slide tree-marker="practice"}
+---
+
+### Event-driven queue simulation
 
 ```text
 Initialize A[0] ~ F_A, N[0] = 0, S[0] = infinity
@@ -787,7 +846,9 @@ while the stopping rule is not met:
 
 [Queue simulation companion notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/QueueSimulation.ipynb)
 
-## Tracking customer time {.tree-marker-slide tree-marker="practice"}
+---
+
+### Tracking customer time
 
 Add
 
