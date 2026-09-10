@@ -196,6 +196,10 @@ decks after adding links.
 
 ## Current state
 
+- The regular classroom is PH 109, as confirmed September 10, 2026. The
+  Schedule source is updated and rendered for publication with this checkpoint.
+  The published Canvas Welcome page now displays PH 109 and
+  the Tuesday/Thursday 10:00 AM meeting time; the saved page is verified.
 - `AreWeThereYet.ipynb` and `GeneratingSamples.ipynb` now have consistent
   Colab badges and conditional setup cells. In Colab they clone the current
   course and install the repository's exact recorded `classlib` and `qmcpy`

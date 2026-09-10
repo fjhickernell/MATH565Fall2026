@@ -61,7 +61,7 @@ appropriate phase rather than appended indiscriminately.
     - [x] Verify the August 18 start date and December 3 final regular
       meeting.
     - [x] Mark Thanksgiving Day, November 26, as no class.
-    - [x] Record the classroom as PH 108.
+    - [x] Record the classroom as PH 109 (room change September 10, 2026).
     - [x] Add a TBA final-exam entry for the following week.
     - [x] Leave unknown topics, materials, and additional dates blank.
     - [x] Validate Quarto rendering and generated page structure.
