@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-09-09">
+  <meta name="dcterms.date" content="2026-09-10">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -716,7 +716,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">September 9, 2026</p>
+  <p class="date">September 10, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 center">
 <h1>Course Map</h1>
@@ -1030,7 +1030,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="fbfc1d80" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="ee994780" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1048,7 +1048,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="508ea851" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="8f390f09" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1392,12 +1392,73 @@ K(t,x)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 </div>
 
 <ul>
+<li><a href="#/direct-sampling-mcmc-and-event-simulation">Direct sampling, MCMC, and event simulation</a></li>
 <li><a href="#/maximum-likelihood-estimation">Maximum likelihood estimation</a></li>
 <li><a href="#/bayesian-inference">Bayesian inference</a></li>
+<li><a href="#/computing-posterior-summaries">Computing posterior summaries</a></li>
 <li><a href="#/queueing-systems">Queueing systems</a></li>
 <li><a href="#/event-driven-queue-simulation">Event-driven queue simulation</a></li>
 <li><a href="#/tracking-customer-time">Tracking customer time</a></li>
 </ul>
+</section>
+<section id="direct-sampling-mcmc-and-event-simulation" class="slide level2" data-state="goldborder">
+<h2>Direct sampling, MCMC, and event simulation</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Application</th>
+<th style="text-align: left;">What matters</th>
+<th style="text-align: left;">Natural simulation approach</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Finance: European / Asian options</td>
+<td style="text-align: left;">Finite maturity; terminal value or path average</td>
+<td style="text-align: left;"><span class="alert">Direct sampling</span> of model inputs → independent paths; refine time steps as needed</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bayesian inference</td>
+<td style="text-align: left;">Complicated, concentrated posterior; often known only up to normalization</td>
+<td style="text-align: left;"><span class="alert">MCMC</span> when direct posterior sampling is difficult; mixing still matters</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Queueing: waiting / blocking</td>
+<td style="text-align: left;">Arrival and departure order; interactions at individual events</td>
+<td style="text-align: left;"><span class="alert">Event-driven simulation</span> of the system’s Markov state; no fixed fine time grid</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Finance: couple coarse and fine paths with <a href="05-selected-topics.html#multilevel-monte-carlo">multilevel Monte Carlo</a> later</li>
+<li>Barrier options: fine path detail can matter in finance too</li>
+</ul>
+<div class="key-point">
+<p>Choose by <span class="alert">access to the distribution</span> and <span class="alert">which details affect the answer</span></p>
+</div>
+<aside class="notes">
+<p>The finite horizon makes a finance path a finite collection of random inputs after discretization; it does not by itself make direct sampling easy. In the models used here, Gaussian increments or known transition laws are available, so independent inputs generate independent paths, even though values within each path are dependent and may form a Markov process. Low discrepancy inputs are another choice, but do not give independent paths.</p>
+<p>For geometric Brownian motion, transitions on a chosen grid can be sampled exactly; a European terminal payoff needs no intervening time steps. A continuously averaged Asian payoff still needs control of path-integration error. A barrier payoff can depend critically on crossings between grid points. Refinement and Brownian-bridge corrections address different sources of error. Multilevel Monte Carlo combines many cheap coarse paths with fewer coupled fine-minus-coarse corrections; it is not MCMC.</p>
+<p>A sharp posterior alone does not require MCMC: a narrow normal or a conjugate posterior may be sampled directly. The obstacle is the lack of an effective direct sampler for the posterior geometry, often with only an unnormalized density available. Narrow directions and separated modes can also impede MCMC.</p>
+<p>Queueing belongs here as simulation of a Markov system, not as a claim that Metropolis–Hastings is needed for queues. Event order and state-dependent interactions determine waiting and blocking. Simulate directly from arrival and service laws, advancing to the next event. Both finite-horizon and steady-state questions are possible; steady-state time averages require appropriate time weighting and attention to initialization.</p>
+<p>Additional spoken examples: reliability simulation with directly sampled component lifetimes; inventory systems with event-driven demand and restocking.</p>
+<p>Reference for the multilevel preview and payoff-dependent refinement: <a href="https://people.maths.ox.ac.uk/gilesm/files/opre.pdf">Giles, Multilevel Monte Carlo path simulation</a></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="maximum-likelihood-estimation" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
 <h2>Maximum likelihood estimation</h2>
@@ -1428,12 +1489,26 @@ L(\mu,\sigma^2;y)
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
+<ul>
+<li>Especially useful when <span class="alert">data are limited relative to model complexity</span></li>
+<li>Prior knowledge supplements the data; weak data call for checking sensitivity to the prior</li>
+<li>Also useful with abundant data</li>
+</ul>
 <p>Combine a prior density with the likelihood:</p>
 <p><span class="math display">\[\begin{align*}
 \varrho_{\mathrm{post}}(\theta\mid y)
 &amp;=\frac{L(\theta;y)\varrho_{\mathrm{prior}}(\theta)}{\varrho_Y(y)}\\
 &amp;\propto L(\theta;y)\varrho_{\mathrm{prior}}(\theta)
 \end{align*}\]</span></p>
+</section>
+<section id="computing-posterior-summaries" class="slide level2 tree-marker-slide" data-tree-marker="prob-est">
+<h2>Computing posterior summaries</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
 <ul>
 <li>The evidence <span class="math inline">\(\varrho_Y(y)\)</span> depends only on the observed data</li>
 <li>MCMC needs only the <span class="alert">unnormalized posterior</span></li>
@@ -1454,11 +1529,13 @@ L(\mu,\sigma^2;y)
 
 <p>Consider a single-server queue observed at event times</p>
 <p><span class="math display">\[\begin{align*}
-A_i&amp;=\text{time until the next arrival},&amp; A_i&amp;\sim F_A,\\
+A_i&amp;=\text{time until the next arrival},\\
 N_i&amp;=\text{number of customers in the system},\\
-S_i&amp;=\text{remaining service time},&amp; S_i&amp;\sim F_S
+S_i&amp;=\text{remaining service time}
 \end{align*}\]</span></p>
-<p>The state <span class="math inline">\((A_i,N_i,S_i)\)</span> is Markov when arrival and service times are generated independently from their specified laws</p>
+<p>Draw full interarrival times from <span class="math inline">\(F_A\)</span> and full service times from <span class="math inline">\(F_S\)</span></p>
+<p>Residual times generally have different laws</p>
+<p>The state <span class="math inline">\((A_i,N_i,S_i)\)</span> is Markov when new interarrival and service durations are independent</p>
 <p>At each event, either</p>
 <ul>
 <li>the next customer arrives before service finishes, or</li>
@@ -1472,12 +1549,12 @@ S_i&amp;=\text{remaining service time},&amp; S_i&amp;\sim F_S
   <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
 </div>
 
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="" aria-label="1"></a>Initialize A[0] ~ F_A, N[0] = 0, S[0] ~ F_S</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="" aria-label="1"></a>Initialize A[0] ~ F_A, N[0] = 0, S[0] = infinity</span>
 <span id="cb1-2"><a href="" aria-label="2"></a>while the stopping rule is not met:</span>
 <span id="cb1-3"><a href="" aria-label="3"></a>    if N[i] == 0:</span>
 <span id="cb1-4"><a href="" aria-label="4"></a>        advance to the next arrival</span>
 <span id="cb1-5"><a href="" aria-label="5"></a>        N[i+1] = 1</span>
-<span id="cb1-6"><a href="" aria-label="6"></a>        generate A[i+1] ~ F_A</span>
+<span id="cb1-6"><a href="" aria-label="6"></a>        generate S[i+1] ~ F_S and A[i+1] ~ F_A</span>
 <span id="cb1-7"><a href="" aria-label="7"></a>    elif A[i] &lt; S[i]:</span>
 <span id="cb1-8"><a href="" aria-label="8"></a>        advance to the next arrival</span>
 <span id="cb1-9"><a href="" aria-label="9"></a>        N[i+1] = N[i] + 1</span>
@@ -1487,8 +1564,10 @@ S_i&amp;=\text{remaining service time},&amp; S_i&amp;\sim F_S
 <span id="cb1-13"><a href="" aria-label="13"></a>        advance to the next service completion</span>
 <span id="cb1-14"><a href="" aria-label="14"></a>        N[i+1] = N[i] - 1</span>
 <span id="cb1-15"><a href="" aria-label="15"></a>        A[i+1] = A[i] - S[i]</span>
-<span id="cb1-16"><a href="" aria-label="16"></a>        generate S[i+1] ~ F_S</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-16"><a href="" aria-label="16"></a>        if N[i+1] &gt; 0: generate S[i+1] ~ F_S</span>
+<span id="cb1-17"><a href="" aria-label="17"></a>        else: S[i+1] = infinity</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="alert">Events replace fixed time steps</span>, avoiding work when nothing changes</p>
+<p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/QueueSimulation.ipynb">Queue simulation companion notebook</a></p>
 </section>
 <section id="tracking-customer-time" class="slide level2 tree-marker-slide" data-tree-marker="practice">
 <h2>Tracking customer time</h2>

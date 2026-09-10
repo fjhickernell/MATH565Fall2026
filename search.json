@@ -81,21 +81,21 @@
     "href": "pages/notebooks.html#sampling",
     "title": "Jupyter Notebooks",
     "section": "Sampling",
-    "text": "Sampling\nNotebooks on random and low discrepancy sample generation, acceptance-rejection sampling, conditional Monte Carlo, Markov chain Monte Carlo, and related sampling methods will appear here.\n\nGenerating Samples — construct and transform IID and low discrepancy samples, including binomial, zero-inflated exponential, Gaussian-process, Brownian-motion, and financial-option examples"
+    "text": "Sampling\nNotebooks on random and low discrepancy sample generation, acceptance-rejection sampling, conditional Monte Carlo, Markov chain Monte Carlo, and related sampling methods will appear here.\n\nGenerating Samples — construct and transform IID and low discrepancy samples, including binomial, zero-inflated exponential, Gaussian-process, Brownian-motion, and financial-option examples\nTransport Maps and Acceptance–Rejection — compare transport maps and rejection sampling using scalar and banana-shaped targets\nMetropolis–Hastings — explore proposal scales, repeated states, separated-mode trapping, and parallel tempering"
   },
   {
     "objectID": "pages/notebooks.html#applications",
     "href": "pages/notebooks.html#applications",
     "title": "Jupyter Notebooks",
     "section": "Applications",
-    "text": "Applications\n\nAre We There Yet? — use a travel-time model to explore Monte Carlo convergence, error assessment, quantiles, conditional Monte Carlo, and randomized Sobol sampling\n\nAdditional notebooks will apply Monte Carlo and quasi-Monte Carlo methods to integration, financial options, queueing models, and other examples."
+    "text": "Applications\n\nAre We There Yet? — use a travel-time model to explore Monte Carlo convergence, error assessment, quantiles, conditional Monte Carlo, and randomized Sobol sampling\nBayesian MCMC — compare posterior sampling with exact benchmarks and explore multiple-chain diagnostics and tempering\nQueue Simulation — simulate single-server queues and drive-through blocking with SimPy; compare customer delays, time-average congestion, and stationary benchmarks\n\nAdditional notebooks will apply Monte Carlo and quasi-Monte Carlo methods to integration, financial options, and other examples."
   },
   {
     "objectID": "pages/notebooks.html#performance",
     "href": "pages/notebooks.html#performance",
     "title": "Jupyter Notebooks",
     "section": "Performance",
-    "text": "Performance\nNotebooks examining convergence, discrepancy, accuracy, algorithmic efficiency, and computational performance will appear here."
+    "text": "Performance\n\nDiscrepancy — compare empirical distributions using maximum mean discrepancy, kernel scales, and witness functions"
   },
   {
     "objectID": "index.html",
