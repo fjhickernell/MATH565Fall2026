@@ -706,7 +706,7 @@
 
 <section id="title-slide" data-background-color="#f5f7fb" data-background-image="https://fjhickernell.github.io/MATH565Fall2026/classlib/classlib/quarto/assets/images/normal-scatter.png" data-background-position="top left" data-background-size="55%" class="quarto-title-block center">
   <h1 class="title">MATH 565 — Fall 2026</h1>
-  <p class="subtitle"><span class="deck-title">Markov Chain Monte Carlo</span><br> <span class="deck-meta">Owen, Chapters 11–12</span></p>
+  <p class="subtitle"><span class="deck-title">Markov Chain Monte Carlo</span><br> <span class="deck-meta">Owen, Chapters 6, 8, 11, and 15 (selected topics)<br> Discrepancy: Hickernell, Kirk, Sorokin (2026), Section 5</span></p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -1030,7 +1030,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="de0597c3" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="d12deafe" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1048,7 +1048,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="3aca1551" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="e3d8f6b5" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1099,6 +1099,9 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 <li><a href="#/discrepancy-between-distributions">Discrepancy between distributions</a></li>
 <li><a href="#/empirical-distributions">Empirical distributions</a></li>
 <li><a href="#/unbiased-estimates-of-squared-discrepancy">Unbiased estimates of squared discrepancy</a></li>
+<li><a href="#/relative-entropy-another-comparison">Relative entropy: another comparison</a></li>
+<li><a href="#/stein-discrepancy">Stein discrepancy</a></li>
+<li><a href="#/comparing-distribution-discrepancies">Comparing distribution discrepancies</a></li>
 </ul>
 </section>
 <section id="how-can-we-measure-sample-quality" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
@@ -1137,9 +1140,24 @@ D^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
 <li>the <span class="alert">root mean squared integration error</span> when the integrand is modeled as a Gaussian process with covariance kernel <span class="math inline">\(K\)</span></li>
 </ul>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/Discrepancy.ipynb"><code>Discrepancy</code> companion notebook</a></p>
+<p>Tutorial: <a href="https://arxiv.org/abs/2502.03644">Hickernell, Kirk, Sorokin (2026)</a>, Section 5 — kernel discrepancy and integration error</p>
 <div class="key-point">
 <p>The kernel determines which differences between distributions matter most</p>
 </div>
+<aside class="notes">
+<p>F. J. Hickernell, N. Kirk, &amp; A. G. Sorokin, Quasi-Monte Carlo Methods: What, Why, and How?, in Monte Carlo and Quasi-Monte Carlo Methods: MCQMC, Waterloo, Canada, August 2024, (eds.&nbsp;C. Lemieux and B. Feng), pp.&nbsp;3–40, 2026.</p>
+<p>Section 5.1 develops kernel-defined discrepancy and worst-case error; Section 5.2 treats centered discrepancy; Section 5.5 connects randomized and Bayesian error. These supplement Owen’s Chapter 15 and provide a direct reference for the kernel-based presentation in this deck. The tutorial’s unit-cube formulation is extended here to general target distributions.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="symmetric-positive-definite-kernels" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
 <h2>Symmetric positive definite kernels</h2>
@@ -1231,6 +1249,148 @@ D_{\mathrm{unb}}^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
 <div class="exitem roman">
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span> Let <span class="math inline">\(\{X_i\}_{i=0}^{m-1}\)</span> and <span class="math inline">\(\{Z_j\}_{j=0}^{n-1}\)</span> be independent IID samples from <span class="math inline">\(F_X\)</span> and <span class="math inline">\(F_Z\)</span> <span class="exsub">Take expectations term by term to show <span class="math inline">\(\Ex[D_{\mathrm{unb}}^2]=D^2(F_X,F_Z;K)\)</span></span> <span class="exsub">What is the expectation when <span class="math inline">\(F_X=F_Z\)</span>?</span> <span class="exsub">Why may a realization be negative, and does more negative mean a better match?</span> <span class="exsub">Which step fails when the <span class="math inline">\(X_i\)</span> are successive Metropolis states?</span> </span></p>
 </div>
+</section>
+<section id="relative-entropy-another-comparison" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
+<h2>Relative entropy: another comparison</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+</div>
+
+<p><span class="alert">Kullback–Leibler (KL) divergence</span>, also called <span class="alert">relative entropy</span></p>
+<p>For normalized densities <span class="math inline">\(\varrho_X\)</span> and <span class="math inline">\(\varrho_Z\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+D_{\mathrm{KL}}(F_X\Vert F_Z)
+&amp;=\int_{\mathcal X}\varrho_X(x)
+\log\!\left(\frac{\varrho_X(x)}{\varrho_Z(x)}\right)\,\dif x
+\end{align*}\]</span></p>
+<ul>
+<li>Nonnegative; zero exactly when the distributions agree</li>
+<li>Generally asymmetric; infinite if <span class="math inline">\(F_X\)</span> assigns mass where <span class="math inline">\(F_Z\)</span> assigns none</li>
+<li>Entropy describes one distribution; <span class="alert">relative entropy compares two</span></li>
+<li>Variational inference fits an approximate density by minimizing KL to the target</li>
+</ul>
+<div class="key-point">
+<p>Finite empirical sample versus continuous target: KL is infinite</p>
+<p>Kernel discrepancy compares these directly, without density estimation</p>
+</div>
+<aside class="notes">
+<p>Use natural logarithms and the convention that a zero numerator contributes zero. The density formula assumes a common dominating measure. More generally, KL is infinite unless the first distribution is absolutely continuous with respect to the second. A finite empirical measure and an atomless target are mutually singular, so both KL directions are infinite; density estimation or binning changes the comparison. This does not prevent studying KL convergence of a chain’s marginal law, which is distinct from its empirical measure.</p>
+<p>Variational inference commonly minimizes <span class="math inline">\(D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})\)</span> over a tractable family. It is an optimization alternative to MCMC, not itself an MCMC sampler. An unknown target normalizing constant contributes an additive constant to this objective; it does not prevent optimization, but is needed for its absolute numerical value.</p>
+<p>References: <a href="https://www.stat.cmu.edu/~cshalizi/dm/20/lectures/09/lecture-09.html#entropy-log-likelihood-divergence">Shalizi, Information Theory I, entropy and divergence</a>; <a href="https://arxiv.org/abs/1601.00670">Blei, Kucukelbir, and McAuliffe, Variational Inference: A Review for Statisticians</a></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="stein-discrepancy" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
+<h2>Stein discrepancy</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+</div>
+
+<p>For a smooth positive target density <span class="math inline">\(\varrho_{\mathrm{tar}}(x)=\widetilde\varrho(x)/C\)</span>, the <span class="alert">score</span> removes the unknown normalizing constant</p>
+<p><span class="math display">\[\begin{align*}
+s(x)&amp;=\nabla_x\log\varrho_{\mathrm{tar}}(x)
+=\nabla_x\log\widetilde\varrho(x)\\
+\mathcal T g(x)&amp;=s(x)^\mathsf{T}g(x)+\nabla\!\cdot g(x),
+\qquad \Ex_{\mathrm{tar}}[\mathcal T g(X)]=0
+\end{align*}\]</span></p>
+<ul>
+<li>Stein discrepancy: largest sample violation of this identity over a chosen class of <span class="math inline">\(g\)</span></li>
+<li><span class="alert">Kernel Stein discrepancy (KSD)</span>: use a vector-valued RKHS unit ball</li>
+<li>Computable from candidate points, target scores, and kernel derivatives</li>
+<li>No target reference sample or normalizing constant required</li>
+</ul>
+<div class="key-point">
+<p>Requires smoothness and valid boundary conditions; kernel choice matters</p>
+<p>Some KSDs fail to detect nonconvergence; separated-mode weights can be hard to assess</p>
+</div>
+<aside class="notes">
+<p>This slide describes the common Langevin, score-based Stein operator for a continuous target, not every Stein discrepancy. Here <span class="math inline">\(g\)</span> is a vector field; the identity follows by integration by parts when the boundary term vanishes and the expectations exist. On bounded supports, the function class or operator must enforce the appropriate boundary conditions. Discrete targets require a different operator.</p>
+<p>For candidate points <span class="math inline">\(x_0,\ldots,x_{n-1}\)</span>, the discrepancy is <span class="math inline">\(\sup_{g\in\mathcal G}|n^{-1}\sum_{i=0}^{n-1}\mathcal T g(x_i)|\)</span>. Applying Stein operators to both arguments of a sufficiently smooth base kernel gives a target-dependent Stein kernel and a pairwise-sum formula for KSD squared. Thus KSD is closely related to MMD, using a specially constructed kernel whose target expectation vanishes. It is not a wholly unrelated alternative to kernel discrepancy. Direct pairwise computation is quadratic in sample size.</p>
+<p>Suitable kernels and target assumptions give convergence-determining KSDs; the failure of some kernels is not a universal failure of Stein discrepancy. Weak sensitivity to weights of well-separated modes is a finite-sample testing limitation, distinct from an asymptotic convergence theorem.</p>
+<p>References: <a href="https://proceedings.mlr.press/v48/liub16.html">Liu, Lee, and Jordan (2016)</a>; <a href="https://proceedings.mlr.press/v70/gorham17a.html">Gorham and Mackey (2017)</a>; <a href="https://proceedings.mlr.press/v202/liu23i.html">Liu, Duncan, and Gandy (2023)</a></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="comparing-distribution-discrepancies" class="slide level2">
+<h2>Comparing distribution discrepancies</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Ordinary MMD</th>
+<th style="text-align: left;">KL / relative entropy</th>
+<th style="text-align: left;">Score-based KSD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Normalizing constant</td>
+<td style="text-align: left;">Direct integrals: needed; reference samples: not needed</td>
+<td style="text-align: left;">Value: generally needed; optimization: may drop out</td>
+<td style="text-align: left;">Cancels from the score</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Benefit</td>
+<td style="text-align: left;">Sample comparisons; integration-error meaning</td>
+<td style="text-align: left;">Information-theoretic meaning; variational fitting</td>
+<td style="text-align: left;">No target draws or normalizer</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Limitation</td>
+<td style="text-align: left;">Kernel choice; target integration or reference error</td>
+<td style="text-align: left;">Asymmetry; empirical vs continuous: infinite</td>
+<td style="text-align: left;">Derivatives; boundary, kernel, and mode sensitivity</td>
+</tr>
+</tbody>
+</table>
+<p>With <span class="math inline">\(\varrho_{\mathrm{tar}}=\widetilde\varrho/C\)</span> and approximation density <span class="math inline">\(\varrho_{\mathrm{approx}}\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})
+&amp;=\Ex_{\mathrm{approx}}\!\left[\log\!\left(
+\frac{\varrho_{\mathrm{approx}}(X)}{\widetilde\varrho(X)}\right)\right]+\log C
+\end{align*}\]</span></p>
+<p><span class="alert">Fixed target</span>: <span class="math inline">\(\log C\)</span> does not affect minimization over the approximation</p>
+<aside class="notes">
+<p>The MMD row concerns ordinary kernels, before the Stein construction. Direct target integration requires normalized expectations, although a constant may already be incorporated in an analytic kernel mean or removed by computing a ratio of integrals. Empirical two-sample MMD itself never evaluates a density; obtaining trustworthy target reference draws may still be difficult. In this course, the discrepancy notebook uses independent acceptance–rejection draws as its reference, so the MMD calculation does not use a normalizing constant.</p>
+<p>The KL optimization statement is for a fixed target and the displayed direction. It is not permission to omit a parameter-dependent normalizer when fitting the target model. Density or density-ratio estimators can estimate KL from samples, but that differs from plugging an atomic empirical measure into KL.</p>
+<p>The comparisons concern different quantities; their numerical magnitudes are not interchangeable, and none is automatically a calibrated MCMC stopping rule. References are given in the preceding KL and Stein slide notes.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
 <section id="discrepancy-as-integration-error" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="estimation">

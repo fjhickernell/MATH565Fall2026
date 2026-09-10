@@ -640,7 +640,7 @@
 
 <section id="title-slide" data-background-color="#f5f7fb" data-background-image="https://fjhickernell.github.io/MATH565Fall2026/classlib/classlib/quarto/assets/images/normal-scatter.png" data-background-position="top left" data-background-size="55%" class="quarto-title-block center">
   <h1 class="title">MATH 565 — Fall 2026</h1>
-  <p class="subtitle"><span class="deck-title">Introduction</span><br> <span class="deck-meta">Owen, Chapters 1 and 2 <br> Diagnostic Survey due Aug 21<br> Assignment 1 due Sep 2</span></p>
+  <p class="subtitle"><span class="deck-title">Introduction</span><br> <span class="deck-meta">Owen, Chapters 1–2 and 8<br> Sampling previews: Chapters 10, 15, and 17<br> Diagnostic Survey due Aug 21<br> Assignment 1 due Sep 2</span></p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -1488,6 +1488,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <div class="column" style="width:50%;">
 <ul>
 <li><a href="03-markov-chain-monte-carlo.html#kernel-discrepancy">Kernel discrepancy</a></li>
+<li><a href="03-markov-chain-monte-carlo.html#relative-entropy-another-comparison">Kullback–Leibler (KL) divergence</a></li>
 <li><a href="04-improving-efficiency.html#latin-hypercube-sampling-in-d-dimensions">Latin hypercube sampling</a></li>
 <li><a href="03-markov-chain-monte-carlo.html#maximum-likelihood-estimation">Likelihood</a></li>
 <li><a href="#/laws-of-total-expectation-and-variance">Law of total expectation</a></li>
@@ -1529,6 +1530,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="02-generating-samples.html#the-quantile-transform">Quantile transform</a></li>
 <li><a href="#/random-variables-and-distributions">Random variable</a></li>
 <li><a href="04-improving-efficiency.html#randomized-low-discrepancy-sampling">Randomized low discrepancy sampling</a></li>
+<li><a href="03-markov-chain-monte-carlo.html#relative-entropy-another-comparison">Relative entropy</a></li>
 <li><a href="03-markov-chain-monte-carlo.html#a-reproducing-kernel-hilbert-space">Reproducing kernel Hilbert space</a></li>
 <li><a href="#/under-random-sampling">Root mean squared error (RMSE)</a></li>
 </ul>
@@ -1539,6 +1541,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="#/sampling">Sample variance</a></li>
 <li><a href="#/shrinkage-estimators">Shrinkage estimator</a></li>
 <li><a href="#/moments-of-random-variables">Standard deviation</a></li>
+<li><a href="03-markov-chain-monte-carlo.html#stein-discrepancy">Stein discrepancy</a></li>
 <li><a href="05-selected-topics.html#stochastic-gradient-descent">Stochastic gradient descent</a></li>
 <li><a href="03-markov-chain-monte-carlo.html#symmetric-positive-definite-kernels">Symmetric positive definite kernel</a></li>
 <li><a href="02-generating-samples.html#transport-maps">Target distribution</a></li>
@@ -1736,7 +1739,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points<br>Compare how its <span class="math inline">\(x_1\)</span>–<span class="math inline">\(x_2\)</span> projection fills the unit square</p>
-<div id="1e5debd0" class="cell" data-execution_count="4">
+<div id="c2e2f0e6" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1749,7 +1752,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="grid-n64">Grid, <span class="math inline">\(n=64\)</span></h3>
-<div id="bb883605" class="cell" data-execution_count="5">
+<div id="cec86516" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1762,7 +1765,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="orthogonal-array-n64">Orthogonal array, <span class="math inline">\(n=64\)</span></h3>
-<div id="afc6acf0" class="cell" data-execution_count="6">
+<div id="4a68b0e0" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1775,7 +1778,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="iid-n64">IID, <span class="math inline">\(n=64\)</span></h3>
-<div id="6202e65b" class="cell" data-execution_count="7">
+<div id="102fd6a1" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1788,7 +1791,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="scrambled-sobol-n64">Scrambled Sobol’, <span class="math inline">\(n=64\)</span></h3>
-<div id="89bdcc3e" class="cell" data-execution_count="8">
+<div id="ffe0d37a" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
