@@ -1030,7 +1030,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="ee994780" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="de0597c3" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1048,7 +1048,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="8f390f09" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="3aca1551" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1395,10 +1395,7 @@ K(t,x)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 <li><a href="#/direct-sampling-mcmc-and-event-simulation">Direct sampling, MCMC, and event simulation</a></li>
 <li><a href="#/maximum-likelihood-estimation">Maximum likelihood estimation</a></li>
 <li><a href="#/bayesian-inference">Bayesian inference</a></li>
-<li><a href="#/computing-posterior-summaries">Computing posterior summaries</a></li>
 <li><a href="#/queueing-systems">Queueing systems</a></li>
-<li><a href="#/event-driven-queue-simulation">Event-driven queue simulation</a></li>
-<li><a href="#/tracking-customer-time">Tracking customer time</a></li>
 </ul>
 </section>
 <section id="direct-sampling-mcmc-and-event-simulation" class="slide level2" data-state="goldborder">
@@ -1467,11 +1464,54 @@ K(t,x)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>For parameter <span class="math inline">\(\theta\)</span> and observed data <span class="math inline">\(y\)</span>, the likelihood is</p>
+<p>Our Monte Carlo error assessments so far have used a <span class="alert">frequentist perspective</span></p>
+<ul>
+<li><span class="alert">Frequentist:</span> assess estimators by repeated-sampling bias, variance, and coverage; no likelihood is required</li>
+<li><span class="alert">Fisherian / likelihood:</span> compare parameter values through how well they explain the observed data</li>
+<li><span class="alert">Bayesian:</span> combine a sampling model with a prior to describe posterior uncertainty</li>
+</ul>
+<div class="key-point">
+<p>These perspectives overlap: MLE can be assessed frequentist-wise, and Bayesian inference also uses likelihood</p>
+</div>
+<p><a href="https://hastie.su.domains/CASI/">B. Efron &amp; T. Hastie, <em>Computer Age Statistical Inference</em> (2016)</a>, Chapters 2–4</p>
+<aside class="notes">
+<p>Efron and Hastie distinguish frequentist, Fisherian, and Bayesian traditions in <a href="https://hastie.su.domains/CASI/">B. Efron &amp; T. Hastie, <em>Computer Age Statistical Inference</em> (2016)</a>, Chapters 2–4. The bullets emphasize the aspects relevant to this course, rather than giving an exhaustive account of each tradition.</p>
+<p>Our sample means, standard errors, and confidence intervals have been evaluated through their behavior under repeated sampling. This does not require specifying or maximizing a parametric likelihood. For example, a central limit theorem can justify an approximate confidence interval without assuming the observations themselves are normal.</p>
+<p>We now introduce likelihood to explain the ingredients of Bayesian inference. Maximizing it is one possible use; multiplying it by a prior is another. An MLE is not a prerequisite for Bayes.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="likelihood-and-maximum-likelihood-estimation">Likelihood and maximum likelihood estimation</h3>
+<p>The <span class="alert">likelihood</span> is the shared starting point for MLE and Bayesian inference</p>
+<p>For observed data <span class="math inline">\(y\)</span> and parameter <span class="math inline">\(\theta\)</span>,</p>
 <p><span class="math display">\[
 L(\theta;y)=\varrho_{Y\mid\theta}(y\mid\theta)
 \]</span></p>
-<p>The <span class="alert">maximum likelihood estimator</span> maximizes <span class="math inline">\(L(\theta;y)\)</span></p>
+<ul>
+<li>Use the sampling model’s density or probability mass function; <span class="alert">no normality assumption</span></li>
+<li>Hold <span class="math inline">\(y\)</span> fixed and compare candidate parameter values <span class="math inline">\(\theta\)</span></li>
+</ul>
+<p>The <span class="alert">maximum likelihood estimator</span> selects a maximizer:</p>
+<p><span class="math display">\[
+\htheta_{\mathrm{MLE}}\in\operatorname*{arg\,max}_{\theta}L(\theta;y)
+\]</span></p>
+<div class="key-point">
+<p><span class="alert">MLE:</span> maximize the likelihood for a point estimate<br> <span class="alert">Bayesian inference:</span> combine the same likelihood with a prior for a posterior distribution</p>
+</div>
+<aside class="notes">
+<p>MLE is an alternative method of inference, not a required step before Bayes. The likelihood is the precursor common to both. Frequentist inference can add confidence intervals and other uncertainty assessments; it is not limited to point estimation. Bayesian inference can also report point summaries.</p>
+<p>The normal model below is one worked example, not an assumption of the general likelihood definition. The Bayesian notebook uses a normal observation model with known variance to make an exact posterior benchmark available.</p>
 <p>For <span class="math inline">\(Y_0,\ldots,Y_{n-1}\ \IIDsim\ \Norm(\mu,\sigma^2)\)</span>,</p>
 <p><span class="math display">\[\begin{align*}
 L(\mu,\sigma^2;y)
@@ -1480,6 +1520,17 @@ L(\mu,\sigma^2;y)
 \hmu_{\mathrm{MLE}}&amp;=\frac1n\sum_{i=0}^{n-1}y_i,&amp;
 \hsigma^2_{\mathrm{MLE}}&amp;=\frac1n\sum_{i=0}^{n-1}(y_i-\hmu_{\mathrm{MLE}})^2
 \end{align*}\]</span></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="bayesian-inference" class="slide level2 tree-marker-slide" data-tree-marker="prob-est">
 <h2>Bayesian inference</h2>
@@ -1494,21 +1545,16 @@ L(\mu,\sigma^2;y)
 <li>Prior knowledge supplements the data; weak data call for checking sensitivity to the prior</li>
 <li>Also useful with abundant data</li>
 </ul>
-<p>Combine a prior density with the likelihood:</p>
+<p>Keep the sampling likelihood; now add prior information about <span class="math inline">\(\theta\)</span>:</p>
 <p><span class="math display">\[\begin{align*}
 \varrho_{\mathrm{post}}(\theta\mid y)
 &amp;=\frac{L(\theta;y)\varrho_{\mathrm{prior}}(\theta)}{\varrho_Y(y)}\\
 &amp;\propto L(\theta;y)\varrho_{\mathrm{prior}}(\theta)
 \end{align*}\]</span></p>
 </section>
-<section id="computing-posterior-summaries" class="slide level2 tree-marker-slide" data-tree-marker="prob-est">
-<h2>Computing posterior summaries</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
-</div>
+<section class="slide level2">
 
+<h3 id="computing-posterior-summaries">Computing posterior summaries</h3>
 <ul>
 <li>The evidence <span class="math inline">\(\varrho_Y(y)\)</span> depends only on the observed data</li>
 <li>MCMC needs only the <span class="alert">unnormalized posterior</span></li>
@@ -1542,13 +1588,9 @@ S_i&amp;=\text{remaining service time}
 <li>the current service finishes before the next arrival</li>
 </ul>
 </section>
-<section id="event-driven-queue-simulation" class="slide level2 tree-marker-slide" data-tree-marker="practice">
-<h2>Event-driven queue simulation</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
-</div>
+<section class="slide level2">
 
+<h3 id="event-driven-queue-simulation">Event-driven queue simulation</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="" aria-label="1"></a>Initialize A[0] ~ F_A, N[0] = 0, S[0] = infinity</span>
 <span id="cb1-2"><a href="" aria-label="2"></a>while the stopping rule is not met:</span>
 <span id="cb1-3"><a href="" aria-label="3"></a>    if N[i] == 0:</span>
@@ -1569,13 +1611,9 @@ S_i&amp;=\text{remaining service time}
 <p><span class="alert">Events replace fixed time steps</span>, avoiding work when nothing changes</p>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/QueueSimulation.ipynb">Queue simulation companion notebook</a></p>
 </section>
-<section id="tracking-customer-time" class="slide level2 tree-marker-slide" data-tree-marker="practice">
-<h2>Tracking customer time</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
-</div>
+<section class="slide level2">
 
+<h3 id="tracking-customer-time">Tracking customer time</h3>
 <p>Add</p>
 <p><span class="math display">\[\begin{align*}
 T_i&amp;=\text{total elapsed time},\\
