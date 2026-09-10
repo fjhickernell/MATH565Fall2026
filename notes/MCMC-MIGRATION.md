@@ -52,6 +52,29 @@ settings; the separate bounded-banana comparison retains its existing settings.
 
 ## Discrepancy reference and interpretation
 
+The discrepancy explanation links the Hickernell–Kirk–Sorokin tutorial,
+Section 5, using the existing shared reference metadata. The title-slide
+reading audit and notebook-specific Owen mapping are recorded in
+`notes/OWEN-COVERAGE-AUDIT.md`; Chapter 12 is no longer presented as current
+MCMC coverage because Gibbs sampling is not developed here.
+
+Deck 03 now briefly compares kernel discrepancy with relative entropy
+(Kullback–Leibler divergence), including asymmetry, the infinite KL between
+a finite empirical measure and an atomless target, and a variational-inference
+preview. Speaker notes distinguish the chain's marginal law from its empirical
+measure and link the supporting references. The cumulative Deck 01 index links
+KL divergence and relative entropy to this slide; no KL notebook estimator is
+introduced. The objective comparison now also introduces score-based kernel
+Stein discrepancy, its cancellation of target normalizers, and its smoothness,
+boundary, kernel, and separated-mode limitations, with primary references.
+A comparison table distinguishes direct-integration MMD from reference-sample
+MMD and KL's absolute value from fixed-target variational optimization. KSD's
+relationship to MMD is explained in speaker notes. The index also links Stein
+discrepancy; these additions do not introduce a KSD notebook implementation.
+The KL, Stein, and comparison slides close the Kernel Discrepancy section,
+after empirical MMD and its unbiased-estimator exercise and before Discrepancy
+as Integration Error, so ordinary kernel discrepancy is developed first.
+
 Current instructor-selected settings are 1,000 candidate states, 10,000
 independent AR reference points, and 1,000 burn-in states. Exact blocked kernel
 sums limit memory; cached reference self-sums avoid repeating that work for each
@@ -79,12 +102,13 @@ figures; reruns of the three existing companions were saved only to temporary
 validation copies to preserve the instructor’s current outputs. Independent numerical
 checks cover the bounded-target integral and mean, rejected-state retention,
 joint-density swap algebra and state exchange, kernel identities, and exact
-posterior normalization. Instructor content review remains pending. Deck 03 and
+posterior normalization. Instructor content review of Deck 03 and all four companions was completed
+on September 10, 2026. Deck 03 and
 the notebook page link all four companions, with sources and helpers included
 in the same checkpoint. The instructor accepts the established Colab setup without
 separate clean-Colab validation and will address problems when they arise. Keep
 both helpers published with the notebooks. The queue companion and its links are
-ready for instructor review.
+instructor-reviewed.
 
 ## Queueing companion
 

@@ -2,8 +2,20 @@
 
 ## Current task
 
-Finish instructor review of the prepared Deck 03 notebook family, beginning
-with the new queueing companion:
+Prepare Test 1 for September 15, covering Introduction and Generating Samples;
+finalize the room, test PDF, and Canvas entry. Remaining notebook and later-deck
+work is listed below.
+
+Deck 03 now closes its Kernel Discrepancy section with KL/relative entropy,
+Stein discrepancy, and the normalizing-constant comparison before integration
+error. Preserve that order and the Hickernell–Kirk–Sorokin Section 5 citation.
+The revised Decks 01–03 readings and seven-notebook audit are recorded in
+`notes/OWEN-COVERAGE-AUDIT.md`.
+
+## Completed Deck 03 review
+
+The instructor confirmed on September 10, 2026 that Deck 03 and all four
+companions are reviewed, and that the September 10 lectures are prepared:
 
 - `notebooks/sampling/MetropolisHastings.ipynb`: compare with the already taught
   acceptance--rejection method; study trapping and then parallel tempering.
@@ -22,7 +34,7 @@ retention, swap ratios, exact posterior algebra, and kernel identities. The
 source map and corrections are recorded in `notes/MCMC-MIGRATION.md`.
 
 Deck 03 and `pages/notebooks.qmd` now link all four companions, with their
-sources and helpers included in the same checkpoint. Instructor content review remains pending.
+sources and helpers included in the same checkpoint. Instructor content review is complete.
 By instructor decision, separate clean-Colab execution is no longer a publication
 prerequisite: rely on the established setup and address problems when reported.
 Keep `notebooks/mcmc_examples.py` published with the notebooks. The official
@@ -44,7 +56,7 @@ transition denominators, and percentages throughout, distinguishes whole-run
 from retained-state summaries, and explains why repeated states must remain in
 the empirical distribution.
 
-Continue the instructor-led Deck 03 review. The September 8 schedule now names
+Deck 03 review is complete. The September 8 schedule names
 Markov chain Monte Carlo and links Deck 03. Recent slide revisions include the
 global construction/local decision contrast, gold-border Markov definition,
 asymptotic-distribution motivation, compact martingale note, joint-density
@@ -59,50 +71,43 @@ reference. MLE is not a prerequisite for Bayes, and normal observations are
 only a worked example in speaker notes. Bayesian and queueing topics each
 retain one level-two heading with supporting continuation slides. The queue
 notebook now highlights residual times, finite-run averages, blocking, and
-capacity versus service rate. Continue the remaining instructor review; these
-edits do not establish approval of the full deck or all four companions.
+capacity versus service rate. The instructor has now confirmed review of the
+full deck and all four companions.
 
 ## Other pending MATH 565 work
 
-1. Review the Gaussian-mixture section and IID/Sobol' comparison in
-   `GeneratingSamples.ipynb` with the instructor.
-2. Return later this term to the Deck 02 mixture and acceptance--rejection
+1. Return later this term to the Deck 02 mixture and acceptance--rejection
    integral formulations over an enlarged space including the decision
    variable; see `notes/TODO-LATER.md`. This remains deferred for now.
-3. Review the revised advanced-direct-sampling sequence: transport maps,
+2. Review the revised advanced-direct-sampling sequence: transport maps,
    acceptance--rejection, the reusable \(\operatorname{Beta}(2,1)\) scalar
    example, and the proposed companion-notebook treatment. Confirm that the
    target/proposal
    roles and their $\varrho_{\mathrm{tar}}$ and
    $\varrho_{\mathrm{prop}}$ notation read consistently across transport,
    importance sampling, and MCMC.
-4. Give Deck 02 a final instructor-led polish pass, including its notebook
+3. Give Deck 02 a final instructor-led polish pass, including its notebook
    links and the relationship between the lecture and retained notebooks.
-5. Review Deck 03 individually, beginning with its scope, section sequence,
-   and mathematical emphasis before detailed layout polishing.
-6. Review Deck 04 and then Deck 05 using the same instructor-led process.
-7. Create or adapt the Microsoft Bookings pages for Fall 2026 presenter and
+4. Review Deck 04 and then Deck 05 using the same instructor-led process.
+5. Create or adapt the Microsoft Bookings pages for Fall 2026 presenter and
    observer sign-ups, following the separate-page workflow used in Fall 2025,
    and add the finalized links and procedures to the project page.
-8. Complete the remaining Fall 2026 logistics and student-facing page details,
+6. Complete the remaining Fall 2026 logistics and student-facing page details,
    including the seminar link, assignments, tests, project dates, and visible
    browser review.
 
-Deck 03 review and its new Metropolis--Hastings companion are now active for
-September 8. The remaining Deck 02 notebook review and polish work stays pending;
-starting Deck 03 does not establish completion of those earlier items.
+Deck 03 and its four companions are reviewed. The instructor has also closed
+the remaining Deck 02 companion-notebook task.
 
-## Pending Deck 02 notebook work
+## Deck 02 notebook work — closed September 10, 2026
 
-Complete the GeneratingSamples instructor review. The approved combined
-transport-map and acceptance--rejection notebook is now linked on the notebook page. The
-QMCPy-native sampler substitution and local validation are complete.
-Keep this Deck 02 work separate from the still-separate
-`FinancialOptionPayoffs.ipynb` migration.
-
-The broader Deck 02 milestone also includes the financial-payoff notebook, an
-instructor review of every retained companion, and the deck's final polish pass
-before Deck 03 review begins.
+The instructor confirmed that the remaining companion-notebook task is done,
+including review of the Gaussian-mixture and IID/Sobol' sections in
+`GeneratingSamples.ipynb`. The combined transport/acceptance--rejection
+companion is already reviewed, validated, and linked. The previously planned
+separate `FinancialOptionPayoffs.ipynb` does not exist; its creation is no
+longer an outstanding requirement for this completed task. Do not reopen the
+task solely because that planned file is absent.
 
 ## QMCPy acceptance--rejection state
 
@@ -281,7 +286,7 @@ decks after adding links.
 - `notebooks/NOTEBOOK_INVENTORY.md` now records the deck-to-notebook plan. It
   keeps `GeneratingSamples.ipynb` as a survey with a compact mixture section,
   combines transport maps and acceptance--rejection in one focused companion,
-  retains a separate financial-payoff companion, and splits the inherited
+  originally proposed a separate financial-payoff companion, and splits the inherited
   Asian-option and MCMC omnibus material across Decks 02--04 by teaching
   purpose. Deck assignments identify previews, main developments,
   continuations, and retrospective calls rather than exclusive ownership;
@@ -292,7 +297,7 @@ decks after adding links.
   analytic density. Its low discrepancy section now compares IID and
   randomized Sobol' sampling using CDF errors and 32 independent repetitions,
   with fitted power-law trends for the median maximum CDF errors.
-  Instructor review remains pending; the instructor reports successful Colab
+  Instructor review is complete; the instructor reports successful Colab
   execution of the notebook.
 - `TransportMapsAndAcceptanceRejection.ipynb` is now drafted with transport
   first: the Beta(2,1) map, the unbounded triangular flow, the Bayes
@@ -323,7 +328,8 @@ decks after adding links.
 - `slides/05-selected-topics.qmd` is a full first-pass conversion covering
   parallel computing, gradient and stochastic-gradient descent, and two-level
   and multilevel Monte Carlo. It adds an executable gradient-path comparison.
-- Decks 03–05 are converted first drafts, not instructor-reviewed final decks.
+- Deck 03 and its four companions are instructor-reviewed as of September 10,
+  2026. Decks 04–05 remain first drafts awaiting instructor review.
 - MCTS is assigned to Deck 05, Selected Topics. It remains parked until that
   deck's review.
 - The root website and all five decks render with the `qmcpy` kernel, and the
@@ -335,17 +341,15 @@ decks after adding links.
   decision, and deferred-work notes. A read-only Intel audit found no
   unpublished work, commits, stashes, or dirty submodules there.
 
-## Later questions for Deck 03
+## Optional later reference work for Deck 03
 
-- Does Deck 03 have the right scope, section sequence, and mathematical
-  emphasis for Fall 2026?
 - Should the Hickernell (1998) and Gretton et al. (2012) discrepancy references
   be added to shared `classlib` metadata and cited in Deck 03?
 
 ## Constraints
 
-- Treat Decks 03–05 as first drafts for individual instructor review, not as
-  final approvals of scope or visible layout.
+- Treat Decks 04–05 as first drafts for individual instructor review. Deck 03
+  and its four companions have completed instructor review.
 - Use Decks 01 and 02 as the local presentation and navigation prototypes
   without reopening their approved lecture content during Deck 03 review.
 - Strip out Fall 2025-specific logistics, including references to that
@@ -359,13 +363,13 @@ decks after adding links.
   layout, semantic emphasis, and gaps in visual explanation.
 - Keep MCTS in Deck 05, Selected Topics, rather than the MCMC deck.
 
-## Current notebook handoff complete when
+## Deck 03 notebook handoff — complete September 10, 2026
 
 - All four Deck 03 companions are instructor-reviewed; local validation is complete.
-- Their added notebook-page links are rendered and published through the normal
-  Checkpoint workflow. Separate clean-Colab validation is not required.
+- Their notebook-page links are rendered and published. Separate clean-Colab
+  validation is not required.
 
-## Remaining Deck 02 completion criteria
+## Deck 02 maintenance and later polish
 
 - Preserve the recorded-commit Colab setup and address reported runtime problems;
   separate clean-Colab execution is not a publication prerequisite.
@@ -374,5 +378,5 @@ decks after adding links.
   `qmcpy` kernel, and linked appropriately; decisions to combine or omit other
   inherited notebooks are recorded.
 - Deck 02 has received its polish pass for the current stage, renders cleanly,
-  and is ready to advance to Deck 03 review; later decks may add calls to the
+  independently of the completed Deck 03 review; later decks may add calls to the
   same notebooks or motivate coherent extensions.

@@ -97,6 +97,10 @@ appropriate phase rather than appended indiscriminately.
         `TransportMapsAndAcceptanceRejection.ipynb` from the Deck 02 transport
         sequence and a narrowed migration of the inherited
         acceptance--rejection notebook.
+      - [x] Close the remaining Deck 02 companion-notebook task, including
+        GeneratingSamples mixture and IID/Sobol' review (September 10, 2026).
+        The proposed separate financial-payoff notebook was not created; it
+        is no longer an outstanding requirement for this task.
       - [x] Complete instructor review of the combined transport/acceptance--rejection
         notebook and add its Colab badge and Deck 02 links.
       - [x] Use pinned QMCPy-native acceptance--rejection for both targets;
@@ -118,14 +122,14 @@ appropriate phase rather than appended indiscriminately.
         companion notebook, with an exercise distinguishing IID and MCMC pairs.
       - [x] Add the three MCMC notebook-page links under the instructor’s
         policy accepting the established Colab setup without separate validation.
-      - [ ] Complete instructor content review of the three MCMC notebooks.
+      - [x] Complete instructor content review of the three MCMC notebooks.
       - [x] Migrate `QueueSimulation.ipynb` using SimPy for single-server and
         drive-through blocking models, with finite-run accounting and benchmark
         comparisons; add its notebook-page and Deck 03 links.
       - [x] Add eight deterministic checks for queue paths, blocking, accounting,
         and stopping rules; validate all four Deck 03 companions in clean local
         kernels without warnings and inspect the queue notebook’s four figures.
-      - [ ] Complete instructor content review of the queueing companion.
+      - [x] Complete instructor content review of the queueing companion.
     - [ ] Add notebook links only after each target exists and passes
       validation.
       - [x] Link the validated `AreWeThereYet.ipynb` from the Applications
@@ -317,12 +321,21 @@ appropriate phase rather than appended indiscriminately.
     worked example and demote supporting Bayesian/queueing headings.
   - [x] Add four queue-notebook callouts emphasizing residual times, finite-run
     averages, blocking, and the distinction between capacity and service rate.
+  - [x] Compare ordinary kernel discrepancy, KL/relative entropy, and
+    score-based Stein discrepancy, including normalizing constants and
+    limitations; place alternatives after empirical MMD and cite the
+    Hickernell–Kirk–Sorokin tutorial for the kernel/error development.
+  - [x] Audit all seven notebooks through MCMC against Owen's available
+    chapters, update Decks 01–03 title readings, and record the detailed
+    mapping in `notes/OWEN-COVERAGE-AUDIT.md`.
   - [x] Draft Lecture 04, Improving Efficiency, from the Fall 2025 Keynote
     deck, including executable comparisons of sampling designs.
   - [x] Draft Lecture 05, Selected Topics, from the Fall 2025 Keynote deck,
     including parallel computation, stochastic gradient descent, and
     multilevel Monte Carlo.
-  - [ ] Review Lectures 03–05 individually with the instructor and refine
+  - [x] Complete instructor review of Lecture 03 and its four companions
+    (September 10, 2026).
+  - [ ] Review Lectures 04–05 individually with the instructor and refine
     their scope, narrative, examples, and visible layout.
   - [ ] Include Markov chain tree search (MCTS) in Deck 05, Selected Topics.
 - [ ] Adapt course pages and policies to the authoritative repository.

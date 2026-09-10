@@ -17,7 +17,8 @@ include-after-body:
 
 subtitle: |
   <span class="deck-title">{{< meta deck_title >}}</span><br>
-  <span class="deck-meta">{{< meta texts.owen.short >}}, Chapters 11–12</span>
+  <span class="deck-meta">{{< meta texts.owen.short >}}, Chapters 6, 8, 11, and 15 (selected topics)<br>
+  Discrepancy: {{< meta papers.hickirsor_2026_qmc_tutorial.short >}}, Section 5</span>
 ---
 
 # Course Map
@@ -384,6 +385,9 @@ Diagnose both [exploration]{.alert} of the full state space and [concentration]{
 - [Discrepancy between distributions](#discrepancy-between-distributions)
 - [Empirical distributions](#empirical-distributions)
 - [Unbiased estimates of squared discrepancy](#unbiased-estimates-of-squared-discrepancy)
+- [Relative entropy: another comparison](#relative-entropy-another-comparison)
+- [Stein discrepancy](#stein-discrepancy)
+- [Comparing distribution discrepancies](#comparing-distribution-discrepancies)
 
 ## How can we measure sample quality? {.tree-marker-slide tree-marker="low-discrepancy"}
 
@@ -410,8 +414,20 @@ Kernel discrepancy measures
 
 [`Discrepancy` companion notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/Discrepancy.ipynb)
 
+Tutorial: [{{< meta papers.hickirsor_2026_qmc_tutorial.short >}}]({{< meta papers.hickirsor_2026_qmc_tutorial.arxiv_url >}}), Section 5 — kernel discrepancy and integration error
+
 ::: {.key-point}
 The kernel determines which differences between distributions matter most
+:::
+
+::: {.notes}
+{{< meta papers.hickirsor_2026_qmc_tutorial.full >}}
+
+Section 5.1 develops kernel-defined discrepancy and worst-case error;
+Section 5.2 treats centered discrepancy; Section 5.5 connects randomized
+and Bayesian error. These supplement Owen's Chapter 15 and provide a direct
+reference for the kernel-based presentation in this deck. The tutorial's
+unit-cube formulation is extended here to general target distributions.
 :::
 
 ## Symmetric positive definite kernels {.tree-marker-slide tree-marker="statistics"}
@@ -503,6 +519,135 @@ Let $\{X_i\}_{i=0}^{m-1}$ and $\{Z_j\}_{j=0}^{n-1}$ be independent IID samples f
 <span class="exsub">Why may a realization be negative, and does more negative mean a better match?</span>
 <span class="exsub">Which step fails when the $X_i$ are successive Metropolis states?</span>
 </span>
+:::
+
+## Relative entropy: another comparison {.tree-marker-slide tree-marker="statistics"}
+
+[Kullback–Leibler (KL) divergence]{.alert}, also called [relative entropy]{.alert}
+
+For normalized densities $\varrho_X$ and $\varrho_Z$,
+
+\begin{align*}
+D_{\mathrm{KL}}(F_X\Vert F_Z)
+&=\int_{\mathcal X}\varrho_X(x)
+\log\!\left(\frac{\varrho_X(x)}{\varrho_Z(x)}\right)\,\dif x
+\end{align*}
+
+- Nonnegative; zero exactly when the distributions agree
+- Generally asymmetric; infinite if $F_X$ assigns mass where $F_Z$ assigns none
+- Entropy describes one distribution; [relative entropy compares two]{.alert}
+- Variational inference fits an approximate density by minimizing KL to the target
+
+::: {.key-point}
+Finite empirical sample versus continuous target: KL is infinite
+
+Kernel discrepancy compares these directly, without density estimation
+:::
+
+::: {.notes}
+Use natural logarithms and the convention that a zero numerator contributes
+zero. The density formula assumes a common dominating measure. More generally,
+KL is infinite unless the first distribution is absolutely continuous with
+respect to the second. A finite empirical measure and an atomless target are
+mutually singular, so both KL directions are infinite; density estimation or
+binning changes the comparison. This does not prevent studying KL convergence
+of a chain's marginal law, which is distinct from its empirical measure.
+
+Variational inference commonly minimizes
+$D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})$ over a tractable
+family. It is an optimization alternative to MCMC, not itself an MCMC sampler.
+An unknown target normalizing constant contributes an additive constant to
+this objective; it does not prevent optimization, but is needed for its
+absolute numerical value.
+
+References: [Shalizi, Information Theory I, entropy and divergence](https://www.stat.cmu.edu/~cshalizi/dm/20/lectures/09/lecture-09.html#entropy-log-likelihood-divergence);
+[Blei, Kucukelbir, and McAuliffe, Variational Inference: A Review for Statisticians](https://arxiv.org/abs/1601.00670)
+:::
+
+## Stein discrepancy {.tree-marker-slide tree-marker="statistics"}
+
+For a smooth positive target density $\varrho_{\mathrm{tar}}(x)=\widetilde\varrho(x)/C$,
+the [score]{.alert} removes the unknown normalizing constant
+
+\begin{align*}
+s(x)&=\nabla_x\log\varrho_{\mathrm{tar}}(x)
+=\nabla_x\log\widetilde\varrho(x)\\
+\mathcal T g(x)&=s(x)^\mathsf{T}g(x)+\nabla\!\cdot g(x),
+\qquad \Ex_{\mathrm{tar}}[\mathcal T g(X)]=0
+\end{align*}
+
+- Stein discrepancy: largest sample violation of this identity over a chosen class of $g$
+- [Kernel Stein discrepancy (KSD)]{.alert}: use a vector-valued RKHS unit ball
+- Computable from candidate points, target scores, and kernel derivatives
+- No target reference sample or normalizing constant required
+
+::: {.key-point}
+Requires smoothness and valid boundary conditions; kernel choice matters
+
+Some KSDs fail to detect nonconvergence; separated-mode weights can be hard to assess
+:::
+
+::: {.notes}
+This slide describes the common Langevin, score-based Stein operator for a
+continuous target, not every Stein discrepancy. Here $g$ is a vector field;
+the identity follows by integration by parts when the boundary term vanishes
+and the expectations exist. On bounded supports, the function class or operator
+must enforce the appropriate boundary conditions. Discrete targets require a
+different operator.
+
+For candidate points $x_0,\ldots,x_{n-1}$, the discrepancy is
+$\sup_{g\in\mathcal G}|n^{-1}\sum_{i=0}^{n-1}\mathcal T g(x_i)|$.
+Applying Stein operators to both arguments of a sufficiently smooth base kernel
+gives a target-dependent Stein kernel and a pairwise-sum formula for KSD squared.
+Thus KSD is closely related to MMD, using a specially constructed kernel whose
+target expectation vanishes. It is not a wholly unrelated alternative to
+kernel discrepancy. Direct pairwise computation is quadratic in sample size.
+
+Suitable kernels and target assumptions give convergence-determining KSDs;
+the failure of some kernels is not a universal failure of Stein discrepancy.
+Weak sensitivity to weights of well-separated modes is a finite-sample testing
+limitation, distinct from an asymptotic convergence theorem.
+
+References: [Liu, Lee, and Jordan (2016)](https://proceedings.mlr.press/v48/liub16.html);
+[Gorham and Mackey (2017)](https://proceedings.mlr.press/v70/gorham17a.html);
+[Liu, Duncan, and Gandy (2023)](https://proceedings.mlr.press/v202/liu23i.html)
+:::
+
+## Comparing distribution discrepancies
+
+| | Ordinary MMD | KL / relative entropy | Score-based KSD |
+|:--|:--|:--|:--|
+| Normalizing constant | Direct integrals: needed; reference samples: not needed | Value: generally needed; optimization: may drop out | Cancels from the score |
+| Benefit | Sample comparisons; integration-error meaning | Information-theoretic meaning; variational fitting | No target draws or normalizer |
+| Limitation | Kernel choice; target integration or reference error | Asymmetry; empirical vs continuous: infinite | Derivatives; boundary, kernel, and mode sensitivity |
+
+With $\varrho_{\mathrm{tar}}=\widetilde\varrho/C$ and approximation density $\varrho_{\mathrm{approx}}$,
+
+\begin{align*}
+D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})
+&=\Ex_{\mathrm{approx}}\!\left[\log\!\left(
+\frac{\varrho_{\mathrm{approx}}(X)}{\widetilde\varrho(X)}\right)\right]+\log C
+\end{align*}
+
+[Fixed target]{.alert}: $\log C$ does not affect minimization over the approximation
+
+::: {.notes}
+The MMD row concerns ordinary kernels, before the Stein construction. Direct
+target integration requires normalized expectations, although a constant may
+already be incorporated in an analytic kernel mean or removed by computing a
+ratio of integrals. Empirical two-sample MMD itself never evaluates a density;
+obtaining trustworthy target reference draws may still be difficult. In this
+course, the discrepancy notebook uses independent acceptance--rejection draws
+as its reference, so the MMD calculation does not use a normalizing constant.
+
+The KL optimization statement is for a fixed target and the displayed direction.
+It is not permission to omit a parameter-dependent normalizer when fitting
+the target model. Density or density-ratio estimators can estimate KL from
+samples, but that differs from plugging an atomic empirical measure into KL.
+
+The comparisons concern different quantities; their numerical magnitudes are
+not interchangeable, and none is automatically a calibrated MCMC stopping rule.
+References are given in the preceding KL and Stein slide notes.
 :::
 
 # Discrepancy as Integration Error {.tree-marker-slide tree-marker="estimation"}

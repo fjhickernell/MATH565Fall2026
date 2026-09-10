@@ -53,6 +53,10 @@ notebook's dominant teaching purpose; ambiguous cases are identified below.
 
 ## Deck-to-notebook teaching plan
 
+The [Owen coverage audit](../notes/OWEN-COVERAGE-AUDIT.md) maps all seven
+current notebooks through MCMC to the title-slide readings in Decks 01–03,
+distinguishing main coverage, previews, prerequisites, and separate references.
+
 ### Organizing principle
 
 Use one notebook for one coherent computational or applied narrative, not one
@@ -190,8 +194,13 @@ the full importance-sampling treatment in Deck 04.
 
 ### `applications/FinancialOptionPayoffs.ipynb` — Decks 02 and 04
 
-Create a dedicated notebook for discrete risk-neutral geometric-Brownian
-paths and payoff definitions. It should contain:
+**Status (September 10, 2026):** The instructor closed the remaining Deck 02
+companion-notebook task. This proposed separate notebook was not created and
+is not an outstanding requirement for that task. The design below is retained
+only as a reference if a later deck calls for it.
+
+The proposed notebook would cover discrete risk-neutral geometric-Brownian
+paths and payoff definitions:
 
 - European call and put payoffs, with Black--Scholes values as benchmarks
   where applicable;
@@ -224,7 +233,7 @@ conceptual formulation in the slides.
 `MarkovChainMonteCarlo.ipynb` are now retained across three course-owned
 notebooks. All three execute from clean local `qmcpy` kernels and their saved
 figures have been inspected. Deck 03 and notebook-page links are added.
-Instructor content review remains pending; separate Colab validation is no
+Instructor content review was completed September 10, 2026; separate Colab validation is no
 longer a publication prerequisite. See
 [`notes/MCMC-MIGRATION.md`](../notes/MCMC-MIGRATION.md) for the source map and
 mathematical corrections.
@@ -475,8 +484,8 @@ into either performance notebook.
 
 - **Status:** Migration complete. Modernized initialization and current QMCPy
   APIs, clean execution, and saved outputs have been validated. The notebook
-  is linked from the course notebook page and Deck 02. Instructor review is
-  still pending. The compact Deck 02 Gaussian-mixture section is now included
+  is linked from the course notebook page and Deck 02. Instructor review was
+  completed September 10, 2026. The compact Deck 02 Gaussian-mixture section is now included
   after the zero-inflated exponential. The low discrepancy section compares
   IID and randomized Sobol' mixture samples using maximum CDF error across
   32 independent repetitions. The full notebook executes cleanly
@@ -528,7 +537,7 @@ into either performance notebook.
 
 - **Status:** All non-queueing sections migrated to the Metropolis, Bayesian,
   and discrepancy companions and validated locally. Instructor content review
-  remains pending; notebook-page links are added and separate Colab validation
+  was completed September 10, 2026; notebook-page links are added and separate Colab validation
   is no longer required.
 - **Source:** `MATH565Fall2025/notebooks/MarkovChainMonteCarlo.ipynb`
 - **Proposed targets:** Use the Metropolis material in
@@ -616,7 +625,7 @@ into either performance notebook.
 ### `queuesim_quick_start.ipynb`
 
 - **Status:** Migrated to `applications/QueueSimulation.ipynb` using SimPy 4.1.2;
-  ready for instructor review.
+  instructor-reviewed September 10, 2026.
 - **Source:** `MATH565Fall2025/notebooks/queuesim_quick_start.ipynb`
 - **Proposed target:**
   `MATH565Fall2026/notebooks/applications/QueueSimulation.ipynb`
@@ -785,22 +794,19 @@ not by the accidental boundaries of the inherited files.
 
 1. Colab execution of `applications/AreWeThereYet.ipynb` and
    `sampling/GeneratingSamples.ipynb` is confirmed by the instructor.
-2. Complete instructor review of the implemented Gaussian-mixture section
-   and IID/Sobol' comparison in `sampling/GeneratingSamples.ipynb`.
+2. Instructor review of the Gaussian-mixture section and IID/Sobol' comparison
+   in `sampling/GeneratingSamples.ipynb` is complete (September 10, 2026).
 3. The instructor-approved `sampling/TransportMapsAndAcceptanceRejection.ipynb`
    now has its notebook-page and Deck 02 links included with the validated
    source; separate clean-Colab execution is not required.
-4. Create and validate `applications/FinancialOptionPayoffs.ipynb`, drawing
-   only the basic path and payoff material needed from the inherited Asian
-   option notebook.
-5. Complete instructor review of the retained Deck 02 companions, add the
-   validated notebook calls, and give that stage of the deck--notebook sequence
-   its initial polish. Later decks may add further calls or motivate revisions
+4. The proposed separate `applications/FinancialOptionPayoffs.ipynb` was not
+   created; the instructor closed the Deck 02 notebook task September 10, 2026.
+5. The retained Deck 02 companion review is complete. Further deck polish
+   remains separate. Later decks may add further calls or motivate revisions
    without changing notebook identity merely to match a deck boundary.
-6. Review Deck 03, then create or migrate `sampling/MetropolisHastings.ipynb`,
+6. Completed September 10, 2026: reviewed Deck 03 and migrated/reviewed `sampling/MetropolisHastings.ipynb`,
    `applications/BayesianMCMC.ipynb`, `performance/Discrepancy.ipynb`, and
-   `applications/QueueSimulation.ipynb` in the order established by that
-   review.
+   `applications/QueueSimulation.ipynb`.
 7. During Deck 04 review, migrate `applications/KeisterExample.ipynb` and
    `sampling/ConditionalMonteCarlo.ipynb`, then create
    `performance/AsianOptionVarianceReduction.ipynb` from the retained

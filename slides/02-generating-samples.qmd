@@ -17,7 +17,7 @@ include-after-body:
 
 subtitle: |
   <span class="deck-title">{{< meta deck_title >}}</span><br>
-  <span class="deck-meta">{{< meta texts.owen.short >}}, Chapters 3–6<br>
+  <span class="deck-meta">{{< meta texts.owen.short >}}, Chapters 3–6 and 15–17<br>
   Assignment 2 due Sep 11<br>
   Test 1 · Sep 15</span>
 ---

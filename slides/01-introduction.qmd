@@ -17,7 +17,8 @@ include-after-body:
 
 subtitle: |
   <span class="deck-title">{{< meta deck_title >}}</span><br>
-  <span class="deck-meta">{{< meta texts.owen.short >}}, Chapters 1 and 2 <br>
+  <span class="deck-meta">{{< meta texts.owen.short >}}, Chapters 1–2 and 8<br>
+  Sampling previews: Chapters 10, 15, and 17<br>
   Diagnostic Survey due Aug 21<br>
   Assignment 1 due Sep 2</span>
 ---
@@ -442,6 +443,7 @@ Canvas<br>Only one person per group submits the assignment
 ::: {.columns}
 ::: {.column width="50%"}
 - [Kernel discrepancy](03-markov-chain-monte-carlo.html#kernel-discrepancy)
+- [Kullback–Leibler (KL) divergence](03-markov-chain-monte-carlo.html#relative-entropy-another-comparison)
 - [Latin hypercube sampling](04-improving-efficiency.html#latin-hypercube-sampling-in-d-dimensions)
 - [Likelihood](03-markov-chain-monte-carlo.html#maximum-likelihood-estimation)
 - [Law of total expectation](#laws-of-total-expectation-and-variance)
@@ -482,6 +484,7 @@ Canvas<br>Only one person per group submits the assignment
 - [Quantile transform](02-generating-samples.html#the-quantile-transform)
 - [Random variable](#random-variables-and-distributions)
 - [Randomized low discrepancy sampling](04-improving-efficiency.html#randomized-low-discrepancy-sampling)
+- [Relative entropy](03-markov-chain-monte-carlo.html#relative-entropy-another-comparison)
 - [Reproducing kernel Hilbert space](03-markov-chain-monte-carlo.html#a-reproducing-kernel-hilbert-space)
 - [Root mean squared error (RMSE)](#under-random-sampling)
 :::
@@ -492,6 +495,7 @@ Canvas<br>Only one person per group submits the assignment
 - [Sample variance](#sampling)
 - [Shrinkage estimator](#shrinkage-estimators)
 - [Standard deviation](#moments-of-random-variables)
+- [Stein discrepancy](03-markov-chain-monte-carlo.html#stein-discrepancy)
 - [Stochastic gradient descent](05-selected-topics.html#stochastic-gradient-descent)
 - [Symmetric positive definite kernel](03-markov-chain-monte-carlo.html#symmetric-positive-definite-kernels)
 - [Target distribution](02-generating-samples.html#transport-maps)
