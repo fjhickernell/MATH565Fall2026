@@ -101,8 +101,8 @@ appropriate phase rather than appended indiscriminately.
         notebook and add its Colab badge and Deck 02 links.
       - [x] Use pinned QMCPy-native acceptance--rejection for both targets;
         validate all ten code cells locally and inspect all six saved plots.
-      - [ ] Validate the combined notebook in clean Colab and add its
-        course notebook-page link.
+      - [x] Add the combined notebook’s course notebook-page link; the instructor
+        waived separate clean-Colab validation as a publication prerequisite.
       - [x] Confirm successful Colab execution of `AreWeThereYet.ipynb` and
         `GeneratingSamples.ipynb` (reported by the instructor).
       - [x] Migrate the complete non-queueing 2025 MCMC material into
@@ -116,8 +116,16 @@ appropriate phase rather than appended indiscriminately.
         complement; validate whole-run, retained-run, and tempering accounting.
       - [x] Clarify negative off-diagonal MMD estimates in Deck 03 and its
         companion notebook, with an exercise distinguishing IID and MCMC pairs.
-      - [ ] Complete instructor review and clean-Colab validation of the three
-        MCMC notebooks, then add their notebook-page links.
+      - [x] Add the three MCMC notebook-page links under the instructor’s
+        policy accepting the established Colab setup without separate validation.
+      - [ ] Complete instructor content review of the three MCMC notebooks.
+      - [x] Migrate `QueueSimulation.ipynb` using SimPy for single-server and
+        drive-through blocking models, with finite-run accounting and benchmark
+        comparisons; add its notebook-page and Deck 03 links.
+      - [x] Add eight deterministic checks for queue paths, blocking, accounting,
+        and stopping rules; validate all four Deck 03 companions in clean local
+        kernels without warnings and inspect the queue notebook’s four figures.
+      - [ ] Complete instructor content review of the queueing companion.
     - [ ] Add notebook links only after each target exists and passes
       validation.
       - [x] Link the validated `AreWeThereYet.ipynb` from the Applications
@@ -301,6 +309,9 @@ appropriate phase rather than appended indiscriminately.
       its companion notebook treatment.
   - [x] Draft Lecture 03, Markov Chain Monte Carlo, from the Fall 2025
     Keynote deck, including its discrepancy, Bayesian, and queueing material.
+  - [x] Add a gold-border applications comparison of direct finance sampling,
+    Bayesian MCMC, and event-driven queue simulation, with a multilevel Monte
+    Carlo preview and qualifications in speaker notes.
   - [x] Draft Lecture 04, Improving Efficiency, from the Fall 2025 Keynote
     deck, including executable comparisons of sampling designs.
   - [x] Draft Lecture 05, Selected Topics, from the Fall 2025 Keynote deck,

@@ -2,7 +2,8 @@
 
 ## Current task
 
-Review the complete non-queueing MCMC notebook family for Deck 03:
+Finish instructor review of the prepared Deck 03 notebook family, beginning
+with the new queueing companion:
 
 - `notebooks/sampling/MetropolisHastings.ipynb`: compare with the already taught
   acceptance--rejection method; study trapping and then parallel tempering.
@@ -10,18 +11,25 @@ Review the complete non-queueing MCMC notebook family for Deck 03:
   with exact posterior benchmarks, multiple-chain diagnostics, and tempering.
 - `notebooks/performance/Discrepancy.ipynb`: compare empirical distributions
   using MMD, kernel scales, and the witness function.
+- `notebooks/applications/QueueSimulation.ipynb`: SimPy single-server and
+  drive-through models, finite-run accounting, independent replications, and
+  blocking comparisons.
 
-All three execute from clean local `qmcpy` kernels and their saved figures have
-been inspected. Mathematical checks cover target normalization, rejected-state
+All four companions pass clean local `qmcpy` execution without warnings.
+The queue notebook has saved outputs and four inspected figures, and its eight
+deterministic model tests pass. Existing MCMC notebook outputs were preserved. Mathematical checks cover target normalization, rejected-state
 retention, swap ratios, exact posterior algebra, and kernel identities. The
 source map and corrections are recorded in `notes/MCMC-MIGRATION.md`.
 
-Deck 03 now links each notebook from its matching instructional section.
-After instructor review, validate in clean Colab, then add the
-`pages/notebooks.qmd` links. The Colab setup needs the course-owned
-`notebooks/mcmc_examples.py` published with the notebooks; local execution is
-not live-Colab validation. The official PyMC API quickstart is linked as an
-optional external Bayesian supplement. Queueing remains deferred.
+Deck 03 and `pages/notebooks.qmd` now link all four companions, with their
+sources and helpers included in the same checkpoint. Instructor content review remains pending.
+By instructor decision, separate clean-Colab execution is no longer a publication
+prerequisite: rely on the established setup and address problems when reported.
+Keep `notebooks/mcmc_examples.py` published with the notebooks. The official
+PyMC API quickstart is an optional external Bayesian supplement. SimPy 4.1.2
+is the queueing engine; course-specific process definitions and exact finite-run
+accounting live in `notebooks/queue_examples.py`. No PyMC/NUTS or emcee dependency
+is required to finish the current Deck 03 preparation.
 
 The Deck 03 discrepancy section and its companion notebook now clarify that
 the off-diagonal IID estimator targets the nonnegative population MMD squared:
@@ -40,16 +48,18 @@ Continue the instructor-led Deck 03 review. The September 8 schedule now names
 Markov chain Monte Carlo and links Deck 03. Recent slide revisions include the
 global construction/local decision contrast, gold-border Markov definition,
 asymptotic-distribution motivation, compact martingale note, joint-density
-acceptance interpretation, and separated-mode trapping demonstration.
+acceptance interpretation, and separated-mode trapping demonstration. The
+applications section now opens with a gold-border comparison of direct finance
+sampling, Bayesian MCMC, and event-driven queue simulation; detailed
+qualifications and optional examples remain in speaker notes.
 
 ## Other pending MATH 565 work
 
 1. Review the Gaussian-mixture section and IID/Sobol' comparison in
    `GeneratingSamples.ipynb` with the instructor.
-2. Validate the revised
-   `sampling/TransportMapsAndAcceptanceRejection.ipynb` in clean Colab.
-   Deck 02 already links it; add the course notebook-page link
-   after Colab validation, following `notebooks/NOTEBOOK_INVENTORY.md`.
+2. Return later this term to the Deck 02 mixture and acceptance--rejection
+   integral formulations over an enlarged space including the decision
+   variable; see `notes/TODO-LATER.md`. This remains deferred for now.
 3. Review the revised advanced-direct-sampling sequence: transport maps,
    acceptance--rejection, the reusable \(\operatorname{Beta}(2,1)\) scalar
    example, and the proposed companion-notebook treatment. Confirm that the
@@ -75,8 +85,8 @@ starting Deck 03 does not establish completion of those earlier items.
 
 ## Pending Deck 02 notebook work
 
-Complete the GeneratingSamples instructor review and the clean-Colab validation
-of the approved combined transport-map and acceptance--rejection notebook. The
+Complete the GeneratingSamples instructor review. The approved combined
+transport-map and acceptance--rejection notebook is now linked on the notebook page. The
 QMCPy-native sampler substitution and local validation are complete.
 Keep this Deck 02 work separate from the still-separate
 `FinancialOptionPayoffs.ipynb` migration.
@@ -88,15 +98,15 @@ before Deck 03 review begins.
 ## QMCPy acceptance--rejection state
 
 Both the Beta$(2,1)$ and bounded banana examples now use
-`qmcpy.AcceptanceRejection` from the existing pinned QMCPy commit `d8fec003`,
+`qmcpy.AcceptanceRejection` from the course's recorded QMCPy dependency,
 with IID uniform drivers, ordinary densities, and the required density
 integrals. All ten code cells pass local clean-kernel execution with the
 recorded dependencies; all six saved plots have been inspected. Fixed-proposal
 experiments retain the acceptance diagnostics without confusing batching
 overhead with intrinsic acceptance probability.
 
-Clean-Colab validation remains pending. After it succeeds, add the course
-notebook-page link. API choices and maintenance details are recorded in
+The course notebook-page link is included with the validated notebook source.
+Separate clean-Colab validation is no longer required. API choices and maintenance details are recorded in
 `notes/TECHNICAL-NOTES.md`; the more general classlib sampler remains unchanged.
 
 ## Machine handoff — Deck 02 notebooks
@@ -166,8 +176,8 @@ The candidate/reference draws are independent. A scatter plot can hide repeated
 states, and a single-run MMD ranking does not establish an optimal proposal scale.
 
 Before handing back the notebook work, restart and run every edited notebook
-with the `qmcpy` kernel, inspect saved output size and warnings, test the
-recorded-commit setup in a clean Colab runtime, and render affected pages and
+with the `qmcpy` kernel, inspect saved output size and warnings, retain the
+recorded-commit Colab setup, and render affected pages and
 decks after adding links.
 
 ## Current state
@@ -286,8 +296,8 @@ decks after adding links.
   The Colab badge now
   targets its Fall 2026 repository path.
   Deck 02 links it from More Advanced Direct Sampling and the scalar
-  acceptance--rejection comparison. Live-Colab validation and the course-page
-  link remain pending.
+  acceptance--rejection comparison. The course-page link is included with the
+  notebook source; separate Colab validation is no longer required.
 - `slides/03-markov-chain-monte-carlo.qmd` is a full first-pass conversion of
   the Fall 2025 Keynote deck. It preserves the Markov-chain examples,
   Metropolis–Hastings practice, discrepancy development, MLE and Bayesian
@@ -342,15 +352,14 @@ decks after adding links.
 
 ## Current notebook handoff complete when
 
-- All three MCMC notebooks are instructor-reviewed and validated in clean Colab.
-- Their notebook-page links are added; those links and the existing Deck 03
-  links are rendered and published through the normal Checkpoint workflow.
+- All four Deck 03 companions are instructor-reviewed; local validation is complete.
+- Their added notebook-page links are rendered and published through the normal
+  Checkpoint workflow. Separate clean-Colab validation is not required.
 
 ## Remaining Deck 02 completion criteria
 
-- Clean current Colab runtimes install the recorded `classlib` and `qmcpy`
-  commits and execute both `AreWeThereYet.ipynb` and
-  `GeneratingSamples.ipynb` end to end without an import or setup failure.
+- Preserve the recorded-commit Colab setup and address reported runtime problems;
+  separate clean-Colab execution is not a publication prerequisite.
 - `GeneratingSamples.ipynb` is instructor-approved.
 - Every retained Deck 02 companion notebook is migrated, validated with the
   `qmcpy` kernel, and linked appropriately; decisions to combine or omit other

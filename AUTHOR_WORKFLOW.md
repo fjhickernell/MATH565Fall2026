@@ -254,6 +254,30 @@ variables, plots, captions, and links between decks and notebooks. Apply it
 prospectively as materials are created or substantially revised; do not make a
 mechanical notation-only rewrite of otherwise untouched material.
 
+## Variable accents in notebooks and slides
+
+Use `\widehat{...}` for hats and `\overline{...}` for bars over variables,
+rather than narrow `\hat` or `\bar` accents. The existing shared bar macros
+already use `\overline`; retain them when their meaning matches. Keep sample
+indices outside the accent unless the entire indexed expression is averaged.
+Before editing a notebook, name it to the instructor so an open copy can be
+reloaded afterward. Preserve existing edits and saved outputs when changing
+only Markdown notation.
+
+## Deck 03 notebook dependencies
+
+`QueueSimulation.ipynb` uses SimPy 4.1.2 in addition to the standard course
+runtime. Install it locally with `python -m pip install "simpy==4.1.2"` in the
+`qmcpy` environment; the notebook's Colab setup installs the same version.
+Publish `notebooks/queue_examples.py` with the notebook. Validate its process
+and accounting code with
+`python -m unittest discover -s tests -p 'test_queue_examples.py'`.
+
+`BayesianMCMC.ipynb` uses the course's transparent Metropolis and tempering
+implementations with ArviZ diagnostics. The PyMC quickstart is an optional
+external supplement, not a required package or unfinished prerequisite for
+Deck 03. A course-owned PyMC/NUTS extension requires a distinct teaching purpose.
+
 ## Notebook execution timing
 
 Every course notebook must set
@@ -262,7 +286,11 @@ Colab detection and setup, and keep a final code cell with the ID
 `notebook-runtime` that reports `Total execution time for this notebook is …
 min … sec.` The runtime cell must remain the notebook's last cell. Validate the
 complete run and its timing output with the `qmcpy` kernel before publication;
-clean-Colab validation remains a separate publication requirement.
+separate clean-Colab execution is not a publication prerequisite. The instructor
+accepts the established Colab setup based on successful use across many
+notebooks; investigate and fix Colab problems when they arise. Keep local
+execution validation and record instructor content review separately from
+publication.
 
 ## Preview and render
 

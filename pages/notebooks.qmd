@@ -29,6 +29,10 @@ sampling methods will appear here.
   — construct and transform IID and low discrepancy samples, including
   binomial, zero-inflated exponential, Gaussian-process, Brownian-motion, and
   financial-option examples
+- [Transport Maps and Acceptance–Rejection](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb)
+  — compare transport maps and rejection sampling using scalar and banana-shaped targets
+- [Metropolis–Hastings](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/MetropolisHastings.ipynb)
+  — explore proposal scales, repeated states, separated-mode trapping, and parallel tempering
 
 ## Applications
 
@@ -37,10 +41,17 @@ sampling methods will appear here.
   assessment, quantiles, conditional Monte Carlo, and randomized Sobol
   sampling
 
+- [Bayesian MCMC](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/BayesianMCMC.ipynb)
+  — compare posterior sampling with exact benchmarks and explore multiple-chain diagnostics and tempering
+
+- [Queue Simulation](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/QueueSimulation.ipynb)
+  — simulate single-server queues and drive-through blocking with SimPy; compare
+  customer delays, time-average congestion, and stationary benchmarks
+
 Additional notebooks will apply Monte Carlo and quasi-Monte Carlo methods to
-integration, financial options, queueing models, and other examples.
+integration, financial options, and other examples.
 
 ## Performance
 
-Notebooks examining convergence, discrepancy, accuracy, algorithmic
-efficiency, and computational performance will appear here.
+- [Discrepancy](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/Discrepancy.ipynb)
+  — compare empirical distributions using maximum mean discrepancy, kernel scales, and witness functions

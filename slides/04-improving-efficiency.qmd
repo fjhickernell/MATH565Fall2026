@@ -338,8 +338,8 @@ as small as possible
 Center the response and control values:
 
 \begin{align*}
-y_i&=f(x_i)-\bar f,&
-H_{ij}&=\eta_j(x_i)-\bar\eta_j
+y_i&=f(x_i)-\overline{f},&
+H_{ij}&=\eta_j(x_i)-\overline{\eta}_j
 \end{align*}
 
 Then

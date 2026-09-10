@@ -134,8 +134,8 @@ absorb transport maps, acceptance--rejection, or MCMC.
 The draft includes the inverse-map and density checks, a Beta target
 comparison, and quadrature-based marginals and acceptance diagnostics for
 the bounded banana. The instructor has approved the notebook; its Colab badge
-and Deck 02 links are added. Live-Colab validation and the notebook-page link
-remain pending.
+and Deck 02 and notebook-page links are added. Separate Colab validation is
+no longer a publication prerequisite.
 
 Create one focused notebook answering a common question: how can easy proposal
 draws become unweighted target samples by moving every draw or by accepting
@@ -223,8 +223,9 @@ conceptual formulation in the slides.
 **Migration state:** All non-queueing sections of the 2025
 `MarkovChainMonteCarlo.ipynb` are now retained across three course-owned
 notebooks. All three execute from clean local `qmcpy` kernels and their saved
-figures have been inspected. Instructor review and clean-Colab validation
-remain before student-facing links are added. See
+figures have been inspected. Deck 03 and notebook-page links are added.
+Instructor content review remains pending; separate Colab validation is no
+longer a publication prerequisite. See
 [`notes/MCMC-MIGRATION.md`](../notes/MCMC-MIGRATION.md) for the source map and
 mathematical corrections.
 
@@ -267,12 +268,13 @@ to its integration-error interpretation.
 
 ### `applications/QueueSimulation.ipynb` — Deck 03, possible Deck 05 return
 
-Deferred at the instructor’s request; migrate after the current MCMC family.
-Modernize the inherited queue quick start as a separate application notebook.
+**Migrated:** The standalone queue companion uses SimPy 4.1.2 for event
+scheduling and resources, with course-owned process and measurement code.
 Because the current Deck 03 treats queues as Markov-chain and event-driven
-systems, Deck 03 is its current main-development caller. Evaluate SimPy as the
-implementation package, possibly through a small course-facing interface, but
-do not place queue code in the MCMC notebook. Deck 05 may call and extend the
+systems, Deck 03 is its current main-development caller. The notebook retains
+both original models and adds exact finite-run accounting, a stationary
+benchmark, independent replications, and a coupled capacity comparison. Both
+the course notebook page and Deck 03 link it. Deck 05 may call and extend the
 same queue notebook if queueing becomes a larger selected application during
 deck review; that later use does not require moving or renaming it.
 
@@ -302,7 +304,8 @@ into either performance notebook.
 - **Status:** The bounded banana target and diagnostics have been adapted into
   the combined transport/acceptance--rejection draft. The new notebook runs
   locally with the `qmcpy` kernel and is instructor-approved. Its Colab badge
-  and Deck 02 links are added; live-Colab validation remains pending. The
+  and Deck 02 and notebook-page links are added; separate Colab validation is
+  no longer required. The
   inherited sampler and half-normal example were not copied.
 - **Source:** `MATH565Fall2025/notebooks/AcceptanceRejection.ipynb`
 - **Proposed target:**
@@ -524,8 +527,9 @@ into either performance notebook.
 ### `MarkovChainMonteCarlo.ipynb`
 
 - **Status:** All non-queueing sections migrated to the Metropolis, Bayesian,
-  and discrepancy companions and validated locally. Instructor review and
-  clean-Colab validation remain pending.
+  and discrepancy companions and validated locally. Instructor content review
+  remains pending; notebook-page links are added and separate Colab validation
+  is no longer required.
 - **Source:** `MATH565Fall2025/notebooks/MarkovChainMonteCarlo.ipynb`
 - **Proposed targets:** Use the Metropolis material in
   `MATH565Fall2026/notebooks/sampling/MetropolisHastings.ipynb`, the Bayesian
@@ -611,7 +615,8 @@ into either performance notebook.
 
 ### `queuesim_quick_start.ipynb`
 
-- **Status:** Not migrated.
+- **Status:** Migrated to `applications/QueueSimulation.ipynb` using SimPy 4.1.2;
+  ready for instructor review.
 - **Source:** `MATH565Fall2025/notebooks/queuesim_quick_start.ipynb`
 - **Proposed target:**
   `MATH565Fall2026/notebooks/applications/QueueSimulation.ipynb`
@@ -624,11 +629,10 @@ into either performance notebook.
   examples. Use them only to recover a demonstrated feature or correction
   absent from the principal quick-start notebook. Related checkpoints are not
   primary sources.
-- **Migration concerns:** The Colab link misspells the notebook as
-  `quesim_quick_start.ipynb`. Confirm the current `classlib.queuesim` API,
-  replace the direct `Path.cwd().parent` assumption, and evaluate SimPy as the
-  modern implementation package without coupling queue code to the MCMC
-  notebook.
+- **Migration resolution:** Corrected the Colab link and root discovery. SimPy
+  replaces `classlib.queuesim` for this notebook; `queue_examples.py` records
+  customer timestamps and computes clipped time averages. Eight deterministic
+  tests cover pathwise correctness and stopping behavior.
 - **Classification:** Applications is recommended because queueing systems
   are the organizing models, although the notebook also illustrates
   simulation construction.
@@ -654,8 +658,8 @@ Many notebooks contain one or more of the following:
 - installation of `classlib` from a moving remote branch.
 
 Replace these with Fall 2026 links and the documented course dependency
-workflow. Do not publish a Colab badge until its complete setup has been
-tested. A Colab setup must clone the current course repository, initialize
+workflow. The instructor accepts the established Colab setup without separate
+clean-Colab execution before publication; investigate problems when they arise. A Colab setup must clone the current course repository, initialize
 only the recorded `classlib` and `qmcpy` submodules through their public HTTPS
 URLs, and install those exact checkouts. Do not substitute PyPI releases or a
 moving QMCPy `develop` branch: the course may temporarily rely on pinned
@@ -783,9 +787,9 @@ not by the accidental boundaries of the inherited files.
    `sampling/GeneratingSamples.ipynb` is confirmed by the instructor.
 2. Complete instructor review of the implemented Gaussian-mixture section
    and IID/Sobol' comparison in `sampling/GeneratingSamples.ipynb`.
-3. Validate the instructor-approved
-   `sampling/TransportMapsAndAcceptanceRejection.ipynb` in clean Colab; its
-   local execution and Deck 02 links are already checked.
+3. The instructor-approved `sampling/TransportMapsAndAcceptanceRejection.ipynb`
+   now has its notebook-page and Deck 02 links included with the validated
+   source; separate clean-Colab execution is not required.
 4. Create and validate `applications/FinancialOptionPayoffs.ipynb`, drawing
    only the basic path and payoff material needed from the inherited Asian
    option notebook.

@@ -20,6 +20,17 @@ multiple decks.
 
 ## Deck 02 — Generating Samples
 
+- Later this term (Fall 2026), express mixture sampling and acceptance--rejection
+  sampling as integrals over an enlarged space that explicitly includes the
+  decision variable (component selection or the acceptance decision draw).
+  Consider a Stieltjes formulation; the precise formulation remains open.
+  Use this perspective to prepare for later discussion of what makes a
+  sampling construction friendly to low discrepancy methods. The instructor
+  requested this note on September 10, 2026, and deferred the Deck 02 changes
+  until later this term; do not implement them yet or postpone them to a
+  future academic year. Keep the exposition in Deck 02; the instructor can
+  return to that deck and show it later in the term, after the class has
+  moved on to other decks.
 - Refactor the Asian-option sampling code so path construction and payoff
   interfaces can be reused for importance sampling and control variates in
   Deck 04. Follow the documented division of labor between
@@ -40,8 +51,8 @@ multiple decks.
   supplement. Consider a course-owned PyMC/NUTS extension only after assessing
   dependency burden and a distinct teaching purpose. Langevin and hand-built
   Hamiltonian Monte Carlo remain possible later extensions.
-- Modernize the queueing example as its own Deck 03 application notebook and
-  evaluate SimPy, possibly with a small shim for a consistent course interface.
+- The queueing companion now uses SimPy 4.1.2 with course-owned process and
+  measurement code. Further queueing extensions belong after the current review.
 
 ## Deck 04 — Improving Efficiency
 

@@ -635,11 +635,63 @@ The weights $\gamma_\ell$ express [coordinate importance]{.alert}
 
 # Applications of Markov Chains {.tree-marker-slide tree-marker="prob-est"}
 
+- [Direct sampling, MCMC, and event simulation](#direct-sampling-mcmc-and-event-simulation)
 - [Maximum likelihood estimation](#maximum-likelihood-estimation)
 - [Bayesian inference](#bayesian-inference)
+- [Computing posterior summaries](#computing-posterior-summaries)
 - [Queueing systems](#queueing-systems)
 - [Event-driven queue simulation](#event-driven-queue-simulation)
 - [Tracking customer time](#tracking-customer-time)
+
+## Direct sampling, MCMC, and event simulation {data-state="goldborder"}
+
+| Application | What matters | Natural simulation approach |
+|:--|:--|:--|
+| Finance: European / Asian options | Finite maturity; terminal value or path average | [Direct sampling]{.alert} of model inputs → independent paths; refine time steps as needed |
+| Bayesian inference | Complicated, concentrated posterior; often known only up to normalization | [MCMC]{.alert} when direct posterior sampling is difficult; mixing still matters |
+| Queueing: waiting / blocking | Arrival and departure order; interactions at individual events | [Event-driven simulation]{.alert} of the system's Markov state; no fixed fine time grid |
+
+- Finance: couple coarse and fine paths with [multilevel Monte Carlo](05-selected-topics.html#multilevel-monte-carlo) later
+- Barrier options: fine path detail can matter in finance too
+
+::: {.key-point}
+Choose by [access to the distribution]{.alert} and [which details affect the answer]{.alert}
+:::
+
+::: {.notes}
+The finite horizon makes a finance path a finite collection of random inputs
+after discretization; it does not by itself make direct sampling easy. In the
+models used here, Gaussian increments or known transition laws are available,
+so independent inputs generate independent paths, even though values within
+each path are dependent and may form a Markov process. Low discrepancy inputs
+are another choice, but do not give independent paths.
+
+For geometric Brownian motion, transitions on a chosen grid can be sampled
+exactly; a European terminal payoff needs no intervening time steps. A
+continuously averaged Asian payoff still needs control of path-integration
+error. A barrier payoff can depend critically on crossings between grid points.
+Refinement and Brownian-bridge corrections address different sources of error.
+Multilevel Monte Carlo combines many cheap coarse paths with fewer coupled
+fine-minus-coarse corrections; it is not MCMC.
+
+A sharp posterior alone does not require MCMC: a narrow normal or a conjugate
+posterior may be sampled directly. The obstacle is the lack of an effective
+direct sampler for the posterior geometry, often with only an unnormalized
+density available. Narrow directions and separated modes can also impede MCMC.
+
+Queueing belongs here as simulation of a Markov system, not as a claim that
+Metropolis--Hastings is needed for queues. Event order and state-dependent
+interactions determine waiting and blocking. Simulate directly from arrival
+and service laws, advancing to the next event. Both finite-horizon and
+steady-state questions are possible; steady-state time averages require
+appropriate time weighting and attention to initialization.
+
+Additional spoken examples: reliability simulation with directly sampled
+component lifetimes; inventory systems with event-driven demand and restocking.
+
+Reference for the multilevel preview and payoff-dependent refinement:
+[Giles, Multilevel Monte Carlo path simulation](https://people.maths.ox.ac.uk/gilesm/files/opre.pdf)
+:::
 
 ## Maximum likelihood estimation {.tree-marker-slide tree-marker="estimation"}
 
@@ -663,6 +715,10 @@ L(\mu,\sigma^2;y)
 
 ## Bayesian inference {.tree-marker-slide tree-marker="prob-est"}
 
+- Especially useful when [data are limited relative to model complexity]{.alert}
+- Prior knowledge supplements the data; weak data call for checking sensitivity to the prior
+- Also useful with abundant data
+
 Combine a prior density with the likelihood:
 
 \begin{align*}
@@ -670,6 +726,8 @@ Combine a prior density with the likelihood:
 &=\frac{L(\theta;y)\varrho_{\mathrm{prior}}(\theta)}{\varrho_Y(y)}\\
 &\propto L(\theta;y)\varrho_{\mathrm{prior}}(\theta)
 \end{align*}
+
+## Computing posterior summaries {.tree-marker-slide tree-marker="prob-est"}
 
 - The evidence $\varrho_Y(y)$ depends only on the observed data
 - MCMC needs only the [unnormalized posterior]{.alert}
@@ -687,12 +745,16 @@ Bayesian inference is a primary reason to sample from complicated unnormalized d
 Consider a single-server queue observed at event times
 
 \begin{align*}
-A_i&=\text{time until the next arrival},& A_i&\sim F_A,\\
+A_i&=\text{time until the next arrival},\\
 N_i&=\text{number of customers in the system},\\
-S_i&=\text{remaining service time},& S_i&\sim F_S
+S_i&=\text{remaining service time}
 \end{align*}
 
-The state $(A_i,N_i,S_i)$ is Markov when arrival and service times are generated independently from their specified laws
+Draw full interarrival times from $F_A$ and full service times from $F_S$
+
+Residual times generally have different laws
+
+The state $(A_i,N_i,S_i)$ is Markov when new interarrival and service durations are independent
 
 At each event, either
 
@@ -702,12 +764,12 @@ At each event, either
 ## Event-driven queue simulation {.tree-marker-slide tree-marker="practice"}
 
 ```text
-Initialize A[0] ~ F_A, N[0] = 0, S[0] ~ F_S
+Initialize A[0] ~ F_A, N[0] = 0, S[0] = infinity
 while the stopping rule is not met:
     if N[i] == 0:
         advance to the next arrival
         N[i+1] = 1
-        generate A[i+1] ~ F_A
+        generate S[i+1] ~ F_S and A[i+1] ~ F_A
     elif A[i] < S[i]:
         advance to the next arrival
         N[i+1] = N[i] + 1
@@ -717,10 +779,13 @@ while the stopping rule is not met:
         advance to the next service completion
         N[i+1] = N[i] - 1
         A[i+1] = A[i] - S[i]
-        generate S[i+1] ~ F_S
+        if N[i+1] > 0: generate S[i+1] ~ F_S
+        else: S[i+1] = infinity
 ```
 
 [Events replace fixed time steps]{.alert}, avoiding work when nothing changes
+
+[Queue simulation companion notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/QueueSimulation.ipynb)
 
 ## Tracking customer time {.tree-marker-slide tree-marker="practice"}
 
