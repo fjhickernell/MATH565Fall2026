@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-09-10">
+  <meta name="dcterms.date" content="2026-09-11">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -36,7 +36,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="02-generating-samples_files/libs/revealjs/dist/theme/quarto-6873a23780672be33fc26734594de2fe.css">
+  <link rel="stylesheet" href="02-generating-samples_files/libs/revealjs/dist/theme/quarto-5e3eb0fb4589d0efdc23a828031c590a.css">
   <link href="02-generating-samples_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="02-generating-samples_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="02-generating-samples_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -650,10 +650,21 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">September 10, 2026</p>
+  <p class="date">September 11, 2026</p>
 </section>
-<section id="course-map" class="title-slide slide level1 center">
+<section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-02-overview">
 <h1>Course Map</h1>
+<div class="tree-component tree-component--mc deck-summary-tree" data-tree-id="mc" style="--tree-width: 42%; --tree-font-scale: 1.15; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+  <div class="tree-component__label" data-label-id="analysis" style="--tree-left: 26%; --tree-top: 81%; --tree-align: left;">Analysis</div>
+  <div class="tree-component__label" data-label-id="linear-algebra" style="--tree-left: 39%; --tree-top: 89%; --tree-align: center;">Linear<br>Algebra</div>
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+  <div class="tree-component__label" data-label-id="pseudorandom-numbers" style="--tree-left: 61%; --tree-top: 70%; --tree-align: center;">Pseudorandom<br>Numbers</div>
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="qf" style="--tree-left: 5%; --tree-top: 33%; --tree-align: center;">Quantitative<br>Finance</div>
+</div>
+
 <div class="columns">
 <div class="column" style="width:36%;">
 <h3>
@@ -661,7 +672,7 @@ Course decks
 </h3>
 <ul>
 <li><a href="01-introduction.html">Introduction</a></li>
-<li><a href="02-generating-samples.html">Generating Samples</a> — <span class="alert">current</span></li>
+<li><a href="02-generating-samples.html" class="current-deck" aria-current="page">Generating Samples</a></li>
 <li><a href="03-markov-chain-monte-carlo.html">Markov Chain Monte Carlo</a></li>
 <li><a href="04-improving-efficiency.html">Improving Efficiency</a></li>
 <li><a href="05-selected-topics.html">Selected Topics</a></li>
@@ -669,9 +680,6 @@ Course decks
 </div><div class="column" style="width:4%;">
 
 </div><div class="column" style="width:60%;">
-<h3>
-In this deck
-</h3>
 <p><span class="math display">\[
 \vU_i \sim \Unif[0,1]^d
 \;\longrightarrow\;
@@ -679,6 +687,11 @@ In this deck
 \;\longrightarrow\;
 Y_i = f(\vX_i)
 \]</span></p>
+</div></div>
+<div class="deck-section-links">
+<h3>
+This deck
+</h3>
 <ul>
 <li><a href="#/from-uniformity-to-a-target-distribution">From Uniformity to a Target Distribution</a></li>
 <li><a href="#/random-vectors-and-stochastic-processes">Random Vectors and Stochastic Processes</a></li>
@@ -686,7 +699,7 @@ Y_i = f(\vX_i)
 <li><a href="#/more-advanced-direct-sampling">More Advanced Direct Sampling</a></li>
 <li><a href="#/big-ideas">Big Ideas</a></li>
 </ul>
-</div></div>
+</div>
 </section>
 
 <section>
@@ -830,7 +843,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="15bcb574" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="b0727c21" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -874,7 +887,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="ec25f2c5" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="659d84be" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -906,7 +919,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="5a46286e" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="351b610a" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -990,7 +1003,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="b0f7909e" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="b3d9c0f3" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1428,12 +1441,11 @@ M_d:=\max_{0\le j\le d}S_j
 </ul>
 </section></section>
 <section>
-<section id="low-discrepancy-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="low-discrepancy">
+<section id="low-discrepancy-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="low-discrepancy-sampling">
 <h1>Low Discrepancy Sampling</h1>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
 </div>
 
 <ul>
@@ -1442,12 +1454,11 @@ M_d:=\max_{0\le j\le d}S_j
 <li><a href="#/why-coordinate-order-matters">Why coordinate order matters</a></li>
 </ul>
 </section>
-<section id="what-does-low-discrepancy-mean" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<section id="what-does-low-discrepancy-mean" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy-sampling">
 <h2>What does low discrepancy mean?</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
 </div>
 
 <p>Relaxing the requirement that <span class="math inline">\(\vU_0,\ldots,\vU_{n-1}\)</span> be IID allows carefully constructed samples to cover <span class="math inline">\([0,1]^d\)</span> more evenly</p>
@@ -1460,12 +1471,11 @@ M_d:=\max_{0\le j\le d}S_j
 <p>Low discrepancy replaces independent placement by <span class="alert">deliberate coverage</span></p>
 </div>
 </section>
-<section id="low-discrepancy-sequences" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<section id="low-discrepancy-sequences" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy-sampling">
 <h2>Low discrepancy sequences</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
 </div>
 
 <p>Important families include</p>
@@ -1478,12 +1488,11 @@ M_d:=\max_{0\le j\le d}S_j
 <p>They are available in deterministic and randomized forms through SciPy and <a href="https://qmcpy.org/">QMCPy</a></p>
 <p>In software arrays rows correspond to samples and columns to coordinates</p>
 </section>
-<section id="why-coordinate-order-matters" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<section id="why-coordinate-order-matters" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy-sampling">
 <h2>Why coordinate order matters</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
 </div>
 
 <p>Return to the <a href="#/principal-component-factorization">PCA factorization</a>:</p>
@@ -1725,13 +1734,11 @@ U\le
 <li><span class="alert">Acceptance–rejection</span>: keep <span class="math inline">\(Z\)</span> with probability <span class="math inline">\(Z\)</span></li>
 </ul>
 </section></section>
-<section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="prob-stat-est">
+<section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="random-generation">
 <h1>Big Ideas</h1>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
-  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
 </div>
 
 <ul>

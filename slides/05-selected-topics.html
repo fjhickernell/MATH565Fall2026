@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-09-10">
+  <meta name="dcterms.date" content="2026-09-11">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -36,7 +36,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="05-selected-topics_files/libs/revealjs/dist/theme/quarto-6873a23780672be33fc26734594de2fe.css">
+  <link rel="stylesheet" href="05-selected-topics_files/libs/revealjs/dist/theme/quarto-5e3eb0fb4589d0efdc23a828031c590a.css">
   <link href="05-selected-topics_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="05-selected-topics_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="05-selected-topics_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -650,10 +650,24 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">September 10, 2026</p>
+  <p class="date">September 11, 2026</p>
 </section>
-<section id="course-map" class="title-slide slide level1 center">
+<section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-05-overview">
 <h1>Course Map</h1>
+<div class="tree-component tree-component--mc deck-summary-tree" data-tree-id="mc" style="--tree-width: 42%; --tree-font-scale: 1.15; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+  <div class="tree-component__label" data-label-id="analysis" style="--tree-left: 26%; --tree-top: 81%; --tree-align: left;">Analysis</div>
+  <div class="tree-component__label" data-label-id="cs" style="--tree-left: 61%; --tree-top: 88%; --tree-align: center;">Computer<br>Science</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+  <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
+  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
+  <div class="tree-component__label" data-label-id="multilevel" style="--tree-left: 61%; --tree-top: 52%; --tree-align: center;">Multilevel<br>Monte Carlo</div>
+  <div class="tree-component__label" data-label-id="stochastic-optimization" style="--tree-left: 77%; --tree-top: 46%; --tree-align: center;">Stochastic<br>Optimization</div>
+  <div class="tree-component__label" data-label-id="hpc" style="--tree-left: 69%; --tree-top: 33%; --tree-align: center;">High-Performance<br>Computing</div>
+</div>
+
 <div class="columns">
 <div class="column" style="width:36%;">
 <h3>
@@ -664,13 +678,18 @@ Course decks
 <li><a href="02-generating-samples.html">Generating Samples</a></li>
 <li><a href="03-markov-chain-monte-carlo.html">Markov Chain Monte Carlo</a></li>
 <li><a href="04-improving-efficiency.html">Improving Efficiency</a></li>
-<li><a href="05-selected-topics.html" class="alert">Selected Topics</a></li>
+<li><a href="05-selected-topics.html" class="current-deck" aria-current="page">Selected Topics</a></li>
 </ul>
 </div><div class="column" style="width:4%;">
 
 </div><div class="column" style="width:60%;">
+<div class="deck-map-theme">
+<p><span class="alert">Share the work across processors, samples, and levels</span></p>
+</div>
+</div></div>
+<div class="deck-section-links">
 <h3>
-In this deck
+This deck
 </h3>
 <ul>
 <li><a href="#/parallel-and-stochastic-computation">Parallel and Stochastic Computation</a></li>
@@ -678,7 +697,7 @@ In this deck
 <li><a href="#/multilevel-monte-carlo">Multilevel Monte Carlo</a></li>
 <li><a href="#/big-ideas">Big Ideas</a></li>
 </ul>
-</div></div>
+</div>
 </section>
 
 <section>
@@ -773,7 +792,7 @@ In this deck
 </div>
 
 <p>Both methods minimize the same quadratic loss<br>Stochastic gradients use one randomly selected component at each step</p>
-<div id="1a3a266b" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
+<div id="7dd21f33" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>

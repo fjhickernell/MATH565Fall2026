@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-09-10">
+  <meta name="dcterms.date" content="2026-09-11">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -102,7 +102,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="03-markov-chain-monte-carlo_files/libs/revealjs/dist/theme/quarto-6873a23780672be33fc26734594de2fe.css">
+  <link rel="stylesheet" href="03-markov-chain-monte-carlo_files/libs/revealjs/dist/theme/quarto-5e3eb0fb4589d0efdc23a828031c590a.css">
   <link href="03-markov-chain-monte-carlo_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="03-markov-chain-monte-carlo_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="03-markov-chain-monte-carlo_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -716,10 +716,25 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">September 10, 2026</p>
+  <p class="date">September 11, 2026</p>
 </section>
-<section id="course-map" class="title-slide slide level1 center">
+<section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-03-overview">
 <h1>Course Map</h1>
+<div class="tree-component tree-component--mc deck-summary-tree" data-tree-id="mc" style="--tree-width: 42%; --tree-font-scale: 1.15; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+  <div class="tree-component__label" data-label-id="analysis" style="--tree-left: 26%; --tree-top: 81%; --tree-align: left;">Analysis</div>
+  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+  <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
+  <div class="tree-component__label" data-label-id="statistical-inference" style="--tree-left: 3%; --tree-top: 45%; --tree-align: center;">Statistical<br>Inference</div>
+  <div class="tree-component__label" data-label-id="bayesian-computation" style="--tree-left: 51%; --tree-top: 6%; --tree-align: center;">Bayesian<br>Computation</div>
+</div>
+
 <div class="columns">
 <div class="column" style="width:36%;">
 <h3>
@@ -728,16 +743,13 @@ Course decks
 <ul>
 <li><a href="01-introduction.html">Introduction</a></li>
 <li><a href="02-generating-samples.html">Generating Samples</a></li>
-<li><a href="03-markov-chain-monte-carlo.html" class="alert">Markov Chain Monte Carlo</a></li>
+<li><a href="03-markov-chain-monte-carlo.html" class="current-deck" aria-current="page">Markov Chain Monte Carlo</a></li>
 <li><a href="04-improving-efficiency.html">Improving Efficiency</a></li>
 <li><a href="05-selected-topics.html">Selected Topics</a></li>
 </ul>
 </div><div class="column" style="width:4%;">
 
 </div><div class="column" style="width:60%;">
-<h3>
-In this deck
-</h3>
 <p><span class="math display">\[\begin{gather*}
 \vU_i\sim\Unif[0,1]^{d+1}
 \;\xrightarrow{\text{propose}}\;
@@ -747,6 +759,11 @@ In this deck
 \vX_i\sim\varrho_{\mathrm{tar}}
 \qquad\text{at stationarity}
 \end{gather*}\]</span></p>
+</div></div>
+<div class="deck-section-links">
+<h3>
+This deck
+</h3>
 <ul>
 <li><a href="#/from-direct-sampling-to-markov-chains">From Direct Sampling to Markov Chains</a></li>
 <li><a href="#/metropolishastings-sampling">Metropolis–Hastings Sampling</a></li>
@@ -755,15 +772,16 @@ In this deck
 <li><a href="#/applications-of-markov-chains">Applications of Markov Chains</a></li>
 <li><a href="#/big-ideas">Big Ideas</a></li>
 </ul>
-</div></div>
+</div>
 </section>
 
 <section>
-<section id="from-direct-sampling-to-markov-chains" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="random-generation">
+<section id="from-direct-sampling-to-markov-chains" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="mcmc-probability">
 <h1>From Direct Sampling to Markov Chains</h1>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
 <ul>
@@ -772,11 +790,11 @@ In this deck
 <li><a href="#/examples-of-markov-chains">Examples of Markov chains</a></li>
 </ul>
 </section>
-<section id="when-direct-sampling-is-difficult" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<section id="when-direct-sampling-is-difficult" class="slide level2 tree-marker-slide" data-tree-marker="mcmc">
 <h2>When direct sampling is difficult</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
 </div>
 
 <ul>
@@ -847,11 +865,11 @@ X_0=X_1=0,
 <p>Only the first is a <span class="alert">martingale</span>: its expected next value, given the history, equals its current value</p>
 </section></section>
 <section>
-<section id="metropolishastings-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="random-generation">
+<section id="metropolishastings-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="mcmc">
 <h1>Metropolis–Hastings Sampling</h1>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
 </div>
 
 <ul>
@@ -864,11 +882,11 @@ X_0=X_1=0,
 <li><a href="#/tuning-and-diagnostics">Tuning and diagnostics</a></li>
 </ul>
 </section>
-<section id="the-metropolishastings-algorithm" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<section id="the-metropolishastings-algorithm" class="slide level2 tree-marker-slide" data-tree-marker="mcmc">
 <h2>The Metropolis–Hastings algorithm</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
 </div>
 
 <p>Suppose</p>
@@ -892,10 +910,11 @@ X_0=X_1=0,
 </ol>
 <p><span class="alert">Every iteration accepts either the proposal or the current state</span><br>Nothing is discarded</p>
 </section>
-<section id="why-the-acceptance-ratio-works" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<section id="why-the-acceptance-ratio-works" class="slide level2 tree-marker-slide" data-tree-marker="mcmc-probability">
 <h2>Why the acceptance ratio works</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
@@ -916,11 +935,11 @@ X_0=X_1=0,
 <p>The transition kernel satisfies <span class="alert">detailed balance</span> with the target distribution, making the target invariant under suitable conditions</p>
 </div>
 </section>
-<section id="the-metropolis-algorithm" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<section id="the-metropolis-algorithm" class="slide level2 tree-marker-slide" data-tree-marker="mcmc">
 <h2>The Metropolis algorithm</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
 </div>
 
 <p>If the proposal is symmetric,</p>
@@ -940,11 +959,12 @@ X_0=X_1=0,
 <li>repeat <span class="math inline">\(X_i\)</span> when a proposal is rejected</li>
 </ul>
 </section>
-<section id="metropolis-practice" class="slide level2 tree-marker-slide" data-tree-marker="practice">
+<section id="metropolis-practice" class="slide level2 tree-marker-slide" data-tree-marker="mcmc-practice">
 <h2>Metropolis practice</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
+  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
 </div>
 
 <p>Use the uniform numbers in order and choose a random order of the candidate <span class="math inline">\(x\)</span> values</p>
@@ -1019,18 +1039,19 @@ X_0=X_1=0,
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Starting at <span class="math inline">\(x=-1.2\)</span>, follow several Metropolis steps and record each accepted or repeated state</span></p>
 </div>
 </section>
-<section id="a-random-walk-metropolis-example" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<section id="a-random-walk-metropolis-example" class="slide level2 tree-marker-slide" data-tree-marker="mcmc-practice">
 <h2>A random-walk Metropolis example</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
+  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
 </div>
 
 <p>Target a bimodal Gaussian mixture using the symmetric proposal</p>
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="7a2e4b9b" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="4f3789c4" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1040,15 +1061,16 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 </div>
 </section>
-<section id="separated-modes-can-trap-a-chain" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<section id="separated-modes-can-trap-a-chain" class="slide level2 tree-marker-slide" data-tree-marker="mcmc-practice">
 <h2>Separated modes can trap a chain</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
+  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="1f32fc4e" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="24e87488" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1059,10 +1081,11 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 <p><span class="alert">Acceptance within a mode does not establish exploration of both modes</span></p>
 </section>
-<section id="tuning-and-diagnostics" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
+<section id="tuning-and-diagnostics" class="slide level2 tree-marker-slide" data-tree-marker="mcmc-statistics">
 <h2>Tuning and diagnostics</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
   <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
 </div>
 
@@ -1082,62 +1105,141 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 <div class="key-point">
 <p>Diagnose both <span class="alert">exploration</span> of the full state space and <span class="alert">concentration</span> in high-density regions</p>
 </div>
-</section></section>
-<section>
-<section id="kernel-discrepancy" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="low-discrepancy">
-<h1>Kernel Discrepancy</h1>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
-</div>
-
-<ul>
-<li><a href="#/how-can-we-measure-sample-quality">How can we measure sample quality?</a></li>
-<li><a href="#/what-discrepancy-measures">What discrepancy measures</a></li>
-<li><a href="#/symmetric-positive-definite-kernels">Symmetric positive definite kernels</a></li>
-<li><a href="#/discrepancy-between-distributions">Discrepancy between distributions</a></li>
-<li><a href="#/empirical-distributions">Empirical distributions</a></li>
-<li><a href="#/unbiased-estimates-of-squared-discrepancy">Unbiased estimates of squared discrepancy</a></li>
-<li><a href="#/relative-entropy-another-comparison">Relative entropy: another comparison</a></li>
-<li><a href="#/stein-discrepancy">Stein discrepancy</a></li>
-<li><a href="#/comparing-distribution-discrepancies">Comparing distribution discrepancies</a></li>
-</ul>
 </section>
-<section id="how-can-we-measure-sample-quality" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
-<h2>How can we measure sample quality?</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
-</div>
+<section class="slide level2">
 
-<p>For samples <span class="math inline">\(\{x_i\}_{i=0}^{m-1}\)</span> and <span class="math inline">\(\{z_j\}_{j=0}^{n-1}\)</span>, a kernel <span class="math inline">\(K\)</span> defines</p>
+<h3 id="parallel-tempering">Parallel tempering: explore hot, estimate cold</h3>
+<p>Run replicas with <span class="alert">inverse temperatures</span> <span class="math inline">\(1=\beta_0&gt;\cdots&gt;\beta_{R-1}&gt;0\)</span></p>
 <p><span class="math display">\[\begin{align*}
-D^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
-&amp;=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(x_i,x_j)\\
-&amp;\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
-+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)
+\varrho_{\beta_r}(x)&amp;\propto\varrho_{\mathrm{tar}}(x)^{\beta_r}
 \end{align*}\]</span></p>
 <ul>
-<li>Also called <span class="alert">maximum mean discrepancy (MMD)</span> in machine learning</li>
-<li>Direct computation requires <span class="math inline">\(\Order(\max(m,n)^2)\)</span> kernel evaluations</li>
-<li>The answer depends on the chosen kernel and its parameters</li>
+<li><span class="alert">Cold</span> (<span class="math inline">\(\beta_0=1\)</span>): original target; <span class="alert">hot</span> (<span class="math inline">\(\beta_r&lt;1\)</span>): flatter density, easier valley crossing</li>
+<li>Each sweep: local Metropolis updates, then proposed <span class="alert">state swaps</span> between neighboring temperatures</li>
+<li>Accept a swap <span class="math inline">\(x_r\leftrightarrow x_s\)</span> with probability</li>
 </ul>
+<p><span class="math display">\[\begin{align*}
+\alpha_{\mathrm{swap}}
+&amp;=\min\left\{1,
+\left[\frac{\varrho_{\mathrm{tar}}(x_s)}{\varrho_{\mathrm{tar}}(x_r)}\right]^{\beta_r-\beta_s}\right\}
+\end{align*}\]</span></p>
+<ul>
+<li>Accepted swaps bring hot-chain discoveries into the cold slot</li>
+<li>Use <span class="alert">cold-slot samples only</span> for the original target; inspect mode visits and swap rates</li>
+</ul>
+<aside class="notes">
+<p>Temperature is <span class="math inline">\(T_r=1/\beta_r\)</span>. Raising the whole density to a power below one reduces peak-to-valley density ratios. Each tempered density must have a finite normalizing integral; this holds for the notebook’s Gaussian mixture.</p>
+<p>The augmented target is the product of the <span class="math inline">\(R\)</span> tempered densities. A symmetric proposal to exchange two states has MH ratio <span class="math display">\[\begin{align*}
+\frac{\varrho_{\mathrm{tar}}(x_s)^{\beta_r}
+      \varrho_{\mathrm{tar}}(x_r)^{\beta_s}}
+     {\varrho_{\mathrm{tar}}(x_r)^{\beta_r}
+      \varrho_{\mathrm{tar}}(x_s)^{\beta_s}}
+&amp;=\left[\frac{\varrho_{\mathrm{tar}}(x_s)}
+                 {\varrho_{\mathrm{tar}}(x_r)}\right]^{\beta_r-\beta_s}.
+\end{align*}\]</span> All normalizing constants cancel. Local updates and accepted/rejected swaps preserve the product target. Slots retain their temperatures; states move between slots. This is whole-target tempering, including the prior for a posterior target, rather than likelihood-only tempering.</p>
+<p>In the notebook, inverse temperatures are <span class="math inline">\(1,0.5,0.2,0.08,0.025\)</span>; every replica starts in the left mode. Show the flattened densities, then the hot and cold traces. Ask how a state discovered in the right mode can reach the cold slot. The cold slot must visit both modes in the correct proportions, not merely alternate between them. Discard the initial burn-in and keep all retained repeats; never pool unweighted hot and cold samples. Compare methods at equal target-evaluation cost, since each sweep updates <span class="math inline">\(R\)</span> replicas. Frequent swaps alone do not prove adequate exploration.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="what-discrepancy-measures" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
-<h2>What discrepancy measures</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+<section class="slide level2">
+
+<h3 id="why-this-swap-rule">Why this swap rule?</h3>
+<p><span class="alert">Temperatures stay in their slots; the two states trade places</span></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Slot <span class="math inline">\(r\)</span>, density <span class="math inline">\(\varrho_{\beta_r}\)</span></th>
+<th style="text-align: left;">Slot <span class="math inline">\(s\)</span>, density <span class="math inline">\(\varrho_{\beta_s}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Before</td>
+<td style="text-align: left;"><span class="math inline">\(x_r\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(x_s\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">After</td>
+<td style="text-align: left;"><span class="math inline">\(x_s\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(x_r\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Compare the <span class="alert">product density after</span> with the <span class="alert">product density before</span>:</p>
+<p><span class="math display">\[\begin{align*}
+R_{\mathrm{swap}}
+&amp;=\frac{\text{density after}}{\text{density before}}
+=\frac{\varrho_{\beta_r}(x_s)\,\varrho_{\beta_s}(x_r)}
+        {\varrho_{\beta_r}(x_r)\,\varrho_{\beta_s}(x_s)}
+=\left[\frac{\varrho_{\mathrm{tar}}(x_s)}{\varrho_{\mathrm{tar}}(x_r)}\right]^{\beta_r-\beta_s}
+\end{align*}\]</span></p>
+<ul>
+<li>Draw <span class="math inline">\(U\sim\Unif(0,1)\)</span>; swap if <span class="math inline">\(U\le\min\{1,R_{\mathrm{swap}}\}\)</span></li>
+<li>Renaming <span class="math inline">\(r\)</span> and <span class="math inline">\(s\)</span>: reciprocal density ratio and opposite exponent → <span class="alert">same rule</span></li>
+</ul>
+<div class="key-point">
+<p>Cold <span class="math inline">\(\beta_r=1\)</span>, hot <span class="math inline">\(\beta_s=1/2\)</span>, and <span class="math inline">\(\varrho_{\mathrm{tar}}(x_s)=4\varrho_{\mathrm{tar}}(x_r)\)</span>: <span class="math inline">\(R_{\mathrm{swap}}=\sqrt{4}=2\)</span> → always swap; the reverse move is accepted with probability <span class="math inline">\(1/2\)</span></p>
+</div>
+<aside class="notes">
+<p>The ratio compares two configurations of the same pair of slots. It does not compare <span class="math inline">\(\varrho_{\beta_r}(x_s)\)</span> with <span class="math inline">\(\varrho_{\beta_s}(x_r)\)</span>: those are the two factors in the numerator, not competing alternatives.</p>
+<p>Write <span class="math inline">\(\varrho_{\beta}(x)=\varrho_{\mathrm{tar}}(x)^\beta/C_\beta\)</span>. The constants <span class="math inline">\(C_{\beta_r}\)</span> and <span class="math inline">\(C_{\beta_s}\)</span> appear in both products and cancel. So do the densities for all unchanged slots in the full product target. The exponent matters: a hot density is proportional to a power of the target, not generally to the target itself.</p>
+<p>For the example, take unnormalized target values 1 at <span class="math inline">\(x_r\)</span> and 4 at <span class="math inline">\(x_s\)</span>. The before product is <span class="math inline">\(1^1\,4^{1/2}=2\)</span>; the after product is <span class="math inline">\(4^1\,1^{1/2}=4\)</span>. The ratio is <span class="math inline">\(4/2=2\)</span>. After that swap, proposing to move back gives <span class="math inline">\(2/4=1/2\)</span>. The accepted probability flows balance: <span class="math inline">\(2\times1=4\times(1/2)\)</span>, up to the common normalizing constant and proposal probability. Renaming slots changes neither physical configuration; reversing a move exchanges the before and after configurations. This distinction resolves the apparent asymmetry.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="kernel-discrepancy" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="discrepancy">
+<h1>Kernel Discrepancy</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
   <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
 </div>
 
-<p>Kernel discrepancy measures</p>
 <ul>
-<li>the difference between two probability distributions</li>
-<li>the <span class="alert">worst-case integration error</span> over the unit ball of a reproducing kernel Hilbert space</li>
-<li>the <span class="alert">root mean squared integration error</span> when the integrand is modeled as a Gaussian process with covariance kernel <span class="math inline">\(K\)</span></li>
+<li><a href="#/kernels-and-discrepancy">Kernels and discrepancy</a></li>
+<li><a href="#/discrepancy-between-distributions">Discrepancy between distributions</a></li>
+<li><a href="#/interpreting-sample-discrepancy">Interpreting sample discrepancy</a></li>
+</ul>
+</section>
+<section id="kernels-and-discrepancy" class="slide level2 tree-marker-slide" data-tree-marker="discrepancy-analysis">
+<h2>Kernels and discrepancy</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+  <div class="tree-component__label" data-label-id="analysis" style="--tree-left: 26%; --tree-top: 81%; --tree-align: left;">Analysis</div>
+</div>
+
+<p><span id="what-discrepancy-measures"></span></p>
+<p>Do our samples represent the <span class="alert">target distribution</span>?</p>
+<ul>
+<li>Compare distributions using a <span class="alert">kernel</span> <span class="math inline">\(K(t,x)\)</span></li>
+<li>A kernel specifies which spatial differences receive weight</li>
+<li>Define the distribution discrepancy first, then substitute empirical distributions</li>
+<li><span class="alert">Maximum mean discrepancy (MMD)</span>: the same kernel comparison used in machine learning</li>
 </ul>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/Discrepancy.ipynb"><code>Discrepancy</code> companion notebook</a></p>
 <p>Tutorial: <a href="https://arxiv.org/abs/2502.03644">Hickernell, Kirk, Sorokin (2026)</a>, Section 5 — kernel discrepancy and integration error</p>
@@ -1159,13 +1261,9 @@ D^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
           display:block!important;
       }</style></aside>
 </section>
-<section id="symmetric-positive-definite-kernels" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
-<h2>Symmetric positive definite kernels</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
-</div>
+<section class="slide level2">
 
+<h3 id="symmetric-positive-definite-kernels">Symmetric positive definite kernels</h3>
 <p>A kernel <span class="math inline">\(K:\mathcal X\times\mathcal X\to\reals\)</span> is <span class="alert">symmetric positive definite</span> when every Gram matrix</p>
 <p><span class="math display">\[
 \mK=(K(x_i,x_j))_{i,j=0}^{n-1}
@@ -1184,11 +1282,10 @@ K(t,x)&amp;=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 <li><p>Kernels usually have <span class="alert">parameters</span> to be chosen or estimated</p></li>
 </ul>
 </section>
-<section id="discrepancy-between-distributions" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<section id="discrepancy-between-distributions" class="slide level2 tree-marker-slide" data-tree-marker="discrepancy">
 <h2>Discrepancy between distributions</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
   <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
 </div>
 
@@ -1196,44 +1293,110 @@ K(t,x)&amp;=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 <p><span class="math display">\[\begin{align*}
 D^2(F_X,F_Z;K)
 &amp;=\Ex[K(X,X')]-2\Ex[K(X,Z)]+\Ex[K(Z,Z')]\\
-&amp;=\int_{\mathcal X^2}K(x,x')\,\dif(F_X-F_Z)(x)\,\dif(F_X-F_Z)(x')\\
-&amp;\ge0
+&amp;=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')
+-2\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_Z(x')\\
+&amp;\qquad \qquad
++\int_{\mathcal X^2}K(x,x')\,\dif F_Z(x)\,\dif F_Z(x')\\
+&amp;=\int_{\mathcal X^2}K(x,x')\,\dif(F_X-F_Z)(x)\,\dif(F_X-F_Z)(x') \ge0
 \end{align*}\]</span></p>
 <p>If both distributions have densities,</p>
-<p><span class="math display">\[
+<p><span class="math display">\[\begin{align*}
 D^2(F_X,F_Z;K)
-=\int_{\mathcal X^2}K(x,x')
+&amp;=\int_{\mathcal X^2}K(x,x')\,\varrho_X(x)\,\varrho_X(x')\,\dif x\,\dif x'
+-2\int_{\mathcal X^2}K(x,x')\,\varrho_X(x)\,\varrho_Z(x')\,\dif x\,\dif x'\\
+&amp;\qquad \qquad +\int_{\mathcal X^2}K(x,x')\,\varrho_Z(x)\,\varrho_Z(x')\,\dif x\,\dif x'\\
+&amp;=\int_{\mathcal X^2}K(x,x')
 \{\varrho_X(x)-\varrho_Z(x)\}
-\{\varrho_X(x')-\varrho_Z(x')\}\,\dif x\,\dif x'
-\]</span></p>
+\{\varrho_X(x')-\varrho_Z(x')\}\,\dif x\,\dif x' \ge0
+\end{align*}\]</span></p>
 </section>
-<section id="empirical-distributions" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
-<h2>Empirical distributions</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
-</div>
+<section class="slide level2">
 
-<p>For the empirical distribution of <span class="math inline">\(z_0,\ldots,z_{n-1}\)</span>,</p>
+<h3 id="empirical-distributions">Empirical distributions</h3>
+<p>Put mass <span class="math inline">\(1/n\)</span> at each <span class="math inline">\(z_i\)</span>: <span class="math inline">\(\widehat F_{Z,n}=n^{-1}\sum_{i=0}^{n-1}\delta_{z_i}\)</span></p>
+<p>Replace <span class="math inline">\(F_Z\)</span> by <span class="math inline">\(\widehat F_{Z,n}\)</span> in the distribution formula:</p>
 <p><span class="math display">\[\begin{align*}
 D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
 &amp;=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')\\
 &amp;\quad-\frac{2}{n}\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,z_i)\,\dif F_X(x)\\
 &amp;\quad+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)
 \end{align*}\]</span></p>
-<p>The same formula covers <span class="alert">one target distribution and one sample</span> or <span class="alert">two samples</span></p>
+<p>Integration against an empirical distribution becomes <span class="alert">averaging over its sample</span></p>
 </section>
-<section id="unbiased-estimates-of-squared-discrepancy" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
-<h2>Unbiased estimates of squared discrepancy</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<section class="slide level2">
+
+<h3 id="how-can-we-measure-sample-quality">Two empirical distributions</h3>
+<p>Replace both distributions by empirical distributions: integrals become sums</p>
+<p><span class="math display">\[\begin{align*}
+D^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
+&amp;=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(x_i,x_j)\\
+&amp;\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
++\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)
+\end{align*}\]</span></p>
+<ul>
+<li>The <span class="alert">exact squared discrepancy of these empirical distributions</span>; nonnegative</li>
+<li>Direct computation requires <span class="math inline">\(\Order(\max(m,n)^2)\)</span> kernel evaluations</li>
+<li>The answer depends on the chosen kernel and its parameters</li>
+</ul>
+</section>
+<section id="interpreting-sample-discrepancy" class="slide level2 tree-marker-slide" data-tree-marker="discrepancy-statistics">
+<h2>Interpreting sample discrepancy</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
   <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
 </div>
 
-<p>The squared discrepancy is nonnegative</p>
-<p>But an unbiased estimator <span class="alert">may be negative</span></p>
-<p>Replace within-sample sums by off-diagonal averages:</p>
+<p><span class="alert">Two questions, two quantities</span></p>
+<p>&nbsp;</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Question</th>
+<th style="text-align: left;">Quantity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">How different are these empirical distributions?</td>
+<td style="text-align: left;">Exact <span class="math inline">\(D^2(\widehat F_{X,m},\widehat F_{Z,n};K)\ge0\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">How different are the underlying distributions?</td>
+<td style="text-align: left;">Estimate <span class="math inline">\(D^2(F_X,F_Z;K)\)</span> from random samples</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The ordinary empirical formula answers the first question</li>
+<li>As an estimator of population discrepancy, it is generally biased</li>
+<li>With independent IID samples, removing diagonal terms gives an <span class="alert">unbiased estimator</span></li>
+<li>Unbiased estimates may be negative; <span class="alert">the population squared discrepancy is not</span></li>
+</ul>
+<aside class="notes">
+<p>Condition on the observed point sets for the first question: no unknown quantity remains in their empirical discrepancy. For the second question, regard the points as random draws from underlying distributions and ask about expectation over repeated samples. Reusing the same symbol without identifying these different targets can make the two formulas seem contradictory.</p>
+<p>The off-diagonal correction uses independence within each sample as well as between the samples. Successive MCMC states do not satisfy the IID condition.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="unbiased-estimates-of-squared-discrepancy">Unbiased estimates of squared discrepancy</h3>
+<p>For two independent IID samples, estimate <span class="math inline">\(D^2(F_X,F_Z;K)\)</span></p>
+<p>Replace within-sample sums by <span class="alert">off-diagonal averages</span>:</p>
 <p><span class="math display">\[\begin{align*}
 D_{\mathrm{unb}}^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
 &amp;=\frac{1}{m(m-1)}\sum_{\substack{i,j=0\\i\ne j}}^{m-1}K(x_i,x_j)\\
@@ -1250,136 +1413,28 @@ D_{\mathrm{unb}}^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span> Let <span class="math inline">\(\{X_i\}_{i=0}^{m-1}\)</span> and <span class="math inline">\(\{Z_j\}_{j=0}^{n-1}\)</span> be independent IID samples from <span class="math inline">\(F_X\)</span> and <span class="math inline">\(F_Z\)</span> <span class="exsub">Take expectations term by term to show <span class="math inline">\(\Ex[D_{\mathrm{unb}}^2]=D^2(F_X,F_Z;K)\)</span></span> <span class="exsub">What is the expectation when <span class="math inline">\(F_X=F_Z\)</span>?</span> <span class="exsub">Why may a realization be negative, and does more negative mean a better match?</span> <span class="exsub">Which step fails when the <span class="math inline">\(X_i\)</span> are successive Metropolis states?</span> </span></p>
 </div>
 </section>
-<section id="relative-entropy-another-comparison" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
-<h2>Relative entropy: another comparison</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
-</div>
+<section class="slide level2">
 
-<p><span class="alert">Kullback–Leibler (KL) divergence</span>, also called <span class="alert">relative entropy</span></p>
-<p>For normalized densities <span class="math inline">\(\varrho_X\)</span> and <span class="math inline">\(\varrho_Z\)</span>,</p>
+<h3 id="how-small-should-discrepancy-be">How small should discrepancy be?</h3>
+<p><span class="alert">Zero is the ideal</span>; no universal acceptable cutoff</p>
+<p>For a fixed target <span class="math inline">\(F_X\)</span> and kernel <span class="math inline">\(K\)</span>, normalize by the <span class="alert">no-sample error</span>:</p>
 <p><span class="math display">\[\begin{align*}
-D_{\mathrm{KL}}(F_X\Vert F_Z)
-&amp;=\int_{\mathcal X}\varrho_X(x)
-\log\!\left(\frac{\varrho_X(x)}{\varrho_Z(x)}\right)\,\dif x
+D_0^2&amp;=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')&gt;0,
+&amp;\qquad D_{\mathrm{rel},n}^2&amp;=\frac{D^2(F_X,\{z_i\}_{i=0}^{n-1};K)}{D_0^2}
 \end{align*}\]</span></p>
 <ul>
-<li>Nonnegative; zero exactly when the distributions agree</li>
-<li>Generally asymmetric; infinite if <span class="math inline">\(F_X\)</span> assigns mass where <span class="math inline">\(F_Z\)</span> assigns none</li>
-<li>Entropy describes one distribution; <span class="alert">relative entropy compares two</span></li>
-<li>Variational inference fits an approximate density by minimizing KL to the target</li>
+<li><span class="math inline">\(D_{\mathrm{rel},n}^2&lt;1\)</span>: improvement over estimating the integral by zero</li>
+<li>Removes overall kernel amplitude; <span class="alert">length scale and kernel shape still matter</span></li>
+<li>No guaranteed <span class="math inline">\([0,1]\)</span> range; compare samples using the <span class="alert">same target and kernel</span></li>
+<li>Study decay with <span class="math inline">\(n\)</span>: IID has <span class="math inline">\(\Ex[D_n^2]=C_K/n\)</span>, hence root mean squared discrepancy <span class="math inline">\(\Order(n^{-1/2})\)</span></li>
 </ul>
 <div class="key-point">
-<p>Finite empirical sample versus continuous target: KL is infinite</p>
-<p>Kernel discrepancy compares these directly, without density estimation</p>
+<p>Look for decreasing discrepancy and its <span class="alert">asymptotic rate</span>, together with the integration accuracy needed</p>
 </div>
 <aside class="notes">
-<p>Use natural logarithms and the convention that a zero numerator contributes zero. The density formula assumes a common dominating measure. More generally, KL is infinite unless the first distribution is absolutely continuous with respect to the second. A finite empirical measure and an atomless target are mutually singular, so both KL directions are infinite; density estimation or binning changes the comparison. This does not prevent studying KL convergence of a chain’s marginal law, which is distinct from its empirical measure.</p>
-<p>Variational inference commonly minimizes <span class="math inline">\(D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})\)</span> over a tractable family. It is an optimization alternative to MCMC, not itself an MCMC sampler. An unknown target normalizing constant contributes an additive constant to this objective; it does not prevent optimization, but is needed for its absolute numerical value.</p>
-<p>References: <a href="https://www.stat.cmu.edu/~cshalizi/dm/20/lectures/09/lecture-09.html#entropy-log-likelihood-divergence">Shalizi, Information Theory I, entropy and divergence</a>; <a href="https://arxiv.org/abs/1601.00670">Blei, Kucukelbir, and McAuliffe, Variational Inference: A Review for Statisticians</a></p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="stein-discrepancy" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
-<h2>Stein discrepancy</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
-</div>
-
-<p>For a smooth positive target density <span class="math inline">\(\varrho_{\mathrm{tar}}(x)=\widetilde\varrho(x)/C\)</span>, the <span class="alert">score</span> removes the unknown normalizing constant</p>
-<p><span class="math display">\[\begin{align*}
-s(x)&amp;=\nabla_x\log\varrho_{\mathrm{tar}}(x)
-=\nabla_x\log\widetilde\varrho(x)\\
-\mathcal T g(x)&amp;=s(x)^\mathsf{T}g(x)+\nabla\!\cdot g(x),
-\qquad \Ex_{\mathrm{tar}}[\mathcal T g(X)]=0
-\end{align*}\]</span></p>
-<ul>
-<li>Stein discrepancy: largest sample violation of this identity over a chosen class of <span class="math inline">\(g\)</span></li>
-<li><span class="alert">Kernel Stein discrepancy (KSD)</span>: use a vector-valued RKHS unit ball</li>
-<li>Computable from candidate points, target scores, and kernel derivatives</li>
-<li>No target reference sample or normalizing constant required</li>
-</ul>
-<div class="key-point">
-<p>Requires smoothness and valid boundary conditions; kernel choice matters</p>
-<p>Some KSDs fail to detect nonconvergence; separated-mode weights can be hard to assess</p>
-</div>
-<aside class="notes">
-<p>This slide describes the common Langevin, score-based Stein operator for a continuous target, not every Stein discrepancy. Here <span class="math inline">\(g\)</span> is a vector field; the identity follows by integration by parts when the boundary term vanishes and the expectations exist. On bounded supports, the function class or operator must enforce the appropriate boundary conditions. Discrete targets require a different operator.</p>
-<p>For candidate points <span class="math inline">\(x_0,\ldots,x_{n-1}\)</span>, the discrepancy is <span class="math inline">\(\sup_{g\in\mathcal G}|n^{-1}\sum_{i=0}^{n-1}\mathcal T g(x_i)|\)</span>. Applying Stein operators to both arguments of a sufficiently smooth base kernel gives a target-dependent Stein kernel and a pairwise-sum formula for KSD squared. Thus KSD is closely related to MMD, using a specially constructed kernel whose target expectation vanishes. It is not a wholly unrelated alternative to kernel discrepancy. Direct pairwise computation is quadratic in sample size.</p>
-<p>Suitable kernels and target assumptions give convergence-determining KSDs; the failure of some kernels is not a universal failure of Stein discrepancy. Weak sensitivity to weights of well-separated modes is a finite-sample testing limitation, distinct from an asymptotic convergence theorem.</p>
-<p>References: <a href="https://proceedings.mlr.press/v48/liub16.html">Liu, Lee, and Jordan (2016)</a>; <a href="https://proceedings.mlr.press/v70/gorham17a.html">Gorham and Mackey (2017)</a>; <a href="https://proceedings.mlr.press/v202/liu23i.html">Liu, Duncan, and Gandy (2023)</a></p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="comparing-distribution-discrepancies" class="slide level2">
-<h2>Comparing distribution discrepancies</h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: left;">Ordinary MMD</th>
-<th style="text-align: left;">KL / relative entropy</th>
-<th style="text-align: left;">Score-based KSD</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Normalizing constant</td>
-<td style="text-align: left;">Direct integrals: needed; reference samples: not needed</td>
-<td style="text-align: left;">Value: generally needed; optimization: may drop out</td>
-<td style="text-align: left;">Cancels from the score</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Benefit</td>
-<td style="text-align: left;">Sample comparisons; integration-error meaning</td>
-<td style="text-align: left;">Information-theoretic meaning; variational fitting</td>
-<td style="text-align: left;">No target draws or normalizer</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Limitation</td>
-<td style="text-align: left;">Kernel choice; target integration or reference error</td>
-<td style="text-align: left;">Asymmetry; empirical vs continuous: infinite</td>
-<td style="text-align: left;">Derivatives; boundary, kernel, and mode sensitivity</td>
-</tr>
-</tbody>
-</table>
-<p>With <span class="math inline">\(\varrho_{\mathrm{tar}}=\widetilde\varrho/C\)</span> and approximation density <span class="math inline">\(\varrho_{\mathrm{approx}}\)</span>,</p>
-<p><span class="math display">\[\begin{align*}
-D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})
-&amp;=\Ex_{\mathrm{approx}}\!\left[\log\!\left(
-\frac{\varrho_{\mathrm{approx}}(X)}{\widetilde\varrho(X)}\right)\right]+\log C
-\end{align*}\]</span></p>
-<p><span class="alert">Fixed target</span>: <span class="math inline">\(\log C\)</span> does not affect minimization over the approximation</p>
-<aside class="notes">
-<p>The MMD row concerns ordinary kernels, before the Stein construction. Direct target integration requires normalized expectations, although a constant may already be incorporated in an analytic kernel mean or removed by computing a ratio of integrals. Empirical two-sample MMD itself never evaluates a density; obtaining trustworthy target reference draws may still be difficult. In this course, the discrepancy notebook uses independent acceptance–rejection draws as its reference, so the MMD calculation does not use a normalizing constant.</p>
-<p>The KL optimization statement is for a fixed target and the displayed direction. It is not permission to omit a parameter-dependent normalizer when fitting the target model. Density or density-ratio estimators can estimate KL from samples, but that differs from plugging an atomic empirical measure into KL.</p>
-<p>The comparisons concern different quantities; their numerical magnitudes are not interchangeable, and none is automatically a calibrated MCMC stopping rule. References are given in the preceding KL and Stein slide notes.</p>
+<p>The empty sample is not a probability distribution: <span class="math inline">\(D_0\)</span> means the RKHS worst-case error of the zero quadrature rule, equivalently comparison with the zero measure. It is also the prior standard deviation of the integral under the zero-mean GP model. This normalization requires <span class="math inline">\(0&lt;D_0^2&lt;\infty\)</span>; a kernel centered with respect to the target can have <span class="math inline">\(D_0=0\)</span> and cannot use this ratio.</p>
+<p>Multiplying <span class="math inline">\(K\)</span> by a positive constant multiplies both squared errors by that constant, so it cancels. Changing length scale changes which functions and spatial differences matter; normalization cannot remove that dependence. A relative squared discrepancy of <span class="math inline">\(0.01\)</span> corresponds to a discrepancy of <span class="math inline">\(0.1\)</span> times the no-sample error. It does not imply 1 percent relative error for every integrand. For a particular <span class="math inline">\(f\)</span>, use the bound <span class="math inline">\(D_n\norm{f}_{\mathcal H_K}\)</span> and an application-specific tolerance.</p>
+<p>Zero discrepancy means equal kernel mean embeddings; identifying equal probability distributions additionally requires a characteristic kernel. For IID sampling the later “What the kernel controls” slide gives the exact <span class="math inline">\(C_K/n\)</span> expectation when the kernel moments are finite. This is a mean-square benchmark, not monotone decay on every realization. MCMC dependence changes the constant and may affect the rate without suitable mixing assumptions. A finite independent reference sample adds error: increase its size as well when studying decay, rather than interpreting a fixed-reference error floor as a failure to converge. Do not choose length scales simply to minimize the displayed discrepancy. The off-diagonal estimator can be negative and is not itself a squared norm.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1393,11 +1448,11 @@ D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})
       }</style></aside>
 </section></section>
 <section>
-<section id="discrepancy-as-integration-error" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="estimation">
+<section id="discrepancy-as-integration-error" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="error-assessment">
 <h1>Discrepancy as Integration Error</h1>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+  <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
 </div>
 
 <ul>
@@ -1407,13 +1462,15 @@ D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})
 <li><a href="#/average-case-integration-error">Average-case integration error</a></li>
 <li><a href="#/what-the-kernel-controls">What the kernel controls</a></li>
 <li><a href="#/centered-discrepancy-and-smoothness">Centered discrepancy and smoothness</a></li>
+<li><a href="#/alternative-comparisons">Alternative comparisons</a></li>
 </ul>
 </section>
-<section id="a-reproducing-kernel-hilbert-space" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
+<section id="a-reproducing-kernel-hilbert-space" class="slide level2 tree-marker-slide" data-tree-marker="discrepancy-analysis">
 <h2>A reproducing kernel Hilbert space</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+  <div class="tree-component__label" data-label-id="analysis" style="--tree-left: 26%; --tree-top: 81%; --tree-align: left;">Analysis</div>
 </div>
 
 <p>Every symmetric positive definite kernel <span class="math inline">\(K\)</span> defines a Hilbert space <span class="math inline">\(\mathcal H_K\)</span> of functions on <span class="math inline">\(\mathcal X\)</span> with the <span class="alert">reproducing property</span></p>
@@ -1428,11 +1485,11 @@ f&amp;\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i
 \end{align*}\]</span></p>
 <p>are bounded linear functionals on <span class="math inline">\(\mathcal H_K\)</span></p>
 </section>
-<section id="worst-case-integration-error" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<section id="worst-case-integration-error" class="slide level2 tree-marker-slide" data-tree-marker="error-assessment">
 <h2>Worst-case integration error</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+  <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
 </div>
 
 <p>By the Riesz representation theorem, some <span class="math inline">\(\zeta\in\mathcal H_K\)</span> satisfies</p>
@@ -1447,12 +1504,11 @@ f&amp;\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i
 \]</span></p>
 <p>This separates <span class="alert">sample quality</span>, <span class="math inline">\(\norm{\zeta}_{\mathcal H_K}\)</span>, from <span class="alert">integrand difficulty</span>, <span class="math inline">\(\norm{f}_{\mathcal H_K}\)</span></p>
 </section>
-<section id="the-discrepancy-identity" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<section id="the-discrepancy-identity" class="slide level2 tree-marker-slide" data-tree-marker="error-assessment">
 <h2>The discrepancy identity</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+  <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
 </div>
 
 <p>The representer is</p>
@@ -1470,11 +1526,11 @@ f&amp;\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i
 \end{align*}\]</span></p>
 <p>Thus discrepancy is the <span class="alert">worst-case error over <span class="math inline">\(\norm{f}_{\mathcal H_K}\le1\)</span></span></p>
 </section>
-<section id="average-case-integration-error" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
+<section id="average-case-integration-error" class="slide level2 tree-marker-slide" data-tree-marker="error-assessment">
 <h2>Average-case integration error</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+  <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
 </div>
 
 <p>Suppose <span class="math inline">\(f\)</span> is modeled as a zero-mean Gaussian process with covariance kernel <span class="math inline">\(K\)</span></p>
@@ -1490,10 +1546,11 @@ f&amp;\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i
 \end{align*}\]</span></p>
 <p>Discrepancy is also the <span class="alert">root mean squared error under the Gaussian-process model</span></p>
 </section>
-<section id="what-the-kernel-controls" class="slide level2 tree-marker-slide" data-tree-marker="statistics">
+<section id="what-the-kernel-controls" class="slide level2 tree-marker-slide" data-tree-marker="discrepancy-statistics">
 <h2>What the kernel controls</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
   <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
 </div>
 
@@ -1541,14 +1598,209 @@ K(t,x)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 {\gamma_1\cdots\gamma_d\partial x_1\cdots\partial x_d}}_2^2
 \end{align*}\]</span></p>
 <p>The weights <span class="math inline">\(\gamma_\ell\)</span> express <span class="alert">coordinate importance</span></p>
+</section>
+<section id="alternative-comparisons" class="slide level2 tree-marker-slide" data-tree-marker="discrepancy-statistics">
+<h2>Alternative comparisons</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
+</div>
+
+<h3 id="relative-entropy-another-comparison">Relative entropy</h3>
+<p><span class="alert">Kullback–Leibler (KL) divergence</span>, also called <span class="alert">relative entropy</span></p>
+<p>For normalized densities <span class="math inline">\(\varrho_X\)</span> and <span class="math inline">\(\varrho_Z\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+D_{\mathrm{KL}}(F_X\Vert F_Z)
+&amp;=\int_{\mathcal X}\varrho_X(x)
+\log\!\left(\frac{\varrho_X(x)}{\varrho_Z(x)}\right)\,\dif x
+\end{align*}\]</span></p>
+<ul>
+<li>Nonnegative; zero exactly when the distributions agree</li>
+<li>Generally asymmetric; infinite if <span class="math inline">\(F_X\)</span> assigns mass where <span class="math inline">\(F_Z\)</span> assigns none</li>
+<li>Entropy describes one distribution; <span class="alert">relative entropy compares two</span></li>
+<li>Variational inference fits an approximate density by minimizing KL to the target</li>
+</ul>
+<div class="key-point">
+<p>Finite empirical sample versus continuous target: KL is infinite</p>
+<p>Kernel discrepancy compares these directly, without density estimation</p>
+</div>
+<aside class="notes">
+<p>Use natural logarithms and the convention that a zero numerator contributes zero. The density formula assumes a common dominating measure. More generally, KL is infinite unless the first distribution is absolutely continuous with respect to the second. A finite empirical measure and an atomless target are mutually singular, so both KL directions are infinite; density estimation or binning changes the comparison. This does not prevent studying KL convergence of a chain’s marginal law, which is distinct from its empirical measure.</p>
+<p>Variational inference commonly minimizes <span class="math inline">\(D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})\)</span> over a tractable family. It is an optimization alternative to MCMC, not itself an MCMC sampler. An unknown target normalizing constant contributes an additive constant to this objective; it does not prevent optimization, but is needed for its absolute numerical value.</p>
+<p>References: <a href="https://www.stat.cmu.edu/~cshalizi/dm/20/lectures/09/lecture-09.html#entropy-log-likelihood-divergence">Shalizi, Information Theory I, entropy and divergence</a>; <a href="https://arxiv.org/abs/1601.00670">Blei, Kucukelbir, and McAuliffe, Variational Inference: A Review for Statisticians</a></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="kl-minimization-with-an-unnormalized-target">KL minimization with an unnormalized target</h3>
+<p>With <span class="math inline">\(\varrho_{\mathrm{tar}}=\widetilde\varrho/C\)</span> and approximation density <span class="math inline">\(\varrho_{\mathrm{approx}}\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})
+&amp;=\Ex_{\mathrm{approx}}\!\left[\log\!\left(
+\frac{\varrho_{\mathrm{approx}}(X)}{\widetilde\varrho(X)}\right)\right]+\log C
+\end{align*}\]</span></p>
+<p><span class="alert">Fixed target</span>: <span class="math inline">\(\log C\)</span> does not affect minimization over the approximation</p>
+<aside class="notes">
+<p>The KL optimization statement is for a fixed target and the displayed direction. It is not permission to omit a parameter-dependent normalizer when fitting the target model. Density or density-ratio estimators can estimate KL from samples, but that differs from plugging an atomic empirical measure into KL.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="stein-discrepancy">Stein discrepancy</h3>
+<p>For a smooth positive target density <span class="math inline">\(\varrho_{\mathrm{tar}}(x)=\widetilde\varrho(x)/C\)</span>, the <span class="alert">score</span> removes the unknown normalizing constant</p>
+<p><span class="math display">\[\begin{align*}
+s(x)&amp;=\nabla_x\log\varrho_{\mathrm{tar}}(x)
+=\nabla_x\log\widetilde\varrho(x)\\
+\mathcal T g(x)&amp;=s(x)^\mathsf{T}g(x)+\nabla\!\cdot g(x),
+\qquad g:\mathcal X\to\mathbb R^d
+\end{align*}\]</span></p>
+<p><span class="alert">Stein’s identity</span>: <span class="math inline">\(\Ex_{\mathrm{tar}}[\mathcal T g(X)]=0\)</span> for suitable <span class="math inline">\(g\)</span></p>
+<p>For candidate points <span class="math inline">\(z_0,\ldots,z_{n-1}\)</span>, write the error as <span class="alert">true value minus sample average</span>:</p>
+<p><span class="math display">\[\begin{align*}
+D_{\mathrm{Stein}}(F_{\mathrm{tar}},\{z_i\};\mathcal G)
+&amp;=\sup_{g\in\mathcal G}\left|
+\underbrace{\Ex_{\mathrm{tar}}[\mathcal T g(X)]}_{0}
+-\frac1n\sum_{i=0}^{n-1}\mathcal T g(z_i)\right|
+\end{align*}\]</span></p>
+<div class="key-point">
+<p>The largest departure from zero over a <span class="alert">size-constrained class</span> <span class="math inline">\(\mathcal G\)</span> of test functions</p>
+</div>
+<aside class="notes">
+<p>This slide describes the common Langevin, score-based Stein operator for a continuous target, not every Stein discrepancy. Here <span class="math inline">\(g\)</span> is a vector field; the identity follows by integration by parts when the boundary term vanishes and the expectations exist. On bounded supports, the function class or operator must enforce the appropriate boundary conditions. Discrete targets require a different operator.</p>
+<p>For candidate points <span class="math inline">\(x_0,\ldots,x_{n-1}\)</span>, the discrepancy is <span class="math inline">\(\sup_{g\in\mathcal G}|0-n^{-1}\sum_{i=0}^{n-1}\mathcal T g(x_i)|\)</span>, with the true target integral first and the sample approximation second. Applying Stein operators to both arguments of a sufficiently smooth base kernel gives a target-dependent Stein kernel and a pairwise-sum formula for KSD squared. Thus KSD is closely related to MMD, using a specially constructed kernel whose target expectation vanishes. It is not a wholly unrelated alternative to kernel discrepancy. Direct pairwise computation is quadratic in sample size.</p>
+<p>Suitable kernels and target assumptions give convergence-determining KSDs; the failure of some kernels is not a universal failure of Stein discrepancy. Weak sensitivity to weights of well-separated modes is a finite-sample testing limitation, distinct from an asymptotic convergence theorem.</p>
+<p>References: <a href="https://proceedings.mlr.press/v48/liub16.html">Liu, Lee, and Jordan (2016)</a>; <a href="https://proceedings.mlr.press/v70/gorham17a.html">Gorham and Mackey (2017)</a>; <a href="https://proceedings.mlr.press/v202/liu23i.html">Liu, Duncan, and Gandy (2023)</a></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="computing-kernel-stein-discrepancy">Computing kernel Stein discrepancy</h3>
+<p>For <span class="alert">kernel Stein discrepancy (KSD)</span>, choose <span class="math inline">\(\mathcal G\)</span> as the unit ball of <span class="math inline">\(\mathcal H_K^d\)</span></p>
+<p>The supremum has an explicit formula using a <span class="alert">Stein kernel</span>:</p>
+<p><span class="math display">\[\begin{align*}
+K_{\mathrm{Stein}}(x,z)
+&amp;=s(x)^\mathsf{T}s(z)K(x,z)
++s(x)^\mathsf{T}\nabla_z K(x,z)\\
+&amp;\quad+s(z)^\mathsf{T}\nabla_x K(x,z)
++\sum_{\ell=1}^d\frac{\partial^2 K(x,z)}{\partial x_\ell\,\partial z_\ell}\\[0.5ex]
+\mathrm{KSD}^2(F_{\mathrm{tar}},\{z_i\};K)
+&amp;=\frac{1}{n^2}\sum_{i,j=0}^{n-1}K_{\mathrm{Stein}}(z_i,z_j)\ge0
+\end{align*}\]</span></p>
+<ul>
+<li>The target-integral terms vanish: only the <span class="alert">sample-pair sum</span> remains</li>
+<li>Needs target scores and kernel derivatives; no target draws or normalizing constant</li>
+</ul>
+<div class="key-point">
+<p>Requires smoothness and valid boundary conditions; kernel choice matters</p>
+<p>Some KSDs fail to detect nonconvergence; separated-mode weights can be hard to assess</p>
+</div>
+<aside class="notes">
+<p>Here <span class="math inline">\(\mathcal H_K^d\)</span> is the space of vector fields whose components belong to the RKHS of the scalar base kernel <span class="math inline">\(K\)</span>, with squared norm equal to the sum of the component squared norms. Its unit ball prevents arbitrary rescaling of <span class="math inline">\(g\)</span>. The smoothness, integrability, and boundary assumptions must allow the Stein identity to hold for the relevant kernel sections and derivatives. Then <span class="math inline">\(\Ex_{X\sim F_{\mathrm{tar}}}[K_{\mathrm{Stein}}(X,z)]=0\)</span>, so the target-target and target-sample terms in ordinary squared discrepancy are zero. The displayed sum includes the diagonal: it is the exact squared KSD of the empirical measure, not the off-diagonal unbiased estimator of a population quantity. No independence assumption is needed for this finite-point formula, though dependence matters for its sampling behavior.</p>
+<p>Reference: <a href="https://proceedings.mlr.press/v48/liub16.pdf">Liu, Lee, and Jordan (2016), Theorem 3.6</a></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="comparing-distribution-discrepancies">Comparing distribution discrepancies</h3>
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Ordinary MMD</th>
+<th style="text-align: left;">KL / relative entropy</th>
+<th style="text-align: left;">Score-based KSD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Normalizing constant</td>
+<td style="text-align: left;">Direct integrals: needed; reference samples: not needed</td>
+<td style="text-align: left;">Value: generally needed; optimization: may drop out</td>
+<td style="text-align: left;">Cancels from the score</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Benefit</td>
+<td style="text-align: left;">Sample comparisons; integration-error meaning</td>
+<td style="text-align: left;">Information-theoretic meaning; variational fitting</td>
+<td style="text-align: left;">No target draws or normalizer</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Limitation</td>
+<td style="text-align: left;">Kernel choice; target integration or reference error</td>
+<td style="text-align: left;">Asymmetry; empirical vs continuous: infinite</td>
+<td style="text-align: left;">Derivatives; boundary, kernel, and mode sensitivity</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>The MMD row concerns ordinary kernels, before the Stein construction. Direct target integration requires normalized expectations, although a constant may already be incorporated in an analytic kernel mean or removed by computing a ratio of integrals. Empirical two-sample MMD itself never evaluates a density; obtaining trustworthy target reference draws may still be difficult. In this course, the discrepancy notebook uses independent acceptance–rejection draws as its reference, so the MMD calculation does not use a normalizing constant.</p>
+<p>The comparisons concern different quantities; their numerical magnitudes are not interchangeable, and none is automatically a calibrated MCMC stopping rule. References are given in the preceding KL and Stein slide notes.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
-<section id="applications-of-markov-chains" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="prob-est">
+<section id="applications-of-markov-chains" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="mcmc-practice">
 <h1>Applications of Markov Chains</h1>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
+  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
 </div>
 
 <ul>
@@ -1617,10 +1869,11 @@ K(t,x)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
           display:block!important;
       }</style></aside>
 </section>
-<section id="maximum-likelihood-estimation" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<section id="maximum-likelihood-estimation" class="slide level2 tree-marker-slide" data-tree-marker="inference-estimation">
 <h2>Maximum likelihood estimation</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.8; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="statistical-inference" style="--tree-left: 3%; --tree-top: 45%; --tree-align: center;">Statistical<br>Inference</div>
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
@@ -1692,12 +1945,13 @@ L(\mu,\sigma^2;y)
           display:block!important;
       }</style></aside>
 </section>
-<section id="bayesian-inference" class="slide level2 tree-marker-slide" data-tree-marker="prob-est">
+<section id="bayesian-inference" class="slide level2 tree-marker-slide" data-tree-marker="bayesian-mcmc">
 <h2>Bayesian inference</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.8; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+  <div class="tree-component__label" data-label-id="bayesian-computation" style="--tree-left: 51%; --tree-top: 6%; --tree-align: center;">Bayesian<br>Computation</div>
+  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
+  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
 </div>
 
 <ul>
@@ -1726,10 +1980,11 @@ L(\mu,\sigma^2;y)
 </div>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/BayesianMCMC.ipynb"><code>BayesianMCMC</code> companion notebook</a></p>
 </section>
-<section id="queueing-systems" class="slide level2 tree-marker-slide" data-tree-marker="probability">
+<section id="queueing-systems" class="slide level2 tree-marker-slide" data-tree-marker="probability-practice">
 <h2>Queueing systems</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
@@ -1795,13 +2050,13 @@ W_j&amp;=\text{waiting plus service time for customer $j$}
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Which state variables are needed if service times are not memoryless?</span></p>
 </div>
 </section></section>
-<section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="prob-stat-est">
+<section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="mcmc-discrepancy-practice">
 <h1>Big Ideas</h1>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.7; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
-  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
+  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
 </div>
 
 <ul>

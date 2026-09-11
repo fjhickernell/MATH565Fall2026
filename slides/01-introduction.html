@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-09-10">
+  <meta name="dcterms.date" content="2026-09-11">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -36,7 +36,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="01-introduction_files/libs/revealjs/dist/theme/quarto-6873a23780672be33fc26734594de2fe.css">
+  <link rel="stylesheet" href="01-introduction_files/libs/revealjs/dist/theme/quarto-5e3eb0fb4589d0efdc23a828031c590a.css">
   <link href="01-introduction_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="01-introduction_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="01-introduction_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -650,7 +650,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">September 10, 2026</p>
+  <p class="date">September 11, 2026</p>
 </section>
 <section id="we-begin-this-semester-amid-significant-change" class="slide level2">
 <h2>We begin this semester amid significant change</h2>
@@ -1501,7 +1501,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 </div><div class="column" style="width:50%;">
 <ul>
 <li><a href="03-markov-chain-monte-carlo.html#maximum-likelihood-estimation">Maximum likelihood estimator</a></li>
-<li><a href="03-markov-chain-monte-carlo.html#how-can-we-measure-sample-quality">Maximum mean discrepancy (MMD)</a></li>
+<li><a href="03-markov-chain-monte-carlo.html#discrepancy-between-distributions">Maximum mean discrepancy (MMD)</a></li>
 <li><a href="#/moments-of-random-variables">Mean</a></li>
 <li><a href="#/mean-squared-error-bias-and-variance">Mean squared error (MSE)</a></li>
 <li><a href="#/moments-of-random-variables">Median</a></li>
@@ -1519,7 +1519,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li><a href="03-markov-chain-monte-carlo.html#tuning-and-diagnostics">Parallel tempering</a></li>
+<li><a href="03-markov-chain-monte-carlo.html#parallel-tempering">Parallel tempering</a></li>
 <li><a href="#/monte-carlo-estimates-of-properties-of-y">Point estimator</a></li>
 <li><a href="02-generating-samples.html#principal-component-factorization">Principal-component (PCA) factorization</a></li>
 <li><a href="#/random-variables-and-distributions">Probability density function (PDF)</a></li>
@@ -1739,7 +1739,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points<br>Compare how its <span class="math inline">\(x_1\)</span>–<span class="math inline">\(x_2\)</span> projection fills the unit square</p>
-<div id="304c257b" class="cell" data-execution_count="4">
+<div id="80be380c" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1752,7 +1752,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="grid-n64">Grid, <span class="math inline">\(n=64\)</span></h3>
-<div id="39249dcc" class="cell" data-execution_count="5">
+<div id="123d1061" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1765,7 +1765,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="orthogonal-array-n64">Orthogonal array, <span class="math inline">\(n=64\)</span></h3>
-<div id="2ccd7767" class="cell" data-execution_count="6">
+<div id="a8c2fe89" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1778,7 +1778,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="iid-n64">IID, <span class="math inline">\(n=64\)</span></h3>
-<div id="df8705be" class="cell" data-execution_count="7">
+<div id="de315da5" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1791,7 +1791,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="scrambled-sobol-n64">Scrambled Sobol’, <span class="math inline">\(n=64\)</span></h3>
-<div id="e740e7f9" class="cell" data-execution_count="8">
+<div id="09f41e21" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
