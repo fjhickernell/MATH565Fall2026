@@ -27,6 +27,10 @@ markers:
       - low-discrepancy
       - discrepancy
 
+  low-discrepancy-sampling:
+    font_scale: 3.3
+    labels: [low-discrepancy]
+
   quant-finance:
     labels:
       - qf
@@ -50,6 +54,10 @@ markers:
       - probability
       - statistics
 
+  error-assessment:
+    font_scale: 3.0
+    labels: [error-assessment]
+
   estimation:
     labels:
       - estimation
@@ -70,3 +78,81 @@ markers:
       - probability
       - statistics
       - estimation
+
+  # Deck 03 contexts: selections of existing MC-tree labels only.
+  mcmc:
+    font_scale: 3.2
+    labels: [mcmc]
+
+  mcmc-probability:
+    font_scale: 3.0
+    labels: [mcmc, probability]
+
+  mcmc-practice:
+    font_scale: 3.0
+    labels: [mcmc]
+    group_headings: [practice]
+
+  mcmc-statistics:
+    font_scale: 3.0
+    labels: [mcmc, statistics]
+
+  discrepancy:
+    font_scale: 3.0
+    labels: [discrepancy]
+
+  discrepancy-statistics:
+    font_scale: 3.0
+    labels: [discrepancy, statistics]
+
+  discrepancy-analysis:
+    font_scale: 3.0
+    labels: [discrepancy, analysis]
+
+  discrepancy-probability:
+    font_scale: 3.0
+    labels: [discrepancy, probability]
+
+  inference-estimation:
+    font_scale: 2.8
+    labels: [statistical-inference, estimation]
+
+  bayesian-mcmc:
+    font_scale: 2.8
+    labels: [bayesian-computation, mcmc, statistics]
+
+  probability-practice:
+    font_scale: 3.2
+    labels: [probability]
+    group_headings: [practice]
+
+  mcmc-discrepancy-practice:
+    font_scale: 2.7
+    labels: [mcmc, discrepancy]
+    group_headings: [practice]
+
+  # Course Map summaries: existing labels for the content of each whole deck.
+  deck-02-overview:
+    width: 42%
+    font_scale: 1.15
+    classes: [deck-summary-tree]
+    labels: [probability, analysis, linear-algebra, random-generation, pseudorandom-numbers, low-discrepancy, qf]
+
+  deck-03-overview:
+    width: 42%
+    font_scale: 1.15
+    classes: [deck-summary-tree]
+    labels: [probability, statistics, analysis, mcmc, discrepancy, low-discrepancy, estimation, error-assessment, statistical-inference, bayesian-computation]
+    group_headings: [practice]
+
+  deck-04-overview:
+    width: 42%
+    font_scale: 1.15
+    classes: [deck-summary-tree]
+    labels: [probability, statistics, analysis, linear-algebra, random-generation, low-discrepancy, discrepancy, estimation, error-assessment, variance-reduction, importance-sampling, density-estimation, qf]
+
+  deck-05-overview:
+    width: 42%
+    font_scale: 1.15
+    classes: [deck-summary-tree]
+    labels: [probability, statistics, analysis, cs, estimation, error-assessment, variance-reduction, multilevel, stochastic-optimization, hpc]

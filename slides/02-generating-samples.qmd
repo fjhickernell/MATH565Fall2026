@@ -22,14 +22,14 @@ subtitle: |
   Test 1 · Sep 15</span>
 ---
 
-# Course Map
+# Course Map {.deck-course-map tree-marker="deck-02-overview"}
 
 ::: {.columns}
 ::: {.column width="36%"}
 <h3>Course decks</h3>
 
 - [{{< meta decks.d01.title >}}]({{< meta decks.d01.file >}})
-- [{{< meta decks.d02.title >}}]({{< meta decks.d02.file >}}) — [current]{.alert}
+- [{{< meta decks.d02.title >}}]({{< meta decks.d02.file >}}){.current-deck aria-current="page"}
 - [{{< meta decks.d03.title >}}]({{< meta decks.d03.file >}})
 - [{{< meta decks.d04.title >}}]({{< meta decks.d04.file >}})
 - [{{< meta decks.d05.title >}}]({{< meta decks.d05.file >}})
@@ -39,8 +39,6 @@ subtitle: |
 :::
 
 ::: {.column width="60%"}
-<h3>In this deck</h3>
-
 $$
 \vU_i \sim \Unif[0,1]^d
 \;\longrightarrow\;
@@ -49,12 +47,17 @@ $$
 Y_i = f(\vX_i)
 $$
 
+:::
+:::
+
+::: {.deck-section-links}
+<h3>This deck</h3>
+
 - [From Uniformity to a Target Distribution](#from-uniformity-to-a-target-distribution)
 - [Random Vectors and Stochastic Processes](#random-vectors-and-stochastic-processes)
 - [Low Discrepancy Sampling](#low-discrepancy-sampling)
 - [More Advanced Direct Sampling](#more-advanced-direct-sampling)
 - [Big Ideas](#big-ideas)
-:::
 :::
 
 # From Uniformity to a Target Distribution {.tree-marker-slide tree-marker="random-generation"}
@@ -923,13 +926,13 @@ $$
 - With no dividends and $r\ge0$, early exercise does not improve an American
   call, so we omit it here
 
-# Low Discrepancy Sampling {.tree-marker-slide tree-marker="low-discrepancy"}
+# Low Discrepancy Sampling {.tree-marker-slide tree-marker="low-discrepancy-sampling"}
 
 - [What does low discrepancy mean?](#what-does-low-discrepancy-mean)
 - [Low discrepancy sequences](#low-discrepancy-sequences)
 - [Why coordinate order matters](#why-coordinate-order-matters)
 
-## What does low discrepancy mean? {.tree-marker-slide tree-marker="low-discrepancy"}
+## What does low discrepancy mean? {.tree-marker-slide tree-marker="low-discrepancy-sampling"}
 
 Relaxing the requirement that $\vU_0,\ldots,\vU_{n-1}$ be IID allows carefully
 constructed samples to cover $[0,1]^d$ more evenly
@@ -946,7 +949,7 @@ The empirical distribution of the sample is close to the uniform distribution
 Low discrepancy replaces independent placement by [deliberate coverage]{.alert}
 :::
 
-## Low discrepancy sequences {.tree-marker-slide tree-marker="low-discrepancy"}
+## Low discrepancy sequences {.tree-marker-slide tree-marker="low-discrepancy-sampling"}
 
 Important families include
 
@@ -960,7 +963,7 @@ They are available in deterministic and randomized forms through SciPy and
 
 In software arrays rows correspond to samples and columns to coordinates
 
-## Why coordinate order matters {.tree-marker-slide tree-marker="low-discrepancy"}
+## Why coordinate order matters {.tree-marker-slide tree-marker="low-discrepancy-sampling"}
 
 Return to the [PCA factorization](#principal-component-factorization):
 
@@ -1233,7 +1236,7 @@ $$
 - [Exact transport]{.alert}: move every $Z$ to $\sqrt Z$
 - [Acceptance–rejection]{.alert}: keep $Z$ with probability $Z$
 
-# Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="prob-stat-est"}
+# Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="random-generation"}
 
 - Start with [uniform]{.alert} samples and transform them to the [target]{.alert} distribution
 - The generalized inverse works for discrete and continuous distributions

@@ -13,17 +13,34 @@ Each MATH 565 deck follows this opening sequence:
 
 1. The generated title slide identifies the course and deck and gives its
    principal textbook or overarching reference in title-slide metadata.
-2. `# Course Map` uses two columns:
+2. `# Course Map` uses the following navigation elements:
    - **Course decks** lists every deck in course order and marks the current
-     deck with an adjacent `.alert` label outside the link.
-   - **In this deck** links every instructional `#` section in presentation
-     order, repeating its capitalization and punctuation exactly.
+     deck with the emphasis specified below.
+   - **This deck** (Decks 02–05) or **In this deck** (Deck 01) links every
+     instructional `#` section in presentation order, repeating its
+     capitalization and punctuation exactly.
 3. The instructional sections follow the shared section-outline convention.
 
 Follow the [shared Course Map theme convention](../classlib/docs/slide-style.md#course-map-themes).
-MATH 565 uses 36% for Course decks, a 4% empty gutter, and 60% for In this
-deck throughout the course. Center phrase-only themes at `1.5em`;
+MATH 565 uses 36% for Course decks, a 4% empty gutter, and 60% for the
+right-hand theme area. Center phrase-only themes at `1.5em`;
 Introduction uses a 🎬 clapperboard beside `[Teaser Trailer]{.alert}`.
+
+Decks 02–05 use a whole-deck MC tree on the lower right of the Course Map,
+with named `deck-02-overview` through `deck-05-overview` presets in
+`slides/tree-markers.yml`. Select existing tree labels from the deck's actual
+substantive content, including foundational subjects and developed applications;
+omit passing mentions (for example, finance in Decks 03 and 05). Do not simply
+collect the small navigation-marker presets or introduce new tree topics.
+The upper row retains the 36% / 4% / 60% course-list and theme proportions.
+The current deck link uses `.current-deck` and `aria-current="page"`, with
+blue color, bold weight, and 110% font size. Section links move to the lower
+left under **This deck**. Per instructor preference, omit the separate **In this deck** heading above the theme in
+these four maps; this is a local exception to the shared theme-heading
+convention. The `.deck-course-map` layout reserves the lower right for a
+42%-wide tree, compared with the 16% navigation trees. Preserve readable labels, the theme, all links, and footer
+clearance when changing either a map or its topic selection. Deck 01 retains
+its existing Course Map and full introductory tree.
 
 Use raw `<h3>` elements for the Course Map column labels so they do not change
 RevealJS hierarchy. Register every deck in `slides/_metadata.yml` with its
@@ -86,6 +103,36 @@ marker element rather than changing RevealJS's slide positioning model.
 Published deck HTML lives under `_site/slides/`, while shared tree assets live
 under `_site/classlib/`. Tree renderers and presets must therefore use
 `../classlib/classlib/quarto/components/trees` as `asset_base_url`.
+
+### Deck 02 marker selections
+
+Generating Samples develops Probability, Analysis (inverse transforms and
+Jacobians), Linear Algebra (Cholesky and PCA), random-number generation,
+Pseudorandom Numbers, Low Discrepancy sampling, and Quantitative Finance.
+It previews discrepancy measures without defining them and does not develop
+statistical estimation. Its overview therefore omits Discrepancy Measures,
+Statistics, and Estimation. Use `low-discrepancy-sampling` for its small trees,
+and `random-generation` for its Big Ideas slide. Decks 03–04 develop the
+actual discrepancy formulas and may use the combined marker.
+
+### Deck 03 marker selections
+
+Use the existing MCMC label for Metropolis--Hastings algorithms and add
+Probability for invariance arguments, Statistics for diagnostics, or Practice
+for worked experiments. Use Discrepancy Measures for general MMD/KL/KSD
+comparisons; reserve the combined Low Discrepancy marker for the centered
+QMC discrepancy material. Use Analysis for kernel/RKHS foundations and
+Error Assessment for the integration-error section, worst-case bounds, the
+discrepancy identity, and Gaussian-process RMSE. Avoid combining adjacent
+labels when they overlap at marker size.
+
+Bayesian applications use Bayesian Computation, MCMC, and Statistics;
+likelihood uses Statistical Inference and Estimation. Queueing uses Probability
+and Practice: event-driven Markov-system simulation does not by itself make
+it an MCMC sampler. These are selections from the existing MC tree, not new
+overall-tree labels. Continuations retain the no-marker convention above.
+Full-width comparison tables omit markers to keep their header rows
+unobscured; their section or parent slide supplies the navigation context.
 
 ## Shared references
 

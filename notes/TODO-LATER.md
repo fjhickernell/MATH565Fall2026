@@ -10,11 +10,9 @@ multiple decks.
 
 ## Parked review questions
 
-- Add Course Map themes to Improving Efficiency and Selected Topics during
-  their instructor-led deck reviews, following the shared theme convention.
 - Choose an overarching text or chapter reference for Deck 05; the Fall 2025
   title slide says only `Owen, Chapters ???`.
-- Decide during the Deck 03 review whether to add the Hickernell (1998) and
+- In a later citation pass, decide whether to add the Hickernell (1998) and
   Gretton et al. (2012) discrepancy references to shared `classlib` metadata
   and cite them in the deck.
 
@@ -33,9 +31,10 @@ multiple decks.
   moved on to other decks.
 - Refactor the Asian-option sampling code so path construction and payoff
   interfaces can be reused for importance sampling and control variates in
-  Deck 04. Follow the documented division of labor between
-  `FinancialOptionPayoffs.ipynb` and `AsianOptionVarianceReduction.ipynb`,
-  while allowing both Decks 02 and 04 to call either notebook where useful.
+  Deck 04, starting from the retained `GeneratingSamples.ipynb` examples.
+  The separate `FinancialOptionPayoffs.ipynb` proposal was closed without
+  creating that notebook; it is not a prerequisite. Decide the reusable
+  code organization while developing `AsianOptionVarianceReduction.ipynb`.
 - If QMCPy's kernel abstraction has matured, consider using covariance kernels
   in the Gaussian-process material. Keep reusable implementation work in the
   standalone QMCSoftware repository.
@@ -52,13 +51,13 @@ multiple decks.
   dependency burden and a distinct teaching purpose. Langevin and hand-built
   Hamiltonian Monte Carlo remain possible later extensions.
 - The queueing companion now uses SimPy 4.1.2 with course-owned process and
-  measurement code. Further queueing extensions belong after the current review.
+  measurement code. The current review is complete; further queueing extensions remain optional.
 
 ## Deck 04 — Improving Efficiency
 
 - Create `AsianOptionVarianceReduction.ipynb` with importance sampling and
-  control variates, building on reusable sampling/payoff architecture from
-  Deck 02 `FinancialOptionPayoffs.ipynb`.
+  control variates, reusing or extracting the sampling/payoff code retained in
+  `GeneratingSamples.ipynb`; no separate financial-payoff notebook is required.
 - Improve `nbviz` styling and explanatory overlays when modernizing that
   example.
 - Modernize retained stopping-criteria notebook material and keep algorithmic
@@ -82,6 +81,13 @@ multiple decks.
   rather than the current Markov-chain application in Deck 03.
 - Consider kernel herding and Bayesian cubature here if they are better framed
   as selected modern methods than as efficiency techniques in Deck 04.
+
+## Deferred course logistics
+
+- Create or adapt separate Microsoft Bookings pages for Fall 2026 presenter
+  and observer project sign-ups, following the Fall 2025 workflow. Add the
+  finalized links and procedures to the project page. This remains Blue on
+  the Dashboard until activated.
 
 ## Cross-course notebooks and workflow
 

@@ -42,3 +42,37 @@
 .reveal #what-is-where kbd {
   margin-inline: 0.24em;
 }
+
+/* Whole-deck topic trees share the Course Map with a lower-left section list. */
+.reveal .slides section.deck-course-map .deck-summary-tree {
+  position: absolute;
+  right: 0;
+  top: 12.2em;
+  margin: 0;
+}
+
+.reveal .deck-course-map .deck-section-links {
+  width: 55%;
+  margin-top: 0.4em;
+}
+
+.reveal .deck-course-map .deck-map-theme {
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.reveal .deck-course-map .columns ul li {
+  margin-block: 0.15em;
+  line-height: 1.15;
+}
+
+.reveal .deck-course-map .deck-section-links ul li {
+  margin-block: 0.2em;
+  line-height: 1.15;
+}
+
+.reveal .deck-course-map a.current-deck {
+  color: var(--header-blue);
+  font-weight: 800;
+  font-size: 1.1em;
+}

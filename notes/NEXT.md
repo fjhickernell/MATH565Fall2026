@@ -3,12 +3,15 @@
 ## Current task
 
 Prepare Test 1 for September 15, covering Introduction and Generating Samples;
-finalize the room, test PDF, and Canvas entry. Remaining notebook and later-deck
-work is listed below.
+finalize the room, test PDF, and Canvas entry. The regular classroom is PH 109;
+confirm the test room explicitly. Also grade homework (Dashboard deadline:
+September 9; completion not yet reported) and add the seminar link.
+Remaining notebook and later-deck work is listed below.
 
-Deck 03 now closes its Kernel Discrepancy section with KL/relative entropy,
-Stein discrepancy, and the normalizing-constant comparison before integration
-error. Preserve that order and the Hickernell–Kirk–Sorokin Section 5 citation.
+Deck 03 introduces kernel discrepancy, then its worst-case and Gaussian-process
+average-case integration-error interpretations, then KL/relative entropy, Stein
+discrepancy, and their comparison. Preserve that order and the
+Hickernell–Kirk–Sorokin Section 5 citation.
 The revised Decks 01–03 readings and seven-notebook audit are recorded in
 `notes/OWEN-COVERAGE-AUDIT.md`.
 
@@ -74,30 +77,40 @@ notebook now highlights residual times, finite-run averages, blocking, and
 capacity versus service rate. The instructor has now confirmed review of the
 full deck and all four companions.
 
+## Latest slide refinements
+
+The September 10 lecture follow-up now includes parallel tempering and a
+before/after product-density swap explanation. Discrepancy proceeds from
+distributions to empirical samples, then unbiased population estimation and
+normalization. The worst-case and GP average-case error interpretations precede
+KL and Stein. Stein now has explicit supremum and pairwise-kernel formulas,
+using true integral minus sample average. Notebook algorithms are unchanged.
+
+Decks 02–05 have larger Course Map trees at lower right, **This deck** links
+at lower left, and bold, larger current-deck links. Tree selections reflect
+substantive coverage: no Discrepancy Measures or Estimation/Statistics in
+Deck 02, no finance in Decks 03 or 05, and Error Assessment on Deck 03's error
+derivations. Course-specific conventions are in `docs/slide-style.md`.
+Decks 04–05 also now have Course Map themes; their full content review remains
+pending. All five decks render, the revised slides and maps have been visually
+checked, and their local navigation links are validated.
+
 ## Other pending MATH 565 work
 
-1. Return later this term to the Deck 02 mixture and acceptance--rejection
+1. Review Deck 04 and then Deck 05 using the instructor-led process, including
+   their companion-notebook plans in `notes/TODO-LATER.md`.
+2. Return later this term to the Deck 02 mixture and acceptance--rejection
    integral formulations over an enlarged space including the decision
    variable; see `notes/TODO-LATER.md`. This remains deferred for now.
-2. Review the revised advanced-direct-sampling sequence: transport maps,
-   acceptance--rejection, the reusable \(\operatorname{Beta}(2,1)\) scalar
-   example, and the proposed companion-notebook treatment. Confirm that the
-   target/proposal
-   roles and their $\varrho_{\mathrm{tar}}$ and
-   $\varrho_{\mathrm{prop}}$ notation read consistently across transport,
-   importance sampling, and MCMC.
-3. Give Deck 02 a final instructor-led polish pass, including its notebook
-   links and the relationship between the lecture and retained notebooks.
-4. Review Deck 04 and then Deck 05 using the same instructor-led process.
-5. Create or adapt the Microsoft Bookings pages for Fall 2026 presenter and
-   observer sign-ups, following the separate-page workflow used in Fall 2025,
-   and add the finalized links and procedures to the project page.
-6. Complete the remaining Fall 2026 logistics and student-facing page details,
-   including the seminar link, assignments, tests, project dates, and visible
-   browser review.
+3. Complete the remaining Fall 2026 logistics and student-facing page details,
+   including assignments, tests, project dates, and visible browser review.
 
-Deck 03 and its four companions are reviewed. The instructor has also closed
-the remaining Deck 02 companion-notebook task.
+Deck 02 polish and its companion-notebook review are complete for the current
+stage. Deck 03 and its four companions are reviewed. Do not reopen those tasks
+from older handoff instructions below. Separate presenter/observer Bookings
+pages, the QMCPy mixture feature, MCTS, and other deferred extensions remain
+in `notes/TODO-LATER.md`; Bookings, mixture support, and MCTS retain their Blue
+Dashboard status.
 
 ## Deck 02 notebook work — closed September 10, 2026
 

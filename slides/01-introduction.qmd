@@ -456,7 +456,7 @@ Canvas<br>Only one person per group submits the assignment
 
 ::: {.column width="50%"}
 - [Maximum likelihood estimator](03-markov-chain-monte-carlo.html#maximum-likelihood-estimation)
-- [Maximum mean discrepancy (MMD)](03-markov-chain-monte-carlo.html#how-can-we-measure-sample-quality)
+- [Maximum mean discrepancy (MMD)](03-markov-chain-monte-carlo.html#discrepancy-between-distributions)
 - [Mean](#moments-of-random-variables)
 - [Mean squared error (MSE)](#mean-squared-error-bias-and-variance)
 - [Median](#moments-of-random-variables)
@@ -473,7 +473,7 @@ Canvas<br>Only one person per group submits the assignment
 
 ::: {.columns}
 ::: {.column width="50%"}
-- [Parallel tempering](03-markov-chain-monte-carlo.html#tuning-and-diagnostics)
+- [Parallel tempering](03-markov-chain-monte-carlo.html#parallel-tempering)
 - [Point estimator](#monte-carlo-estimates-of-properties-of-y)
 - [Principal-component (PCA) factorization](02-generating-samples.html#principal-component-factorization)
 - [Probability density function (PDF)](#random-variables-and-distributions)

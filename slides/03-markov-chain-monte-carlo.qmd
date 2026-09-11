@@ -21,7 +21,7 @@ subtitle: |
   Discrepancy: {{< meta papers.hickirsor_2026_qmc_tutorial.short >}}, Section 5</span>
 ---
 
-# Course Map
+# Course Map {.deck-course-map tree-marker="deck-03-overview"}
 
 ::: {.columns}
 ::: {.column width="36%"}
@@ -29,7 +29,7 @@ subtitle: |
 
 - [{{< meta decks.d01.title >}}]({{< meta decks.d01.file >}})
 - [{{< meta decks.d02.title >}}]({{< meta decks.d02.file >}})
-- [{{< meta decks.d03.title >}}]({{< meta decks.d03.file >}}){.alert}
+- [{{< meta decks.d03.title >}}]({{< meta decks.d03.file >}}){.current-deck aria-current="page"}
 - [{{< meta decks.d04.title >}}]({{< meta decks.d04.file >}})
 - [{{< meta decks.d05.title >}}]({{< meta decks.d05.file >}})
 :::
@@ -38,8 +38,6 @@ subtitle: |
 :::
 
 ::: {.column width="60%"}
-<h3>In this deck</h3>
-
 \begin{gather*}
 \vU_i\sim\Unif[0,1]^{d+1}
 \;\xrightarrow{\text{propose}}\;
@@ -50,6 +48,12 @@ subtitle: |
 \qquad\text{at stationarity}
 \end{gather*}
 
+:::
+:::
+
+::: {.deck-section-links}
+<h3>This deck</h3>
+
 - [From Direct Sampling to Markov Chains](#from-direct-sampling-to-markov-chains)
 - [Metropolis–Hastings Sampling](#metropolishastings-sampling)
 - [Kernel Discrepancy](#kernel-discrepancy)
@@ -57,15 +61,14 @@ subtitle: |
 - [Applications of Markov Chains](#applications-of-markov-chains)
 - [Big Ideas](#big-ideas)
 :::
-:::
 
-# From Direct Sampling to Markov Chains {.tree-marker-slide tree-marker="random-generation"}
+# From Direct Sampling to Markov Chains {.tree-marker-slide tree-marker="mcmc-probability"}
 
 - [When direct sampling is difficult](#when-direct-sampling-is-difficult)
 - [The Markov property](#the-markov-property)
 - [Examples of Markov chains](#examples-of-markov-chains)
 
-## When direct sampling is difficult {.tree-marker-slide tree-marker="random-generation"}
+## When direct sampling is difficult {.tree-marker-slide tree-marker="mcmc"}
 
 - Quantile, affine, and exact transport maps
     - [Global construction]{.alert}: a map that produces the target distribution
@@ -132,7 +135,7 @@ The pair $Y_i=(X_{i-1},X_i)$ [is Markov]{.alert} because its state retains the n
 
 Only the first is a [martingale]{.alert}: its expected next value, given the history, equals its current value
 
-# Metropolis–Hastings Sampling {.tree-marker-slide tree-marker="random-generation"}
+# Metropolis–Hastings Sampling {.tree-marker-slide tree-marker="mcmc"}
 
 - [The Metropolis–Hastings algorithm](#the-metropolishastings-algorithm)
 - [Why the acceptance ratio works](#why-the-acceptance-ratio-works)
@@ -142,7 +145,7 @@ Only the first is a [martingale]{.alert}: its expected next value, given the his
 - [Separated modes can trap a chain](#separated-modes-can-trap-a-chain)
 - [Tuning and diagnostics](#tuning-and-diagnostics)
 
-## The Metropolis–Hastings algorithm {.tree-marker-slide tree-marker="random-generation"}
+## The Metropolis–Hastings algorithm {.tree-marker-slide tree-marker="mcmc"}
 
 Suppose
 
@@ -172,7 +175,7 @@ Given $X_0$, repeat for $i=0,\ldots,n-1$:
 [Every iteration accepts either the proposal or the current state]{.alert}<br>Nothing is discarded
 
 
-## Why the acceptance ratio works {.tree-marker-slide tree-marker="probability"}
+## Why the acceptance ratio works {.tree-marker-slide tree-marker="mcmc-probability"}
 
 The ratio compares the two directions of a proposed transition:
 
@@ -192,7 +195,7 @@ $$
 The transition kernel satisfies [detailed balance]{.alert} with the target distribution, making the target invariant under suitable conditions
 :::
 
-## The Metropolis algorithm {.tree-marker-slide tree-marker="random-generation"}
+## The Metropolis algorithm {.tree-marker-slide tree-marker="mcmc"}
 
 If the proposal is symmetric,
 
@@ -214,7 +217,7 @@ For a random-walk proposal $Z=X_i+\epsilon_i$ with symmetric $\epsilon_i$:
 - accept some downhill moves, which keeps the chain from becoming trapped immediately
 - repeat $X_i$ when a proposal is rejected
 
-## Metropolis practice {.tree-marker-slide tree-marker="practice"}
+## Metropolis practice {.tree-marker-slide tree-marker="mcmc-practice"}
 
 Use the uniform numbers in order and choose a random order of the candidate $x$ values
 
@@ -231,7 +234,7 @@ Use the uniform numbers in order and choose a random order of the candidate $x$ 
 <span>Starting at $x=-1.2$, follow several Metropolis steps and record each accepted or repeated state</span>
 :::
 
-## A random-walk Metropolis example {.tree-marker-slide tree-marker="random-generation"}
+## A random-walk Metropolis example {.tree-marker-slide tree-marker="mcmc-practice"}
 
 Target a bimodal Gaussian mixture using the symmetric proposal
 
@@ -291,7 +294,7 @@ for ax in axes:
 plt.show()
 ```
 
-## Separated modes can trap a chain {.tree-marker-slide tree-marker="random-generation"}
+## Separated modes can trap a chain {.tree-marker-slide tree-marker="mcmc-practice"}
 
 Same mixture weights and widths; move the means to $-5$ and $5$<br>
 Keep $Z\mid X_i=x\sim\Norm(x,1.4^2)$; start one chain in each mode
@@ -356,7 +359,7 @@ plt.show()
 
 [Acceptance within a mode does not establish exploration of both modes]{.alert}
 
-## Tuning and diagnostics {.tree-marker-slide tree-marker="statistics"}
+## Tuning and diagnostics {.tree-marker-slide tree-marker="mcmc-statistics"}
 
 MCMC is attractive because it
 
@@ -377,40 +380,125 @@ Useful responses include [pilot runs]{.alert}, [multiple chains]{.alert}, and [p
 Diagnose both [exploration]{.alert} of the full state space and [concentration]{.alert} in high-density regions
 :::
 
-# Kernel Discrepancy {.tree-marker-slide tree-marker="low-discrepancy"}
+---
 
-- [How can we measure sample quality?](#how-can-we-measure-sample-quality)
-- [What discrepancy measures](#what-discrepancy-measures)
-- [Symmetric positive definite kernels](#symmetric-positive-definite-kernels)
-- [Discrepancy between distributions](#discrepancy-between-distributions)
-- [Empirical distributions](#empirical-distributions)
-- [Unbiased estimates of squared discrepancy](#unbiased-estimates-of-squared-discrepancy)
-- [Relative entropy: another comparison](#relative-entropy-another-comparison)
-- [Stein discrepancy](#stein-discrepancy)
-- [Comparing distribution discrepancies](#comparing-distribution-discrepancies)
+### Parallel tempering: explore hot, estimate cold {#parallel-tempering}
 
-## How can we measure sample quality? {.tree-marker-slide tree-marker="low-discrepancy"}
-
-For samples $\{x_i\}_{i=0}^{m-1}$ and $\{z_j\}_{j=0}^{n-1}$, a kernel $K$ defines
+Run replicas with [inverse temperatures]{.alert} $1=\beta_0>\cdots>\beta_{R-1}>0$
 
 \begin{align*}
-D^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
-&=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(x_i,x_j)\\
-&\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
-+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)
+\varrho_{\beta_r}(x)&\propto\varrho_{\mathrm{tar}}(x)^{\beta_r}
 \end{align*}
 
-- Also called [maximum mean discrepancy (MMD)]{.alert} in machine learning
-- Direct computation requires $\Order(\max(m,n)^2)$ kernel evaluations
-- The answer depends on the chosen kernel and its parameters
+- [Cold]{.alert} ($\beta_0=1$): original target; [hot]{.alert} ($\beta_r<1$): flatter density, easier valley crossing
+- Each sweep: local Metropolis updates, then proposed [state swaps]{.alert} between neighboring temperatures
+- Accept a swap $x_r\leftrightarrow x_s$ with probability
 
-## What discrepancy measures {.tree-marker-slide tree-marker="low-discrepancy"}
+\begin{align*}
+\alpha_{\mathrm{swap}}
+&=\min\left\{1,
+\left[\frac{\varrho_{\mathrm{tar}}(x_s)}{\varrho_{\mathrm{tar}}(x_r)}\right]^{\beta_r-\beta_s}\right\}
+\end{align*}
 
-Kernel discrepancy measures
+- Accepted swaps bring hot-chain discoveries into the cold slot
+- Use [cold-slot samples only]{.alert} for the original target; inspect mode visits and swap rates
 
-- the difference between two probability distributions
-- the [worst-case integration error]{.alert} over the unit ball of a reproducing kernel Hilbert space
-- the [root mean squared integration error]{.alert} when the integrand is modeled as a Gaussian process with covariance kernel $K$
+::: {.notes}
+Temperature is $T_r=1/\beta_r$. Raising the whole density to a power below one
+reduces peak-to-valley density ratios. Each tempered density must have a finite
+normalizing integral; this holds for the notebook's Gaussian mixture.
+
+The augmented target is the product of the $R$ tempered densities. A symmetric
+proposal to exchange two states has MH ratio
+\begin{align*}
+\frac{\varrho_{\mathrm{tar}}(x_s)^{\beta_r}
+      \varrho_{\mathrm{tar}}(x_r)^{\beta_s}}
+     {\varrho_{\mathrm{tar}}(x_r)^{\beta_r}
+      \varrho_{\mathrm{tar}}(x_s)^{\beta_s}}
+&=\left[\frac{\varrho_{\mathrm{tar}}(x_s)}
+                 {\varrho_{\mathrm{tar}}(x_r)}\right]^{\beta_r-\beta_s}.
+\end{align*}
+All normalizing constants cancel. Local updates and accepted/rejected swaps
+preserve the product target. Slots retain their temperatures; states move
+between slots. This is whole-target tempering, including the prior for a
+posterior target, rather than likelihood-only tempering.
+
+In the notebook, inverse temperatures are $1,0.5,0.2,0.08,0.025$; every replica
+starts in the left mode. Show the flattened densities, then the hot and cold
+traces. Ask how a state discovered in the right mode can reach the cold slot.
+The cold slot must visit both modes in the correct proportions, not merely
+alternate between them. Discard the initial burn-in and keep all retained repeats; never pool
+unweighted hot and cold samples. Compare methods at equal target-evaluation
+cost, since each sweep updates $R$ replicas. Frequent swaps alone do not prove
+adequate exploration.
+:::
+
+---
+
+### Why this swap rule? {#why-this-swap-rule}
+
+[Temperatures stay in their slots; the two states trade places]{.alert}
+
+| | Slot $r$, density $\varrho_{\beta_r}$ | Slot $s$, density $\varrho_{\beta_s}$ |
+|:--|:--|:--|
+| Before | $x_r$ | $x_s$ |
+| After | $x_s$ | $x_r$ |
+
+Compare the [product density after]{.alert} with the [product density before]{.alert}:
+
+\begin{align*}
+R_{\mathrm{swap}}
+&=\frac{\text{density after}}{\text{density before}}
+=\frac{\varrho_{\beta_r}(x_s)\,\varrho_{\beta_s}(x_r)}
+        {\varrho_{\beta_r}(x_r)\,\varrho_{\beta_s}(x_s)}
+=\left[\frac{\varrho_{\mathrm{tar}}(x_s)}{\varrho_{\mathrm{tar}}(x_r)}\right]^{\beta_r-\beta_s}
+\end{align*}
+
+- Draw $U\sim\Unif(0,1)$; swap if $U\le\min\{1,R_{\mathrm{swap}}\}$
+- Renaming $r$ and $s$: reciprocal density ratio and opposite exponent → [same rule]{.alert}
+
+::: {.key-point}
+Cold $\beta_r=1$, hot $\beta_s=1/2$, and $\varrho_{\mathrm{tar}}(x_s)=4\varrho_{\mathrm{tar}}(x_r)$:
+$R_{\mathrm{swap}}=\sqrt{4}=2$ → always swap; the reverse move is accepted with probability $1/2$
+:::
+
+::: {.notes}
+The ratio compares two configurations of the same pair of slots. It does not
+compare $\varrho_{\beta_r}(x_s)$ with $\varrho_{\beta_s}(x_r)$: those are the
+two factors in the numerator, not competing alternatives.
+
+Write $\varrho_{\beta}(x)=\varrho_{\mathrm{tar}}(x)^\beta/C_\beta$.
+The constants $C_{\beta_r}$ and $C_{\beta_s}$ appear in both products and cancel.
+So do the densities for all unchanged slots in the full product target.
+The exponent matters: a hot density is proportional to a power of the target,
+not generally to the target itself.
+
+For the example, take unnormalized target values 1 at $x_r$ and 4 at $x_s$.
+The before product is $1^1\,4^{1/2}=2$; the after product is
+$4^1\,1^{1/2}=4$. The ratio is $4/2=2$. After that swap, proposing to move
+back gives $2/4=1/2$. The accepted probability flows balance:
+$2\times1=4\times(1/2)$, up to the common normalizing constant and proposal
+probability. Renaming slots changes neither physical configuration; reversing
+a move exchanges the before and after configurations. This distinction
+resolves the apparent asymmetry.
+:::
+
+# Kernel Discrepancy {.tree-marker-slide tree-marker="discrepancy"}
+
+- [Kernels and discrepancy](#kernels-and-discrepancy)
+- [Discrepancy between distributions](#discrepancy-between-distributions)
+- [Interpreting sample discrepancy](#interpreting-sample-discrepancy)
+
+## Kernels and discrepancy {#kernels-and-discrepancy .tree-marker-slide tree-marker="discrepancy-analysis"}
+
+<span id="what-discrepancy-measures"></span>
+
+Do our samples represent the [target distribution]{.alert}?
+
+- Compare distributions using a [kernel]{.alert} $K(t,x)$
+- A kernel specifies which spatial differences receive weight
+- Define the distribution discrepancy first, then substitute empirical distributions
+- [Maximum mean discrepancy (MMD)]{.alert}: the same kernel comparison used in machine learning
 
 [`Discrepancy` companion notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/Discrepancy.ipynb)
 
@@ -430,7 +518,9 @@ reference for the kernel-based presentation in this deck. The tutorial's
 unit-cube formulation is extended here to general target distributions.
 :::
 
-## Symmetric positive definite kernels {.tree-marker-slide tree-marker="statistics"}
+---
+
+### Symmetric positive definite kernels {#symmetric-positive-definite-kernels}
 
 A kernel $K:\mathcal X\times\mathcal X\to\reals$ is [symmetric positive definite]{.alert} when every Gram matrix
 
@@ -454,29 +544,39 @@ K(t,x)&=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 
 - Kernels usually have [parameters]{.alert} to be chosen or estimated
 
-## Discrepancy between distributions {.tree-marker-slide tree-marker="low-discrepancy"}
+## Discrepancy between distributions {.tree-marker-slide tree-marker="discrepancy"}
 
 For independent $X,X'\sim F_X$ and $Z,Z'\sim F_Z$,
 
 \begin{align*}
 D^2(F_X,F_Z;K)
 &=\Ex[K(X,X')]-2\Ex[K(X,Z)]+\Ex[K(Z,Z')]\\
-&=\int_{\mathcal X^2}K(x,x')\,\dif(F_X-F_Z)(x)\,\dif(F_X-F_Z)(x')\\
-&\ge0
+&=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')
+-2\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_Z(x')\\
+&\qquad \qquad
++\int_{\mathcal X^2}K(x,x')\,\dif F_Z(x)\,\dif F_Z(x')\\
+&=\int_{\mathcal X^2}K(x,x')\,\dif(F_X-F_Z)(x)\,\dif(F_X-F_Z)(x') \ge0
 \end{align*}
 
 If both distributions have densities,
 
-$$
+\begin{align*}
 D^2(F_X,F_Z;K)
-=\int_{\mathcal X^2}K(x,x')
+&=\int_{\mathcal X^2}K(x,x')\,\varrho_X(x)\,\varrho_X(x')\,\dif x\,\dif x'
+-2\int_{\mathcal X^2}K(x,x')\,\varrho_X(x)\,\varrho_Z(x')\,\dif x\,\dif x'\\
+&\qquad \qquad +\int_{\mathcal X^2}K(x,x')\,\varrho_Z(x)\,\varrho_Z(x')\,\dif x\,\dif x'\\
+&=\int_{\mathcal X^2}K(x,x')
 \{\varrho_X(x)-\varrho_Z(x)\}
-\{\varrho_X(x')-\varrho_Z(x')\}\,\dif x\,\dif x'
-$$
+\{\varrho_X(x')-\varrho_Z(x')\}\,\dif x\,\dif x' \ge0
+\end{align*}
 
-## Empirical distributions {.tree-marker-slide tree-marker="low-discrepancy"}
+---
 
-For the empirical distribution of $z_0,\ldots,z_{n-1}$,
+### Empirical distributions {#empirical-distributions}
+
+Put mass $1/n$ at each $z_i$: $\widehat F_{Z,n}=n^{-1}\sum_{i=0}^{n-1}\delta_{z_i}$
+
+Replace $F_Z$ by $\widehat F_{Z,n}$ in the distribution formula:
 
 \begin{align*}
 D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
@@ -485,15 +585,59 @@ D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
 &\quad+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)
 \end{align*}
 
-The same formula covers [one target distribution and one sample]{.alert} or [two samples]{.alert}
+Integration against an empirical distribution becomes [averaging over its sample]{.alert}
 
-## Unbiased estimates of squared discrepancy {.tree-marker-slide tree-marker="statistics"}
+---
 
-The squared discrepancy is nonnegative
+### Two empirical distributions {#how-can-we-measure-sample-quality}
 
-But an unbiased estimator [may be negative]{.alert}
+Replace both distributions by empirical distributions: integrals become sums
 
-Replace within-sample sums by off-diagonal averages:
+\begin{align*}
+D^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
+&=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(x_i,x_j)\\
+&\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
++\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)
+\end{align*}
+
+- The [exact squared discrepancy of these empirical distributions]{.alert}; nonnegative
+- Direct computation requires $\Order(\max(m,n)^2)$ kernel evaluations
+- The answer depends on the chosen kernel and its parameters
+
+## Interpreting sample discrepancy {#interpreting-sample-discrepancy .tree-marker-slide tree-marker="discrepancy-statistics"}
+
+[Two questions, two quantities]{.alert}
+
+&nbsp;
+
+| Question | Quantity |
+|:--|:--|
+| How different are these empirical distributions? | Exact $D^2(\widehat F_{X,m},\widehat F_{Z,n};K)\ge0$ |
+| How different are the underlying distributions? | Estimate $D^2(F_X,F_Z;K)$ from random samples |
+
+- The ordinary empirical formula answers the first question
+- As an estimator of population discrepancy, it is generally biased
+- With independent IID samples, removing diagonal terms gives an [unbiased estimator]{.alert}
+- Unbiased estimates may be negative; [the population squared discrepancy is not]{.alert}
+
+::: {.notes}
+Condition on the observed point sets for the first question: no unknown
+quantity remains in their empirical discrepancy. For the second question,
+regard the points as random draws from underlying distributions and ask about
+expectation over repeated samples. Reusing the same symbol without identifying
+these different targets can make the two formulas seem contradictory.
+
+The off-diagonal correction uses independence within each sample as well as
+between the samples. Successive MCMC states do not satisfy the IID condition.
+:::
+
+---
+
+### Unbiased estimates of squared discrepancy {#unbiased-estimates-of-squared-discrepancy}
+
+For two independent IID samples, estimate $D^2(F_X,F_Z;K)$
+
+Replace within-sample sums by [off-diagonal averages]{.alert}:
 
 \begin{align*}
 D_{\mathrm{unb}}^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
@@ -521,136 +665,56 @@ Let $\{X_i\}_{i=0}^{m-1}$ and $\{Z_j\}_{j=0}^{n-1}$ be independent IID samples f
 </span>
 :::
 
-## Relative entropy: another comparison {.tree-marker-slide tree-marker="statistics"}
+---
 
-[Kullback–Leibler (KL) divergence]{.alert}, also called [relative entropy]{.alert}
+### How small should discrepancy be? {#how-small-should-discrepancy-be}
 
-For normalized densities $\varrho_X$ and $\varrho_Z$,
+[Zero is the ideal]{.alert}; no universal acceptable cutoff
+
+For a fixed target $F_X$ and kernel $K$, normalize by the [no-sample error]{.alert}:
 
 \begin{align*}
-D_{\mathrm{KL}}(F_X\Vert F_Z)
-&=\int_{\mathcal X}\varrho_X(x)
-\log\!\left(\frac{\varrho_X(x)}{\varrho_Z(x)}\right)\,\dif x
+D_0^2&=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')>0,
+&\qquad D_{\mathrm{rel},n}^2&=\frac{D^2(F_X,\{z_i\}_{i=0}^{n-1};K)}{D_0^2}
 \end{align*}
 
-- Nonnegative; zero exactly when the distributions agree
-- Generally asymmetric; infinite if $F_X$ assigns mass where $F_Z$ assigns none
-- Entropy describes one distribution; [relative entropy compares two]{.alert}
-- Variational inference fits an approximate density by minimizing KL to the target
+- $D_{\mathrm{rel},n}^2<1$: improvement over estimating the integral by zero
+- Removes overall kernel amplitude; [length scale and kernel shape still matter]{.alert}
+- No guaranteed $[0,1]$ range; compare samples using the [same target and kernel]{.alert}
+- Study decay with $n$: IID has $\Ex[D_n^2]=C_K/n$, hence root mean squared discrepancy $\Order(n^{-1/2})$
 
 ::: {.key-point}
-Finite empirical sample versus continuous target: KL is infinite
-
-Kernel discrepancy compares these directly, without density estimation
+Look for decreasing discrepancy and its [asymptotic rate]{.alert}, together with the integration accuracy needed
 :::
 
 ::: {.notes}
-Use natural logarithms and the convention that a zero numerator contributes
-zero. The density formula assumes a common dominating measure. More generally,
-KL is infinite unless the first distribution is absolutely continuous with
-respect to the second. A finite empirical measure and an atomless target are
-mutually singular, so both KL directions are infinite; density estimation or
-binning changes the comparison. This does not prevent studying KL convergence
-of a chain's marginal law, which is distinct from its empirical measure.
+The empty sample is not a probability distribution: $D_0$ means the RKHS
+worst-case error of the zero quadrature rule, equivalently comparison with the
+zero measure. It is also the prior standard deviation of the integral under
+the zero-mean GP model. This normalization requires $0<D_0^2<\infty$; a kernel
+centered with respect to the target can have $D_0=0$ and cannot use this ratio.
 
-Variational inference commonly minimizes
-$D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})$ over a tractable
-family. It is an optimization alternative to MCMC, not itself an MCMC sampler.
-An unknown target normalizing constant contributes an additive constant to
-this objective; it does not prevent optimization, but is needed for its
-absolute numerical value.
+Multiplying $K$ by a positive constant multiplies both squared errors by that
+constant, so it cancels. Changing length scale changes which functions and
+spatial differences matter; normalization cannot remove that dependence.
+A relative squared discrepancy of $0.01$ corresponds to a discrepancy of
+$0.1$ times the no-sample error. It does not imply 1 percent relative error
+for every integrand. For a particular $f$, use the bound $D_n\norm{f}_{\mathcal H_K}$
+and an application-specific tolerance.
 
-References: [Shalizi, Information Theory I, entropy and divergence](https://www.stat.cmu.edu/~cshalizi/dm/20/lectures/09/lecture-09.html#entropy-log-likelihood-divergence);
-[Blei, Kucukelbir, and McAuliffe, Variational Inference: A Review for Statisticians](https://arxiv.org/abs/1601.00670)
+Zero discrepancy means equal kernel mean embeddings; identifying equal
+probability distributions additionally requires a characteristic kernel.
+For IID sampling the later “What the kernel controls” slide gives the exact $C_K/n$ expectation
+when the kernel moments are finite. This is a mean-square benchmark, not
+monotone decay on every realization. MCMC dependence changes the constant and
+may affect the rate without suitable mixing assumptions. A finite independent
+reference sample adds error: increase its size as well when studying decay,
+rather than interpreting a fixed-reference error floor as a failure to converge.
+Do not choose length scales simply to minimize the displayed discrepancy.
+The off-diagonal estimator can be negative and is not itself a squared norm.
 :::
 
-## Stein discrepancy {.tree-marker-slide tree-marker="statistics"}
-
-For a smooth positive target density $\varrho_{\mathrm{tar}}(x)=\widetilde\varrho(x)/C$,
-the [score]{.alert} removes the unknown normalizing constant
-
-\begin{align*}
-s(x)&=\nabla_x\log\varrho_{\mathrm{tar}}(x)
-=\nabla_x\log\widetilde\varrho(x)\\
-\mathcal T g(x)&=s(x)^\mathsf{T}g(x)+\nabla\!\cdot g(x),
-\qquad \Ex_{\mathrm{tar}}[\mathcal T g(X)]=0
-\end{align*}
-
-- Stein discrepancy: largest sample violation of this identity over a chosen class of $g$
-- [Kernel Stein discrepancy (KSD)]{.alert}: use a vector-valued RKHS unit ball
-- Computable from candidate points, target scores, and kernel derivatives
-- No target reference sample or normalizing constant required
-
-::: {.key-point}
-Requires smoothness and valid boundary conditions; kernel choice matters
-
-Some KSDs fail to detect nonconvergence; separated-mode weights can be hard to assess
-:::
-
-::: {.notes}
-This slide describes the common Langevin, score-based Stein operator for a
-continuous target, not every Stein discrepancy. Here $g$ is a vector field;
-the identity follows by integration by parts when the boundary term vanishes
-and the expectations exist. On bounded supports, the function class or operator
-must enforce the appropriate boundary conditions. Discrete targets require a
-different operator.
-
-For candidate points $x_0,\ldots,x_{n-1}$, the discrepancy is
-$\sup_{g\in\mathcal G}|n^{-1}\sum_{i=0}^{n-1}\mathcal T g(x_i)|$.
-Applying Stein operators to both arguments of a sufficiently smooth base kernel
-gives a target-dependent Stein kernel and a pairwise-sum formula for KSD squared.
-Thus KSD is closely related to MMD, using a specially constructed kernel whose
-target expectation vanishes. It is not a wholly unrelated alternative to
-kernel discrepancy. Direct pairwise computation is quadratic in sample size.
-
-Suitable kernels and target assumptions give convergence-determining KSDs;
-the failure of some kernels is not a universal failure of Stein discrepancy.
-Weak sensitivity to weights of well-separated modes is a finite-sample testing
-limitation, distinct from an asymptotic convergence theorem.
-
-References: [Liu, Lee, and Jordan (2016)](https://proceedings.mlr.press/v48/liub16.html);
-[Gorham and Mackey (2017)](https://proceedings.mlr.press/v70/gorham17a.html);
-[Liu, Duncan, and Gandy (2023)](https://proceedings.mlr.press/v202/liu23i.html)
-:::
-
-## Comparing distribution discrepancies
-
-| | Ordinary MMD | KL / relative entropy | Score-based KSD |
-|:--|:--|:--|:--|
-| Normalizing constant | Direct integrals: needed; reference samples: not needed | Value: generally needed; optimization: may drop out | Cancels from the score |
-| Benefit | Sample comparisons; integration-error meaning | Information-theoretic meaning; variational fitting | No target draws or normalizer |
-| Limitation | Kernel choice; target integration or reference error | Asymmetry; empirical vs continuous: infinite | Derivatives; boundary, kernel, and mode sensitivity |
-
-With $\varrho_{\mathrm{tar}}=\widetilde\varrho/C$ and approximation density $\varrho_{\mathrm{approx}}$,
-
-\begin{align*}
-D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})
-&=\Ex_{\mathrm{approx}}\!\left[\log\!\left(
-\frac{\varrho_{\mathrm{approx}}(X)}{\widetilde\varrho(X)}\right)\right]+\log C
-\end{align*}
-
-[Fixed target]{.alert}: $\log C$ does not affect minimization over the approximation
-
-::: {.notes}
-The MMD row concerns ordinary kernels, before the Stein construction. Direct
-target integration requires normalized expectations, although a constant may
-already be incorporated in an analytic kernel mean or removed by computing a
-ratio of integrals. Empirical two-sample MMD itself never evaluates a density;
-obtaining trustworthy target reference draws may still be difficult. In this
-course, the discrepancy notebook uses independent acceptance--rejection draws
-as its reference, so the MMD calculation does not use a normalizing constant.
-
-The KL optimization statement is for a fixed target and the displayed direction.
-It is not permission to omit a parameter-dependent normalizer when fitting
-the target model. Density or density-ratio estimators can estimate KL from
-samples, but that differs from plugging an atomic empirical measure into KL.
-
-The comparisons concern different quantities; their numerical magnitudes are
-not interchangeable, and none is automatically a calibrated MCMC stopping rule.
-References are given in the preceding KL and Stein slide notes.
-:::
-
-# Discrepancy as Integration Error {.tree-marker-slide tree-marker="estimation"}
+# Discrepancy as Integration Error {.tree-marker-slide tree-marker="error-assessment"}
 
 - [A reproducing kernel Hilbert space](#a-reproducing-kernel-hilbert-space)
 - [Worst-case integration error](#worst-case-integration-error)
@@ -658,8 +722,9 @@ References are given in the preceding KL and Stein slide notes.
 - [Average-case integration error](#average-case-integration-error)
 - [What the kernel controls](#what-the-kernel-controls)
 - [Centered discrepancy and smoothness](#centered-discrepancy-and-smoothness)
+- [Alternative comparisons](#alternative-comparisons)
 
-## A reproducing kernel Hilbert space {.tree-marker-slide tree-marker="statistics"}
+## A reproducing kernel Hilbert space {.tree-marker-slide tree-marker="discrepancy-analysis"}
 
 Every symmetric positive definite kernel $K$ defines a Hilbert space $\mathcal H_K$ of functions on $\mathcal X$ with the [reproducing property]{.alert}
 
@@ -678,7 +743,7 @@ f&\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)
 
 are bounded linear functionals on $\mathcal H_K$
 
-## Worst-case integration error {.tree-marker-slide tree-marker="estimation"}
+## Worst-case integration error {.tree-marker-slide tree-marker="error-assessment"}
 
 By the Riesz representation theorem, some $\zeta\in\mathcal H_K$ satisfies
 
@@ -696,7 +761,7 @@ $$
 
 This separates [sample quality]{.alert}, $\norm{\zeta}_{\mathcal H_K}$, from [integrand difficulty]{.alert}, $\norm{f}_{\mathcal H_K}$
 
-## The discrepancy identity {.tree-marker-slide tree-marker="low-discrepancy"}
+## The discrepancy identity {.tree-marker-slide tree-marker="error-assessment"}
 
 The representer is
 
@@ -717,7 +782,7 @@ Its squared norm is exactly the squared discrepancy:
 
 Thus discrepancy is the [worst-case error over $\norm{f}_{\mathcal H_K}\le1$]{.alert}
 
-## Average-case integration error {.tree-marker-slide tree-marker="statistics"}
+## Average-case integration error {.tree-marker-slide tree-marker="error-assessment"}
 
 Suppose $f$ is modeled as a zero-mean Gaussian process with covariance kernel $K$
 
@@ -735,7 +800,7 @@ For deterministic $z_0,\ldots,z_{n-1}$,
 
 Discrepancy is also the [root mean squared error under the Gaussian-process model]{.alert}
 
-## What the kernel controls {.tree-marker-slide tree-marker="statistics"}
+## What the kernel controls {.tree-marker-slide tree-marker="discrepancy-statistics"}
 
 - The numerical value of discrepancy depends on $K$ and its hyperparameters
 - Multiplying $K$ by $c^2$ multiplies discrepancy by $\abs{c}$
@@ -778,7 +843,198 @@ Its norm combines the function value at the center with weighted square-integral
 
 The weights $\gamma_\ell$ express [coordinate importance]{.alert}
 
-# Applications of Markov Chains {.tree-marker-slide tree-marker="prob-est"}
+## Alternative comparisons {#alternative-comparisons .tree-marker-slide tree-marker="discrepancy-statistics"}
+
+### Relative entropy {#relative-entropy-another-comparison}
+
+[Kullback–Leibler (KL) divergence]{.alert}, also called [relative entropy]{.alert}
+
+For normalized densities $\varrho_X$ and $\varrho_Z$,
+
+\begin{align*}
+D_{\mathrm{KL}}(F_X\Vert F_Z)
+&=\int_{\mathcal X}\varrho_X(x)
+\log\!\left(\frac{\varrho_X(x)}{\varrho_Z(x)}\right)\,\dif x
+\end{align*}
+
+- Nonnegative; zero exactly when the distributions agree
+- Generally asymmetric; infinite if $F_X$ assigns mass where $F_Z$ assigns none
+- Entropy describes one distribution; [relative entropy compares two]{.alert}
+- Variational inference fits an approximate density by minimizing KL to the target
+
+::: {.key-point}
+Finite empirical sample versus continuous target: KL is infinite
+
+Kernel discrepancy compares these directly, without density estimation
+:::
+
+::: {.notes}
+Use natural logarithms and the convention that a zero numerator contributes
+zero. The density formula assumes a common dominating measure. More generally,
+KL is infinite unless the first distribution is absolutely continuous with
+respect to the second. A finite empirical measure and an atomless target are
+mutually singular, so both KL directions are infinite; density estimation or
+binning changes the comparison. This does not prevent studying KL convergence
+of a chain's marginal law, which is distinct from its empirical measure.
+
+Variational inference commonly minimizes
+$D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})$ over a tractable
+family. It is an optimization alternative to MCMC, not itself an MCMC sampler.
+An unknown target normalizing constant contributes an additive constant to
+this objective; it does not prevent optimization, but is needed for its
+absolute numerical value.
+
+References: [Shalizi, Information Theory I, entropy and divergence](https://www.stat.cmu.edu/~cshalizi/dm/20/lectures/09/lecture-09.html#entropy-log-likelihood-divergence);
+[Blei, Kucukelbir, and McAuliffe, Variational Inference: A Review for Statisticians](https://arxiv.org/abs/1601.00670)
+:::
+
+---
+
+### KL minimization with an unnormalized target
+
+With $\varrho_{\mathrm{tar}}=\widetilde\varrho/C$ and approximation density $\varrho_{\mathrm{approx}}$,
+
+\begin{align*}
+D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})
+&=\Ex_{\mathrm{approx}}\!\left[\log\!\left(
+\frac{\varrho_{\mathrm{approx}}(X)}{\widetilde\varrho(X)}\right)\right]+\log C
+\end{align*}
+
+[Fixed target]{.alert}: $\log C$ does not affect minimization over the approximation
+
+
+::: {.notes}
+The KL optimization statement is for a fixed target and the displayed direction.
+It is not permission to omit a parameter-dependent normalizer when fitting
+the target model. Density or density-ratio estimators can estimate KL from
+samples, but that differs from plugging an atomic empirical measure into KL.
+:::
+
+---
+
+### Stein discrepancy {#stein-discrepancy}
+
+For a smooth positive target density $\varrho_{\mathrm{tar}}(x)=\widetilde\varrho(x)/C$,
+the [score]{.alert} removes the unknown normalizing constant
+
+\begin{align*}
+s(x)&=\nabla_x\log\varrho_{\mathrm{tar}}(x)
+=\nabla_x\log\widetilde\varrho(x)\\
+\mathcal T g(x)&=s(x)^\mathsf{T}g(x)+\nabla\!\cdot g(x),
+\qquad g:\mathcal X\to\mathbb R^d
+\end{align*}
+
+[Stein's identity]{.alert}: $\Ex_{\mathrm{tar}}[\mathcal T g(X)]=0$ for suitable $g$
+
+For candidate points $z_0,\ldots,z_{n-1}$, write the error as [true value minus sample average]{.alert}:
+
+\begin{align*}
+D_{\mathrm{Stein}}(F_{\mathrm{tar}},\{z_i\};\mathcal G)
+&=\sup_{g\in\mathcal G}\left|
+\underbrace{\Ex_{\mathrm{tar}}[\mathcal T g(X)]}_{0}
+-\frac1n\sum_{i=0}^{n-1}\mathcal T g(z_i)\right|
+\end{align*}
+
+::: {.key-point}
+The largest departure from zero over a [size-constrained class]{.alert} $\mathcal G$ of test functions
+:::
+
+::: {.notes}
+This slide describes the common Langevin, score-based Stein operator for a
+continuous target, not every Stein discrepancy. Here $g$ is a vector field;
+the identity follows by integration by parts when the boundary term vanishes
+and the expectations exist. On bounded supports, the function class or operator
+must enforce the appropriate boundary conditions. Discrete targets require a
+different operator.
+
+For candidate points $x_0,\ldots,x_{n-1}$, the discrepancy is
+$\sup_{g\in\mathcal G}|0-n^{-1}\sum_{i=0}^{n-1}\mathcal T g(x_i)|$,
+with the true target integral first and the sample approximation second.
+Applying Stein operators to both arguments of a sufficiently smooth base kernel
+gives a target-dependent Stein kernel and a pairwise-sum formula for KSD squared.
+Thus KSD is closely related to MMD, using a specially constructed kernel whose
+target expectation vanishes. It is not a wholly unrelated alternative to
+kernel discrepancy. Direct pairwise computation is quadratic in sample size.
+
+Suitable kernels and target assumptions give convergence-determining KSDs;
+the failure of some kernels is not a universal failure of Stein discrepancy.
+Weak sensitivity to weights of well-separated modes is a finite-sample testing
+limitation, distinct from an asymptotic convergence theorem.
+
+References: [Liu, Lee, and Jordan (2016)](https://proceedings.mlr.press/v48/liub16.html);
+[Gorham and Mackey (2017)](https://proceedings.mlr.press/v70/gorham17a.html);
+[Liu, Duncan, and Gandy (2023)](https://proceedings.mlr.press/v202/liu23i.html)
+:::
+
+---
+
+### Computing kernel Stein discrepancy
+
+For [kernel Stein discrepancy (KSD)]{.alert}, choose $\mathcal G$ as the unit ball of $\mathcal H_K^d$
+
+The supremum has an explicit formula using a [Stein kernel]{.alert}:
+
+\begin{align*}
+K_{\mathrm{Stein}}(x,z)
+&=s(x)^\mathsf{T}s(z)K(x,z)
++s(x)^\mathsf{T}\nabla_z K(x,z)\\
+&\quad+s(z)^\mathsf{T}\nabla_x K(x,z)
++\sum_{\ell=1}^d\frac{\partial^2 K(x,z)}{\partial x_\ell\,\partial z_\ell}\\[0.5ex]
+\mathrm{KSD}^2(F_{\mathrm{tar}},\{z_i\};K)
+&=\frac{1}{n^2}\sum_{i,j=0}^{n-1}K_{\mathrm{Stein}}(z_i,z_j)\ge0
+\end{align*}
+
+- The target-integral terms vanish: only the [sample-pair sum]{.alert} remains
+- Needs target scores and kernel derivatives; no target draws or normalizing constant
+
+::: {.key-point}
+Requires smoothness and valid boundary conditions; kernel choice matters
+
+Some KSDs fail to detect nonconvergence; separated-mode weights can be hard to assess
+:::
+
+::: {.notes}
+Here $\mathcal H_K^d$ is the space of vector fields whose components belong to
+the RKHS of the scalar base kernel $K$, with squared norm equal to the sum of
+the component squared norms. Its unit ball prevents arbitrary rescaling of $g$.
+The smoothness, integrability, and boundary assumptions must allow the Stein
+identity to hold for the relevant kernel sections and derivatives.
+Then $\Ex_{X\sim F_{\mathrm{tar}}}[K_{\mathrm{Stein}}(X,z)]=0$,
+so the target-target and target-sample terms in ordinary squared discrepancy
+are zero. The displayed sum includes the diagonal: it is the exact squared
+KSD of the empirical measure, not the off-diagonal unbiased estimator of a
+population quantity. No independence assumption is needed for this finite-point
+formula, though dependence matters for its sampling behavior.
+
+Reference: [Liu, Lee, and Jordan (2016), Theorem 3.6](https://proceedings.mlr.press/v48/liub16.pdf)
+:::
+
+---
+
+### Comparing distribution discrepancies {#comparing-distribution-discrepancies}
+
+| | Ordinary MMD | KL / relative entropy | Score-based KSD |
+|:--|:--|:--|:--|
+| Normalizing constant | Direct integrals: needed; reference samples: not needed | Value: generally needed; optimization: may drop out | Cancels from the score |
+| Benefit | Sample comparisons; integration-error meaning | Information-theoretic meaning; variational fitting | No target draws or normalizer |
+| Limitation | Kernel choice; target integration or reference error | Asymmetry; empirical vs continuous: infinite | Derivatives; boundary, kernel, and mode sensitivity |
+
+
+::: {.notes}
+The MMD row concerns ordinary kernels, before the Stein construction. Direct
+target integration requires normalized expectations, although a constant may
+already be incorporated in an analytic kernel mean or removed by computing a
+ratio of integrals. Empirical two-sample MMD itself never evaluates a density;
+obtaining trustworthy target reference draws may still be difficult. In this
+course, the discrepancy notebook uses independent acceptance--rejection draws
+as its reference, so the MMD calculation does not use a normalizing constant.
+
+The comparisons concern different quantities; their numerical magnitudes are
+not interchangeable, and none is automatically a calibrated MCMC stopping rule.
+References are given in the preceding KL and Stein slide notes.
+:::
+
+# Applications of Markov Chains {.tree-marker-slide tree-marker="mcmc-practice"}
 
 - [Direct sampling, MCMC, and event simulation](#direct-sampling-mcmc-and-event-simulation)
 - [Maximum likelihood estimation](#maximum-likelihood-estimation)
@@ -835,7 +1091,7 @@ Reference for the multilevel preview and payoff-dependent refinement:
 [Giles, Multilevel Monte Carlo path simulation](https://people.maths.ox.ac.uk/gilesm/files/opre.pdf)
 :::
 
-## Maximum likelihood estimation {.tree-marker-slide tree-marker="estimation"}
+## Maximum likelihood estimation {.tree-marker-slide tree-marker="inference-estimation"}
 
 Our Monte Carlo error assessments so far have used a [frequentist perspective]{.alert}
 
@@ -913,7 +1169,7 @@ L(\mu,\sigma^2;y)
 \end{align*}
 :::
 
-## Bayesian inference {.tree-marker-slide tree-marker="prob-est"}
+## Bayesian inference {.tree-marker-slide tree-marker="bayesian-mcmc"}
 
 - Especially useful when [data are limited relative to model complexity]{.alert}
 - Prior knowledge supplements the data; weak data call for checking sensitivity to the prior
@@ -942,7 +1198,7 @@ Bayesian inference is a primary reason to sample from complicated unnormalized d
 
 [`BayesianMCMC` companion notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/BayesianMCMC.ipynb)
 
-## Queueing systems {.tree-marker-slide tree-marker="probability"}
+## Queueing systems {.tree-marker-slide tree-marker="probability-practice"}
 
 Consider a single-server queue observed at event times
 
@@ -1019,7 +1275,7 @@ At a service completion:
 <span>Which state variables are needed if service times are not memoryless?</span>
 :::
 
-# Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="prob-stat-est"}
+# Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="mcmc-discrepancy-practice"}
 
 - A Markov chain's next-state law depends on its [current state]{.alert}
 - Metropolis–Hastings corrects a proposal mechanism so that the [target distribution is invariant]{.alert}

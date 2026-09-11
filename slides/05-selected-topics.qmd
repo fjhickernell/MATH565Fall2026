@@ -18,7 +18,7 @@ include-after-body:
 subtitle: <span class="deck-title">{{< meta deck_title >}}</span>
 ---
 
-# Course Map
+# Course Map {.deck-course-map tree-marker="deck-05-overview"}
 
 ::: {.columns}
 ::: {.column width="36%"}
@@ -28,20 +28,27 @@ subtitle: <span class="deck-title">{{< meta deck_title >}}</span>
 - [{{< meta decks.d02.title >}}]({{< meta decks.d02.file >}})
 - [{{< meta decks.d03.title >}}]({{< meta decks.d03.file >}})
 - [{{< meta decks.d04.title >}}]({{< meta decks.d04.file >}})
-- [{{< meta decks.d05.title >}}]({{< meta decks.d05.file >}}){.alert}
+- [{{< meta decks.d05.title >}}]({{< meta decks.d05.file >}}){.current-deck aria-current="page"}
 :::
 
 ::: {.column width="4%"}
 :::
 
 ::: {.column width="60%"}
-<h3>In this deck</h3>
+::: {.deck-map-theme}
+[Share the work across processors, samples, and levels]{.alert}
+:::
+
+:::
+:::
+
+::: {.deck-section-links}
+<h3>This deck</h3>
 
 - [Parallel and Stochastic Computation](#parallel-and-stochastic-computation)
 - [Two-Level Monte Carlo](#two-level-monte-carlo)
 - [Multilevel Monte Carlo](#multilevel-monte-carlo)
 - [Big Ideas](#big-ideas)
-:::
 :::
 
 # Parallel and Stochastic Computation {.tree-marker-slide tree-marker="practice"}

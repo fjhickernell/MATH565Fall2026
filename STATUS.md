@@ -244,6 +244,11 @@ appropriate phase rather than appended indiscriminately.
   to Generating Samples beneath In this deck.
 - [x] Add the vector uniform-input, conditional-proposal, and accept-or-stay
   theme to the MCMC Course Map, identifying the target law at stationarity.
+- [x] Add larger whole-deck topic trees to Course Maps in Decks 02–05, with
+  substantive topic selections, lower-left This deck links, and bold current
+  deck emphasis; add themes to Decks 04–05 and validate layouts.
+- [x] Audit Decks 02–03 navigation markers against taught content, including
+  Error Assessment for the worst-case and GP error derivations.
 - [x] Load course-wide slide styling consistently across every deck.
 - [x] Validate shared slide styling, metadata, navigation, and assets from
   `classlib`.
@@ -309,7 +314,7 @@ appropriate phase rather than appended indiscriminately.
       $\varrho_{\mathrm{prop}}$ across Decks 02--04, and retain the 2025
       acceptance-indicator and Bayes' theorem explanation for an unnormalized
       target.
-    - [ ] Complete instructor review of the revised transport-map sequence and
+    - [x] Complete instructor review of the revised transport-map sequence and
       its companion notebook treatment.
   - [x] Draft Lecture 03, Markov Chain Monte Carlo, from the Fall 2025
     Keynote deck, including its discrepancy, Bayesian, and queueing material.
@@ -323,8 +328,11 @@ appropriate phase rather than appended indiscriminately.
     averages, blocking, and the distinction between capacity and service rate.
   - [x] Compare ordinary kernel discrepancy, KL/relative entropy, and
     score-based Stein discrepancy, including normalizing constants and
-    limitations; place alternatives after empirical MMD and cite the
+    limitations; place alternatives after the integration-error development and cite the
     Hickernell–Kirk–Sorokin tutorial for the kernel/error development.
+  - [x] Expand parallel-tempering swap explanations and normalize discrepancy;
+    organize distribution, empirical, and unbiased formulas; make Stein's
+    supremum and kernel formulas explicit with true-integral-minus-sum order.
   - [x] Audit all seven notebooks through MCMC against Owen's available
     chapters, update Decks 01–03 title readings, and record the detailed
     mapping in `notes/OWEN-COVERAGE-AUDIT.md`.
@@ -337,7 +345,7 @@ appropriate phase rather than appended indiscriminately.
     (September 10, 2026).
   - [ ] Review Lectures 04–05 individually with the instructor and refine
     their scope, narrative, examples, and visible layout.
-  - [ ] Include Markov chain tree search (MCTS) in Deck 05, Selected Topics.
+  - [ ] Include Monte Carlo tree search (MCTS) in Deck 05, Selected Topics.
 - [ ] Adapt course pages and policies to the authoritative repository.
 - [ ] Migrate assignments, notebooks, examples, and required static assets.
 - [ ] Review migrated material for obsolete dates, links, software
