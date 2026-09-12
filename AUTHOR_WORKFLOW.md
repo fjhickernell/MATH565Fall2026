@@ -127,6 +127,38 @@ Then carry out the following steps:
    Request the exact `Checkpoint` command to publish any post-Canvas completion
    updates still uncommitted in the repository.
 
+## Loading grades, instructor review, and release
+
+1. Use the instructor's saved `.xlsx` grading workbook when available, rather
+   than an older CSV. Select the grading sheet by name, not the active tab.
+   Match the total and feedback columns by their headers, confirm the points
+   scale, and match each row to its Canvas student or group. Preserve the
+   instructor's scores and feedback; leave blank feedback blank. Keep private
+   grading files outside the public course repository.
+2. **Before entering any score**, inspect the assignment's grade-posting policy
+   and set it to manual posting if necessary. Verify the setting so the uploaded
+   grades remain hidden for instructor review. Check feedback visibility too;
+   if comments cannot remain hidden, retain them locally until release is
+   approved. If Canvas cannot support a private upload, explain the limitation
+   before entering data. Do not rely on hiding grades after automatic posting
+   has already exposed them.
+3. Load and verify all intended grades and eligible hidden feedback. Check group
+   propagation and exclude Test Student. Verify saved comments in the Gradebook
+   submission tray before retrying: for individuals on a group assignment,
+   SpeedGrader and submission details may omit comments that were actually
+   saved. Avoid duplicate comments.
+4. Open the Grades page for the instructor to scan. After loading, draft an
+   announcement stating that the grades are posted and incorporating the
+   workbook's separate general-comments tab. Preserve its meaning, with light
+   editing for clarity. Keep this draft local or otherwise unpublished; do not
+   schedule an automatic release. Present the completed upload and announcement
+   for review and wait for explicit publication approval.
+5. After approval, post grades, release any held feedback, and verify student
+   visibility before publishing an approved grades-posted announcement. A request
+   to draft the announcement alone does not authorize sending it. Record the
+   verified outcome in the private grading handoff without putting student data
+   into the public repository.
+
 ## Adding or updating a test or examination
 
 Use the following workflow whenever a test or final-examination detail is

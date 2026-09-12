@@ -115,6 +115,17 @@ duplicates. After final Canvas verification and tracked handoff updates, request
 one closeout `Checkpoint` when needed to preserve the completed state; do not
 treat it as another Canvas confirmation.
 
+### Grade upload and release
+
+Follow the grade-upload workflow in `AUTHOR_WORKFLOW.md`. By default, load
+grades for instructor review without publishing them. Before entering the first
+score, verify that the assignment uses manual grade posting. Obtain explicit
+instructor approval after the review before releasing grades or an announcement.
+An ordinary request to upload grades does not authorize publication. After
+loading, draft a grades-posted announcement using the grading workbook's
+general-comments tab; keep the announcement unpublished until release is approved
+and the grades are verified visible.
+
 ### Dashboard reconciliation at Checkpoint
 
 As part of every Checkpoint, read `notes/NEXT.md` from both active teaching
