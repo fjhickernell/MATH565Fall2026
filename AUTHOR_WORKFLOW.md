@@ -127,6 +127,41 @@ Then carry out the following steps:
    Request the exact `Checkpoint` command to publish any post-Canvas completion
    updates still uncommitted in the repository.
 
+## Preparing assignment grading materials
+
+When asked to prepare an assignment for grading, inspect the previous
+assignment's private OneDrive grading folder and use its workbook and folder
+organization as the reference. Keep all submissions, student identities,
+scores, and feedback outside the public course repository.
+
+1. Verify the current assignment and its SpeedGrader roster. Reconcile groups
+   afresh for each assignment; do not carry forward a previous assignment's
+   partner mapping. Keep non-submission rows visible and exclude Test Student.
+2. Use Canvas's normal **Download Submissions** action to obtain the bulk ZIP
+   and save it in the private `Homework/Assignment N` folder. If automated
+   downloading fails, distinguish that failure from a restriction on the
+   instructor's access. An automated browser error, even one displaying an
+   organization-policy message, does not establish that manual downloading
+   will fail or that IT assistance is required. For Assignment 2, the normal
+   manual Canvas download succeeded after automated attempts failed.
+3. When a manual download is needed, clearly say that the instructor's action
+   is required and give the steps immediately: open the assignment, left-click
+   **Download Submissions**, wait for Canvas to prepare the ZIP, and save it
+   in the private assignment folder or Downloads. Do not substitute **Save
+   Link As** for the normal Canvas flow. Do not bypass security controls. If
+   the manual flow also fails, report that specific result and seek an
+   institution-approved resolution.
+4. Once the ZIP is saved, resume autonomously: verify archive integrity,
+   preserve the original, record its checksum, organize files by submitter,
+   safely extract nested archives, and reconcile attachment IDs against
+   Canvas. Do not execute uninspected student code.
+5. Prepare or update the Excel tracker with local folder paths, separate
+   exercise scores, totals that remain blank until all required scores are
+   entered, feedback, and a separate general-comments tab. Preserve existing
+   instructor edits. Flag apparent missing deliverables for review without
+   assigning automatic deductions. Save a private grading guide and handoff
+   describing the verified state and any remaining work.
+
 ## Loading grades, instructor review, and release
 
 1. Use the instructor's saved `.xlsx` grading workbook when available, rather

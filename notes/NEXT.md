@@ -5,7 +5,12 @@
 Prepare Test 1 for September 15, covering Introduction and Generating Samples;
 finalize the room, test PDF, and Canvas entry. The regular classroom is PH 109;
 confirm the test room explicitly. Also grade homework (Dashboard deadline:
-September 9; completion not yet reported) and add the seminar link.
+September 9; completion not yet reported) and add the seminar link. Assignment
+2 is prepared for grading in the private OneDrive course folder: the Canvas ZIP
+and all 30 attachments are verified, 17 submitting groups or individuals are
+organized, two non-submission rows remain visible, and the Excel tracker and
+grading guide are ready. No Assignment 2 scores or feedback have been entered
+in Canvas.
 Remaining notebook and later-deck work is listed below.
 
 Deck 03 introduces kernel discrepancy, then its worst-case and Gaussian-process

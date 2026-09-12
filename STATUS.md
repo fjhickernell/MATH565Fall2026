@@ -26,6 +26,8 @@ appropriate phase rather than appended indiscriminately.
   publishing procedures.
 - [x] Document the minimal-input assignment workflow, standing Canvas defaults,
   consolidated publication confirmation, and end-to-end verification steps.
+- [x] Document the private assignment-grading preparation workflow, including
+  Canvas download fallback, submission reconciliation, and tracker setup.
 - [x] Add `STATUS.md` as the permanent phase-organized construction record.
 - [x] Reconcile project documentation and style guides after establishing the
   prototype course conventions.
