@@ -33,14 +33,16 @@ substantive content, including foundational subjects and developed applications;
 omit passing mentions (for example, finance in Decks 03 and 05). Do not simply
 collect the small navigation-marker presets or introduce new tree topics.
 The upper row retains the 36% / 4% / 60% course-list and theme proportions.
-The current deck link uses `.current-deck` and `aria-current="page"`, with
-blue color, bold weight, and 110% font size. Section links move to the lower
-left under **This deck**. Per instructor preference, omit the separate **In this deck** heading above the theme in
-these four maps; this is a local exception to the shared theme-heading
+In all five Course Maps, the current deck link uses `.current-deck` and
+`aria-current="page"`, with blue color, bold weight, and 110% font size. In
+Decks 02–05, section links move to the lower left under **This deck**. Per
+instructor preference, omit the separate **In this deck** heading above the
+theme in these four maps; this is a local exception to the shared theme-heading
 convention. The `.deck-course-map` layout reserves the lower right for a
 42%-wide tree, compared with the 16% navigation trees. Preserve readable labels, the theme, all links, and footer
 clearance when changing either a map or its topic selection. Deck 01 retains
-its existing Course Map and full introductory tree.
+its existing tree-free Course Map because the Monte Carlo tree has not yet
+been introduced; its full introductory tree appears later in the deck.
 
 Use raw `<h3>` elements for the Course Map column labels so they do not change
 RevealJS hierarchy. Register every deck in `slides/_metadata.yml` with its

@@ -316,6 +316,9 @@ appropriate phase rather than appended indiscriminately.
       target.
     - [x] Complete instructor review of the revised transport-map sequence and
       its companion notebook treatment.
+    - [x] Reframe mixture sampling and acceptance--rejection as expectations
+      over a $(d+1)$-dimensional uniform input after transporting the first
+      $d$ coordinates to the proposal distribution.
   - [x] Draft Lecture 03, Markov Chain Monte Carlo, from the Fall 2025
     Keynote deck, including its discrepancy, Bayesian, and queueing material.
   - [x] Add a gold-border applications comparison of direct finance sampling,

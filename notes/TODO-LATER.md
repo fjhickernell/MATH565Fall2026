@@ -18,17 +18,6 @@ multiple decks.
 
 ## Deck 02 — Generating Samples
 
-- Later this term (Fall 2026), express mixture sampling and acceptance--rejection
-  sampling as integrals over an enlarged space that explicitly includes the
-  decision variable (component selection or the acceptance decision draw).
-  Consider a Stieltjes formulation; the precise formulation remains open.
-  Use this perspective to prepare for later discussion of what makes a
-  sampling construction friendly to low discrepancy methods. The instructor
-  requested this note on September 10, 2026, and deferred the Deck 02 changes
-  until later this term; do not implement them yet or postpone them to a
-  future academic year. Keep the exposition in Deck 02; the instructor can
-  return to that deck and show it later in the term, after the class has
-  moved on to other decks.
 - Refactor the Asian-option sampling code so path construction and payoff
   interfaces can be reused for importance sampling and control variates in
   Deck 04, starting from the retained `GeneratingSamples.ipynb` examples.
@@ -91,6 +80,12 @@ multiple decks.
 
 ## Cross-course notebooks and workflow
 
+- Consider adding an `all` mode to the shared `quarto-slides-live` helper.
+  `quarto-slides-live all` would render every deck initially, serve the common
+  `slides/_site` output, and rebuild all decks when slide or shared-style
+  sources change, so navigation always reaches current local output. The
+  tradeoff is slower rebuilds than the existing single-deck mode; do not
+  implement this without a separate request.
 - Align retained older notebooks with the current `classlib`/`nbviz` workflow,
   notation, and visual conventions rather than mechanically porting them.
 - Add periodic full-repository notebook execution to detect dependency and

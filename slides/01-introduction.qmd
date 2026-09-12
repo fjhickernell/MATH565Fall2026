@@ -140,7 +140,7 @@ assert all(
 ::: {.column width="36%"}
 <h3>Course decks</h3>
 
-- [{{< meta decks.d01.title >}}]({{< meta decks.d01.file >}}) — [current]{.alert}
+- [{{< meta decks.d01.title >}}]({{< meta decks.d01.file >}}){.current-deck aria-current="page"}
 - [{{< meta decks.d02.title >}}]({{< meta decks.d02.file >}})
 - [{{< meta decks.d03.title >}}]({{< meta decks.d03.file >}})
 - [{{< meta decks.d04.title >}}]({{< meta decks.d04.file >}})

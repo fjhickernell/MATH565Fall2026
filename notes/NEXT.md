@@ -86,23 +86,32 @@ normalization. The worst-case and GP average-case error interpretations precede
 KL and Stein. Stein now has explicit supremum and pairwise-kernel formulas,
 using true integral minus sample average. Notebook algorithms are unchanged.
 
-Decks 02–05 have larger Course Map trees at lower right, **This deck** links
-at lower left, and bold, larger current-deck links. Tree selections reflect
-substantive coverage: no Discrepancy Measures or Estimation/Statistics in
-Deck 02, no finance in Decks 03 or 05, and Error Assessment on Deck 03's error
-derivations. Course-specific conventions are in `docs/slide-style.md`.
+Decks 02–05 have larger Course Map trees at lower right and **This deck** links
+at lower left; all five decks use bold, larger current-deck links. Deck 01's
+Course Map remains tree-free because the Monte Carlo tree has not yet been
+introduced. Tree selections reflect substantive coverage: no Discrepancy
+Measures or Estimation/Statistics in Deck 02, no finance in Decks 03 or 05,
+and Error Assessment on Deck 03's error derivations. Course-specific
+conventions are in `docs/slide-style.md`.
 Decks 04–05 also now have Course Map themes; their full content review remains
 pending. All five decks render, the revised slides and maps have been visually
 checked, and their local navigation links are validated.
+
+At the end of Deck 02, mixture sampling and acceptance--rejection now share an
+enlarged-input formulation. The first $d$ uniform coordinates are transported
+to a proposal draw and one additional independent uniform coordinate makes the
+component or acceptance decision. The mixture expectation is a single
+expectation over $[0,1]^{d+1}$; the accepted-target expectation is a ratio of
+two such expectations. The acceptance indicator also makes explicit the
+discontinuity that low discrepancy sampling must resolve. Both new slides and
+the consolidated Big Ideas summary render cleanly and have been visually
+checked at the standard RevealJS viewport.
 
 ## Other pending MATH 565 work
 
 1. Review Deck 04 and then Deck 05 using the instructor-led process, including
    their companion-notebook plans in `notes/TODO-LATER.md`.
-2. Return later this term to the Deck 02 mixture and acceptance--rejection
-   integral formulations over an enlarged space including the decision
-   variable; see `notes/TODO-LATER.md`. This remains deferred for now.
-3. Complete the remaining Fall 2026 logistics and student-facing page details,
+2. Complete the remaining Fall 2026 logistics and student-facing page details,
    including assignments, tests, project dates, and visible browser review.
 
 Deck 02 polish and its companion-notebook review are complete for the current

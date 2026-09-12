@@ -1236,20 +1236,91 @@ $$
 - [Exact transport]{.alert}: move every $Z$ to $\sqrt Z$
 - [Acceptance–rejection]{.alert}: keep $Z$ with probability $Z$
 
+---
+
+### One extra coordinate for a mixture
+
+Start with one transported proposal and one independent decision coordinate
+
+\begin{gather*}
+(\vU,U)\sim\Unif[0,1]^{d+1},
+\qquad
+\vZ=S(\vU)\sim\varrho_{\mathrm{prop}},
+\\
+C(U)=
+\begin{cases}1,&U\le p,\\2,&U>p,
+\end{cases}
+\qquad
+\vX=T_{C(U)}(\vZ),
+\qquad
+T_k(\vZ)\sim\varrho_k
+\end{gather*}
+
+For every integrable $f$,
+
+\begin{align*}
+\Ex_{\mathrm{mix}}[f(\vX)]
+&=\Ex\!\left[f\!\left(T_{C(U)}\bigl(S(\vU)\bigr)\right)\right]\\
+&=p\Ex_{\varrho_1}[f]+(1-p)\Ex_{\varrho_2}[f]
+\end{align*}
+
+Gaussian mixture: $S$ applies $\Phi^{-1}$ coordinatewise and
+$T_k(\vz)=\vmu_k+\mA_k\vz$, where
+$\mA_k\mA_k^{\mathsf T}=\mSigma_k$
+
+::: {.key-point}
+The discrete component choice becomes a deterministic function of the
+$(d+1)$-dimensional uniform input
+:::
+
+---
+
+### One extra coordinate for acceptance–rejection
+
+Use the same transported proposal and define
+
+$$
+a(\vz):=\frac{\varrho_{\mathrm{tar}}(\vz)}
+{M\varrho_{\mathrm{prop}}(\vz)},
+\qquad
+W:=\boldsymbol{1}\!\left\{U\le a\bigl(S(\vU)\bigr)\right\}
+$$
+
+Then the expectation under the desired density $c\varrho_{\mathrm{tar}}$ is
+
+\begin{align*}
+\Ex_{\mathrm{tar}}[f(\vX)]
+&=\Ex\bigl[f(\vZ)\mid W=1\bigr]\\
+&=\frac{\Ex\!\left[f\bigl(S(\vU)\bigr)W\right]}
+{\Ex(W)}\\
+&=\frac{\displaystyle\int_{[0,1]^{d+1}}
+f\bigl(S(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(S(\vu)\bigr)\right\}
+\,\dif\vu\,\dif v}
+{\displaystyle\int_{[0,1]^{d+1}}
+\boldsymbol{1}\!\left\{v\le a\bigl(S(\vu)\bigr)\right\}
+\,\dif\vu\,\dif v}
+\end{align*}
+
+::: {.key-point}
+Mixture selection and rejection both append [one decision coordinate]{.alert}
+
+The resulting jump or indicator is the feature that low discrepancy sampling
+must resolve
+:::
+
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="random-generation"}
 
 - Start with [uniform]{.alert} samples and transform them to the [target]{.alert} distribution
 - The generalized inverse works for discrete and continuous distributions
-- Mixtures combine a discrete component choice with a conditional transform
 - Independent marginal transforms do not create dependence<br>Correlated normal
   vectors require a matrix factorization<br>PCA can concentrate variation in
   early coordinates for low discrepancy sampling
 - Gaussian-process sampling reduces finite collections of function values to
   multivariate normal sampling
 - Low discrepancy points trade independent placement for more even coverage
-- An exact transport moves every proposal point to the target and makes the
-  correction weight equal to one
-- Acceptance–rejection samples from an unnormalized density when a suitable
-  proposal envelope is available
+- Mixtures and acceptance–rejection append one uniform decision coordinate to
+  a transported proposal, yielding target expectations over $[0,1]^{d+1}$
+- Exact transport moves every proposal point; acceptance–rejection keeps
+  selected points using an unnormalized target and a global envelope
 
 [Companion `GeneratingSamples` notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb)
