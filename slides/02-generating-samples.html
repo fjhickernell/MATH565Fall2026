@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-09-11">
+  <meta name="dcterms.date" content="2026-09-12">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -36,7 +36,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="02-generating-samples_files/libs/revealjs/dist/theme/quarto-5e3eb0fb4589d0efdc23a828031c590a.css">
+  <link rel="stylesheet" href="02-generating-samples_files/libs/revealjs/dist/theme/quarto-54ab46cda977e271b976e98a737b5e9a.css">
   <link href="02-generating-samples_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="02-generating-samples_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="02-generating-samples_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -650,7 +650,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">September 11, 2026</p>
+  <p class="date">September 12, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-02-overview">
 <h1>Course Map</h1>
@@ -843,7 +843,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="b0727c21" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="620e594a" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -887,7 +887,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="659d84be" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="92a3a4d3" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -919,7 +919,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="351b610a" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="7ce0b5e9" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1003,7 +1003,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="b3d9c0f3" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="d4d76eb0" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1733,6 +1733,62 @@ U\le
 <li><span class="alert">Exact transport</span>: move every <span class="math inline">\(Z\)</span> to <span class="math inline">\(\sqrt Z\)</span></li>
 <li><span class="alert">Acceptance–rejection</span>: keep <span class="math inline">\(Z\)</span> with probability <span class="math inline">\(Z\)</span></li>
 </ul>
+</section>
+<section class="slide level2">
+
+<h3 id="one-extra-coordinate-for-a-mixture">One extra coordinate for a mixture</h3>
+<p>Start with one transported proposal and one independent decision coordinate</p>
+<p><span class="math display">\[\begin{gather*}
+(\vU,U)\sim\Unif[0,1]^{d+1},
+\qquad
+\vZ=S(\vU)\sim\varrho_{\mathrm{prop}},
+\\
+C(U)=
+\begin{cases}1,&amp;U\le p,\\2,&amp;U&gt;p,
+\end{cases}
+\qquad
+\vX=T_{C(U)}(\vZ),
+\qquad
+T_k(\vZ)\sim\varrho_k
+\end{gather*}\]</span></p>
+<p>For every integrable <span class="math inline">\(f\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+\Ex_{\mathrm{mix}}[f(\vX)]
+&amp;=\Ex\!\left[f\!\left(T_{C(U)}\bigl(S(\vU)\bigr)\right)\right]\\
+&amp;=p\Ex_{\varrho_1}[f]+(1-p)\Ex_{\varrho_2}[f]
+\end{align*}\]</span></p>
+<p>Gaussian mixture: <span class="math inline">\(S\)</span> applies <span class="math inline">\(\Phi^{-1}\)</span> coordinatewise and <span class="math inline">\(T_k(\vz)=\vmu_k+\mA_k\vz\)</span>, where <span class="math inline">\(\mA_k\mA_k^{\mathsf T}=\mSigma_k\)</span></p>
+<div class="key-point">
+<p>The discrete component choice becomes a deterministic function of the <span class="math inline">\((d+1)\)</span>-dimensional uniform input</p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="one-extra-coordinate-for-acceptancerejection">One extra coordinate for acceptance–rejection</h3>
+<p>Use the same transported proposal and define</p>
+<p><span class="math display">\[
+a(\vz):=\frac{\varrho_{\mathrm{tar}}(\vz)}
+{M\varrho_{\mathrm{prop}}(\vz)},
+\qquad
+W:=\boldsymbol{1}\!\left\{U\le a\bigl(S(\vU)\bigr)\right\}
+\]</span></p>
+<p>Then the expectation under the desired density <span class="math inline">\(c\varrho_{\mathrm{tar}}\)</span> is</p>
+<p><span class="math display">\[\begin{align*}
+\Ex_{\mathrm{tar}}[f(\vX)]
+&amp;=\Ex\bigl[f(\vZ)\mid W=1\bigr]\\
+&amp;=\frac{\Ex\!\left[f\bigl(S(\vU)\bigr)W\right]}
+{\Ex(W)}\\
+&amp;=\frac{\displaystyle\int_{[0,1]^{d+1}}
+f\bigl(S(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(S(\vu)\bigr)\right\}
+\,\dif\vu\,\dif v}
+{\displaystyle\int_{[0,1]^{d+1}}
+\boldsymbol{1}\!\left\{v\le a\bigl(S(\vu)\bigr)\right\}
+\,\dif\vu\,\dif v}
+\end{align*}\]</span></p>
+<div class="key-point">
+<p>Mixture selection and rejection both append <span class="alert">one decision coordinate</span></p>
+<p>The resulting jump or indicator is the feature that low discrepancy sampling must resolve</p>
+</div>
 </section></section>
 <section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="random-generation">
 <h1>Big Ideas</h1>
@@ -1744,12 +1800,11 @@ U\le
 <ul>
 <li>Start with <span class="alert">uniform</span> samples and transform them to the <span class="alert">target</span> distribution</li>
 <li>The generalized inverse works for discrete and continuous distributions</li>
-<li>Mixtures combine a discrete component choice with a conditional transform</li>
 <li>Independent marginal transforms do not create dependence<br>Correlated normal vectors require a matrix factorization<br>PCA can concentrate variation in early coordinates for low discrepancy sampling</li>
 <li>Gaussian-process sampling reduces finite collections of function values to multivariate normal sampling</li>
 <li>Low discrepancy points trade independent placement for more even coverage</li>
-<li>An exact transport moves every proposal point to the target and makes the correction weight equal to one</li>
-<li>Acceptance–rejection samples from an unnormalized density when a suitable proposal envelope is available</li>
+<li>Mixtures and acceptance–rejection append one uniform decision coordinate to a transported proposal, yielding target expectations over <span class="math inline">\([0,1]^{d+1}\)</span></li>
+<li>Exact transport moves every proposal point; acceptance–rejection keeps selected points using an unnormalized target and a global envelope</li>
 </ul>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb">Companion <code>GeneratingSamples</code> notebook</a></p>
 
