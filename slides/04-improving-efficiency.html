@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-09-12">
+  <meta name="dcterms.date" content="2026-09-13">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -650,7 +650,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">September 12, 2026</p>
+  <p class="date">September 13, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-04-overview">
 <h1>Course Map</h1>
@@ -687,7 +687,7 @@ Course decks
 
 </div><div class="column" style="width:60%;">
 <div class="deck-map-theme">
-<p><span class="alert">Reduce variance per unit of work</span></p>
+<p><span class="alert">Reducing variance (or variation) per unit of work</span></p>
 </div>
 </div></div>
 <div class="deck-section-links">
@@ -1312,7 +1312,7 @@ X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="dde8cd1d" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="1">
+<div id="8a7a0587" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1381,6 +1381,9 @@ D^2(\{x_i\}_{i=0}^{n-1},F;K)
 &amp;\quad+\frac1{n^2}\sum_{i,j=0}^{n-1}K(x_i,x_j)
 \end{align*}\]</span></p>
 <p>We usually take <span class="math inline">\(\mathcal X=[0,1]^d\)</span> and seek nodes with small discrepancy</p>
+<div class="key-point">
+<p>For deterministic low discrepancy sampling, <span class="alert">variation replaces variance</span>: error depends on the integrand’s variation and the design’s discrepancy</p>
+</div>
 </section>
 <section id="three-interpretations-of-discrepancy" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
 <h2>Three interpretations of discrepancy</h2>
