@@ -38,7 +38,7 @@ subtitle: |
 
 ::: {.column width="60%"}
 ::: {.deck-map-theme}
-[Reducing variance (or variation) per unit of work]{.alert}
+[Reducing variance (or variation) <br>per unit of work]{.alert}
 :::
 
 :::
