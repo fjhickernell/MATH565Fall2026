@@ -195,6 +195,9 @@ appropriate phase rather than appended indiscriminately.
       presentation logistics.
     - [ ] Inspect the visible page layout and dropdown behavior in a browser.
   - [ ] Policies (`classlib/classlib/quarto/pages/policies.qmd`)
+    - [x] Add a detailed instructor statement describing how ChatGPT and Codex
+      support course preparation, verification, and maintenance, and link to it
+      from an abbreviated early slide in Deck 01.
     - [ ] Verify that institutional offices, personnel, contact details, and
       policy links are current for Fall 2026.
   - [ ] Accessing repo
