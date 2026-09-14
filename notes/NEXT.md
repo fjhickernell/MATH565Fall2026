@@ -2,11 +2,10 @@
 
 ## Current task
 
-Prepare Test 1 for September 15, covering Introduction and Generating Samples;
-finalize the room, test PDF, and Canvas entry. The regular classroom is PH 109;
-confirm the test room explicitly. Also grade homework (Dashboard deadline:
-September 9; completion not yet reported) and add the seminar link. Assignment
-2 is prepared for grading in the private OneDrive course folder: the Canvas ZIP
+Grade Homework 2 (Dashboard deadline: September 14; completion not yet
+reported), add the seminar link, and then review Deck 04 followed by Deck 05.
+Assignment 2 is prepared for grading in the private OneDrive course folder:
+the Canvas ZIP
 and all 30 attachments are verified, 17 submitting groups or individuals are
 organized, two non-submission rows remain visible, and the Excel tracker and
 grading guide are ready. No Assignment 2 scores or feedback have been entered

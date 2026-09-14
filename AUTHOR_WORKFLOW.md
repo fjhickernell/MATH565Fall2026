@@ -215,6 +215,54 @@ finalized or materially revised:
    site, and verify the Tests page, schedule links, assessment notice, internal
    navigation, and affected deck at the standard RevealJS viewport.
 
+## Post-lecture pacing reconciliation
+
+After an instructional meeting, reconcile the public schedule and the next
+lecture plan against the Panopto recording. The exact command `Lecture update`
+runs this workflow for the current course; `Lecture update 332` and
+`Lecture update 565` select the named active course from either course
+repository. The command itself authorizes the email, Panopto, schedule, and
+single-occurrence calendar actions below.
+
+1. Check the Illinois Tech email account for the Panopto “Ready to view”
+   notice. This standing workflow authorizes that read-only email check. If
+   Panopto authentication is required, begin at `https://portal.iit.edu` and
+   continue in the same browser session.
+2. Reconcile the most recent completed instructional meeting that has not
+   already been reconciled. Inspect the recording near the end of its
+   substantive lecture portion, before any quiz, test, or administrative
+   wrap-up. Use the captions and the visible slide, notebook, or board to
+   identify the last topic actually completed and the first topic still
+   needing attention; do not infer the stopping point from the planned
+   schedule alone.
+3. Update the completed meeting's row in `pages/schedule.qmd` to describe what
+   was actually covered. Update the next instructional meeting's row with the
+   continuation topic and its existing deck, notebook, or other material link.
+   Keep assessment rows and coverage statements intact. Never use an
+   assessment-only meeting as the continuation destination; when a quiz, test,
+   or examination intervenes, carry the continuation to the next
+   instructional meeting.
+4. Add a concise continuation note to the next instructional MATH 565 event on
+   the Illinois Tech `Calendar` calendar. Name the deck and first slide,
+   section, or notebook point to resume, followed by a short record of what the
+   preceding lecture completed. Edit only that occurrence of the recurring
+   course event unless the instructor explicitly requests a series-wide
+   change.
+5. Verify the calendar account, occurrence date, event time, location, and
+   saved note, then render or otherwise validate the changed schedule page.
+6. Record the successful reconciliation in `notes/LECTURE-UPDATES.md`,
+   including the lecture date, Panopto recording identifier or link, next
+   instructional event annotated, and check date. Do not advance the ledger
+   when the recording or stopping point could not be verified.
+7. Leave repository changes uncommitted and unpublished until the instructor
+   gives the exact `Checkpoint` command.
+
+If the recording notice has not arrived, do not guess. Leave the schedule and
+calendar unchanged and report that the lecture update is waiting for the
+recording. If the latest course meeting was an assessment and all earlier
+instructional meetings are already reconciled, report that no lecture update
+is needed.
+
 ## Propagating classlib changes
 
 Develop and review a reusable change in the course repository's `classlib`
