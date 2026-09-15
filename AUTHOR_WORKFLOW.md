@@ -199,6 +199,21 @@ scores, and feedback outside the public course repository.
 Use the following workflow whenever a test or final-examination detail is
 finalized or materially revised:
 
+For every quiz, test, and final examination, keep all assessment PDFs out of
+the public course repository until the assessment has been administered and
+grading is complete. Do not publish the student/no-answers copy. After grading,
+publish only the answer-key PDF under `assets/tests/current/`, include an
+anonymous score distribution with the released answers, and link that released
+copy from the Tests page. Keep student names and the private LaTeX source out of
+the public repository. Copy the same released PDF into the `565/` folder of the
+canonical `HickernellTestArchive` checkout. Publish the archive change
+separately, then intentionally advance this course's pinned archive to that
+published commit; do not update another course's pin merely to add a MATH 565
+file. The only exception is a take-home component of a final examination: its
+student/no-answers copy may be published when the instructor intentionally
+releases it to students, but its answers and score distribution remain private
+until grading is complete.
+
 1. Confirm the assessment name, date, duration, coverage, room, current PDF,
    and Canvas status. Leave unresolved details explicitly marked TBA.
 2. Maintain `pages/tests.qmd` as the authoritative location for the assessment

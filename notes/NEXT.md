@@ -256,10 +256,17 @@ decks after adding links.
   links only to the assignment detail page and Assignments page. Its detail
   page, Assignments entry, Schedule entry, and Deck 02 reminder are live, and
   its all-sections Canvas announcement has been posted.
-- Test 1 is scheduled for the full class period on September 15 and covers
-  **Introduction** and **Generating Samples**. Its date and coverage appear on
-  the Schedule, Tests page, and Deck 02 title slide. The room, current test PDF,
-  and Canvas entry remain to be finalized.
+- Test 1 is scheduled for the full class period on September 15 in **PH 109**
+  and covers **Introduction** and **Generating Samples**. Its date and coverage
+  appear on the Schedule, Tests page, and Deck 02 title slide. The private
+  assessment materials are complete. Do not put any Test 1 PDF on the web until
+  grading is complete; then add the anonymous score distribution to the
+  released answers, publish only the released answer-key PDF under
+  `assets/tests/current/`, copy the same released PDF into the canonical test
+  archive's `565/` folder, and link it from the Tests page. Publish the archive
+  commit before advancing the course's pinned archive. Canvas already has a
+  published no-submission Test 1 item in the Tests group, verified in the
+  gradebook on September 15; no announcement is needed.
 - The Fall 2026 project-selection deadline is Friday, September 18. A live
   Illinois-Tech-only Microsoft Form records students' names, A-numbers, project
   type, article citation and PDF or proposed QMCPy feature, and optional QMCPy
