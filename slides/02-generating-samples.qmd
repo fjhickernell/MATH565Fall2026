@@ -57,6 +57,7 @@ $$
 - [Random Vectors and Stochastic Processes](#random-vectors-and-stochastic-processes)
 - [Low Discrepancy Sampling](#low-discrepancy-sampling)
 - [More Advanced Direct Sampling](#more-advanced-direct-sampling)
+- [Reframing Sampling as Unit-Cube Integration](#reframing-sampling-as-unit-cube-integration)
 - [Big Ideas](#big-ideas)
 :::
 
@@ -1236,31 +1237,46 @@ $$
 - [Exact transport]{.alert}: move every $Z$ to $\sqrt Z$
 - [Acceptance–rejection]{.alert}: keep $Z$ with probability $Z$
 
----
+# Reframing Sampling as Unit-Cube Integration {.tree-marker-slide tree-marker="random-generation"}
 
-### One extra coordinate for a mixture
-
-Start with one transported proposal and one independent decision coordinate
+One uniform input, with the last coordinate making the [decision]{.alert}
 
 \begin{gather*}
-(\vU,U)\sim\Unif[0,1]^{d+1},
-\qquad
-\vZ=S(\vU)\sim\varrho_{\mathrm{prop}},
+(\vU,V)=(U_1,\ldots,U_d,U_{d+1})\sim\Unif[0,1]^{d+1},
 \\
-C(U)=
-\begin{cases}1,&U\le p,\\2,&U>p,
-\end{cases}
-\qquad
-\vX=T_{C(U)}(\vZ),
-\qquad
-T_k(\vZ)\sim\varrho_k
+\vZ=S(\vU)\sim\varrho_{\mathrm{prop}}
+\end{gather*}
+
+- [Mixtures: choosing a component](#mixtures-choosing-a-component)
+- [Acceptance–rejection: choosing which proposals to keep](#acceptance-rejection-choosing-which-proposals-to-keep)
+
+::: {.key-point}
+Target expectations become integrals over $[0,1]^{d+1}$
+
+&nbsp;
+
+[Low discrepancy sampling]{.alert} starts with uniform points in this cube;
+performance depends on the resulting integrand, including its decision boundary
+:::
+
+## Mixtures: choosing a component {.tree-marker-slide tree-marker="random-generation"}
+
+For $0<p<1$, let $T_k(\vZ)\sim\varrho_k$ and define
+
+\begin{gather*}
+C(V)=\begin{cases}1,&V\le p,\\2,&V>p,\end{cases}
+\qquad \vX=T_{C(V)}\bigl(S(\vU)\bigr)
 \end{gather*}
 
 For every integrable $f$,
 
 \begin{align*}
 \Ex_{\mathrm{mix}}[f(\vX)]
-&=\Ex\!\left[f\!\left(T_{C(U)}\bigl(S(\vU)\bigr)\right)\right]\\
+&=\int_{[0,1]^{d+1}} f\!\left(T_{C(v)}\bigl(S(\vu)\bigr)\right)
+\,\dif\vu\,\dif v\\
+&=\int_{[0,1]^d}\left[
+\int_0^p f\bigl(T_1(S(\vu))\bigr)\,\dif v
++\int_p^1 f\bigl(T_2(S(\vu))\bigr)\,\dif v\right]\dif\vu\\
 &=p\Ex_{\varrho_1}[f]+(1-p)\Ex_{\varrho_2}[f]
 \end{align*}
 
@@ -1269,30 +1285,25 @@ $T_k(\vz)=\vmu_k+\mA_k\vz$, where
 $\mA_k\mA_k^{\mathsf T}=\mSigma_k$
 
 ::: {.key-point}
-The discrete component choice becomes a deterministic function of the
-$(d+1)$-dimensional uniform input
+The decision coordinate $V$ selects a component at the [fixed threshold]{.alert} $p$
 :::
 
----
+## Acceptance–rejection: choosing which proposals to keep {#acceptance-rejection-choosing-which-proposals-to-keep .tree-marker-slide tree-marker="random-generation"}
 
-### One extra coordinate for acceptance–rejection
-
-Use the same transported proposal and define
+With $\varrho_{\mathrm{tar}}\le M\varrho_{\mathrm{prop}}$, define
 
 $$
 a(\vz):=\frac{\varrho_{\mathrm{tar}}(\vz)}
 {M\varrho_{\mathrm{prop}}(\vz)},
 \qquad
-W:=\boldsymbol{1}\!\left\{U\le a\bigl(S(\vU)\bigr)\right\}
+W:=\boldsymbol{1}\!\left\{V\le a\bigl(S(\vU)\bigr)\right\}
 $$
 
-Then the expectation under the desired density $c\varrho_{\mathrm{tar}}$ is
+For the normalized target density $c\varrho_{\mathrm{tar}}$,
 
 \begin{align*}
 \Ex_{\mathrm{tar}}[f(\vX)]
 &=\Ex\bigl[f(\vZ)\mid W=1\bigr]\\
-&=\frac{\Ex\!\left[f\bigl(S(\vU)\bigr)W\right]}
-{\Ex(W)}\\
 &=\frac{\displaystyle\int_{[0,1]^{d+1}}
 f\bigl(S(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(S(\vu)\bigr)\right\}
 \,\dif\vu\,\dif v}
@@ -1302,10 +1313,8 @@ f\bigl(S(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(S(\vu)\bigr)\right\}
 \end{align*}
 
 ::: {.key-point}
-Mixture selection and rejection both append [one decision coordinate]{.alert}
-
-The resulting jump or indicator is the feature that low discrepancy sampling
-must resolve
+The decision coordinate $V$ keeps a proposal below the [varying threshold]{.alert}
+$a(S(\vU))$, determined by the other $d$ coordinates
 :::
 
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="random-generation"}
@@ -1318,8 +1327,9 @@ must resolve
 - Gaussian-process sampling reduces finite collections of function values to
   multivariate normal sampling
 - Low discrepancy points trade independent placement for more even coverage
-- Mixtures and acceptance–rejection append one uniform decision coordinate to
-  a transported proposal, yielding target expectations over $[0,1]^{d+1}$
+- Mixtures and acceptance–rejection express target expectations as integrals
+  over $[0,1]^{d+1}$<br>Low discrepancy sampling acts on the uniform inputs;
+  the component jump or acceptance boundary affects integration error
 - Exact transport moves every proposal point; acceptance–rejection keeps
   selected points using an unnormalized target and a global envelope
 

@@ -102,15 +102,15 @@ Decks 04–05 also now have Course Map themes; their full content review remains
 pending. All five decks render, the revised slides and maps have been visually
 checked, and their local navigation links are validated.
 
-At the end of Deck 02, mixture sampling and acceptance--rejection now share an
-enlarged-input formulation. The first $d$ uniform coordinates are transported
-to a proposal draw and one additional independent uniform coordinate makes the
-component or acceptance decision. The mixture expectation is a single
-expectation over $[0,1]^{d+1}$; the accepted-target expectation is a ratio of
-two such expectations. The acceptance indicator also makes explicit the
-discontinuity that low discrepancy sampling must resolve. Both new slides and
-the consolidated Big Ideas summary render cleanly and have been visually
-checked at the standard RevealJS viewport.
+Deck 02 now groups mixture sampling and acceptance--rejection under
+“Reframing Sampling as Unit-Cube Integration,” with matching Course Map and
+section-outline links. The first $d$ uniform coordinates generate a proposal;
+$V=U_{d+1}$ selects a component at a fixed threshold or accepts the proposal
+at a threshold determined by the other coordinates. Both target expectations
+are explicit integrals over $[0,1]^{d+1}$ (a ratio for rejection). Preserve this
+bridge to later low discrepancy performance: uniform inputs are shared, while
+the resulting integrand and its decision boundary determine integration error.
+The revised section and formulas render cleanly and have been visually checked.
 
 ## Other pending MATH 565 work
 
