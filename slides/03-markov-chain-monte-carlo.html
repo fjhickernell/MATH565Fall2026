@@ -1051,7 +1051,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="d77b6171" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="1be46250" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1070,7 +1070,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="c199019b" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="905d8ebc" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1236,7 +1236,7 @@ R_{\mathrm{swap}}
 <p><span id="what-discrepancy-measures"></span></p>
 <p>Do our samples represent the <span class="alert">target distribution</span>?</p>
 <ul>
-<li>Compare distributions using a <span class="alert">kernel</span> <span class="math inline">\(K(t,x)\)</span></li>
+<li>Compare distributions using a <span class="alert">kernel</span> <span class="math inline">\(K(\vt,\vx)\)</span></li>
 <li>A kernel specifies which spatial differences receive weight</li>
 <li>Define the distribution discrepancy first, then substitute empirical distributions</li>
 <li><span class="alert">Maximum mean discrepancy (MMD)</span>: the same kernel comparison used in machine learning</li>
@@ -1266,14 +1266,14 @@ R_{\mathrm{swap}}
 <h3 id="symmetric-positive-definite-kernels">Symmetric positive definite kernels</h3>
 <p>A kernel <span class="math inline">\(K:\mathcal X\times\mathcal X\to\reals\)</span> is <span class="alert">symmetric positive definite</span> when every Gram matrix</p>
 <p><span class="math display">\[
-\mK=(K(x_i,x_j))_{i,j=0}^{n-1}
+\mK=(K(\vx_i,\vx_j))_{i,j=0}^{n-1}
 \]</span></p>
-<p>is symmetric positive definite for distinct <span class="math inline">\(x_0,\ldots,x_{n-1}\)</span></p>
+<p>is symmetric positive definite for distinct <span class="math inline">\(\vx_0,\ldots,\vx_{n-1}\)</span></p>
 <p>Examples include</p>
 <p><span class="math display">\[\begin{align*}
-K(t,x)&amp;=\exp\!\left(-\norm{t-x}^2/h^2\right),
+K(\vt,\vx)&amp;=\exp\!\left(-\norm{\vt-\vx}^2/h^2\right),
 &amp;&amp;\mathcal X=\reals^d,\\
-K(t,x)&amp;=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
+K(\vt,\vx)&amp;=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 \left(\abs{t_\ell-\tfrac12}+\abs{x_\ell-\tfrac12}-\abs{t_\ell-x_\ell}\right)\right],
 &amp;&amp;\mathcal X=[0,1]^d
 \end{align*}\]</span></p>
@@ -1289,37 +1289,37 @@ K(t,x)&amp;=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
   <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
 </div>
 
-<p>For independent <span class="math inline">\(X,X'\sim F_X\)</span> and <span class="math inline">\(Z,Z'\sim F_Z\)</span>,</p>
+<p>For independent <span class="math inline">\(\vX,\vX'\sim F_{\vX}\)</span> and <span class="math inline">\(\vZ,\vZ'\sim F_{\vZ}\)</span>,</p>
 <p><span class="math display">\[\begin{align*}
-D^2(F_X,F_Z;K)
-&amp;=\Ex[K(X,X')]-2\Ex[K(X,Z)]+\Ex[K(Z,Z')]\\
-&amp;=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')
--2\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_Z(x')\\
+D^2(F_{\vX},F_{\vZ};K)
+&amp;=\Ex[K(\vX,\vX')]-2\Ex[K(\vX,\vZ)]+\Ex[K(\vZ,\vZ')]\\
+&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')
+-2\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vZ}(\vx')\\
 &amp;\qquad \qquad
-+\int_{\mathcal X^2}K(x,x')\,\dif F_Z(x)\,\dif F_Z(x')\\
-&amp;=\int_{\mathcal X^2}K(x,x')\,\dif(F_X-F_Z)(x)\,\dif(F_X-F_Z)(x') \ge0
++\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vZ}(\vx)\,\dif F_{\vZ}(\vx')\\
+&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif(F_{\vX}-F_{\vZ})(\vx)\,\dif(F_{\vX}-F_{\vZ})(\vx') \ge0
 \end{align*}\]</span></p>
 <p>If both distributions have densities,</p>
 <p><span class="math display">\[\begin{align*}
-D^2(F_X,F_Z;K)
-&amp;=\int_{\mathcal X^2}K(x,x')\,\varrho_X(x)\,\varrho_X(x')\,\dif x\,\dif x'
--2\int_{\mathcal X^2}K(x,x')\,\varrho_X(x)\,\varrho_Z(x')\,\dif x\,\dif x'\\
-&amp;\qquad \qquad +\int_{\mathcal X^2}K(x,x')\,\varrho_Z(x)\,\varrho_Z(x')\,\dif x\,\dif x'\\
-&amp;=\int_{\mathcal X^2}K(x,x')
-\{\varrho_X(x)-\varrho_Z(x)\}
-\{\varrho_X(x')-\varrho_Z(x')\}\,\dif x\,\dif x' \ge0
+D^2(F_{\vX},F_{\vZ};K)
+&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\varrho_{\vX}(\vx)\,\varrho_{\vX}(\vx')\,\dif \vx\,\dif \vx'
+-2\int_{\mathcal X^2}K(\vx,\vx')\,\varrho_{\vX}(\vx)\,\varrho_{\vZ}(\vx')\,\dif \vx\,\dif \vx'\\
+&amp;\qquad \qquad +\int_{\mathcal X^2}K(\vx,\vx')\,\varrho_{\vZ}(\vx)\,\varrho_{\vZ}(\vx')\,\dif \vx\,\dif \vx'\\
+&amp;=\int_{\mathcal X^2}K(\vx,\vx')
+\{\varrho_{\vX}(\vx)-\varrho_{\vZ}(\vx)\}
+\{\varrho_{\vX}(\vx')-\varrho_{\vZ}(\vx')\}\,\dif \vx\,\dif \vx' \ge0
 \end{align*}\]</span></p>
 </section>
 <section class="slide level2">
 
 <h3 id="empirical-distributions">Empirical distributions</h3>
-<p>Put mass <span class="math inline">\(1/n\)</span> at each <span class="math inline">\(z_i\)</span>: <span class="math inline">\(\widehat F_{Z,n}=n^{-1}\sum_{i=0}^{n-1}\delta_{z_i}\)</span></p>
-<p>Replace <span class="math inline">\(F_Z\)</span> by <span class="math inline">\(\widehat F_{Z,n}\)</span> in the distribution formula:</p>
+<p>Put mass <span class="math inline">\(1/n\)</span> at each <span class="math inline">\(\vz_i\)</span>: <span class="math inline">\(\widehat F_{\vZ,n}=n^{-1}\sum_{i=0}^{n-1}\delta_{\vz_i}\)</span></p>
+<p>Replace <span class="math inline">\(F_{\vZ}\)</span> by <span class="math inline">\(\widehat F_{\vZ,n}\)</span> in the distribution formula:</p>
 <p><span class="math display">\[\begin{align*}
-D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
-&amp;=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')\\
-&amp;\quad-\frac{2}{n}\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,z_i)\,\dif F_X(x)\\
-&amp;\quad+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)
+D^2(F_{\vX},\{\vz_i\}_{i=0}^{n-1};K)
+&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')\\
+&amp;\quad-\frac{2}{n}\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vz_i)\,\dif F_{\vX}(\vx)\\
+&amp;\quad+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(\vz_i,\vz_j)
 \end{align*}\]</span></p>
 <p>Integration against an empirical distribution becomes <span class="alert">averaging over its sample</span></p>
 </section>
@@ -1328,10 +1328,10 @@ D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
 <h3 id="how-can-we-measure-sample-quality">Two empirical distributions</h3>
 <p>Replace both distributions by empirical distributions: integrals become sums</p>
 <p><span class="math display">\[\begin{align*}
-D^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
-&amp;=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(x_i,x_j)\\
-&amp;\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
-+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)
+D^2\!\left(\{\vx_i\}_{i=0}^{m-1},\{\vz_j\}_{j=0}^{n-1};K\right)
+&amp;=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(\vx_i,\vx_j)\\
+&amp;\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(\vx_i,\vz_j)
++\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(\vz_i,\vz_j)
 \end{align*}\]</span></p>
 <ul>
 <li>The <span class="alert">exact squared discrepancy of these empirical distributions</span>; nonnegative</li>
@@ -1363,11 +1363,11 @@ D^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">How different are these empirical distributions?</td>
-<td style="text-align: left;">Exact <span class="math inline">\(D^2(\widehat F_{X,m},\widehat F_{Z,n};K)\ge0\)</span></td>
+<td style="text-align: left;">Exact <span class="math inline">\(D^2(\widehat F_{\vX,m},\widehat F_{\vZ,n};K)\ge0\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">How different are the underlying distributions?</td>
-<td style="text-align: left;">Estimate <span class="math inline">\(D^2(F_X,F_Z;K)\)</span> from random samples</td>
+<td style="text-align: left;">Estimate <span class="math inline">\(D^2(F_{\vX},F_{\vZ};K)\)</span> from random samples</td>
 </tr>
 </tbody>
 </table>
@@ -1395,13 +1395,13 @@ D^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
 <section class="slide level2">
 
 <h3 id="unbiased-estimates-of-squared-discrepancy">Unbiased estimates of squared discrepancy</h3>
-<p>For two independent IID samples, estimate <span class="math inline">\(D^2(F_X,F_Z;K)\)</span></p>
+<p>For two independent IID samples, estimate <span class="math inline">\(D^2(F_{\vX},F_{\vZ};K)\)</span></p>
 <p>Replace within-sample sums by <span class="alert">off-diagonal averages</span>:</p>
 <p><span class="math display">\[\begin{align*}
-D_{\mathrm{unb}}^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
-&amp;=\frac{1}{m(m-1)}\sum_{\substack{i,j=0\\i\ne j}}^{m-1}K(x_i,x_j)\\
-&amp;\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
-+\frac{1}{n(n-1)}\sum_{\substack{i,j=0\\i\ne j}}^{n-1}K(z_i,z_j)
+D_{\mathrm{unb}}^2\!\left(\{\vx_i\}_{i=0}^{m-1},\{\vz_j\}_{j=0}^{n-1};K\right)
+&amp;=\frac{1}{m(m-1)}\sum_{\substack{i,j=0\\i\ne j}}^{m-1}K(\vx_i,\vx_j)\\
+&amp;\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(\vx_i,\vz_j)
++\frac{1}{n(n-1)}\sum_{\substack{i,j=0\\i\ne j}}^{n-1}K(\vz_i,\vz_j)
 \end{align*}\]</span></p>
 <p><span class="alert">Unbiased</span> describes the estimator’s expectation, not the sign of each realization</p>
 <p>A more negative realization is <span class="alert">not a better match</span>; it is a larger downward sampling fluctuation</p>
@@ -1410,17 +1410,17 @@ D_{\mathrm{unb}}^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
 
 <h3 id="what-does-unbiased-mean">What does unbiased mean?</h3>
 <div class="exitem roman">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span> Let <span class="math inline">\(\{X_i\}_{i=0}^{m-1}\)</span> and <span class="math inline">\(\{Z_j\}_{j=0}^{n-1}\)</span> be independent IID samples from <span class="math inline">\(F_X\)</span> and <span class="math inline">\(F_Z\)</span> <span class="exsub">Take expectations term by term to show <span class="math inline">\(\Ex[D_{\mathrm{unb}}^2]=D^2(F_X,F_Z;K)\)</span></span> <span class="exsub">What is the expectation when <span class="math inline">\(F_X=F_Z\)</span>?</span> <span class="exsub">Why may a realization be negative, and does more negative mean a better match?</span> <span class="exsub">Which step fails when the <span class="math inline">\(X_i\)</span> are successive Metropolis states?</span> </span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span> Let <span class="math inline">\(\{\vX_i\}_{i=0}^{m-1}\)</span> and <span class="math inline">\(\{\vZ_j\}_{j=0}^{n-1}\)</span> be independent IID samples from <span class="math inline">\(F_{\vX}\)</span> and <span class="math inline">\(F_{\vZ}\)</span> <span class="exsub">Take expectations term by term to show <span class="math inline">\(\Ex[D_{\mathrm{unb}}^2]=D^2(F_{\vX},F_{\vZ};K)\)</span></span> <span class="exsub">What is the expectation when <span class="math inline">\(F_{\vX}=F_{\vZ}\)</span>?</span> <span class="exsub">Why may a realization be negative, and does more negative mean a better match?</span> <span class="exsub">Which step fails when the <span class="math inline">\(\vX_i\)</span> are successive Metropolis states?</span> </span></p>
 </div>
 </section>
 <section class="slide level2">
 
 <h3 id="how-small-should-discrepancy-be">How small should discrepancy be?</h3>
 <p><span class="alert">Zero is the ideal</span>; no universal acceptable cutoff</p>
-<p>For a fixed target <span class="math inline">\(F_X\)</span> and kernel <span class="math inline">\(K\)</span>, normalize by the <span class="alert">no-sample error</span>:</p>
+<p>For a fixed target <span class="math inline">\(F_{\vX}\)</span> and kernel <span class="math inline">\(K\)</span>, normalize by the <span class="alert">no-sample error</span>:</p>
 <p><span class="math display">\[\begin{align*}
-D_0^2&amp;=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')&gt;0,
-&amp;\qquad D_{\mathrm{rel},n}^2&amp;=\frac{D^2(F_X,\{z_i\}_{i=0}^{n-1};K)}{D_0^2}
+D_0^2&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')&gt;0,
+&amp;\qquad D_{\mathrm{rel},n}^2&amp;=\frac{D^2(F_{\vX},\{\vz_i\}_{i=0}^{n-1};K)}{D_0^2}
 \end{align*}\]</span></p>
 <ul>
 <li><span class="math inline">\(D_{\mathrm{rel},n}^2&lt;1\)</span>: improvement over estimating the integral by zero</li>
@@ -1475,15 +1475,31 @@ D_0^2&amp;=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')&gt;0,
 
 <p>Every symmetric positive definite kernel <span class="math inline">\(K\)</span> defines a Hilbert space <span class="math inline">\(\mathcal H_K\)</span> of functions on <span class="math inline">\(\mathcal X\)</span> with the <span class="alert">reproducing property</span></p>
 <p><span class="math display">\[
-f(x)=\langle K(\cdot,x),f\rangle_{\mathcal H_K}
+f(\vx)=\langle K(\cdot,\vx),f\rangle_{\mathcal H_K}
 \]</span></p>
-<p>Assume <span class="math inline">\(\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')\)</span> is finite</p>
+<p>Assume <span class="math inline">\(K\)</span> is measurable and</p>
+<p><span class="math display">\[
+\int_{\mathcal X}\sqrt{K(\vx,\vx)}\,\dif F_{\vX}(\vx)&lt;\infty
+\]</span></p>
 <p>Then both</p>
 <p><span class="math display">\[\begin{align*}
-f&amp;\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x),\\
-f&amp;\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)
+f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx),\\
+f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vz_i)
 \end{align*}\]</span></p>
 <p>are bounded linear functionals on <span class="math inline">\(\mathcal H_K\)</span></p>
+<aside class="notes">
+<p>The reproducing property and Cauchy–Schwarz give <span class="math inline">\(\abs{f(\vx)}\le\norm{f}_{\mathcal H_K}\sqrt{K(\vx,\vx)}\)</span>. The displayed sufficient condition therefore ensures absolute integrability and bounds the integration functional. Finite kernel diagonals at the sample points bound each point evaluation, hence also the error functional. It also ensures absolute integrability of the double kernel integral via <span class="math inline">\(\abs{K(\vx,\vx')}\le\sqrt{K(\vx,\vx)K(\vx',\vx')}\)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="worst-case-integration-error" class="slide level2 tree-marker-slide" data-tree-marker="error-assessment">
 <h2>Worst-case integration error</h2>
@@ -1494,15 +1510,29 @@ f&amp;\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i
 
 <p>By the Riesz representation theorem, some <span class="math inline">\(\zeta\in\mathcal H_K\)</span> satisfies</p>
 <p><span class="math display">\[
-\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)
+\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vz_i)
 =\langle\zeta,f\rangle_{\mathcal H_K}
 \]</span></p>
 <p>Therefore, by Cauchy–Schwarz,</p>
 <p><span class="math display">\[
-\left\lvert\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)\right\rvert
+\left\lvert\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vz_i)\right\rvert
 \le\norm{\zeta}_{\mathcal H_K}\norm{f}_{\mathcal H_K}
 \]</span></p>
 <p>This separates <span class="alert">sample quality</span>, <span class="math inline">\(\norm{\zeta}_{\mathcal H_K}\)</span>, from <span class="alert">integrand difficulty</span>, <span class="math inline">\(\norm{f}_{\mathcal H_K}\)</span></p>
+<p>For <span class="math inline">\(\zeta\ne0\)</span>, the unit-norm integrand <span class="math inline">\(f=\zeta/\norm{\zeta}_{\mathcal H_K}\)</span> <span class="alert">attains the bound</span></p>
+<aside class="notes">
+<p>For this choice, <span class="math inline">\(\norm{f}_{\mathcal H_K}=1\)</span> and <span class="math inline">\(\langle\zeta,f\rangle_{\mathcal H_K}=\norm{\zeta}_{\mathcal H_K}\)</span>. Thus the bound is the actual supremum over the unit ball, not merely an upper bound. If <span class="math inline">\(\zeta=0\)</span>, every integrand in the space has zero integration error, so the worst-case error is zero without dividing by its norm.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="the-discrepancy-identity" class="slide level2 tree-marker-slide" data-tree-marker="error-assessment">
 <h2>The discrepancy identity</h2>
@@ -1511,18 +1541,36 @@ f&amp;\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i
   <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
 </div>
 
-<p>The representer is</p>
+<p>Fix <span class="math inline">\(\vx'\in\mathcal X\)</span> and regard <span class="math inline">\(K(\cdot,\vx')\)</span> as an <span class="alert">integrand</span></p>
+<p>Apply the reproducing property to <span class="math inline">\(\zeta\)</span>, then the error representation with <span class="math inline">\(f=K(\cdot,\vx')\)</span>:</p>
+<p><span class="math display">\[\begin{align*}
+\zeta(\vx')
+&amp;=\langle\zeta,K(\cdot,\vx')\rangle_{\mathcal H_K}\\
+&amp;=\int_{\mathcal X}K(\vx,\vx')\,\dif F_{\vX}(\vx)
+-\frac1n\sum_{i=0}^{n-1}K(\vz_i,\vx')
+\end{align*}\]</span></p>
+<p>Thus <span class="math inline">\(\zeta(\vx')\)</span> is the <span class="alert">true integral minus sample average</span> for the kernel section <span class="math inline">\(K(\cdot,\vx')\)</span></p>
+<div class="key-point">
+<p>The error representer is a function: at each <span class="math inline">\(\vx'\)</span>, its value is the integration error of the reproducing kernel anchored at <span class="math inline">\(\vx'\)</span></p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="from-the-representer-to-squared-discrepancy">From the representer to squared discrepancy</h3>
+<p>Now use <span class="math inline">\(f=\zeta\)</span> in the same error representation:</p>
 <p><span class="math display">\[
-\zeta(x')=\int_{\mathcal X}K(x,x')\,\dif F_X(x)
--\frac1n\sum_{i=0}^{n-1}K(z_i,x')
+\norm{\zeta}_{\mathcal H_K}^2
+=\langle\zeta,\zeta\rangle_{\mathcal H_K}
+=\int_{\mathcal X}\zeta(\vx')\,\dif F_{\vX}(\vx')
+-\frac1n\sum_{j=0}^{n-1}\zeta(\vz_j)
 \]</span></p>
-<p>Its squared norm is exactly the squared discrepancy:</p>
+<p>Substitute the kernel-section error formula for each value of <span class="math inline">\(\zeta\)</span>; symmetry of <span class="math inline">\(K\)</span> combines the two cross terms:</p>
 <p><span class="math display">\[\begin{align*}
 \norm{\zeta}_{\mathcal H_K}^2
-&amp;=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')\\
-&amp;\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,z_i)\,\dif F_X(x)
-+\frac1{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)\\
-&amp;=D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
+&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')\\
+&amp;\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vz_i)\,\dif F_{\vX}(\vx)
++\frac1{n^2}\sum_{i,j=0}^{n-1}K(\vz_i,\vz_j)\\
+&amp;=D^2(F_{\vX},\{\vz_i\}_{i=0}^{n-1};K)
 \end{align*}\]</span></p>
 <p>Thus discrepancy is the <span class="alert">worst-case error over <span class="math inline">\(\norm{f}_{\mathcal H_K}\le1\)</span></span></p>
 </section>
@@ -1534,17 +1582,34 @@ f&amp;\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i
 </div>
 
 <p>Suppose <span class="math inline">\(f\)</span> is modeled as a zero-mean Gaussian process with covariance kernel <span class="math inline">\(K\)</span></p>
-<p>For deterministic <span class="math inline">\(z_0,\ldots,z_{n-1}\)</span>,</p>
+<p>For deterministic <span class="math inline">\(\vz_0,\ldots,\vz_{n-1}\)</span>,</p>
 <p><span class="math display">\[\begin{align*}
 &amp;\Ex_f\!\left[
-\left\{\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)\right\}^2
+\left\{\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vz_i)\right\}^2
 \right]\\
-&amp;\quad=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')
--\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,z_i)\,\dif F_X(x)
-+\frac1{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)\\
-&amp;\quad=D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
+&amp;\quad=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')
+-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vz_i)\,\dif F_{\vX}(\vx)
++\frac1{n^2}\sum_{i,j=0}^{n-1}K(\vz_i,\vz_j)\\
+&amp;\quad=D^2(F_{\vX},\{\vz_i\}_{i=0}^{n-1};K)
 \end{align*}\]</span></p>
 <p>Discrepancy is also the <span class="alert">root mean squared error under the Gaussian-process model</span></p>
+<div class="key-point">
+<p><span class="alert">Gaussianity is not required</span>: the same RMSE identity holds for any zero-mean stochastic process with covariance kernel <span class="math inline">\(K\)</span>, provided the required second moments and integrals exist</p>
+</div>
+<aside class="notes">
+<p>For a fixed sample design, expand the square of the integration error. Only <span class="math inline">\(\Ex_f[f(\vx)]=0\)</span> and <span class="math inline">\(\Ex_f[f(\vx)f(\vx')]=K(\vx,\vx')\)</span> enter the calculation; no Gaussian distribution assumption is used. Assume the random integral exists in mean square and expectation can be interchanged with the displayed integrals. A sufficient condition for a measurable second-order process is <span class="math inline">\(\int_{\mathcal X}\sqrt{K(\vx,\vx)}\,\dif F_{\vX}(\vx)&lt;\infty\)</span>, together with finite kernel diagonals at the sample points.</p>
+<p>Gaussian processes are a common model and additionally specify finite-dimensional distributions and Gaussian uncertainty statements. Covariance alone determines this RMSE, but not the full error distribution or Gaussian credible intervals. For a nonzero mean function, the mean integration error contributes an additional squared-bias term unless the quadrature rule integrates that mean exactly.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="what-the-kernel-controls" class="slide level2 tree-marker-slide" data-tree-marker="discrepancy-statistics">
 <h2>What the kernel controls</h2>
@@ -1565,11 +1630,11 @@ f&amp;\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i
 </ul></li>
 <li>In the average-case setting, hyperparameters may be estimated by empirical Bayes or maximum likelihood</li>
 </ul>
-<p>For IID <span class="math inline">\(Z_i\sim F_X\)</span>,</p>
+<p>For IID <span class="math inline">\(\vZ_i\sim F_{\vX}\)</span>,</p>
 <p><span class="math display">\[
-\Ex\!\left[D^2(F_X,\{Z_i\}_{i=0}^{n-1};K)\right]
+\Ex\!\left[D^2(F_{\vX},\{\vZ_i\}_{i=0}^{n-1};K)\right]
 =\frac1n\left\{
-\int K(x,x)\,\dif F_X(x)-\int K(x,x')\,\dif F_X(x)\,\dif F_X(x')
+\int K(\vx,\vx)\,\dif F_{\vX}(\vx)-\int K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')
 \right\}
 \]</span></p>
 </section>
@@ -1583,7 +1648,7 @@ f&amp;\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i
 
 <p>For <span class="math inline">\(\mathcal X=[0,1]^d\)</span>, the centered-discrepancy kernel is</p>
 <p><span class="math display">\[
-K(t,x)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
+K(\vt,\vx)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 \left(\abs{t_\ell-\tfrac12}+\abs{x_\ell-\tfrac12}-\abs{t_\ell-x_\ell}\right)\right]
 \]</span></p>
 <p>Its norm combines the function value at the center with weighted square-integrals of mixed derivatives:</p>
@@ -1594,7 +1659,7 @@ K(t,x)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 &amp;\quad+\norm{\frac{\partial^2 f(x_1,x_2,1/2,\ldots)}
 {\gamma_1\gamma_2\partial x_1\partial x_2}}_2^2
 +\cdots
-+\norm{\frac{\partial^d f(x)}
++\norm{\frac{\partial^d f(\vx)}
 {\gamma_1\cdots\gamma_d\partial x_1\cdots\partial x_d}}_2^2
 \end{align*}\]</span></p>
 <p>The weights <span class="math inline">\(\gamma_\ell\)</span> express <span class="alert">coordinate importance</span></p>
@@ -1609,15 +1674,15 @@ K(t,x)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 
 <h3 id="relative-entropy-another-comparison">Relative entropy</h3>
 <p><span class="alert">Kullback–Leibler (KL) divergence</span>, also called <span class="alert">relative entropy</span></p>
-<p>For normalized densities <span class="math inline">\(\varrho_X\)</span> and <span class="math inline">\(\varrho_Z\)</span>,</p>
+<p>For normalized densities <span class="math inline">\(\varrho_{\vX}\)</span> and <span class="math inline">\(\varrho_{\vZ}\)</span>,</p>
 <p><span class="math display">\[\begin{align*}
-D_{\mathrm{KL}}(F_X\Vert F_Z)
-&amp;=\int_{\mathcal X}\varrho_X(x)
-\log\!\left(\frac{\varrho_X(x)}{\varrho_Z(x)}\right)\,\dif x
+D_{\mathrm{KL}}(F_{\vX}\Vert F_{\vZ})
+&amp;=\int_{\mathcal X}\varrho_{\vX}(\vx)
+\log\!\left(\frac{\varrho_{\vX}(\vx)}{\varrho_{\vZ}(\vx)}\right)\,\dif \vx
 \end{align*}\]</span></p>
 <ul>
 <li>Nonnegative; zero exactly when the distributions agree</li>
-<li>Generally asymmetric; infinite if <span class="math inline">\(F_X\)</span> assigns mass where <span class="math inline">\(F_Z\)</span> assigns none</li>
+<li>Generally asymmetric; infinite if <span class="math inline">\(F_{\vX}\)</span> assigns mass where <span class="math inline">\(F_{\vZ}\)</span> assigns none</li>
 <li>Entropy describes one distribution; <span class="alert">relative entropy compares two</span></li>
 <li>Variational inference fits an approximate density by minimizing KL to the target</li>
 </ul>
@@ -1648,7 +1713,7 @@ D_{\mathrm{KL}}(F_X\Vert F_Z)
 <p><span class="math display">\[\begin{align*}
 D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})
 &amp;=\Ex_{\mathrm{approx}}\!\left[\log\!\left(
-\frac{\varrho_{\mathrm{approx}}(X)}{\widetilde\varrho(X)}\right)\right]+\log C
+\frac{\varrho_{\mathrm{approx}}(\vX)}{\widetilde\varrho(\vX)}\right)\right]+\log C
 \end{align*}\]</span></p>
 <p><span class="alert">Fixed target</span>: <span class="math inline">\(\log C\)</span> does not affect minimization over the approximation</p>
 <aside class="notes">
@@ -1668,27 +1733,27 @@ D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})
 <section class="slide level2">
 
 <h3 id="stein-discrepancy">Stein discrepancy</h3>
-<p>For a smooth positive target density <span class="math inline">\(\varrho_{\mathrm{tar}}(x)=\widetilde\varrho(x)/C\)</span>, the <span class="alert">score</span> removes the unknown normalizing constant</p>
+<p>For a smooth positive target density <span class="math inline">\(\varrho_{\mathrm{tar}}(\vx)=\widetilde\varrho(\vx)/C\)</span>, the <span class="alert">score</span> removes the unknown normalizing constant</p>
 <p><span class="math display">\[\begin{align*}
-s(x)&amp;=\nabla_x\log\varrho_{\mathrm{tar}}(x)
-=\nabla_x\log\widetilde\varrho(x)\\
-\mathcal T g(x)&amp;=s(x)^\mathsf{T}g(x)+\nabla\!\cdot g(x),
+s(\vx)&amp;=\nabla_{\vx}\log\varrho_{\mathrm{tar}}(\vx)
+=\nabla_{\vx}\log\widetilde\varrho(\vx)\\
+\mathcal T g(\vx)&amp;=s(\vx)^\mathsf{T}g(\vx)+\nabla\!\cdot g(\vx),
 \qquad g:\mathcal X\to\mathbb R^d
 \end{align*}\]</span></p>
-<p><span class="alert">Stein’s identity</span>: <span class="math inline">\(\Ex_{\mathrm{tar}}[\mathcal T g(X)]=0\)</span> for suitable <span class="math inline">\(g\)</span></p>
-<p>For candidate points <span class="math inline">\(z_0,\ldots,z_{n-1}\)</span>, write the error as <span class="alert">true value minus sample average</span>:</p>
+<p><span class="alert">Stein’s identity</span>: <span class="math inline">\(\Ex_{\mathrm{tar}}[\mathcal T g(\vX)]=0\)</span> for suitable <span class="math inline">\(g\)</span></p>
+<p>For candidate points <span class="math inline">\(\vz_0,\ldots,\vz_{n-1}\)</span>, write the error as <span class="alert">true value minus sample average</span>:</p>
 <p><span class="math display">\[\begin{align*}
-D_{\mathrm{Stein}}(F_{\mathrm{tar}},\{z_i\};\mathcal G)
+D_{\mathrm{Stein}}(F_{\mathrm{tar}},\{\vz_i\};\mathcal G)
 &amp;=\sup_{g\in\mathcal G}\left|
-\underbrace{\Ex_{\mathrm{tar}}[\mathcal T g(X)]}_{0}
--\frac1n\sum_{i=0}^{n-1}\mathcal T g(z_i)\right|
+\underbrace{\Ex_{\mathrm{tar}}[\mathcal T g(\vX)]}_{0}
+-\frac1n\sum_{i=0}^{n-1}\mathcal T g(\vz_i)\right|
 \end{align*}\]</span></p>
 <div class="key-point">
 <p>The largest departure from zero over a <span class="alert">size-constrained class</span> <span class="math inline">\(\mathcal G\)</span> of test functions</p>
 </div>
 <aside class="notes">
 <p>This slide describes the common Langevin, score-based Stein operator for a continuous target, not every Stein discrepancy. Here <span class="math inline">\(g\)</span> is a vector field; the identity follows by integration by parts when the boundary term vanishes and the expectations exist. On bounded supports, the function class or operator must enforce the appropriate boundary conditions. Discrete targets require a different operator.</p>
-<p>For candidate points <span class="math inline">\(x_0,\ldots,x_{n-1}\)</span>, the discrepancy is <span class="math inline">\(\sup_{g\in\mathcal G}|0-n^{-1}\sum_{i=0}^{n-1}\mathcal T g(x_i)|\)</span>, with the true target integral first and the sample approximation second. Applying Stein operators to both arguments of a sufficiently smooth base kernel gives a target-dependent Stein kernel and a pairwise-sum formula for KSD squared. Thus KSD is closely related to MMD, using a specially constructed kernel whose target expectation vanishes. It is not a wholly unrelated alternative to kernel discrepancy. Direct pairwise computation is quadratic in sample size.</p>
+<p>For candidate points <span class="math inline">\(\vx_0,\ldots,\vx_{n-1}\)</span>, the discrepancy is <span class="math inline">\(\sup_{g\in\mathcal G}|0-n^{-1}\sum_{i=0}^{n-1}\mathcal T g(\vx_i)|\)</span>, with the true target integral first and the sample approximation second. Applying Stein operators to both arguments of a sufficiently smooth base kernel gives a target-dependent Stein kernel and a pairwise-sum formula for KSD squared. Thus KSD is closely related to MMD, using a specially constructed kernel whose target expectation vanishes. It is not a wholly unrelated alternative to kernel discrepancy. Direct pairwise computation is quadratic in sample size.</p>
 <p>Suitable kernels and target assumptions give convergence-determining KSDs; the failure of some kernels is not a universal failure of Stein discrepancy. Weak sensitivity to weights of well-separated modes is a finite-sample testing limitation, distinct from an asymptotic convergence theorem.</p>
 <p>References: <a href="https://proceedings.mlr.press/v48/liub16.html">Liu, Lee, and Jordan (2016)</a>; <a href="https://proceedings.mlr.press/v70/gorham17a.html">Gorham and Mackey (2017)</a>; <a href="https://proceedings.mlr.press/v202/liu23i.html">Liu, Duncan, and Gandy (2023)</a></p>
 <style type="text/css">
@@ -1709,13 +1774,13 @@ D_{\mathrm{Stein}}(F_{\mathrm{tar}},\{z_i\};\mathcal G)
 <p>For <span class="alert">kernel Stein discrepancy (KSD)</span>, choose <span class="math inline">\(\mathcal G\)</span> as the unit ball of <span class="math inline">\(\mathcal H_K^d\)</span></p>
 <p>The supremum has an explicit formula using a <span class="alert">Stein kernel</span>:</p>
 <p><span class="math display">\[\begin{align*}
-K_{\mathrm{Stein}}(x,z)
-&amp;=s(x)^\mathsf{T}s(z)K(x,z)
-+s(x)^\mathsf{T}\nabla_z K(x,z)\\
-&amp;\quad+s(z)^\mathsf{T}\nabla_x K(x,z)
-+\sum_{\ell=1}^d\frac{\partial^2 K(x,z)}{\partial x_\ell\,\partial z_\ell}\\[0.5ex]
-\mathrm{KSD}^2(F_{\mathrm{tar}},\{z_i\};K)
-&amp;=\frac{1}{n^2}\sum_{i,j=0}^{n-1}K_{\mathrm{Stein}}(z_i,z_j)\ge0
+K_{\mathrm{Stein}}(\vx,\vz)
+&amp;=s(\vx)^\mathsf{T}s(\vz)K(\vx,\vz)
++s(\vx)^\mathsf{T}\nabla_{\vz} K(\vx,\vz)\\
+&amp;\quad+s(\vz)^\mathsf{T}\nabla_{\vx} K(\vx,\vz)
++\sum_{\ell=1}^d\frac{\partial^2 K(\vx,\vz)}{\partial x_\ell\,\partial z_\ell}\\[0.5ex]
+\mathrm{KSD}^2(F_{\mathrm{tar}},\{\vz_i\};K)
+&amp;=\frac{1}{n^2}\sum_{i,j=0}^{n-1}K_{\mathrm{Stein}}(\vz_i,\vz_j)\ge0
 \end{align*}\]</span></p>
 <ul>
 <li>The target-integral terms vanish: only the <span class="alert">sample-pair sum</span> remains</li>
@@ -1726,7 +1791,7 @@ K_{\mathrm{Stein}}(x,z)
 <p>Some KSDs fail to detect nonconvergence; separated-mode weights can be hard to assess</p>
 </div>
 <aside class="notes">
-<p>Here <span class="math inline">\(\mathcal H_K^d\)</span> is the space of vector fields whose components belong to the RKHS of the scalar base kernel <span class="math inline">\(K\)</span>, with squared norm equal to the sum of the component squared norms. Its unit ball prevents arbitrary rescaling of <span class="math inline">\(g\)</span>. The smoothness, integrability, and boundary assumptions must allow the Stein identity to hold for the relevant kernel sections and derivatives. Then <span class="math inline">\(\Ex_{X\sim F_{\mathrm{tar}}}[K_{\mathrm{Stein}}(X,z)]=0\)</span>, so the target-target and target-sample terms in ordinary squared discrepancy are zero. The displayed sum includes the diagonal: it is the exact squared KSD of the empirical measure, not the off-diagonal unbiased estimator of a population quantity. No independence assumption is needed for this finite-point formula, though dependence matters for its sampling behavior.</p>
+<p>Here <span class="math inline">\(\mathcal H_K^d\)</span> is the space of vector fields whose components belong to the RKHS of the scalar base kernel <span class="math inline">\(K\)</span>, with squared norm equal to the sum of the component squared norms. Its unit ball prevents arbitrary rescaling of <span class="math inline">\(g\)</span>. The smoothness, integrability, and boundary assumptions must allow the Stein identity to hold for the relevant kernel sections and derivatives. Then <span class="math inline">\(\Ex_{\vX\sim F_{\mathrm{tar}}}[K_{\mathrm{Stein}}(\vX,\vz)]=0\)</span>, so the target-target and target-sample terms in ordinary squared discrepancy are zero. The displayed sum includes the diagonal: it is the exact squared KSD of the empirical measure, not the off-diagonal unbiased estimator of a population quantity. No independence assumption is needed for this finite-point formula, though dependence matters for its sampling behavior.</p>
 <p>Reference: <a href="https://proceedings.mlr.press/v48/liub16.pdf">Liu, Lee, and Jordan (2016), Theorem 3.6</a></p>
 <style type="text/css">
         span.MJX_Assistive_MathML {

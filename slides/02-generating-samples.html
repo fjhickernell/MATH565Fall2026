@@ -844,7 +844,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="0cbb6be8" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="721ea8a4" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -888,7 +888,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="cadadf92" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="164c5fbf" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -920,7 +920,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="b512d922" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="a025ad2e" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -970,11 +970,11 @@ F_X(x)
 
 <h3 id="sampling-without-the-mixture-quantile">Sampling without the mixture quantile</h3>
 <p>Numerically inverting <span class="math inline">\(F_X\)</span> would work, but a hierarchical construction avoids solving <span class="math inline">\(F_X(x)=u\)</span></p>
-<p>Generate <span class="math inline">\(U_1,U_2\ \sim\ \Unif(0,1)\)</span> and define</p>
+<p>Generate independent <span class="math inline">\(U_1,U_2\sim\Unif(0,1)\)</span><br> The last coordinate <span class="math inline">\(U_2\)</span> selects the component; <span class="math inline">\(U_1\)</span> supplies the normal quantile</p>
 <p><span class="math display">\[
-C=\begin{cases}1,&amp;U_1\le p,\\2,&amp;U_1&gt;p,\end{cases}
+C=\begin{cases}1,&amp;U_2\le p,\\2,&amp;U_2&gt;p,\end{cases}
 \qquad
-X=\mu_C+\sigma_C\Phi^{-1}(U_2)
+X=\mu_C+\sigma_C\Phi^{-1}(U_1)
 \]</span></p>
 <p>Then <span class="math inline">\(\Prob(C=1)=p\)</span> and <span class="math inline">\(X\mid C=k\sim\Norm(\mu_k,\sigma_k^2)\)</span></p>
 <div class="key-point">
@@ -992,19 +992,19 @@ p&amp;=0.3,\\
 (\mu_1,\sigma_1)&amp;=(-2,0.5),\\
 (\mu_2,\sigma_2)&amp;=(1,1)
 \end{align*}\]</span></p>
-<p>For <span class="math inline">\(U_1=0.24\)</span> and <span class="math inline">\(U_2=0.90\)</span>,</p>
+<p>For <span class="math inline">\(U_1=0.90\)</span> and <span class="math inline">\(U_2=0.24\)</span>,</p>
 <p><span class="math display">\[\begin{align*}
 C&amp;=1,\\
 X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 &amp;\approx -1.36
 \end{align*}\]</span></p>
 <div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Use <span class="math inline">\(U_1=0.70\)</span> and <span class="math inline">\(U_2=0.25\)</span>.<br>Which component is selected?<br>What value of <span class="math inline">\(X\)</span> is generated?</span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Use <span class="math inline">\(U_1=0.25\)</span> and <span class="math inline">\(U_2=0.70\)</span>.<br>Which component is selected?<br>What value of <span class="math inline">\(X\)</span> is generated?</span></p>
 </div>
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="0ede11ed" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="2f4bb9c7" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
