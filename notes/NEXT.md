@@ -107,10 +107,21 @@ Deck 02 now groups mixture sampling and acceptance--rejection under
 section-outline links. The first $d$ uniform coordinates generate a proposal;
 $V=U_{d+1}$ selects a component at a fixed threshold or accepts the proposal
 at a threshold determined by the other coordinates. Both target expectations
-are explicit integrals over $[0,1]^{d+1}$ (a ratio for rejection). Preserve this
+are explicit integrals over $[0,1]^{d+1}$ (a ratio for rejection), followed by
+written-out sample-mean approximations using zero-based point indices. Rejection
+uses the same points in both means and equals the average over accepted
+proposals when at least one is accepted. Preserve this
 bridge to later low discrepancy performance: uniform inputs are shared, while
 the resulting integrand and its decision boundary determine integration error.
 The revised section and formulas render cleanly and have been visually checked.
+
+The Bayesian, queueing, Metropolis--Hastings, discrepancy, and transport/rejection
+companions now pair mathematical plot labels with descriptions, including queue
+population, mean parameters, chain states, coordinates, and decision values.
+All five notebooks execute with the `qmcpy` kernel and refreshed saved plots;
+labels and units have been visually checked. SimPy >=4.1.2 is now recorded in
+course `requirements.txt`, installed by local setup and CI, and matched by the
+queue notebook's Colab setup. ArviZ remains supplied by QMCPy's `class` extra.
 
 ## Other pending MATH 565 work
 

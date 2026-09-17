@@ -30,6 +30,7 @@ cd MATH565Fall2026
 conda activate qmcpy
 python -m pip install -e classlib
 python -m pip install -e "qmcpy/.[class]"
+python -m pip install -r requirements.txt
 python -m ipykernel install --user --name qmcpy --display-name "qmcpy"
 ```
 

@@ -132,6 +132,11 @@ appropriate phase rather than appended indiscriminately.
         and stopping rules; validate all four Deck 03 companions in clean local
         kernels without warnings and inspect the queue notebook’s four figures.
       - [x] Complete instructor content review of the queueing companion.
+      - [x] Add descriptive text and units to mathematical plot labels across
+        the Bayesian, queueing, Metropolis--Hastings, discrepancy, and
+        transport/rejection companions; execute and visually check all five.
+      - [x] Record SimPy >=4.1.2 in course requirements and install the course
+        requirements during local setup and CI.
     - [ ] Add notebook links only after each target exists and passes
       validation.
       - [x] Link the validated `AreWeThereYet.ipynb` from the Applications
@@ -323,7 +328,8 @@ appropriate phase rather than appended indiscriminately.
       its companion notebook treatment.
     - [x] Reframe mixture sampling and acceptance--rejection as unit-cube integrals
       over a $(d+1)$-dimensional uniform input after transporting the first
-      $d$ coordinates to the proposal distribution.
+      $d$ coordinates to the proposal distribution; write out the mixture
+      sample mean and the rejection ratio of sample means explicitly.
   - [x] Draft Lecture 03, Markov Chain Monte Carlo, from the Fall 2025
     Keynote deck, including its discrepancy, Bayesian, and queueing material.
   - [x] Add a gold-border applications comparison of direct finance sampling,

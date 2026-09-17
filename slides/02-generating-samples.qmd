@@ -1247,6 +1247,9 @@ One uniform input, with the last coordinate making the [decision]{.alert}
 \vZ=S(\vU)\sim\varrho_{\mathrm{prop}}
 \end{gather*}
 
+For numerical integration: points $(\vu_i,v_i)\in[0,1]^{d+1}$, $i=0,\ldots,n-1$<br>
+Use IID uniform draws or randomized low discrepancy points
+
 - [Mixtures: choosing a component](#mixtures-choosing-a-component)
 - [Acceptance–rejection: choosing which proposals to keep](#acceptance-rejection-choosing-which-proposals-to-keep)
 
@@ -1277,12 +1280,16 @@ For every integrable $f$,
 &=\int_{[0,1]^d}\left[
 \int_0^p f\bigl(T_1(S(\vu))\bigr)\,\dif v
 +\int_p^1 f\bigl(T_2(S(\vu))\bigr)\,\dif v\right]\dif\vu\\
-&=p\Ex_{\varrho_1}[f]+(1-p)\Ex_{\varrho_2}[f]
+&=p\Ex_{\varrho_1}[f(\vX)]+(1-p)\Ex_{\varrho_2}[f(\vX)]\\
+&\approx\frac1n\sum_{i=0}^{n-1}
+f\!\left(T_{C(v_i)}\bigl(S(\vu_i)\bigr)\right)
 \end{align*}
 
+::: {.notes}
 Gaussian mixture: $S$ applies $\Phi^{-1}$ coordinatewise and
 $T_k(\vz)=\vmu_k+\mA_k\vz$, where
 $\mA_k\mA_k^{\mathsf T}=\mSigma_k$
+:::
 
 ::: {.key-point}
 The decision coordinate $V$ selects a component at the [fixed threshold]{.alert} $p$
@@ -1290,31 +1297,32 @@ The decision coordinate $V$ selects a component at the [fixed threshold]{.alert}
 
 ## Acceptance–rejection: choosing which proposals to keep {#acceptance-rejection-choosing-which-proposals-to-keep .tree-marker-slide tree-marker="random-generation"}
 
-With $\varrho_{\mathrm{tar}}\le M\varrho_{\mathrm{prop}}$, define
+Target $c\varrho_{\mathrm{tar}}$, with $\varrho_{\mathrm{tar}}\le M\varrho_{\mathrm{prop}}$; define
 
 $$
 a(\vz):=\frac{\varrho_{\mathrm{tar}}(\vz)}
 {M\varrho_{\mathrm{prop}}(\vz)},
 \qquad
-W:=\boldsymbol{1}\!\left\{V\le a\bigl(S(\vU)\bigr)\right\}
+W_i:=\boldsymbol{1}\!\left\{v_i\le a\bigl(S(\vu_i)\bigr)\right\}
 $$
-
-For the normalized target density $c\varrho_{\mathrm{tar}}$,
 
 \begin{align*}
 \Ex_{\mathrm{tar}}[f(\vX)]
-&=\Ex\bigl[f(\vZ)\mid W=1\bigr]\\
 &=\frac{\displaystyle\int_{[0,1]^{d+1}}
 f\bigl(S(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(S(\vu)\bigr)\right\}
 \,\dif\vu\,\dif v}
 {\displaystyle\int_{[0,1]^{d+1}}
 \boldsymbol{1}\!\left\{v\le a\bigl(S(\vu)\bigr)\right\}
-\,\dif\vu\,\dif v}
+\,\dif\vu\,\dif v}\\
+&\approx\frac{\displaystyle\frac1n\sum_{i=0}^{n-1}f\bigl(S(\vu_i)\bigr)W_i}
+{\displaystyle\frac1n\sum_{i=0}^{n-1}W_i}
+=\frac{\displaystyle\sum_{i:\,W_i=1}f\bigl(S(\vu_i)\bigr)}
+{\displaystyle\sum_{i=0}^{n-1}W_i}
 \end{align*}
 
 ::: {.key-point}
-The decision coordinate $V$ keeps a proposal below the [varying threshold]{.alert}
-$a(S(\vU))$, determined by the other $d$ coordinates
+[Two sample means, same points]{.alert}; their quotient averages accepted proposals<br>
+Defined when at least one proposal is accepted
 :::
 
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="random-generation"}

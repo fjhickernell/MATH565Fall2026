@@ -1,2 +1,3 @@
-# Course-site-only Python dependencies may be listed here temporarily.
-# Prefer dependencies supplied by HickernellAcademicLib or QMCSoftware.
+# Course-specific Python dependencies beyond classlib and qmcpy[class].
+# QueueSimulation notebook and queue_examples.py
+simpy>=4.1.2

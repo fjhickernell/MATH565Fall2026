@@ -339,6 +339,7 @@ git submodule update --init --recursive
 conda activate qmcpy
 python -m pip install -e classlib
 python -m pip install -e "qmcpy/.[class]"
+python -m pip install -r requirements.txt
 python -m ipykernel install --user --name qmcpy --display-name "qmcpy"
 ```
 
@@ -396,9 +397,10 @@ only Markdown notation.
 
 ## Deck 03 notebook dependencies
 
-`QueueSimulation.ipynb` uses SimPy 4.1.2 in addition to the standard course
-runtime. Install it locally with `python -m pip install "simpy==4.1.2"` in the
-`qmcpy` environment; the notebook's Colab setup installs the same version.
+`QueueSimulation.ipynb` uses SimPy >=4.1.2 in addition to the standard course
+runtime. It is recorded in the course `requirements.txt`; install it with
+`python -m pip install -r requirements.txt` in the `qmcpy` environment.
+The notebook's Colab setup uses the same minimum version; 4.1.2 is the validated version.
 Publish `notebooks/queue_examples.py` with the notebook. Validate its process
 and accounting code with
 `python -m unittest discover -s tests -p 'test_queue_examples.py'`.
