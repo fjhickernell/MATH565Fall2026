@@ -697,6 +697,7 @@ This deck
 <li><a href="#/random-vectors-and-stochastic-processes">Random Vectors and Stochastic Processes</a></li>
 <li><a href="#/low-discrepancy-sampling">Low Discrepancy Sampling</a></li>
 <li><a href="#/more-advanced-direct-sampling">More Advanced Direct Sampling</a></li>
+<li><a href="#/reframing-sampling-as-unit-cube-integration">Reframing Sampling as Unit-Cube Integration</a></li>
 <li><a href="#/big-ideas">Big Ideas</a></li>
 </ul>
 </div>
@@ -843,7 +844,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="332a60b1" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="af1fc093" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -887,7 +888,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="7dc56309" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="f6adbd18" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -919,7 +920,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="732fc478" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="7b5a95bb" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1003,7 +1004,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="8120811e" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="4d772267" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1733,51 +1734,76 @@ U\le
 <li><span class="alert">Exact transport</span>: move every <span class="math inline">\(Z\)</span> to <span class="math inline">\(\sqrt Z\)</span></li>
 <li><span class="alert">Acceptance–rejection</span>: keep <span class="math inline">\(Z\)</span> with probability <span class="math inline">\(Z\)</span></li>
 </ul>
-</section>
-<section class="slide level2">
+</section></section>
+<section>
+<section id="reframing-sampling-as-unit-cube-integration" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="random-generation">
+<h1>Reframing Sampling as Unit-Cube Integration</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
 
-<h3 id="one-extra-coordinate-for-a-mixture">One extra coordinate for a mixture</h3>
-<p>Start with one transported proposal and one independent decision coordinate</p>
+<p>One uniform input, with the last coordinate making the <span class="alert">decision</span></p>
 <p><span class="math display">\[\begin{gather*}
-(\vU,U)\sim\Unif[0,1]^{d+1},
-\qquad
-\vZ=S(\vU)\sim\varrho_{\mathrm{prop}},
+(\vU,V)=(U_1,\ldots,U_d,U_{d+1})\sim\Unif[0,1]^{d+1},
 \\
-C(U)=
-\begin{cases}1,&amp;U\le p,\\2,&amp;U&gt;p,
-\end{cases}
-\qquad
-\vX=T_{C(U)}(\vZ),
-\qquad
-T_k(\vZ)\sim\varrho_k
+\vZ=S(\vU)\sim\varrho_{\mathrm{prop}}
+\end{gather*}\]</span></p>
+<ul>
+<li><a href="#/mixtures-choosing-a-component">Mixtures: choosing a component</a></li>
+<li><a href="#/acceptance-rejection-choosing-which-proposals-to-keep">Acceptance–rejection: choosing which proposals to keep</a></li>
+</ul>
+<div class="key-point">
+<p>Target expectations become integrals over <span class="math inline">\([0,1]^{d+1}\)</span></p>
+<p>&nbsp;</p>
+<p><span class="alert">Low discrepancy sampling</span> starts with uniform points in this cube; performance depends on the resulting integrand, including its decision boundary</p>
+</div>
+</section>
+<section id="mixtures-choosing-a-component" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>Mixtures: choosing a component</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<p>For <span class="math inline">\(0&lt;p&lt;1\)</span>, let <span class="math inline">\(T_k(\vZ)\sim\varrho_k\)</span> and define</p>
+<p><span class="math display">\[\begin{gather*}
+C(V)=\begin{cases}1,&amp;V\le p,\\2,&amp;V&gt;p,\end{cases}
+\qquad \vX=T_{C(V)}\bigl(S(\vU)\bigr)
 \end{gather*}\]</span></p>
 <p>For every integrable <span class="math inline">\(f\)</span>,</p>
 <p><span class="math display">\[\begin{align*}
 \Ex_{\mathrm{mix}}[f(\vX)]
-&amp;=\Ex\!\left[f\!\left(T_{C(U)}\bigl(S(\vU)\bigr)\right)\right]\\
+&amp;=\int_{[0,1]^{d+1}} f\!\left(T_{C(v)}\bigl(S(\vu)\bigr)\right)
+\,\dif\vu\,\dif v\\
+&amp;=\int_{[0,1]^d}\left[
+\int_0^p f\bigl(T_1(S(\vu))\bigr)\,\dif v
++\int_p^1 f\bigl(T_2(S(\vu))\bigr)\,\dif v\right]\dif\vu\\
 &amp;=p\Ex_{\varrho_1}[f]+(1-p)\Ex_{\varrho_2}[f]
 \end{align*}\]</span></p>
 <p>Gaussian mixture: <span class="math inline">\(S\)</span> applies <span class="math inline">\(\Phi^{-1}\)</span> coordinatewise and <span class="math inline">\(T_k(\vz)=\vmu_k+\mA_k\vz\)</span>, where <span class="math inline">\(\mA_k\mA_k^{\mathsf T}=\mSigma_k\)</span></p>
 <div class="key-point">
-<p>The discrete component choice becomes a deterministic function of the <span class="math inline">\((d+1)\)</span>-dimensional uniform input</p>
+<p>The decision coordinate <span class="math inline">\(V\)</span> selects a component at the <span class="alert">fixed threshold</span> <span class="math inline">\(p\)</span></p>
 </div>
 </section>
-<section class="slide level2">
+<section id="acceptance-rejection-choosing-which-proposals-to-keep" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>Acceptance–rejection: choosing which proposals to keep</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
 
-<h3 id="one-extra-coordinate-for-acceptancerejection">One extra coordinate for acceptance–rejection</h3>
-<p>Use the same transported proposal and define</p>
+<p>With <span class="math inline">\(\varrho_{\mathrm{tar}}\le M\varrho_{\mathrm{prop}}\)</span>, define</p>
 <p><span class="math display">\[
 a(\vz):=\frac{\varrho_{\mathrm{tar}}(\vz)}
 {M\varrho_{\mathrm{prop}}(\vz)},
 \qquad
-W:=\boldsymbol{1}\!\left\{U\le a\bigl(S(\vU)\bigr)\right\}
+W:=\boldsymbol{1}\!\left\{V\le a\bigl(S(\vU)\bigr)\right\}
 \]</span></p>
-<p>Then the expectation under the desired density <span class="math inline">\(c\varrho_{\mathrm{tar}}\)</span> is</p>
+<p>For the normalized target density <span class="math inline">\(c\varrho_{\mathrm{tar}}\)</span>,</p>
 <p><span class="math display">\[\begin{align*}
 \Ex_{\mathrm{tar}}[f(\vX)]
 &amp;=\Ex\bigl[f(\vZ)\mid W=1\bigr]\\
-&amp;=\frac{\Ex\!\left[f\bigl(S(\vU)\bigr)W\right]}
-{\Ex(W)}\\
 &amp;=\frac{\displaystyle\int_{[0,1]^{d+1}}
 f\bigl(S(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(S(\vu)\bigr)\right\}
 \,\dif\vu\,\dif v}
@@ -1786,8 +1812,7 @@ f\bigl(S(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(S(\vu)\bigr)\right\}
 \,\dif\vu\,\dif v}
 \end{align*}\]</span></p>
 <div class="key-point">
-<p>Mixture selection and rejection both append <span class="alert">one decision coordinate</span></p>
-<p>The resulting jump or indicator is the feature that low discrepancy sampling must resolve</p>
+<p>The decision coordinate <span class="math inline">\(V\)</span> keeps a proposal below the <span class="alert">varying threshold</span> <span class="math inline">\(a(S(\vU))\)</span>, determined by the other <span class="math inline">\(d\)</span> coordinates</p>
 </div>
 </section></section>
 <section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="random-generation">
@@ -1803,7 +1828,7 @@ f\bigl(S(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(S(\vu)\bigr)\right\}
 <li>Independent marginal transforms do not create dependence<br>Correlated normal vectors require a matrix factorization<br>PCA can concentrate variation in early coordinates for low discrepancy sampling</li>
 <li>Gaussian-process sampling reduces finite collections of function values to multivariate normal sampling</li>
 <li>Low discrepancy points trade independent placement for more even coverage</li>
-<li>Mixtures and acceptance–rejection append one uniform decision coordinate to a transported proposal, yielding target expectations over <span class="math inline">\([0,1]^{d+1}\)</span></li>
+<li>Mixtures and acceptance–rejection express target expectations as integrals over <span class="math inline">\([0,1]^{d+1}\)</span><br>Low discrepancy sampling acts on the uniform inputs; the component jump or acceptance boundary affects integration error</li>
 <li>Exact transport moves every proposal point; acceptance–rejection keeps selected points using an unnormalized target and a global envelope</li>
 </ul>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb">Companion <code>GeneratingSamples</code> notebook</a></p>
