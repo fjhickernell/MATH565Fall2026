@@ -844,7 +844,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="af1fc093" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="0cbb6be8" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -888,7 +888,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="f6adbd18" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="cadadf92" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -920,7 +920,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="7b5a95bb" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="b512d922" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1004,7 +1004,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="4d772267" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="0ede11ed" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1749,6 +1749,7 @@ U\le
 \\
 \vZ=S(\vU)\sim\varrho_{\mathrm{prop}}
 \end{gather*}\]</span></p>
+<p>For numerical integration: points <span class="math inline">\((\vu_i,v_i)\in[0,1]^{d+1}\)</span>, <span class="math inline">\(i=0,\ldots,n-1\)</span><br> Use IID uniform draws or randomized low discrepancy points</p>
 <ul>
 <li><a href="#/mixtures-choosing-a-component">Mixtures: choosing a component</a></li>
 <li><a href="#/acceptance-rejection-choosing-which-proposals-to-keep">Acceptance–rejection: choosing which proposals to keep</a></li>
@@ -1779,9 +1780,23 @@ C(V)=\begin{cases}1,&amp;V\le p,\\2,&amp;V&gt;p,\end{cases}
 &amp;=\int_{[0,1]^d}\left[
 \int_0^p f\bigl(T_1(S(\vu))\bigr)\,\dif v
 +\int_p^1 f\bigl(T_2(S(\vu))\bigr)\,\dif v\right]\dif\vu\\
-&amp;=p\Ex_{\varrho_1}[f]+(1-p)\Ex_{\varrho_2}[f]
+&amp;=p\Ex_{\varrho_1}[f(\vX)]+(1-p)\Ex_{\varrho_2}[f(\vX)]\\
+&amp;\approx\frac1n\sum_{i=0}^{n-1}
+f\!\left(T_{C(v_i)}\bigl(S(\vu_i)\bigr)\right)
 \end{align*}\]</span></p>
+<aside class="notes">
 <p>Gaussian mixture: <span class="math inline">\(S\)</span> applies <span class="math inline">\(\Phi^{-1}\)</span> coordinatewise and <span class="math inline">\(T_k(\vz)=\vmu_k+\mA_k\vz\)</span>, where <span class="math inline">\(\mA_k\mA_k^{\mathsf T}=\mSigma_k\)</span></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <div class="key-point">
 <p>The decision coordinate <span class="math inline">\(V\)</span> selects a component at the <span class="alert">fixed threshold</span> <span class="math inline">\(p\)</span></p>
 </div>
@@ -1793,26 +1808,28 @@ C(V)=\begin{cases}1,&amp;V\le p,\\2,&amp;V&gt;p,\end{cases}
   <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
 </div>
 
-<p>With <span class="math inline">\(\varrho_{\mathrm{tar}}\le M\varrho_{\mathrm{prop}}\)</span>, define</p>
+<p>Target <span class="math inline">\(c\varrho_{\mathrm{tar}}\)</span>, with <span class="math inline">\(\varrho_{\mathrm{tar}}\le M\varrho_{\mathrm{prop}}\)</span>; define</p>
 <p><span class="math display">\[
 a(\vz):=\frac{\varrho_{\mathrm{tar}}(\vz)}
 {M\varrho_{\mathrm{prop}}(\vz)},
 \qquad
-W:=\boldsymbol{1}\!\left\{V\le a\bigl(S(\vU)\bigr)\right\}
+W_i:=\boldsymbol{1}\!\left\{v_i\le a\bigl(S(\vu_i)\bigr)\right\}
 \]</span></p>
-<p>For the normalized target density <span class="math inline">\(c\varrho_{\mathrm{tar}}\)</span>,</p>
 <p><span class="math display">\[\begin{align*}
 \Ex_{\mathrm{tar}}[f(\vX)]
-&amp;=\Ex\bigl[f(\vZ)\mid W=1\bigr]\\
 &amp;=\frac{\displaystyle\int_{[0,1]^{d+1}}
 f\bigl(S(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(S(\vu)\bigr)\right\}
 \,\dif\vu\,\dif v}
 {\displaystyle\int_{[0,1]^{d+1}}
 \boldsymbol{1}\!\left\{v\le a\bigl(S(\vu)\bigr)\right\}
-\,\dif\vu\,\dif v}
+\,\dif\vu\,\dif v}\\
+&amp;\approx\frac{\displaystyle\frac1n\sum_{i=0}^{n-1}f\bigl(S(\vu_i)\bigr)W_i}
+{\displaystyle\frac1n\sum_{i=0}^{n-1}W_i}
+=\frac{\displaystyle\sum_{i:\,W_i=1}f\bigl(S(\vu_i)\bigr)}
+{\displaystyle\sum_{i=0}^{n-1}W_i}
 \end{align*}\]</span></p>
 <div class="key-point">
-<p>The decision coordinate <span class="math inline">\(V\)</span> keeps a proposal below the <span class="alert">varying threshold</span> <span class="math inline">\(a(S(\vU))\)</span>, determined by the other <span class="math inline">\(d\)</span> coordinates</p>
+<p><span class="alert">Two sample means, same points</span>; their quotient averages accepted proposals<br> Defined when at least one proposal is accepted</p>
 </div>
 </section></section>
 <section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="random-generation">
