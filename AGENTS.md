@@ -176,8 +176,9 @@ Dashboard editing, status, completion, synchronization, and timestamp rules.
 - Preserve the `T2. MATH 332` and `T1. MATH 565` project headings and IDs.
 - Do not change, move, reorder, rewrite, or remove any other Dashboard item.
 
-Inspect the state of every repository relevant to the task. Never overwrite,
-discard, or commit pre-existing user changes. Run the established
+Inspect the state of every repository relevant to the task. Never overwrite
+or discard pre-existing user changes. Include them in an authorized Checkpoint
+according to its preservation scope. Run the established
 synchronization workflow only when required by the project's synchronization
 rules or explicitly requested by the user. Keep reference repositories
 read-only.
@@ -221,17 +222,51 @@ explicitly requests it.
 
 ## Git and checkpoints
 
+### Shared teaching Checkpoint scope
+
+When invoked from either active teaching project, `Checkpoint` applies to both
+`MATH332Fall2026` and `MATH565Fall2026`, unless the user explicitly limits its
+scope. This is an intentional local exception to the global default of
+checkpointing only the current project's repositories: these two courses share
+one teaching workspace and are preserved together.
+
+- Review, validate, commit, and push all eligible pending changes in both course
+  repositories, including user edits and changes from other completed tasks;
+  do not restrict the snapshot to the current conversational task.
+- Before staging, inspect the status of Codex tasks working in either course
+  repository or its writable dependencies. Recheck before committing. If a
+  task is still running or the working tree is still being modified, defer that
+  repository and any dependent submodule publication; checkpoint the other
+  idle repository normally. Do not interrupt another task, wait for it to finish,
+  or commit an intermediate state solely to complete this Checkpoint.
+- Report every deferred repository and the running task or concurrent changes
+  that caused the deferral. Do not claim both courses are checkpointed when one
+  was deferred; preserve its work for a later Checkpoint.
+- Apply the full global and repository-specific workflow independently to each
+  included repository: handoff review, confidentiality audit, previous CI check,
+  appropriate validation, writable-submodule ordering, and final status report.
+- Historical/reference repositories and pinned read-only dependencies remain
+  excluded. This scope rule does not authorize routine synchronization or add
+  SharedConfigs or GitTracked to the commit/push scope; the existing teaching
+  Dashboard reconciliation remains applicable.
+- The same repository scope and running-task exception apply to supported
+  Checkpoint variants, including `Express Checkpoint`; their validation and
+  commit-message rules remain as defined in the global guidance.
+
 Do not commit or push during ordinary intermediate work unless the user asks.
 
 The word **"Finished"** has no special meaning. Treat it as ordinary
 conversation unless the user explicitly asks to commit or push.
 
-Only these two checkpoint commands are recognized:
+The normal Checkpoint commands are:
 
 - `Checkpoint`
 - `Checkpoint <commit message>`
 
-Either command is explicit authorization to validate, document durable
+The global Express Checkpoint variants are also supported with their expedited
+validation rules.
+
+Either normal command is explicit authorization to validate, document durable
 conventions when needed, stage every modified or untracked non-ignored file,
 commit the complete repository state, and push the current branch. A
 checkpoint is a preservation snapshot, not a task-scoped commit: do not omit a

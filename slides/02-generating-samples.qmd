@@ -407,12 +407,13 @@ $Q=F_X^{-1}$ generally has [no analytic closed form]{.alert}
 Numerically inverting $F_X$ would work, but a hierarchical construction avoids
 solving $F_X(x)=u$
 
-Generate $U_1,U_2\ \sim\ \Unif(0,1)$ and define
+Generate independent $U_1,U_2\sim\Unif(0,1)$<br>
+The last coordinate $U_2$ selects the component; $U_1$ supplies the normal quantile
 
 $$
-C=\begin{cases}1,&U_1\le p,\\2,&U_1>p,\end{cases}
+C=\begin{cases}1,&U_2\le p,\\2,&U_2>p,\end{cases}
 \qquad
-X=\mu_C+\sigma_C\Phi^{-1}(U_2)
+X=\mu_C+\sigma_C\Phi^{-1}(U_1)
 $$
 
 Then $\Prob(C=1)=p$ and $X\mid C=k\sim\Norm(\mu_k,\sigma_k^2)$
@@ -436,7 +437,7 @@ p&=0.3,\\
 (\mu_2,\sigma_2)&=(1,1)
 \end{align*}
 
-For $U_1=0.24$ and $U_2=0.90$,
+For $U_1=0.90$ and $U_2=0.24$,
 
 \begin{align*}
 C&=1,\\
@@ -446,7 +447,7 @@ X&=-2+0.5\Phi^{-1}(0.90)\\
 
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>
-<span>Use $U_1=0.70$ and $U_2=0.25$.<br>Which component is selected?<br>What
+<span>Use $U_1=0.25$ and $U_2=0.70$.<br>Which component is selected?<br>What
 value of $X$ is generated?</span>
 :::
 :::

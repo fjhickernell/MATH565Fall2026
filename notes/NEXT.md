@@ -13,10 +13,20 @@ grading guide are ready. No Assignment 2 scores or feedback have been entered
 in Canvas.
 Remaining notebook and later-deck work is listed below.
 
-Deck 03 introduces kernel discrepancy, then its worst-case and Gaussian-process
-average-case integration-error interpretations, then KL/relative entropy, Stein
+For September 22, resume Deck 03 at “Centered discrepancy and smoothness,”
+then KL and Stein; Bayesian inference and queues remain ahead. The September
+17 recording, schedule reconciliation, and single-occurrence calendar note
+are recorded in `notes/LECTURE-UPDATES.md`.
+
+Deck 03 introduces kernel discrepancy, then its worst-case and average-case
+integration-error interpretations (GP first, then the zero-mean stochastic-process
+generalization), then KL/relative entropy, Stein
 discrepancy, and their comparison. Preserve that order and the
 Hickernell–Kirk–Sorokin Section 5 citation.
+The error representer derivation now explicitly applies the reproducing
+property to $\zeta$, then uses $f=\zeta$ to obtain squared discrepancy.
+Preserve the sufficient diagonal-integrability assumption and the unit-norm
+integrand attaining the worst-case bound.
 The revised Decks 01–03 readings and seven-notebook audit are recorded in
 `notes/OWEN-COVERAGE-AUDIT.md`.
 
@@ -114,6 +124,10 @@ proposals when at least one is accepted. Preserve this
 bridge to later low discrepancy performance: uniform inputs are shared, while
 the resulting integrand and its decision boundary determine integration error.
 The revised section and formulas render cleanly and have been visually checked.
+The original scalar mixture slides and `GeneratingSamples.ipynb` now use the
+same order: normal quantile first, component decision last; worked example
+inputs are swapped to preserve their results. This ordering is documented in
+`docs/slide-style.md`.
 
 The Bayesian, queueing, Metropolis--Hastings, discrepancy, and transport/rejection
 companions now pair mathematical plot labels with descriptions, including queue

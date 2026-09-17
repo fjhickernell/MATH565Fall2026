@@ -495,7 +495,7 @@ resolves the apparent asymmetry.
 
 Do our samples represent the [target distribution]{.alert}?
 
-- Compare distributions using a [kernel]{.alert} $K(t,x)$
+- Compare distributions using a [kernel]{.alert} $K(\vt,\vx)$
 - A kernel specifies which spatial differences receive weight
 - Define the distribution discrepancy first, then substitute empirical distributions
 - [Maximum mean discrepancy (MMD)]{.alert}: the same kernel comparison used in machine learning
@@ -525,17 +525,17 @@ unit-cube formulation is extended here to general target distributions.
 A kernel $K:\mathcal X\times\mathcal X\to\reals$ is [symmetric positive definite]{.alert} when every Gram matrix
 
 $$
-\mK=(K(x_i,x_j))_{i,j=0}^{n-1}
+\mK=(K(\vx_i,\vx_j))_{i,j=0}^{n-1}
 $$
 
-is symmetric positive definite for distinct $x_0,\ldots,x_{n-1}$
+is symmetric positive definite for distinct $\vx_0,\ldots,\vx_{n-1}$
 
 Examples include
 
 \begin{align*}
-K(t,x)&=\exp\!\left(-\norm{t-x}^2/h^2\right),
+K(\vt,\vx)&=\exp\!\left(-\norm{\vt-\vx}^2/h^2\right),
 &&\mathcal X=\reals^d,\\
-K(t,x)&=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
+K(\vt,\vx)&=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 \left(\abs{t_\ell-\tfrac12}+\abs{x_\ell-\tfrac12}-\abs{t_\ell-x_\ell}\right)\right],
 &&\mathcal X=[0,1]^d
 \end{align*}
@@ -546,43 +546,43 @@ K(t,x)&=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 
 ## Discrepancy between distributions {.tree-marker-slide tree-marker="discrepancy"}
 
-For independent $X,X'\sim F_X$ and $Z,Z'\sim F_Z$,
+For independent $\vX,\vX'\sim F_{\vX}$ and $\vZ,\vZ'\sim F_{\vZ}$,
 
 \begin{align*}
-D^2(F_X,F_Z;K)
-&=\Ex[K(X,X')]-2\Ex[K(X,Z)]+\Ex[K(Z,Z')]\\
-&=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')
--2\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_Z(x')\\
+D^2(F_{\vX},F_{\vZ};K)
+&=\Ex[K(\vX,\vX')]-2\Ex[K(\vX,\vZ)]+\Ex[K(\vZ,\vZ')]\\
+&=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')
+-2\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vZ}(\vx')\\
 &\qquad \qquad
-+\int_{\mathcal X^2}K(x,x')\,\dif F_Z(x)\,\dif F_Z(x')\\
-&=\int_{\mathcal X^2}K(x,x')\,\dif(F_X-F_Z)(x)\,\dif(F_X-F_Z)(x') \ge0
++\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vZ}(\vx)\,\dif F_{\vZ}(\vx')\\
+&=\int_{\mathcal X^2}K(\vx,\vx')\,\dif(F_{\vX}-F_{\vZ})(\vx)\,\dif(F_{\vX}-F_{\vZ})(\vx') \ge0
 \end{align*}
 
 If both distributions have densities,
 
 \begin{align*}
-D^2(F_X,F_Z;K)
-&=\int_{\mathcal X^2}K(x,x')\,\varrho_X(x)\,\varrho_X(x')\,\dif x\,\dif x'
--2\int_{\mathcal X^2}K(x,x')\,\varrho_X(x)\,\varrho_Z(x')\,\dif x\,\dif x'\\
-&\qquad \qquad +\int_{\mathcal X^2}K(x,x')\,\varrho_Z(x)\,\varrho_Z(x')\,\dif x\,\dif x'\\
-&=\int_{\mathcal X^2}K(x,x')
-\{\varrho_X(x)-\varrho_Z(x)\}
-\{\varrho_X(x')-\varrho_Z(x')\}\,\dif x\,\dif x' \ge0
+D^2(F_{\vX},F_{\vZ};K)
+&=\int_{\mathcal X^2}K(\vx,\vx')\,\varrho_{\vX}(\vx)\,\varrho_{\vX}(\vx')\,\dif \vx\,\dif \vx'
+-2\int_{\mathcal X^2}K(\vx,\vx')\,\varrho_{\vX}(\vx)\,\varrho_{\vZ}(\vx')\,\dif \vx\,\dif \vx'\\
+&\qquad \qquad +\int_{\mathcal X^2}K(\vx,\vx')\,\varrho_{\vZ}(\vx)\,\varrho_{\vZ}(\vx')\,\dif \vx\,\dif \vx'\\
+&=\int_{\mathcal X^2}K(\vx,\vx')
+\{\varrho_{\vX}(\vx)-\varrho_{\vZ}(\vx)\}
+\{\varrho_{\vX}(\vx')-\varrho_{\vZ}(\vx')\}\,\dif \vx\,\dif \vx' \ge0
 \end{align*}
 
 ---
 
 ### Empirical distributions {#empirical-distributions}
 
-Put mass $1/n$ at each $z_i$: $\widehat F_{Z,n}=n^{-1}\sum_{i=0}^{n-1}\delta_{z_i}$
+Put mass $1/n$ at each $\vz_i$: $\widehat F_{\vZ,n}=n^{-1}\sum_{i=0}^{n-1}\delta_{\vz_i}$
 
-Replace $F_Z$ by $\widehat F_{Z,n}$ in the distribution formula:
+Replace $F_{\vZ}$ by $\widehat F_{\vZ,n}$ in the distribution formula:
 
 \begin{align*}
-D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
-&=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')\\
-&\quad-\frac{2}{n}\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,z_i)\,\dif F_X(x)\\
-&\quad+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)
+D^2(F_{\vX},\{\vz_i\}_{i=0}^{n-1};K)
+&=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')\\
+&\quad-\frac{2}{n}\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vz_i)\,\dif F_{\vX}(\vx)\\
+&\quad+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(\vz_i,\vz_j)
 \end{align*}
 
 Integration against an empirical distribution becomes [averaging over its sample]{.alert}
@@ -594,10 +594,10 @@ Integration against an empirical distribution becomes [averaging over its sample
 Replace both distributions by empirical distributions: integrals become sums
 
 \begin{align*}
-D^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
-&=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(x_i,x_j)\\
-&\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
-+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)
+D^2\!\left(\{\vx_i\}_{i=0}^{m-1},\{\vz_j\}_{j=0}^{n-1};K\right)
+&=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(\vx_i,\vx_j)\\
+&\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(\vx_i,\vz_j)
++\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(\vz_i,\vz_j)
 \end{align*}
 
 - The [exact squared discrepancy of these empirical distributions]{.alert}; nonnegative
@@ -612,8 +612,8 @@ D^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
 
 | Question | Quantity |
 |:--|:--|
-| How different are these empirical distributions? | Exact $D^2(\widehat F_{X,m},\widehat F_{Z,n};K)\ge0$ |
-| How different are the underlying distributions? | Estimate $D^2(F_X,F_Z;K)$ from random samples |
+| How different are these empirical distributions? | Exact $D^2(\widehat F_{\vX,m},\widehat F_{\vZ,n};K)\ge0$ |
+| How different are the underlying distributions? | Estimate $D^2(F_{\vX},F_{\vZ};K)$ from random samples |
 
 - The ordinary empirical formula answers the first question
 - As an estimator of population discrepancy, it is generally biased
@@ -635,15 +635,15 @@ between the samples. Successive MCMC states do not satisfy the IID condition.
 
 ### Unbiased estimates of squared discrepancy {#unbiased-estimates-of-squared-discrepancy}
 
-For two independent IID samples, estimate $D^2(F_X,F_Z;K)$
+For two independent IID samples, estimate $D^2(F_{\vX},F_{\vZ};K)$
 
 Replace within-sample sums by [off-diagonal averages]{.alert}:
 
 \begin{align*}
-D_{\mathrm{unb}}^2\!\left(\{x_i\}_{i=0}^{m-1},\{z_j\}_{j=0}^{n-1};K\right)
-&=\frac{1}{m(m-1)}\sum_{\substack{i,j=0\\i\ne j}}^{m-1}K(x_i,x_j)\\
-&\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(x_i,z_j)
-+\frac{1}{n(n-1)}\sum_{\substack{i,j=0\\i\ne j}}^{n-1}K(z_i,z_j)
+D_{\mathrm{unb}}^2\!\left(\{\vx_i\}_{i=0}^{m-1},\{\vz_j\}_{j=0}^{n-1};K\right)
+&=\frac{1}{m(m-1)}\sum_{\substack{i,j=0\\i\ne j}}^{m-1}K(\vx_i,\vx_j)\\
+&\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(\vx_i,\vz_j)
++\frac{1}{n(n-1)}\sum_{\substack{i,j=0\\i\ne j}}^{n-1}K(\vz_i,\vz_j)
 \end{align*}
 
 [Unbiased]{.alert} describes the estimator's expectation, not the sign of each realization
@@ -657,11 +657,11 @@ A more negative realization is [not a better match]{.alert}; it is a larger down
 ::: {.exitem .roman}
 <span class="exbullet">$\exstar$</span>
 <span>
-Let $\{X_i\}_{i=0}^{m-1}$ and $\{Z_j\}_{j=0}^{n-1}$ be independent IID samples from $F_X$ and $F_Z$
-<span class="exsub">Take expectations term by term to show $\Ex[D_{\mathrm{unb}}^2]=D^2(F_X,F_Z;K)$</span>
-<span class="exsub">What is the expectation when $F_X=F_Z$?</span>
+Let $\{\vX_i\}_{i=0}^{m-1}$ and $\{\vZ_j\}_{j=0}^{n-1}$ be independent IID samples from $F_{\vX}$ and $F_{\vZ}$
+<span class="exsub">Take expectations term by term to show $\Ex[D_{\mathrm{unb}}^2]=D^2(F_{\vX},F_{\vZ};K)$</span>
+<span class="exsub">What is the expectation when $F_{\vX}=F_{\vZ}$?</span>
 <span class="exsub">Why may a realization be negative, and does more negative mean a better match?</span>
-<span class="exsub">Which step fails when the $X_i$ are successive Metropolis states?</span>
+<span class="exsub">Which step fails when the $\vX_i$ are successive Metropolis states?</span>
 </span>
 :::
 
@@ -671,11 +671,11 @@ Let $\{X_i\}_{i=0}^{m-1}$ and $\{Z_j\}_{j=0}^{n-1}$ be independent IID samples f
 
 [Zero is the ideal]{.alert}; no universal acceptable cutoff
 
-For a fixed target $F_X$ and kernel $K$, normalize by the [no-sample error]{.alert}:
+For a fixed target $F_{\vX}$ and kernel $K$, normalize by the [no-sample error]{.alert}:
 
 \begin{align*}
-D_0^2&=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')>0,
-&\qquad D_{\mathrm{rel},n}^2&=\frac{D^2(F_X,\{z_i\}_{i=0}^{n-1};K)}{D_0^2}
+D_0^2&=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')>0,
+&\qquad D_{\mathrm{rel},n}^2&=\frac{D^2(F_{\vX},\{\vz_i\}_{i=0}^{n-1};K)}{D_0^2}
 \end{align*}
 
 - $D_{\mathrm{rel},n}^2<1$: improvement over estimating the integral by zero
@@ -729,55 +729,106 @@ The off-diagonal estimator can be negative and is not itself a squared norm.
 Every symmetric positive definite kernel $K$ defines a Hilbert space $\mathcal H_K$ of functions on $\mathcal X$ with the [reproducing property]{.alert}
 
 $$
-f(x)=\langle K(\cdot,x),f\rangle_{\mathcal H_K}
+f(\vx)=\langle K(\cdot,\vx),f\rangle_{\mathcal H_K}
 $$
 
-Assume $\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')$ is finite
+Assume $K$ is measurable and
+
+$$
+\int_{\mathcal X}\sqrt{K(\vx,\vx)}\,\dif F_{\vX}(\vx)<\infty
+$$
 
 Then both
 
 \begin{align*}
-f&\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x),\\
-f&\longmapsto\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)
+f&\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx),\\
+f&\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vz_i)
 \end{align*}
 
 are bounded linear functionals on $\mathcal H_K$
+
+::: {.notes}
+The reproducing property and Cauchy–Schwarz give
+$\abs{f(\vx)}\le\norm{f}_{\mathcal H_K}\sqrt{K(\vx,\vx)}$.
+The displayed sufficient condition therefore ensures absolute integrability
+and bounds the integration functional. Finite kernel diagonals at the sample
+points bound each point evaluation, hence also the error functional.
+It also ensures absolute integrability of the double kernel integral via
+$\abs{K(\vx,\vx')}\le\sqrt{K(\vx,\vx)K(\vx',\vx')}$.
+:::
 
 ## Worst-case integration error {.tree-marker-slide tree-marker="error-assessment"}
 
 By the Riesz representation theorem, some $\zeta\in\mathcal H_K$ satisfies
 
 $$
-\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)
+\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vz_i)
 =\langle\zeta,f\rangle_{\mathcal H_K}
 $$
 
 Therefore, by Cauchy–Schwarz,
 
 $$
-\left\lvert\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)\right\rvert
+\left\lvert\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vz_i)\right\rvert
 \le\norm{\zeta}_{\mathcal H_K}\norm{f}_{\mathcal H_K}
 $$
 
 This separates [sample quality]{.alert}, $\norm{\zeta}_{\mathcal H_K}$, from [integrand difficulty]{.alert}, $\norm{f}_{\mathcal H_K}$
 
+For $\zeta\ne0$, the unit-norm integrand
+$f=\zeta/\norm{\zeta}_{\mathcal H_K}$ [attains the bound]{.alert}
+
+::: {.notes}
+For this choice, $\norm{f}_{\mathcal H_K}=1$ and
+$\langle\zeta,f\rangle_{\mathcal H_K}=\norm{\zeta}_{\mathcal H_K}$.
+Thus the bound is the actual supremum over the unit ball, not merely an upper
+bound. If $\zeta=0$, every integrand in the space has zero integration error,
+so the worst-case error is zero without dividing by its norm.
+:::
+
 ## The discrepancy identity {.tree-marker-slide tree-marker="error-assessment"}
 
-The representer is
+Fix $\vx'\in\mathcal X$ and regard $K(\cdot,\vx')$ as an [integrand]{.alert}
+
+Apply the reproducing property to $\zeta$, then the error representation
+with $f=K(\cdot,\vx')$:
+
+\begin{align*}
+\zeta(\vx')
+&=\langle\zeta,K(\cdot,\vx')\rangle_{\mathcal H_K}\\
+&=\int_{\mathcal X}K(\vx,\vx')\,\dif F_{\vX}(\vx)
+-\frac1n\sum_{i=0}^{n-1}K(\vz_i,\vx')
+\end{align*}
+
+Thus $\zeta(\vx')$ is the [true integral minus sample average]{.alert}
+for the kernel section $K(\cdot,\vx')$
+
+::: {.key-point}
+The error representer is a function: at each $\vx'$, its value is the integration error of the reproducing kernel anchored at $\vx'$
+:::
+
+---
+
+### From the representer to squared discrepancy
+
+Now use $f=\zeta$ in the same error representation:
 
 $$
-\zeta(x')=\int_{\mathcal X}K(x,x')\,\dif F_X(x)
--\frac1n\sum_{i=0}^{n-1}K(z_i,x')
+\norm{\zeta}_{\mathcal H_K}^2
+=\langle\zeta,\zeta\rangle_{\mathcal H_K}
+=\int_{\mathcal X}\zeta(\vx')\,\dif F_{\vX}(\vx')
+-\frac1n\sum_{j=0}^{n-1}\zeta(\vz_j)
 $$
 
-Its squared norm is exactly the squared discrepancy:
+Substitute the kernel-section error formula for each value of $\zeta$;
+symmetry of $K$ combines the two cross terms:
 
 \begin{align*}
 \norm{\zeta}_{\mathcal H_K}^2
-&=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')\\
-&\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,z_i)\,\dif F_X(x)
-+\frac1{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)\\
-&=D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
+&=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')\\
+&\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vz_i)\,\dif F_{\vX}(\vx)
++\frac1{n^2}\sum_{i,j=0}^{n-1}K(\vz_i,\vz_j)\\
+&=D^2(F_{\vX},\{\vz_i\}_{i=0}^{n-1};K)
 \end{align*}
 
 Thus discrepancy is the [worst-case error over $\norm{f}_{\mathcal H_K}\le1$]{.alert}
@@ -786,19 +837,40 @@ Thus discrepancy is the [worst-case error over $\norm{f}_{\mathcal H_K}\le1$]{.a
 
 Suppose $f$ is modeled as a zero-mean Gaussian process with covariance kernel $K$
 
-For deterministic $z_0,\ldots,z_{n-1}$,
+For deterministic $\vz_0,\ldots,\vz_{n-1}$,
 
 \begin{align*}
 &\Ex_f\!\left[
-\left\{\int_{\mathcal X}f(x)\,\dif F_X(x)-\frac1n\sum_{i=0}^{n-1}f(z_i)\right\}^2
+\left\{\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vz_i)\right\}^2
 \right]\\
-&\quad=\int_{\mathcal X^2}K(x,x')\,\dif F_X(x)\,\dif F_X(x')
--\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,z_i)\,\dif F_X(x)
-+\frac1{n^2}\sum_{i,j=0}^{n-1}K(z_i,z_j)\\
-&\quad=D^2(F_X,\{z_i\}_{i=0}^{n-1};K)
+&\quad=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')
+-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vz_i)\,\dif F_{\vX}(\vx)
++\frac1{n^2}\sum_{i,j=0}^{n-1}K(\vz_i,\vz_j)\\
+&\quad=D^2(F_{\vX},\{\vz_i\}_{i=0}^{n-1};K)
 \end{align*}
 
 Discrepancy is also the [root mean squared error under the Gaussian-process model]{.alert}
+
+::: {.key-point}
+[Gaussianity is not required]{.alert}: the same RMSE identity holds for any zero-mean stochastic process with covariance kernel $K$, provided the required second moments and integrals exist
+:::
+
+::: {.notes}
+For a fixed sample design, expand the square of the integration error.
+Only $\Ex_f[f(\vx)]=0$ and
+$\Ex_f[f(\vx)f(\vx')]=K(\vx,\vx')$ enter the calculation;
+no Gaussian distribution assumption is used. Assume the random integral
+exists in mean square and expectation can be interchanged with the displayed
+integrals. A sufficient condition for a measurable second-order process is
+$\int_{\mathcal X}\sqrt{K(\vx,\vx)}\,\dif F_{\vX}(\vx)<\infty$,
+together with finite kernel diagonals at the sample points.
+
+Gaussian processes are a common model and additionally specify finite-dimensional
+distributions and Gaussian uncertainty statements. Covariance alone determines
+this RMSE, but not the full error distribution or Gaussian credible intervals.
+For a nonzero mean function, the mean integration error contributes an
+additional squared-bias term unless the quadrature rule integrates that mean exactly.
+:::
 
 ## What the kernel controls {.tree-marker-slide tree-marker="discrepancy-statistics"}
 
@@ -810,12 +882,12 @@ Discrepancy is also the [root mean squared error under the Gaussian-process mode
   - coordinate importance
 - In the average-case setting, hyperparameters may be estimated by empirical Bayes or maximum likelihood
 
-For IID $Z_i\sim F_X$,
+For IID $\vZ_i\sim F_{\vX}$,
 
 $$
-\Ex\!\left[D^2(F_X,\{Z_i\}_{i=0}^{n-1};K)\right]
+\Ex\!\left[D^2(F_{\vX},\{\vZ_i\}_{i=0}^{n-1};K)\right]
 =\frac1n\left\{
-\int K(x,x)\,\dif F_X(x)-\int K(x,x')\,\dif F_X(x)\,\dif F_X(x')
+\int K(\vx,\vx)\,\dif F_{\vX}(\vx)-\int K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')
 \right\}
 $$
 
@@ -824,7 +896,7 @@ $$
 For $\mathcal X=[0,1]^d$, the centered-discrepancy kernel is
 
 $$
-K(t,x)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
+K(\vt,\vx)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 \left(\abs{t_\ell-\tfrac12}+\abs{x_\ell-\tfrac12}-\abs{t_\ell-x_\ell}\right)\right]
 $$
 
@@ -837,7 +909,7 @@ Its norm combines the function value at the center with weighted square-integral
 &\quad+\norm{\frac{\partial^2 f(x_1,x_2,1/2,\ldots)}
 {\gamma_1\gamma_2\partial x_1\partial x_2}}_2^2
 +\cdots
-+\norm{\frac{\partial^d f(x)}
++\norm{\frac{\partial^d f(\vx)}
 {\gamma_1\cdots\gamma_d\partial x_1\cdots\partial x_d}}_2^2
 \end{align*}
 
@@ -849,16 +921,16 @@ The weights $\gamma_\ell$ express [coordinate importance]{.alert}
 
 [Kullback–Leibler (KL) divergence]{.alert}, also called [relative entropy]{.alert}
 
-For normalized densities $\varrho_X$ and $\varrho_Z$,
+For normalized densities $\varrho_{\vX}$ and $\varrho_{\vZ}$,
 
 \begin{align*}
-D_{\mathrm{KL}}(F_X\Vert F_Z)
-&=\int_{\mathcal X}\varrho_X(x)
-\log\!\left(\frac{\varrho_X(x)}{\varrho_Z(x)}\right)\,\dif x
+D_{\mathrm{KL}}(F_{\vX}\Vert F_{\vZ})
+&=\int_{\mathcal X}\varrho_{\vX}(\vx)
+\log\!\left(\frac{\varrho_{\vX}(\vx)}{\varrho_{\vZ}(\vx)}\right)\,\dif \vx
 \end{align*}
 
 - Nonnegative; zero exactly when the distributions agree
-- Generally asymmetric; infinite if $F_X$ assigns mass where $F_Z$ assigns none
+- Generally asymmetric; infinite if $F_{\vX}$ assigns mass where $F_{\vZ}$ assigns none
 - Entropy describes one distribution; [relative entropy compares two]{.alert}
 - Variational inference fits an approximate density by minimizing KL to the target
 
@@ -897,7 +969,7 @@ With $\varrho_{\mathrm{tar}}=\widetilde\varrho/C$ and approximation density $\va
 \begin{align*}
 D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})
 &=\Ex_{\mathrm{approx}}\!\left[\log\!\left(
-\frac{\varrho_{\mathrm{approx}}(X)}{\widetilde\varrho(X)}\right)\right]+\log C
+\frac{\varrho_{\mathrm{approx}}(\vX)}{\widetilde\varrho(\vX)}\right)\right]+\log C
 \end{align*}
 
 [Fixed target]{.alert}: $\log C$ does not affect minimization over the approximation
@@ -914,25 +986,25 @@ samples, but that differs from plugging an atomic empirical measure into KL.
 
 ### Stein discrepancy {#stein-discrepancy}
 
-For a smooth positive target density $\varrho_{\mathrm{tar}}(x)=\widetilde\varrho(x)/C$,
+For a smooth positive target density $\varrho_{\mathrm{tar}}(\vx)=\widetilde\varrho(\vx)/C$,
 the [score]{.alert} removes the unknown normalizing constant
 
 \begin{align*}
-s(x)&=\nabla_x\log\varrho_{\mathrm{tar}}(x)
-=\nabla_x\log\widetilde\varrho(x)\\
-\mathcal T g(x)&=s(x)^\mathsf{T}g(x)+\nabla\!\cdot g(x),
+s(\vx)&=\nabla_{\vx}\log\varrho_{\mathrm{tar}}(\vx)
+=\nabla_{\vx}\log\widetilde\varrho(\vx)\\
+\mathcal T g(\vx)&=s(\vx)^\mathsf{T}g(\vx)+\nabla\!\cdot g(\vx),
 \qquad g:\mathcal X\to\mathbb R^d
 \end{align*}
 
-[Stein's identity]{.alert}: $\Ex_{\mathrm{tar}}[\mathcal T g(X)]=0$ for suitable $g$
+[Stein's identity]{.alert}: $\Ex_{\mathrm{tar}}[\mathcal T g(\vX)]=0$ for suitable $g$
 
-For candidate points $z_0,\ldots,z_{n-1}$, write the error as [true value minus sample average]{.alert}:
+For candidate points $\vz_0,\ldots,\vz_{n-1}$, write the error as [true value minus sample average]{.alert}:
 
 \begin{align*}
-D_{\mathrm{Stein}}(F_{\mathrm{tar}},\{z_i\};\mathcal G)
+D_{\mathrm{Stein}}(F_{\mathrm{tar}},\{\vz_i\};\mathcal G)
 &=\sup_{g\in\mathcal G}\left|
-\underbrace{\Ex_{\mathrm{tar}}[\mathcal T g(X)]}_{0}
--\frac1n\sum_{i=0}^{n-1}\mathcal T g(z_i)\right|
+\underbrace{\Ex_{\mathrm{tar}}[\mathcal T g(\vX)]}_{0}
+-\frac1n\sum_{i=0}^{n-1}\mathcal T g(\vz_i)\right|
 \end{align*}
 
 ::: {.key-point}
@@ -947,8 +1019,8 @@ and the expectations exist. On bounded supports, the function class or operator
 must enforce the appropriate boundary conditions. Discrete targets require a
 different operator.
 
-For candidate points $x_0,\ldots,x_{n-1}$, the discrepancy is
-$\sup_{g\in\mathcal G}|0-n^{-1}\sum_{i=0}^{n-1}\mathcal T g(x_i)|$,
+For candidate points $\vx_0,\ldots,\vx_{n-1}$, the discrepancy is
+$\sup_{g\in\mathcal G}|0-n^{-1}\sum_{i=0}^{n-1}\mathcal T g(\vx_i)|$,
 with the true target integral first and the sample approximation second.
 Applying Stein operators to both arguments of a sufficiently smooth base kernel
 gives a target-dependent Stein kernel and a pairwise-sum formula for KSD squared.
@@ -975,13 +1047,13 @@ For [kernel Stein discrepancy (KSD)]{.alert}, choose $\mathcal G$ as the unit ba
 The supremum has an explicit formula using a [Stein kernel]{.alert}:
 
 \begin{align*}
-K_{\mathrm{Stein}}(x,z)
-&=s(x)^\mathsf{T}s(z)K(x,z)
-+s(x)^\mathsf{T}\nabla_z K(x,z)\\
-&\quad+s(z)^\mathsf{T}\nabla_x K(x,z)
-+\sum_{\ell=1}^d\frac{\partial^2 K(x,z)}{\partial x_\ell\,\partial z_\ell}\\[0.5ex]
-\mathrm{KSD}^2(F_{\mathrm{tar}},\{z_i\};K)
-&=\frac{1}{n^2}\sum_{i,j=0}^{n-1}K_{\mathrm{Stein}}(z_i,z_j)\ge0
+K_{\mathrm{Stein}}(\vx,\vz)
+&=s(\vx)^\mathsf{T}s(\vz)K(\vx,\vz)
++s(\vx)^\mathsf{T}\nabla_{\vz} K(\vx,\vz)\\
+&\quad+s(\vz)^\mathsf{T}\nabla_{\vx} K(\vx,\vz)
++\sum_{\ell=1}^d\frac{\partial^2 K(\vx,\vz)}{\partial x_\ell\,\partial z_\ell}\\[0.5ex]
+\mathrm{KSD}^2(F_{\mathrm{tar}},\{\vz_i\};K)
+&=\frac{1}{n^2}\sum_{i,j=0}^{n-1}K_{\mathrm{Stein}}(\vz_i,\vz_j)\ge0
 \end{align*}
 
 - The target-integral terms vanish: only the [sample-pair sum]{.alert} remains
@@ -999,7 +1071,7 @@ the RKHS of the scalar base kernel $K$, with squared norm equal to the sum of
 the component squared norms. Its unit ball prevents arbitrary rescaling of $g$.
 The smoothness, integrability, and boundary assumptions must allow the Stein
 identity to hold for the relevant kernel sections and derivatives.
-Then $\Ex_{X\sim F_{\mathrm{tar}}}[K_{\mathrm{Stein}}(X,z)]=0$,
+Then $\Ex_{\vX\sim F_{\mathrm{tar}}}[K_{\mathrm{Stein}}(\vX,\vz)]=0$,
 so the target-target and target-sample terms in ordinary squared discrepancy
 are zero. The displayed sum includes the diagonal: it is the exact squared
 KSD of the empirical measure, not the off-diagonal unbiased estimator of a

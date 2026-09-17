@@ -65,6 +65,11 @@ Deck 01 Course Map synchronized.
   $n-1$.
 - Keep coordinate indices $1,\ldots,d$ and multilevel indices
   $1,\ldots,L$ one-based.
+- For mixture and acceptance--rejection constructions, put the uniform decision
+  coordinate last: the first $d$ coordinates generate the proposal or
+  within-component draw, and $U_{d+1}$ selects the component or acceptance.
+  In the scalar mixture, $U_1$ supplies the normal quantile and $U_2$ chooses
+  the component. Keep notebook code and worked examples in the same order.
 - Keep notation consistent with the shared macro registry and course
   notebooks.
 - Keep the [uniform-input, target-sample, and output roles](../AUTHOR_WORKFLOW.md#course-wide-simulation-notation)
