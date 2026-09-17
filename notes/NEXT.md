@@ -3,7 +3,8 @@
 ## Current task
 
 Grade Homework 2 (Dashboard deadline: September 14; completion not yet
-reported), add the seminar link, and then review Deck 04 followed by Deck 05.
+reported), grade Test 1 by Tuesday, September 22, 2026, add the seminar link,
+and then review Deck 04 followed by Deck 05.
 Assignment 2 is prepared for grading in the private OneDrive course folder:
 the Canvas ZIP
 and all 30 attachments are verified, 17 submitting groups or individuals are
