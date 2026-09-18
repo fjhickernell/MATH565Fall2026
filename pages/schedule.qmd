@@ -32,6 +32,7 @@ holidays, and examination details are finalized.
 | | Fri Sep 18 | **Project topic submission deadline** | [Topic Selection & Presentation Scheduling](project.qmd#topic-selection-and-approval) |
 | 6 | Tue Sep 22 | Centered discrepancy and smoothness; Alternative comparisons (KL and Stein)<br>Continue toward Bayesian inference and queues | [Markov Chain Monte Carlo](../slides/03-markov-chain-monte-carlo.html#centered-discrepancy-and-smoothness) |
 | | Thu Sep 24 | | |
+| | Fri Sep 25 | **Assignment 3 due** | [{{< meta texts.owen.short >}} Exercises 5.4 and 5.13](../assignments/assignment_3.qmd) |
 | 7 | Tue Sep 29 | | |
 
 ### October

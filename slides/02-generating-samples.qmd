@@ -19,6 +19,7 @@ subtitle: |
   <span class="deck-title">{{< meta deck_title >}}</span><br>
   <span class="deck-meta">{{< meta texts.owen.short >}}, Chapters 3–6 and 15–17<br>
   Assignment 2 due Sep 11<br>
+  <a href="../assignments/assignment_3.html">Assignment 3 due Sep 25</a><br>
   Test 1 · Sep 15</span>
 ---
 

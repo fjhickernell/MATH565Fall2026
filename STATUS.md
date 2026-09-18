@@ -164,6 +164,11 @@ appropriate phase rather than appended indiscriminately.
       assignment-specific pair group set and a description linking only the
       assignment detail page and Assignments page, then post its Canvas
       announcement after the course website changes are live.
+    - [x] Prepare Assignment 3 locally as Owen Exercises 5.4 and 5.13, due
+      September 25; save unpublished Canvas draft 104697 for 20 points and
+      unlimited file uploads.
+    - [ ] Deploy Assignment 3, configure its separate pair group set, and
+      publish its Canvas assignment and announcement after instructor approval.
     - [ ] Add assignment entries and due dates as they are finalized.
     - [x] Validate Quarto rendering and generated page structure.
     - [ ] Inspect the visible page layout in a browser.

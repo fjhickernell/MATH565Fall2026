@@ -2,6 +2,22 @@
 
 ## Current task
 
+Assignment 3 (Owen Exercises 5.4 and 5.13, due September 25 at 11:59 PM
+America/Chicago) is prepared locally. Canvas draft 104697 is saved unpublished
+for 20 points, file uploads, unlimited attempts, and Everyone; its description
+links only to the course detail page and Assignments page. Local rendering and
+link checks pass. Next: verify the deployed links after this Checkpoint, then
+prepare/verify
+Assignment 3 Groups (20 self-sign-up groups, maximum two students), configure
+the shared group grade, and request one combined Canvas publication confirmation.
+Canvas duplicate audit found only Assignment 1 and 2 group sets and no
+Assignment 3 announcement. No Assignment 3 groups or announcement have been
+created yet. Prepared announcement title: “Assignment 3 is on the course
+website.” Body: link “Assignment 3” to the live detail page and “Assignments”
+to the course Assignments page; explain that students working individually or
+with one partner must sign up under Assignment 3 Groups and that one group
+member submits the shared work in Canvas. Do not repeat exercises or due date.
+
 Grade Homework 2 (Dashboard deadline: September 14; completion not yet
 reported), grade Test 1 by Tuesday, September 22, 2026, add the seminar link,
 and then review Deck 04 followed by Deck 05.
