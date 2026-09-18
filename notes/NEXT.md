@@ -2,34 +2,18 @@
 
 ## Immediate actions
 
-1. Finish Assignment 3 Canvas setup and publication (homework assignment target:
-   September 17; student deadline: September 25 at 11:59 PM America/Chicago).
-   Website sources were committed and pushed in `fcbb207`; verify the live
-   detail and Assignments links before Canvas publication. Draft 104697 is
-   saved unpublished for 20 points, file uploads, unlimited attempts, and
-   Everyone; its description links only to those two course pages.
-   Prepare/verify Assignment 3 Groups (20 self-sign-up groups, maximum two
-   students), configure the shared group grade, and prepare the announcement.
-   The last duplicate audit found only Assignment 1 and 2 group sets and no
-   Assignment 3 announcement; recheck before creating either. Request one
-   combined Canvas publication confirmation after setup and live-link checks.
-   Prepared title: “Assignment 3 is on the course website.” Link “Assignment 3”
-   and “Assignments” to their live pages; explain group sign-up for individuals
-   or pairs and one shared submission. Do not repeat exercises or the due date.
-2. Grade Homework 2 (Dashboard deadline: September 14; completion not reported).
+1. Grade Homework 2 (Dashboard deadline: September 14; completion not reported).
    Submissions and the grading tracker are prepared privately. No scores or
    feedback have been entered in Canvas. Follow the manual-posting and
    instructor-review workflow before releasing grades.
-3. Review project-topic submissions after the September 18 deadline.
-4. Grade Test 1 by September 22; retain private assessment and grading material
+2. Review project-topic submissions after the September 18 deadline.
+3. Grade Test 1 by September 22; retain private assessment and grading material
    under the assessment-confidentiality rules.
-5. Prepare the September 22 lecture: resume Deck 03 at “Centered discrepancy
+4. Prepare the September 22 lecture: resume Deck 03 at “Centered discrepancy
    and smoothness,” then KL and Stein. Bayesian inference and queues remain
    ahead. The single-occurrence Illinois Tech calendar note is already saved.
-6. Add the seminar link, then review Deck 04 followed by Deck 05 with the
+5. Add the seminar link, then review Deck 04 followed by Deck 05 with the
    instructor, including their companion-notebook plans.
-7. After Canvas publication, reconcile its final verified state and request
-   a closeout Checkpoint if needed.
 
 ## Current verified state
 
@@ -472,3 +456,15 @@ decks after adding links.
 - Deck 02 has received its polish pass for the current stage, renders cleanly,
   independently of the completed Deck 03 review; later decks may add calls to the
   same notebooks or motivate coherent extensions.
+
+## Assignment 3 Canvas closeout
+
+- September 17, 2026: verified both deployed course-page links and published
+  Canvas Assignment 3 (104697), 20 points, due September 25 at 11:59 PM Chicago,
+  unlimited file uploads for Everyone. Assignment 3 Groups (1738) has 20
+  self-sign-up groups limited to two students; submission and grade are shared.
+- Instructor approved publication. All-sections announcement 105901,
+  “Assignment 3 is on the course website,” was posted and verified at 10:30 PM.
+  https://iit.instructure.com/courses/25777/discussion_topics/105901
+- The schedule Date column keeps each weekday, month, and day on one line;
+  verified at 639- and 1400-pixel browser widths.

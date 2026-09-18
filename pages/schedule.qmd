@@ -1,5 +1,6 @@
 ---
 title: "Schedule"
+css: ../assets/css/schedule.css
 ---
 
 Classes normally meet Tuesdays and Thursdays at 10:00 AM in **PH 109**.

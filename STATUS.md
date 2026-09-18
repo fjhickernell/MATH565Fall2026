@@ -175,9 +175,10 @@ appropriate phase rather than appended indiscriminately.
       September 25; save unpublished Canvas draft 104697 for 20 points and
       unlimited file uploads.
     - [x] Commit and push Assignment 3 website sources (`fcbb207`).
-    - [ ] Verify the deployed Assignment 3 links, configure its separate pair
+    - [x] Verify the deployed Assignment 3 links, configure its separate pair
       group set, and publish its Canvas assignment and announcement after
-      instructor approval.
+      instructor approval. Verified September 17; announcement 105901 posted
+      to All Sections at 10:30 PM.
     - [ ] Add assignment entries and due dates as they are finalized.
     - [x] Validate Quarto rendering and generated page structure.
     - [ ] Inspect the visible page layout in a browser.
