@@ -1,0 +1,5 @@
+/* Keep weekday, month, and day together in the schedule's Date column. */
+#quarto-document-content table th:nth-child(2),
+#quarto-document-content table td:nth-child(2) {
+  white-space: nowrap;
+}
