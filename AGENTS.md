@@ -231,11 +231,13 @@ explicitly requests it.
 
 ### Shared teaching Checkpoint scope
 
-`Checkpoint 565` explicitly limits scope to the active MATH 565 course and
-its changed writable submodules; `565` is a scope selector, not a commit
-message. Construct a descriptive commit message. `Checkpoint 332` likewise
-selects only the active MATH 332 course. Dashboard reconciliation still
-applies without adding infrastructure repositories to the commit/push scope.
+`Checkpoint 332` and `Checkpoint 565` explicitly select only the named active
+course and its changed writable submodules. The course number is a scope
+selector, not a commit message. With no text after the selector, construct a
+descriptive commit message. For `Checkpoint 332 <message>` or
+`Checkpoint 565 <message>`, use the text after the scope selector as the exact
+commit message. Dashboard reconciliation still applies without adding
+infrastructure repositories to the commit/push scope.
 
 When invoked from either active teaching project, `Checkpoint` applies to both
 `MATH332Fall2026` and `MATH565Fall2026`, unless the user explicitly limits its
