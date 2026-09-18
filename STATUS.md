@@ -66,6 +66,13 @@ appropriate phase rather than appended indiscriminately.
     - [x] Record the classroom as PH 109 (room change September 10, 2026).
     - [x] Add a TBA final-exam entry for the following week.
     - [x] Leave unknown topics, materials, and additional dates blank.
+    - [x] Audit all nine instructional Panopto recordings from August 18
+      through September 17; reconcile actual coverage and covered-deck links,
+      preserving assessment and deadline entries.
+    - [x] Record the historical audit and September 22 continuation in
+      `notes/LECTURE-UPDATES.md`; the next calendar occurrence is annotated.
+    - [x] Include the historical schedule audit in the September 17 Checkpoint;
+      verify the resulting remote deployment separately.
     - [x] Validate Quarto rendering and generated page structure.
     - [ ] Inspect the visible page layout in a browser.
   - [ ] Notebooks (`pages/notebooks.qmd`)
@@ -167,8 +174,10 @@ appropriate phase rather than appended indiscriminately.
     - [x] Prepare Assignment 3 locally as Owen Exercises 5.4 and 5.13, due
       September 25; save unpublished Canvas draft 104697 for 20 points and
       unlimited file uploads.
-    - [ ] Deploy Assignment 3, configure its separate pair group set, and
-      publish its Canvas assignment and announcement after instructor approval.
+    - [x] Commit and push Assignment 3 website sources (`fcbb207`).
+    - [ ] Verify the deployed Assignment 3 links, configure its separate pair
+      group set, and publish its Canvas assignment and announcement after
+      instructor approval.
     - [ ] Add assignment entries and due dates as they are finalized.
     - [x] Validate Quarto rendering and generated page structure.
     - [ ] Inspect the visible page layout in a browser.

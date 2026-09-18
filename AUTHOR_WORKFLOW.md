@@ -272,6 +272,25 @@ single-occurrence calendar actions below.
 7. Leave repository changes uncommitted and unpublished until the instructor
    gives the exact `Checkpoint` command.
 
+### Retrospective lecture audit
+
+When the instructor requests an audit of all lectures through a stated date,
+apply the same recording-evidence standard to every completed instructional
+meeting in that range. Match recordings by their actual meeting dates; ignore
+short duplicate or incomplete recordings when a complete recording is available.
+Record missing evidence as unresolved rather than treating a planned topic or
+an accepted baseline as verified coverage. Use captions to distinguish a slide
+preview from substantive teaching, and link each completed row to its covered
+decks. Preserve assessment-only meetings and deadline entries.
+
+Record the historical audit in `notes/LECTURE-UPDATES.md`, explicitly
+superseding an earlier accepted baseline when appropriate. Do not recreate
+historical calendar notes; reconcile only the next instructional occurrence,
+retaining an already verified continuation note when it is still accurate.
+Update `notes/NEXT.md`, `STATUS.md`, and the MATH 565 Dashboard tasks to reflect
+the verified stopping point and remaining publication work. Preserve pending
+grading, Canvas publication, and instructor-review tasks until completed.
+
 If the recording notice has not arrived, do not guess. Leave the schedule and
 calendar unchanged and report that the lecture update is waiting for the
 recording. If the latest course meeting was an assessment and all earlier

@@ -1,38 +1,51 @@
 # Next task
 
-## Current task
+## Immediate actions
 
-Assignment 3 (Owen Exercises 5.4 and 5.13, due September 25 at 11:59 PM
-America/Chicago) is prepared locally. Canvas draft 104697 is saved unpublished
-for 20 points, file uploads, unlimited attempts, and Everyone; its description
-links only to the course detail page and Assignments page. Local rendering and
-link checks pass. Next: verify the deployed links after this Checkpoint, then
-prepare/verify
-Assignment 3 Groups (20 self-sign-up groups, maximum two students), configure
-the shared group grade, and request one combined Canvas publication confirmation.
-Canvas duplicate audit found only Assignment 1 and 2 group sets and no
-Assignment 3 announcement. No Assignment 3 groups or announcement have been
-created yet. Prepared announcement title: “Assignment 3 is on the course
-website.” Body: link “Assignment 3” to the live detail page and “Assignments”
-to the course Assignments page; explain that students working individually or
-with one partner must sign up under Assignment 3 Groups and that one group
-member submits the shared work in Canvas. Do not repeat exercises or due date.
+1. Finish Assignment 3 Canvas setup and publication (homework assignment target:
+   September 17; student deadline: September 25 at 11:59 PM America/Chicago).
+   Website sources were committed and pushed in `fcbb207`; verify the live
+   detail and Assignments links before Canvas publication. Draft 104697 is
+   saved unpublished for 20 points, file uploads, unlimited attempts, and
+   Everyone; its description links only to those two course pages.
+   Prepare/verify Assignment 3 Groups (20 self-sign-up groups, maximum two
+   students), configure the shared group grade, and prepare the announcement.
+   The last duplicate audit found only Assignment 1 and 2 group sets and no
+   Assignment 3 announcement; recheck before creating either. Request one
+   combined Canvas publication confirmation after setup and live-link checks.
+   Prepared title: “Assignment 3 is on the course website.” Link “Assignment 3”
+   and “Assignments” to their live pages; explain group sign-up for individuals
+   or pairs and one shared submission. Do not repeat exercises or the due date.
+2. Grade Homework 2 (Dashboard deadline: September 14; completion not reported).
+   Submissions and the grading tracker are prepared privately. No scores or
+   feedback have been entered in Canvas. Follow the manual-posting and
+   instructor-review workflow before releasing grades.
+3. Review project-topic submissions after the September 18 deadline.
+4. Grade Test 1 by September 22; retain private assessment and grading material
+   under the assessment-confidentiality rules.
+5. Prepare the September 22 lecture: resume Deck 03 at “Centered discrepancy
+   and smoothness,” then KL and Stein. Bayesian inference and queues remain
+   ahead. The single-occurrence Illinois Tech calendar note is already saved.
+6. Add the seminar link, then review Deck 04 followed by Deck 05 with the
+   instructor, including their companion-notebook plans.
+7. After Canvas publication, reconcile its final verified state and request
+   a closeout Checkpoint if needed.
 
-Grade Homework 2 (Dashboard deadline: September 14; completion not yet
-reported), grade Test 1 by Tuesday, September 22, 2026, add the seminar link,
-and then review Deck 04 followed by Deck 05.
-Assignment 2 is prepared for grading in the private OneDrive course folder:
-the Canvas ZIP
-and all 30 attachments are verified, 17 submitting groups or individuals are
-organized, two non-submission rows remain visible, and the Excel tracker and
-grading guide are ready. No Assignment 2 scores or feedback have been entered
-in Canvas.
-Remaining notebook and later-deck work is listed below.
+## Current verified state
 
-For September 22, resume Deck 03 at “Centered discrepancy and smoothness,”
-then KL and Stein; Bayesian inference and queues remain ahead. The September
-17 recording, schedule reconciliation, and single-occurrence calendar note
-are recorded in `notes/LECTURE-UPDATES.md`.
+All nine instructional recordings from August 18 through September 17 have
+been audited. The completed schedule rows reflect actual coverage and link
+the covered decks; `notes/LECTURE-UPDATES.md` records recording identifiers
+and evidence. September 15 remains assessment-only. The historical audit
+supersedes the accepted September 10 baseline; do not repeat it from old
+baseline instructions. Schedule rendering and 36 local links/anchors pass.
+The schedule audit and handoff updates are included in this Checkpoint;
+remote deployment follows the push and remains to be verified.
+
+Decks 01–03 and their companions have completed instructor review; Decks
+04–05 remain drafts for instructor review. Remaining deferred notebook,
+Bookings, QMCPy mixture, and MCTS work stays in `notes/TODO-LATER.md` and the
+Blue Dashboard, without reopening completed Deck 02–03 work.
 
 Deck 03 introduces kernel discrepancy, then its worst-case and average-case
 integration-error interpretations (GP first, then the zero-mean stochastic-process

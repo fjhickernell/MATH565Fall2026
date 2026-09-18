@@ -129,6 +129,13 @@ recording identifier or link, the next instructional event annotated, and the
 check date. A missing recording does not count as reconciliation and must not
 advance the ledger.
 
+When the instructor requests all lectures through a date, use the retrospective
+lecture-audit workflow in `AUTHOR_WORKFLOW.md`. Consult the existing ledger
+first, audit the requested instructional range, and reconcile the 565 Dashboard
+and handoff files with actual coverage and remaining actions. A recording-based
+historical audit supersedes an accepted baseline; do not reopen audited meetings
+solely because older notes describe that baseline.
+
 ### Assignment request shorthand
 
 When the user asks to create, set up, or materially revise an assignment,
@@ -223,6 +230,12 @@ explicitly requests it.
 ## Git and checkpoints
 
 ### Shared teaching Checkpoint scope
+
+`Checkpoint 565` explicitly limits scope to the active MATH 565 course and
+its changed writable submodules; `565` is a scope selector, not a commit
+message. Construct a descriptive commit message. `Checkpoint 332` likewise
+selects only the active MATH 332 course. Dashboard reconciliation still
+applies without adding infrastructure repositories to the commit/push scope.
 
 When invoked from either active teaching project, `Checkpoint` applies to both
 `MATH332Fall2026` and `MATH565Fall2026`, unless the user explicitly limits its
