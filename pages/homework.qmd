@@ -12,6 +12,14 @@ title: "Assignments"
   submission is automatically shared with all group members.
 - Grades and feedback are shared with the whole group. By default, all
   members receive the **same grade**.
+- **Every submitted filename must include the names of all group members**
+  (or your name if working individually), for example,
+  `HW2_Jane_Doe_John_Smith.pdf` and `HW2_Jane_Doe_John_Smith.ipynb`.
+- **The contents of every submitted file must include the full names and
+  A-numbers (student IDs) of all group members**, or your own if working
+  individually. Put this information at the beginning of each PDF, in the
+  first Markdown cell of each notebook, and in a header comment in each
+  source-code file.
 - Assignments are due by **11:59 PM Chicago Time** on the due date. Canvas
   displays due dates in your time zone.
 - Each submission must include **all relevant files**:

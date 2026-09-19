@@ -158,6 +158,8 @@ appropriate phase rather than appended indiscriminately.
       Quarto template based on the architecture and course-material
       references.
     - [x] Record the currently established assignment ground rules.
+    - [x] Require every submitted filename to identify all group members and
+      every file's contents to include each member's full name and A-number.
     - [x] Leave assignment details and due dates pending rather than inventing
       them.
     - [x] Finalize Assignment 1 as Owen Exercises 1.2 and 2.1, due September

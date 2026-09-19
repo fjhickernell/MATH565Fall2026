@@ -2,17 +2,13 @@
 
 ## Immediate actions
 
-1. Grade Homework 2 (Dashboard deadline: September 14; completion not reported).
-   Submissions and the grading tracker are prepared privately. No scores or
-   feedback have been entered in Canvas. Follow the manual-posting and
-   instructor-review workflow before releasing grades.
-2. Review project-topic submissions after the September 18 deadline.
-3. Grade Test 1 by September 22; retain private assessment and grading material
+1. Review project-topic submissions after the September 18 deadline.
+2. Grade Test 1 by September 22; retain private assessment and grading material
    under the assessment-confidentiality rules.
-4. Prepare the September 22 lecture: resume Deck 03 at “Centered discrepancy
+3. Prepare the September 22 lecture: resume Deck 03 at “Centered discrepancy
    and smoothness,” then KL and Stein. Bayesian inference and queues remain
    ahead. The single-occurrence Illinois Tech calendar note is already saved.
-5. Add the seminar link, then review Deck 04 followed by Deck 05 with the
+4. Add the seminar link, then review Deck 04 followed by Deck 05 with the
    instructor, including their companion-notebook plans.
 
 ## Current verified state
@@ -25,6 +21,12 @@ supersedes the accepted September 10 baseline; do not repeat it from old
 baseline instructions. Schedule rendering and 36 local links/anchors pass.
 The schedule audit and handoff updates are included in this Checkpoint;
 remote deployment follows the push and remains to be verified.
+
+Homework 2 grading is complete. All 19 real Canvas grading rows were checked
+against the private workbook; grades, text comments, and the two annotated
+feedback PDFs were released on September 18. The all-sections Canvas
+announcement is published. Student-specific grading details and files remain
+outside this public repository.
 
 Decks 01–03 and their companions have completed instructor review; Decks
 04–05 remain drafts for instructor review. Remaining deferred notebook,
