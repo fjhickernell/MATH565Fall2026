@@ -1051,7 +1051,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="06d26f86" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="314a2cf1" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1070,7 +1070,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="0edb6604" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="de3369dd" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2053,14 +2053,28 @@ L(\mu,\sigma^2;y)
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
-<p>Consider a single-server queue. Immediately after event <span class="math inline">\(i\)</span>, let</p>
+<p>First distinguish <span class="alert">full input durations</span> from <span class="alert">event-state clocks</span>.</p>
+<p>The random inputs are</p>
+<p><span class="math display">\[
+U_k\sim F_A \quad\text{($k$th interarrival duration)},
+\qquad
+V_j\sim F_S \quad\text{(customer $j$'s full service time)}.
+\]</span></p>
+<p>Immediately after event <span class="math inline">\(i\)</span>, the state is</p>
 <p><span class="math display">\[\begin{align*}
 A_i&amp;=\text{time until the next arrival},\\
 N_i&amp;=\text{number of customers in the system},\\
 S_i&amp;=\text{remaining service time}, \qquad S_i=\infty\text{ when the server is idle}
 \end{align*}\]</span></p>
-<p>Draw full interarrival times from <span class="math inline">\(F_A\)</span> and full service times from <span class="math inline">\(F_S\)</span></p>
-<p>The <span class="alert">inter-event interval</span> is</p>
+<p>After the <span class="math inline">\(k\)</span>th arrival, reset <span class="math inline">\(A_{i+1}=U_{k+1}\)</span>. When customer <span class="math inline">\(j\)</span> begins service, reset <span class="math inline">\(S_{i+1}=V_j\)</span>.</p>
+<div class="key-point">
+<p>The full input durations become the countdown clocks in the event state</p>
+</div>
+</section>
+<section class="slide level2">
+
+<h3 id="the-next-queue-event">The next queue event</h3>
+<p>Between events, both active clocks count down by the same amount. The next event occurs after</p>
 <p><span class="math display">\[
 \Delta t_i=\min(A_i,S_i)
 \]</span></p>
@@ -2068,40 +2082,47 @@ S_i&amp;=\text{remaining service time}, \qquad S_i=\infty\text{ when the server 
 <li><span class="alert"><strong>Arrival:</strong></span> <span class="math inline">\(A_i&lt;S_i\)</span></li>
 <li><span class="alert"><strong>Service completion:</strong></span> <span class="math inline">\(S_i\leq A_i\)</span></li>
 </ul>
-<p>The state <span class="math inline">\((A_i,N_i,S_i)\)</span> is Markov when new interarrival and service durations are independent</p>
+<p>Then</p>
+<p><span class="math display">\[
+T_{i+1}=T_i+\Delta t_i,
+\]</span></p>
+<p>At the event, update <span class="math inline">\(N_{i+1}\)</span>. If a clock starts anew, load its next full input duration, <span class="math inline">\(U_k\)</span> or <span class="math inline">\(V_j\)</span>. Carry the other clock’s residual time forward.</p>
+<p>The state <span class="math inline">\((A_i,N_i,S_i)\)</span> is Markov when the input durations are independent.</p>
 </section>
 <section class="slide level2">
 
 <h3 id="residual-times">Residual times</h3>
 <p>A partially elapsed interarrival or service time generally does not have the same probability distribution as a newly drawn full duration</p>
-<p><strong>Example.</strong> If <span class="math inline">\(V\sim\Unif(4,8)\)</span> and five minutes have elapsed, then</p>
+<p><strong>Example.</strong> If <span class="math inline">\(V_j\sim\Unif(4,8)\)</span> and five minutes of customer <span class="math inline">\(j\)</span>’s service have elapsed, the remaining time has distribution</p>
 <p><span class="math display">\[
-V-5\mid V&gt;5\sim\Unif(0,3), \qquad \text{not }\Unif(4,8)
+V_j-5\mid V_j&gt;5\sim\Unif(0,3), \qquad \text{not }\Unif(4,8)
 \]</span></p>
-<p>In the taxi example, taxi interarrival times were exponential and therefore memoryless. If <span class="math inline">\(X\sim\Exp(\lambda)\)</span>, then</p>
+<p>In the taxi example, the interarrival durations <span class="math inline">\(U_k\)</span> were exponential and therefore memoryless:</p>
 <p><span class="math display">\[
-X-t\mid X&gt;t\sim\Exp(\lambda)
+U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 \]</span></p>
 </section>
 <section class="slide level2">
 
 <h3 id="event-driven-queue-simulation">Event-driven queue simulation</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="" aria-label="1"></a>Initialize i = 0, T[0] = 0, A[0] ~ F_A, N[0] = 0, S[0] = infinity</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="" aria-label="1"></a>Initialize i = 0, T[0] = 0, A[0] = U_1, N[0] = 0, S[0] = infinity</span>
 <span id="cb1-2"><a href="" aria-label="2"></a>while i &lt; i_max and T[i] &lt; T_max:  # event or simulated-time limit</span>
 <span id="cb1-3"><a href="" aria-label="3"></a>    delta_t_i = min(A[i], S[i])  # S[i] = infinity while idle</span>
 <span id="cb1-4"><a href="" aria-label="4"></a>    if T[i] + delta_t_i &gt;= T_max: stop at T_max without processing the event</span>
 <span id="cb1-5"><a href="" aria-label="5"></a>    T[i+1] = T[i] + delta_t_i</span>
 <span id="cb1-6"><a href="" aria-label="6"></a>    if A[i] &lt; S[i]:  # arrival</span>
 <span id="cb1-7"><a href="" aria-label="7"></a>        N[i+1] = N[i] + 1</span>
-<span id="cb1-8"><a href="" aria-label="8"></a>        generate A[i+1] ~ F_A</span>
-<span id="cb1-9"><a href="" aria-label="9"></a>        if N[i] == 0: generate S[i+1] ~ F_S</span>
-<span id="cb1-10"><a href="" aria-label="10"></a>        else: S[i+1] = S[i] - delta_t_i</span>
-<span id="cb1-11"><a href="" aria-label="11"></a>    else:  # service completion</span>
-<span id="cb1-12"><a href="" aria-label="12"></a>        N[i+1] = N[i] - 1</span>
-<span id="cb1-13"><a href="" aria-label="13"></a>        A[i+1] = A[i] - delta_t_i</span>
-<span id="cb1-14"><a href="" aria-label="14"></a>        if N[i+1] &gt; 0: generate S[i+1] ~ F_S</span>
-<span id="cb1-15"><a href="" aria-label="15"></a>        else: S[i+1] = infinity</span>
-<span id="cb1-16"><a href="" aria-label="16"></a>    i = i + 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-8"><a href="" aria-label="8"></a>        A[i+1] = next unused U_k</span>
+<span id="cb1-9"><a href="" aria-label="9"></a>        if N[i] == 0:</span>
+<span id="cb1-10"><a href="" aria-label="10"></a>            S[i+1] = V_j for the arriving customer j</span>
+<span id="cb1-11"><a href="" aria-label="11"></a>        else: S[i+1] = S[i] - delta_t_i</span>
+<span id="cb1-12"><a href="" aria-label="12"></a>    else:  # service completion</span>
+<span id="cb1-13"><a href="" aria-label="13"></a>        N[i+1] = N[i] - 1</span>
+<span id="cb1-14"><a href="" aria-label="14"></a>        A[i+1] = A[i] - delta_t_i</span>
+<span id="cb1-15"><a href="" aria-label="15"></a>        if N[i+1] &gt; 0:</span>
+<span id="cb1-16"><a href="" aria-label="16"></a>            S[i+1] = V_j for the next customer j</span>
+<span id="cb1-17"><a href="" aria-label="17"></a>        else: S[i+1] = infinity</span>
+<span id="cb1-18"><a href="" aria-label="18"></a>    i = i + 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="alert">Events replace fixed time steps</span>, avoiding work when nothing changes</p>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/QueueSimulation.ipynb">Queue simulation companion notebook</a></p>
 </section>
@@ -2128,7 +2149,7 @@ W_j&amp;=\text{accumulated time in the system for customer $j$}
 <section class="slide level2">
 
 <h3 id="queue-simulation-practice">Queue simulation practice</h3>
-<p>The full <span class="alert"><span class="math inline">\(A\)</span>-draws and <span class="math inline">\(S\)</span>-draws</span> are given. Use each row from left to right:</p>
+<p>The full <span class="alert">interarrival and service draws</span> are given. Use each row from left to right:</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -2140,13 +2161,13 @@ W_j&amp;=\text{accumulated time in the system for customer $j$}
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(A\)</span> (interarrival)</td>
+<td style="text-align: left;">Interarrival <span class="math inline">\(U_k\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(2\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(1.5\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(5\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math inline">\(S\)</span> (service)</td>
+<td style="text-align: left;">Service <span class="math inline">\(V_j\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(5\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(1\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(4\)</span></td>
@@ -2396,13 +2417,13 @@ W_j&amp;=\text{accumulated time in the system for customer $j$}
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(A\)</span> (interarrival)</td>
+<td style="text-align: left;">Interarrival <span class="math inline">\(U_k\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(3\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(5\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(4\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math inline">\(S\)</span> (service)</td>
+<td style="text-align: left;">Service <span class="math inline">\(V_j\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(1\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(2\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(6\)</span></td>
@@ -2420,13 +2441,13 @@ W_j&amp;=\text{accumulated time in the system for customer $j$}
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(A\)</span> (interarrival)</td>
+<td style="text-align: left;">Interarrival <span class="math inline">\(U_k\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(1\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(2\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(6\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math inline">\(S\)</span> (service)</td>
+<td style="text-align: left;">Service <span class="math inline">\(V_j\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(5\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(2\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(4\)</span></td>
@@ -2444,20 +2465,20 @@ W_j&amp;=\text{accumulated time in the system for customer $j$}
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(A\)</span> (interarrival)</td>
+<td style="text-align: left;">Interarrival <span class="math inline">\(U_k\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(2\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(1\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(7\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math inline">\(S\)</span> (service)</td>
+<td style="text-align: left;">Service <span class="math inline">\(V_j\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(4\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(2\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(6\)</span></td>
 </tr>
 </tbody>
 </table>
-<p>For each table, report the event sequence and customer times. Each table supplies three <span class="math inline">\(A\)</span>-draws and three <span class="math inline">\(S\)</span>-draws. Which <span class="math inline">\(S\)</span>-draws remain unused, and why?</p>
+<p>For each table, report the event sequence and customer times. Each table supplies three interarrival draws and three service draws. Which service draws remain unused, and why?</p>
 <aside class="notes">
 <p>For the first table, the completed state table is</p>
 <table class="caption-top">
