@@ -3,12 +3,10 @@
 ## Immediate actions
 
 1. Review project-topic submissions after the September 18 deadline.
-2. Grade Test 1 by September 22; retain private assessment and grading material
-   under the assessment-confidentiality rules.
-3. Prepare the September 22 lecture: resume Deck 03 at “Centered discrepancy
+2. Prepare the September 22 lecture: resume Deck 03 at “Centered discrepancy
    and smoothness,” then KL and Stein. Bayesian inference and queues remain
    ahead. The single-occurrence Illinois Tech calendar note is already saved.
-4. Add the seminar link, then review Deck 04 followed by Deck 05 with the
+3. Add the seminar link, then review Deck 04 followed by Deck 05 with the
    instructor, including their companion-notebook plans.
 
 ## Current verified state
@@ -297,17 +295,14 @@ decks after adding links.
   links only to the assignment detail page and Assignments page. Its detail
   page, Assignments entry, Schedule entry, and Deck 02 reminder are live, and
   its all-sections Canvas announcement has been posted.
-- Test 1 is scheduled for the full class period on September 15 in **PH 109**
-  and covers **Introduction** and **Generating Samples**. Its date and coverage
-  appear on the Schedule, Tests page, and Deck 02 title slide. The private
-  assessment materials are complete. Do not put any Test 1 PDF on the web until
-  grading is complete; then add the anonymous score distribution to the
-  released answers, publish only the released answer-key PDF under
-  `assets/tests/current/`, copy the same released PDF into the canonical test
-  archive's `565/` folder, and link it from the Tests page. Publish the archive
-  commit before advancing the course's pinned archive. Canvas already has a
-  published no-submission Test 1 item in the Tests group, verified in the
-  gradebook on September 15; no announcement is needed.
+- Test 1 was administered September 15 in **PH 109** and covered
+  **Introduction** and **Generating Samples**. Grading is complete. Canvas
+  grades were posted September 20, and the published 100-point **Best Test**
+  item will later repeat each student's higher score so that the better of
+  Test 1 and Test 2 counts twice within the Tests group. The released answer
+  key includes the anonymous score distribution and is linked from the Tests
+  page; the same PDF is in the canonical test archive. The Canvas announcement
+  remains a draft pending instructor review.
 - The Fall 2026 project-selection deadline is Friday, September 18. A live
   Illinois-Tech-only Microsoft Form records students' names, A-numbers, project
   type, article citation and PDF or proposed QMCPy feature, and optional QMCPy
