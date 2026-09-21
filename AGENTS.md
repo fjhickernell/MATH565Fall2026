@@ -169,6 +169,27 @@ loading, draft a grades-posted announcement using the grading workbook's
 general-comments tab; keep the announcement unpublished until release is approved
 and the grades are verified visible.
 
+### Assessment-release shorthand
+
+Interpret `Assessment release COURSE ASSESSMENT` as authorization to perform
+the complete post-grading workflow in
+[`AUTHOR_WORKFLOW.md`](AUTHOR_WORKFLOW.md#releasing-a-graded-quiz-test-or-examination).
+For example, `Assessment release 565 Test 2` or
+`Assessment release 332 Quiz 1` identifies the active course and assessment
+unambiguously. If the course number is omitted, use the current active course
+repository only when the intended course is clear; otherwise ask for the
+course number before making a consequential change.
+
+The command confirms that grading is complete and authorizes posting the
+reviewed assessment grades, publishing only the answer-version PDF with its
+anonymous distribution, updating and pushing the canonical test archive and
+affected course repository in the required order, verifying the live release,
+maintaining any syllabus-defined synthetic grade item such as **Best Test**,
+and preparing an all-sections Canvas announcement. Keep the announcement
+unpublished for instructor review. `Publish the assessment announcement`
+authorizes the final Canvas publication after the draft and live links have
+been verified.
+
 ### Dashboard reconciliation at Checkpoint
 
 As part of every Checkpoint, read `notes/NEXT.md` from both active teaching
