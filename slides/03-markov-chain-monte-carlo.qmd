@@ -1272,47 +1272,68 @@ Bayesian inference is a primary reason to sample from complicated unnormalized d
 
 ## Queueing systems {.tree-marker-slide tree-marker="probability-practice"}
 
-Consider a single-server queue observed at event times
+Consider a single-server queue. Immediately after event $i$, let
 
 \begin{align*}
 A_i&=\text{time until the next arrival},\\
 N_i&=\text{number of customers in the system},\\
-S_i&=\text{remaining service time}
+S_i&=\text{remaining service time}, \qquad S_i=\infty\text{ when the server is idle}
 \end{align*}
 
 Draw full interarrival times from $F_A$ and full service times from $F_S$
 
-Residual times generally have different laws
+The [inter-event interval]{.alert} is
+
+$$
+\Delta t_i=\min(A_i,S_i)
+$$
+
+- [**Arrival:**]{.alert} $A_i<S_i$
+- [**Service completion:**]{.alert} $S_i\leq A_i$
 
 The state $(A_i,N_i,S_i)$ is Markov when new interarrival and service durations are independent
 
-At each event, either
+---
 
-- the next customer arrives before service finishes, or
-- the current service finishes before the next arrival
+### Residual times
+
+A partially elapsed interarrival or service time generally does not have the
+same probability distribution as a newly drawn full duration
+
+**Example.** If $V\sim\Unif(4,8)$ and five minutes have elapsed, then
+
+$$
+V-5\mid V>5\sim\Unif(0,3), \qquad \text{not }\Unif(4,8)
+$$
+
+In the taxi example, taxi interarrival times were exponential and therefore
+memoryless. If $X\sim\Exp(\lambda)$, then
+
+$$
+X-t\mid X>t\sim\Exp(\lambda)
+$$
 
 ---
 
 ### Event-driven queue simulation
 
 ```text
-Initialize A[0] ~ F_A, N[0] = 0, S[0] = infinity
-while the stopping rule is not met:
-    if N[i] == 0:
-        advance to the next arrival
-        N[i+1] = 1
-        generate S[i+1] ~ F_S and A[i+1] ~ F_A
-    elif A[i] < S[i]:
-        advance to the next arrival
+Initialize i = 0, T[0] = 0, A[0] ~ F_A, N[0] = 0, S[0] = infinity
+while i < i_max and T[i] < T_max:  # event or simulated-time limit
+    delta_t_i = min(A[i], S[i])  # S[i] = infinity while idle
+    if T[i] + delta_t_i >= T_max: stop at T_max without processing the event
+    T[i+1] = T[i] + delta_t_i
+    if A[i] < S[i]:  # arrival
         N[i+1] = N[i] + 1
-        S[i+1] = S[i] - A[i]
         generate A[i+1] ~ F_A
-    else:
-        advance to the next service completion
+        if N[i] == 0: generate S[i+1] ~ F_S
+        else: S[i+1] = S[i] - delta_t_i
+    else:  # service completion
         N[i+1] = N[i] - 1
-        A[i+1] = A[i] - S[i]
+        A[i+1] = A[i] - delta_t_i
         if N[i+1] > 0: generate S[i+1] ~ F_S
         else: S[i+1] = infinity
+    i = i + 1
 ```
 
 [Events replace fixed time steps]{.alert}, avoiding work when nothing changes
@@ -1323,28 +1344,165 @@ while the stopping rule is not met:
 
 ### Tracking customer time
 
-Add
+Track
 
 \begin{align*}
-T_i&=\text{total elapsed time},\\
-W_j&=\text{waiting plus service time for customer $j$}
+T_i&=\text{simulated time immediately after event $i$},\\
+W_j&=\text{accumulated time in the system for customer $j$}
 \end{align*}
 
-At an arrival after elapsed time $\Delta t$:
+During the [interval from event $i$ to event $i+1$]{.alert}, of length $\Delta t_i$:
 
-- add $\Delta t$ to every customer currently in the system
-- initialize the arriving customer's clock
-- update the queue length and residual event times
+- set $T_{i+1}=T_i+\Delta t_i$
+- update $W_j\leftarrow W_j+\Delta t_i$ for every customer $j$ present immediately after event $i$
+- decrease $A_i$ by $\Delta t_i$ and, when the server is busy, decrease $S_i$ by $\Delta t_i$
 
-At a service completion:
+At [event $i+1$]{.alert}, reset the clock that reached zero and carry the other
+residual clock forward:
 
-- add the completed service interval to all waiting customers
-- record the departing customer's $W_j$
-- begin service for the next customer
+- **Arrival:** set $N_{i+1}=N_i+1$, initialize $W_j=0$ for the arriving
+  customer, and draw $A_{i+1}$. Draw $S_{i+1}$ only if the server was idle
+- **Service completion:** set $N_{i+1}=N_i-1$, record the departing customer's
+  final $W_j$, and draw $S_{i+1}$ only if another customer is waiting
+
+---
+
+### Queue simulation practice
+
+The full [$A$-draws and $S$-draws]{.alert} are given. Use each row from left to right:
+
+| Draw | First | Second | Third |
+|:--|--:|--:|--:|
+| $A$ (interarrival) | $2$ | $1.5$ | $5$ |
+| $S$ (service) | $5$ | $1$ | $4$ |
 
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>
-<span>Which state variables are needed if service times are not memoryless?</span>
+<span>The system starts empty at $T_0=0$. From the supplied row, complete four events, one of each case. Compute each $\Delta t_i$, identify the event, and update the state and customer times.</span>
+:::
+
+:::: {.columns}
+::: {.column width="72%"}
+| $i$ | $T_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
+|--:|--:|--:|--:|--:|--:|:--|
+| 0 | 0 | 2 | 0 | $\infty$ | 2 | arrival |
+| 1 |  |  |  |  |  |  |
+| 2 |  |  |  |  |  |  |
+| 3 |  |  |  |  |  |  |
+| 4 |  |  |  |  | -- | -- |
+:::
+
+::: {.column width="28%"}
+| After event | $W_1$ | $W_2$ | $W_3$ |
+|--:|--:|--:|--:|
+| 0 | -- | -- | -- |
+| 1 |  | -- | -- |
+| 2 |  |  | -- |
+| 3 |  |  |  |
+| 4 |  |  |  |
+:::
+::::
+
+Draw a new service time [only when a customer begins service]{.alert}
+
+::: {.notes}
+The full solution is
+
+| $i$ | $T_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
+|--:|--:|--:|--:|--:|--:|:--|
+| 0 | 0 | 2 | 0 | $\infty$ | 2 | arrival |
+| 1 | 2 | 1.5 | 1 | 5 | 1.5 | arrival |
+| 2 | 3.5 | 5 | 2 | 3.5 | 3.5 | service completion |
+| 3 | 7 | 1.5 | 1 | 1 | 1 | service completion |
+| 4 | 8 | 0.5 | 0 | $\infty$ | -- | -- |
+
+Customer times immediately after each event are
+
+| After event | $W_1$ | $W_2$ | $W_3$ |
+|--:|--:|--:|--:|
+| 0 | -- | -- | -- |
+| 1 | 0 | -- | -- |
+| 2 | 1.5 | 0 | -- |
+| 3 | 5, departed | 3.5 | -- |
+| 4 | 5, departed | 4.5, departed | -- |
+
+Thus the four transitions are arrival to an idle server, arrival to a busy
+server, service completion with another customer waiting, and service
+completion leaving the system empty. The first two arrivals consume all three
+interarrival draws: the initial draw is 2, then the two arrivals draw 1.5 and
+5. Only the first arrival and the first service completion begin service, so
+the third service draw, 4, remains unused. The third customer has not arrived
+by event 4, so $W_3$ remains unavailable.
+:::
+
+---
+
+### $\exstar$ More queue simulation practice
+
+For each table, start with an [empty system at $T_0=0$]{.alert}, make your own
+state and customer-time tables, and complete four events.
+
+| Draw | First | Second | Third |
+|:--|--:|--:|--:|
+| $A$ (interarrival) | $3$ | $5$ | $4$ |
+| $S$ (service) | $1$ | $2$ | $6$ |
+
+| Draw | First | Second | Third |
+|:--|--:|--:|--:|
+| $A$ (interarrival) | $1$ | $2$ | $6$ |
+| $S$ (service) | $5$ | $2$ | $4$ |
+
+| Draw | First | Second | Third |
+|:--|--:|--:|--:|
+| $A$ (interarrival) | $2$ | $1$ | $7$ |
+| $S$ (service) | $4$ | $2$ | $6$ |
+
+For each table, report the event sequence and customer times. Each table
+supplies three $A$-draws and three $S$-draws. Which $S$-draws remain unused,
+and why?
+
+::: {.notes}
+For the first table, the completed state table is
+
+| $i$ | $T_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
+|--:|--:|--:|--:|--:|--:|:--|
+| 0 | 0 | 3 | 0 | $\infty$ | 3 | arrival |
+| 1 | 3 | 5 | 1 | 1 | 1 | service completion |
+| 2 | 4 | 4 | 0 | $\infty$ | 4 | arrival |
+| 3 | 8 | 4 | 1 | 2 | 2 | service completion |
+| 4 | 10 | 2 | 0 | $\infty$ | -- | -- |
+
+The event sequence is arrival, service completion, arrival, service
+completion. The departing customer times are $W_1=1$ and $W_2=2$. The third
+service draw, 6, is unused.
+
+For the second table, the completed state table is
+
+| $i$ | $T_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
+|--:|--:|--:|--:|--:|--:|:--|
+| 0 | 0 | 1 | 0 | $\infty$ | 1 | arrival |
+| 1 | 1 | 2 | 1 | 5 | 2 | arrival |
+| 2 | 3 | 6 | 2 | 3 | 3 | service completion |
+| 3 | 6 | 3 | 1 | 2 | 2 | service completion |
+| 4 | 8 | 1 | 0 | $\infty$ | -- | -- |
+
+The event sequence is arrival, arrival, service completion, service
+completion. The departing customer times are $W_1=5$ and $W_2=5$. The third
+service draw, 4, is unused.
+
+For the third table, the completed state table is
+
+| $i$ | $T_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
+|--:|--:|--:|--:|--:|--:|:--|
+| 0 | 0 | 2 | 0 | $\infty$ | 2 | arrival |
+| 1 | 2 | 1 | 1 | 4 | 1 | arrival |
+| 2 | 3 | 7 | 2 | 3 | 3 | service completion |
+| 3 | 6 | 4 | 1 | 2 | 2 | service completion |
+| 4 | 8 | 2 | 0 | $\infty$ | -- | -- |
+
+The event sequence is arrival, arrival, service completion, service
+completion. The departing customer times are $W_1=4$ and $W_2=5$. The third
+service draw, 6, is unused.
 :::
 
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="mcmc-discrepancy-practice"}
