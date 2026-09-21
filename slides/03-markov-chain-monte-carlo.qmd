@@ -1272,7 +1272,17 @@ Bayesian inference is a primary reason to sample from complicated unnormalized d
 
 ## Queueing systems {.tree-marker-slide tree-marker="probability-practice"}
 
-Consider a single-server queue. Immediately after event $i$, let
+First distinguish [full input durations]{.alert} from [event-state clocks]{.alert}.
+
+The random inputs are
+
+$$
+U_k\sim F_A \quad\text{($k$th interarrival duration)},
+\qquad
+V_j\sim F_S \quad\text{(customer $j$'s full service time)}.
+$$
+
+Immediately after event $i$, the state is
 
 \begin{align*}
 A_i&=\text{time until the next arrival},\\
@@ -1280,9 +1290,19 @@ N_i&=\text{number of customers in the system},\\
 S_i&=\text{remaining service time}, \qquad S_i=\infty\text{ when the server is idle}
 \end{align*}
 
-Draw full interarrival times from $F_A$ and full service times from $F_S$
+After the $k$th arrival, reset $A_{i+1}=U_{k+1}$. When customer $j$ begins
+service, reset $S_{i+1}=V_j$.
 
-The [inter-event interval]{.alert} is
+::: {.key-point}
+The full input durations become the countdown clocks in the event state
+:::
+
+---
+
+### The next queue event
+
+Between events, both active clocks count down by the same amount. The next
+event occurs after
 
 $$
 \Delta t_i=\min(A_i,S_i)
@@ -1291,7 +1311,16 @@ $$
 - [**Arrival:**]{.alert} $A_i<S_i$
 - [**Service completion:**]{.alert} $S_i\leq A_i$
 
-The state $(A_i,N_i,S_i)$ is Markov when new interarrival and service durations are independent
+Then
+
+$$
+T_{i+1}=T_i+\Delta t_i,
+$$
+
+At the event, update $N_{i+1}$. If a clock starts anew, load its next full input
+duration, $U_k$ or $V_j$. Carry the other clock's residual time forward.
+
+The state $(A_i,N_i,S_i)$ is Markov when the input durations are independent.
 
 ---
 
@@ -1300,17 +1329,18 @@ The state $(A_i,N_i,S_i)$ is Markov when new interarrival and service durations 
 A partially elapsed interarrival or service time generally does not have the
 same probability distribution as a newly drawn full duration
 
-**Example.** If $V\sim\Unif(4,8)$ and five minutes have elapsed, then
+**Example.** If $V_j\sim\Unif(4,8)$ and five minutes of customer $j$'s service
+have elapsed, the remaining time has distribution
 
 $$
-V-5\mid V>5\sim\Unif(0,3), \qquad \text{not }\Unif(4,8)
+V_j-5\mid V_j>5\sim\Unif(0,3), \qquad \text{not }\Unif(4,8)
 $$
 
-In the taxi example, taxi interarrival times were exponential and therefore
-memoryless. If $X\sim\Exp(\lambda)$, then
+In the taxi example, the interarrival durations $U_k$ were exponential and
+therefore memoryless:
 
 $$
-X-t\mid X>t\sim\Exp(\lambda)
+U_k-t\mid U_k>t\sim\Exp(\lambda)
 $$
 
 ---
@@ -1318,20 +1348,22 @@ $$
 ### Event-driven queue simulation
 
 ```text
-Initialize i = 0, T[0] = 0, A[0] ~ F_A, N[0] = 0, S[0] = infinity
+Initialize i = 0, T[0] = 0, A[0] = U_1, N[0] = 0, S[0] = infinity
 while i < i_max and T[i] < T_max:  # event or simulated-time limit
     delta_t_i = min(A[i], S[i])  # S[i] = infinity while idle
     if T[i] + delta_t_i >= T_max: stop at T_max without processing the event
     T[i+1] = T[i] + delta_t_i
     if A[i] < S[i]:  # arrival
         N[i+1] = N[i] + 1
-        generate A[i+1] ~ F_A
-        if N[i] == 0: generate S[i+1] ~ F_S
+        A[i+1] = next unused U_k
+        if N[i] == 0:
+            S[i+1] = V_j for the arriving customer j
         else: S[i+1] = S[i] - delta_t_i
     else:  # service completion
         N[i+1] = N[i] - 1
         A[i+1] = A[i] - delta_t_i
-        if N[i+1] > 0: generate S[i+1] ~ F_S
+        if N[i+1] > 0:
+            S[i+1] = V_j for the next customer j
         else: S[i+1] = infinity
     i = i + 1
 ```
@@ -1369,12 +1401,12 @@ residual clock forward:
 
 ### Queue simulation practice
 
-The full [$A$-draws and $S$-draws]{.alert} are given. Use each row from left to right:
+The full [interarrival and service draws]{.alert} are given. Use each row from left to right:
 
 | Draw | First | Second | Third |
 |:--|--:|--:|--:|
-| $A$ (interarrival) | $2$ | $1.5$ | $5$ |
-| $S$ (service) | $5$ | $1$ | $4$ |
+| Interarrival $U_k$ | $2$ | $1.5$ | $5$ |
+| Service $V_j$ | $5$ | $1$ | $4$ |
 
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>
@@ -1444,22 +1476,22 @@ state and customer-time tables, and complete four events.
 
 | Draw | First | Second | Third |
 |:--|--:|--:|--:|
-| $A$ (interarrival) | $3$ | $5$ | $4$ |
-| $S$ (service) | $1$ | $2$ | $6$ |
+| Interarrival $U_k$ | $3$ | $5$ | $4$ |
+| Service $V_j$ | $1$ | $2$ | $6$ |
 
 | Draw | First | Second | Third |
 |:--|--:|--:|--:|
-| $A$ (interarrival) | $1$ | $2$ | $6$ |
-| $S$ (service) | $5$ | $2$ | $4$ |
+| Interarrival $U_k$ | $1$ | $2$ | $6$ |
+| Service $V_j$ | $5$ | $2$ | $4$ |
 
 | Draw | First | Second | Third |
 |:--|--:|--:|--:|
-| $A$ (interarrival) | $2$ | $1$ | $7$ |
-| $S$ (service) | $4$ | $2$ | $6$ |
+| Interarrival $U_k$ | $2$ | $1$ | $7$ |
+| Service $V_j$ | $4$ | $2$ | $6$ |
 
 For each table, report the event sequence and customer times. Each table
-supplies three $A$-draws and three $S$-draws. Which $S$-draws remain unused,
-and why?
+supplies three interarrival draws and three service draws. Which service draws
+remain unused, and why?
 
 ::: {.notes}
 For the first table, the completed state table is
