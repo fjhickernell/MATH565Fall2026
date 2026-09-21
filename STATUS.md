@@ -71,8 +71,8 @@ appropriate phase rather than appended indiscriminately.
       preserving assessment and deadline entries.
     - [x] Record the historical audit and September 22 continuation in
       `notes/LECTURE-UPDATES.md`; the next calendar occurrence is annotated.
-    - [x] Include the historical schedule audit in the September 17 Checkpoint;
-      verify the resulting remote deployment separately.
+    - [x] Include the historical schedule audit in the September 17 Checkpoint
+      and verify the resulting remote deployment.
     - [x] Validate Quarto rendering and generated page structure.
     - [ ] Inspect the visible page layout in a browser.
   - [ ] Notebooks (`pages/notebooks.qmd`)
@@ -357,6 +357,9 @@ appropriate phase rather than appended indiscriminately.
     worked example and demote supporting Bayesian/queueing headings.
   - [x] Add four queue-notebook callouts emphasizing residual times, finite-run
     averages, blocking, and the distinction between capacity and service rate.
+  - [x] Refine the Bayesian and queueing materials; distinguish full
+    interarrival and service inputs from event-state residual clocks, align the
+    simulation helper and companion, and add worked four-event queue practice.
   - [x] Compare ordinary kernel discrepancy, KL/relative entropy, and
     score-based Stein discrepancy, including normalizing constants and
     limitations; place alternatives after the integration-error development and cite the

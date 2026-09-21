@@ -16,9 +16,9 @@ been audited. The completed schedule rows reflect actual coverage and link
 the covered decks; `notes/LECTURE-UPDATES.md` records recording identifiers
 and evidence. September 15 remains assessment-only. The historical audit
 supersedes the accepted September 10 baseline; do not repeat it from old
-baseline instructions. Schedule rendering and 36 local links/anchors pass.
-The schedule audit and handoff updates are included in this Checkpoint;
-remote deployment follows the push and remains to be verified.
+baseline instructions. Schedule rendering and 36 local links/anchors pass. The
+schedule audit and handoff updates are deployed, and the corresponding remote
+workflow completed successfully.
 
 Homework 2 grading is complete. All 19 real Canvas grading rows were checked
 against the private workbook; grades, text comments, and the two annotated
@@ -149,6 +149,13 @@ All five notebooks execute with the `qmcpy` kernel and refreshed saved plots;
 labels and units have been visually checked. SimPy >=4.1.2 is now recorded in
 course `requirements.txt`, installed by local setup and CI, and matched by the
 queue notebook's Colab setup. ArviZ remains supplied by QMCPy's `class` extra.
+
+The September 21 Bayesian and queueing refinements are deployed. Queueing now
+distinguishes full interarrival and service inputs $U_k,V_j$ from event-state
+residual clocks $A_i,S_i$, states the event-driven update sequence explicitly,
+and includes worked four-event practice. The queue helper and companion use
+the same notation and accounting conventions. The latest `main` deployment
+through commit `4cd934d` completed successfully.
 
 ## Other pending MATH 565 work
 
