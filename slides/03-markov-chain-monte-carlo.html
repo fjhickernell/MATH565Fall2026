@@ -1051,7 +1051,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="a2084d3a" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="22ef6c3c" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1070,7 +1070,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="814f69bf" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="60b213a5" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2054,54 +2054,68 @@ L(\mu,\sigma^2;y)
 </div>
 
 <p>First distinguish <span class="alert">full input durations</span> from <span class="alert">event-state clocks</span>.</p>
-<p>The random inputs are</p>
+<p>Assume the random inputs are mutually independent:</p>
 <p><span class="math display">\[
 U_k\sim F_A \quad\text{($k$th interarrival duration)},
 \qquad
 V_j\sim F_S \quad\text{(customer $j$'s full service time)}.
 \]</span></p>
-<p>Immediately after event <span class="math inline">\(i\)</span>, the state is</p>
+<p>Immediately after event <span class="math inline">\(i\)</span>, the <span class="alert">state</span> is <span class="math inline">\(X_i=(A_i,N_i,S_i), \qquad i=0,1,\ldots\)</span>, where</p>
 <p><span class="math display">\[\begin{align*}
 A_i&amp;=\text{time until the next arrival},\\
 N_i&amp;=\text{number of customers in the system},\\
 S_i&amp;=\text{remaining service time}, \qquad S_i=\infty\text{ when the server is idle}
 \end{align*}\]</span></p>
-<p>The <span class="alert">event-epoch process</span> is</p>
-<p><span class="math display">\[
-X_i=(A_i,N_i,S_i), \qquad i=0,1,\ldots
-\]</span></p>
-<p>After the <span class="math inline">\(k\)</span>th arrival, reset <span class="math inline">\(A_{i+1}=U_{k+1}\)</span>. When customer <span class="math inline">\(j\)</span> begins service, reset <span class="math inline">\(S_{i+1}=V_j\)</span>.</p>
+<ul>
+<li><p>At the <span class="math inline">\(k\)</span>th arrival, load the next arrival clock with <span class="math inline">\(U_{k+1}\)</span></p></li>
+<li><p>When customer <span class="math inline">\(j\)</span> begins service, load the service clock with <span class="math inline">\(V_j\)</span></p></li>
+<li><p>For performance, also track <span class="math inline">\(W_j=\)</span> accumulated time in the system for customer <span class="math inline">\(j\)</span></p></li>
+</ul>
 <div class="key-point">
-<p>The full input durations become the countdown clocks in the event state</p>
+<p>The state <span class="math inline">\(X_i\)</span> determines the next-event law. The <span class="math inline">\(W_j\)</span> clocks measure customer time but do not affect that law</p>
 </div>
 </section>
 <section class="slide level2">
 
 <h3 id="the-next-queue-event">The next queue event</h3>
-<p>Between events, both active clocks count down by the same amount. The next event occurs after</p>
-<p><span class="math display">\[
-\Delta t_i=\min(A_i,S_i)
-\]</span></p>
+<ul>
+<li><p>The next event occurs after <span class="math inline">\(\Delta t_i=\min(A_i,S_i)\)</span></p>
 <ul>
 <li><span class="alert"><strong>Arrival:</strong></span> <span class="math inline">\(A_i&lt;S_i\)</span></li>
 <li><span class="alert"><strong>Service completion:</strong></span> <span class="math inline">\(S_i\leq A_i\)</span></li>
+</ul></li>
+<li><p>During the interval from event <span class="math inline">\(i\)</span> to event <span class="math inline">\(i+1\)</span></p>
+<ul>
+<li>Simulated time: <span class="math inline">\(T_{i+1}=T_i+\Delta t_i\)</span></li>
+<li>Both active state clocks count down by <span class="math inline">\(\Delta t_i\)</span></li>
+<li>Each customer present gains <span class="math inline">\(W_j\leftarrow W_j+\Delta t_i\)</span></li>
+</ul></li>
+<li><p>At the event</p>
+<ul>
+<li>Update <span class="math inline">\(N_{i+1}\)</span></li>
+<li>On arrival, set the new customer’s <span class="math inline">\(W_j=0\)</span></li>
+<li>On service completion, record the departing customer’s <span class="math inline">\(W_j\)</span></li>
+<li>Load each clock that starts anew with its next full input duration</li>
+<li>Carry every other active clock’s residual time forward</li>
+</ul></li>
 </ul>
-<p>Then</p>
-<p><span class="math display">\[
-T_{i+1}=T_i+\Delta t_i,
-\]</span></p>
-<p>At the event, update <span class="math inline">\(N_{i+1}\)</span>. If a clock starts anew, load its next full input duration, <span class="math inline">\(U_k\)</span> or <span class="math inline">\(V_j\)</span>. Carry the other clock’s residual time forward.</p>
-<p>When the unused input durations are independent of the past, the conditional distribution of <span class="math inline">\(X_{i+1}\)</span> given the full history depends only on <span class="math inline">\(X_i\)</span>. Thus <span class="math inline">\(\{X_i\}_{i\geq 0}\)</span> is a Markov chain. The customer clocks <span class="math inline">\(W_j\)</span> track performance but are not needed to determine the next queue state.</p>
 </section>
 <section class="slide level2">
 
-<h3 id="residual-times">Residual times</h3>
-<p>A partially elapsed interarrival or service time generally does not have the same probability distribution as a newly drawn full duration</p>
+<h3 id="markov-interpretation">Markov interpretation</h3>
+<div class="key-point">
+<p>If we jump into the process at <span class="math inline">\(i=47\)</span>, knowing <span class="math inline">\(X_{47}=(A_{47},N_{47},S_{47})\)</span> and using future independent input durations lets us continue with <span class="math inline">\(X_{48},X_{49},\ldots\)</span> without knowing the earlier queue states <span class="math inline">\(X_0,\ldots,X_{46}\)</span></p>
+</div>
+<ul>
+<li>The residual clocks belong in the state because a partially elapsed duration generally does not have the same distribution as a newly drawn full duration</li>
+</ul>
 <p><strong>Example.</strong> If <span class="math inline">\(V_j\sim\Unif(4,8)\)</span> and five minutes of customer <span class="math inline">\(j\)</span>’s service have elapsed, the remaining time has distribution</p>
 <p><span class="math display">\[
 V_j-5\mid V_j&gt;5\sim\Unif(0,3), \qquad \text{not }\Unif(4,8)
 \]</span></p>
-<p>In the taxi example, the interarrival durations <span class="math inline">\(U_k\)</span> were exponential and therefore memoryless:</p>
+<ul>
+<li>In the taxi example, the interarrival durations <span class="math inline">\(U_k\)</span> were exponential and therefore memoryless:</li>
+</ul>
 <p><span class="math display">\[
 U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 \]</span></p>
@@ -2129,26 +2143,6 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <span id="cb1-18"><a href="" aria-label="18"></a>    i = i + 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="alert">Events replace fixed time steps</span>, avoiding work when nothing changes</p>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/QueueSimulation.ipynb">Queue simulation companion notebook</a></p>
-</section>
-<section class="slide level2">
-
-<h3 id="tracking-customer-time">Tracking customer time</h3>
-<p>Track</p>
-<p><span class="math display">\[\begin{align*}
-T_i&amp;=\text{simulated time immediately after event $i$},\\
-W_j&amp;=\text{accumulated time in the system for customer $j$}
-\end{align*}\]</span></p>
-<p>During the <span class="alert">interval from event <span class="math inline">\(i\)</span> to event <span class="math inline">\(i+1\)</span></span>, of length <span class="math inline">\(\Delta t_i\)</span>:</p>
-<ul>
-<li>set <span class="math inline">\(T_{i+1}=T_i+\Delta t_i\)</span></li>
-<li>update <span class="math inline">\(W_j\leftarrow W_j+\Delta t_i\)</span> for every customer <span class="math inline">\(j\)</span> present immediately after event <span class="math inline">\(i\)</span></li>
-<li>decrease <span class="math inline">\(A_i\)</span> by <span class="math inline">\(\Delta t_i\)</span> and, when the server is busy, decrease <span class="math inline">\(S_i\)</span> by <span class="math inline">\(\Delta t_i\)</span></li>
-</ul>
-<p>At <span class="alert">event <span class="math inline">\(i+1\)</span></span>, reset the clock that reached zero and carry the other residual clock forward:</p>
-<ul>
-<li><strong>Arrival:</strong> set <span class="math inline">\(N_{i+1}=N_i+1\)</span>, initialize <span class="math inline">\(W_j=0\)</span> for the arriving customer, and draw <span class="math inline">\(A_{i+1}\)</span>. Draw <span class="math inline">\(S_{i+1}\)</span> only if the server was idle</li>
-<li><strong>Service completion:</strong> set <span class="math inline">\(N_{i+1}=N_i-1\)</span>, record the departing customer’s final <span class="math inline">\(W_j\)</span>, and draw <span class="math inline">\(S_{i+1}\)</span> only if another customer is waiting</li>
-</ul>
 </section>
 <section class="slide level2">
 
