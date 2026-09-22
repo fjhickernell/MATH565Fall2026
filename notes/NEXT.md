@@ -153,9 +153,10 @@ queue notebook's Colab setup. ArviZ remains supplied by QMCPy's `class` extra.
 The September 21 Bayesian and queueing refinements are deployed. Queueing now
 distinguishes full interarrival and service inputs $U_k,V_j$ from event-state
 residual clocks $A_i,S_i$, states the event-driven update sequence explicitly,
-and includes worked four-event practice. The queue helper and companion use
-the same notation and accounting conventions. The latest `main` deployment
-through commit `4cd934d` completed successfully.
+defines the event-epoch Markov chain $X_i=(A_i,N_i,S_i)$, and presents the
+first four-event trace as a completed example followed by a starred
+continuation exercise. The queue helper and companion use the same notation
+and accounting conventions. The revised deck renders successfully.
 
 ## Other pending MATH 565 work
 

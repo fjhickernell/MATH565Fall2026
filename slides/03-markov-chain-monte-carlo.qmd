@@ -1290,6 +1290,12 @@ N_i&=\text{number of customers in the system},\\
 S_i&=\text{remaining service time}, \qquad S_i=\infty\text{ when the server is idle}
 \end{align*}
 
+The [event-epoch process]{.alert} is
+
+$$
+X_i=(A_i,N_i,S_i), \qquad i=0,1,\ldots
+$$
+
 After the $k$th arrival, reset $A_{i+1}=U_{k+1}$. When customer $j$ begins
 service, reset $S_{i+1}=V_j$.
 
@@ -1320,7 +1326,10 @@ $$
 At the event, update $N_{i+1}$. If a clock starts anew, load its next full input
 duration, $U_k$ or $V_j$. Carry the other clock's residual time forward.
 
-The state $(A_i,N_i,S_i)$ is Markov when the input durations are independent.
+When the unused input durations are independent of the past, the conditional
+distribution of $X_{i+1}$ given the full history depends only on $X_i$.
+Thus $\{X_i\}_{i\geq 0}$ is a Markov chain. The customer clocks $W_j$ track
+performance but are not needed to determine the next queue state.
 
 ---
 
@@ -1399,7 +1408,7 @@ residual clock forward:
 
 ---
 
-### Queue simulation practice
+### Queue simulation example
 
 The full [interarrival and service draws]{.alert} are given. Use each row from left to right:
 
@@ -1408,38 +1417,12 @@ The full [interarrival and service draws]{.alert} are given. Use each row from l
 | Interarrival $U_k$ | $2$ | $1.5$ | $5$ |
 | Service $V_j$ | $5$ | $1$ | $4$ |
 
-::: {.exitem}
-<span class="exbullet">$\exstar$</span>
-<span>The system starts empty at $T_0=0$. From the supplied row, complete four events, one of each case. Compute each $\Delta t_i$, identify the event, and update the state and customer times.</span>
-:::
+**Example.** The system starts empty at $T_0=0$. The four events include one
+of each case. At every event, compute $\Delta t_i$, identify the event, and
+update the state and customer times.
 
 :::: {.columns}
 ::: {.column width="72%"}
-| $i$ | $T_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
-|--:|--:|--:|--:|--:|--:|:--|
-| 0 | 0 | 2 | 0 | $\infty$ | 2 | arrival |
-| 1 |  |  |  |  |  |  |
-| 2 |  |  |  |  |  |  |
-| 3 |  |  |  |  |  |  |
-| 4 |  |  |  |  | -- | -- |
-:::
-
-::: {.column width="28%"}
-| After event | $W_1$ | $W_2$ | $W_3$ |
-|--:|--:|--:|--:|
-| 0 | -- | -- | -- |
-| 1 |  | -- | -- |
-| 2 |  |  | -- |
-| 3 |  |  |  |
-| 4 |  |  |  |
-:::
-::::
-
-Draw a new service time [only when a customer begins service]{.alert}
-
-::: {.notes}
-The full solution is
-
 | $i$ | $T_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
 |--:|--:|--:|--:|--:|--:|:--|
 | 0 | 0 | 2 | 0 | $\infty$ | 2 | arrival |
@@ -1447,9 +1430,9 @@ The full solution is
 | 2 | 3.5 | 5 | 2 | 3.5 | 3.5 | service completion |
 | 3 | 7 | 1.5 | 1 | 1 | 1 | service completion |
 | 4 | 8 | 0.5 | 0 | $\infty$ | -- | -- |
+:::
 
-Customer times immediately after each event are
-
+::: {.column width="28%"}
 | After event | $W_1$ | $W_2$ | $W_3$ |
 |--:|--:|--:|--:|
 | 0 | -- | -- | -- |
@@ -1457,7 +1440,12 @@ Customer times immediately after each event are
 | 2 | 1.5 | 0 | -- |
 | 3 | 5, departed | 3.5 | -- |
 | 4 | 5, departed | 4.5, departed | -- |
+:::
+::::
 
+Draw a new service time [only when a customer begins service]{.alert}
+
+::: {.notes}
 Thus the four transitions are arrival to an idle server, arrival to a busy
 server, service completion with another customer waiting, and service
 completion leaving the system empty. The first two arrivals consume all three
@@ -1469,7 +1457,7 @@ by event 4, so $W_3$ remains unavailable.
 
 ---
 
-### $\exstar$ More queue simulation practice
+### $\exstar$ Queue simulation exercise
 
 For each table, start with an [empty system at $T_0=0$]{.alert}, make your own
 state and customer-time tables, and complete four events.
