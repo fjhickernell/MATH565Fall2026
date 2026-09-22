@@ -1274,7 +1274,7 @@ Bayesian inference is a primary reason to sample from complicated unnormalized d
 
 First distinguish [full input durations]{.alert} from [event-state clocks]{.alert}.
 
-The random inputs are
+Assume the random inputs are mutually independent:
 
 $$
 U_k\sim F_A \quad\text{($k$th interarrival duration)},
@@ -1282,7 +1282,7 @@ U_k\sim F_A \quad\text{($k$th interarrival duration)},
 V_j\sim F_S \quad\text{(customer $j$'s full service time)}.
 $$
 
-Immediately after event $i$, the state is
+Immediately after event $i$, the [state]{.alert} is $X_i=(A_i,N_i,S_i), \qquad i=0,1,\ldots$, where
 
 \begin{align*}
 A_i&=\text{time until the next arrival},\\
@@ -1290,53 +1290,51 @@ N_i&=\text{number of customers in the system},\\
 S_i&=\text{remaining service time}, \qquad S_i=\infty\text{ when the server is idle}
 \end{align*}
 
-The [event-epoch process]{.alert} is
+- At the $k$th arrival, load the next arrival clock with $U_{k+1}$
+- When customer $j$ begins service, load the service clock with $V_j$
 
-$$
-X_i=(A_i,N_i,S_i), \qquad i=0,1,\ldots
-$$
-
-After the $k$th arrival, reset $A_{i+1}=U_{k+1}$. When customer $j$ begins
-service, reset $S_{i+1}=V_j$.
+- For performance, also track
+  $W_j=$ accumulated time in the system for customer $j$
 
 ::: {.key-point}
-The full input durations become the countdown clocks in the event state
+The state $X_i$ determines the next-event law. The $W_j$ clocks measure
+customer time but do not affect that law
 :::
 
 ---
 
 ### The next queue event
 
-Between events, both active clocks count down by the same amount. The next
-event occurs after
+- The next event occurs after $\Delta t_i=\min(A_i,S_i)$
 
-$$
-\Delta t_i=\min(A_i,S_i)
-$$
+    - [**Arrival:**]{.alert} $A_i<S_i$
+    - [**Service completion:**]{.alert} $S_i\leq A_i$
 
-- [**Arrival:**]{.alert} $A_i<S_i$
-- [**Service completion:**]{.alert} $S_i\leq A_i$
+- During the interval from event $i$ to event $i+1$
+    - Simulated time: $T_{i+1}=T_i+\Delta t_i$
+    - Both active state clocks count down by $\Delta t_i$
+    - Each customer present gains $W_j\leftarrow W_j+\Delta t_i$
 
-Then
-
-$$
-T_{i+1}=T_i+\Delta t_i,
-$$
-
-At the event, update $N_{i+1}$. If a clock starts anew, load its next full input
-duration, $U_k$ or $V_j$. Carry the other clock's residual time forward.
-
-When the unused input durations are independent of the past, the conditional
-distribution of $X_{i+1}$ given the full history depends only on $X_i$.
-Thus $\{X_i\}_{i\geq 0}$ is a Markov chain. The customer clocks $W_j$ track
-performance but are not needed to determine the next queue state.
+- At the event
+    - Update $N_{i+1}$
+    - On arrival, set the new customer's $W_j=0$
+    - On service completion, record the departing customer's $W_j$
+    - Load each clock that starts anew with its next full input duration
+    - Carry every other active clock's residual time forward
 
 ---
 
-### Residual times
+### Markov interpretation
 
-A partially elapsed interarrival or service time generally does not have the
-same probability distribution as a newly drawn full duration
+::: {.key-point}
+If we jump into the process at $i=47$, knowing
+$X_{47}=(A_{47},N_{47},S_{47})$ and using future independent input durations
+lets us continue with $X_{48},X_{49},\ldots$ without knowing the earlier queue
+states $X_0,\ldots,X_{46}$
+:::
+
+- The residual clocks belong in the state because a partially elapsed duration
+  generally does not have the same distribution as a newly drawn full duration
 
 **Example.** If $V_j\sim\Unif(4,8)$ and five minutes of customer $j$'s service
 have elapsed, the remaining time has distribution
@@ -1345,8 +1343,8 @@ $$
 V_j-5\mid V_j>5\sim\Unif(0,3), \qquad \text{not }\Unif(4,8)
 $$
 
-In the taxi example, the interarrival durations $U_k$ were exponential and
-therefore memoryless:
+- In the taxi example, the interarrival durations $U_k$ were exponential and
+  therefore memoryless:
 
 $$
 U_k-t\mid U_k>t\sim\Exp(\lambda)
@@ -1380,31 +1378,6 @@ while i < i_max and T[i] < T_max:  # event or simulated-time limit
 [Events replace fixed time steps]{.alert}, avoiding work when nothing changes
 
 [Queue simulation companion notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/QueueSimulation.ipynb)
-
----
-
-### Tracking customer time
-
-Track
-
-\begin{align*}
-T_i&=\text{simulated time immediately after event $i$},\\
-W_j&=\text{accumulated time in the system for customer $j$}
-\end{align*}
-
-During the [interval from event $i$ to event $i+1$]{.alert}, of length $\Delta t_i$:
-
-- set $T_{i+1}=T_i+\Delta t_i$
-- update $W_j\leftarrow W_j+\Delta t_i$ for every customer $j$ present immediately after event $i$
-- decrease $A_i$ by $\Delta t_i$ and, when the server is busy, decrease $S_i$ by $\Delta t_i$
-
-At [event $i+1$]{.alert}, reset the clock that reached zero and carry the other
-residual clock forward:
-
-- **Arrival:** set $N_{i+1}=N_i+1$, initialize $W_j=0$ for the arriving
-  customer, and draw $A_{i+1}$. Draw $S_{i+1}$ only if the server was idle
-- **Service completion:** set $N_{i+1}=N_i-1$, record the departing customer's
-  final $W_j$, and draw $S_{i+1}$ only if another customer is waiting
 
 ---
 

@@ -158,6 +158,14 @@ first four-event trace as a completed example followed by a starred
 continuation exercise. The queue helper and companion use the same notation
 and accounting conventions. The revised deck renders successfully.
 
+The September 22 queueing pass makes the Markov interpretation explicit: at
+event 47, $X_{47}=(A_{47},N_{47},S_{47})$ plus independent future inputs is
+enough to continue without the earlier states. Customer clocks $W_j$ remain
+separate performance bookkeeping, their updates now accompany the next-event
+rules, and the redundant customer-time continuation slide has been removed.
+The worked example and all three exercise answer tables were rechecked, and
+Deck 03 renders successfully.
+
 ## Other pending MATH 565 work
 
 1. Review Deck 04 and then Deck 05 using the instructor-led process, including
