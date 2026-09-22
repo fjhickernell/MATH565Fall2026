@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-09-21">
+  <meta name="dcterms.date" content="2026-09-22">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -716,7 +716,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">September 21, 2026</p>
+  <p class="date">September 22, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-03-overview">
 <h1>Course Map</h1>
@@ -1051,7 +1051,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="4a4f3ff1" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="a2084d3a" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1070,7 +1070,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="16bb2f8c" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="814f69bf" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2066,6 +2066,10 @@ A_i&amp;=\text{time until the next arrival},\\
 N_i&amp;=\text{number of customers in the system},\\
 S_i&amp;=\text{remaining service time}, \qquad S_i=\infty\text{ when the server is idle}
 \end{align*}\]</span></p>
+<p>The <span class="alert">event-epoch process</span> is</p>
+<p><span class="math display">\[
+X_i=(A_i,N_i,S_i), \qquad i=0,1,\ldots
+\]</span></p>
 <p>After the <span class="math inline">\(k\)</span>th arrival, reset <span class="math inline">\(A_{i+1}=U_{k+1}\)</span>. When customer <span class="math inline">\(j\)</span> begins service, reset <span class="math inline">\(S_{i+1}=V_j\)</span>.</p>
 <div class="key-point">
 <p>The full input durations become the countdown clocks in the event state</p>
@@ -2087,7 +2091,7 @@ S_i&amp;=\text{remaining service time}, \qquad S_i=\infty\text{ when the server 
 T_{i+1}=T_i+\Delta t_i,
 \]</span></p>
 <p>At the event, update <span class="math inline">\(N_{i+1}\)</span>. If a clock starts anew, load its next full input duration, <span class="math inline">\(U_k\)</span> or <span class="math inline">\(V_j\)</span>. Carry the other clock’s residual time forward.</p>
-<p>The state <span class="math inline">\((A_i,N_i,S_i)\)</span> is Markov when the input durations are independent.</p>
+<p>When the unused input durations are independent of the past, the conditional distribution of <span class="math inline">\(X_{i+1}\)</span> given the full history depends only on <span class="math inline">\(X_i\)</span>. Thus <span class="math inline">\(\{X_i\}_{i\geq 0}\)</span> is a Markov chain. The customer clocks <span class="math inline">\(W_j\)</span> track performance but are not needed to determine the next queue state.</p>
 </section>
 <section class="slide level2">
 
@@ -2148,7 +2152,7 @@ W_j&amp;=\text{accumulated time in the system for customer $j$}
 </section>
 <section class="slide level2">
 
-<h3 id="queue-simulation-practice">Queue simulation practice</h3>
+<h3 id="queue-simulation-example">Queue simulation example</h3>
 <p>The full <span class="alert">interarrival and service draws</span> are given. Use each row from left to right:</p>
 <table class="caption-top">
 <thead>
@@ -2174,118 +2178,9 @@ W_j&amp;=\text{accumulated time in the system for customer $j$}
 </tr>
 </tbody>
 </table>
-<div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>The system starts empty at <span class="math inline">\(T_0=0\)</span>. From the supplied row, complete four events, one of each case. Compute each <span class="math inline">\(\Delta t_i\)</span>, identify the event, and update the state and customer times.</span></p>
-</div>
+<p><strong>Example.</strong> The system starts empty at <span class="math inline">\(T_0=0\)</span>. The four events include one of each case. At every event, compute <span class="math inline">\(\Delta t_i\)</span>, identify the event, and update the state and customer times.</p>
 <div class="columns">
 <div class="column" style="width:72%;">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: right;"><span class="math inline">\(i\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(T_i\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(A_i\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(N_i\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(S_i\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(\Delta t_i\)</span></th>
-<th style="text-align: left;">Event <span class="math inline">\(i+1\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;"><span class="math inline">\(\infty\)</span></td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">arrival</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">4</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;">–</td>
-<td style="text-align: left;">–</td>
-</tr>
-</tbody>
-</table>
-</div><div class="column" style="width:28%;">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: right;">After event</th>
-<th style="text-align: right;"><span class="math inline">\(W_1\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(W_2\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(W_3\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;">–</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">4</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-</tbody>
-</table>
-</div></div>
-<p>Draw a new service time <span class="alert">only when a customer begins service</span></p>
-<aside class="notes">
-<p>The full solution is</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -2346,7 +2241,7 @@ W_j&amp;=\text{accumulated time in the system for customer $j$}
 </tr>
 </tbody>
 </table>
-<p>Customer times immediately after each event are</p>
+</div><div class="column" style="width:28%;">
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -2389,6 +2284,9 @@ W_j&amp;=\text{accumulated time in the system for customer $j$}
 </tr>
 </tbody>
 </table>
+</div></div>
+<p>Draw a new service time <span class="alert">only when a customer begins service</span></p>
+<aside class="notes">
 <p>Thus the four transitions are arrival to an idle server, arrival to a busy server, service completion with another customer waiting, and service completion leaving the system empty. The first two arrivals consume all three interarrival draws: the initial draw is 2, then the two arrivals draw 1.5 and 5. Only the first arrival and the first service completion begin service, so the third service draw, 4, remains unused. The third customer has not arrived by event 4, so <span class="math inline">\(W_3\)</span> remains unavailable.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -2404,7 +2302,7 @@ W_j&amp;=\text{accumulated time in the system for customer $j$}
 </section>
 <section class="slide level2">
 
-<h3 id="exstar-more-queue-simulation-practice"><span class="math inline">\(\exstar\)</span> More queue simulation practice</h3>
+<h3 id="exstar-queue-simulation-exercise"><span class="math inline">\(\exstar\)</span> Queue simulation exercise</h3>
 <p>For each table, start with an <span class="alert">empty system at <span class="math inline">\(T_0=0\)</span></span>, make your own state and customer-time tables, and complete four events.</p>
 <table class="caption-top">
 <thead>
