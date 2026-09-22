@@ -9,9 +9,9 @@
   displayed lecture materials; distinguish substantive coverage from previews
   and deferred explanations.
 
-The schedule is reconciled through September 17. Historical rows below record
-the audit, not retroactive calendar edits; the existing September 22
-continuation note remains the next instructional annotation.
+The schedule is reconciled through September 22. The August 18–September 17
+rows record the historical audit without retroactive calendar edits; the
+September 24 continuation note is the next instructional annotation.
 
 | Instructional meeting | Status | Panopto recording | Next instructional event annotated | Checked |
 |---|---|---|---|---|
@@ -24,6 +24,7 @@ continuation note remains the next instructional annotation.
 | September 8, 2026 | Audited: Unit-cube integration and transformation smoothness review (10:03–about 25:00); Metropolis–Hastings, tuning/burn-in, banana and separated-mixture examples through 1:14:57; discrepancy deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=bbca56aa-0cc9-4ea0-970e-b4bf011b060d) | Historical audit; no retroactive calendar edit | September 17, 2026 |
 | September 10, 2026 | Audited: MCMC tuning; brief parallel tempering (28:02–33:27); kernel discrepancy, empirical distributions, scale/normalization, and banana sample comparisons. Unbiased estimator displayed at 54:06 but explicitly deferred at 1:07:42 | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=6afb6e26-622c-4ca0-bda9-b4c10113fd5c) | Historical audit; no retroactive calendar edit | September 17, 2026 |
 | September 17, 2026 | Reconciled through “What the kernel controls”; centered smoothness and KL displayed near wrap-up but not substantively developed | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=a4d147cd-ed76-49f8-a422-b4c80110f997) | September 22, 2026, 10:00–11:15 AM America/Chicago; Illinois Tech Calendar occurrence only; resume Deck 03 at “Centered discrepancy and smoothness,” then KL and Stein | September 17, 2026 |
+| September 22, 2026 | Reconciled through Bayesian inference, the mixture-posterior example, and parallel tempering; queueing only previewed near the end | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=ff0780b1-ca15-4d39-a0b4-b4cd0117a8b1) | September 24, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume Deck 03 at “Queueing systems” | September 22, 2026 |
 
 Recording evidence: Deck 02 mixture/acceptance–rejection unit-cube review
 preceded Deck 03 (33:06). Unbiased discrepancy began at 37:06; RKHS and
@@ -34,10 +35,10 @@ the newly displayed KL slide. Bayesian inference and queues were not reached.
 The centered-smoothness slide was briefly displayed during navigation, without
 a substantive explanation; retain it as the first continuation point.
 
-Calendar verification: September 22 occurrence on Illinois Tech Fred →
-Calendar, 10:00–11:15 AM Central Daylight Time; saved continuation note
-verified. The instructor reported correcting the stale calendar location
-on September 17, 2026; no further agent calendar edit is needed.
+Historical calendar verification: September 22 occurrence on Illinois Tech
+Fred → Calendar, 10:00–11:15 AM Central Daylight Time; its continuation note
+was verified. PH 109 is the current classroom for both courses, reconfirmed
+September 22.
 
 Assessment-only meetings do not require lecture reconciliation and are not
 continuation-note destinations. Compare this ledger with

@@ -31,8 +31,8 @@ holidays, and examination details are finalized.
 | 5 | Tue Sep 15 | **Test 1** | [Introduction](../slides/01-introduction.html)<br>[Generating Samples](../slides/02-generating-samples.html) |
 | | Thu Sep 17 | Unit-cube sampling review; Unbiased squared-discrepancy estimates; RKHS worst-case integration error; Gaussian-process RMSE and kernel assumptions | [Generating Samples](../slides/02-generating-samples.html)<br>[Markov Chain Monte Carlo](../slides/03-markov-chain-monte-carlo.html) |
 | | Fri Sep 18 | **Project topic submission deadline** | [Topic Selection & Presentation Scheduling](project.qmd#topic-selection-and-approval) |
-| 6 | Tue Sep 22 | Centered discrepancy and smoothness; Alternative comparisons (KL and Stein)<br>Continue toward Bayesian inference and queues | [Markov Chain Monte Carlo](../slides/03-markov-chain-monte-carlo.html#centered-discrepancy-and-smoothness) |
-| | Thu Sep 24 | | |
+| 6 | Tue Sep 22 | Centered discrepancy and smoothness; brief KL and Stein comparisons; likelihood and Bayesian inference; mixture-posterior MCMC and parallel tempering; queueing preview | [Markov Chain Monte Carlo](../slides/03-markov-chain-monte-carlo.html#centered-discrepancy-and-smoothness)<br>[Bayesian MCMC notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/BayesianMCMC.ipynb) |
+| | Thu Sep 24 | Queueing systems: event-state clocks and event-driven simulation | [Markov Chain Monte Carlo](../slides/03-markov-chain-monte-carlo.html#queueing-systems) |
 | | Fri Sep 25 | **Assignment 3 due** | [{{< meta texts.owen.short >}} Exercises 5.4 and 5.13](../assignments/assignment_3.qmd) |
 | 7 | Tue Sep 29 | | |
 
