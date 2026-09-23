@@ -222,6 +222,11 @@ appropriate phase rather than appended indiscriminately.
     - [x] Verify both Project dropdown links in the generated navigation.
     - [ ] Finalize Fall 2026 links, dates, deadlines, scheduling tools, and
       presentation logistics.
+      - [x] Set the November 23–24 presentation windows, four 20-minute
+        breaks, and 30 bookable 20-minute slots; prepare an Excel
+        sign-up workbook and a roster-based quota checker.
+      - [ ] Approve student editing access, publish the live workbook link,
+        and finalize location, sign-up deadlines, and submission procedure.
     - [ ] Inspect the visible page layout and dropdown behavior in a browser.
   - [ ] Policies (`classlib/classlib/quarto/pages/policies.qmd`)
     - [x] Add a detailed instructor statement describing how ChatGPT and Codex

@@ -59,26 +59,37 @@ Detailed feedback questions and assessment guidance are on the
 ## Presentation scheduling and observations
 
 Project presentations will take place on **Monday, November 23, and Tuesday,
-November 24**, immediately before Thanksgiving. The deadlines below are
-proposed; links, location, and submission procedures will be added when they
-are finalized.
+November 24**, immediately before Thanksgiving. Each day has sessions from
+**9:00 AM–noon** and **2:20–5:00 PM** America/Chicago, with 20-minute breaks
+from **10:20–10:40 AM** and **3:40–4:00 PM**. There are **30 presentation
+slots** in total. The sign-up deadlines below are proposed; the shared
+schedule link, location, and submission procedures will be added when finalized.
 
 | Planning item | Fall 2026 information |
 |---|---|
 | Presentation dates | **Monday–Tuesday, November 23–24** |
+| Presentation sessions | **9:00 AM–noon and 2:20–5:00 PM** each day, America/Chicago |
 | Individual presentation length | **15 minutes**, followed by **5 minutes for questions and answers** |
 | Two-person QMCPy feature presentation length | **30 minutes**, followed by **10 minutes for questions and answers** |
 | Presentation location and format | **TBA** |
 | Proposed presenter sign-up deadline | **Wednesday, November 11** |
-| Presenter scheduling tool | **TBA** |
+| Presenter scheduling tool | Shared Excel sign-up schedule; link forthcoming |
 | Presentation schedule | **TBA** |
 | Proposed observer sign-up deadline | **Wednesday, November 18** |
-| Observer sign-up process | **TBA** |
+| Observer sign-up process | Use the same schedule after presenters reserve their slots; link forthcoming |
 | Equipment and connection requirements | **TBA** |
 | Proposed assessment submission deadline | **Wednesday, November 25, at 11:59 PM** |
 | Assessment submission procedure | **TBA** |
 
 Each student is expected to observe and assess **two** other presentations.
+Reserve one 20-minute row for an individual presentation. A two-person QMCPy
+feature team must reserve **two adjacent rows**. Each teammate enters their
+own name in **Presenter(s)** on one row and selects **1 of 2** or **2 of 2**
+in **Team part**, in that order. After the presenter schedule is set, enter
+your name in an available observer column for two **different** projects.
+You may not observe your own project. To observe a two-person team's
+presentation, enter your name on **both adjacent rows** and attend the full
+40 minutes; that counts as **one** observed project.
 Arrive on time for both presentations and observations, be prepared, and give
 substantive feedback. The final observation and submission procedures will be
 posted when the schedule is available.

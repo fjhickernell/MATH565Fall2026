@@ -18,6 +18,49 @@ HickernellAcademicLib first, then intentionally update the course repository's
 `classlib` pointer. Keep course-specific content and styling in this
 repository, and do not leave course-only modifications in `classlib`.
 
+## Project presentation sign-up and audit
+
+The Fall 2026 sign-up workbook lives in the private MATH 565 OneDrive course
+folder under `Projects/outputs/01a0d04d-4b3e-7930-a201-711b2387be13/`.
+It has one row per 20-minute slot on November 23–24, 2026. The 9:00 AM–noon
+morning and 2:20–5:00 PM afternoon sessions include a 10:20–10:40 AM and a
+3:40–4:00 PM break each day, leaving 30 bookable slots. The workbook is the
+authoritative live schedule; the course page explains the rules and links to
+it after student editing access has been approved and verified.
+
+Students enter one name in `Presenter(s)` for each slot. An individual uses
+one row. A two-person team uses adjacent rows, with one teammate's name in
+each, marked `1 of 2` then `2 of 2` in `Team part`. Observer registration
+begins after presenter slots are set. Each student observes two different
+projects and never their own. A team project's observers enter their names
+on both rows and attend its entire 40 minutes; it counts as one observed
+project. Three observer columns provide capacity when teams reduce the number
+of distinct projects.
+
+For a repeatable roster check:
+
+1. Export the current sign-up sheet as CSV from Excel. Save the export and a
+   private roster CSV outside the public course repository. The roster must
+   have a `Name` column with every enrolled student's full name. Use the same
+   spelling in the sheet; the checker ignores capitalization and extra spaces.
+2. Run:
+
+   ```bash
+   python3 tools/check_project_bookings.py schedule.csv roster.csv --summary booking-summary.csv
+   ```
+
+3. Review every reported issue and the private summary. The checker flags
+   missing or duplicate presentation/observation bookings, unknown names,
+   self-observation, malformed team pairs, and observers missing one half of
+   a team talk. Re-export and rerun after corrections. Do not place the roster,
+   bookings export, or student summary in Git.
+
+Use the same row layout and script in later terms after replacing the dates,
+session windows, roster, and course-specific web instructions. Confirm that
+roster names are unique before opening sign-ups; resolve any collision in a
+private roster workflow rather than adding A-numbers to a student-visible
+sheet.
+
 ## Adding or updating an assignment
 
 Use this workflow whenever the instructor asks to create, set up, or materially

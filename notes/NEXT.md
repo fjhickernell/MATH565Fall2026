@@ -28,7 +28,7 @@ outside this public repository.
 
 Decks 01–03 and their companions have completed instructor review; Decks
 04–05 remain drafts for instructor review. Remaining deferred notebook,
-Bookings, QMCPy mixture, and MCTS work stays in `notes/TODO-LATER.md` and the
+QMCPy mixture, and MCTS work stays in `notes/TODO-LATER.md` and the
 Blue Dashboard, without reopening completed Deck 02–03 work.
 
 Deck 03 introduces kernel discrepancy, then its worst-case and average-case
@@ -331,8 +331,43 @@ decks after adding links.
   teammate. The course page links the form, the Schedule records its deadline,
   and the page correctly states that a review article must have been published
   less than fifteen years ago. Presenter and
-  observer scheduling still needs separate Microsoft Bookings pages adapted
-  from the Fall 2025 workflow; no tracked 2025 Python sign-up checker exists.
+  observer scheduling now uses one Excel sign-up workbook in the private
+  Fall 2026 MATH 565 OneDrive Projects folder. It has 30 twenty-minute slots
+  on November 23–24, with one morning and one afternoon break each day. The
+  roster-based checker is `tools/check_project_bookings.py`; see
+  `AUTHOR_WORKFLOW.md` for the repeatable export and audit steps. Student
+  editing access, a live course-page link, location, and final sign-up
+  deadlines remain to be set. A proposed Illinois Tech organization-wide
+  editing link was rejected by automatic approval review; obtain explicit
+  scope approval before creating a student link.
+
+### Project scheduling handoff — September 23, 2026
+
+- The workbook is `MATH565_Project_Presentation_Signup_Fall2026.xlsx` in the
+  private OneDrive `MATH 565 Fall 2026/Projects/outputs/01a0d04d-4b3e-7930-a201-711b2387be13/`
+  folder. It synced to OneDrive and opened in Excel for the web. It has 15
+  bookable 20-minute slots each day (30 total): 9:00 AM–noon, excluding
+  10:20–10:40 AM; 2:20–5:00 PM, excluding 3:40–4:00 PM. Dates and times,
+  headers, and the `Team part` dropdown were checked in the saved workbook.
+- Student-facing columns are `Presenter(s)` (one name per row), `Team part`
+  (`1 of 2` then `2 of 2` on adjacent team rows), and three observer spaces.
+  Team observers must occupy both rows; the pair counts as one observed
+  project. No A-number or project ID appears in the sheet. The project page
+  and `AUTHOR_WORKFLOW.md` describe these rules.
+- `tools/check_project_bookings.py` compares a CSV export with a private
+  roster CSV (`Name` column). Five synthetic tests pass. It reports quota
+  counts and team/observer errors; do not put real student exports or reports
+  in Git. The actual class roster has not yet been audited.
+- The workbook is still private. Automatic approval review rejected
+  organization-wide editing access; it must not be retried without explicit
+  user approval of the sharing scope. After access is approved, create and
+  verify the student link, put it on `pages/project.qmd`, and confirm the room,
+  remote participation policy, and proposed November 11/18 sign-up deadlines.
+- Local `quarto render pages/project.qmd --to html` failed in Quarto 1.10.18
+  while compiling the theme (Dart `cpuinfo_macos.cc:42: unreachable code` on
+  `macos_x64`). This did not validate the page. Retry rendering in a working
+  environment before relying on the page's rendered output. `git diff --check`
+  and the Python tests passed; no completed render was obtained on Intel.
 - Deck 01 is complete and instructor-approved. Its cumulative Terms to Know
   index links terminology introduced in Decks 02–05, and its approved closing
   transition previews Generating Samples using the transformation

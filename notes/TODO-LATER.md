@@ -73,10 +73,10 @@ multiple decks.
 
 ## Deferred course logistics
 
-- Create or adapt separate Microsoft Bookings pages for Fall 2026 presenter
-  and observer project sign-ups, following the Fall 2025 workflow. Add the
-  finalized links and procedures to the project page. This remains Blue on
-  the Dashboard until activated.
+- Finish the Fall 2026 shared Excel project sign-up: confirm its student
+  editing scope, add the live link to the project page, and reconcile the
+  exported schedule against the roster with `tools/check_project_bookings.py`.
+  The workbook has 30 available 20-minute slots across November 23–24.
 
 ## Cross-course notebooks and workflow
 
