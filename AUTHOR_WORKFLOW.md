@@ -199,6 +199,12 @@ scores, and feedback outside the public course repository.
 Use the following workflow whenever a test or final-examination detail is
 finalized or materially revised:
 
+When dates are established before coverage or other details are final, first
+follow the shared
+[`Save-the-date announcements`](classlib/docs/assessment-save-the-date.md)
+workflow. Then apply the MATH 565 rules below as the remaining details are
+finalized.
+
 For every quiz, test, and final examination, keep all assessment PDFs out of
 the public course repository until the assessment has been administered and
 grading is complete. Do not publish the student/no-answers copy. After grading,

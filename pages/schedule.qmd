@@ -47,7 +47,7 @@ holidays, and examination details are finalized.
 | | Thu Oct 15 | | |
 | 10 | Tue Oct 20 | | |
 | | Thu Oct 22 | | |
-| 11 | Tue Oct 27 | | |
+| 11 | Tue Oct 27 | **Test 2** | Coverage TBD |
 | | Thu Oct 29 | | |
 
 ### November
@@ -81,4 +81,4 @@ Final examinations occur during the following week.
 
 | Week | Date | Topic | Slides / Materials |
 |---:|---|---|---|
-| 17 | TBA | **Final Exam — time and location TBA** | |
+| 17 | TBA | **Final Exam — time and location TBA** | Whole course; greater emphasis on material not covered by Test 1 or Test 2 |

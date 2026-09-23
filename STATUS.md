@@ -194,6 +194,13 @@ appropriate phase rather than appended indiscriminately.
     - [x] Connect the shared archive-search instructions and dynamic MATH 565
       archive listing.
     - [x] Adopt the established test and examination instructions.
+    - [x] Schedule Test 2 for October 27 in PH 109; set the published
+      On Paper Canvas item for 11:15 AM; add the date to the course
+      website sources; and post the all-sections announcement. Coverage
+      remains TBD.
+    - [x] State that final-examination dates will be posted when scheduled by
+      the Registrar and that the cumulative examination will emphasize
+      material not covered by Test 1 or Test 2.
     - [ ] Finalize coverage, rooms, final-exam date/time/location, and current
       PDF links.
     - [x] Validate recursive submodule initialization and archive enumeration.

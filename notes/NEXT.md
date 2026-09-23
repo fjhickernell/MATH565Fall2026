@@ -319,6 +319,12 @@ decks after adding links.
   key includes the anonymous score distribution and is linked from the Tests
   page; the same PDF is in the canonical test archive. The Canvas announcement
   remains a draft pending instructor review.
+- Test 2 is scheduled for Tuesday, October 27, 2026, in PH 109. Published
+  Canvas On Paper assignment `95838` is due at the 11:15 AM class end for
+  Everyone in the Tests group; coverage remains TBD. All-sections announcement
+  `106296` is posted. The announcement and Tests page state that final-exam
+  dates will be posted when scheduled by the Registrar and that the cumulative
+  examination will emphasize material not covered by Test 1 or Test 2.
 - The Fall 2026 project-selection deadline is Friday, September 18. A live
   Illinois-Tech-only Microsoft Form records students' names, A-numbers, project
   type, article citation and PDF or proposed QMCPy feature, and optional QMCPy
