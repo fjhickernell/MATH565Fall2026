@@ -1743,7 +1743,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points<br>Compare how its <span class="math inline">\(x_1\)</span>–<span class="math inline">\(x_2\)</span> projection fills the unit square</p>
-<div id="04dfd7ec" class="cell" data-execution_count="4">
+<div id="028b4ccb" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1756,7 +1756,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="grid-n64">Grid, <span class="math inline">\(n=64\)</span></h3>
-<div id="5407a52f" class="cell" data-execution_count="5">
+<div id="f7a8a58f" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1769,7 +1769,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="orthogonal-array-n64">Orthogonal array, <span class="math inline">\(n=64\)</span></h3>
-<div id="142a1aed" class="cell" data-execution_count="6">
+<div id="64201a76" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1782,7 +1782,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="iid-n64">IID, <span class="math inline">\(n=64\)</span></h3>
-<div id="47c01772" class="cell" data-execution_count="7">
+<div id="ac340d1f" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1795,7 +1795,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="scrambled-sobol-n64">Scrambled Sobol’, <span class="math inline">\(n=64\)</span></h3>
-<div id="a089bc04" class="cell" data-execution_count="8">
+<div id="ea08cee2" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2078,22 +2078,22 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Let <span class="math inline">\(Y=f(X_1,\ldots,X_d)\)</span> and <span class="math inline">\(Z=(X_2,\ldots,X_d)\)</span></p>
+<p>Let <span class="math inline">\(Y=f(X_1,\ldots,X_d)\)</span> and <span class="math inline">\(\vZ=(X_2,\ldots,X_d)\)</span></p>
 <p>If</p>
 <p><span class="math display">\[
-g(Z):=\Ex(Y\mid Z)
+g(\vZ):=\Ex(Y\mid \vZ)
 \]</span></p>
 <p>is available <span class="alert">analytically</span></p>
 <p><span class="math display">\[
-\mu=\Ex(Y)=\Ex_Z[g(Z)]
+\mu=\Ex(Y)=\Ex_{\vZ}[g(\vZ)]
 \qquad
-\var_Z(g(Z)) \overset{\exstar}{\le} \var(Y)
+\var_{\vZ}(g(\vZ)) \overset{\exstar}{\le} \var(Y)
 \]</span></p>
-<p>Sampling <span class="math inline">\(g(Z)\)</span> instead of <span class="math inline">\(Y\)</span> can <span class="alert">reduce variance</span></p>
+<p>Sampling <span class="math inline">\(g(\vZ)\)</span> instead of <span class="math inline">\(Y\)</span> can <span class="alert">reduce variance</span></p>
 <p>&nbsp;</p>
-<p>If the conditional density <span class="math inline">\(h(y,z):=\varrho_{Y\mid Z}(y\mid z)\)</span> is available <span class="alert">analytically</span></p>
+<p>If the conditional density <span class="math inline">\(h(y,\vz):=\varrho_{Y\mid \vZ}(y\mid \vz)\)</span> is available <span class="alert">analytically</span></p>
 <p><span class="math display">\[
-\varrho_Y(y)=\Ex_Z[h(y,Z)]
+\varrho_Y(y)=\Ex_{\vZ}[h(y,\vZ)]
 \]</span></p>
 <p>so a probability density can itself be expressed as an expectation</p>
 </section></section>
@@ -2142,10 +2142,10 @@ g(Z):=\Ex(Y\mid Z)
 <p>with the distribution required by the model</p>
 </div><div class="column" style="width:39%;">
 <ul>
-<li>Where do <span class="alert">uniform samples</span> come from?</li>
-<li>How do we transform them to a <span class="alert">target distribution</span>?</li>
-<li>How do we generate <span class="alert">dependent random vectors and stochastic processes</span>?</li>
-<li>Can <span class="alert">more even coverage</span> improve Monte Carlo estimates?</li>
+<li>Where do <a href="02-generating-samples.html#where-do-random-variables-come-from">uniform samples</a> come from?</li>
+<li>How do we transform them to a <a href="02-generating-samples.html#the-quantile-transform">target distribution</a>?</li>
+<li>How do we generate <a href="02-generating-samples.html#random-vectors-and-stochastic-processes">dependent random vectors and stochastic processes</a>?</li>
+<li>Can <a href="02-generating-samples.html#what-does-low-discrepancy-mean">more even coverage</a> improve Monte Carlo estimates?</li>
 </ul>
 </div><div class="column" style="width:15%;">
 

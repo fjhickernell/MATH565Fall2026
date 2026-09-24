@@ -791,11 +791,11 @@ This deck
 </div>
 
 <ul>
-<li>Quantile, affine, and exact transport maps
+<li><a href="02-generating-samples.html#the-quantile-transform">Quantile</a>, <a href="02-generating-samples.html#multivariate-normal-sampling">affine</a>, and <a href="02-generating-samples.html#transport-maps">exact transport maps</a>
 <ul>
 <li><span class="alert">Global construction</span>: a map that produces the target distribution</li>
 </ul></li>
-<li>Acceptance–rejection
+<li><a href="02-generating-samples.html#acceptancerejection-sampling">Acceptance–rejection</a>
 <ul>
 <li><span class="alert">Global bound</span>: a proposal envelope valid throughout the target support</li>
 </ul></li>
@@ -882,24 +882,24 @@ X_0=X_1=0,
   <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
 </div>
 
-<p>Suppose</p>
+<p>For states in <span class="math inline">\(\reals^d\)</span>, suppose</p>
 <ul>
 <li>the target has known, possibly unnormalized density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span></li>
-<li><span class="math inline">\(\varrho_{\mathrm{prop}}(z\mid x)\)</span> proposes a new state <span class="math inline">\(z\)</span> from the current state <span class="math inline">\(x\)</span></li>
+<li><span class="math inline">\(\varrho_{\mathrm{prop}}(\vz\mid \vx)\)</span> proposes a new state <span class="math inline">\(\vz\)</span> from the current state <span class="math inline">\(\vx\)</span></li>
 </ul>
-<p>Given <span class="math inline">\(X_0\)</span>, repeat for <span class="math inline">\(i=0,\ldots,n-1\)</span>:</p>
+<p>Given <span class="math inline">\(\vX_0\)</span>, repeat for <span class="math inline">\(i=0,\ldots,n-1\)</span>:</p>
 <ol type="1">
-<li><p>Generate <span class="math inline">\(Z\sim\varrho_{\mathrm{prop}}(\cdot\mid X_i)\)</span> and <span class="math inline">\(U\sim\Unif[0,1]\)</span></p></li>
+<li><p>Generate <span class="math inline">\(\vZ\sim\varrho_{\mathrm{prop}}(\cdot\mid \vX_i)\)</span> and <span class="math inline">\(U\sim\Unif[0,1]\)</span></p></li>
 <li><p>Compute</p>
 <p><span class="math display">\[
-\alpha(X_i,Z)=\min\!\left\{1,
-\frac{\varrho_{\mathrm{tar}}(Z)\varrho_{\mathrm{prop}}(X_i\mid Z)}
-{\varrho_{\mathrm{tar}}(X_i)\varrho_{\mathrm{prop}}(Z\mid X_i)}\right\}
+\alpha(\vX_i,\vZ)=\min\!\left\{1,
+\frac{\varrho_{\mathrm{tar}}(\vZ)\varrho_{\mathrm{prop}}(\vX_i\mid \vZ)}
+{\varrho_{\mathrm{tar}}(\vX_i)\varrho_{\mathrm{prop}}(\vZ\mid \vX_i)}\right\}
 =\min\!\left\{1,
-\frac{\text{joint density of first $Z$, then $X_i$}}
-{\text{joint density of first $X_i$, then $Z$}}\right\}
+\frac{\text{joint density of first $\vZ$, then $\vX_i$}}
+{\text{joint density of first $\vX_i$, then $\vZ$}}\right\}
 \]</span></p></li>
-<li><p>Set <span class="math inline">\(X_{i+1}=Z\)</span> if <span class="math inline">\(U\le\alpha(X_i,Z)\)</span><br>Otherwise set <span class="math inline">\(X_{i+1}=X_i\)</span></p></li>
+<li><p>Set <span class="math inline">\(\vX_{i+1}=\vZ\)</span> if <span class="math inline">\(U\le\alpha(\vX_i,\vZ)\)</span><br>Otherwise set <span class="math inline">\(\vX_{i+1}=\vX_i\)</span></p></li>
 </ol>
 <p><span class="alert">Every iteration accepts either the proposal or the current state</span><br>Nothing is discarded</p>
 </section>
@@ -913,11 +913,11 @@ X_0=X_1=0,
 
 <p>The ratio compares the two directions of a proposed transition:</p>
 <p><span class="math display">\[
-\frac{\varrho_{\mathrm{tar}}(Z)\varrho_{\mathrm{prop}}(X_i\mid Z)}
-{\varrho_{\mathrm{tar}}(X_i)\varrho_{\mathrm{prop}}(Z\mid X_i)}
+\frac{\varrho_{\mathrm{tar}}(\vZ)\varrho_{\mathrm{prop}}(\vX_i\mid \vZ)}
+{\varrho_{\mathrm{tar}}(\vX_i)\varrho_{\mathrm{prop}}(\vZ\mid \vX_i)}
 =
-\frac{\text{target weight at $Z$}\times\text{return proposal}}
-{\text{target weight at $X_i$}\times\text{forward proposal}}
+\frac{\text{target weight at $\vZ$}\times\text{return proposal}}
+{\text{target weight at $\vX_i$}\times\text{forward proposal}}
 \]</span></p>
 <ul>
 <li>Moves toward higher target density are favored</li>
@@ -937,19 +937,19 @@ X_0=X_1=0,
 
 <p>If the proposal is symmetric,</p>
 <p><span class="math display">\[
-\varrho_{\mathrm{prop}}(z\mid x)
-=\varrho_{\mathrm{prop}}(x\mid z),
+\varrho_{\mathrm{prop}}(\vz\mid \vx)
+=\varrho_{\mathrm{prop}}(\vx\mid \vz),
 \]</span></p>
 <p>then the acceptance probability simplifies to</p>
 <p><span class="math display">\[
-\alpha(x,z)=\min\!\left\{1,
-\frac{\varrho_{\mathrm{tar}}(z)}{\varrho_{\mathrm{tar}}(x)}\right\}
+\alpha(\vx,\vz)=\min\!\left\{1,
+\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{tar}}(\vx)}\right\}
 \]</span></p>
-<p>For a random-walk proposal <span class="math inline">\(Z=X_i+\epsilon_i\)</span> with symmetric <span class="math inline">\(\epsilon_i\)</span>:</p>
+<p>For a random-walk proposal <span class="math inline">\(\vZ=\vX_i+\vepsilon_i\)</span> with symmetric <span class="math inline">\(\vepsilon_i\)</span>:</p>
 <ul>
 <li>accept every move to a state with at least as much target density</li>
 <li>accept some downhill moves, which keeps the chain from becoming trapped immediately</li>
-<li>repeat <span class="math inline">\(X_i\)</span> when a proposal is rejected</li>
+<li>repeat <span class="math inline">\(\vX_i\)</span> when a proposal is rejected</li>
 </ul>
 </section>
 <section id="metropolis-practice" class="slide level2 tree-marker-slide" data-tree-marker="mcmc-practice">
@@ -1044,7 +1044,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="84035117" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="2f5e31de" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1063,7 +1063,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="d17791fa" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="9d41f446" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1104,17 +1104,17 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 <h3 id="parallel-tempering">Parallel tempering: explore hot, estimate cold</h3>
 <p>Run replicas with <span class="alert">inverse temperatures</span> <span class="math inline">\(1=\beta_0&gt;\cdots&gt;\beta_{R-1}&gt;0\)</span></p>
 <p><span class="math display">\[\begin{align*}
-\varrho_{\beta_r}(x)&amp;\propto\varrho_{\mathrm{tar}}(x)^{\beta_r}
+\varrho_{\beta_r}(\vx)&amp;\propto\varrho_{\mathrm{tar}}(\vx)^{\beta_r}
 \end{align*}\]</span></p>
 <ul>
 <li><span class="alert">Cold</span> (<span class="math inline">\(\beta_0=1\)</span>): original target; <span class="alert">hot</span> (<span class="math inline">\(\beta_r&lt;1\)</span>): flatter density, easier valley crossing</li>
 <li>Each sweep: local Metropolis updates, then proposed <span class="alert">state swaps</span> between neighboring temperatures</li>
-<li>Accept a swap <span class="math inline">\(x_r\leftrightarrow x_s\)</span> with probability</li>
+<li>Accept a swap <span class="math inline">\(\vx_r\leftrightarrow \vx_s\)</span> with probability</li>
 </ul>
 <p><span class="math display">\[\begin{align*}
 \alpha_{\mathrm{swap}}
 &amp;=\min\left\{1,
-\left[\frac{\varrho_{\mathrm{tar}}(x_s)}{\varrho_{\mathrm{tar}}(x_r)}\right]^{\beta_r-\beta_s}\right\}
+\left[\frac{\varrho_{\mathrm{tar}}(\vx_s)}{\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}\right\}
 \end{align*}\]</span></p>
 <ul>
 <li>Accepted swaps bring hot-chain discoveries into the cold slot</li>
@@ -1123,12 +1123,12 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 <aside class="notes">
 <p>Temperature is <span class="math inline">\(T_r=1/\beta_r\)</span>. Raising the whole density to a power below one reduces peak-to-valley density ratios. Each tempered density must have a finite normalizing integral; this holds for the notebook’s Gaussian mixture.</p>
 <p>The augmented target is the product of the <span class="math inline">\(R\)</span> tempered densities. A symmetric proposal to exchange two states has MH ratio <span class="math display">\[\begin{align*}
-\frac{\varrho_{\mathrm{tar}}(x_s)^{\beta_r}
-      \varrho_{\mathrm{tar}}(x_r)^{\beta_s}}
-     {\varrho_{\mathrm{tar}}(x_r)^{\beta_r}
-      \varrho_{\mathrm{tar}}(x_s)^{\beta_s}}
-&amp;=\left[\frac{\varrho_{\mathrm{tar}}(x_s)}
-                 {\varrho_{\mathrm{tar}}(x_r)}\right]^{\beta_r-\beta_s}.
+\frac{\varrho_{\mathrm{tar}}(\vx_s)^{\beta_r}
+      \varrho_{\mathrm{tar}}(\vx_r)^{\beta_s}}
+     {\varrho_{\mathrm{tar}}(\vx_r)^{\beta_r}
+      \varrho_{\mathrm{tar}}(\vx_s)^{\beta_s}}
+&amp;=\left[\frac{\varrho_{\mathrm{tar}}(\vx_s)}
+                 {\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}.
 \end{align*}\]</span> All normalizing constants cancel. Local updates and accepted/rejected swaps preserve the product target. Slots retain their temperatures; states move between slots. This is whole-target tempering, including the prior for a posterior target, rather than likelihood-only tempering.</p>
 <p>In the notebook, inverse temperatures are <span class="math inline">\(1,0.5,0.2,0.08,0.025\)</span>; every replica starts in the left mode. Show the flattened densities, then the hot and cold traces. Ask how a state discovered in the right mode can reach the cold slot. The cold slot must visit both modes in the correct proportions, not merely alternate between them. Discard the initial burn-in and keep all retained repeats; never pool unweighted hot and cold samples. Compare methods at equal target-evaluation cost, since each sweep updates <span class="math inline">\(R\)</span> replicas. Frequent swaps alone do not prove adequate exploration.</p>
 <style type="text/css">
@@ -1163,13 +1163,13 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Before</td>
-<td style="text-align: left;"><span class="math inline">\(x_r\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(x_s\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\vx_r\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\vx_s\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">After</td>
-<td style="text-align: left;"><span class="math inline">\(x_s\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(x_r\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\vx_s\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\vx_r\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -1177,21 +1177,21 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 <p><span class="math display">\[\begin{align*}
 R_{\mathrm{swap}}
 &amp;=\frac{\text{density after}}{\text{density before}}
-=\frac{\varrho_{\beta_r}(x_s)\,\varrho_{\beta_s}(x_r)}
-        {\varrho_{\beta_r}(x_r)\,\varrho_{\beta_s}(x_s)}
-=\left[\frac{\varrho_{\mathrm{tar}}(x_s)}{\varrho_{\mathrm{tar}}(x_r)}\right]^{\beta_r-\beta_s}
+=\frac{\varrho_{\beta_r}(\vx_s)\,\varrho_{\beta_s}(\vx_r)}
+        {\varrho_{\beta_r}(\vx_r)\,\varrho_{\beta_s}(\vx_s)}
+=\left[\frac{\varrho_{\mathrm{tar}}(\vx_s)}{\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}
 \end{align*}\]</span></p>
 <ul>
 <li>Draw <span class="math inline">\(U\sim\Unif(0,1)\)</span>; swap if <span class="math inline">\(U\le\min\{1,R_{\mathrm{swap}}\}\)</span></li>
 <li>Renaming <span class="math inline">\(r\)</span> and <span class="math inline">\(s\)</span>: reciprocal density ratio and opposite exponent → <span class="alert">same rule</span></li>
 </ul>
 <div class="key-point">
-<p>Cold <span class="math inline">\(\beta_r=1\)</span>, hot <span class="math inline">\(\beta_s=1/2\)</span>, and <span class="math inline">\(\varrho_{\mathrm{tar}}(x_s)=4\varrho_{\mathrm{tar}}(x_r)\)</span>: <span class="math inline">\(R_{\mathrm{swap}}=\sqrt{4}=2\)</span> → always swap; the reverse move is accepted with probability <span class="math inline">\(1/2\)</span></p>
+<p>Cold <span class="math inline">\(\beta_r=1\)</span>, hot <span class="math inline">\(\beta_s=1/2\)</span>, and <span class="math inline">\(\varrho_{\mathrm{tar}}(\vx_s)=4\varrho_{\mathrm{tar}}(\vx_r)\)</span>: <span class="math inline">\(R_{\mathrm{swap}}=\sqrt{4}=2\)</span> → always swap; the reverse move is accepted with probability <span class="math inline">\(1/2\)</span></p>
 </div>
 <aside class="notes">
-<p>The ratio compares two configurations of the same pair of slots. It does not compare <span class="math inline">\(\varrho_{\beta_r}(x_s)\)</span> with <span class="math inline">\(\varrho_{\beta_s}(x_r)\)</span>: those are the two factors in the numerator, not competing alternatives.</p>
-<p>Write <span class="math inline">\(\varrho_{\beta}(x)=\varrho_{\mathrm{tar}}(x)^\beta/C_\beta\)</span>. The constants <span class="math inline">\(C_{\beta_r}\)</span> and <span class="math inline">\(C_{\beta_s}\)</span> appear in both products and cancel. So do the densities for all unchanged slots in the full product target. The exponent matters: a hot density is proportional to a power of the target, not generally to the target itself.</p>
-<p>For the example, take unnormalized target values 1 at <span class="math inline">\(x_r\)</span> and 4 at <span class="math inline">\(x_s\)</span>. The before product is <span class="math inline">\(1^1\,4^{1/2}=2\)</span>; the after product is <span class="math inline">\(4^1\,1^{1/2}=4\)</span>. The ratio is <span class="math inline">\(4/2=2\)</span>. After that swap, proposing to move back gives <span class="math inline">\(2/4=1/2\)</span>. The accepted probability flows balance: <span class="math inline">\(2\times1=4\times(1/2)\)</span>, up to the common normalizing constant and proposal probability. Renaming slots changes neither physical configuration; reversing a move exchanges the before and after configurations. This distinction resolves the apparent asymmetry.</p>
+<p>The ratio compares two configurations of the same pair of slots. It does not compare <span class="math inline">\(\varrho_{\beta_r}(\vx_s)\)</span> with <span class="math inline">\(\varrho_{\beta_s}(\vx_r)\)</span>: those are the two factors in the numerator, not competing alternatives.</p>
+<p>Write <span class="math inline">\(\varrho_{\beta}(\vx)=\varrho_{\mathrm{tar}}(\vx)^\beta/C_\beta\)</span>. The constants <span class="math inline">\(C_{\beta_r}\)</span> and <span class="math inline">\(C_{\beta_s}\)</span> appear in both products and cancel. So do the densities for all unchanged slots in the full product target. The exponent matters: a hot density is proportional to a power of the target, not generally to the target itself.</p>
+<p>For the example, take unnormalized target values 1 at <span class="math inline">\(\vx_r\)</span> and 4 at <span class="math inline">\(\vx_s\)</span>. The before product is <span class="math inline">\(1^1\,4^{1/2}=2\)</span>; the after product is <span class="math inline">\(4^1\,1^{1/2}=4\)</span>. The ratio is <span class="math inline">\(4/2=2\)</span>. After that swap, proposing to move back gives <span class="math inline">\(2/4=1/2\)</span>. The accepted probability flows balance: <span class="math inline">\(2\times1=4\times(1/2)\)</span>, up to the common normalizing constant and proposal probability. Renaming slots changes neither physical configuration; reversing a move exchanges the before and after configurations. This distinction resolves the apparent asymmetry.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1427,7 +1427,7 @@ D_0^2&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')
 <aside class="notes">
 <p>The empty sample is not a probability distribution: <span class="math inline">\(D_0\)</span> means the RKHS worst-case error of the zero quadrature rule, equivalently comparison with the zero measure. It is also the prior standard deviation of the integral under the zero-mean GP model. This normalization requires <span class="math inline">\(0&lt;D_0^2&lt;\infty\)</span>; a kernel centered with respect to the target can have <span class="math inline">\(D_0=0\)</span> and cannot use this ratio.</p>
 <p>Multiplying <span class="math inline">\(K\)</span> by a positive constant multiplies both squared errors by that constant, so it cancels. Changing length scale changes which functions and spatial differences matter; normalization cannot remove that dependence. A relative squared discrepancy of <span class="math inline">\(0.01\)</span> corresponds to a discrepancy of <span class="math inline">\(0.1\)</span> times the no-sample error. It does not imply 1 percent relative error for every integrand. For a particular <span class="math inline">\(f\)</span>, use the bound <span class="math inline">\(D_n\norm{f}_{\mathcal H_K}\)</span> and an application-specific tolerance.</p>
-<p>Zero discrepancy means equal kernel mean embeddings; identifying equal probability distributions additionally requires a characteristic kernel. For IID sampling the later “What the kernel controls” slide gives the exact <span class="math inline">\(C_K/n\)</span> expectation when the kernel moments are finite. This is a mean-square benchmark, not monotone decay on every realization. MCMC dependence changes the constant and may affect the rate without suitable mixing assumptions. A finite independent reference sample adds error: increase its size as well when studying decay, rather than interpreting a fixed-reference error floor as a failure to converge. Do not choose length scales simply to minimize the displayed discrepancy. The off-diagonal estimator can be negative and is not itself a squared norm.</p>
+<p>Zero discrepancy means equal kernel mean embeddings; identifying equal probability distributions additionally requires a characteristic kernel. For IID sampling the later <a href="#/what-the-kernel-controls">“What the kernel controls” slide</a> gives the exact <span class="math inline">\(C_K/n\)</span> expectation when the kernel moments are finite. This is a mean-square benchmark, not monotone decay on every realization. MCMC dependence changes the constant and may affect the rate without suitable mixing assumptions. A finite independent reference sample adds error: increase its size as well when studying decay, rather than interpreting a fixed-reference error floor as a failure to converge. Do not choose length scales simply to minimize the displayed discrepancy. The off-diagonal estimator can be negative and is not itself a squared norm.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2053,7 +2053,7 @@ U_k\sim F_A \quad\text{($k$th interarrival duration)},
 \qquad
 V_j\sim F_S \quad\text{(customer $j$'s full service time)}.
 \]</span></p>
-<p>Immediately after event <span class="math inline">\(i\)</span>, the <span class="alert">state</span> is <span class="math inline">\(X_i=(A_i,N_i,S_i), \qquad i=0,1,\ldots\)</span>, where</p>
+<p>Immediately after event <span class="math inline">\(i\)</span>, the <span class="alert">state</span> is <span class="math inline">\(\vX_i=(A_i,N_i,S_i), \qquad i=0,1,\ldots\)</span>, where</p>
 <p><span class="math display">\[\begin{align*}
 A_i&amp;=\text{time until the next arrival},\\
 N_i&amp;=\text{number of customers in the system},\\
@@ -2065,7 +2065,7 @@ S_i&amp;=\text{remaining service time}, \qquad S_i=\infty\text{ when the server 
 <li><p>For performance, also track <span class="math inline">\(W_j=\)</span> accumulated time in the system for customer <span class="math inline">\(j\)</span></p></li>
 </ul>
 <div class="key-point">
-<p>The state <span class="math inline">\(X_i\)</span> determines the next-event law. The <span class="math inline">\(W_j\)</span> clocks measure customer time but do not affect that law</p>
+<p>The state <span class="math inline">\(\vX_i\)</span> determines the next-event law. The <span class="math inline">\(W_j\)</span> clocks measure customer time but do not affect that law</p>
 </div>
 </section>
 <section class="slide level2">
@@ -2097,7 +2097,7 @@ S_i&amp;=\text{remaining service time}, \qquad S_i=\infty\text{ when the server 
 
 <h3 id="markov-interpretation">Markov interpretation</h3>
 <div class="key-point">
-<p>If we jump into the process at <span class="math inline">\(i=47\)</span>, knowing <span class="math inline">\(X_{47}=(A_{47},N_{47},S_{47})\)</span> and using future independent input durations lets us continue with <span class="math inline">\(X_{48},X_{49},\ldots\)</span> without knowing the earlier queue states <span class="math inline">\(X_0,\ldots,X_{46}\)</span></p>
+<p>If we jump into the process at <span class="math inline">\(i=47\)</span>, knowing <span class="math inline">\(\vX_{47}=(A_{47},N_{47},S_{47})\)</span> and using future independent input durations lets us continue with <span class="math inline">\(\vX_{48},\vX_{49},\ldots\)</span> without knowing the earlier queue states <span class="math inline">\(\vX_0,\ldots,\vX_{46}\)</span></p>
 </div>
 <ul>
 <li>The residual clocks belong in the state because a partially elapsed duration generally does not have the same distribution as a newly drawn full duration</li>
@@ -2586,10 +2586,10 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <h1>How Far We Have Come</h1>
 <p><span class="alert">From random inputs to distribution-aware simulation</span></p>
 <ul>
-<li><span class="alert">Estimate</span> — sample averages approximate expectations and quantify uncertainty</li>
-<li><span class="alert">Generate</span> — transform uniform inputs into target samples, including dependent vectors and paths</li>
-<li><span class="alert">Extend</span> — MCMC reaches targets known only up to normalization, at the cost of dependent samples</li>
-<li><span class="alert">Assess</span> — kernel discrepancy connects distributional fit with integration error</li>
+<li><a href="01-introduction.html#under-random-sampling">Estimate</a> — sample averages approximate expectations and quantify uncertainty</li>
+<li><a href="02-generating-samples.html#from-uniformity-to-a-target-distribution">Generate</a> — transform uniform inputs into target samples, including dependent vectors and paths</li>
+<li><a href="03-markov-chain-monte-carlo.html#the-metropolishastings-algorithm">Extend</a> — MCMC reaches targets known only up to normalization, at the cost of dependent samples</li>
+<li><a href="03-markov-chain-monte-carlo.html#discrepancy-as-integration-error">Assess</a> — kernel discrepancy connects distributional fit with integration error</li>
 </ul>
 <div class="key-point">
 <p>Sampling tells us <span class="alert">what to compute</span>; discrepancy helps judge <span class="alert">how well the samples represent the target</span></p>
@@ -2601,10 +2601,10 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <p>We now have ways to generate samples and assess their error</p>
 <p><a href="04-improving-efficiency.html">Improving Efficiency</a> asks how to get a more accurate answer for the same computational work:</p>
 <ul>
-<li>Change the sampling distribution or transform the integral</li>
-<li>Remove known variation with conditioning and control variates</li>
-<li>Place samples deliberately with stratification and low discrepancy methods</li>
-<li>Randomize structured points to estimate uncertainty</li>
+<li><a href="04-improving-efficiency.html#importance-sampling">Change the sampling distribution</a> or <a href="04-improving-efficiency.html#transforming-an-integral">transform the integral</a></li>
+<li>Remove known variation with <a href="04-improving-efficiency.html#conditional-monte-carlo">conditioning</a> and <a href="04-improving-efficiency.html#control-variates">control variates</a></li>
+<li>Place samples deliberately with <a href="04-improving-efficiency.html#latin-hypercube-sampling-in-one-dimension">stratification</a> and <a href="04-improving-efficiency.html#from-lhs-to-quasi-monte-carlo">low discrepancy methods</a></li>
+<li><a href="04-improving-efficiency.html#why-randomize">Randomize structured points to estimate uncertainty</a></li>
 </ul>
 <div class="key-point">
 <p><span class="alert">Next:</span> <a href="04-improving-efficiency.html">reduce error per unit of work</a></p>

@@ -725,21 +725,21 @@ This deck
 
 <p>Suppose</p>
 <p><span class="math display">\[
-\mu=\Ex[f(X)]=\Ex[g(X)],
-\qquad X\sim\Unif[0,1]^d
+\mu=\Ex[f(\vX)]=\Ex[g(\vX)],
+\qquad \vX\sim\Unif[0,1]^d
 \]</span></p>
 <p>Both IID sample means are unbiased:</p>
 <p><span class="math display">\[\begin{align*}
-\hmu_{f,n}&amp;=\frac1n\sum_{i=0}^{n-1}f(X_i),&amp;
-\hmu_{g,n}&amp;=\frac1n\sum_{i=0}^{n-1}g(X_i)
+\hmu_{f,n}&amp;=\frac1n\sum_{i=0}^{n-1}f(\vX_i),&amp;
+\hmu_{g,n}&amp;=\frac1n\sum_{i=0}^{n-1}g(\vX_i)
 \end{align*}\]</span></p>
 <p>Their mean squared errors are their variances:</p>
 <p><span class="math display">\[\begin{align*}
-\var(\hmu_{f,n})&amp;=\frac{\var\{f(X)\}}n,&amp;
-\var(\hmu_{g,n})&amp;=\frac{\var\{g(X)\}}n
+\var(\hmu_{f,n})&amp;=\frac{\var\{f(\vX)\}}n,&amp;
+\var(\hmu_{g,n})&amp;=\frac{\var\{g(\vX)\}}n
 \end{align*}\]</span></p>
 <div class="key-point">
-<p>Deck 01 showed that accepting some bias can reduce MSE</p>
+<p><a href="01-introduction.html#shrinkage-estimators">Deck 01 showed that accepting some bias can reduce MSE</a></p>
 <p>Here both estimators are unbiased, so an equivalent expectation is better when its <span class="alert">integrand has smaller variance</span></p>
 </div>
 </section>
@@ -752,16 +752,15 @@ This deck
 
 <p>Consider</p>
 <p><span class="math display">\[
-\mu=\int_{\reals^d}\cos(\norm{t})\exp(-\norm{t}^2)\,\dif t
+\mu=\int_{\reals^d}\cos(\norm{\vt})\exp(-\norm{\vt}^2)\,\dif\vt
 \]</span></p>
-<p>Let <span class="math inline">\(x_j=\Phi(at_j)\)</span>, where <span class="math inline">\(\Phi\)</span> is the standard normal CDF</p>
-<p>Then <span class="math inline">\(t_j=\Phi^{-1}(x_j)/a\)</span> and</p>
+<p>Let <span class="math inline">\(\vx=\Phi(a\vt)\)</span> componentwise, where <span class="math inline">\(\Phi\)</span> is the standard normal CDF</p>
+<p>Then <span class="math inline">\(\vt=\Phi^{-1}(\vx)/a\)</span> and, for <span class="math inline">\(0&lt;a\le\sqrt2\)</span>,</p>
 <p><span class="math display">\[\begin{align*}
 \mu
 &amp;=\int_{[0,1]^d}\frac{(2\mpi)^{d/2}}{a^d}
-\cos\!\left(\frac{\norm{\Phi^{-1}(x)}}a\right)\\
-&amp;\quad\times\exp\!\left[-\frac{2-a^2}{2a^2}\norm{\Phi^{-1}(x)}^2\right]\,\dif x,
-\qquad a^2\le2
+\cos\!\left(\frac{\norm{\Phi^{-1}(\vx)}}a\right)\\
+&amp;\quad\times\exp\!\left[-\frac{2-a^2}{2a^2}\norm{\Phi^{-1}(\vx)}^2\right]\,\dif\vx
 \end{align*}\]</span></p>
 <p>The parameter <span class="math inline">\(a\)</span> creates a <span class="alert">family of unbiased estimators</span> with different variances</p>
 </section>
@@ -772,21 +771,21 @@ This deck
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>To approximate <span class="math inline">\(\mu=\int_{\mathcal T}g(t)\,\dif t\)</span>, choose an invertible map</p>
+<p>To approximate <span class="math inline">\(\mu=\int_{\mathcal T}g(\vt)\,\dif \vt\)</span>, choose an invertible map</p>
 <p><span class="math display">\[
-t=\psi(x),
-\qquad \psi:\mathcal X\to\mathcal T
+\vt=\psi(\vx),
+\qquad \psi:\mathcal X\to\mathcal T,\quad \mathcal X,\mathcal T\subseteq\reals^d
 \]</span></p>
-<p>Let <span class="math inline">\(J(x;\psi)=\det\{\partial\psi_i/\partial x_j\}_{i,j=1}^d\)</span></p>
-<p>If <span class="math inline">\(X\)</span> has density <span class="math inline">\(\varrho_X\)</span>, then</p>
+<p>Let <span class="math inline">\(J(\vx;\psi)=\det\{\partial\psi_i/\partial x_j\}_{i,j=1}^d\)</span></p>
+<p>If <span class="math inline">\(\vX\)</span> has density <span class="math inline">\(\varrho_{\vX}\)</span>, then</p>
 <p><span class="math display">\[\begin{align*}
 \mu
-&amp;=\int_{\mathcal X}g\bigl(\psi(x)\bigr)\abs{J(x;\psi)}\,\dif x\\
-&amp;=\Ex_{X\sim\varrho_X}\!\left[
-\frac{g\bigl(\psi(X)\bigr)\abs{J(X;\psi)}}{\varrho_X(X)}
+&amp;=\int_{\mathcal X}g\bigl(\psi(\vx)\bigr)\abs{J(\vx;\psi)}\,\dif \vx\\
+&amp;=\Ex_{\vX\sim\varrho_{\vX}}\!\left[
+\frac{g\bigl(\psi(\vX)\bigr)\abs{J(\vX;\psi)}}{\varrho_{\vX}(\vX)}
 \right]
 \end{align*}\]</span></p>
-<p>For <span class="math inline">\(X\sim\Unif[0,1]^d\)</span>, the density in the denominator is one</p>
+<p>For <span class="math inline">\(\vX\sim\Unif[0,1]^d\)</span>, the density in the denominator is one</p>
 </section>
 <section id="transforming-a-random-variable" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
 <h2>Transforming a random variable</h2>
@@ -851,19 +850,19 @@ f\bigl(T(\vZ)\bigr)
 <p>Choose a proposal density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span> that is positive wherever <span class="math inline">\(f\varrho_{\mathrm{tar}}\)</span> is nonzero:</p>
 <p><span class="math display">\[\begin{align*}
 \mu
-&amp;=\int f(x)\varrho_{\mathrm{tar}}(x)\,\dif x\\
-&amp;=\Ex_{Z\sim\varrho_{\mathrm{prop}}}\!\left[
-f(Z)\frac{\varrho_{\mathrm{tar}}(Z)}
-{\varrho_{\mathrm{prop}}(Z)}
+&amp;=\int f(\vx)\varrho_{\mathrm{tar}}(\vx)\,\dif \vx\\
+&amp;=\Ex_{\vZ\sim\varrho_{\mathrm{prop}}}\!\left[
+f(\vZ)\frac{\varrho_{\mathrm{tar}}(\vZ)}
+{\varrho_{\mathrm{prop}}(\vZ)}
 \right]
 \end{align*}\]</span></p>
 <p>The ratio <span class="math inline">\(\varrho_{\mathrm{tar}}/\varrho_{\mathrm{prop}}\)</span> is the <span class="alert">importance weight</span></p>
-<p>For <span class="math inline">\(Z_0,\ldots,Z_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}\)</span>,</p>
+<p>For <span class="math inline">\(\vZ_0,\ldots,\vZ_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}\)</span>,</p>
 <p><span class="math display">\[
 \hmu_{\mathrm{IS},n}
-=\frac1n\sum_{i=0}^{n-1}f(Z_i)
-\frac{\varrho_{\mathrm{tar}}(Z_i)}
-{\varrho_{\mathrm{prop}}(Z_i)}
+=\frac1n\sum_{i=0}^{n-1}f(\vZ_i)
+\frac{\varrho_{\mathrm{tar}}(\vZ_i)}
+{\varrho_{\mathrm{prop}}(\vZ_i)}
 \]</span></p>
 </section>
 <section class="slide level2">
@@ -909,7 +908,7 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1)
 </tr>
 </tbody>
 </table>
-<p><span class="alert">Deck 02 acceptance–rejection</span>: same proposal, keep <span class="math inline">\(Z\)</span> with probability <span class="math inline">\(Z\)</span></p>
+<p><a href="02-generating-samples.html#acceptance-rejection-choosing-which-proposals-to-keep">Deck 02 acceptance–rejection</a>: same proposal, keep <span class="math inline">\(Z\)</span> with probability <span class="math inline">\(Z\)</span></p>
 <div class="key-point">
 <p>Transport changes samples; importance sampling changes contributions</p>
 </div>
@@ -969,14 +968,14 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1)
 </div>
 
 <p>Positive option payoffs may be rare under a discretized Brownian path</p>
-<p>Let <span class="math inline">\(X\sim\Norm(\vzero,\mSigma)\)</span> with <span class="math inline">\(\Sigma_{jk}=\min(t_j,t_k)\)</span> and target density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span></p>
+<p>Let <span class="math inline">\(\vX\sim\Norm(\vzero,\mSigma)\)</span> with <span class="math inline">\(\Sigma_{jk}=\min(t_j,t_k)\)</span> and target density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span></p>
 <p>Use the proposal <span class="math inline">\(\Norm(\va,\mSigma)\)</span> with density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span> and</p>
 <p><span class="math display">\[
 \va=\theta(t_1,\ldots,t_d)^\mathsf T
 \]</span></p>
 <p>The likelihood ratio simplifies to</p>
 <p><span class="math display">\[
-\frac{\varrho_{\mathrm{tar}}(x)}{\varrho_{\mathrm{prop}}(x)}
+\frac{\varrho_{\mathrm{tar}}(\vx)}{\varrho_{\mathrm{prop}}(\vx)}
 =\exp\!\left(-\theta x_d+\frac{\theta^2t_d}{2}\right)
 \]</span></p>
 <ul>
@@ -1034,18 +1033,18 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1)
 <p>Let <span class="math inline">\(\eta_1,\ldots,\eta_m\)</span> have known zero means</p>
 <p>For any coefficients <span class="math inline">\(\beta_1,\ldots,\beta_m\)</span>,</p>
 <p><span class="math display">\[
-\mu=\Ex[f(X)]
-=\Ex\!\left[f(X)-\sum_{j=1}^m\beta_j\eta_j(X)\right]
+\mu=\Ex[f(\vX)]
+=\Ex\!\left[f(\vX)-\sum_{j=1}^m\beta_j\eta_j(\vX)\right]
 \]</span></p>
 <p>The estimator</p>
 <p><span class="math display">\[
 \hmu_{\mathrm{CV},n}
-=\frac1n\sum_{i=0}^{n-1}\left[f(X_i)-\sum_{j=1}^m\beta_j\eta_j(X_i)\right]
+=\frac1n\sum_{i=0}^{n-1}\left[f(\vX_i)-\sum_{j=1}^m\beta_j\eta_j(\vX_i)\right]
 \]</span></p>
 <p>is unbiased for fixed <span class="math inline">\(\vbeta\)</span></p>
 <p>Choose <span class="math inline">\(\vbeta\)</span> to make</p>
 <p><span class="math display">\[
-\var\!\left[f(X)-\sum_{j=1}^m\beta_j\eta_j(X)\right]
+\var\!\left[f(\vX)-\sum_{j=1}^m\beta_j\eta_j(\vX)\right]
 \]</span></p>
 <p>as small as possible</p>
 </section>
@@ -1058,8 +1057,8 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1)
 
 <p>Center the response and control values:</p>
 <p><span class="math display">\[\begin{align*}
-y_i&amp;=f(x_i)-\overline{f},&amp;
-H_{ij}&amp;=\eta_j(x_i)-\overline{\eta}_j
+y_i&amp;=f(\vx_i)-\overline{f},&amp;
+H_{ij}&amp;=\eta_j(\vx_i)-\overline{\eta}_j
 \end{align*}\]</span></p>
 <p>Then</p>
 <p><span class="math display">\[
@@ -1097,7 +1096,7 @@ H_{ij}&amp;=\eta_j(x_i)-\overline{\eta}_j
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Recall</p>
+<p>Recall the <a href="01-introduction.html#laws-of-total-expectation-and-variance">laws of total expectation and variance</a></p>
 <p><span class="math display">\[\begin{align*}
 \Ex(Y)&amp;=\Ex_Z\{\Ex(Y\mid Z)\},\\
 \var(Y)&amp;=\Ex_Z\{\var(Y\mid Z)\}+\var_Z\{\Ex(Y\mid Z)\}
@@ -1108,9 +1107,9 @@ H_{ij}&amp;=\eta_j(x_i)-\overline{\eta}_j
 \]</span></p>
 <p>If <span class="math inline">\(Y=f(X_1,\ldots,X_d)\)</span> and</p>
 <p><span class="math display">\[
-g(X_{2:d})=\Ex(Y\mid X_{2:d})
+g(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
 \]</span></p>
-<p>is analytic, estimate <span class="math inline">\(\mu\)</span> by sampling <span class="math inline">\(g(X_{2:d})\)</span> instead of <span class="math inline">\(Y\)</span></p>
+<p>is analytic, estimate <span class="math inline">\(\mu\)</span> by sampling <span class="math inline">\(g(\vX_{2:d})\)</span> instead of <span class="math inline">\(Y\)</span></p>
 <p><span class="alert">Analytically averaging over part of the randomness reduces variance</span></p>
 </section>
 <section id="conditional-density-estimation" class="slide level2 tree-marker-slide" data-tree-marker="prob-est">
@@ -1121,18 +1120,18 @@ g(X_{2:d})=\Ex(Y\mid X_{2:d})
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Let <span class="math inline">\(Y=f(X)\)</span> with <span class="math inline">\(X\sim\Unif[0,1]^d\)</span></p>
+<p>Let <span class="math inline">\(Y=f(\vX)\)</span> with <span class="math inline">\(\vX\sim\Unif[0,1]^d\)</span></p>
 <p>Suppose <span class="math inline">\(f\)</span> is increasing in <span class="math inline">\(x_1\)</span> and</p>
 <p><span class="math display">\[
-y=f(x_1,x_{2:d})iff x_1=g(y;x_{2:d})
+y=f(x_1,\vx_{2:d})\iff x_1=g(y;\vx_{2:d})
 \]</span></p>
 <p>Then</p>
 <p><span class="math display">\[\begin{align*}
-F_{Y\mid X_{2:d}}(y\mid x_{2:d})
-&amp;=\Prob\{X_1\le g(y;x_{2:d})\}\\
-&amp;=g(y;x_{2:d}),\\
+F_{Y\mid \vX_{2:d}}(y\mid \vx_{2:d})
+&amp;=\Prob\{X_1\le g(y;\vx_{2:d})\}\\
+&amp;=g(y;\vx_{2:d}),\\
 \varrho_Y(y)
-&amp;=\int_{[0,1]^{d-1}}\frac{\partial g}{\partial y}(y;x)\,\dif x
+&amp;=\int_{[0,1]^{d-1}}\frac{\partial g}{\partial y}(y;\vx_{2:d})\,\dif\vx_{2:d}
 \end{align*}\]</span></p>
 <p>Thus a density value becomes an <span class="alert">expectation of a conditional density</span></p>
 </section>
@@ -1146,12 +1145,12 @@ F_{Y\mid X_{2:d}}(y\mid x_{2:d})
 <p>Let</p>
 <p><span class="math display">\[
 Y=\gamma_1X_1+\cdots+\gamma_dX_d,
-\qquad X\sim\Unif[0,1]^d,
+\qquad \vX\sim\Unif[0,1]^d,
 \qquad \gamma_j&gt;0
 \]</span></p>
 <p>Solving for <span class="math inline">\(x_1\)</span> gives</p>
 <p><span class="math display">\[
-g(y;x_{2:d})=\frac{y-\sum_{j=2}^d\gamma_jx_j}{\gamma_1}
+g(y;\vx_{2:d})=\frac{y-\sum_{j=2}^d\gamma_jx_j}{\gamma_1}
 \]</span></p>
 <p>when <span class="math inline">\(\sum_{j=2}^d\gamma_jx_j\le y\le\gamma_1+\sum_{j=2}^d\gamma_jx_j\)</span></p>
 <p>Hence</p>
@@ -1190,22 +1189,22 @@ g(y;x_{2:d})=\frac{y-\sum_{j=2}^d\gamma_jx_j}{\gamma_1}
   <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
 </div>
 
-<p>If <span class="math inline">\(T(X)\)</span> has the same distribution as <span class="math inline">\(X\)</span>, pair <span class="math inline">\(f(X_i)\)</span> with <span class="math inline">\(f\bigl(T(X_i)\bigr)\)</span>:</p>
+<p>If <span class="math inline">\(T(\vX)\)</span> has the same distribution as <span class="math inline">\(\vX\)</span>, pair <span class="math inline">\(f(\vX_i)\)</span> with <span class="math inline">\(f\bigl(T(\vX_i)\bigr)\)</span>:</p>
 <p><span class="math display">\[
 \hmu_{\mathrm{Anti},n}
-=\frac1{2n}\sum_{i=0}^{n-1}\left[f(X_i)+f\bigl(T(X_i)\bigr)\right]
+=\frac1{2n}\sum_{i=0}^{n-1}\left[f(\vX_i)+f\bigl(T(\vX_i)\bigr)\right]
 \]</span></p>
 <p>Examples:</p>
 <p><span class="math display">\[\begin{align*}
-T(X)&amp;=1-X,&amp; X&amp;\sim\Unif[0,1]^d,\\
-T(X)&amp;=-X,&amp; X&amp;\sim\Norm(\vzero,\mSigma)
+T(\vX)&amp;=\vone-\vX,&amp; \vX&amp;\sim\Unif[0,1]^d,\\
+T(\vX)&amp;=-\vX,&amp; \vX&amp;\sim\Norm(\vzero,\mSigma)
 \end{align*}\]</span></p>
-<p>Although <span class="math inline">\(X_i\)</span> and <span class="math inline">\(T(X_i)\)</span> are dependent, the pairs are independent across <span class="math inline">\(i\)</span></p>
+<p>Although <span class="math inline">\(\vX_i\)</span> and <span class="math inline">\(T(\vX_i)\)</span> are dependent, the pairs are independent across <span class="math inline">\(i\)</span></p>
 <p>The variance is</p>
 <p><span class="math display">\[
 \var(\hmu_{\mathrm{Anti},n})
-=\frac{\var\{f(X)\}}{2n}
-\left[1+\corr\{f(X),f(T(X))\}\right]
+=\frac{\var\{f(\vX)\}}{2n}
+\left[1+\corr\{f(\vX),f(T(\vX))\}\right]
 \]</span></p>
 <p>Antithetic sampling helps when the paired function values are <span class="alert">negatively correlated</span></p>
 </section>
@@ -1284,11 +1283,11 @@ X_i=\frac{i+U_i}{n},
 X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
 \qquad U_{i\ell}\ \IIDsim\ \Unif[0,1]
 \]</span></p>
-<p>Each coordinate uses every stratum exactly once</p>
+<p>Each point is <span class="math inline">\(\vX_i=(X_{i1},\ldots,X_{id})\)</span>; each coordinate uses every stratum exactly once</p>
 <p>For <span class="math inline">\(R\)</span> independent Latin hypercubes,</p>
 <p><span class="math display">\[\begin{align*}
 \hmu_{\mathrm{LHS},n}^{(r)}
-&amp;=\frac1n\sum_{i=0}^{n-1}f(X_i^{(r)}),\\
+&amp;=\frac1n\sum_{i=0}^{n-1}f(\vX_i^{(r)}),\\
 \hmu_{\mathrm{LHS},n,R}
 &amp;=\frac1R\sum_{r=1}^R\hmu_{\mathrm{LHS},n}^{(r)},\\
 \widehat{\var}(\hmu_{\mathrm{LHS},n,R})
@@ -1305,7 +1304,7 @@ X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="7b6e5911" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="1">
+<div id="cb11bf6e" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1366,12 +1365,12 @@ X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
 </div>
 
 <p><span class="alert">Low discrepancy sampling</span>, or quasi-Monte Carlo, improves space filling beyond one-dimensional stratification</p>
-<p>For nodes <span class="math inline">\(x_0,\ldots,x_{n-1}\)</span> and target distribution <span class="math inline">\(F\)</span>,</p>
+<p>For nodes <span class="math inline">\(\vx_0,\ldots,\vx_{n-1}\)</span> and target distribution <span class="math inline">\(F\)</span>,</p>
 <p><span class="math display">\[\begin{align*}
-D^2(\{x_i\}_{i=0}^{n-1},F;K)
-&amp;=\int_{\mathcal X^2}K(x,x')\,\dif F(x)\,\dif F(x')\\
-&amp;\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,x_i)\,\dif F(x)\\
-&amp;\quad+\frac1{n^2}\sum_{i,j=0}^{n-1}K(x_i,x_j)
+D^2(\{\vx_i\}_{i=0}^{n-1},F;K)
+&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F(\vx)\,\dif F(\vx')\\
+&amp;\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vx_i)\,\dif F(\vx)\\
+&amp;\quad+\frac1{n^2}\sum_{i,j=0}^{n-1}K(\vx_i,\vx_j)
 \end{align*}\]</span></p>
 <p>We usually take <span class="math inline">\(\mathcal X=[0,1]^d\)</span> and seek nodes with small discrepancy</p>
 <div class="key-point">
@@ -1388,13 +1387,13 @@ D^2(\{x_i\}_{i=0}^{n-1},F;K)
 
 <p>For the uniform target on <span class="math inline">\([0,1]^d\)</span>, discrepancy is</p>
 <ul>
-<li><p><span class="alert">worst-case error</span></p>
+<li><p><a href="03-markov-chain-monte-carlo.html#worst-case-integration-error">worst-case error</a></p>
 <p><span class="math display">\[
-\left\lvert\int f(x)\,\dif x-\frac1n\sum_{i=0}^{n-1}f(x_i)\right\rvert
+\left\lvert\int f(\vx)\,\dif \vx-\frac1n\sum_{i=0}^{n-1}f(\vx_i)\right\rvert
 \le D\norm{f}_{\mathcal H_K}
 \]</span></p></li>
-<li><p><span class="alert">average-case root mean squared error</span> for <span class="math inline">\(f\)</span> drawn from a Gaussian process with covariance kernel <span class="math inline">\(K\)</span></p></li>
-<li><p><span class="alert">distance between the target distribution and the empirical distribution</span></p></li>
+<li><p><a href="03-markov-chain-monte-carlo.html#average-case-integration-error">average-case root mean squared error</a> for <span class="math inline">\(f\)</span> drawn from a Gaussian process with covariance kernel <span class="math inline">\(K\)</span></p></li>
+<li><p><a href="03-markov-chain-monte-carlo.html#discrepancy-between-distributions">distance between the target distribution and the empirical distribution</a></p></li>
 </ul>
 <p>The kernel specifies the function class and the distributional features being measured</p>
 </section>
@@ -1444,22 +1443,22 @@ i=(\cdots i_2i_1i_0)_b
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Kronecker</td>
-<td style="text-align: left;"><span class="math inline">\(x_i=i\vzeta\bmod1\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\vx_i=i\vzeta\bmod1\)</span></td>
 <td style="text-align: left;">none</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Lattice</td>
-<td style="text-align: left;"><span class="math inline">\(x_i=\phi_b(i)\vzeta\bmod1\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\vx_i=\phi_b(i)\vzeta\bmod1\)</span></td>
 <td style="text-align: left;"><span class="math inline">\(n=b^m\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Halton</td>
-<td style="text-align: left;"><span class="math inline">\(x_i=\{\phi_2(i),\phi_3(i),\phi_5(i),\ldots\}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\vx_i=(\phi_2(i),\phi_3(i),\phi_5(i),\ldots)\)</span></td>
 <td style="text-align: left;">none</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Digital</td>
-<td style="text-align: left;"><span class="math inline">\(x_i=i_0c_0\oplus i_1c_1\oplus\cdots\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\vx_i=i_0\vc_0\oplus i_1\vc_1\oplus\cdots\)</span></td>
 <td style="text-align: left;"><span class="math inline">\(n=b^m\)</span></td>
 </tr>
 </tbody>
@@ -1497,12 +1496,12 @@ i=(\cdots i_2i_1i_0)_b
 
 <p>Randomization aims for</p>
 <p><span class="math display">\[
-X_{\mathrm{rand},i}\sim\Unif[0,1]^d
+\vX_{\mathrm{rand},i}\sim\Unif[0,1]^d
 \]</span></p>
 <p>for every <span class="math inline">\(i\)</span>, while preserving low discrepancy jointly</p>
 <ul>
-<li><span class="alert">Random shift</span>: <span class="math inline">\(X_{\mathrm{rand},i}=x_i+\vDelta\bmod1\)</span>, especially for lattices and Kronecker sequences</li>
-<li><span class="alert">Random digital shift</span>: <span class="math inline">\(X_{\mathrm{rand},i}=x_i\oplus\vDelta\)</span>, especially for digital sequences</li>
+<li><span class="alert">Random shift</span>: <span class="math inline">\(\vX_{\mathrm{rand},i}=\vx_i+\vDelta\bmod1\)</span>, especially for lattices and Kronecker sequences</li>
+<li><span class="alert">Random digital shift</span>: <span class="math inline">\(\vX_{\mathrm{rand},i}=\vx_i\oplus\vDelta\)</span>, especially for digital sequences</li>
 <li><span class="alert">Linear matrix or nested uniform scrambling</span>, especially for digital sequences</li>
 </ul>
 <p>Independent randomizations provide replications without reverting to IID point placement</p>
@@ -1518,9 +1517,9 @@ X_{\mathrm{rand},i}\sim\Unif[0,1]^d
 <ul>
 <li><p>The estimator</p>
 <p><span class="math display">\[
-\hmu_n=\frac1n\sum_{i=0}^{n-1}f(X_{\mathrm{rand},i})
+\hmu_n=\frac1n\sum_{i=0}^{n-1}f(\vX_{\mathrm{rand},i})
 \]</span></p>
-<p>is unbiased for <span class="math inline">\(\Ex[f(X)]\)</span>, <span class="math inline">\(X\sim\Unif[0,1]^d\)</span></p></li>
+<p>is unbiased for <span class="math inline">\(\Ex[f(\vX)]\)</span>, <span class="math inline">\(\vX\sim\Unif[0,1]^d\)</span></p></li>
 <li><p>Randomized nodes almost surely avoid the boundary, so Gaussian quantile transforms remain finite</p></li>
 <li><p>Independent randomizations allow variance and error estimation</p></li>
 <li><p>For smooth integrands, scrambled digital sequences can attain nearly <span class="math inline">\(\Order(n^{-3/2})\)</span> RMSE</p></li>
@@ -1540,7 +1539,7 @@ X_{\mathrm{rand},i}\sim\Unif[0,1]^d
 \abs{\mu-\hmu_n}&amp;\le\varepsilon
 \quad\text{for what $n$?}
 \end{align*}\]</span></p>
-<p>We want answers based only on the computed data <span class="math inline">\(f(x_0),f(x_1),\ldots\)</span></p>
+<p>We want answers based only on the computed data <span class="math inline">\(f(\vx_0),f(\vx_1),\ldots\)</span></p>
 <ul>
 <li>IID sampling: use a Central Limit Theorem interval when justified</li>
 <li>Randomized low discrepancy sampling: use independent replications</li>
@@ -1578,10 +1577,10 @@ X_{\mathrm{rand},i}\sim\Unif[0,1]^d
 <h1>How Far We Have Come</h1>
 <p><span class="alert">A complete path from model to efficient estimate</span></p>
 <ul>
-<li><span class="alert">Formulate</span> — express the target quantity as an expectation</li>
-<li><span class="alert">Sample</span> — use direct transforms or Markov chains to represent the target</li>
-<li><span class="alert">Assess</span> — connect uncertainty and discrepancy to integration error</li>
-<li><span class="alert">Improve</span> — choose weights, controls, dependence, or low discrepancy points to reduce error</li>
+<li><a href="01-introduction.html#moments-of-random-variables">Formulate</a> — express the target quantity as an expectation</li>
+<li><a href="02-generating-samples.html#from-uniformity-to-a-target-distribution">Sample</a> — use direct transforms or Markov chains to represent the target</li>
+<li><a href="03-markov-chain-monte-carlo.html#discrepancy-as-integration-error">Assess</a> — connect uncertainty and discrepancy to integration error</li>
+<li><a href="04-improving-efficiency.html#variance-reduction">Improve</a> — choose weights, controls, dependence, or low discrepancy points to reduce error</li>
 </ul>
 <div class="key-point">
 <p>Method choice depends on <span class="alert">error, cost, and a credible stopping rule</span></p>
@@ -1593,10 +1592,10 @@ X_{\mathrm{rand},i}\sim\Unif[0,1]^d
 <p>Efficiency also depends on how the computation is organized</p>
 <p><a href="05-selected-topics.html">Selected Topics</a> develops:</p>
 <ul>
-<li>Parallel sample evaluation and sound random streams</li>
-<li>Stochastic gradients when exact optimization steps cost too much</li>
-<li>Coupled coarse and fine approximations</li>
-<li>Multilevel allocation by variance and cost</li>
+<li><a href="05-selected-topics.html#parallel-computing">Parallel sample evaluation and sound random streams</a></li>
+<li><a href="05-selected-topics.html#stochastic-gradient-descent">Stochastic gradients</a> when exact optimization steps cost too much</li>
+<li><a href="05-selected-topics.html#splitting-an-expectation">Coupled coarse and fine approximations</a></li>
+<li><a href="05-selected-topics.html#optimal-multilevel-allocation">Multilevel allocation by variance and cost</a></li>
 </ul>
 <div class="key-point">
 <p><span class="alert">Next:</span> <a href="05-selected-topics.html">share work across processors, samples, and levels</a></p>

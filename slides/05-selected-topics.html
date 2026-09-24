@@ -785,7 +785,7 @@ This deck
 </div>
 
 <p>Both methods minimize the same quadratic loss<br>Stochastic gradients use one randomly selected component at each step</p>
-<div id="43024971" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
+<div id="01cc23af" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -952,22 +952,22 @@ n_\ell
 
 <p>Suppose</p>
 <p><span class="math display">\[
-\mu=\lim_{d\to\infty}\Ex\{f_d(X_{1:d})\}
+\mu=\lim_{d\to\infty}\Ex\{f_d(\vX_{1:d})\}
 \]</span></p>
 <p>as in an option payoff based on an increasingly fine time discretization</p>
 <p>Choose <span class="math inline">\(d_1&lt;\cdots&lt;d_L\)</span> and define coupled differences</p>
 <p><span class="math display">\[\begin{align*}
-Y_1&amp;=f_{d_1}(X_{1:d_1}),\\
-Y_\ell&amp;=f_{d_\ell}(X_{1:d_\ell})
--f_{d_{\ell-1}}(X_{1:d_{\ell-1}}),
+Y_1&amp;=f_{d_1}(\vX_{1:d_1}),\\
+Y_\ell&amp;=f_{d_\ell}(\vX_{1:d_\ell})
+-f_{d_{\ell-1}}(\vX_{1:d_{\ell-1}}),
 \qquad \ell\ge2
 \end{align*}\]</span></p>
 <p>Then</p>
 <p><span class="math display">\[
-\Ex\{f_{d_L}(X_{1:d_L})\}
+\Ex\{f_{d_L}(\vX_{1:d_L})\}
 =\sum_{\ell=1}^L\Ex(Y_\ell)
 \]</span></p>
-<p>with a remaining truncation bias <span class="math inline">\(\mu-\Ex\{f_{d_L}(X_{1:d_L})\}\)</span></p>
+<p>with a remaining truncation bias <span class="math inline">\(\mu-\Ex\{f_{d_L}(\vX_{1:d_L})\}\)</span></p>
 </section>
 <section id="why-telescoping-helps" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
 <h2>Why telescoping helps</h2>
@@ -1017,10 +1017,10 @@ Y_\ell&amp;=f_{d_\ell}(X_{1:d_\ell})
 <h1>How Far We Have Come</h1>
 <p><span class="alert">From Monte Carlo estimates to computational design</span></p>
 <ul>
-<li><span class="alert">Model</span> — express a question as an expectation and generate suitable samples</li>
-<li><span class="alert">Check</span> — quantify uncertainty and compare sample distributions</li>
-<li><span class="alert">Improve</span> — reduce variation with conditioning, weights, or structured points</li>
-<li><span class="alert">Allocate</span> — distribute work across processors and approximation levels</li>
+<li><a href="01-introduction.html#sampling">Model</a> — express a question as an expectation and generate suitable samples</li>
+<li><a href="03-markov-chain-monte-carlo.html#interpreting-sample-discrepancy">Check</a> — quantify uncertainty and compare sample distributions</li>
+<li><a href="04-improving-efficiency.html#variance-reduction">Improve</a> — reduce variation with conditioning, weights, or structured points</li>
+<li><a href="05-selected-topics.html#optimal-multilevel-allocation">Allocate</a> — distribute work across processors and approximation levels</li>
 </ul>
 <div class="key-point">
 <p>Good simulation balances <span class="alert">accuracy, computational cost, and evidence for stopping</span></p>

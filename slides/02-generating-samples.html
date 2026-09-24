@@ -837,7 +837,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="e0c9a76f" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="51808abf" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -881,7 +881,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="fec498a7" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="8f04c322" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -913,7 +913,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="a61a7d08" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="987d21e7" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -997,7 +997,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="6e2b5ce9" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="4db98b28" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1460,7 +1460,7 @@ M_d:=\max_{0\le j\le d}S_j
 \vU_0,\ldots,\vU_{n-1}\ \LDsim\ \Unif[0,1]^d
 \]</span></p>
 <p>The empirical distribution of the sample is close to the uniform distribution</p>
-<p><span class="alert">Discrepancy</span> quantifies that difference; precise definitions come later</p>
+<p><a href="03-markov-chain-monte-carlo.html#discrepancy-between-distributions">Discrepancy</a> quantifies that difference; precise definitions come later</p>
 <div class="key-point">
 <p>Low discrepancy replaces independent placement by <span class="alert">deliberate coverage</span></p>
 </div>
@@ -1647,22 +1647,22 @@ T_b^{-1}(\vx)
 
 <p>Ingredients</p>
 <ul>
-<li><span class="alert">Proposal</span>: sample <span class="math inline">\(Z\)</span> from known density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span></li>
-<li><span class="alert">Possibly unnormalized target</span>: known <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span><br>The desired <span class="math inline">\(X\)</span> density is <span class="math inline">\(c\varrho_{\mathrm{tar}}\)</span> for some <span class="math inline">\(c&gt;0\)</span></li>
-<li><span class="alert">Global envelope</span>: known <span class="math inline">\(M\)</span> with <span class="math inline">\(\varrho_{\mathrm{tar}}(x)\le M\varrho_{\mathrm{prop}}(x)\)</span> for all <span class="math inline">\(x\)</span></li>
+<li><span class="alert">Proposal</span>: sample <span class="math inline">\(\vZ\)</span> from known density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span></li>
+<li><span class="alert">Possibly unnormalized target</span>: known <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span><br>The desired <span class="math inline">\(\vX\)</span> density is <span class="math inline">\(c\varrho_{\mathrm{tar}}\)</span> for some <span class="math inline">\(c&gt;0\)</span></li>
+<li><span class="alert">Global envelope</span>: known <span class="math inline">\(M\)</span> with <span class="math inline">\(\varrho_{\mathrm{tar}}(\vx)\le M\varrho_{\mathrm{prop}}(\vx)\)</span> for all <span class="math inline">\(\vx\)</span></li>
 </ul>
-<p>Sampler for <span class="math inline">\(X_0,\ldots,X_{n-1}\)</span></p>
+<p>Sampler for <span class="math inline">\(\vX_0,\ldots,\vX_{n-1}\)</span></p>
 <p><span class="math display">\[
 \begin{aligned}
 &amp;i\leftarrow0\\[-0.2em]
 &amp;\texttt{repeat}\\[-0.2em]
 &amp;\qquad \texttt{repeat}\quad
-  Z\sim\varrho_{\mathrm{prop}},\quad U\sim\Unif[0,1]
+  \vZ\sim\varrho_{\mathrm{prop}},\quad U\sim\Unif[0,1]
   \quad\text{independently}\\[-0.2em]
 &amp;\qquad \texttt{until}\quad
-  U\le\frac{\varrho_{\mathrm{tar}}(Z)}
-  {M\varrho_{\mathrm{prop}}(Z)}\\[-0.2em]
-&amp;\qquad X_i\leftarrow Z,\quad i\leftarrow i+1\\[-0.2em]
+  U\le\frac{\varrho_{\mathrm{tar}}(\vZ)}
+  {M\varrho_{\mathrm{prop}}(\vZ)}\\[-0.2em]
+&amp;\qquad \vX_i\leftarrow \vZ,\quad i\leftarrow i+1\\[-0.2em]
 &amp;\texttt{until}\quad i=n
 \end{aligned}
 \]</span></p>
@@ -1675,30 +1675,30 @@ T_b^{-1}(\vx)
 <p><span class="math display">\[
 W:=
 \begin{cases}
-1, &amp; U\le \varrho_{\mathrm{tar}}(Z)/
-           \bigl[M\varrho_{\mathrm{prop}}(Z)\bigr],\\
+1, &amp; U\le \varrho_{\mathrm{tar}}(\vZ)/
+           \bigl[M\varrho_{\mathrm{prop}}(\vZ)\bigr],\\
 0, &amp; \text{otherwise}
 \end{cases}
 \]</span></p>
 <p><span class="alert">Density of an accepted proposal</span></p>
 <p><span class="math display">\[\begin{align*}
-\varrho_X(z)
-&amp;=\varrho_{Z\mid W}(z\mid1)\\
-&amp;=\frac{\Prob(W=1\mid Z=z)\varrho_{\mathrm{prop}}(z)}
+\varrho_{\vX}(\vz)
+&amp;=\varrho_{\vZ\mid W}(\vz\mid1)\\
+&amp;=\frac{\Prob(W=1\mid \vZ=\vz)\varrho_{\mathrm{prop}}(\vz)}
         {\Prob(W=1)}
 &amp;&amp;\text{by Bayes' theorem}\\
-&amp;=\frac{\left(\varrho_{\mathrm{tar}}(z)/
-        \bigl[M\varrho_{\mathrm{prop}}(z)\bigr]\right)
-        \varrho_{\mathrm{prop}}(z)}
+&amp;=\frac{\left(\varrho_{\mathrm{tar}}(\vz)/
+        \bigl[M\varrho_{\mathrm{prop}}(\vz)\bigr]\right)
+        \varrho_{\mathrm{prop}}(\vz)}
         {\Prob(W=1)}
 &amp;&amp;\text{by the acceptance rule}\\
-&amp;=\frac{\varrho_{\mathrm{tar}}(z)}{M\Prob(W=1)}
-=c\varrho_{\mathrm{tar}}(z)
+&amp;=\frac{\varrho_{\mathrm{tar}}(\vz)}{M\Prob(W=1)}
+=c\varrho_{\mathrm{tar}}(\vz)
 &amp;&amp;\text{since }c\varrho_{\mathrm{tar}}\text{ is a density}
 \end{align*}\]</span></p>
 <ul>
 <li><span class="alert">Acceptance probability</span>: <span class="math inline">\(\Prob(\text{acceptance})=\Prob(W=1)=1/(Mc)\)</span></li>
-<li><span class="alert">Expected proposal cost</span>: <span class="math inline">\(n(Mc)\)</span> samples of <span class="math inline">\(Z\)</span> for <span class="math inline">\(n\)</span> samples of <span class="math inline">\(X\)</span></li>
+<li><span class="alert">Expected proposal cost</span>: <span class="math inline">\(n(Mc)\)</span> samples of <span class="math inline">\(\vZ\)</span> for <span class="math inline">\(n\)</span> samples of <span class="math inline">\(\vX\)</span></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -1854,10 +1854,10 @@ f\bigl(S(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(S(\vu)\bigr)\right\}
 <p>Direct methods turn uniform inputs into target samples, but a convenient transform or envelope may be hard to find</p>
 <p><a href="03-markov-chain-monte-carlo.html">Markov Chain Monte Carlo</a> takes a different route:</p>
 <ul>
-<li>Propose a move using the current sample</li>
-<li>Accept or stay to preserve the target distribution</li>
-<li>Diagnose dependent samples and compare their distributions</li>
-<li>Use Markov chains to simulate dynamic systems, including queues</li>
+<li><a href="03-markov-chain-monte-carlo.html#the-metropolishastings-algorithm">Propose a move using the current sample</a></li>
+<li><a href="03-markov-chain-monte-carlo.html#why-the-acceptance-ratio-works">Accept or stay to preserve the target distribution</a></li>
+<li><a href="03-markov-chain-monte-carlo.html#tuning-and-diagnostics">Diagnose dependent samples</a> and <a href="03-markov-chain-monte-carlo.html#interpreting-sample-discrepancy">compare their distributions</a></li>
+<li>Use Markov chains to simulate dynamic systems, including <a href="03-markov-chain-monte-carlo.html#queueing-systems">queues</a></li>
 </ul>
 <div class="key-point">
 <p><span class="alert">Next:</span> <a href="03-markov-chain-monte-carlo.html">sample difficult targets by building a chain</a></p>
