@@ -361,3 +361,29 @@ Multilevel Monte Carlo is effective when [correction variance decays faster than
 - Two-level and multilevel estimators split work according to variance and cost
 - Coupling adjacent approximations creates low-variance corrections
 - A good hierarchy spends most computation where it buys the largest reduction in error
+
+# How Far We Have Come
+
+[From Monte Carlo estimates to computational design]{.alert}
+
+- [Model]{.alert} — express a question as an expectation and generate suitable samples
+- [Check]{.alert} — quantify uncertainty and compare sample distributions
+- [Improve]{.alert} — reduce variation with conditioning, weights, or structured points
+- [Allocate]{.alert} — distribute work across processors and approximation levels
+
+::: {.key-point}
+Good simulation balances [accuracy, computational cost, and evidence for stopping]{.alert}
+:::
+
+# What Comes Next
+
+Bring the course methods together in a concrete model or project:
+
+- Define the target quantity and the source of approximation error
+- Choose a sampling method and justify its assumptions
+- Compare an efficiency improvement against a clear baseline
+- Report uncertainty, computational cost, and a stopping criterion
+
+::: {.key-point}
+The next step is [a defensible end-to-end simulation]{.alert}
+:::

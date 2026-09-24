@@ -1336,6 +1336,9 @@ Defined when at least one proposal is accepted
   early coordinates for low discrepancy sampling
 - Gaussian-process sampling reduces finite collections of function values to
   multivariate normal sampling
+
+## Big Ideas (continued) {data-state="goldborder"}
+
 - Low discrepancy points trade independent placement for more even coverage
 - Mixtures and acceptance–rejection express target expectations as integrals
   over $[0,1]^{d+1}$<br>Low discrepancy sampling acts on the uniform inputs;
@@ -1344,3 +1347,19 @@ Defined when at least one proposal is accepted
   selected points using an unnormalized target and a global envelope
 
 [Companion `GeneratingSamples` notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb)
+
+# What Comes Next
+
+Direct methods turn uniform inputs into target samples, but a convenient
+transform or envelope may be hard to find
+
+[Markov Chain Monte Carlo]({{< meta decks.d03.file >}}) takes a different route:
+
+- Propose a move using the current sample
+- Accept or stay to preserve the target distribution
+- Diagnose dependent samples and compare their distributions
+- Use Markov chains to simulate dynamic systems, including queues
+
+::: {.key-point}
+[Next:]{.alert} [sample difficult targets by building a chain]({{< meta decks.d03.file >}})
+:::

@@ -21,6 +21,13 @@ Each MATH 565 deck follows this opening sequence:
      capitalization and punctuation exactly.
 3. The instructional sections follow the shared section-outline convention.
 
+Close each deck with **Big Ideas** and **What Comes Next**. Starting with
+Deck 03, place **How Far We Have Come** between them to connect the current
+unit with earlier ones. When Big Ideas needs more room, continue it on a
+separate slide. Course Map section links include only the first **Big Ideas**
+slide among these closing slides, so the map remains focused on the
+instructional sections.
+
 Follow the [shared Course Map theme convention](../classlib/docs/slide-style.md#course-map-themes).
 MATH 565 uses 36% for Course decks, a 4% empty gutter, and 60% for the
 right-hand theme area. Center phrase-only themes at `1.5em`;

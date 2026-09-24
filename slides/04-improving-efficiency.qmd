@@ -789,3 +789,31 @@ An efficient method needs both [fast error decay]{.alert} and a [reliable stoppi
 - Antithetic sampling and Latin hypercubes introduce useful dependence deliberately
 - Low discrepancy sequences replace random clustering with balanced space filling
 - Randomization restores unbiasedness and supports error estimation while retaining QMC efficiency
+
+# How Far We Have Come
+
+[A complete path from model to efficient estimate]{.alert}
+
+- [Formulate]{.alert} — express the target quantity as an expectation
+- [Sample]{.alert} — use direct transforms or Markov chains to represent the target
+- [Assess]{.alert} — connect uncertainty and discrepancy to integration error
+- [Improve]{.alert} — choose weights, controls, dependence, or low discrepancy points to reduce error
+
+::: {.key-point}
+Method choice depends on [error, cost, and a credible stopping rule]{.alert}
+:::
+
+# What Comes Next
+
+Efficiency also depends on how the computation is organized
+
+[Selected Topics]({{< meta decks.d05.file >}}) develops:
+
+- Parallel sample evaluation and sound random streams
+- Stochastic gradients when exact optimization steps cost too much
+- Coupled coarse and fine approximations
+- Multilevel allocation by variance and cost
+
+::: {.key-point}
+[Next:]{.alert} [share work across processors, samples, and levels]({{< meta decks.d05.file >}})
+:::

@@ -288,6 +288,10 @@ appropriate phase rather than appended indiscriminately.
   deck emphasis; add themes to Decks 04–05 and validate layouts.
 - [x] Audit Decks 02–03 navigation markers against taught content, including
   Error Assessment for the worst-case and GP error derivations.
+- [x] Add cumulative closing slides to the developed decks: Big Ideas and
+  What Comes Next throughout, How Far We Have Come from Deck 03 onward, and
+  a gold-bordered Big Ideas continuation in Deck 02; keep only Big Ideas in
+  each Course Map's closing links.
 - [x] Load course-wide slide styling consistently across every deck.
 - [x] Validate shared slide styling, metadata, navigation, and assets from
   `classlib`.

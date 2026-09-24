@@ -1506,3 +1506,33 @@ service draw, 6, is unused.
 - Kernel discrepancy compares distributions and measures both [worst-case]{.alert} and [average-case integration error]{.alert}
 - The kernel specifies which distributional differences and integrand features matter
 - Markov chains model computational algorithms as well as dynamic systems such as queues
+
+# How Far We Have Come
+
+[From random inputs to distribution-aware simulation]{.alert}
+
+- [Estimate]{.alert} — sample averages approximate expectations and quantify uncertainty
+- [Generate]{.alert} — transform uniform inputs into target samples, including dependent vectors and paths
+- [Extend]{.alert} — MCMC reaches targets known only up to normalization, at the cost of dependent samples
+- [Assess]{.alert} — kernel discrepancy connects distributional fit with integration error
+
+::: {.key-point}
+Sampling tells us [what to compute]{.alert}; discrepancy helps judge
+[how well the samples represent the target]{.alert}
+:::
+
+# What Comes Next
+
+We now have ways to generate samples and assess their error
+
+[Improving Efficiency]({{< meta decks.d04.file >}}) asks how to get a more
+accurate answer for the same computational work:
+
+- Change the sampling distribution or transform the integral
+- Remove known variation with conditioning and control variates
+- Place samples deliberately with stratification and low discrepancy methods
+- Randomize structured points to estimate uncertainty
+
+::: {.key-point}
+[Next:]{.alert} [reduce error per unit of work]({{< meta decks.d04.file >}})
+:::

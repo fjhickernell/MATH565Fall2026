@@ -179,7 +179,6 @@ assert all(
 - [Samples, Estimators, and Estimates](#samples-estimators-and-estimates)
 - [Conditioning](#conditioning)
 - [Big Ideas](#big-ideas)
-- [Next: Generating Samples](#next-generating-samples)
 :::
 :::
 
@@ -982,7 +981,7 @@ so a probability density can itself be expressed as an expectation
 - Conditioning can turn a difficult random quantity into a lower-variance
   expectation
 
-# Next: Generating Samples {.tree-marker-slide tree-marker="random-generation"}
+# What Comes Next {.tree-marker-slide tree-marker="random-generation"}
 
 ::: {.columns}
 ::: {.column width="46%"}
@@ -1014,5 +1013,5 @@ with the distribution required by the model
 :::
 
 ::: {.key-point}
-Next: turn [uniform inputs]{.alert} into samples from the models we need
+[Next: Generating Samples]({{< meta decks.d02.file >}}) — turn [uniform inputs]{.alert} into target samples
 :::
