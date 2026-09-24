@@ -3,22 +3,20 @@
 ## Immediate actions
 
 1. Review project-topic submissions after the September 18 deadline.
-2. Prepare the September 24 lecture: resume Deck 03 at “Queueing systems,”
-   beginning with event-state clocks and event-driven simulation. The
-   single-occurrence Illinois Tech calendar note is saved for PH 109.
+2. Prepare the September 29 lecture: resume Deck 03 at “Event-driven queue
+   simulation” and its notebook, then the closing synthesis and Deck 04
+   transition. The single-occurrence Illinois Tech calendar note is verified
+   for PH 109.
 3. Add the seminar link, then review Deck 04 followed by Deck 05 with the
    instructor, including their companion-notebook plans.
 
 ## Current verified state
 
-All instructional recordings from August 18 through September 22 have
-been audited or reconciled. The completed schedule rows reflect actual coverage and link
-the covered decks; `notes/LECTURE-UPDATES.md` records recording identifiers
-and evidence. September 15 remains assessment-only. The historical audit
-supersedes the accepted September 10 baseline; do not repeat it from old
-baseline instructions. Schedule rendering and 36 local links/anchors pass. The
-September 22 reached Bayesian inference and parallel tempering; queueing was
-only previewed. The September 24 continuation is recorded in the ledger.
+All instructional recordings from August 18 through September 24 have been
+audited or reconciled. September 24 completed queue-event calculations and
+all three group exercises; code was only briefly shown. The September 29
+continuation note is saved and verified. The updated schedule passed local rendering. September 15 remains assessment-only, and the historical
+recording audit supersedes the accepted September 10 baseline.
 
 Homework 2 grading is complete. All 19 real Canvas grading rows were checked
 against the private workbook; grades, text comments, and the two annotated
