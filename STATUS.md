@@ -293,6 +293,8 @@ appropriate phase rather than appended indiscriminately.
   a gold-bordered Big Ideas continuation in Deck 02; keep only Big Ideas in
   each Course Map's closing links.
 - [x] Load course-wide slide styling consistently across every deck.
+- [x] Link callbacks and forward references across all five decks and audit
+  multidimensional vector notation, including Keister and discrepancy formulas.
 - [x] Validate shared slide styling, metadata, navigation, and assets from
   `classlib`.
 - [x] Add reusable Monte Carlo overview-tree rendering and named course tree

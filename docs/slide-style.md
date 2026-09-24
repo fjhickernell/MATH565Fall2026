@@ -67,6 +67,13 @@ Deck 01 Course Map synchronized.
 
 ## MATH 565 terminology and notation
 
+- Use bold vector notation for points and random inputs in multidimensional
+  spaces: `\vx`, `\vt`, `\vX`, and corresponding shared vector macros.
+  Carry it through function and kernel arguments, densities, differentials,
+  sample nodes, and subvectors such as `\vX_{2:d}`. Keep scalar coordinates
+  (`x_j`, `X_{i\ell}`), scalar time arguments, and explicitly univariate
+  examples unbold. Distinguish a sample vector `\vx_i` from its scalar
+  coordinates `x_{i\ell}`.
 - Use zero-based indexing for samples, observations, Markov-chain states, and
   low discrepancy sequences: a sample of size $n$ is indexed from $0$ through
   $n-1$.

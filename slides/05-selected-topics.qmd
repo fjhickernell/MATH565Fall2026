@@ -310,7 +310,7 @@ $$
 Suppose
 
 $$
-\mu=\lim_{d\to\infty}\Ex\{f_d(X_{1:d})\}
+\mu=\lim_{d\to\infty}\Ex\{f_d(\vX_{1:d})\}
 $$
 
 as in an option payoff based on an increasingly fine time discretization
@@ -318,20 +318,20 @@ as in an option payoff based on an increasingly fine time discretization
 Choose $d_1<\cdots<d_L$ and define coupled differences
 
 \begin{align*}
-Y_1&=f_{d_1}(X_{1:d_1}),\\
-Y_\ell&=f_{d_\ell}(X_{1:d_\ell})
--f_{d_{\ell-1}}(X_{1:d_{\ell-1}}),
+Y_1&=f_{d_1}(\vX_{1:d_1}),\\
+Y_\ell&=f_{d_\ell}(\vX_{1:d_\ell})
+-f_{d_{\ell-1}}(\vX_{1:d_{\ell-1}}),
 \qquad \ell\ge2
 \end{align*}
 
 Then
 
 $$
-\Ex\{f_{d_L}(X_{1:d_L})\}
+\Ex\{f_{d_L}(\vX_{1:d_L})\}
 =\sum_{\ell=1}^L\Ex(Y_\ell)
 $$
 
-with a remaining truncation bias $\mu-\Ex\{f_{d_L}(X_{1:d_L})\}$
+with a remaining truncation bias $\mu-\Ex\{f_{d_L}(\vX_{1:d_L})\}$
 
 ## Why telescoping helps {.tree-marker-slide tree-marker="estimation"}
 
@@ -366,10 +366,10 @@ Multilevel Monte Carlo is effective when [correction variance decays faster than
 
 [From Monte Carlo estimates to computational design]{.alert}
 
-- [Model]{.alert} — express a question as an expectation and generate suitable samples
-- [Check]{.alert} — quantify uncertainty and compare sample distributions
-- [Improve]{.alert} — reduce variation with conditioning, weights, or structured points
-- [Allocate]{.alert} — distribute work across processors and approximation levels
+- [Model]({{< meta decks.d01.file >}}#sampling) — express a question as an expectation and generate suitable samples
+- [Check]({{< meta decks.d03.file >}}#interpreting-sample-discrepancy) — quantify uncertainty and compare sample distributions
+- [Improve]({{< meta decks.d04.file >}}#variance-reduction) — reduce variation with conditioning, weights, or structured points
+- [Allocate]({{< meta decks.d05.file >}}#optimal-multilevel-allocation) — distribute work across processors and approximation levels
 
 ::: {.key-point}
 Good simulation balances [accuracy, computational cost, and evidence for stopping]{.alert}

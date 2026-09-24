@@ -70,26 +70,26 @@ subtitle: |
 Suppose
 
 $$
-\mu=\Ex[f(X)]=\Ex[g(X)],
-\qquad X\sim\Unif[0,1]^d
+\mu=\Ex[f(\vX)]=\Ex[g(\vX)],
+\qquad \vX\sim\Unif[0,1]^d
 $$
 
 Both IID sample means are unbiased:
 
 \begin{align*}
-\hmu_{f,n}&=\frac1n\sum_{i=0}^{n-1}f(X_i),&
-\hmu_{g,n}&=\frac1n\sum_{i=0}^{n-1}g(X_i)
+\hmu_{f,n}&=\frac1n\sum_{i=0}^{n-1}f(\vX_i),&
+\hmu_{g,n}&=\frac1n\sum_{i=0}^{n-1}g(\vX_i)
 \end{align*}
 
 Their mean squared errors are their variances:
 
 \begin{align*}
-\var(\hmu_{f,n})&=\frac{\var\{f(X)\}}n,&
-\var(\hmu_{g,n})&=\frac{\var\{g(X)\}}n
+\var(\hmu_{f,n})&=\frac{\var\{f(\vX)\}}n,&
+\var(\hmu_{g,n})&=\frac{\var\{g(\vX)\}}n
 \end{align*}
 
 ::: {.key-point}
-Deck 01 showed that accepting some bias can reduce MSE
+[Deck 01 showed that accepting some bias can reduce MSE]({{< meta decks.d01.file >}}#shrinkage-estimators)
 
 Here both estimators are unbiased, so an equivalent expectation is better when its
 [integrand has smaller variance]{.alert}
@@ -100,45 +100,44 @@ Here both estimators are unbiased, so an equivalent expectation is better when i
 Consider
 
 $$
-\mu=\int_{\reals^d}\cos(\norm{t})\exp(-\norm{t}^2)\,\dif t
+\mu=\int_{\reals^d}\cos(\norm{\vt})\exp(-\norm{\vt}^2)\,\dif\vt
 $$
 
-Let $x_j=\Phi(at_j)$, where $\Phi$ is the standard normal CDF
+Let $\vx=\Phi(a\vt)$ componentwise, where $\Phi$ is the standard normal CDF
 
-Then $t_j=\Phi^{-1}(x_j)/a$ and
+Then $\vt=\Phi^{-1}(\vx)/a$ and, for $0<a\le\sqrt2$,
 
 \begin{align*}
 \mu
 &=\int_{[0,1]^d}\frac{(2\mpi)^{d/2}}{a^d}
-\cos\!\left(\frac{\norm{\Phi^{-1}(x)}}a\right)\\
-&\quad\times\exp\!\left[-\frac{2-a^2}{2a^2}\norm{\Phi^{-1}(x)}^2\right]\,\dif x,
-\qquad a^2\le2
+\cos\!\left(\frac{\norm{\Phi^{-1}(\vx)}}a\right)\\
+&\quad\times\exp\!\left[-\frac{2-a^2}{2a^2}\norm{\Phi^{-1}(\vx)}^2\right]\,\dif\vx
 \end{align*}
 
 The parameter $a$ creates a [family of unbiased estimators]{.alert} with different variances
 
 ## Transforming an integral {.tree-marker-slide tree-marker="estimation"}
 
-To approximate $\mu=\int_{\mathcal T}g(t)\,\dif t$, choose an invertible map
+To approximate $\mu=\int_{\mathcal T}g(\vt)\,\dif \vt$, choose an invertible map
 
 $$
-t=\psi(x),
-\qquad \psi:\mathcal X\to\mathcal T
+\vt=\psi(\vx),
+\qquad \psi:\mathcal X\to\mathcal T,\quad \mathcal X,\mathcal T\subseteq\reals^d
 $$
 
-Let $J(x;\psi)=\det\{\partial\psi_i/\partial x_j\}_{i,j=1}^d$
+Let $J(\vx;\psi)=\det\{\partial\psi_i/\partial x_j\}_{i,j=1}^d$
 
-If $X$ has density $\varrho_X$, then
+If $\vX$ has density $\varrho_{\vX}$, then
 
 \begin{align*}
 \mu
-&=\int_{\mathcal X}g\bigl(\psi(x)\bigr)\abs{J(x;\psi)}\,\dif x\\
-&=\Ex_{X\sim\varrho_X}\!\left[
-\frac{g\bigl(\psi(X)\bigr)\abs{J(X;\psi)}}{\varrho_X(X)}
+&=\int_{\mathcal X}g\bigl(\psi(\vx)\bigr)\abs{J(\vx;\psi)}\,\dif \vx\\
+&=\Ex_{\vX\sim\varrho_{\vX}}\!\left[
+\frac{g\bigl(\psi(\vX)\bigr)\abs{J(\vX;\psi)}}{\varrho_{\vX}(\vX)}
 \right]
 \end{align*}
 
-For $X\sim\Unif[0,1]^d$, the density in the denominator is one
+For $\vX\sim\Unif[0,1]^d$, the density in the denominator is one
 
 ## Transforming a random variable {.tree-marker-slide tree-marker="random-generation"}
 
@@ -199,23 +198,23 @@ $f\varrho_{\mathrm{tar}}$ is nonzero:
 
 \begin{align*}
 \mu
-&=\int f(x)\varrho_{\mathrm{tar}}(x)\,\dif x\\
-&=\Ex_{Z\sim\varrho_{\mathrm{prop}}}\!\left[
-f(Z)\frac{\varrho_{\mathrm{tar}}(Z)}
-{\varrho_{\mathrm{prop}}(Z)}
+&=\int f(\vx)\varrho_{\mathrm{tar}}(\vx)\,\dif \vx\\
+&=\Ex_{\vZ\sim\varrho_{\mathrm{prop}}}\!\left[
+f(\vZ)\frac{\varrho_{\mathrm{tar}}(\vZ)}
+{\varrho_{\mathrm{prop}}(\vZ)}
 \right]
 \end{align*}
 
 The ratio $\varrho_{\mathrm{tar}}/\varrho_{\mathrm{prop}}$ is the
 [importance weight]{.alert}
 
-For $Z_0,\ldots,Z_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}$,
+For $\vZ_0,\ldots,\vZ_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}$,
 
 $$
 \hmu_{\mathrm{IS},n}
-=\frac1n\sum_{i=0}^{n-1}f(Z_i)
-\frac{\varrho_{\mathrm{tar}}(Z_i)}
-{\varrho_{\mathrm{prop}}(Z_i)}
+=\frac1n\sum_{i=0}^{n-1}f(\vZ_i)
+\frac{\varrho_{\mathrm{tar}}(\vZ_i)}
+{\varrho_{\mathrm{prop}}(\vZ_i)}
 $$
 
 ---
@@ -238,7 +237,7 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1)
 | Estimator | $\displaystyle \hmu_{\mathrm{T},n}=\frac1n\sum_{i=0}^{n-1}f\bigl(\sqrt{Z_i}\bigr)$ | $\displaystyle \hmu_{\mathrm{IS},n}=\frac1n\sum_{i=0}^{n-1}2Z_i f(Z_i)$ |
 | Contribution | Unweighted target sample | Weighted proposal sample |
 
-[Deck 02 acceptance–rejection]{.alert}: same proposal, keep $Z$ with
+[Deck 02 acceptance–rejection]({{< meta decks.d02.file >}}#acceptance-rejection-choosing-which-proposals-to-keep): same proposal, keep $Z$ with
 probability $Z$
 
 ::: {.key-point}
@@ -269,7 +268,7 @@ Weighted proposal $\longrightarrow$ better or worse for a particular $f$
 
 Positive option payoffs may be rare under a discretized Brownian path
 
-Let $X\sim\Norm(\vzero,\mSigma)$ with $\Sigma_{jk}=\min(t_j,t_k)$ and
+Let $\vX\sim\Norm(\vzero,\mSigma)$ with $\Sigma_{jk}=\min(t_j,t_k)$ and
 target density $\varrho_{\mathrm{tar}}$
 
 Use the proposal $\Norm(\va,\mSigma)$ with density
@@ -282,7 +281,7 @@ $$
 The likelihood ratio simplifies to
 
 $$
-\frac{\varrho_{\mathrm{tar}}(x)}{\varrho_{\mathrm{prop}}(x)}
+\frac{\varrho_{\mathrm{tar}}(\vx)}{\varrho_{\mathrm{prop}}(\vx)}
 =\exp\!\left(-\theta x_d+\frac{\theta^2t_d}{2}\right)
 $$
 
@@ -319,15 +318,15 @@ Let $\eta_1,\ldots,\eta_m$ have known zero means
 For any coefficients $\beta_1,\ldots,\beta_m$,
 
 $$
-\mu=\Ex[f(X)]
-=\Ex\!\left[f(X)-\sum_{j=1}^m\beta_j\eta_j(X)\right]
+\mu=\Ex[f(\vX)]
+=\Ex\!\left[f(\vX)-\sum_{j=1}^m\beta_j\eta_j(\vX)\right]
 $$
 
 The estimator
 
 $$
 \hmu_{\mathrm{CV},n}
-=\frac1n\sum_{i=0}^{n-1}\left[f(X_i)-\sum_{j=1}^m\beta_j\eta_j(X_i)\right]
+=\frac1n\sum_{i=0}^{n-1}\left[f(\vX_i)-\sum_{j=1}^m\beta_j\eta_j(\vX_i)\right]
 $$
 
 is unbiased for fixed $\vbeta$
@@ -335,7 +334,7 @@ is unbiased for fixed $\vbeta$
 Choose $\vbeta$ to make
 
 $$
-\var\!\left[f(X)-\sum_{j=1}^m\beta_j\eta_j(X)\right]
+\var\!\left[f(\vX)-\sum_{j=1}^m\beta_j\eta_j(\vX)\right]
 $$
 
 as small as possible
@@ -345,8 +344,8 @@ as small as possible
 Center the response and control values:
 
 \begin{align*}
-y_i&=f(x_i)-\overline{f},&
-H_{ij}&=\eta_j(x_i)-\overline{\eta}_j
+y_i&=f(\vx_i)-\overline{f},&
+H_{ij}&=\eta_j(\vx_i)-\overline{\eta}_j
 \end{align*}
 
 Then
@@ -377,7 +376,7 @@ A control variate turns [known expectations]{.alert} into information about an u
 
 ## Conditional Monte Carlo {.tree-marker-slide tree-marker="prob-est"}
 
-Recall
+Recall the [laws of total expectation and variance]({{< meta decks.d01.file >}}#laws-of-total-expectation-and-variance)
 
 \begin{align*}
 \Ex(Y)&=\Ex_Z\{\Ex(Y\mid Z)\},\\
@@ -393,31 +392,31 @@ $$
 If $Y=f(X_1,\ldots,X_d)$ and
 
 $$
-g(X_{2:d})=\Ex(Y\mid X_{2:d})
+g(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
 $$
 
-is analytic, estimate $\mu$ by sampling $g(X_{2:d})$ instead of $Y$
+is analytic, estimate $\mu$ by sampling $g(\vX_{2:d})$ instead of $Y$
 
 [Analytically averaging over part of the randomness reduces variance]{.alert}
 
 ## Conditional density estimation {.tree-marker-slide tree-marker="prob-est"}
 
-Let $Y=f(X)$ with $X\sim\Unif[0,1]^d$
+Let $Y=f(\vX)$ with $\vX\sim\Unif[0,1]^d$
 
 Suppose $f$ is increasing in $x_1$ and
 
 $$
-y=f(x_1,x_{2:d})iff x_1=g(y;x_{2:d})
+y=f(x_1,\vx_{2:d})\iff x_1=g(y;\vx_{2:d})
 $$
 
 Then
 
 \begin{align*}
-F_{Y\mid X_{2:d}}(y\mid x_{2:d})
-&=\Prob\{X_1\le g(y;x_{2:d})\}\\
-&=g(y;x_{2:d}),\\
+F_{Y\mid \vX_{2:d}}(y\mid \vx_{2:d})
+&=\Prob\{X_1\le g(y;\vx_{2:d})\}\\
+&=g(y;\vx_{2:d}),\\
 \varrho_Y(y)
-&=\int_{[0,1]^{d-1}}\frac{\partial g}{\partial y}(y;x)\,\dif x
+&=\int_{[0,1]^{d-1}}\frac{\partial g}{\partial y}(y;\vx_{2:d})\,\dif\vx_{2:d}
 \end{align*}
 
 Thus a density value becomes an [expectation of a conditional density]{.alert}
@@ -428,14 +427,14 @@ Let
 
 $$
 Y=\gamma_1X_1+\cdots+\gamma_dX_d,
-\qquad X\sim\Unif[0,1]^d,
+\qquad \vX\sim\Unif[0,1]^d,
 \qquad \gamma_j>0
 $$
 
 Solving for $x_1$ gives
 
 $$
-g(y;x_{2:d})=\frac{y-\sum_{j=2}^d\gamma_jx_j}{\gamma_1}
+g(y;\vx_{2:d})=\frac{y-\sum_{j=2}^d\gamma_jx_j}{\gamma_1}
 $$
 
 when $\sum_{j=2}^d\gamma_jx_j\le y\le\gamma_1+\sum_{j=2}^d\gamma_jx_j$
@@ -462,29 +461,29 @@ $$
 
 ## Antithetic sampling {.tree-marker-slide tree-marker="sampling"}
 
-If $T(X)$ has the same distribution as $X$, pair $f(X_i)$ with
-$f\bigl(T(X_i)\bigr)$:
+If $T(\vX)$ has the same distribution as $\vX$, pair $f(\vX_i)$ with
+$f\bigl(T(\vX_i)\bigr)$:
 
 $$
 \hmu_{\mathrm{Anti},n}
-=\frac1{2n}\sum_{i=0}^{n-1}\left[f(X_i)+f\bigl(T(X_i)\bigr)\right]
+=\frac1{2n}\sum_{i=0}^{n-1}\left[f(\vX_i)+f\bigl(T(\vX_i)\bigr)\right]
 $$
 
 Examples:
 
 \begin{align*}
-T(X)&=1-X,& X&\sim\Unif[0,1]^d,\\
-T(X)&=-X,& X&\sim\Norm(\vzero,\mSigma)
+T(\vX)&=\vone-\vX,& \vX&\sim\Unif[0,1]^d,\\
+T(\vX)&=-\vX,& \vX&\sim\Norm(\vzero,\mSigma)
 \end{align*}
 
-Although $X_i$ and $T(X_i)$ are dependent, the pairs are independent across $i$
+Although $\vX_i$ and $T(\vX_i)$ are dependent, the pairs are independent across $i$
 
 The variance is
 
 $$
 \var(\hmu_{\mathrm{Anti},n})
-=\frac{\var\{f(X)\}}{2n}
-\left[1+\corr\{f(X),f(T(X))\}\right]
+=\frac{\var\{f(\vX)\}}{2n}
+\left[1+\corr\{f(\vX),f(T(\vX))\}\right]
 $$
 
 Antithetic sampling helps when the paired function values are [negatively correlated]{.alert}
@@ -557,13 +556,13 @@ X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
 \qquad U_{i\ell}\ \IIDsim\ \Unif[0,1]
 $$
 
-Each coordinate uses every stratum exactly once
+Each point is $\vX_i=(X_{i1},\ldots,X_{id})$; each coordinate uses every stratum exactly once
 
 For $R$ independent Latin hypercubes,
 
 \begin{align*}
 \hmu_{\mathrm{LHS},n}^{(r)}
-&=\frac1n\sum_{i=0}^{n-1}f(X_i^{(r)}),\\
+&=\frac1n\sum_{i=0}^{n-1}f(\vX_i^{(r)}),\\
 \hmu_{\mathrm{LHS},n,R}
 &=\frac1R\sum_{r=1}^R\hmu_{\mathrm{LHS},n}^{(r)},\\
 \widehat{\var}(\hmu_{\mathrm{LHS},n,R})
@@ -640,13 +639,13 @@ plt.show()
 
 [Low discrepancy sampling]{.alert}, or quasi-Monte Carlo, improves space filling beyond one-dimensional stratification
 
-For nodes $x_0,\ldots,x_{n-1}$ and target distribution $F$,
+For nodes $\vx_0,\ldots,\vx_{n-1}$ and target distribution $F$,
 
 \begin{align*}
-D^2(\{x_i\}_{i=0}^{n-1},F;K)
-&=\int_{\mathcal X^2}K(x,x')\,\dif F(x)\,\dif F(x')\\
-&\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(x,x_i)\,\dif F(x)\\
-&\quad+\frac1{n^2}\sum_{i,j=0}^{n-1}K(x_i,x_j)
+D^2(\{\vx_i\}_{i=0}^{n-1},F;K)
+&=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F(\vx)\,\dif F(\vx')\\
+&\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vx_i)\,\dif F(\vx)\\
+&\quad+\frac1{n^2}\sum_{i,j=0}^{n-1}K(\vx_i,\vx_j)
 \end{align*}
 
 We usually take $\mathcal X=[0,1]^d$ and seek nodes with small discrepancy
@@ -660,15 +659,15 @@ error depends on the integrand's variation and the design's discrepancy
 
 For the uniform target on $[0,1]^d$, discrepancy is
 
-- [worst-case error]{.alert}
+- [worst-case error]({{< meta decks.d03.file >}}#worst-case-integration-error)
 
   $$
-  \left\lvert\int f(x)\,\dif x-\frac1n\sum_{i=0}^{n-1}f(x_i)\right\rvert
+  \left\lvert\int f(\vx)\,\dif \vx-\frac1n\sum_{i=0}^{n-1}f(\vx_i)\right\rvert
   \le D\norm{f}_{\mathcal H_K}
   $$
 
-- [average-case root mean squared error]{.alert} for $f$ drawn from a Gaussian process with covariance kernel $K$
-- [distance between the target distribution and the empirical distribution]{.alert}
+- [average-case root mean squared error]({{< meta decks.d03.file >}}#average-case-integration-error) for $f$ drawn from a Gaussian process with covariance kernel $K$
+- [distance between the target distribution and the empirical distribution]({{< meta decks.d03.file >}}#discrepancy-between-distributions)
 
 The kernel specifies the function class and the distributional features being measured
 
@@ -701,10 +700,10 @@ For $i=0,1,\ldots$:
 
 | Family | Construction | Typical preferred size |
 |:---|:---|:---|
-| Kronecker | $x_i=i\vzeta\bmod1$ | none |
-| Lattice | $x_i=\phi_b(i)\vzeta\bmod1$ | $n=b^m$ |
-| Halton | $x_i=\{\phi_2(i),\phi_3(i),\phi_5(i),\ldots\}$ | none |
-| Digital | $x_i=i_0c_0\oplus i_1c_1\oplus\cdots$ | $n=b^m$ |
+| Kronecker | $\vx_i=i\vzeta\bmod1$ | none |
+| Lattice | $\vx_i=\phi_b(i)\vzeta\bmod1$ | $n=b^m$ |
+| Halton | $\vx_i=(\phi_2(i),\phi_3(i),\phi_5(i),\ldots)$ | none |
+| Digital | $\vx_i=i_0\vc_0\oplus i_1\vc_1\oplus\cdots$ | $n=b^m$ |
 
 Here $\oplus$ denotes digitwise addition modulo $b$
 
@@ -730,13 +729,13 @@ A high-dimensional design is built by [optimizing one coordinate at a time]{.ale
 Randomization aims for
 
 $$
-X_{\mathrm{rand},i}\sim\Unif[0,1]^d
+\vX_{\mathrm{rand},i}\sim\Unif[0,1]^d
 $$
 
 for every $i$, while preserving low discrepancy jointly
 
-- [Random shift]{.alert}: $X_{\mathrm{rand},i}=x_i+\vDelta\bmod1$, especially for lattices and Kronecker sequences
-- [Random digital shift]{.alert}: $X_{\mathrm{rand},i}=x_i\oplus\vDelta$, especially for digital sequences
+- [Random shift]{.alert}: $\vX_{\mathrm{rand},i}=\vx_i+\vDelta\bmod1$, especially for lattices and Kronecker sequences
+- [Random digital shift]{.alert}: $\vX_{\mathrm{rand},i}=\vx_i\oplus\vDelta$, especially for digital sequences
 - [Linear matrix or nested uniform scrambling]{.alert}, especially for digital sequences
 
 Independent randomizations provide replications without reverting to IID point placement
@@ -746,10 +745,10 @@ Independent randomizations provide replications without reverting to IID point p
 - The estimator
 
   $$
-  \hmu_n=\frac1n\sum_{i=0}^{n-1}f(X_{\mathrm{rand},i})
+  \hmu_n=\frac1n\sum_{i=0}^{n-1}f(\vX_{\mathrm{rand},i})
   $$
 
-  is unbiased for $\Ex[f(X)]$, $X\sim\Unif[0,1]^d$
+  is unbiased for $\Ex[f(\vX)]$, $\vX\sim\Unif[0,1]^d$
 - Randomized nodes almost surely avoid the boundary, so Gaussian quantile transforms remain finite
 - Independent randomizations allow variance and error estimation
 - For smooth integrands, scrambled digital sequences can attain nearly $\Order(n^{-3/2})$ RMSE
@@ -766,7 +765,7 @@ Two practical questions are
 \quad\text{for what $n$?}
 \end{align*}
 
-We want answers based only on the computed data $f(x_0),f(x_1),\ldots$
+We want answers based only on the computed data $f(\vx_0),f(\vx_1),\ldots$
 
 - IID sampling: use a Central Limit Theorem interval when justified
 - Randomized low discrepancy sampling: use independent replications
@@ -794,10 +793,10 @@ An efficient method needs both [fast error decay]{.alert} and a [reliable stoppi
 
 [A complete path from model to efficient estimate]{.alert}
 
-- [Formulate]{.alert} — express the target quantity as an expectation
-- [Sample]{.alert} — use direct transforms or Markov chains to represent the target
-- [Assess]{.alert} — connect uncertainty and discrepancy to integration error
-- [Improve]{.alert} — choose weights, controls, dependence, or low discrepancy points to reduce error
+- [Formulate]({{< meta decks.d01.file >}}#moments-of-random-variables) — express the target quantity as an expectation
+- [Sample]({{< meta decks.d02.file >}}#from-uniformity-to-a-target-distribution) — use direct transforms or Markov chains to represent the target
+- [Assess]({{< meta decks.d03.file >}}#discrepancy-as-integration-error) — connect uncertainty and discrepancy to integration error
+- [Improve]({{< meta decks.d04.file >}}#variance-reduction) — choose weights, controls, dependence, or low discrepancy points to reduce error
 
 ::: {.key-point}
 Method choice depends on [error, cost, and a credible stopping rule]{.alert}
@@ -809,10 +808,10 @@ Efficiency also depends on how the computation is organized
 
 [Selected Topics]({{< meta decks.d05.file >}}) develops:
 
-- Parallel sample evaluation and sound random streams
-- Stochastic gradients when exact optimization steps cost too much
-- Coupled coarse and fine approximations
-- Multilevel allocation by variance and cost
+- [Parallel sample evaluation and sound random streams]({{< meta decks.d05.file >}}#parallel-computing)
+- [Stochastic gradients]({{< meta decks.d05.file >}}#stochastic-gradient-descent) when exact optimization steps cost too much
+- [Coupled coarse and fine approximations]({{< meta decks.d05.file >}}#splitting-an-expectation)
+- [Multilevel allocation by variance and cost]({{< meta decks.d05.file >}}#optimal-multilevel-allocation)
 
 ::: {.key-point}
 [Next:]{.alert} [share work across processors, samples, and levels]({{< meta decks.d05.file >}})

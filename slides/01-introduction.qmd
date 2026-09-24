@@ -936,30 +936,30 @@ conditional mean across values of $Z$
 
 ## Conditional Monte Carlo {.tree-marker-slide tree-marker="prob-est"}
 
-Let $Y=f(X_1,\ldots,X_d)$ and $Z=(X_2,\ldots,X_d)$
+Let $Y=f(X_1,\ldots,X_d)$ and $\vZ=(X_2,\ldots,X_d)$
 
 If
 
 $$
-g(Z):=\Ex(Y\mid Z)
+g(\vZ):=\Ex(Y\mid \vZ)
 $$
 
 is available [analytically]{.alert}
 
 $$
-\mu=\Ex(Y)=\Ex_Z[g(Z)]
+\mu=\Ex(Y)=\Ex_{\vZ}[g(\vZ)]
 \qquad
-\var_Z(g(Z)) \overset{\exstar}{\le} \var(Y)
+\var_{\vZ}(g(\vZ)) \overset{\exstar}{\le} \var(Y)
 $$
 
-Sampling $g(Z)$ instead of $Y$ can [reduce variance]{.alert}
+Sampling $g(\vZ)$ instead of $Y$ can [reduce variance]{.alert}
 
 &nbsp;
 
-If the conditional density $h(y,z):=\varrho_{Y\mid Z}(y\mid z)$ is available [analytically]{.alert}
+If the conditional density $h(y,\vz):=\varrho_{Y\mid \vZ}(y\mid \vz)$ is available [analytically]{.alert}
 
 $$
-\varrho_Y(y)=\Ex_Z[h(y,Z)]
+\varrho_Y(y)=\Ex_{\vZ}[h(y,\vZ)]
 $$
 
 so a probability density can itself be expressed as an expectation
@@ -1001,11 +1001,11 @@ with the distribution required by the model
 :::
 
 ::: {.column width="39%"}
-- Where do [uniform samples]{.alert} come from?
-- How do we transform them to a [target distribution]{.alert}?
+- Where do [uniform samples]({{< meta decks.d02.file >}}#where-do-random-variables-come-from) come from?
+- How do we transform them to a [target distribution]({{< meta decks.d02.file >}}#the-quantile-transform)?
 - How do we generate [dependent random vectors and stochastic
-  processes]{.alert}?
-- Can [more even coverage]{.alert} improve Monte Carlo estimates?
+  processes]({{< meta decks.d02.file >}}#random-vectors-and-stochastic-processes)?
+- Can [more even coverage]({{< meta decks.d02.file >}}#what-does-low-discrepancy-mean) improve Monte Carlo estimates?
 :::
 
 ::: {.column width="15%"}

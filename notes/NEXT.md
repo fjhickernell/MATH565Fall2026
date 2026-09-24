@@ -107,6 +107,12 @@ full deck and all four companions.
 
 ## Latest slide refinements
 
+All five decks now link callbacks and forward references to the relevant
+slides and consistently distinguish multidimensional vectors from scalar
+coordinates and time arguments. The historical Keister notebook has not yet
+been migrated; its intended comparison across scale parameters needs a
+late-binding lambda correction, recorded in `notebooks/NOTEBOOK_INVENTORY.md`.
+
 The September 10 lecture follow-up now includes parallel tempering and a
 before/after product-density swap explanation. Discrepancy proceeds from
 distributions to empirical samples, then unbiased population estimation and

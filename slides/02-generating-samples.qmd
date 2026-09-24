@@ -946,7 +946,7 @@ $$
 
 The empirical distribution of the sample is close to the uniform distribution
 
-[Discrepancy]{.alert} quantifies that difference; precise definitions come later
+[Discrepancy]({{< meta decks.d03.file >}}#discrepancy-between-distributions) quantifies that difference; precise definitions come later
 
 ::: {.key-point}
 Low discrepancy replaces independent placement by [deliberate coverage]{.alert}
@@ -1146,27 +1146,27 @@ $$
 
 Ingredients
 
-- [Proposal]{.alert}: sample $Z$ from known density
+- [Proposal]{.alert}: sample $\vZ$ from known density
   $\varrho_{\mathrm{prop}}$
 - [Possibly unnormalized target]{.alert}: known
-  $\varrho_{\mathrm{tar}}$<br>The desired $X$ density is
+  $\varrho_{\mathrm{tar}}$<br>The desired $\vX$ density is
   $c\varrho_{\mathrm{tar}}$ for some $c>0$
 - [Global envelope]{.alert}: known $M$ with
-  $\varrho_{\mathrm{tar}}(x)\le M\varrho_{\mathrm{prop}}(x)$ for all $x$
+  $\varrho_{\mathrm{tar}}(\vx)\le M\varrho_{\mathrm{prop}}(\vx)$ for all $\vx$
 
-Sampler for $X_0,\ldots,X_{n-1}$
+Sampler for $\vX_0,\ldots,\vX_{n-1}$
 
 $$
 \begin{aligned}
 &i\leftarrow0\\[-0.2em]
 &\texttt{repeat}\\[-0.2em]
 &\qquad \texttt{repeat}\quad
-  Z\sim\varrho_{\mathrm{prop}},\quad U\sim\Unif[0,1]
+  \vZ\sim\varrho_{\mathrm{prop}},\quad U\sim\Unif[0,1]
   \quad\text{independently}\\[-0.2em]
 &\qquad \texttt{until}\quad
-  U\le\frac{\varrho_{\mathrm{tar}}(Z)}
-  {M\varrho_{\mathrm{prop}}(Z)}\\[-0.2em]
-&\qquad X_i\leftarrow Z,\quad i\leftarrow i+1\\[-0.2em]
+  U\le\frac{\varrho_{\mathrm{tar}}(\vZ)}
+  {M\varrho_{\mathrm{prop}}(\vZ)}\\[-0.2em]
+&\qquad \vX_i\leftarrow \vZ,\quad i\leftarrow i+1\\[-0.2em]
 &\texttt{until}\quad i=n
 \end{aligned}
 $$
@@ -1182,8 +1182,8 @@ $$
 $$
 W:=
 \begin{cases}
-1, & U\le \varrho_{\mathrm{tar}}(Z)/
-           \bigl[M\varrho_{\mathrm{prop}}(Z)\bigr],\\
+1, & U\le \varrho_{\mathrm{tar}}(\vZ)/
+           \bigl[M\varrho_{\mathrm{prop}}(\vZ)\bigr],\\
 0, & \text{otherwise}
 \end{cases}
 $$
@@ -1191,25 +1191,25 @@ $$
 [Density of an accepted proposal]{.alert}
 
 \begin{align*}
-\varrho_X(z)
-&=\varrho_{Z\mid W}(z\mid1)\\
-&=\frac{\Prob(W=1\mid Z=z)\varrho_{\mathrm{prop}}(z)}
+\varrho_{\vX}(\vz)
+&=\varrho_{\vZ\mid W}(\vz\mid1)\\
+&=\frac{\Prob(W=1\mid \vZ=\vz)\varrho_{\mathrm{prop}}(\vz)}
         {\Prob(W=1)}
 &&\text{by Bayes' theorem}\\
-&=\frac{\left(\varrho_{\mathrm{tar}}(z)/
-        \bigl[M\varrho_{\mathrm{prop}}(z)\bigr]\right)
-        \varrho_{\mathrm{prop}}(z)}
+&=\frac{\left(\varrho_{\mathrm{tar}}(\vz)/
+        \bigl[M\varrho_{\mathrm{prop}}(\vz)\bigr]\right)
+        \varrho_{\mathrm{prop}}(\vz)}
         {\Prob(W=1)}
 &&\text{by the acceptance rule}\\
-&=\frac{\varrho_{\mathrm{tar}}(z)}{M\Prob(W=1)}
-=c\varrho_{\mathrm{tar}}(z)
+&=\frac{\varrho_{\mathrm{tar}}(\vz)}{M\Prob(W=1)}
+=c\varrho_{\mathrm{tar}}(\vz)
 &&\text{since }c\varrho_{\mathrm{tar}}\text{ is a density}
 \end{align*}
 
 - [Acceptance probability]{.alert}:
   $\Prob(\text{acceptance})=\Prob(W=1)=1/(Mc)$
-- [Expected proposal cost]{.alert}: $n(Mc)$ samples of $Z$ for $n$ samples of
-  $X$
+- [Expected proposal cost]{.alert}: $n(Mc)$ samples of $\vZ$ for $n$ samples of
+  $\vX$
 
 ---
 
@@ -1355,10 +1355,10 @@ transform or envelope may be hard to find
 
 [Markov Chain Monte Carlo]({{< meta decks.d03.file >}}) takes a different route:
 
-- Propose a move using the current sample
-- Accept or stay to preserve the target distribution
-- Diagnose dependent samples and compare their distributions
-- Use Markov chains to simulate dynamic systems, including queues
+- [Propose a move using the current sample]({{< meta decks.d03.file >}}#the-metropolishastings-algorithm)
+- [Accept or stay to preserve the target distribution]({{< meta decks.d03.file >}}#why-the-acceptance-ratio-works)
+- [Diagnose dependent samples]({{< meta decks.d03.file >}}#tuning-and-diagnostics) and [compare their distributions]({{< meta decks.d03.file >}}#interpreting-sample-discrepancy)
+- Use Markov chains to simulate dynamic systems, including [queues]({{< meta decks.d03.file >}}#queueing-systems)
 
 ::: {.key-point}
 [Next:]{.alert} [sample difficult targets by building a chain]({{< meta decks.d03.file >}})

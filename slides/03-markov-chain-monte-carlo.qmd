@@ -70,9 +70,9 @@ subtitle: |
 
 ## When direct sampling is difficult {.tree-marker-slide tree-marker="mcmc"}
 
-- Quantile, affine, and exact transport maps
+- [Quantile]({{< meta decks.d02.file >}}#the-quantile-transform), [affine]({{< meta decks.d02.file >}}#multivariate-normal-sampling), and [exact transport maps]({{< meta decks.d02.file >}}#transport-maps)
     - [Global construction]{.alert}: a map that produces the target distribution
-- Acceptance–rejection
+- [Acceptance–rejection]({{< meta decks.d02.file >}}#acceptancerejection-sampling)
     - [Global bound]{.alert}: a proposal envelope valid throughout the target support
 - [Markov chain Monte Carlo (MCMC)]{.alert}, via Metropolis–Hastings
     - [Local decision]{.alert}: density ratios at the current and proposed states
@@ -147,30 +147,30 @@ Only the first is a [martingale]{.alert}: its expected next value, given the his
 
 ## The Metropolis–Hastings algorithm {.tree-marker-slide tree-marker="mcmc"}
 
-Suppose
+For states in $\reals^d$, suppose
 
 - the target has known, possibly unnormalized density
   $\varrho_{\mathrm{tar}}$
-- $\varrho_{\mathrm{prop}}(z\mid x)$ proposes a new state $z$ from the
-  current state $x$
+- $\varrho_{\mathrm{prop}}(\vz\mid \vx)$ proposes a new state $\vz$ from the
+  current state $\vx$
 
-Given $X_0$, repeat for $i=0,\ldots,n-1$:
+Given $\vX_0$, repeat for $i=0,\ldots,n-1$:
 
-1. Generate $Z\sim\varrho_{\mathrm{prop}}(\cdot\mid X_i)$ and
+1. Generate $\vZ\sim\varrho_{\mathrm{prop}}(\cdot\mid \vX_i)$ and
    $U\sim\Unif[0,1]$
 2. Compute
 
    $$
-   \alpha(X_i,Z)=\min\!\left\{1,
-   \frac{\varrho_{\mathrm{tar}}(Z)\varrho_{\mathrm{prop}}(X_i\mid Z)}
-   {\varrho_{\mathrm{tar}}(X_i)\varrho_{\mathrm{prop}}(Z\mid X_i)}\right\}
+   \alpha(\vX_i,\vZ)=\min\!\left\{1,
+   \frac{\varrho_{\mathrm{tar}}(\vZ)\varrho_{\mathrm{prop}}(\vX_i\mid \vZ)}
+   {\varrho_{\mathrm{tar}}(\vX_i)\varrho_{\mathrm{prop}}(\vZ\mid \vX_i)}\right\}
    =\min\!\left\{1,
-\frac{\text{joint density of first $Z$, then $X_i$}}
-{\text{joint density of first $X_i$, then $Z$}}\right\}
+\frac{\text{joint density of first $\vZ$, then $\vX_i$}}
+{\text{joint density of first $\vX_i$, then $\vZ$}}\right\}
    $$
 
-3. Set $X_{i+1}=Z$ if $U\le\alpha(X_i,Z)$<br>Otherwise set
-   $X_{i+1}=X_i$
+3. Set $\vX_{i+1}=\vZ$ if $U\le\alpha(\vX_i,\vZ)$<br>Otherwise set
+   $\vX_{i+1}=\vX_i$
 
 [Every iteration accepts either the proposal or the current state]{.alert}<br>Nothing is discarded
 
@@ -180,11 +180,11 @@ Given $X_0$, repeat for $i=0,\ldots,n-1$:
 The ratio compares the two directions of a proposed transition:
 
 $$
-\frac{\varrho_{\mathrm{tar}}(Z)\varrho_{\mathrm{prop}}(X_i\mid Z)}
-{\varrho_{\mathrm{tar}}(X_i)\varrho_{\mathrm{prop}}(Z\mid X_i)}
+\frac{\varrho_{\mathrm{tar}}(\vZ)\varrho_{\mathrm{prop}}(\vX_i\mid \vZ)}
+{\varrho_{\mathrm{tar}}(\vX_i)\varrho_{\mathrm{prop}}(\vZ\mid \vX_i)}
 =
-\frac{\text{target weight at $Z$}\times\text{return proposal}}
-{\text{target weight at $X_i$}\times\text{forward proposal}}
+\frac{\text{target weight at $\vZ$}\times\text{return proposal}}
+{\text{target weight at $\vX_i$}\times\text{forward proposal}}
 $$
 
 - Moves toward higher target density are favored
@@ -200,22 +200,22 @@ The transition kernel satisfies [detailed balance]{.alert} with the target distr
 If the proposal is symmetric,
 
 $$
-\varrho_{\mathrm{prop}}(z\mid x)
-=\varrho_{\mathrm{prop}}(x\mid z),
+\varrho_{\mathrm{prop}}(\vz\mid \vx)
+=\varrho_{\mathrm{prop}}(\vx\mid \vz),
 $$
 
 then the acceptance probability simplifies to
 
 $$
-\alpha(x,z)=\min\!\left\{1,
-\frac{\varrho_{\mathrm{tar}}(z)}{\varrho_{\mathrm{tar}}(x)}\right\}
+\alpha(\vx,\vz)=\min\!\left\{1,
+\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{tar}}(\vx)}\right\}
 $$
 
-For a random-walk proposal $Z=X_i+\epsilon_i$ with symmetric $\epsilon_i$:
+For a random-walk proposal $\vZ=\vX_i+\vepsilon_i$ with symmetric $\vepsilon_i$:
 
 - accept every move to a state with at least as much target density
 - accept some downhill moves, which keeps the chain from becoming trapped immediately
-- repeat $X_i$ when a proposal is rejected
+- repeat $\vX_i$ when a proposal is rejected
 
 ## Metropolis practice {.tree-marker-slide tree-marker="mcmc-practice"}
 
@@ -387,17 +387,17 @@ Diagnose both [exploration]{.alert} of the full state space and [concentration]{
 Run replicas with [inverse temperatures]{.alert} $1=\beta_0>\cdots>\beta_{R-1}>0$
 
 \begin{align*}
-\varrho_{\beta_r}(x)&\propto\varrho_{\mathrm{tar}}(x)^{\beta_r}
+\varrho_{\beta_r}(\vx)&\propto\varrho_{\mathrm{tar}}(\vx)^{\beta_r}
 \end{align*}
 
 - [Cold]{.alert} ($\beta_0=1$): original target; [hot]{.alert} ($\beta_r<1$): flatter density, easier valley crossing
 - Each sweep: local Metropolis updates, then proposed [state swaps]{.alert} between neighboring temperatures
-- Accept a swap $x_r\leftrightarrow x_s$ with probability
+- Accept a swap $\vx_r\leftrightarrow \vx_s$ with probability
 
 \begin{align*}
 \alpha_{\mathrm{swap}}
 &=\min\left\{1,
-\left[\frac{\varrho_{\mathrm{tar}}(x_s)}{\varrho_{\mathrm{tar}}(x_r)}\right]^{\beta_r-\beta_s}\right\}
+\left[\frac{\varrho_{\mathrm{tar}}(\vx_s)}{\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}\right\}
 \end{align*}
 
 - Accepted swaps bring hot-chain discoveries into the cold slot
@@ -411,12 +411,12 @@ normalizing integral; this holds for the notebook's Gaussian mixture.
 The augmented target is the product of the $R$ tempered densities. A symmetric
 proposal to exchange two states has MH ratio
 \begin{align*}
-\frac{\varrho_{\mathrm{tar}}(x_s)^{\beta_r}
-      \varrho_{\mathrm{tar}}(x_r)^{\beta_s}}
-     {\varrho_{\mathrm{tar}}(x_r)^{\beta_r}
-      \varrho_{\mathrm{tar}}(x_s)^{\beta_s}}
-&=\left[\frac{\varrho_{\mathrm{tar}}(x_s)}
-                 {\varrho_{\mathrm{tar}}(x_r)}\right]^{\beta_r-\beta_s}.
+\frac{\varrho_{\mathrm{tar}}(\vx_s)^{\beta_r}
+      \varrho_{\mathrm{tar}}(\vx_r)^{\beta_s}}
+     {\varrho_{\mathrm{tar}}(\vx_r)^{\beta_r}
+      \varrho_{\mathrm{tar}}(\vx_s)^{\beta_s}}
+&=\left[\frac{\varrho_{\mathrm{tar}}(\vx_s)}
+                 {\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}.
 \end{align*}
 All normalizing constants cancel. Local updates and accepted/rejected swaps
 preserve the product target. Slots retain their temperatures; states move
@@ -441,39 +441,39 @@ adequate exploration.
 
 | | Slot $r$, density $\varrho_{\beta_r}$ | Slot $s$, density $\varrho_{\beta_s}$ |
 |:--|:--|:--|
-| Before | $x_r$ | $x_s$ |
-| After | $x_s$ | $x_r$ |
+| Before | $\vx_r$ | $\vx_s$ |
+| After | $\vx_s$ | $\vx_r$ |
 
 Compare the [product density after]{.alert} with the [product density before]{.alert}:
 
 \begin{align*}
 R_{\mathrm{swap}}
 &=\frac{\text{density after}}{\text{density before}}
-=\frac{\varrho_{\beta_r}(x_s)\,\varrho_{\beta_s}(x_r)}
-        {\varrho_{\beta_r}(x_r)\,\varrho_{\beta_s}(x_s)}
-=\left[\frac{\varrho_{\mathrm{tar}}(x_s)}{\varrho_{\mathrm{tar}}(x_r)}\right]^{\beta_r-\beta_s}
+=\frac{\varrho_{\beta_r}(\vx_s)\,\varrho_{\beta_s}(\vx_r)}
+        {\varrho_{\beta_r}(\vx_r)\,\varrho_{\beta_s}(\vx_s)}
+=\left[\frac{\varrho_{\mathrm{tar}}(\vx_s)}{\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}
 \end{align*}
 
 - Draw $U\sim\Unif(0,1)$; swap if $U\le\min\{1,R_{\mathrm{swap}}\}$
 - Renaming $r$ and $s$: reciprocal density ratio and opposite exponent → [same rule]{.alert}
 
 ::: {.key-point}
-Cold $\beta_r=1$, hot $\beta_s=1/2$, and $\varrho_{\mathrm{tar}}(x_s)=4\varrho_{\mathrm{tar}}(x_r)$:
+Cold $\beta_r=1$, hot $\beta_s=1/2$, and $\varrho_{\mathrm{tar}}(\vx_s)=4\varrho_{\mathrm{tar}}(\vx_r)$:
 $R_{\mathrm{swap}}=\sqrt{4}=2$ → always swap; the reverse move is accepted with probability $1/2$
 :::
 
 ::: {.notes}
 The ratio compares two configurations of the same pair of slots. It does not
-compare $\varrho_{\beta_r}(x_s)$ with $\varrho_{\beta_s}(x_r)$: those are the
+compare $\varrho_{\beta_r}(\vx_s)$ with $\varrho_{\beta_s}(\vx_r)$: those are the
 two factors in the numerator, not competing alternatives.
 
-Write $\varrho_{\beta}(x)=\varrho_{\mathrm{tar}}(x)^\beta/C_\beta$.
+Write $\varrho_{\beta}(\vx)=\varrho_{\mathrm{tar}}(\vx)^\beta/C_\beta$.
 The constants $C_{\beta_r}$ and $C_{\beta_s}$ appear in both products and cancel.
 So do the densities for all unchanged slots in the full product target.
 The exponent matters: a hot density is proportional to a power of the target,
 not generally to the target itself.
 
-For the example, take unnormalized target values 1 at $x_r$ and 4 at $x_s$.
+For the example, take unnormalized target values 1 at $\vx_r$ and 4 at $\vx_s$.
 The before product is $1^1\,4^{1/2}=2$; the after product is
 $4^1\,1^{1/2}=4$. The ratio is $4/2=2$. After that swap, proposing to move
 back gives $2/4=1/2$. The accepted probability flows balance:
@@ -704,7 +704,7 @@ and an application-specific tolerance.
 
 Zero discrepancy means equal kernel mean embeddings; identifying equal
 probability distributions additionally requires a characteristic kernel.
-For IID sampling the later “What the kernel controls” slide gives the exact $C_K/n$ expectation
+For IID sampling the later [“What the kernel controls” slide](#what-the-kernel-controls) gives the exact $C_K/n$ expectation
 when the kernel moments are finite. This is a mean-square benchmark, not
 monotone decay on every realization. MCMC dependence changes the constant and
 may affect the rate without suitable mixing assumptions. A finite independent
@@ -1282,7 +1282,7 @@ U_k\sim F_A \quad\text{($k$th interarrival duration)},
 V_j\sim F_S \quad\text{(customer $j$'s full service time)}.
 $$
 
-Immediately after event $i$, the [state]{.alert} is $X_i=(A_i,N_i,S_i), \qquad i=0,1,\ldots$, where
+Immediately after event $i$, the [state]{.alert} is $\vX_i=(A_i,N_i,S_i), \qquad i=0,1,\ldots$, where
 
 \begin{align*}
 A_i&=\text{time until the next arrival},\\
@@ -1297,7 +1297,7 @@ S_i&=\text{remaining service time}, \qquad S_i=\infty\text{ when the server is i
   $W_j=$ accumulated time in the system for customer $j$
 
 ::: {.key-point}
-The state $X_i$ determines the next-event law. The $W_j$ clocks measure
+The state $\vX_i$ determines the next-event law. The $W_j$ clocks measure
 customer time but do not affect that law
 :::
 
@@ -1328,9 +1328,9 @@ customer time but do not affect that law
 
 ::: {.key-point}
 If we jump into the process at $i=47$, knowing
-$X_{47}=(A_{47},N_{47},S_{47})$ and using future independent input durations
-lets us continue with $X_{48},X_{49},\ldots$ without knowing the earlier queue
-states $X_0,\ldots,X_{46}$
+$\vX_{47}=(A_{47},N_{47},S_{47})$ and using future independent input durations
+lets us continue with $\vX_{48},\vX_{49},\ldots$ without knowing the earlier queue
+states $\vX_0,\ldots,\vX_{46}$
 :::
 
 - The residual clocks belong in the state because a partially elapsed duration
@@ -1511,10 +1511,10 @@ service draw, 6, is unused.
 
 [From random inputs to distribution-aware simulation]{.alert}
 
-- [Estimate]{.alert} — sample averages approximate expectations and quantify uncertainty
-- [Generate]{.alert} — transform uniform inputs into target samples, including dependent vectors and paths
-- [Extend]{.alert} — MCMC reaches targets known only up to normalization, at the cost of dependent samples
-- [Assess]{.alert} — kernel discrepancy connects distributional fit with integration error
+- [Estimate]({{< meta decks.d01.file >}}#under-random-sampling) — sample averages approximate expectations and quantify uncertainty
+- [Generate]({{< meta decks.d02.file >}}#from-uniformity-to-a-target-distribution) — transform uniform inputs into target samples, including dependent vectors and paths
+- [Extend]({{< meta decks.d03.file >}}#the-metropolishastings-algorithm) — MCMC reaches targets known only up to normalization, at the cost of dependent samples
+- [Assess]({{< meta decks.d03.file >}}#discrepancy-as-integration-error) — kernel discrepancy connects distributional fit with integration error
 
 ::: {.key-point}
 Sampling tells us [what to compute]{.alert}; discrepancy helps judge
@@ -1528,10 +1528,10 @@ We now have ways to generate samples and assess their error
 [Improving Efficiency]({{< meta decks.d04.file >}}) asks how to get a more
 accurate answer for the same computational work:
 
-- Change the sampling distribution or transform the integral
-- Remove known variation with conditioning and control variates
-- Place samples deliberately with stratification and low discrepancy methods
-- Randomize structured points to estimate uncertainty
+- [Change the sampling distribution]({{< meta decks.d04.file >}}#importance-sampling) or [transform the integral]({{< meta decks.d04.file >}}#transforming-an-integral)
+- Remove known variation with [conditioning]({{< meta decks.d04.file >}}#conditional-monte-carlo) and [control variates]({{< meta decks.d04.file >}}#control-variates)
+- Place samples deliberately with [stratification]({{< meta decks.d04.file >}}#latin-hypercube-sampling-in-one-dimension) and [low discrepancy methods]({{< meta decks.d04.file >}}#from-lhs-to-quasi-monte-carlo)
+- [Randomize structured points to estimate uncertainty]({{< meta decks.d04.file >}}#why-randomize)
 
 ::: {.key-point}
 [Next:]{.alert} [reduce error per unit of work]({{< meta decks.d04.file >}})

@@ -520,7 +520,8 @@ into either performance notebook.
 - **Proposed target:**
   `MATH565Fall2026/notebooks/applications/KeisterExample.ipynb`
 - **Description:** Introduces the Keister integration problem, variable
-  transformations, and accuracy comparisons.
+  transformations, and accuracy comparisons. Plots transformed integrands for
+  several values of $a$ and compares IID and Sobol' estimates.
 - **Dependencies:** NumPy, SciPy, Matplotlib, QMCPy, IPython,
   `classlib.plots`, `classlib.nbviz`, and repository-root path setup. No
   external data or image input was found.
@@ -528,7 +529,9 @@ into either performance notebook.
   is not a migration source.
 - **Migration concerns:** Replace Fall 2025 environment and path assumptions,
   verify plotting helpers, and validate transformations and accuracy results
-  with the pinned QMCPy revision.
+  with the pinned QMCPy revision. Bind each comparison function's $a$ value
+  explicitly: the inherited configuration comprehensions use late-bound
+  lambdas, so all configurations currently evaluate the final $a$ value.
 - **Classification:** Applications is recommended because the Keister
   integral is the organizing example. It could also support Performance
   because it compares accuracy.
