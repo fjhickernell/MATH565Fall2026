@@ -1044,7 +1044,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="2f5e31de" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="d76333be" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1063,7 +1063,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="9d41f446" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="2ceda7c1" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2575,10 +2575,10 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <ul>
 <li>A Markov chain’s next-state law depends on its <span class="alert">current state</span></li>
 <li>Metropolis–Hastings corrects a proposal mechanism so that the <span class="alert">target distribution is invariant</span></li>
-<li>MCMC trades independent samples for access to <span class="alert">complicated unnormalized densities</span></li>
+<li><a href="#/bayesian-inference">Bayesian inference</a>: MCMC samples complicated posteriors known only up to normalization</li>
 <li>Kernel discrepancy compares distributions and measures both <span class="alert">worst-case</span> and <span class="alert">average-case integration error</span></li>
 <li>The kernel specifies which distributional differences and integrand features matter</li>
-<li>Markov chains model computational algorithms as well as dynamic systems such as queues</li>
+<li><a href="#/queueing-systems">Queueing</a>: simulate arrivals and service completions from the current state; measure customer time and blocking</li>
 </ul>
 </section>
 
@@ -2586,9 +2586,10 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <h1>How Far We Have Come</h1>
 <p><span class="alert">From random inputs to distribution-aware simulation</span></p>
 <ul>
-<li><a href="01-introduction.html#under-random-sampling">Estimate</a> — sample averages approximate expectations and quantify uncertainty</li>
-<li><a href="02-generating-samples.html#from-uniformity-to-a-target-distribution">Generate</a> — transform uniform inputs into target samples, including dependent vectors and paths</li>
-<li><a href="03-markov-chain-monte-carlo.html#the-metropolishastings-algorithm">Extend</a> — MCMC reaches targets known only up to normalization, at the cost of dependent samples</li>
+<li><a href="01-introduction.html#under-random-sampling">Estimate</a> — expectations, quantiles, and uncertainty<br><a href="01-introduction.html#are-we-there-yet-revisited">Travel time</a>: how long should we allow?</li>
+<li><a href="02-generating-samples.html#from-uniformity-to-a-target-distribution">Generate</a> — transform uniform inputs into vectors and paths<br><a href="02-generating-samples.html#option-payoffs-and-prices">Option pricing</a>: average discounted payoffs</li>
+<li><a href="03-markov-chain-monte-carlo.html#the-metropolishastings-algorithm">Extend</a> — MCMC samples targets known only up to normalization<br><a href="#/bayesian-inference">Bayesian inference</a>: compute posterior summaries</li>
+<li><a href="#/queueing-systems">Simulate</a> — advance a Markov system from its current state<br><a href="#/queueing-systems">Queueing</a>: customer time and blocking</li>
 <li><a href="03-markov-chain-monte-carlo.html#discrepancy-as-integration-error">Assess</a> — kernel discrepancy connects distributional fit with integration error</li>
 </ul>
 <div class="key-point">
