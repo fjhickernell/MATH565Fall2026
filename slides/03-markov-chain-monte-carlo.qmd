@@ -1390,33 +1390,31 @@ The full [interarrival and service draws]{.alert} are given. Use each row from l
 | Interarrival $U_k$ | $2$ | $1.5$ | $5$ |
 | Service $V_j$ | $5$ | $1$ | $4$ |
 
-**Example.** The system starts empty at $T_0=0$. The four events include one
-of each case. At every event, compute $\Delta t_i$, identify the event, and
-update the state and customer times.
+**Example.** Start empty at $T_0=0$; $\Delta t_i$ is the time to the next event.
 
 :::: {.columns}
-::: {.column width="72%"}
-| $i$ | $T_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
-|--:|--:|--:|--:|--:|--:|:--|
-| 0 | 0 | 2 | 0 | $\infty$ | 2 | arrival |
-| 1 | 2 | 1.5 | 1 | 5 | 1.5 | arrival |
-| 2 | 3.5 | 5 | 2 | 3.5 | 3.5 | service completion |
-| 3 | 7 | 1.5 | 1 | 1 | 1 | service completion |
-| 4 | 8 | 0.5 | 0 | $\infty$ | -- | -- |
-:::
-
-::: {.column width="28%"}
-| After event | $W_1$ | $W_2$ | $W_3$ |
-|--:|--:|--:|--:|
-| 0 | -- | -- | -- |
-| 1 | 0 | -- | -- |
-| 2 | 1.5 | 0 | -- |
-| 3 | 5, departed | 3.5 | -- |
-| 4 | 5, departed | 4.5, departed | -- |
-:::
-::::
+::: {.column width="63%"}
+| $i$ | Event $i$ | $T_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ |
+|--:|:--|--:|--:|--:|--:|--:|
+| 0 | start | 0 | 2 | 0 | $\infty$ | 2 |
+| 1 | arrival 1 | 2 | 1.5 | 1 | 5 | 1.5 |
+| 2 | arrival 2 | 3.5 | 5 | 2 | 3.5 | 3.5 |
+| 3 | service completion 1 | 7 | 1.5 | 1 | 1 | 1 |
+| 4 | service completion 2 | 8 | 0.5 | 0 | $\infty$ | -- |
 
 Draw a new service time [only when a customer begins service]{.alert}
+:::
+
+::: {.column width="37%"}
+| After event | $W_1$ | $W_2$ |
+|--:|--:|--:|
+| 0 | -- | -- |
+| 1 | 0 | -- |
+| 2 | 1.5 | 0 |
+| 3 | 5, done | 3.5 |
+| 4 | 5, done | 4.5, done |
+:::
+::::
 
 ::: {.notes}
 Thus the four transitions are arrival to an idle server, arrival to a busy
@@ -1432,8 +1430,9 @@ by event 4, so $W_3$ remains unavailable.
 
 ### $\exstar$ Queue simulation exercise
 
-For each table, start with an [empty system at $T_0=0$]{.alert}, make your own
-state and customer-time tables, and complete four events.
+For each table, start [empty at $T_0=0$]{.alert}. Process events until the
+supplied draws [no longer determine which event comes next]{.alert}; do not
+invent another draw.
 
 | Draw | First | Second | Third |
 |:--|--:|--:|--:|
@@ -1447,55 +1446,61 @@ state and customer-time tables, and complete four events.
 
 | Draw | First | Second | Third |
 |:--|--:|--:|--:|
-| Interarrival $U_k$ | $2$ | $1$ | $7$ |
-| Service $V_j$ | $4$ | $2$ | $6$ |
+| Interarrival $U_k$ | $2$ | $1$ | $1$ |
+| Service $V_j$ | $5$ | $2$ | $6$ |
 
-For each table, report the event sequence and customer times. Each table
-supplies three interarrival draws and three service draws. Which service draws
-remain unused, and why?
+Report the event sequence and customer times. Which service draws remain
+unused, and why?
 
 ::: {.notes}
+Record the third arrival even though its post-event arrival clock cannot be
+loaded: no fourth interarrival draw was supplied. Then stop, since the next
+arrival could occur before or after the active service completion. The first
+two tables have five determined events; the third has three.
+
 For the first table, the completed state table is
 
 | $i$ | $T_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
 |--:|--:|--:|--:|--:|--:|:--|
-| 0 | 0 | 3 | 0 | $\infty$ | 3 | arrival |
-| 1 | 3 | 5 | 1 | 1 | 1 | service completion |
-| 2 | 4 | 4 | 0 | $\infty$ | 4 | arrival |
-| 3 | 8 | 4 | 1 | 2 | 2 | service completion |
-| 4 | 10 | 2 | 0 | $\infty$ | -- | -- |
+| 0 | 0 | 3 | 0 | $\infty$ | 3 | arrival 1 |
+| 1 | 3 | 5 | 1 | 1 | 1 | service completion 1 |
+| 2 | 4 | 4 | 0 | $\infty$ | 4 | arrival 2 |
+| 3 | 8 | 4 | 1 | 2 | 2 | service completion 2 |
+| 4 | 10 | 2 | 0 | $\infty$ | 2 | arrival 3 |
+| 5 | 12 | unknown | 1 | 6 | unknown | stop |
 
-The event sequence is arrival, service completion, arrival, service
-completion. The departing customer times are $W_1=1$ and $W_2=2$. The third
-service draw, 6, is unused.
+The event sequence is arrival 1, service completion 1, arrival 2, service
+completion 2, arrival 3. The completed customer times are $W_1=1$ and
+$W_2=2$; customer 3 has $W_3=0$ so far. All three service draws have been used.
 
 For the second table, the completed state table is
 
 | $i$ | $T_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
 |--:|--:|--:|--:|--:|--:|:--|
-| 0 | 0 | 1 | 0 | $\infty$ | 1 | arrival |
-| 1 | 1 | 2 | 1 | 5 | 2 | arrival |
-| 2 | 3 | 6 | 2 | 3 | 3 | service completion |
-| 3 | 6 | 3 | 1 | 2 | 2 | service completion |
-| 4 | 8 | 1 | 0 | $\infty$ | -- | -- |
+| 0 | 0 | 1 | 0 | $\infty$ | 1 | arrival 1 |
+| 1 | 1 | 2 | 1 | 5 | 2 | arrival 2 |
+| 2 | 3 | 6 | 2 | 3 | 3 | service completion 1 |
+| 3 | 6 | 3 | 1 | 2 | 2 | service completion 2 |
+| 4 | 8 | 1 | 0 | $\infty$ | 1 | arrival 3 |
+| 5 | 9 | unknown | 1 | 4 | unknown | stop |
 
-The event sequence is arrival, arrival, service completion, service
-completion. The departing customer times are $W_1=5$ and $W_2=5$. The third
-service draw, 4, is unused.
+The event sequence is arrival 1, arrival 2, service completion 1, service
+completion 2, arrival 3. The completed customer times are $W_1=5$ and
+$W_2=5$; customer 3 has $W_3=0$ so far. All three service draws have been used.
 
 For the third table, the completed state table is
 
 | $i$ | $T_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
 |--:|--:|--:|--:|--:|--:|:--|
-| 0 | 0 | 2 | 0 | $\infty$ | 2 | arrival |
-| 1 | 2 | 1 | 1 | 4 | 1 | arrival |
-| 2 | 3 | 7 | 2 | 3 | 3 | service completion |
-| 3 | 6 | 4 | 1 | 2 | 2 | service completion |
-| 4 | 8 | 2 | 0 | $\infty$ | -- | -- |
+| 0 | 0 | 2 | 0 | $\infty$ | 2 | arrival 1 |
+| 1 | 2 | 1 | 1 | 5 | 1 | arrival 2 |
+| 2 | 3 | 1 | 2 | 4 | 1 | arrival 3 |
+| 3 | 4 | unknown | 3 | 3 | unknown | stop |
 
-The event sequence is arrival, arrival, service completion, service
-completion. The departing customer times are $W_1=4$ and $W_2=5$. The third
-service draw, 6, is unused.
+The event sequence is arrival 1, arrival 2, arrival 3. No customer has
+departed; the accumulated times are $W_1=2$, $W_2=1$, and $W_3=0$. Service
+draws $V_2=2$ and $V_3=6$ remain unused because only customer 1 has begun
+service.
 :::
 
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="mcmc-discrepancy-practice"}
