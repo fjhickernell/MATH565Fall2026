@@ -1336,6 +1336,8 @@ Defined when at least one proposal is accepted
   early coordinates for low discrepancy sampling
 - Gaussian-process sampling reduces finite collections of function values to
   multivariate normal sampling
+- [Option pricing](#option-payoffs-and-prices): simulate asset paths, evaluate
+  European, Asian, or barrier payoffs, and average discounted payoffs
 
 ## Big Ideas (continued) {data-state="goldborder"}
 
@@ -1347,6 +1349,12 @@ Defined when at least one proposal is accepted
   selected points using an unnormalized target and a global envelope
 
 [Companion `GeneratingSamples` notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb)
+
+::: {.key-point}
+From [travel-time uncertainty]({{< meta decks.d01.file >}}#are-we-there-yet-revisited)
+to [option pricing](#option-payoffs-and-prices): transform random inputs into
+outputs whose means, probabilities, or quantiles answer the application question
+:::
 
 # What Comes Next
 

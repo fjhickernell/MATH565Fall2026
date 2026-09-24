@@ -107,6 +107,12 @@ full deck and all four companions.
 
 ## Latest slide refinements
 
+Decks 02–03 closing summaries now link the developed applications: travel
+time, option pricing, Bayesian inference, and queueing. Keep Deck 03's
+applications with their methods on one cumulative recap; Deck 02's application
+recap stays in Big Ideas. Applications mentioned only as motivation remain omitted until
+they are developed. The convention is recorded in `docs/slide-style.md`.
+
 All five decks now link callbacks and forward references to the relevant
 slides and consistently distinguish multidimensional vectors from scalar
 coordinates and time arguments. The historical Keister notebook has not yet

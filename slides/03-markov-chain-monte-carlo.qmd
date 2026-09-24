@@ -1502,18 +1502,19 @@ service draw, 6, is unused.
 
 - A Markov chain's next-state law depends on its [current state]{.alert}
 - Metropolis–Hastings corrects a proposal mechanism so that the [target distribution is invariant]{.alert}
-- MCMC trades independent samples for access to [complicated unnormalized densities]{.alert}
+- [Bayesian inference](#bayesian-inference): MCMC samples complicated posteriors known only up to normalization
 - Kernel discrepancy compares distributions and measures both [worst-case]{.alert} and [average-case integration error]{.alert}
 - The kernel specifies which distributional differences and integrand features matter
-- Markov chains model computational algorithms as well as dynamic systems such as queues
+- [Queueing](#queueing-systems): simulate arrivals and service completions from the current state; measure customer time and blocking
 
 # How Far We Have Come
 
 [From random inputs to distribution-aware simulation]{.alert}
 
-- [Estimate]({{< meta decks.d01.file >}}#under-random-sampling) — sample averages approximate expectations and quantify uncertainty
-- [Generate]({{< meta decks.d02.file >}}#from-uniformity-to-a-target-distribution) — transform uniform inputs into target samples, including dependent vectors and paths
-- [Extend]({{< meta decks.d03.file >}}#the-metropolishastings-algorithm) — MCMC reaches targets known only up to normalization, at the cost of dependent samples
+- [Estimate]({{< meta decks.d01.file >}}#under-random-sampling) — expectations, quantiles, and uncertainty<br>[Travel time]({{< meta decks.d01.file >}}#are-we-there-yet-revisited): how long should we allow?
+- [Generate]({{< meta decks.d02.file >}}#from-uniformity-to-a-target-distribution) — transform uniform inputs into vectors and paths<br>[Option pricing]({{< meta decks.d02.file >}}#option-payoffs-and-prices): average discounted payoffs
+- [Extend]({{< meta decks.d03.file >}}#the-metropolishastings-algorithm) — MCMC samples targets known only up to normalization<br>[Bayesian inference](#bayesian-inference): compute posterior summaries
+- [Simulate](#queueing-systems) — advance a Markov system from its current state<br>[Queueing](#queueing-systems): customer time and blocking
 - [Assess]({{< meta decks.d03.file >}}#discrepancy-as-integration-error) — kernel discrepancy connects distributional fit with integration error
 
 ::: {.key-point}

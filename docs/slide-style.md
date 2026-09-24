@@ -26,7 +26,13 @@ Deck 03, place **How Far We Have Come** between them to connect the current
 unit with earlier ones. When Big Ideas needs more room, continue it on a
 separate slide. Course Map section links include only the first **Big Ideas**
 slide among these closing slides, so the map remains focused on the
-instructional sections.
+instructional sections. Include major applications already developed in **Big
+Ideas** and the cumulative **How Far We Have Come**, linking back to their
+substantive slides (for example, travel time, option pricing, Bayesian inference,
+and queueing). Keep applications on the same cumulative slide when space
+permits; omit applications mentioned only as motivation until they receive
+substantive treatment. Minor illustrative examples such as Keister need not
+appear.
 
 Follow the [shared Course Map theme convention](../classlib/docs/slide-style.md#course-map-themes).
 MATH 565 uses 36% for Course decks, a 4% empty gutter, and 60% for the

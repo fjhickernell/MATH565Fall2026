@@ -292,6 +292,8 @@ appropriate phase rather than appended indiscriminately.
   What Comes Next throughout, How Far We Have Come from Deck 03 onward, and
   a gold-bordered Big Ideas continuation in Deck 02; keep only Big Ideas in
   each Course Map's closing links.
+- [x] Connect Decks 02–03 closing summaries to developed applications, keeping
+  Deck 03's methods and applications together on one cumulative recap slide.
 - [x] Load course-wide slide styling consistently across every deck.
 - [x] Link callbacks and forward references across all five decks and audit
   multidimensional vector notation, including Keister and discrepancy formulas.
