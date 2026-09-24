@@ -785,7 +785,7 @@ This deck
 </div>
 
 <p>Both methods minimize the same quadratic loss<br>Stochastic gradients use one randomly selected component at each step</p>
-<div id="41b9cd52" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
+<div id="43024971" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1011,6 +1011,34 @@ Y_\ell&amp;=f_{d_\ell}(X_{1:d_\ell})
 <li>Coupling adjacent approximations creates low-variance corrections</li>
 <li>A good hierarchy spends most computation where it buys the largest reduction in error</li>
 </ul>
+</section>
+
+<section id="how-far-we-have-come" class="title-slide slide level1 center">
+<h1>How Far We Have Come</h1>
+<p><span class="alert">From Monte Carlo estimates to computational design</span></p>
+<ul>
+<li><span class="alert">Model</span> — express a question as an expectation and generate suitable samples</li>
+<li><span class="alert">Check</span> — quantify uncertainty and compare sample distributions</li>
+<li><span class="alert">Improve</span> — reduce variation with conditioning, weights, or structured points</li>
+<li><span class="alert">Allocate</span> — distribute work across processors and approximation levels</li>
+</ul>
+<div class="key-point">
+<p>Good simulation balances <span class="alert">accuracy, computational cost, and evidence for stopping</span></p>
+</div>
+</section>
+
+<section id="what-comes-next" class="title-slide slide level1 center">
+<h1>What Comes Next</h1>
+<p>Bring the course methods together in a concrete model or project:</p>
+<ul>
+<li>Define the target quantity and the source of approximation error</li>
+<li>Choose a sampling method and justify its assumptions</li>
+<li>Compare an efficiency improvement against a clear baseline</li>
+<li>Report uncertainty, computational cost, and a stopping criterion</li>
+</ul>
+<div class="key-point">
+<p>The next step is <span class="alert">a defensible end-to-end simulation</span></p>
+</div>
 
 </section>
     </div>

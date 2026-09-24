@@ -1044,7 +1044,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="b5d27572" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="84035117" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1063,7 +1063,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="1019fbf8" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="d17791fa" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2580,6 +2580,35 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <li>The kernel specifies which distributional differences and integrand features matter</li>
 <li>Markov chains model computational algorithms as well as dynamic systems such as queues</li>
 </ul>
+</section>
+
+<section id="how-far-we-have-come" class="title-slide slide level1 center">
+<h1>How Far We Have Come</h1>
+<p><span class="alert">From random inputs to distribution-aware simulation</span></p>
+<ul>
+<li><span class="alert">Estimate</span> — sample averages approximate expectations and quantify uncertainty</li>
+<li><span class="alert">Generate</span> — transform uniform inputs into target samples, including dependent vectors and paths</li>
+<li><span class="alert">Extend</span> — MCMC reaches targets known only up to normalization, at the cost of dependent samples</li>
+<li><span class="alert">Assess</span> — kernel discrepancy connects distributional fit with integration error</li>
+</ul>
+<div class="key-point">
+<p>Sampling tells us <span class="alert">what to compute</span>; discrepancy helps judge <span class="alert">how well the samples represent the target</span></p>
+</div>
+</section>
+
+<section id="what-comes-next" class="title-slide slide level1 center">
+<h1>What Comes Next</h1>
+<p>We now have ways to generate samples and assess their error</p>
+<p><a href="04-improving-efficiency.html">Improving Efficiency</a> asks how to get a more accurate answer for the same computational work:</p>
+<ul>
+<li>Change the sampling distribution or transform the integral</li>
+<li>Remove known variation with conditioning and control variates</li>
+<li>Place samples deliberately with stratification and low discrepancy methods</li>
+<li>Randomize structured points to estimate uncertainty</li>
+</ul>
+<div class="key-point">
+<p><span class="alert">Next:</span> <a href="04-improving-efficiency.html">reduce error per unit of work</a></p>
+</div>
 
 </section>
     </div>

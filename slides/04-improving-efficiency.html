@@ -1305,7 +1305,7 @@ X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="750115e4" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="1">
+<div id="7b6e5911" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1572,6 +1572,35 @@ X_{\mathrm{rand},i}\sim\Unif[0,1]^d
 <li>Low discrepancy sequences replace random clustering with balanced space filling</li>
 <li>Randomization restores unbiasedness and supports error estimation while retaining QMC efficiency</li>
 </ul>
+</section>
+
+<section id="how-far-we-have-come" class="title-slide slide level1 center">
+<h1>How Far We Have Come</h1>
+<p><span class="alert">A complete path from model to efficient estimate</span></p>
+<ul>
+<li><span class="alert">Formulate</span> — express the target quantity as an expectation</li>
+<li><span class="alert">Sample</span> — use direct transforms or Markov chains to represent the target</li>
+<li><span class="alert">Assess</span> — connect uncertainty and discrepancy to integration error</li>
+<li><span class="alert">Improve</span> — choose weights, controls, dependence, or low discrepancy points to reduce error</li>
+</ul>
+<div class="key-point">
+<p>Method choice depends on <span class="alert">error, cost, and a credible stopping rule</span></p>
+</div>
+</section>
+
+<section id="what-comes-next" class="title-slide slide level1 center">
+<h1>What Comes Next</h1>
+<p>Efficiency also depends on how the computation is organized</p>
+<p><a href="05-selected-topics.html">Selected Topics</a> develops:</p>
+<ul>
+<li>Parallel sample evaluation and sound random streams</li>
+<li>Stochastic gradients when exact optimization steps cost too much</li>
+<li>Coupled coarse and fine approximations</li>
+<li>Multilevel allocation by variance and cost</li>
+</ul>
+<div class="key-point">
+<p><span class="alert">Next:</span> <a href="05-selected-topics.html">share work across processors, samples, and levels</a></p>
+</div>
 
 </section>
     </div>
