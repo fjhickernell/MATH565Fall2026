@@ -1044,7 +1044,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="d76333be" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="0eb161d8" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1063,7 +1063,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="2ceda7c1" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="4037a288" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2165,77 +2165,77 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 </tr>
 </tbody>
 </table>
-<p><strong>Example.</strong> The system starts empty at <span class="math inline">\(T_0=0\)</span>. The four events include one of each case. At every event, compute <span class="math inline">\(\Delta t_i\)</span>, identify the event, and update the state and customer times.</p>
+<p><strong>Example.</strong> Start empty at <span class="math inline">\(T_0=0\)</span>; <span class="math inline">\(\Delta t_i\)</span> is the time to the next event.</p>
 <div class="columns">
-<div class="column" style="width:72%;">
+<div class="column" style="width:63%;">
 <table class="caption-top">
 <thead>
 <tr class="header">
 <th style="text-align: right;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: left;">Event <span class="math inline">\(i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(T_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(A_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(N_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(S_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(\Delta t_i\)</span></th>
-<th style="text-align: left;">Event <span class="math inline">\(i+1\)</span></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">0</td>
+<td style="text-align: left;">start</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;"><span class="math inline">\(\infty\)</span></td>
 <td style="text-align: right;">2</td>
-<td style="text-align: left;">arrival</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1</td>
+<td style="text-align: left;">arrival 1</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">1.5</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">5</td>
 <td style="text-align: right;">1.5</td>
-<td style="text-align: left;">arrival</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2</td>
+<td style="text-align: left;">arrival 2</td>
 <td style="text-align: right;">3.5</td>
 <td style="text-align: right;">5</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">3.5</td>
 <td style="text-align: right;">3.5</td>
-<td style="text-align: left;">service completion</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">3</td>
+<td style="text-align: left;">service completion 1</td>
 <td style="text-align: right;">7</td>
 <td style="text-align: right;">1.5</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">service completion</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">4</td>
+<td style="text-align: left;">service completion 2</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">0.5</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;"><span class="math inline">\(\infty\)</span></td>
 <td style="text-align: right;">–</td>
-<td style="text-align: left;">–</td>
 </tr>
 </tbody>
 </table>
-</div><div class="column" style="width:28%;">
+<p>Draw a new service time <span class="alert">only when a customer begins service</span></p>
+</div><div class="column" style="width:37%;">
 <table class="caption-top">
 <thead>
 <tr class="header">
 <th style="text-align: right;">After event</th>
 <th style="text-align: right;"><span class="math inline">\(W_1\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(W_2\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(W_3\)</span></th>
 </tr>
 </thead>
 <tbody>
@@ -2243,36 +2243,30 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">–</td>
 <td style="text-align: right;">–</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">1.5</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">–</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">5, departed</td>
+<td style="text-align: right;">5, done</td>
 <td style="text-align: right;">3.5</td>
-<td style="text-align: right;">–</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">5, departed</td>
-<td style="text-align: right;">4.5, departed</td>
-<td style="text-align: right;">–</td>
+<td style="text-align: right;">5, done</td>
+<td style="text-align: right;">4.5, done</td>
 </tr>
 </tbody>
 </table>
 </div></div>
-<p>Draw a new service time <span class="alert">only when a customer begins service</span></p>
 <aside class="notes">
 <p>Thus the four transitions are arrival to an idle server, arrival to a busy server, service completion with another customer waiting, and service completion leaving the system empty. The first two arrivals consume all three interarrival draws: the initial draw is 2, then the two arrivals draw 1.5 and 5. Only the first arrival and the first service completion begin service, so the third service draw, 4, remains unused. The third customer has not arrived by event 4, so <span class="math inline">\(W_3\)</span> remains unavailable.</p>
 <style type="text/css">
@@ -2290,7 +2284,7 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <section class="slide level2">
 
 <h3 id="exstar-queue-simulation-exercise"><span class="math inline">\(\exstar\)</span> Queue simulation exercise</h3>
-<p>For each table, start with an <span class="alert">empty system at <span class="math inline">\(T_0=0\)</span></span>, make your own state and customer-time tables, and complete four events.</p>
+<p>For each table, start <span class="alert">empty at <span class="math inline">\(T_0=0\)</span></span>. Process events until the supplied draws <span class="alert">no longer determine which event comes next</span>; do not invent another draw.</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -2353,18 +2347,19 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <td style="text-align: left;">Interarrival <span class="math inline">\(U_k\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(2\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(1\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(7\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Service <span class="math inline">\(V_j\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(4\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(5\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(2\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(6\)</span></td>
 </tr>
 </tbody>
 </table>
-<p>For each table, report the event sequence and customer times. Each table supplies three interarrival draws and three service draws. Which service draws remain unused, and why?</p>
+<p>Report the event sequence and customer times. Which service draws remain unused, and why?</p>
 <aside class="notes">
+<p>Record the third arrival even though its post-event arrival clock cannot be loaded: no fourth interarrival draw was supplied. Then stop, since the next arrival could occur before or after the active service completion. The first two tables have five determined events; the third has three.</p>
 <p>For the first table, the completed state table is</p>
 <table class="caption-top">
 <thead>
@@ -2386,7 +2381,7 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <td style="text-align: right;">0</td>
 <td style="text-align: right;"><span class="math inline">\(\infty\)</span></td>
 <td style="text-align: right;">3</td>
-<td style="text-align: left;">arrival</td>
+<td style="text-align: left;">arrival 1</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1</td>
@@ -2395,7 +2390,7 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">service completion</td>
+<td style="text-align: left;">service completion 1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2</td>
@@ -2404,7 +2399,7 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <td style="text-align: right;">0</td>
 <td style="text-align: right;"><span class="math inline">\(\infty\)</span></td>
 <td style="text-align: right;">4</td>
-<td style="text-align: left;">arrival</td>
+<td style="text-align: left;">arrival 2</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">3</td>
@@ -2413,7 +2408,7 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: left;">service completion</td>
+<td style="text-align: left;">service completion 2</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">4</td>
@@ -2421,12 +2416,21 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;"><span class="math inline">\(\infty\)</span></td>
-<td style="text-align: right;">–</td>
-<td style="text-align: left;">–</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">arrival 3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">unknown</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">unknown</td>
+<td style="text-align: left;">stop</td>
 </tr>
 </tbody>
 </table>
-<p>The event sequence is arrival, service completion, arrival, service completion. The departing customer times are <span class="math inline">\(W_1=1\)</span> and <span class="math inline">\(W_2=2\)</span>. The third service draw, 6, is unused.</p>
+<p>The event sequence is arrival 1, service completion 1, arrival 2, service completion 2, arrival 3. The completed customer times are <span class="math inline">\(W_1=1\)</span> and <span class="math inline">\(W_2=2\)</span>; customer 3 has <span class="math inline">\(W_3=0\)</span> so far. All three service draws have been used.</p>
 <p>For the second table, the completed state table is</p>
 <table class="caption-top">
 <thead>
@@ -2448,7 +2452,7 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <td style="text-align: right;">0</td>
 <td style="text-align: right;"><span class="math inline">\(\infty\)</span></td>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">arrival</td>
+<td style="text-align: left;">arrival 1</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1</td>
@@ -2457,7 +2461,7 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">5</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: left;">arrival</td>
+<td style="text-align: left;">arrival 2</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2</td>
@@ -2466,7 +2470,7 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: left;">service completion</td>
+<td style="text-align: left;">service completion 1</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">3</td>
@@ -2475,7 +2479,7 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: left;">service completion</td>
+<td style="text-align: left;">service completion 2</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">4</td>
@@ -2483,12 +2487,21 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;"><span class="math inline">\(\infty\)</span></td>
-<td style="text-align: right;">–</td>
-<td style="text-align: left;">–</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">arrival 3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">unknown</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">unknown</td>
+<td style="text-align: left;">stop</td>
 </tr>
 </tbody>
 </table>
-<p>The event sequence is arrival, arrival, service completion, service completion. The departing customer times are <span class="math inline">\(W_1=5\)</span> and <span class="math inline">\(W_2=5\)</span>. The third service draw, 4, is unused.</p>
+<p>The event sequence is arrival 1, arrival 2, service completion 1, service completion 2, arrival 3. The completed customer times are <span class="math inline">\(W_1=5\)</span> and <span class="math inline">\(W_2=5\)</span>; customer 3 has <span class="math inline">\(W_3=0\)</span> so far. All three service draws have been used.</p>
 <p>For the third table, the completed state table is</p>
 <table class="caption-top">
 <thead>
@@ -2510,47 +2523,38 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <td style="text-align: right;">0</td>
 <td style="text-align: right;"><span class="math inline">\(\infty\)</span></td>
 <td style="text-align: right;">2</td>
-<td style="text-align: left;">arrival</td>
+<td style="text-align: left;">arrival 1</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">arrival</td>
+<td style="text-align: left;">arrival 2</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">7</td>
+<td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">service completion</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">arrival 3</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">6</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">service completion</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;"><span class="math inline">\(\infty\)</span></td>
-<td style="text-align: right;">–</td>
-<td style="text-align: left;">–</td>
+<td style="text-align: right;">unknown</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">unknown</td>
+<td style="text-align: left;">stop</td>
 </tr>
 </tbody>
 </table>
-<p>The event sequence is arrival, arrival, service completion, service completion. The departing customer times are <span class="math inline">\(W_1=4\)</span> and <span class="math inline">\(W_2=5\)</span>. The third service draw, 6, is unused.</p>
+<p>The event sequence is arrival 1, arrival 2, arrival 3. No customer has departed; the accumulated times are <span class="math inline">\(W_1=2\)</span>, <span class="math inline">\(W_2=1\)</span>, and <span class="math inline">\(W_3=0\)</span>. Service draws <span class="math inline">\(V_2=2\)</span> and <span class="math inline">\(V_3=6\)</span> remain unused because only customer 1 has begun service.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
