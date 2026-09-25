@@ -225,8 +225,12 @@ appropriate phase rather than appended indiscriminately.
       - [x] Set the November 23–24 presentation windows, four 20-minute
         breaks, and 30 bookable 20-minute slots; prepare an Excel
         sign-up workbook and a roster-based quota checker.
-      - [ ] Approve student editing access, publish the live workbook link,
-        and finalize location, sign-up deadlines, and submission procedure.
+      - [x] Grant active students editing access to the schedule and view
+        access to the approval sheet; finalize the room, sign-up deadlines,
+        and immediate assessment hand-in procedure; publish the combined
+        Canvas announcement.
+      - [ ] Deploy the updated project page and verify both restricted
+        workbook links on the live site.
     - [ ] Inspect the visible page layout and dropdown behavior in a browser.
   - [ ] Policies (`classlib/classlib/quarto/pages/policies.qmd`)
     - [x] Add a detailed instructor statement describing how ChatGPT and Codex

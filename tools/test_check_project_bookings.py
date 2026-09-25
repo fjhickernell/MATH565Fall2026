@@ -5,12 +5,12 @@ from tempfile import TemporaryDirectory
 from check_project_bookings import audit, parse_start, read_csv
 
 
-def row(slot, presenter, team_part="", observer1="", observer2=""):
+def row(slot, presenter, title=None, observer1="", observer2=""):
     return {
         "Slot #": str(slot),
         "Date & Time": f"2026-11-23 {9 + (slot - 1) // 3:02d}:{((slot - 1) % 3) * 20:02d}",
         "Presenter(s)": presenter,
-        "Team part": team_part,
+        "Project title": title if title is not None else f"Project {presenter}",
         "Observer 1": observer1,
         "Observer 2": observer2,
     }
@@ -43,16 +43,16 @@ class BookingAuditTests(unittest.TestCase):
 
     def test_team_requires_adjacent_rows_and_same_observers(self):
         rows = [
-            row(1, "Ada", "1 of 2", "Cy", "Di"),
-            row(3, "Bo", "2 of 2", "Cy"),
+            row(1, "Ada", "Shared project", "Cy", "Di"),
+            row(3, "Bo", "Shared project", "Cy"),
         ]
         issues, _ = audit(self.roster, rows)
         self.assertTrue(any("adjacent" in issue for issue in issues))
 
     def test_team_observers_use_distinct_spaces(self):
         rows = [
-            row(1, "Ada", "1 of 2", "Cy"),
-            row(2, "Bo", "2 of 2", "Di"),
+            row(1, "Ada", "Shared project", "Cy"),
+            row(2, "Bo", "Shared project", "Di"),
         ]
         issues, _ = audit(self.roster, rows)
         self.assertFalse(any("both team slots" in issue or "observer listed" in issue for issue in issues))
@@ -65,9 +65,9 @@ class BookingAuditTests(unittest.TestCase):
             path = Path(directory) / "schedule.csv"
             path.write_text(
                 "MATH 565 project presentation sign-up,,,,,\n"
-                "All times America/Chicago,,,,,\n"
-                "Slot #,Date & Time,Presenter(s),Team part,Observer 1,Observer 2\n"
-                "1,11/23/2026 9:00 AM,Ada,,Bo,Cy\n",
+                "20-minute blocks,,,,,\n"
+                "Slot #,Date & Time,Presenter(s),Project title,Observer 1,Observer 2\n"
+                "1,11/23/2026 9:00 AM,Ada,Project Ada,Bo,Cy\n",
                 encoding="utf-8-sig",
             )
             rows = read_csv(path, "Slot #")
@@ -77,6 +77,7 @@ class BookingAuditTests(unittest.TestCase):
     def test_break_rows_are_not_bookable(self):
         break_row = row(2, "No presentations")
         break_row["Slot #"] = "BREAK"
+        break_row["Project title"] = ""
         rows = [row(1, "Ada"), break_row]
         issues, _ = audit(self.roster, rows)
         self.assertFalse(any("integer" in issue for issue in issues))

@@ -2,11 +2,13 @@
 
 ## Immediate actions
 
-1. Review project-topic submissions after the September 18 deadline.
-2. Prepare the September 29 lecture: resume Deck 03 at “Event-driven queue
+1. Prepare the September 29 lecture: resume Deck 03 at “Event-driven queue
    simulation” and its notebook, then the closing synthesis and Deck 04
    transition. The single-occurrence Illinois Tech calendar note is verified
    for PH 109.
+2. Maintain the student-facing approval workbook as new topic submissions
+   arrive through the October 2 follow-up deadline; verify the updated
+   project page when the publishing workflow completes.
 3. Add the seminar link, then review Deck 04 followed by Deck 05 with the
    instructor, including their companion-notebook plans.
 
@@ -345,27 +347,27 @@ decks after adding links.
   Fall 2026 MATH 565 OneDrive Projects folder. It has 30 twenty-minute slots
   on November 23–24, with one morning and one afternoon break each day. The
   roster-based checker is `tools/check_project_bookings.py`; see
-  `AUTHOR_WORKFLOW.md` for the repeatable export and audit steps. Student
-  editing access, a live course-page link, location, and final sign-up
-  deadlines remain to be set. A proposed Illinois Tech organization-wide
-  editing link was rejected by automatic approval review; obtain explicit
-  scope approval before creating a student link.
+  `AUTHOR_WORKFLOW.md` for the repeatable export and audit steps. The 21
+  active MATH 565 students have editing access to the live schedule and view
+  access to the separate approval workbook. A combined all-sections Canvas
+  announcement was published September 25. The course-page changes are
+  locally rendered; verify the live page after the publishing workflow completes.
 
-### Project scheduling handoff — September 23, 2026
+### Project scheduling handoff — September 25, 2026
 
 - The workbook is `MATH565_Project_Presentation_Signup_Fall2026.xlsx` in the
   private OneDrive `MATH 565 Fall 2026/Projects/` folder. It synced to OneDrive
   and opened in Excel for the web. It has 15
   bookable 20-minute slots each day (30 total): 9:00 AM–noon, excluding
   10:20–10:40 AM; 2:20–5:00 PM, excluding 3:40–4:00 PM. Dates and times,
-  headers, and the `Team part` dropdown were checked in the saved workbook.
+  headers were checked in the saved workbook.
   The saved workbook now uses the current six-column layout, with 30 bookable
   slots and four explicit, nonbookable break rows. The updated private OneDrive
   copy was uploaded through the browser and checked in Excel for the web on
   September 23. On Mini, the workbook is now visible directly in `Projects/`;
   the temporary `outputs/` folder and generated preview files were removed.
-- Student-facing columns are `Presenter(s)` (one name per row), `Team part`
-  (`1 of 2` then `2 of 2` on adjacent team rows), and two observer spaces.
+- Student-facing columns are `Presenter(s)` (one name per row), `Project title`,
+  and two observer spaces. Teammates use adjacent rows and repeat the same title.
   Team observers use either row once and attend the full 40 minutes; the pair
   counts as one observed project. No A-number or project ID appears in the
   sheet. The project page and `AUTHOR_WORKFLOW.md` describe these rules.
@@ -373,16 +375,17 @@ decks after adding links.
   roster CSV (`Name` column). Six synthetic tests pass. It reports quota
   counts and team/observer errors; do not put real student exports or reports
   in Git. The actual class roster has not yet been audited.
-- The workbook is still private. Automatic approval review rejected
-  organization-wide editing access; it must not be retried without explicit
-  user approval of the sharing scope. After access is approved, create and
-  verify the student link, put it on `pages/project.qmd`, and confirm the room,
-  remote participation policy, and proposed November 11/18 sign-up deadlines.
-- The published project page was checked on September 23: its project-selection
-  form and Project Assessment links open correctly. The source now corrects
-  the team-observer instruction; verify it after deployment. The schedule
-  link still awaits approved student access. Add it only after access has been
-  configured and verified.
+- Both workbooks are shared only with the 21 active students: `Can edit` for
+  scheduling, `Can view` for topic approvals. No broad sharing link exists.
+  The updated course page links both workbooks and lists the confirmed Galvin
+  Tower 14th Floor West Side Conference Room, October 2 topic deadline,
+  November 4 presenter deadline, and November 11 observer deadline. Live-page
+  verification remains.
+- The private Forms response workbook is authoritative for approvals and
+  comments. The student-facing approval workbook is a manual copy of current
+  A-number, status, and comment; see `AUTHOR_WORKFLOW.md` for resubmissions
+  and `OUTDATED` handling. The combined Canvas announcement is published at
+  `https://iit.instructure.com/courses/25777/discussion_topics/106540`.
 - `quarto render pages/project.qmd --to html` succeeded on Mini on September
   25; `git diff --check` and the six Python tests also passed. No completed
   render was obtained on Intel.

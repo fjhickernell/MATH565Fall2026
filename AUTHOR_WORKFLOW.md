@@ -18,6 +18,29 @@ HickernellAcademicLib first, then intentionally update the course repository's
 `classlib` pointer. Keep course-specific content and styling in this
 repository, and do not leave course-only modifications in `classlib`.
 
+## Project topic approvals and resubmissions
+
+Keep the Microsoft Forms response workbook private: it contains student
+identities, contact details, proposal text, and article files. Review its
+`Status` and `Comments` columns together. When the web grid is ambiguous,
+export a CSV and check the actual cell values before reporting a missing
+comment or approval. Students use the same Project Selection form for initial
+and revised proposals; leave multiple responses enabled. A resubmission
+creates another response row. Mark the superseded row `OUTDATED` in the
+private response workbook and evaluate the newest active response for that
+A-number.
+
+Maintain a separate student-facing approval workbook with only A-number,
+current status, and instructor comment. Omit names, emails, proposal text,
+and uploaded-file links. Copy the instructor's comment faithfully, especially
+when a topic needs revision. This workbook is a manually maintained view:
+after every review or resubmission, update the relevant row, remove or mark
+superseded entries, and refresh its as-of date. A student whose A-number is
+absent has no recorded current submission. Share the approval workbook as
+`Can view` with the verified active course roster, and check the permission
+list before linking it from Canvas or the course page. Do not create a broad
+organization-wide editing link.
+
 ## Project presentation sign-up and audit
 
 The Fall 2026 sign-up workbook lives in the private MATH 565 OneDrive course
@@ -25,13 +48,16 @@ folder under `Projects/`.
 It has one row per 20-minute slot on November 23–24, 2026. The 9:00 AM–noon
 morning and 2:20–5:00 PM afternoon sessions include a 10:20–10:40 AM and a
 3:40–4:00 PM break each day, leaving 30 bookable slots. The workbook is the
-authoritative live schedule; the course page explains the rules and links to
-it after student editing access has been approved and verified.
+authoritative live schedule. Share it as `Can edit` with the verified active
+course roster, verify the resulting access list, and link its direct URL from
+Canvas and the course page. Recheck access when the roster changes.
 
 Students enter one name in `Presenter(s)` for each slot. An individual uses
-one row. A two-person team uses adjacent rows, with one teammate's name in
-each, marked `1 of 2` then `2 of 2` in `Team part`. Observer registration
-begins after presenter slots are set. Each student observes two different
+one row and a concise `Project title`. A two-person team uses adjacent rows,
+with one teammate's name in each and the same title on both. Titles should
+distinguish different projects because the checker uses matching titles to
+identify a team. Observer registration begins after presenter slots are set.
+Each student observes two different
 projects and never their own. A team project's observers use either of its
 two rows, entering each observer once, and attend its entire 40 minutes; it
 counts as one observed project. There are two observer columns on each row.
@@ -52,9 +78,10 @@ For a repeatable roster check:
 
 3. Review every reported issue and the private summary. The checker flags
    missing or duplicate presentation/observation bookings, unknown names,
-   self-observation, malformed team pairs, and observers missing one half of
-   a team talk. Re-export and rerun after corrections. Do not place the roster,
-   bookings export, or student summary in Git.
+   missing titles, self-observation, nonadjacent or malformed team pairs,
+   and observers entered on both team rows. Re-export and rerun after
+   corrections. Do not place the roster, bookings export, or student summary
+   in Git.
 
 Use the same row layout and script in later terms after replacing the dates,
 session windows, roster, and course-specific web instructions. Confirm that

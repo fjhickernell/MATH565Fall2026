@@ -25,14 +25,17 @@ Choose one of the following project types.
 
 1. Choose a project type and identify a focused topic.
 2. Submit the topic for approval. Revised topics will use the same process.
-3. Check the approved-topic list after submissions have been reviewed and
-   revise the proposal if requested.
+3. Check the project-topic spreadsheet after submissions have been reviewed.
+   If you have questions about your status or the feedback, speak with the
+   instructor. If you have not submitted a topic or your topic was not
+   approved, submit an initial or revised proposal by **Friday, October 2**.
 
 | Topic-selection item | Fall 2026 information |
 |---|---|
-| Topic submission deadline | **Friday, September 18** |
+| Original topic submission deadline | **Friday, September 18** |
+| Follow-up deadline for missing or unapproved topics | **Friday, October 2** |
 | Topic submission form | [Submit the Fall 2026 Project Selection form](https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=PmWQ2gIeCEK2imIkiRvqYx5C7GZcajFJvSlbTido5G1UQjJTS0VFUE5VRlJLNUpDUDFMM1VER0FDSS4u) |
-| Approved-topic list | **TBA** |
+| Project-topic spreadsheet | [Check your topic approval status and instructor comments](https://iit0-my.sharepoint.com/personal/hickernell_illinoistech_edu/_layouts/15/doc.aspx?sourcedoc=%7B4d541090-aa83-4cef-98b1-5432cb34a1ee%7D&action=edit) (MATH 565 students only) |
 
 For an article review, identify the main idea, illustrate it with examples of
 your own, offer warranted criticism, and suggest future work. For a QMCPy
@@ -60,32 +63,27 @@ Detailed feedback questions and assessment guidance are on the
 
 Project presentations will take place on **Monday, November 23, and Tuesday,
 November 24**, immediately before Thanksgiving. Each day has sessions from
-**9:00 AM–noon** and **2:20–5:00 PM** America/Chicago, with 20-minute breaks
+**9:00 AM–noon** and **2:20–5:00 PM**, with 20-minute breaks
 from **10:20–10:40 AM** and **3:40–4:00 PM**. There are **30 presentation
-slots** in total. The sign-up deadlines below are proposed; the shared
-schedule link, location, and submission procedures will be added when finalized.
+slots** in total. Presentations will be in the **Galvin Tower, 14th Floor,
+West Side Conference Room**.
 
 | Planning item | Fall 2026 information |
 |---|---|
-| Presentation dates | **Monday–Tuesday, November 23–24** |
-| Presentation sessions | **9:00 AM–noon and 2:20–5:00 PM** each day, America/Chicago |
+| Presentation dates and times | **Monday–Tuesday, November 23–24; 9:00 AM–noon and 2:20–5:00 PM** each day |
 | Individual presentation length | **15 minutes**, followed by **5 minutes for questions and answers** |
 | Two-person QMCPy feature presentation length | **30 minutes**, followed by **10 minutes for questions and answers** |
-| Presentation location and format | **TBA** |
-| Proposed presenter sign-up deadline | **Wednesday, November 11** |
-| Presenter scheduling tool | Shared Excel sign-up schedule; link forthcoming |
-| Presentation schedule | **TBA** |
-| Proposed observer sign-up deadline | **Wednesday, November 18** |
-| Observer sign-up process | Use the same schedule after presenters reserve their slots; link forthcoming |
-| Equipment and connection requirements | **TBA** |
-| Proposed assessment submission deadline | **Wednesday, November 25, at 11:59 PM** |
-| Assessment submission procedure | **TBA** |
+| Presentation location | **Galvin Tower, 14th Floor, West Side Conference Room** |
+| Sign-up and live presentation schedule | [Choose a presentation or observation slot](https://iit0-my.sharepoint.com/:x:/r/personal/hickernell_illinoistech_edu/_layouts/15/Doc.aspx?sourcedoc=%7BCFBB4828-C538-427A-A07C-5C8786B8302A%7D&file=MATH565_Project_Presentation_Signup_Fall2026.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1) (MATH 565 students only) |
+| Presenter sign-up deadline | **Wednesday, November 4** |
+| Observer sign-up deadline | **Wednesday, November 11** |
 
 Each student is expected to observe and assess **two** other presentations.
-Reserve one 20-minute row for an individual presentation. A two-person QMCPy
-feature team must reserve **two adjacent rows**. Each teammate enters their
-own name in **Presenter(s)** on one row and selects **1 of 2** or **2 of 2**
-in **Team part**, in that order. After the presenter schedule is set, enter
+Reserve one 20-minute row for an individual presentation and enter a concise
+**project title** so observers can choose topics that interest them. A
+two-person QMCPy feature team must reserve **two adjacent rows**. Each
+teammate enters their own name in **Presenter(s)** on one row and enters the
+same project title on both rows. After the presenter schedule is set, enter
 your name in an available observer column for two **different** projects.
 You may not observe your own project. To observe a two-person team's
 presentation, enter your name in an available observer space on **either**
@@ -93,8 +91,8 @@ team row and attend the full 40 minutes; that counts as **one** observed
 project. Do not enter your name on both team rows. The schedule shows the
 10:20–10:40 AM and 3:40–4:00 PM breaks as unavailable rows on each day.
 Arrive on time for both presentations and observations, be prepared, and give
-substantive feedback. The final observation and submission procedures will be
-posted when the schedule is available.
+substantive feedback. Hand in your [Project Assessment](project-assessment.qmd)
+immediately after each presentation you observe.
 
 Presentations will be conducted like colloquium or conference talks. Arrive
 early enough to set up without delaying the schedule. The instructor will
