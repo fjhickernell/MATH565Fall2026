@@ -21,7 +21,7 @@ repository, and do not leave course-only modifications in `classlib`.
 ## Project presentation sign-up and audit
 
 The Fall 2026 sign-up workbook lives in the private MATH 565 OneDrive course
-folder under `Projects/outputs/01a0d04d-4b3e-7930-a201-711b2387be13/`.
+folder under `Projects/`.
 It has one row per 20-minute slot on November 23–24, 2026. The 9:00 AM–noon
 morning and 2:20–5:00 PM afternoon sessions include a 10:20–10:40 AM and a
 3:40–4:00 PM break each day, leaving 30 bookable slots. The workbook is the
@@ -32,10 +32,9 @@ Students enter one name in `Presenter(s)` for each slot. An individual uses
 one row. A two-person team uses adjacent rows, with one teammate's name in
 each, marked `1 of 2` then `2 of 2` in `Team part`. Observer registration
 begins after presenter slots are set. Each student observes two different
-projects and never their own. A team project's observers enter their names
-on both rows and attend its entire 40 minutes; it counts as one observed
-project. Three observer columns provide capacity when teams reduce the number
-of distinct projects.
+projects and never their own. A team project's observers use either of its
+two rows, entering each observer once, and attend its entire 40 minutes; it
+counts as one observed project. There are two observer columns on each row.
 
 For a repeatable roster check:
 
@@ -43,6 +42,8 @@ For a repeatable roster check:
    private roster CSV outside the public course repository. The roster must
    have a `Name` column with every enrolled student's full name. Use the same
    spelling in the sheet; the checker ignores capitalization and extra spaces.
+   The schedule shows 10:20–10:40 AM and 3:40–4:00 PM `BREAK` rows on each
+   day; these are not bookable and do not count among the 30 presentation slots.
 2. Run:
 
    ```bash

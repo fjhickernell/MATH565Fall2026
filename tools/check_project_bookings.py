@@ -1,8 +1,8 @@
 """Audit a project sign-up CSV against a course roster.
 
 The sign-up sheet has one row per 20-minute slot. Teammates enter one name
-each in adjacent rows marked 1 of 2 and 2 of 2. Repeat each observer on both
-rows of a team talk.
+each in adjacent rows marked 1 of 2 and 2 of 2. Observers use either row of
+a team talk and attend the full presentation.
 """
 
 from __future__ import annotations
@@ -21,7 +21,6 @@ SCHEDULE_COLUMNS = (
     "Team part",
     "Observer 1",
     "Observer 2",
-    "Observer 3",
 )
 
 
@@ -83,6 +82,10 @@ def audit(roster_rows: list[dict[str, str]], rows: list[dict[str, str]]) -> tupl
         if missing:
             issues.append(f"schedule: missing columns {', '.join(missing)}")
             break
+        if row["Slot #"].strip().casefold() == "break":
+            if row["Presenter(s)"].strip().casefold() != "no presentations" or row["Team part"] or any(row[column] for column in ("Observer 1", "Observer 2")):
+                issues.append(f"schedule row {line}: break row contains a booking")
+            continue
         if not row["Slot #"].isdigit():
             issues.append(f"schedule row {line}: Slot # must be an integer")
             continue
@@ -98,7 +101,7 @@ def audit(roster_rows: list[dict[str, str]], rows: list[dict[str, str]]) -> tupl
 
         presenter = normalized(row["Presenter(s)"])
         team_part = row["Team part"]
-        observers = tuple(normalized(row[column]) for column in ("Observer 1", "Observer 2", "Observer 3") if row[column])
+        observers = tuple(normalized(row[column]) for column in ("Observer 1", "Observer 2") if row[column])
         if not presenter:
             if team_part or observers:
                 issues.append(f"slot {slot}: team or observers entered without a presenter")
@@ -124,8 +127,8 @@ def audit(roster_rows: list[dict[str, str]], rows: list[dict[str, str]]) -> tupl
                 project_by_slot[slot + 1] = slot
                 if next_row[1] == presenter:
                     issues.append(f"slots {slot}–{slot + 1}: teammates must have different names")
-                if set(observers) != set(next_row[3]):
-                    issues.append(f"slots {slot}–{slot + 1}: observers must book both team slots")
+                if set(observers) & set(next_row[3]):
+                    issues.append(f"slots {slot}–{slot + 1}: observer listed in both team slots")
         elif team_part == "2 of 2":
             previous = bookings.get(slot - 1)
             if not previous or previous[2] != "1 of 2" or start - previous[0] != timedelta(minutes=20):

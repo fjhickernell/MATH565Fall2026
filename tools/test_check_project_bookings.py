@@ -5,7 +5,7 @@ from tempfile import TemporaryDirectory
 from check_project_bookings import audit, parse_start, read_csv
 
 
-def row(slot, presenter, team_part="", observer1="", observer2="", observer3=""):
+def row(slot, presenter, team_part="", observer1="", observer2=""):
     return {
         "Slot #": str(slot),
         "Date & Time": f"2026-11-23 {9 + (slot - 1) // 3:02d}:{((slot - 1) % 3) * 20:02d}",
@@ -13,7 +13,6 @@ def row(slot, presenter, team_part="", observer1="", observer2="", observer3="")
         "Team part": team_part,
         "Observer 1": observer1,
         "Observer 2": observer2,
-        "Observer 3": observer3,
     }
 
 
@@ -21,12 +20,12 @@ class BookingAuditTests(unittest.TestCase):
     def setUp(self):
         self.roster = [{"Name": name} for name in ("Ada", "Bo", "Cy", "Di")]
 
-    def test_valid_single_and_team_bookings(self):
+    def test_valid_single_bookings(self):
         rows = [
-            row(1, "Ada", observer1="Bo", observer2="Cy", observer3="Di"),
-            row(2, "Bo", observer1="Ada", observer2="Cy", observer3="Di"),
-            row(3, "Cy", "1 of 2", "Ada", "Bo"),
-            row(4, "Di", "2 of 2", "Ada", "Bo"),
+            row(1, "Ada", observer1="Bo", observer2="Cy"),
+            row(2, "Bo", observer1="Ada", observer2="Di"),
+            row(3, "Cy", observer1="Bo", observer2="Di"),
+            row(4, "Di", observer1="Ada", observer2="Cy"),
         ]
         issues, summary = audit(self.roster, rows)
         self.assertEqual([], issues)
@@ -50,13 +49,16 @@ class BookingAuditTests(unittest.TestCase):
         issues, _ = audit(self.roster, rows)
         self.assertTrue(any("adjacent" in issue for issue in issues))
 
-    def test_team_observers_book_both_rows(self):
+    def test_team_observers_use_distinct_spaces(self):
         rows = [
-            row(1, "Ada", "1 of 2", "Cy", "Di"),
-            row(2, "Bo", "2 of 2", "Cy"),
+            row(1, "Ada", "1 of 2", "Cy"),
+            row(2, "Bo", "2 of 2", "Di"),
         ]
         issues, _ = audit(self.roster, rows)
-        self.assertTrue(any("both team slots" in issue for issue in issues))
+        self.assertFalse(any("both team slots" in issue or "observer listed" in issue for issue in issues))
+        rows[1]["Observer 2"] = "Cy"
+        issues, _ = audit(self.roster, rows)
+        self.assertTrue(any("observer listed in both team slots" in issue for issue in issues))
 
     def test_reads_excel_csv_with_title_rows(self):
         with TemporaryDirectory() as directory:
@@ -64,13 +66,23 @@ class BookingAuditTests(unittest.TestCase):
             path.write_text(
                 "MATH 565 project presentation sign-up,,,,,\n"
                 "All times America/Chicago,,,,,\n"
-                "Slot #,Date & Time,Presenter(s),Team part,Observer 1,Observer 2,Observer 3\n"
-                "1,11/23/2026 9:00 AM,Ada,,Bo,Cy,Di\n",
+                "Slot #,Date & Time,Presenter(s),Team part,Observer 1,Observer 2\n"
+                "1,11/23/2026 9:00 AM,Ada,,Bo,Cy\n",
                 encoding="utf-8-sig",
             )
             rows = read_csv(path, "Slot #")
             self.assertEqual("Ada", rows[0]["Presenter(s)"])
             self.assertEqual(9, parse_start("Mon, Nov 23, 2026 9:00 AM").hour)
+
+    def test_break_rows_are_not_bookable(self):
+        break_row = row(2, "No presentations")
+        break_row["Slot #"] = "BREAK"
+        rows = [row(1, "Ada"), break_row]
+        issues, _ = audit(self.roster, rows)
+        self.assertFalse(any("integer" in issue for issue in issues))
+        break_row["Observer 1"] = "Bo"
+        issues, _ = audit(self.roster, rows)
+        self.assertTrue(any("break row contains a booking" in issue for issue in issues))
 
 
 if __name__ == "__main__":
