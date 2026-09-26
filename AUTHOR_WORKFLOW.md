@@ -91,6 +91,19 @@ sheet.
 
 ## Adding or updating an assignment
 
+### Dates before assignment details
+
+When due dates are set before assignment content, add numbered, unlinked
+`Details TBD` entries to the course Schedule. The schedule entry reserves the
+date; it does not create or publish an assignment. Plan to publish the complete
+course website and Canvas assignment one week before each due date, adapting
+the dates each semester. Track that publication date on the Check-In Dashboard
+under this course, and move its reminder to Urgent one calendar day before
+publication while keeping the source task. Announce each assignment to all
+sections when its details and live links are published. Do not post separate
+announcements merely to announce tentative due dates. Replace each placeholder
+with the assignment-detail link during the full workflow below.
+
 Use this workflow whenever the instructor asks to create, set up, or materially
 revise an assignment, including a minimal “here is an assignment” request. A
 minimal request normally needs only the assignment number, assigned content,
@@ -614,3 +627,8 @@ rsync -a --delete slides/_site/ _site/slides/
 
 The GitHub Actions workflow performs these steps and publishes the result on
 every push to `main`. Do not commit `_site/` or other rendered output.
+
+For Schedule changes, follow the shared
+[webpage style guide](classlib/docs/webpage-style.md)
+guidance. Inspect every monthly table, including sparse future rows; check
+column balance, wrapping, clipping, and assessment coverage formatting.
