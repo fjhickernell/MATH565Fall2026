@@ -18,12 +18,9 @@ multiple decks.
 
 ## Deck 02 — Generating Samples
 
-- Refactor the Asian-option sampling code so path construction and payoff
-  interfaces can be reused for importance sampling and control variates in
-  Deck 04, starting from the retained `GeneratingSamples.ipynb` examples.
-  The separate `FinancialOptionPayoffs.ipynb` proposal was closed without
-  creating that notebook; it is not a prerequisite. Decide the reusable
-  code organization while developing `AsianOptionVarianceReduction.ipynb`.
+- If the Asian-option examples expand further, consider extracting a shared
+  path and payoff helper from `GeneratingSamples.ipynb` and
+  `AsianOptionVarianceReduction.ipynb` while keeping each notebook readable.
 - If QMCPy's kernel abstraction has matured, consider using covariance kernels
   in the Gaussian-process material. Keep reusable implementation work in the
   standalone QMCSoftware repository.
@@ -44,11 +41,8 @@ multiple decks.
 
 ## Deck 04 — Improving Efficiency
 
-- Create `AsianOptionVarianceReduction.ipynb` with importance sampling and
-  control variates, reusing or extracting the sampling/payoff code retained in
-  `GeneratingSamples.ipynb`; no separate financial-payoff notebook is required.
-- Improve `nbviz` styling and explanatory overlays when modernizing that
-  example.
+- Consider additional `nbviz` styling and explanatory overlays for the
+  Asian-option companion after instructor content review.
 - Modernize retained stopping-criteria notebook material and keep algorithmic
   efficiency distinct from hardware timing.
 - Consider kernel herding and Bayesian cubature demonstrations if the QMCPy

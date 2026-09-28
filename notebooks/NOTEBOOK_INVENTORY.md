@@ -101,9 +101,9 @@ pattern, not a permanent ownership contract.
 | Deck | Planned notebook calls | Role in this deck |
 |:---|:---|:---|
 | Deck 01, Introduction | `applications/AreWeThereYet.ipynb` | Main introductory Monte Carlo application; preview of randomized Sobol sampling and later efficiency ideas |
-| Deck 02, Generating Samples | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb`; `applications/FinancialOptionPayoffs.ipynb` | Main direct-sampling development; early low discrepancy and financial-option examples intentionally prepare later decks |
+| Deck 02, Generating Samples | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb` | Main direct-sampling development; early low discrepancy and financial-option examples intentionally prepare later decks |
 | Deck 03, Markov Chain Monte Carlo | `sampling/TransportMapsAndAcceptanceRejection.ipynb`; `sampling/MetropolisHastings.ipynb`; `applications/BayesianMCMC.ipynb`; `performance/Discrepancy.ipynb`; `applications/QueueSimulation.ipynb` | Return to acceptance--rejection as motivation; main MCMC, distribution-comparison, Bayesian, and queueing development |
-| Deck 04, Improving Efficiency | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb`; `applications/FinancialOptionPayoffs.ipynb`; `applications/KeisterExample.ipynb`; `sampling/ConditionalMonteCarlo.ipynb`; `performance/AsianOptionVarianceReduction.ipynb`; `performance/Discrepancy.ipynb` | Return to earlier low discrepancy, transport, and option examples; main importance-sampling, variance-reduction, discrepancy, and QMC development |
+| Deck 04, Improving Efficiency | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb`; planned `sampling/LowDiscrepancyConstructions.ipynb`; `applications/KeisterExample.ipynb`; `sampling/ConditionalMonteCarlo.ipynb`; `performance/AsianOptionVarianceReduction.ipynb`; `performance/Discrepancy.ipynb` | Return to earlier low discrepancy, transport, and option examples; main importance-sampling, variance-reduction, discrepancy, and QMC development |
 | Deck 05, Selected Topics | A consolidated gradient/stochastic-gradient notebook and the GPU Monte Carlo notebook, if retained after review; earlier application notebooks when a selected topic extends them | Flexible continuation into selected methods; queueing may recur if it becomes a substantial application, and future MCTS or multilevel notebooks should remain coherent rather than omnibus |
 
 The broad inherited `QMCPy_Introduction.ipynb` has no required deck call. It
@@ -130,6 +130,18 @@ $(\mu_2,\sigma_2)=(1,1)$. Do not add an extended mixture survey. Instructor
 review may trim or clarify other examples. Deck 04 may call the low discrepancy
 and option sections again, but this already-full survey notebook should not
 absorb transport maps, acceptance--rejection, or MCMC.
+
+### `sampling/LowDiscrepancyConstructions.ipynb` — planned Deck 04 companion
+
+Construct small lattice, Kronecker, and digital point sets by hand and code,
+then visualize their projections with `plot_proj`. Compare IID and the low
+discrepancy methods, including useful randomizations, on one common Keister or
+Asian-option example. Include practical stopping criteria for the applicable
+randomized methods and distinguish them from deterministic error assessment.
+Choose the common example during notebook development so this companion does
+not duplicate the existing Keister and Asian-option narratives. Validate clean
+local `qmcpy` execution and figures before linking it from Deck 04 and the
+notebook page.
 
 ### `sampling/TransportMapsAndAcceptanceRejection.ipynb` — Deck 02, with Decks 03–04 returns
 
@@ -289,13 +301,13 @@ deck review; that later use does not require moving or renaming it.
 
 ### `performance/AsianOptionVarianceReduction.ipynb` — Deck 04, continuing Deck 02
 
-Build this from the variance-reduction portions of the inherited
-`AsianOptionExample.ipynb`. Reuse the path and payoff definitions established
-for Deck 02, then compare IID and low discrepancy sampling, importance
-sampling through drift, a European option as a control variate, and the
-combined drift-plus-control method. Keep the performance comparison and its
-diagnostics here rather than expanding `GeneratingSamples.ipynb` or
-`FinancialOptionPayoffs.ipynb`.
+Created September 28, 2026 from the variance-reduction portions of the inherited
+`AsianOptionExample.ipynb`. It compares IID and randomized Sobol sampling,
+importance sampling through drift, a European-call control variate with a
+separate pilot coefficient, and the combined drift-plus-control method. A
+discretely monitored lookback call reuses the simulated paths. Clean local
+`qmcpy` execution and saved-figure review are complete. The established
+recorded-commit Colab setup remains available if a problem is reported.
 
 ### Deck 05 performance notebooks
 
@@ -366,15 +378,12 @@ into either performance notebook.
 
 ### `AsianOptionExample.ipynb`
 
-- **Status:** Not migrated; split rather than one-for-one migration is now
-  recommended.
+- **Status:** Variance-reduction material migrated and validated locally on
+  September 28, 2026; basic Asian and lookback payoff examples were already
+  included in `sampling/GeneratingSamples.ipynb`.
 - **Source:** `MATH565Fall2025/notebooks/AsianOptionExample.ipynb`
-- **Proposed targets:** Use its path and basic payoff material when creating
-  `MATH565Fall2026/notebooks/applications/FinancialOptionPayoffs.ipynb` for
-  Deck 02, and migrate its drift importance sampling and European control
-  variate material into
-  `MATH565Fall2026/notebooks/performance/AsianOptionVarianceReduction.ipynb`
-  for Deck 04.
+- **2026 targets:** `sampling/GeneratingSamples.ipynb` for payoff basics and
+  `performance/AsianOptionVarianceReduction.ipynb` for Deck 04 methods.
 - **Description:** Prices an arithmetic-mean Asian option and compares
   sampling schemes, importance sampling through drift, and a European option
   as a control variate.
@@ -391,7 +400,8 @@ into either performance notebook.
 
 ### `ConditionalMonteCarlo.ipynb`
 
-- **Status:** Not migrated.
+- **Status:** Migrated to `sampling/ConditionalMonteCarlo.ipynb` and validated
+  in a clean local `qmcpy` kernel on September 28, 2026.
 - **Source:** `MATH565Fall2025/notebooks/ConditionalMonteCarlo.ipynb`
 - **Proposed target:**
   `MATH565Fall2026/notebooks/sampling/ConditionalMonteCarlo.ipynb`
@@ -515,7 +525,9 @@ into either performance notebook.
 
 ### `KeisterExample.ipynb`
 
-- **Status:** Not migrated.
+- **Status:** Migrated to `applications/KeisterExample.ipynb` and validated
+  in a clean local `qmcpy` kernel on September 28, 2026. The inherited
+  late-bound-parameter bug is fixed.
 - **Source:** `MATH565Fall2025/notebooks/KeisterExample.ipynb`
 - **Proposed target:**
   `MATH565Fall2026/notebooks/applications/KeisterExample.ipynb`
@@ -810,10 +822,11 @@ not by the accidental boundaries of the inherited files.
 6. Completed September 10, 2026: reviewed Deck 03 and migrated/reviewed `sampling/MetropolisHastings.ipynb`,
    `applications/BayesianMCMC.ipynb`, `performance/Discrepancy.ipynb`, and
    `applications/QueueSimulation.ipynb`.
-7. During Deck 04 review, migrate `applications/KeisterExample.ipynb` and
-   `sampling/ConditionalMonteCarlo.ipynb`, then create
+7. Completed September 28, 2026: migrated `applications/KeisterExample.ipynb`
+   and `sampling/ConditionalMonteCarlo.ipynb` and created
    `performance/AsianOptionVarianceReduction.ipynb` from the retained
-   variance-reduction parts of the inherited Asian notebook.
+   variance-reduction parts of the inherited Asian notebook. All three run
+   cleanly in the local `qmcpy` kernel and have reviewed saved figures.
 8. During Deck 05 review, consolidate the gradient/stochastic-gradient
    variants and decide whether to migrate the separate GPU notebook.
 9. Reconsider the broad `QMCPy_Introduction.ipynb` only after the focused

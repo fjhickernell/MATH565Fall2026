@@ -89,6 +89,12 @@ appropriate phase rather than appended indiscriminately.
     - [ ] Create the target directories and migrate notebooks incrementally
       according to `notebooks/NOTEBOOK_INVENTORY.md`.
       - [x] Create the Sampling, Applications, and Performance directories.
+      - [x] Migrate the Deck 04 Keister and conditional Monte Carlo notebooks,
+        and create the Asian option variance-reduction companion with a
+        discretely monitored lookback call; execute all three in clean local
+        `qmcpy` kernels and review their saved figures (September 28, 2026).
+      - [ ] Build the Deck 04 low discrepancy constructions companion described
+        in `notebooks/NOTEBOOK_INVENTORY.md` and link it after local validation.
       - [x] Migrate `AreWeThereYet.ipynb` to Applications with modern minimal
         `classlib`/`nbviz` initialization and validate clean execution.
       - [x] Complete instructor review of `AreWeThereYet.ipynb` and finalize

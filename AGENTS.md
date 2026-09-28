@@ -85,6 +85,9 @@ cross-session handoff, not as authorization to begin its task without the
 user's request. Before a checkpoint, update it when the immediate next task
 has changed; keep longer-term work in `notes/TODO-LATER.md`.
 
+When a deck is finished in class, reconcile its hours and outline structure on the
+welcome page using the [Course Outline workflow](AUTHOR_WORKFLOW.md#maintaining-the-course-outline).
+
 ### Next-task shorthand
 
 Interpret `Next?` as a request to read and summarize `notes/NEXT.md` from both

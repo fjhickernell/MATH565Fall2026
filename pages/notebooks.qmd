@@ -33,6 +33,8 @@ sampling methods will appear here.
   — compare transport maps and rejection sampling using scalar and banana-shaped targets
 - [Metropolis–Hastings](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/MetropolisHastings.ipynb)
   — explore proposal scales, repeated states, separated-mode trapping, and parallel tempering
+- [Conditional Monte Carlo](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb)
+  — estimate a weighted-sum density by conditioning; compare IID and randomized Sobol points
 
 ## Applications
 
@@ -47,11 +49,15 @@ sampling methods will appear here.
 - [Queue Simulation](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/QueueSimulation.ipynb)
   — simulate single-server queues and drive-through blocking with SimPy; compare
   customer delays, time-average congestion, and stationary benchmarks
+- [Keister Example](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/KeisterExample.ipynb)
+  — choose among transformed integrands with the same integral
 
 Additional notebooks will apply Monte Carlo and quasi-Monte Carlo methods to
-integration, financial options, and other examples.
+other examples.
 
 ## Performance
 
 - [Discrepancy](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/Discrepancy.ipynb)
   — compare empirical distributions using maximum mean discrepancy, kernel scales, and witness functions
+- [Asian Option Variance Reduction](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb)
+  — compare drift, a European-call control variate, randomized Sobol points, and a discretely monitored lookback call

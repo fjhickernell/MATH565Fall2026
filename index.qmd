@@ -98,8 +98,11 @@ By the end of this course, students will be able to:
 
 ## Course Outline
 
+Hours are approximate 50-minute classroom hours; each 75-minute class meeting
+counts as 1.5 hours.
+
 <details>
-<summary><strong>Introduction</strong> — 4 hours</summary>
+<summary><strong>Introduction</strong> — 5 hours</summary>
 
 - What is a Monte Carlo method?
 - Probability review
@@ -110,7 +113,7 @@ By the end of this course, students will be able to:
 
 
 <details>
-<summary><strong>Generating Samples</strong> — 8 hours</summary>
+<summary><strong>Generating Samples</strong> — 5 hours</summary>
 
 - Pseudo-random numbers
 - Random vectors with different distributions

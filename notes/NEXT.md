@@ -7,10 +7,19 @@
    the closing synthesis and Deck 04 transition. The single-occurrence Illinois
    Tech calendar event is verified for PH 109; its earlier note still mentions
    the notebook.
-2. Maintain the student-facing approval workbook as new topic submissions
+2. Develop `notebooks/sampling/LowDiscrepancyConstructions.ipynb` for Deck 04:
+   construct small
+   lattice, Kronecker, and digital point sets, visualize projections with
+   `plot_proj`, and compare IID and the low discrepancy methods on one common
+   example (Keister or an Asian option). Include randomizations and practical
+   stopping criteria, validate clean `qmcpy` execution and figures, then link
+   it from the construction slides and notebook page. Choose the common
+   example while shaping the notebook so it does not duplicate the existing
+   Keister and Asian-option companions.
+3. Maintain the student-facing approval workbook as new topic submissions
    arrive through the October 2 follow-up deadline; verify the updated
    project page when the publishing workflow completes.
-3. Add the seminar link, then review Deck 04 followed by Deck 05 with the
+4. Add the seminar link, then review Deck 04 followed by Deck 05 with the
    instructor, including their companion-notebook plans.
 
 ## Current verified state
@@ -28,6 +37,26 @@ variation-reduction slides. Its opening section now lists only four main slides;
 supporting examples and bridges are marker-free continuations. Navigation
 trees now select the MC tree's topic-specific labels. Instructor review of
 Deck 04 remains in progress.
+LHS remains available as optional material, with two main headings and three
+continuation slides so it can be skipped in favor of low discrepancy sampling.
+The Deck 04 low discrepancy section now concentrates on sequence constructions,
+randomization, and stopping criteria. It calls back to Deck 02 for coverage
+and coordinate order and to Deck 03 for discrepancy as integration error;
+the repeated kernel formula and separate interpretations/why-randomize slides
+were removed, with their needed points retained in the randomization slide
+or its notes. Existing Deck 03 links to the old headings still resolve. The
+section has hand-calculation examples for lattice, Kronecker, and digital
+sequences, followed by new-generator and shift exercises. It links the existing
+Discrepancy notebook only as a sample-comparison callback; no dedicated
+construction/application/stopping notebook exists yet.
+
+The three Deck 04 companions—Keister transformations, conditional Monte Carlo,
+and Asian-option variance reduction with a discretely monitored lookback
+call—are in the 2026 repository and pass clean local `qmcpy` execution.
+Their saved figures were inspected. All three are linked from the matching
+Deck 04 slides and the notebook page at the instructor's request. Content
+review continues as part of the Deck 04 review; use the established Colab
+setup if a problem is reported.
 
 Homework 2 grading is complete. All 19 real Canvas grading rows were checked
 against the private workbook; grades, text comments, and the two annotated

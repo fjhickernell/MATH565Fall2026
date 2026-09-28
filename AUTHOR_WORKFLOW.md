@@ -18,6 +18,22 @@ HickernellAcademicLib first, then intentionally update the course repository's
 `classlib` pointer. Keep course-specific content and styling in this
 repository, and do not leave course-only modifications in `classlib`.
 
+## Maintaining the Course Outline
+
+After finishing a deck in class, update its entry in the welcome page's
+Course Outline (`index.qmd`). Compare the deck with the course schedule and
+lecture-update ledger, estimate the instructional time attributable to it,
+and round to the nearest whole 50-minute classroom hour. A 75-minute MATH 565
+meeting counts as 1.5 classroom hours; divide mixed-deck meetings according
+to the material taught and exclude assessment-only time. Use the schedule to
+estimate hours when exact transitions are unavailable, and revise the estimate
+if later pacing changes it.
+
+Reconcile the outline's headings, order, and topic bullets with the taught
+decks. Split, combine, or rename outline entries when the actual deck sequence
+requires it; do not preserve an outdated outline structure merely to retain
+an earlier hour allocation. Render and inspect the welcome page after editing.
+
 ## Project topic approvals and resubmissions
 
 Keep the Microsoft Forms response workbook private: it contains student
