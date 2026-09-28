@@ -81,21 +81,21 @@
     "href": "pages/notebooks.html#sampling",
     "title": "Jupyter Notebooks",
     "section": "Sampling",
-    "text": "Sampling\nNotebooks on random and low discrepancy sample generation, acceptance-rejection sampling, conditional Monte Carlo, Markov chain Monte Carlo, and related sampling methods will appear here.\n\nGenerating Samples — construct and transform IID and low discrepancy samples, including binomial, zero-inflated exponential, Gaussian-process, Brownian-motion, and financial-option examples\nTransport Maps and Acceptance–Rejection — compare transport maps and rejection sampling using scalar and banana-shaped targets\nMetropolis–Hastings — explore proposal scales, repeated states, separated-mode trapping, and parallel tempering"
+    "text": "Sampling\nNotebooks on random and low discrepancy sample generation, acceptance-rejection sampling, conditional Monte Carlo, Markov chain Monte Carlo, and related sampling methods will appear here.\n\nGenerating Samples — construct and transform IID and low discrepancy samples, including binomial, zero-inflated exponential, Gaussian-process, Brownian-motion, and financial-option examples\nTransport Maps and Acceptance–Rejection — compare transport maps and rejection sampling using scalar and banana-shaped targets\nMetropolis–Hastings — explore proposal scales, repeated states, separated-mode trapping, and parallel tempering\nConditional Monte Carlo — estimate a weighted-sum density by conditioning; compare IID and randomized Sobol points"
   },
   {
     "objectID": "pages/notebooks.html#applications",
     "href": "pages/notebooks.html#applications",
     "title": "Jupyter Notebooks",
     "section": "Applications",
-    "text": "Applications\n\nAre We There Yet? — use a travel-time model to explore Monte Carlo convergence, error assessment, quantiles, conditional Monte Carlo, and randomized Sobol sampling\nBayesian MCMC — compare posterior sampling with exact benchmarks and explore multiple-chain diagnostics and tempering\nQueue Simulation — simulate single-server queues and drive-through blocking with SimPy; compare customer delays, time-average congestion, and stationary benchmarks\n\nAdditional notebooks will apply Monte Carlo and quasi-Monte Carlo methods to integration, financial options, and other examples."
+    "text": "Applications\n\nAre We There Yet? — use a travel-time model to explore Monte Carlo convergence, error assessment, quantiles, conditional Monte Carlo, and randomized Sobol sampling\nBayesian MCMC — compare posterior sampling with exact benchmarks and explore multiple-chain diagnostics and tempering\nQueue Simulation — simulate single-server queues and drive-through blocking with SimPy; compare customer delays, time-average congestion, and stationary benchmarks\nKeister Example — choose among transformed integrands with the same integral\n\nAdditional notebooks will apply Monte Carlo and quasi-Monte Carlo methods to other examples."
   },
   {
     "objectID": "pages/notebooks.html#performance",
     "href": "pages/notebooks.html#performance",
     "title": "Jupyter Notebooks",
     "section": "Performance",
-    "text": "Performance\n\nDiscrepancy — compare empirical distributions using maximum mean discrepancy, kernel scales, and witness functions"
+    "text": "Performance\n\nDiscrepancy — compare empirical distributions using maximum mean discrepancy, kernel scales, and witness functions\nAsian Option Variance Reduction — compare drift, a European-call control variate, randomized Sobol points, and a discretely monitored lookback call"
   },
   {
     "objectID": "index.html",
@@ -123,7 +123,7 @@
     "href": "index.html#course-outline",
     "title": "Welcome to MATH 565",
     "section": "Course Outline",
-    "text": "Course Outline\n\n\nIntroduction — 4 hours\n\n\nWhat is a Monte Carlo method?\nProbability review\nPoint and interval estimators of means, variances, probability distribution functions, and quantile functions\nConditional Monte Carlo\n\n\n\n\nGenerating Samples — 8 hours\n\n\nPseudo-random numbers\nRandom vectors with different distributions\nLow discrepancy sampling\nAcceptance-rejection sampling\n\n\n\n\nMarkov Chain Monte Carlo + Discrepancy — 9 hours\n\n\nMarkov chains\nMetropolis-Hastings\nKernel-based discrepancies and maximum mean discrepancy\nDiscrepancy as a measure of cubature error\nSample quality\nGibbs sampler\nConvergence diagnostics\nError estimation\n\n\n\n\nEnhancing Efficiency — 15 hours\n\n\nControl variates\nImportance sampling\nAntithetic variates\nStratified sampling and Latin hypercube\nQuasi-Monte Carlo sampling\n\n\n\n\nSelected Topics — 6 hours\n\n\n(TBA)"
+    "text": "Course Outline\nHours are approximate 50-minute classroom hours; each 75-minute class meeting counts as 1.5 hours.\n\n\nIntroduction — 5 hours\n\n\nWhat is a Monte Carlo method?\nProbability review\nPoint and interval estimators of means, variances, probability distribution functions, and quantile functions\nConditional Monte Carlo\n\n\n\n\nGenerating Samples — 5 hours\n\n\nPseudo-random numbers\nRandom vectors with different distributions\nLow discrepancy sampling\nAcceptance-rejection sampling\n\n\n\n\nMarkov Chain Monte Carlo + Discrepancy — 9 hours\n\n\nMarkov chains\nMetropolis-Hastings\nKernel-based discrepancies and maximum mean discrepancy\nDiscrepancy as a measure of cubature error\nSample quality\nGibbs sampler\nConvergence diagnostics\nError estimation\n\n\n\n\nEnhancing Efficiency — 15 hours\n\n\nControl variates\nImportance sampling\nAntithetic variates\nStratified sampling and Latin hypercube\nQuasi-Monte Carlo sampling\n\n\n\n\nSelected Topics — 6 hours\n\n\n(TBA)"
   },
   {
     "objectID": "index.html#assessment",

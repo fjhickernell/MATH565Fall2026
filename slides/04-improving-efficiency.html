@@ -708,14 +708,14 @@ This deck
 </div>
 
 <ul>
-<li><a href="#/variance-reduction">Variance reduction</a></li>
+<li><a href="#/variance-and-variation-reduction">Variance and variation reduction</a></li>
 <li><a href="#/transforming-an-integral">Transforming an integral</a></li>
 <li><a href="#/importance-sampling">Importance sampling</a></li>
 <li><a href="#/choosing-a-transformation">Choosing a transformation</a></li>
 </ul>
 </section>
-<section id="variance-reduction" class="slide level2 tree-marker-slide" data-tree-marker="variance-reduction">
-<h2>Variance reduction</h2>
+<section id="variance-and-variation-reduction" class="slide level2 tree-marker-slide" data-tree-marker="variance-reduction">
+<h2>Variance and variation reduction</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.1; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
@@ -723,23 +723,54 @@ This deck
 
 <p>Suppose</p>
 <p><span class="math display">\[
-\mu=\Ex[f(\vX)]=\Ex[g(\vX)],
+\mu=\Ex[\underbrace{f(\vX)}_{\text{original}}]
+   =\Ex[\underbrace{g(\vX)}_{\text{alternative}}],
 \qquad \vX\sim\Unif[0,1]^d
 \]</span></p>
-<p>Both IID sample means are unbiased:</p>
+<p>For samples <span class="math inline">\(\vX_0,\ldots,\vX_{n-1}\)</span>, define two sample means:</p>
 <p><span class="math display">\[\begin{align*}
 \hmu_{f,n}&amp;=\frac1n\sum_{i=0}^{n-1}f(\vX_i),&amp;
 \hmu_{g,n}&amp;=\frac1n\sum_{i=0}^{n-1}g(\vX_i)
 \end{align*}\]</span></p>
-<p>Their mean squared errors are their variances:</p>
+<p>Seek an <span class="alert">alternative</span> <span class="math inline">\(g\)</span> that estimates <span class="math inline">\(\mu\)</span> with better accuracy for the same computational work</p>
+<ul>
+<li><p>Often, a useful alternative is <span class="alert">flatter</span> across the input space</p></li>
+<li><p>May not affect the rate of decay of error, but <span class="alert">decrease the leading constant</span></p></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="variance-reduction">Variance reduction</h3>
+<p>For IID samples, both sample means are unbiased; their MSEs are their variances:</p>
 <p><span class="math display">\[\begin{align*}
 \var(\hmu_{f,n})&amp;=\frac{\var\{f(\vX)\}}n,&amp;
 \var(\hmu_{g,n})&amp;=\frac{\var\{g(\vX)\}}n
 \end{align*}\]</span></p>
-<div class="key-point">
-<p><a href="01-introduction.html#shrinkage-estimators">Deck 01 showed that accepting some bias can reduce MSE</a></p>
-<p>Here both estimators are unbiased, so an equivalent expectation is better when its <span class="alert">integrand has smaller variance</span></p>
-</div>
+<p>IID RMSE is <span class="alert"><span class="math inline">\(\Order(n^{-1/2})\)</span></span></p>
+<p>&nbsp;</p>
+<p><span class="alert">Randomized low discrepancy</span> points</p>
+<ul>
+<li><p>Are individually uniform but dependent: the sample means remain unbiased</p></li>
+<li><p>The IID variance formula does not apply</p></li>
+<li><p>For sufficiently smooth <span class="math inline">\(f\)</span> or <span class="math inline">\(g\)</span>, random scrambling gives</p>
+<ul>
+<li><p><span class="math inline">\(\var(\hmu_{n})\)</span> nearly <span class="alert"><span class="math inline">\(\Order(n^{-3})\)</span></span></p></li>
+<li><p>RMSE of nearly <span class="alert"><span class="math inline">\(\Order(n^{-3/2})\)</span></span></p></li>
+</ul></li>
+</ul>
+<aside class="notes">
+<p>Deck 01 showed that accepting some bias can reduce MSE. Here the estimators are unbiased, so lower estimator variance means lower RMSE. The rate statement is for nested scrambled nets and sufficiently smooth integrands, not every randomized low discrepancy method or integrand. <a href="https://doi.org/10.1214/aos/1069362380">Owen (1997)</a> provides the variance result. Since the estimator is unbiased, its RMSE is the square root of its variance.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
@@ -751,16 +782,15 @@ This deck
 \]</span></p>
 <p>For <span class="math inline">\(g\in\mathcal H_K\)</span> and uniform target <span class="math inline">\(F\)</span>, the <a href="03-markov-chain-monte-carlo.html#worst-case-integration-error">worst-case error bound</a> gives</p>
 <p><span class="math display">\[
-\left|\frac1n\sum_{i=0}^{n-1}g(\vx_i)-\mu\right|
+\left|\mu-\frac1n\sum_{i=0}^{n-1}g(\vx_i)\right|
 \le D(P_n,F;K)\norm{g}_{\mathcal H_K}
 \]</span></p>
 <ul>
-<li>The nodes determine <span class="alert">discrepancy</span> <span class="math inline">\(D(P_n,F;K)\)</span></li>
-<li>The integrand determines its kernel-dependent <span class="alert">variation</span> <span class="math inline">\(\norm{g}_{\mathcal H_K}\)</span></li>
-<li>Randomized low discrepancy sampling also has variance across randomizations</li>
+<li>The nodes determine discrepancy <span class="math inline">\(D(P_n,F;K)\)</span>, which is typically nearly <span class="alert"><span class="math inline">\(\Order(n^{-1})\)</span></span></li>
+<li>The integrand determines its kernel-dependent variation <span class="math inline">\(\norm{g}_{\mathcal H_K}\)</span></li>
 </ul>
 <div class="key-point">
-<p>For fixed low discrepancy nodes, seek an equivalent integrand with smaller <span class="alert">variation</span> to tighten the error bound</p>
+<p>For fixed low discrepancy nodes, seek an equivalent integrand with smaller variation to tighten the error bound</p>
 </div>
 </section>
 <section class="slide level2">
@@ -770,15 +800,18 @@ This deck
 <p><span class="math display">\[
 \mu=\int_{\reals^d}\cos(\norm{\vt})\exp(-\norm{\vt}^2)\,\dif\vt
 \]</span></p>
-<p>Let <span class="math inline">\(\vx=\Phi(a\vt)\)</span> componentwise, where <span class="math inline">\(\Phi\)</span> is the standard normal CDF</p>
-<p>Then <span class="math inline">\(\vt=\Phi^{-1}(\vx)/a\)</span> and, for <span class="math inline">\(0&lt;a\le\sqrt2\)</span>,</p>
+<p>For <span class="math inline">\(j=1,\ldots,d\)</span>, set <span class="math inline">\(x_j=\Phi(a t_j)\)</span>, so <span class="math inline">\(t_j=\Phi^{-1}(x_j)/a\)</span>, where <span class="math inline">\(\Phi\)</span> is the standard normal CDF</p>
+<p>Define <span class="math inline">\(\vz(\vx)=(\Phi^{-1}(x_j))_{j=1}^d\)</span>. For <span class="math inline">\(0&lt;a\le\sqrt2\)</span>:</p>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Verify by a change of variables that</span></p>
+</div>
 <p><span class="math display">\[\begin{align*}
 \mu
 &amp;=\int_{[0,1]^d}\frac{(2\mpi)^{d/2}}{a^d}
-\cos\!\left(\frac{\norm{\Phi^{-1}(\vx)}}a\right)\\
-&amp;\quad\times\exp\!\left[-\frac{2-a^2}{2a^2}\norm{\Phi^{-1}(\vx)}^2\right]\,\dif\vx
+\cos\bigl(\norm{\vz(\vx)}/a\bigr)\,\exp\bigl[-(2-a^2)\norm{\vz(\vx)}^2/(2a^2)\bigr]\,\dif\vx
 \end{align*}\]</span></p>
-<p>The parameter <span class="math inline">\(a\)</span> creates a <span class="alert">family of unbiased estimators</span> with different variances</p>
+<p>Varying <span class="math inline">\(a\)</span> gives a <span class="alert">family</span> of alternative integrands <span class="math inline">\(g_a\)</span> with the same integral <span class="math inline">\(\mu\)</span>; choose <span class="math inline">\(a\)</span> to reduce estimator variance or integrand variation</p>
+<p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/KeisterExample.ipynb">Explore the choices of <span class="math inline">\(a\)</span> in the Keister notebook</a></p>
 </section>
 <section id="transforming-an-integral" class="slide level2 tree-marker-slide" data-tree-marker="analysis-importance">
 <h2>Transforming an integral</h2>
@@ -988,6 +1021,7 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1)
 <li>Importance weights compensate to preserve the target expectation</li>
 <li>A good drift can <span class="alert">reduce estimator variance</span></li>
 </ul>
+<p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb">Asian option variance-reduction notebook</a></p>
 </section>
 <section id="choosing-a-transformation" class="slide level2 tree-marker-slide" data-tree-marker="analysis-importance">
 <h2>Choosing a transformation</h2>
@@ -1166,6 +1200,7 @@ g(y;\vx_{2:d})=\frac{y-\sum_{j=2}^d\gamma_jx_j}{\gamma_1}
 \gamma_1+\sum_{j=2}^d\gamma_jX_j
 \right}\right]
 \]</span></p>
+<p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb">Conditional Monte Carlo notebook</a></p>
 </section></section>
 <section>
 <section id="structured-random-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="variance-reduction">
@@ -1178,11 +1213,9 @@ g(y;\vx_{2:d})=\frac{y-\sum_{j=2}^d\gamma_jx_j}{\gamma_1}
 <ul>
 <li><a href="#/antithetic-sampling">Antithetic sampling</a></li>
 <li><a href="#/constructing-an-antithetic-variate">Constructing an antithetic variate</a></li>
+<li><a href="#/iid-variance-comparison">IID variance comparison</a></li>
 <li><a href="#/latin-hypercube-sampling-in-one-dimension">Latin hypercube sampling in one dimension</a></li>
-<li><a href="#/one-dimensional-lhs-variance">One-dimensional LHS variance</a></li>
-<li><a href="#/latin-hypercube-sampling-in-d-dimensions">Latin hypercube sampling in <span class="math inline">\(d\)</span> dimensions</a></li>
 <li><a href="#/comparing-random-designs">Comparing random designs</a></li>
-<li><a href="#/strengths-and-limitations-of-lhs">Strengths and limitations of LHS</a></li>
 </ul>
 </section>
 <section id="antithetic-sampling" class="slide level2 tree-marker-slide" data-tree-marker="variance-probability">
@@ -1230,6 +1263,80 @@ T(X)=F^{-1}\bigl(1-F(X)\bigr)\sim F
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>For which monotone functions <span class="math inline">\(f\)</span> does <span class="math inline">\(f(X)\)</span> become negatively correlated with <span class="math inline">\(f\bigl(T(X)\bigr)\)</span>?</span></p>
 </div>
 </section>
+<section id="iid-variance-comparison" class="slide level2 tree-marker-slide" data-tree-marker="variance-probability">
+<h2>IID variance comparison</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
+  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
+</div>
+
+<p>Let <span class="math inline">\(\vX\)</span> and <span class="math inline">\(\vZ\)</span> have target density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span> and proposal density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span>, respectively</p>
+<p>Compare <span class="math inline">\(n\)</span> evaluations of <span class="math inline">\(f\)</span></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 28%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Method</th>
+<th style="text-align: left;">Contribution</th>
+<th style="text-align: left;">Estimator variance for <span class="math inline">\(n\)</span> evaluations of <span class="math inline">\(f\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Direct IID</td>
+<td style="text-align: left;"><span class="math inline">\(f(\vX)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\var(f(\vX))/n\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exact transport, <span class="math inline">\(\psi(\vZ) \stackrel{d}{=} \vX\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(f\bigl(\psi(\vZ)\bigr)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\var(f(\vX))/n\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Importance sampling, <span class="math inline">\(w(\vz)=\varrho_{\mathrm{tar}}(\vz)/\varrho_{\mathrm{prop}}(\vz)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(w(\vZ)f(\vZ)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\var\{w(\vZ)f(\vZ)\}/n\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Control variate</td>
+<td style="text-align: left;"><span class="math inline">\(f(\vX)-\beta\{h(\vX)-\eta\}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\var\{f(\vX)-\beta[h(\vX)-\eta]\}/n\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(n/2\)</span> Antithetic pairs <br><span class="math inline">\(A(\vX) \stackrel{d}{=} \vX\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\{f(\vX)+f(A(\vX))\}/2\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\var(f(\vX))(1+\rho)/n\)</span> <br><span class="math inline">\(\rho=\corr\{f(\vX),f(A(\vX))\}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(\eta=\Ex\{h(\vX)\}\)</span>; <span class="math inline">\(\beta\)</span> is fixed or from an independent pilot; antithetic sampling requires even <span class="math inline">\(n\)</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="beyond-the-iid-variance-formulas">Beyond the IID variance formulas</h3>
+<ul>
+<li>Map, weight, and control calculations add work beyond evaluations of <span class="math inline">\(f\)</span></li>
+<li>For deterministic or randomized low discrepancy points, error depends on integrand variation and point structure; the IID formulas do not apply</li>
+</ul>
+<aside class="notes">
+<p>Exact transport preserves the distribution of <span class="math inline">\(f(\vX)\)</span>, so it has the same IID variance as direct target sampling, though it can be better than weighted importance sampling for a particular <span class="math inline">\(f\)</span>. This does not say that every change of variables preserves variance: the Keister example changes the unit-cube integrand, including its Jacobian. The formulas assume finite second moments and independent replicates or independent antithetic pairs.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="latin-hypercube-sampling-in-one-dimension" class="slide level2 tree-marker-slide" data-tree-marker="variance-reduction">
 <h2>Latin hypercube sampling in one dimension</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.1; --tree-aspect-ratio: 4 / 3;">
@@ -1252,14 +1359,9 @@ X_i=\frac{i+U_i}{n},
 \end{align*}\]</span></p>
 <p>The <span class="math inline">\(X_i\)</span> are independent but <span class="alert">not identically distributed</span></p>
 </section>
-<section id="one-dimensional-lhs-variance" class="slide level2 tree-marker-slide" data-tree-marker="variance-error">
-<h2>One-dimensional LHS variance</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
-  <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
-</div>
+<section class="slide level2">
 
+<h3 id="one-dimensional-lhs-variance">One-dimensional LHS variance</h3>
 <p>Because the strata are independent,</p>
 <p><span class="math display">\[
 \var(\hmu_{\mathrm{LHS},n})
@@ -1274,13 +1376,9 @@ X_i=\frac{i+U_i}{n},
 \end{align*}\]</span></p>
 <p>In one dimension, stratification can improve the IID <span class="math inline">\(n^{-1/2}\)</span> RMSE rate to <span class="math inline">\(n^{-3/2}\)</span> for smooth <span class="math inline">\(f\)</span></p>
 </section>
-<section id="latin-hypercube-sampling-in-d-dimensions" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
-<h2>Latin hypercube sampling in <span class="math inline">\(d\)</span> dimensions</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
-</div>
+<section class="slide level2">
 
+<h3 id="latin-hypercube-sampling-in-d-dimensions">Latin hypercube sampling in <span class="math inline">\(d\)</span> dimensions</h3>
 <p>Let <span class="math inline">\(\pi_1,\ldots,\pi_d\)</span> be independent random permutations of <span class="math inline">\(0,\ldots,n-1\)</span>:</p>
 <p><span class="math display">\[
 X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
@@ -1307,7 +1405,7 @@ X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="0fcf14f1" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="1">
+<div id="209f87ba" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1317,13 +1415,9 @@ X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
 </div>
 </div>
 </section>
-<section id="strengths-and-limitations-of-lhs" class="slide level2 tree-marker-slide" data-tree-marker="variance-reduction">
-<h2>Strengths and limitations of LHS</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.1; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
-</div>
+<section class="slide level2">
 
+<h3 id="strengths-and-limitations-of-lhs">Strengths and limitations of LHS</h3>
 <h3 id="strengths">Strengths</h3>
 <ul>
 <li>No importance density, control variate, or conditional expectation required</li>
@@ -1347,57 +1441,17 @@ X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
   <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
 </div>
 
+<p><span id="from-lhs-to-quasi-monte-carlo"></span></p>
+<p>Deck 02 introduced <a href="02-generating-samples.html#what-does-low-discrepancy-mean">even coverage</a> and <a href="02-generating-samples.html#why-coordinate-order-matters">coordinate order</a>; Deck 03 linked <a href="03-markov-chain-monte-carlo.html#the-discrepancy-identity">discrepancy to integration error</a></p>
+<p>Now we <span class="alert">construct the point sets</span>, randomize them, and assess error</p>
 <ul>
-<li><a href="#/from-lhs-to-quasi-monte-carlo">From LHS to quasi-Monte Carlo</a></li>
-<li><a href="#/three-interpretations-of-discrepancy">Three interpretations of discrepancy</a></li>
 <li><a href="#/the-van-der-corput-sequence">The van der Corput sequence</a></li>
 <li><a href="#/four-low-discrepancy-families">Four low discrepancy families</a></li>
-<li><a href="#/component-by-component-construction">Component-by-component construction</a></li>
 <li><a href="#/randomized-low-discrepancy-sampling">Randomized low discrepancy sampling</a></li>
-<li><a href="#/why-randomize">Why randomize?</a></li>
+<li><a href="#/component-by-component-construction">Component-by-component construction</a></li>
 <li><a href="#/stopping-criteria">Stopping criteria</a></li>
 </ul>
-</section>
-<section id="from-lhs-to-quasi-monte-carlo" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
-<h2>From LHS to quasi-Monte Carlo</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
-</div>
-
-<p><span class="alert">Low discrepancy sampling</span>, or quasi-Monte Carlo, improves space filling beyond one-dimensional stratification</p>
-<p>For nodes <span class="math inline">\(\vx_0,\ldots,\vx_{n-1}\)</span> and target distribution <span class="math inline">\(F\)</span>,</p>
-<p><span class="math display">\[\begin{align*}
-D^2(\{\vx_i\}_{i=0}^{n-1},F;K)
-&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F(\vx)\,\dif F(\vx')\\
-&amp;\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vx_i)\,\dif F(\vx)\\
-&amp;\quad+\frac1{n^2}\sum_{i,j=0}^{n-1}K(\vx_i,\vx_j)
-\end{align*}\]</span></p>
-<p>We usually take <span class="math inline">\(\mathcal X=[0,1]^d\)</span> and seek nodes with small discrepancy</p>
-<div class="key-point">
-<p>For deterministic low discrepancy sampling, <span class="alert">variation replaces variance</span>: error depends on the integrand’s variation and the design’s discrepancy</p>
-</div>
-</section>
-<section id="three-interpretations-of-discrepancy" class="slide level2 tree-marker-slide" data-tree-marker="discrepancy-error">
-<h2>Three interpretations of discrepancy</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
-  <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
-</div>
-
-<p>For the uniform target on <span class="math inline">\([0,1]^d\)</span>, discrepancy is</p>
-<ul>
-<li><p><a href="03-markov-chain-monte-carlo.html#worst-case-integration-error">worst-case error</a></p>
-<p><span class="math display">\[
-\left\lvert\int f(\vx)\,\dif \vx-\frac1n\sum_{i=0}^{n-1}f(\vx_i)\right\rvert
-\le D\norm{f}_{\mathcal H_K}
-\]</span></p></li>
-<li><p><a href="03-markov-chain-monte-carlo.html#average-case-integration-error">average-case root mean squared error</a> for <span class="math inline">\(f\)</span> drawn from a Gaussian process with covariance kernel <span class="math inline">\(K\)</span></p></li>
-<li><p><a href="03-markov-chain-monte-carlo.html#discrepancy-between-distributions">distance between the target distribution and the empirical distribution</a></p></li>
-</ul>
-<p>The kernel specifies the function class and the distributional features being measured</p>
+<p>The <a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/Discrepancy.ipynb">Discrepancy notebook</a> compares IID and Metropolis samples using a kernel measure</p>
 </section>
 <section id="the-van-der-corput-sequence" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy-sampling">
 <h2>The van der Corput sequence</h2>
@@ -1423,6 +1477,32 @@ i=(\cdots i_2i_1i_0)_b
 <div class="key-point">
 <p>The van der Corput construction turns a fixed-size grid into an <span class="alert">extensible sequence</span></p>
 </div>
+</section>
+<section class="slide level2">
+
+<h3 id="first-points-in-base-two">First points in base two</h3>
+<p>For <span class="math inline">\(i=0,1,2,3\)</span>, reversing the binary digits gives</p>
+<p><span class="math display">\[
+\bigl(\phi_2(0),\phi_2(1),\phi_2(2),\phi_2(3)\bigr)
+=\bigl(0,\frac12,\frac14,\frac34\bigr)
+\]</span></p>
+<p>The first four points form the grid <span class="math inline">\(\{0,1/4,1/2,3/4\}\)</span> in a different order</p>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Compute <span class="math inline">\(\phi_2(4)\)</span> and <span class="math inline">\(\phi_2(5)\)</span> and identify the two new eighths</span></p>
+</div>
+<aside class="notes">
+<p>The new values are <span class="math inline">\(1/8\)</span> and <span class="math inline">\(5/8\)</span>, respectively: reverse the three binary digits in <span class="math inline">\(4=100_2\)</span> and <span class="math inline">\(5=101_2\)</span> across the radix point.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="four-low-discrepancy-families" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy-sampling">
 <h2>Four low discrepancy families</h2>
@@ -1464,7 +1544,260 @@ i=(\cdots i_2i_1i_0)_b
 </tbody>
 </table>
 <p>Here <span class="math inline">\(\oplus\)</span> denotes digitwise addition modulo <span class="math inline">\(b\)</span></p>
+<p>For basic Halton, choosing the coordinate bases fixes the sequence</p>
 <p>Different families balance <span class="alert">extensibility</span>, <span class="alert">projection quality</span>, and <span class="alert">fast construction</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="lattice-sequence-eight-points">Lattice sequence: eight points</h3>
+<p>For the lattice sequence with <span class="math inline">\(b=2\)</span>, generator <span class="math inline">\(\vzeta=(1,3)\)</span>, and <span class="math inline">\(n=8\)</span>,</p>
+<p><span class="math display">\[
+\vx_i=\phi_2(i)\vzeta\bmod1
+\]</span></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\((i)_2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\phi_2(i)\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\zeta_1\phi_2(i)\bmod1=x_{i,1}\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\zeta_2\phi_2(i)\bmod1=x_{i,2}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">000</td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">001</td>
+<td style="text-align: center;"><span class="math inline">\(1/2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1/2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1/2\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">010</td>
+<td style="text-align: center;"><span class="math inline">\(1/4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1/4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3/4\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">011</td>
+<td style="text-align: center;"><span class="math inline">\(3/4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3/4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1/4\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">100</td>
+<td style="text-align: center;"><span class="math inline">\(1/8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1/8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3/8\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">101</td>
+<td style="text-align: center;"><span class="math inline">\(5/8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(5/8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(7/8\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">110</td>
+<td style="text-align: center;"><span class="math inline">\(3/8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3/8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1/8\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">111</td>
+<td style="text-align: center;"><span class="math inline">\(7/8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(7/8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(5/8\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>For example, <span class="math inline">\(i=5\)</span> gives <span class="math inline">\(\phi_2(5)=5/8\)</span> and <span class="math inline">\(3(5/8)=15/8\equiv7/8\pmod1\)</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="kronecker-sequence-four-points">Kronecker sequence: four points</h3>
+<p>For hand arithmetic, take <span class="math inline">\(\vzeta=(0.41,0.73)\)</span> and <span class="math inline">\(\vx_i=i\vzeta\bmod1\)</span></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(i\zeta_1\bmod1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(i\zeta_2\bmod1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\vx_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((0,0)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><span class="math inline">\(0.41\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.73\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((0.41,0.73)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;"><span class="math inline">\(0.82\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1.46\bmod1=0.46\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((0.82,0.46)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;"><span class="math inline">\(1.23\bmod1=0.23\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2.19\bmod1=0.19\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((0.23,0.19)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The decimal generator keeps this finite example easy to calculate by hand</p>
+</section>
+<section class="slide level2">
+
+<h3 id="digital-sequence-four-points">Digital sequence: four points</h3>
+<p>In base two, let <span class="math inline">\(i=i_0+2i_1\)</span> and choose <span class="math inline">\(\vc_0=(1/2,1/2)\)</span>, <span class="math inline">\(\vc_1=(1/4,3/4)\)</span></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\((i)_2\)</span></th>
+<th style="text-align: center;">Generators used</th>
+<th style="text-align: center;"><span class="math inline">\(\vx_i=i_0\vc_0\oplus i_1\vc_1\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">00</td>
+<td style="text-align: center;">none</td>
+<td style="text-align: center;"><span class="math inline">\((0,0)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">01</td>
+<td style="text-align: center;"><span class="math inline">\(\vc_0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((1/2,1/2)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;"><span class="math inline">\(\vc_1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((1/4,3/4)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;"><span class="math inline">\(\vc_0\oplus\vc_1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((3/4,1/4)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>For <span class="math inline">\(i=3\)</span>, add binary digits <strong>without carrying</strong>: <span class="math inline">\((0.10_2,0.10_2)\oplus(0.01_2,0.11_2)=(0.11_2,0.01_2)\)</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="construct-with-new-generators">Construct with new generators</h3>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span><strong>Lattice:</strong> Keep <span class="math inline">\(b=2\)</span> and <span class="math inline">\(n=8\)</span>, but use <span class="math inline">\(\vzeta=(1,5)\)</span>; find <span class="math inline">\(\vx_4\)</span> and <span class="math inline">\(\vx_5\)</span> using the <span class="math inline">\(\phi_2(i)\)</span> values in the table</span></p>
+</div>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span><strong>Kronecker:</strong> Use <span class="math inline">\(\vzeta=(0.73,0.24)\)</span>; find <span class="math inline">\(\vx_2\)</span> and <span class="math inline">\(\vx_3\)</span> to two decimal places</span></p>
+</div>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span><strong>Digital, <span class="math inline">\(b=2\)</span>:</strong> Use <span class="math inline">\(\vc_0=(1/2,1/4)\)</span>, <span class="math inline">\(\vc_1=(1/4,1/2)\)</span>, and <span class="math inline">\(\vc_2=(1/8,3/8)\)</span>; find <span class="math inline">\(\vx_i\)</span> for <span class="math inline">\(i=0,\ldots,7\)</span></span></p>
+</div>
+<aside class="notes">
+<p>Lattice: <span class="math inline">\(\vx_4=(1/8,5/8)\)</span> and <span class="math inline">\(\vx_5=(5/8,1/8)\)</span>. Kronecker: <span class="math inline">\(\vx_2=(0.46,0.48)\)</span> and <span class="math inline">\(\vx_3=(0.19,0.72)\)</span>. These rational decimal generators eventually repeat, unlike the irrational generators chosen for long Kronecker sequences; here they isolate the hand calculation of <span class="math inline">\(i\vzeta\bmod1\)</span>. Digital, in order from <span class="math inline">\(i=0\)</span> to <span class="math inline">\(7\)</span>: <span class="math inline">\((0,0),(1/2,1/4),(1/4,1/2),(3/4,3/4),
+(1/8,3/8),(5/8,1/8),(3/8,7/8),(7/8,5/8)\)</span>. The family table does not privilege a particular discrepancy measure; construction quality depends on the function class and the chosen criterion.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="randomized-low-discrepancy-sampling" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy-sampling">
+<h2>Randomized low discrepancy sampling</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+</div>
+
+<p><span id="why-randomize"></span></p>
+<p>Randomization aims for</p>
+<p><span class="math display">\[
+\vX_{\mathrm{rand},i}\sim\Unif[0,1]^d
+\]</span></p>
+<p>for every <span class="math inline">\(i\)</span>, while preserving low discrepancy jointly</p>
+<ul>
+<li><span class="alert">Random shift</span>: <span class="math inline">\(\vX_{\mathrm{rand},i}=\vx_i+\vDelta\bmod1\)</span>, especially for lattices and Kronecker sequences</li>
+<li><span class="alert">Random digital shift</span>: <span class="math inline">\(\vX_{\mathrm{rand},i}=\vx_i\oplus\vDelta\)</span>, especially for digital sequences</li>
+<li><span class="alert">Linear matrix or nested uniform scrambling</span>, especially for digital sequences</li>
+</ul>
+<p>Independent randomizations support error assessment without reverting to IID point placement; recall the <a href="#/variance-reduction">earlier variance and RMSE comparison</a></p>
+<aside class="notes">
+<p>Each randomized point is marginally uniform, so its sample mean is unbiased. Randomization almost surely avoids exact cube-boundary points, making Gaussian quantile transforms finite. The opening variance slide states the nearly <span class="math inline">\(\Order(n^{-3/2})\)</span> RMSE rate for sufficiently smooth integrands under nested scrambling.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="shift-the-points-you-constructed">Shift the points you constructed</h3>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span><strong>Lattice:</strong> For your <span class="math inline">\(\vzeta=(1,5)\)</span> points, suppose the random shift is <span class="math inline">\(\vDelta=(1/4,1/2)\)</span>; find <span class="math inline">\((\vx_4+\vDelta)\bmod1\)</span> and <span class="math inline">\((\vx_5+\vDelta)\bmod1\)</span></span></p>
+</div>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span><strong>Digital, <span class="math inline">\(b=2\)</span>:</strong> For your points from <span class="math inline">\(\vc_0,\vc_1,\vc_2\)</span>, suppose the digital shift is <span class="math inline">\(\vDelta=(3/8,1/4)\)</span>; find <span class="math inline">\(\vx_0\oplus\vDelta\)</span> and <span class="math inline">\(\vx_7\oplus\vDelta\)</span></span></p>
+</div>
+<aside class="notes">
+<p>Lattice: <span class="math inline">\(\vx_4=(1/8,5/8)\)</span> shifts to <span class="math inline">\((3/8,1/8)\)</span>, and <span class="math inline">\(\vx_5=(5/8,1/8)\)</span> shifts to <span class="math inline">\((7/8,5/8)\)</span>. Digital: <span class="math inline">\(\vx_0=(0,0)\)</span> shifts to <span class="math inline">\((3/8,1/4)\)</span>, and <span class="math inline">\(\vx_7=(7/8,5/8)\)</span> shifts by binary digitwise addition to <span class="math inline">\((1/2,7/8)\)</span>. The displayed shifts are particular realizations used for hand calculation; the random shift is uniform on the unit square in the sampling method.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="component-by-component-construction" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
 <h2>Component-by-component construction</h2>
@@ -1485,45 +1818,6 @@ i=(\cdots i_2i_1i_0)_b
 <div class="key-point">
 <p>A high-dimensional design is built by <span class="alert">optimizing one coordinate at a time</span></p>
 </div>
-</section>
-<section id="randomized-low-discrepancy-sampling" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy-sampling">
-<h2>Randomized low discrepancy sampling</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-</div>
-
-<p>Randomization aims for</p>
-<p><span class="math display">\[
-\vX_{\mathrm{rand},i}\sim\Unif[0,1]^d
-\]</span></p>
-<p>for every <span class="math inline">\(i\)</span>, while preserving low discrepancy jointly</p>
-<ul>
-<li><span class="alert">Random shift</span>: <span class="math inline">\(\vX_{\mathrm{rand},i}=\vx_i+\vDelta\bmod1\)</span>, especially for lattices and Kronecker sequences</li>
-<li><span class="alert">Random digital shift</span>: <span class="math inline">\(\vX_{\mathrm{rand},i}=\vx_i\oplus\vDelta\)</span>, especially for digital sequences</li>
-<li><span class="alert">Linear matrix or nested uniform scrambling</span>, especially for digital sequences</li>
-</ul>
-<p>Independent randomizations provide replications without reverting to IID point placement</p>
-</section>
-<section id="why-randomize" class="slide level2 tree-marker-slide" data-tree-marker="statistics-error">
-<h2>Why randomize?</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
-  <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
-</div>
-
-<ul>
-<li><p>The estimator</p>
-<p><span class="math display">\[
-\hmu_n=\frac1n\sum_{i=0}^{n-1}f(\vX_{\mathrm{rand},i})
-\]</span></p>
-<p>is unbiased for <span class="math inline">\(\Ex[f(\vX)]\)</span>, <span class="math inline">\(\vX\sim\Unif[0,1]^d\)</span></p></li>
-<li><p>Randomized nodes almost surely avoid the boundary, so Gaussian quantile transforms remain finite</p></li>
-<li><p>Independent randomizations allow variance and error estimation</p></li>
-<li><p>For smooth integrands, scrambled digital sequences can attain nearly <span class="math inline">\(\Order(n^{-3/2})\)</span> RMSE</p></li>
-</ul>
-<p>Randomization combines <span class="alert">QMC space filling</span> with <span class="alert">Monte Carlo uncertainty quantification</span></p>
 </section>
 <section id="stopping-criteria" class="slide level2 tree-marker-slide" data-tree-marker="data-driven-error">
 <h2>Stopping criteria</h2>
