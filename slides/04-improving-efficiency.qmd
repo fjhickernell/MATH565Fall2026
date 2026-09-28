@@ -54,18 +54,14 @@ subtitle: |
 - [Big Ideas](#big-ideas)
 :::
 
-# Transformations and Importance Sampling {.tree-marker-slide tree-marker="estimation"}
+# Transformations and Importance Sampling {.tree-marker-slide tree-marker="analysis-importance"}
 
 - [Variance reduction](#variance-reduction)
-- [The Keister example](#the-keister-example)
 - [Transforming an integral](#transforming-an-integral)
-- [Transforming a random variable](#transforming-a-random-variable)
-- [Transport makes importance weights constant](#transport-makes-importance-weights-constant)
 - [Importance sampling](#importance-sampling)
-- [Brownian motion with drift](#brownian-motion-with-drift)
 - [Choosing a transformation](#choosing-a-transformation)
 
-## Variance reduction {.tree-marker-slide tree-marker="estimation"}
+## Variance reduction {.tree-marker-slide tree-marker="variance-reduction"}
 
 Suppose
 
@@ -95,7 +91,38 @@ Here both estimators are unbiased, so an equivalent expectation is better when i
 [integrand has smaller variance]{.alert}
 :::
 
-## The Keister example {.tree-marker-slide tree-marker="estimation"}
+---
+
+### Variation reduction for low discrepancy sampling
+
+Keep the nodes $P_n=\{\vx_0,\ldots,\vx_{n-1}\}$ fixed, but choose an
+equivalent integrand:
+
+$$
+\mu=\int_{[0,1]^d}f(\vx)\,\dif\vx
+   =\int_{[0,1]^d}g(\vx)\,\dif\vx
+$$
+
+For $g\in\mathcal H_K$ and uniform target $F$, the
+[worst-case error bound]({{< meta decks.d03.file >}}#worst-case-integration-error) gives
+
+$$
+\left|\frac1n\sum_{i=0}^{n-1}g(\vx_i)-\mu\right|
+\le D(P_n,F;K)\norm{g}_{\mathcal H_K}
+$$
+
+- The nodes determine [discrepancy]{.alert} $D(P_n,F;K)$
+- The integrand determines its kernel-dependent [variation]{.alert} $\norm{g}_{\mathcal H_K}$
+- Randomized low discrepancy sampling also has variance across randomizations
+
+::: {.key-point}
+For fixed low discrepancy nodes, seek an equivalent integrand with smaller
+[variation]{.alert} to tighten the error bound
+:::
+
+---
+
+### The Keister example
 
 Consider
 
@@ -116,7 +143,7 @@ Then $\vt=\Phi^{-1}(\vx)/a$ and, for $0<a\le\sqrt2$,
 
 The parameter $a$ creates a [family of unbiased estimators]{.alert} with different variances
 
-## Transforming an integral {.tree-marker-slide tree-marker="estimation"}
+## Transforming an integral {.tree-marker-slide tree-marker="analysis-importance"}
 
 To approximate $\mu=\int_{\mathcal T}g(\vt)\,\dif \vt$, choose an invertible map
 
@@ -139,7 +166,9 @@ If $\vX$ has density $\varrho_{\vX}$, then
 
 For $\vX\sim\Unif[0,1]^d$, the density in the denominator is one
 
-## Transforming a random variable {.tree-marker-slide tree-marker="random-generation"}
+---
+
+### Transforming a random variable
 
 Let $\vZ$ have proposal density $\varrho_{\mathrm{prop}}$ and define
 $\vX=T(\vZ)$ for an invertible map $T:\mathcal Z\to\mathcal X$
@@ -164,7 +193,9 @@ $$
 
 [A change of variables in an integral]{.alert} and [a transformation of a random variable]{.alert} are the same mechanism viewed from opposite directions
 
-## Transport makes importance weights constant {.tree-marker-slide tree-marker="estimation"}
+---
+
+### Transport makes importance weights constant
 
 For any invertible map $T$,
 
@@ -191,7 +222,7 @@ Transport absorbs the density correction into the map
 Importance sampling carries the correction as a weight
 :::
 
-## Importance sampling {.tree-marker-slide tree-marker="estimation"}
+## Importance sampling {.tree-marker-slide tree-marker="importance-sampling"}
 
 Choose a proposal density $\varrho_{\mathrm{prop}}$ that is positive wherever
 $f\varrho_{\mathrm{tar}}$ is nonzero:
@@ -264,7 +295,9 @@ Target samples $\longrightarrow$ ordinary averages for every $f$
 Weighted proposal $\longrightarrow$ better or worse for a particular $f$
 :::
 
-## Brownian motion with drift {.tree-marker-slide tree-marker="quant-finance"}
+---
+
+### Brownian motion with drift
 
 Positive option payoffs may be rare under a discretized Brownian path
 
@@ -289,7 +322,7 @@ $$
 - Importance weights compensate to preserve the target expectation
 - A good drift can [reduce estimator variance]{.alert}
 
-## Choosing a transformation {.tree-marker-slide tree-marker="estimation"}
+## Choosing a transformation {.tree-marker-slide tree-marker="analysis-importance"}
 
 - Variable transformation and importance sampling are intertwined
 - The sampling density changes the variance of the sample mean
@@ -302,7 +335,7 @@ $$
 Place more samples where the [magnitude of the integrand times the target density]{.alert} is large, without creating extreme weights
 :::
 
-# Control Variates and Conditioning {.tree-marker-slide tree-marker="prob-est"}
+# Control Variates and Conditioning {.tree-marker-slide tree-marker="variance-reduction"}
 
 - [Control variates](#control-variates)
 - [Choosing coefficients by least squares](#choosing-coefficients-by-least-squares)
@@ -311,7 +344,7 @@ Place more samples where the [magnitude of the integrand times the target densit
 - [Conditional density estimation](#conditional-density-estimation)
 - [Density of a sum of uniforms](#density-of-a-sum-of-uniforms)
 
-## Control variates {.tree-marker-slide tree-marker="estimation"}
+## Control variates {.tree-marker-slide tree-marker="variance-reduction"}
 
 Let $\eta_1,\ldots,\eta_m$ have known zero means
 
@@ -339,7 +372,7 @@ $$
 
 as small as possible
 
-## Choosing coefficients by least squares {.tree-marker-slide tree-marker="estimation"}
+## Choosing coefficients by least squares {.tree-marker-slide tree-marker="variance-linear-algebra"}
 
 Center the response and control values:
 
@@ -362,7 +395,7 @@ $$
 
 The residual is orthogonal to the column space of $\mH$, so least squares removes the component of $f$ explained by the controls
 
-## Practical control-variate choices {.tree-marker-slide tree-marker="estimation"}
+## Practical control-variate choices {.tree-marker-slide tree-marker="variance-reduction"}
 
 - Good controls are inexpensive, have known means, and are strongly related to $f$
 - More controls can reduce the sample size needed for a target accuracy
@@ -374,7 +407,7 @@ The residual is orthogonal to the column space of $\mH$, so least squares remove
 A control variate turns [known expectations]{.alert} into information about an unknown expectation
 :::
 
-## Conditional Monte Carlo {.tree-marker-slide tree-marker="prob-est"}
+## Conditional Monte Carlo {.tree-marker-slide tree-marker="variance-probability"}
 
 Recall the [laws of total expectation and variance]({{< meta decks.d01.file >}}#laws-of-total-expectation-and-variance)
 
@@ -399,7 +432,7 @@ is analytic, estimate $\mu$ by sampling $g(\vX_{2:d})$ instead of $Y$
 
 [Analytically averaging over part of the randomness reduces variance]{.alert}
 
-## Conditional density estimation {.tree-marker-slide tree-marker="prob-est"}
+## Conditional density estimation {.tree-marker-slide tree-marker="density-estimation"}
 
 Let $Y=f(\vX)$ with $\vX\sim\Unif[0,1]^d$
 
@@ -421,7 +454,7 @@ F_{Y\mid \vX_{2:d}}(y\mid \vx_{2:d})
 
 Thus a density value becomes an [expectation of a conditional density]{.alert}
 
-## Density of a sum of uniforms {.tree-marker-slide tree-marker="practice"}
+## Density of a sum of uniforms {.tree-marker-slide tree-marker="density-estimation"}
 
 Let
 
@@ -449,7 +482,7 @@ $$
 \right}\right]
 $$
 
-# Structured Random Sampling {.tree-marker-slide tree-marker="sampling"}
+# Structured Random Sampling {.tree-marker-slide tree-marker="variance-reduction"}
 
 - [Antithetic sampling](#antithetic-sampling)
 - [Constructing an antithetic variate](#constructing-an-antithetic-variate)
@@ -459,7 +492,7 @@ $$
 - [Comparing random designs](#comparing-random-designs)
 - [Strengths and limitations of LHS](#strengths-and-limitations-of-lhs)
 
-## Antithetic sampling {.tree-marker-slide tree-marker="sampling"}
+## Antithetic sampling {.tree-marker-slide tree-marker="variance-probability"}
 
 If $T(\vX)$ has the same distribution as $\vX$, pair $f(\vX_i)$ with
 $f\bigl(T(\vX_i)\bigr)$:
@@ -506,7 +539,7 @@ For a symmetric distribution, this often reduces to reflection about the center
 with $f\bigl(T(X)\bigr)$?</span>
 :::
 
-## Latin hypercube sampling in one dimension {.tree-marker-slide tree-marker="sampling"}
+## Latin hypercube sampling in one dimension {.tree-marker-slide tree-marker="variance-reduction"}
 
 Place one independent uniform point in each of $n$ equal strata:
 
@@ -527,7 +560,7 @@ Then $X_i\sim\Unif[i/n,(i+1)/n]$ and
 
 The $X_i$ are independent but [not identically distributed]{.alert}
 
-## One-dimensional LHS variance {.tree-marker-slide tree-marker="estimation"}
+## One-dimensional LHS variance {.tree-marker-slide tree-marker="variance-error"}
 
 Because the strata are independent,
 
@@ -547,7 +580,7 @@ For differentiable $f$, the mean value and Taylor theorems imply
 
 In one dimension, stratification can improve the IID $n^{-1/2}$ RMSE rate to $n^{-3/2}$ for smooth $f$
 
-## Latin hypercube sampling in $d$ dimensions {.tree-marker-slide tree-marker="sampling"}
+## Latin hypercube sampling in $d$ dimensions {.tree-marker-slide tree-marker="random-generation"}
 
 Let $\pi_1,\ldots,\pi_d$ be independent random permutations of $0,\ldots,n-1$:
 
@@ -570,7 +603,7 @@ For $R$ independent Latin hypercubes,
 \left(\hmu_{\mathrm{LHS},n}^{(r)}-\hmu_{\mathrm{LHS},n,R}\right)^2
 \end{align*}
 
-## Comparing random designs {.tree-marker-slide tree-marker="sampling"}
+## Comparing random designs {.tree-marker-slide tree-marker="variance-low-discrepancy"}
 
 Each design has $n=64$ points in $[0,1]^2$
 
@@ -609,7 +642,7 @@ for ax, (title, points) in zip(axes, designs.items()):
 plt.show()
 ```
 
-## Strengths and limitations of LHS {.tree-marker-slide tree-marker="sampling"}
+## Strengths and limitations of LHS {.tree-marker-slide tree-marker="variance-reduction"}
 
 ### Strengths
 
@@ -655,7 +688,7 @@ For deterministic low discrepancy sampling, [variation replaces variance]{.alert
 error depends on the integrand's variation and the design's discrepancy
 :::
 
-## Three interpretations of discrepancy {.tree-marker-slide tree-marker="low-discrepancy"}
+## Three interpretations of discrepancy {.tree-marker-slide tree-marker="discrepancy-error"}
 
 For the uniform target on $[0,1]^d$, discrepancy is
 
@@ -671,7 +704,7 @@ For the uniform target on $[0,1]^d$, discrepancy is
 
 The kernel specifies the function class and the distributional features being measured
 
-## The van der Corput sequence {.tree-marker-slide tree-marker="low-discrepancy"}
+## The van der Corput sequence {.tree-marker-slide tree-marker="low-discrepancy-sampling"}
 
 Write a nonnegative integer in base $b$:
 
@@ -694,7 +727,7 @@ $$
 The van der Corput construction turns a fixed-size grid into an [extensible sequence]{.alert}
 :::
 
-## Four low discrepancy families {.tree-marker-slide tree-marker="low-discrepancy"}
+## Four low discrepancy families {.tree-marker-slide tree-marker="low-discrepancy-sampling"}
 
 For $i=0,1,\ldots$:
 
@@ -724,7 +757,7 @@ The component-by-component strategy:
 A high-dimensional design is built by [optimizing one coordinate at a time]{.alert}
 :::
 
-## Randomized low discrepancy sampling {.tree-marker-slide tree-marker="low-discrepancy"}
+## Randomized low discrepancy sampling {.tree-marker-slide tree-marker="low-discrepancy-sampling"}
 
 Randomization aims for
 
@@ -740,7 +773,7 @@ for every $i$, while preserving low discrepancy jointly
 
 Independent randomizations provide replications without reverting to IID point placement
 
-## Why randomize? {.tree-marker-slide tree-marker="stat-estim"}
+## Why randomize? {.tree-marker-slide tree-marker="statistics-error"}
 
 - The estimator
 
@@ -755,7 +788,7 @@ Independent randomizations provide replications without reverting to IID point p
 
 Randomization combines [QMC space filling]{.alert} with [Monte Carlo uncertainty quantification]{.alert}
 
-## Stopping criteria {.tree-marker-slide tree-marker="estimation"}
+## Stopping criteria {.tree-marker-slide tree-marker="data-driven-error"}
 
 Two practical questions are
 
@@ -777,7 +810,7 @@ We want answers based only on the computed data $f(\vx_0),f(\vx_1),\ldots$
 An efficient method needs both [fast error decay]{.alert} and a [reliable stopping rule]{.alert}
 :::
 
-# Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="prob-stat-est"}
+# Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="variance-low-discrepancy"}
 
 - Equivalent expectations can have dramatically different computational variance
 - Exact transport chooses a map that makes the target-to-proposal correction

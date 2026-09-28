@@ -161,6 +161,19 @@ overall-tree labels. Continuations retain the no-marker convention above.
 Full-width comparison tables omit markers to keep their header rows
 unobscured; their section or parent slide supplies the navigation context.
 
+### Deck 04 marker selections
+
+Use the existing tree's specific method labels rather than Estimation or a
+generic sampling pair throughout Deck 04. Mark variance reduction for controls,
+conditioning, antithetic sampling, and Latin hypercubes; importance sampling
+for density reweighting; density estimation for the conditional-density
+examples; and low discrepancy or discrepancy for the QMC material. Add
+Analysis, Linear Algebra, Probability, Error Assessment, or Data-Driven Error
+Bounds when the slide actually develops that connection. Keep nearby labels
+legible at the small-marker size. The opening section uses a short `##`
+outline for its main ideas; supporting examples and bridges use marker-free
+`###` continuation slides.
+
 ## Shared references
 
 MATH 565 loads `hickernell-texts.yml` and `hickernell-papers.yml` through

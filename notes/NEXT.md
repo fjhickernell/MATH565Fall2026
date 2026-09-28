@@ -3,9 +3,10 @@
 ## Immediate actions
 
 1. Prepare the September 29 lecture: resume Deck 03 at “Event-driven queue
-   simulation” and its notebook, then the closing synthesis and Deck 04
-   transition. The single-occurrence Illinois Tech calendar note is verified
-   for PH 109.
+   simulation,” skip the queue companion notebook to keep moving, then teach
+   the closing synthesis and Deck 04 transition. The single-occurrence Illinois
+   Tech calendar event is verified for PH 109; its earlier note still mentions
+   the notebook.
 2. Maintain the student-facing approval workbook as new topic submissions
    arrive through the October 2 follow-up deadline; verify the updated
    project page when the publishing workflow completes.
@@ -17,8 +18,16 @@
 All instructional recordings from August 18 through September 24 have been
 audited or reconciled. September 24 completed queue-event calculations and
 all three group exercises; code was only briefly shown. The September 29
-continuation note is saved and verified. The updated schedule passed local rendering. September 15 remains assessment-only, and the historical
-recording audit supersedes the accepted September 10 baseline.
+calendar continuation note was saved and verified before the decision to skip
+the queue notebook. The updated schedule passed local rendering. September 15
+remains assessment-only, and the historical recording audit supersedes the
+accepted September 10 baseline.
+
+Deck 04 now opens with separate IID variance-reduction and low discrepancy
+variation-reduction slides. Its opening section now lists only four main slides;
+supporting examples and bridges are marker-free continuations. Navigation
+trees now select the MC tree's topic-specific labels. Instructor review of
+Deck 04 remains in progress.
 
 Homework 2 grading is complete. All 19 real Canvas grading rows were checked
 against the private workbook; grades, text comments, and the two annotated

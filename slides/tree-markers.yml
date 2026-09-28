@@ -131,6 +131,51 @@ markers:
     labels: [mcmc, discrepancy]
     group_headings: [practice]
 
+  # Deck 04 contexts: use the MC tree's specific method and application labels.
+  variance-reduction:
+    font_scale: 3.1
+    labels: [variance-reduction]
+
+  importance-sampling:
+    font_scale: 3.1
+    labels: [importance-sampling]
+
+  density-estimation:
+    font_scale: 3.1
+    labels: [density-estimation]
+
+  analysis-importance:
+    font_scale: 2.9
+    labels: [analysis, importance-sampling]
+
+  variance-linear-algebra:
+    font_scale: 2.9
+    labels: [variance-reduction, linear-algebra]
+
+  variance-probability:
+    font_scale: 2.9
+    labels: [variance-reduction, probability]
+
+  variance-error:
+    font_scale: 2.9
+    labels: [variance-reduction, error-assessment]
+
+  variance-low-discrepancy:
+    font_scale: 2.9
+    labels: [variance-reduction, low-discrepancy]
+
+  discrepancy-error:
+    font_scale: 2.9
+    labels: [discrepancy, error-assessment]
+
+  statistics-error:
+    font_scale: 2.9
+    labels: [statistics, error-assessment]
+
+  data-driven-error:
+    font_scale: 2.9
+    labels: [data-driven, error-assessment]
+
   # Course Map summaries: existing labels for the content of each whole deck.
   deck-02-overview:
     width: 42%
@@ -149,7 +194,7 @@ markers:
     width: 42%
     font_scale: 1.15
     classes: [deck-summary-tree]
-    labels: [probability, statistics, analysis, linear-algebra, random-generation, low-discrepancy, discrepancy, estimation, error-assessment, variance-reduction, importance-sampling, density-estimation, qf]
+    labels: [probability, statistics, analysis, linear-algebra, random-generation, low-discrepancy, discrepancy, estimation, error-assessment, variance-reduction, importance-sampling, density-estimation, data-driven, qf]
 
   deck-05-overview:
     width: 42%
