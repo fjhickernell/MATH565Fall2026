@@ -19,7 +19,13 @@
 3. Maintain the student-facing approval workbook as new topic submissions
    arrive through the October 2 follow-up deadline; verify the updated
    project page when the publishing workflow completes.
-4. Add the seminar link, then review Deck 04 followed by Deck 05 with the
+4. Reconcile notation across Deck 04, **Improving Efficiency**, and Deck 02,
+   **Generating Samples**, during the Deck 04 review. Compare the cases and
+   examples side by side; use consistent symbols for the same roles (such as
+   source and target distributions, transformations, samples, integrands, and
+   estimators), and explain any intentional case-specific differences. Keep
+   companion-notebook explanations aligned with the revised slides.
+5. Add the seminar link, then review Deck 04 followed by Deck 05 with the
    instructor, including their companion-notebook plans.
 
 ## Current verified state
@@ -53,6 +59,9 @@ construction/application/stopping notebook exists yet.
 The three Deck 04 companions—Keister transformations, conditional Monte Carlo,
 and Asian-option variance reduction with a discretely monitored lookback
 call—are in the 2026 repository and pass clean local `qmcpy` execution.
+The Keister companion now also compares randomized lattice samples and tests
+$a=2$ as a boundary-growth counterexample in 20 dimensions; its current
+saved execution has no errors.
 Their saved figures were inspected. All three are linked from the matching
 Deck 04 slides and the notebook page at the instructor's request. Content
 review continues as part of the Deck 04 review; use the established Colab

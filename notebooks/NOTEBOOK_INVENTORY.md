@@ -533,7 +533,8 @@ into either performance notebook.
   `MATH565Fall2026/notebooks/applications/KeisterExample.ipynb`
 - **Description:** Introduces the Keister integration problem, variable
   transformations, and accuracy comparisons. Plots transformed integrands for
-  several values of $a$ and compares IID and Sobol' estimates.
+  several values of $a$ and compares IID, randomized Sobol', and randomized
+  lattice estimates; includes $a=2$ as a boundary-growth counterexample.
 - **Dependencies:** NumPy, SciPy, Matplotlib, QMCPy, IPython,
   `classlib.plots`, `classlib.nbviz`, and repository-root path setup. No
   external data or image input was found.
