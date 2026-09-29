@@ -9,9 +9,9 @@
   displayed lecture materials; distinguish substantive coverage from previews
   and deferred explanations.
 
-The schedule is reconciled through September 24. The August 18–September 17
+The schedule is reconciled through September 29. The August 18–September 17
 rows record the historical audit without retroactive calendar edits; the
-September 29 continuation note is the next instructional annotation.
+October 1 continuation note is the next instructional annotation.
 
 | Instructional meeting | Status | Panopto recording | Next instructional event annotated | Checked |
 |---|---|---|---|---|
@@ -26,6 +26,7 @@ September 29 continuation note is the next instructional annotation.
 | September 17, 2026 | Reconciled through “What the kernel controls”; centered smoothness and KL displayed near wrap-up but not substantively developed | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=a4d147cd-ed76-49f8-a422-b4c80110f997) | September 22, 2026, 10:00–11:15 AM America/Chicago; Illinois Tech Calendar occurrence only; resume Deck 03 at “Centered discrepancy and smoothness,” then KL and Stein | September 17, 2026 |
 | September 22, 2026 | Reconciled through Bayesian inference, the mixture-posterior example, and parallel tempering; queueing only previewed near the end | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=ff0780b1-ca15-4d39-a0b4-b4cd0117a8b1) | September 24, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume Deck 03 at “Queueing systems” | September 22, 2026 |
 | September 24, 2026 | Reconciled: queue state, next-event updates, Markov interpretation, worked example, and all three group exercises; simulation code only briefly shown | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=abf2b4f7-923c-4dfb-8e7f-b4cf0114c7b5) | September 29, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume Deck 03 at “Event-driven queue simulation” and its notebook, then closing synthesis | September 24, 2026 |
+| September 29, 2026 | Reconciled: queue-simulation notebook and MCMC synthesis; Deck 04 through importance sampling’s “Variance depends on the function”; remaining importance sampling explicitly deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f9000848-8245-48ea-b294-b4d4011ca72c) | October 1, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume Deck 04 at “Brownian motion with drift,” then “Choosing a transformation” | September 29, 2026 |
 
 Recording evidence: Deck 02 mixture/acceptance–rejection unit-cube review
 preceded Deck 03 (33:06). Unbiased discrepancy began at 37:06; RKHS and
@@ -61,3 +62,14 @@ Both September 24 Panopto readiness notices were visible in the Illinois Tech
 Fred inbox. The September 29 note was saved for only that occurrence and
 reopened in Illinois Tech Fred → Calendar to verify the note, PH 109, and
 the existing Central Daylight Time meeting hours.
+
+## September 29 recording evidence
+
+The queue-simulation notebook was shown from about 31:27 to 51:15, followed
+by the Deck 04 Keister transformations and importance-sampling examples. The
+two-estimator comparison began at 59:21; “Variance depends on the function”
+was displayed near 1:05. Closing captions explicitly deferred the rest of
+importance sampling to the next class, followed by control variates. The
+October 1 single occurrence was reopened and verified on Illinois Tech Fred
+→ Calendar with the continuation note, PH 109, and its existing Central
+Daylight Time hours.

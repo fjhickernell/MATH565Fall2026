@@ -2,11 +2,11 @@
 
 ## Immediate actions
 
-1. Prepare the September 29 lecture: resume Deck 03 at “Event-driven queue
-   simulation,” skip the queue companion notebook to keep moving, then teach
-   the closing synthesis and Deck 04 transition. The single-occurrence Illinois
-   Tech calendar event is verified for PH 109; its earlier note still mentions
-   the notebook.
+1. Prepare the October 1 lecture: resume Deck 04 at “Brownian motion with
+   drift,” then “Choosing a transformation” and control variates if time
+   permits. September 29 covered the queue companion notebook and Deck 04
+   through “Variance depends on the function.” The October 1 single-occurrence
+   Illinois Tech calendar note is verified for PH 109.
 2. Develop `notebooks/sampling/LowDiscrepancyConstructions.ipynb` for Deck 04:
    construct small
    lattice, Kronecker, and digital point sets, visualize projections with
@@ -30,12 +30,11 @@
 
 ## Current verified state
 
-All instructional recordings from August 18 through September 24 have been
-audited or reconciled. September 24 completed queue-event calculations and
-all three group exercises; code was only briefly shown. The September 29
-calendar continuation note was saved and verified before the decision to skip
-the queue notebook. The updated schedule passed local rendering. September 15
-remains assessment-only, and the historical recording audit supersedes the
+All instructional recordings from August 18 through September 29 have been
+audited or reconciled. September 29 showed the queue-simulation notebook and
+MCMC synthesis, then Deck 04 through the importance-sampling variance
+comparison. The October 1 calendar continuation note was saved and verified.
+September 15 remains assessment-only, and the historical recording audit supersedes the
 accepted September 10 baseline.
 
 Deck 04 now opens with separate IID variance-reduction and low discrepancy

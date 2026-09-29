@@ -34,13 +34,13 @@ holidays, and examination details are finalized.
 | 6 | Tue Sep 22 | Centered discrepancy and smoothness; brief KL and Stein comparisons; likelihood and Bayesian inference; mixture-posterior MCMC and parallel tempering; queueing preview | [Markov Chain Monte Carlo](../slides/03-markov-chain-monte-carlo.html#centered-discrepancy-and-smoothness)<br>[Bayesian MCMC notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/BayesianMCMC.ipynb) |
 | | Thu Sep 24 | Queue state and residual clocks; next-event updates and Markov interpretation; worked queue example and three group exercises; time in system and stopping rule | [Markov Chain Monte Carlo](../slides/03-markov-chain-monte-carlo.html#queueing-systems) |
 | | Fri Sep 25 | **Assignment 3 due** | [{{< meta texts.owen.short >}} Exercises 5.4 and 5.13](../assignments/assignment_3.qmd) |
-| 7 | Tue Sep 29 | Event-driven queue simulation; MCMC synthesis and transition to improving efficiency | [Markov Chain Monte Carlo](../slides/03-markov-chain-monte-carlo.html#event-driven-queue-simulation)<br>[Improving Efficiency](../slides/04-improving-efficiency.html) |
+| 7 | Tue Sep 29 | Queue-simulation recap and notebook; MCMC synthesis; variance and variation reduction, Keister transformations, and importance sampling through “Variance depends on the function” | [Markov Chain Monte Carlo](../slides/03-markov-chain-monte-carlo.html#event-driven-queue-simulation)<br>[Queue simulation notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/QueueSimulation.ipynb)<br>[Improving Efficiency](../slides/04-improving-efficiency.html) |
 
 ### October
 
 | Week | Date | Topic | Slides / Materials |
 |---:|---|---|---|
-| 7 | Thu Oct 1 | | |
+| 7 | Thu Oct 1 | Continue importance sampling with Brownian motion under drift and choosing a transformation; control variates if time permits | [Improving Efficiency](../slides/04-improving-efficiency.html#brownian-motion-with-drift) |
 | 8 | Tue Oct 6 | | |
 | | Wed Oct 7 | **Assignment 4 due** | Details TBD |
 | | Thu Oct 8 | | |
