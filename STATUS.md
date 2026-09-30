@@ -161,6 +161,10 @@ appropriate phase rather than appended indiscriminately.
     - [x] Validate Quarto rendering and generated page structure.
     - [ ] Inspect the visible page layout in a browser.
   - [ ] Assignments (`pages/homework.qmd`)
+    - [x] Prepare Assignment 4 as Owen Exercises 11.5 and 11.6, due October 7
+      at 11:59 PM Chicago; save unpublished Canvas draft 105796 and its metadata.
+    - [ ] Deploy and verify Assignment 4, configure its pair group set, publish
+      after instructor confirmation, and post the all-sections announcement.
     - [x] Create the initial Fall 2026 assignments-page structure.
     - [x] Create the `assignments/` source directory and an Assignment 1
       Quarto template based on the architecture and course-material

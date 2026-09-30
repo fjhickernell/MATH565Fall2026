@@ -18,7 +18,8 @@ include-after-body:
 subtitle: |
   <span class="deck-title">{{< meta deck_title >}}</span><br>
   <span class="deck-meta">{{< meta texts.owen.short >}}, Chapters 6, 8, 11, and 15 (selected topics)<br>
-  Discrepancy: {{< meta papers.hickirsor_2026_qmc_tutorial.short >}}, Section 5</span>
+  Discrepancy: {{< meta papers.hickirsor_2026_qmc_tutorial.short >}}, Section 5</span><br>
+  <span class="deck-meta">[Assignment 4](../assignments/assignment_4.html) due Oct 7</span>
 ---
 
 # Course Map {.deck-course-map tree-marker="deck-03-overview"}

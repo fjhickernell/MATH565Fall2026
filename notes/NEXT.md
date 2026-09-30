@@ -2,6 +2,20 @@
 
 ## Immediate actions
 
+0. Finish Assignment 4 publication: the local Owen Exercises 11.5 and 11.6
+   page, table, schedule, and Deck 03 reminder are prepared for October 7 at
+   11:59 PM Chicago. Canvas draft 105796 is saved unpublished with 20 points,
+   file uploads, unlimited attempts, Everyone, and both course-page links.
+   After checkpoint deployment, verify live links, then audit/create Assignment 4
+   Groups (20 self-sign-up groups, limit two), attach the shared group grade,
+   and obtain the combined Canvas publication confirmation. Full root website
+   and all five decks render successfully; all new assignment links resolve.
+   The whole-site link scan found only a pre-existing image-path issue in the
+   standalone shared bio snippet; the course welcome-page image resolves.
+   Assignment page, monthly schedule tables, and Deck 03 title reminder passed visible Safari review. Canvas
+   groups and announcements were audited: no Assignment 4 set or announcement
+   exists. The announcement draft below is prepared for all sections.
+
 1. Prepare the October 1 lecture: resume Deck 04 at “Brownian motion with
    drift,” then “Choosing a transformation” and control variates if time
    permits. September 29 covered the queue companion notebook and Deck 04
@@ -589,3 +603,17 @@ decks after adding links.
   https://iit.instructure.com/courses/25777/discussion_topics/105901
 - The schedule Date column keeps each weekday, month, and day on one line;
   verified at 639- and 1400-pixel browser widths.
+
+## Assignment 4 announcement draft
+
+Title: Assignment 4 is on the course website
+
+See the [Assignment 4 details](https://fjhickernell.github.io/MATH565Fall2026/assignments/assignment_4.html)
+and [Assignments page](https://fjhickernell.github.io/MATH565Fall2026/pages/homework.html).
+Work individually or with one partner. Join a group in Assignment 4 Groups
+before submitting; one person submits all required files for the group, and
+the submission and grade are shared. Follow the file-naming and identification
+requirements on the Assignments page.
+
+Keep this announcement unpublished until the website and Canvas assignment
+are verified and the instructor confirms publication to all sections.
