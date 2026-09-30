@@ -163,8 +163,12 @@ appropriate phase rather than appended indiscriminately.
   - [ ] Assignments (`pages/homework.qmd`)
     - [x] Prepare Assignment 4 as Owen Exercises 11.5 and 11.6, due October 7
       at 11:59 PM Chicago; save unpublished Canvas draft 105796 and its metadata.
-    - [ ] Deploy and verify Assignment 4, configure its pair group set, publish
-      after instructor confirmation, and post the all-sections announcement.
+    - [x] Deploy and verify the public Assignment 4 and Assignments pages
+      after checkpoint `e9906ca` on September 30, 2026.
+    - [x] Configure Assignment 4's 20 self-sign-up groups (limit two), shared
+      submission/grade, and unlimited file uploads; publish assignment 105796
+      and all-sections announcement 106931 after instructor approval on
+      September 30, 2026; verify saved settings and publication.
     - [x] Create the initial Fall 2026 assignments-page structure.
     - [x] Create the `assignments/` source directory and an Assignment 1
       Quarto template based on the architecture and course-material

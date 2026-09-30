@@ -2,20 +2,6 @@
 
 ## Immediate actions
 
-0. Finish Assignment 4 publication: the local Owen Exercises 11.5 and 11.6
-   page, table, schedule, and Deck 03 reminder are prepared for October 7 at
-   11:59 PM Chicago. Canvas draft 105796 is saved unpublished with 20 points,
-   file uploads, unlimited attempts, Everyone, and both course-page links.
-   After checkpoint deployment, verify live links, then audit/create Assignment 4
-   Groups (20 self-sign-up groups, limit two), attach the shared group grade,
-   and obtain the combined Canvas publication confirmation. Full root website
-   and all five decks render successfully; all new assignment links resolve.
-   The whole-site link scan found only a pre-existing image-path issue in the
-   standalone shared bio snippet; the course welcome-page image resolves.
-   Assignment page, monthly schedule tables, and Deck 03 title reminder passed visible Safari review. Canvas
-   groups and announcements were audited: no Assignment 4 set or announcement
-   exists. The announcement draft below is prepared for all sections.
-
 1. Prepare the October 1 lecture: resume Deck 04 at “Brownian motion with
    drift,” then “Choosing a transformation” and control variates if time
    permits. September 29 covered the queue companion notebook and Deck 04
@@ -604,16 +590,25 @@ decks after adding links.
 - The schedule Date column keeps each weekday, month, and day on one line;
   verified at 639- and 1400-pixel browser widths.
 
-## Assignment 4 announcement draft
+## Assignment 4 Canvas closeout
 
-Title: Assignment 4 is on the course website
+Assignment 4 (Owen Exercises 11.5 and 11.6) and its all-sections announcement
+were published and verified on September 30, 2026 after instructor approval.
+The assignment is 20 points, due October 7 at 11:59 PM America/Chicago,
+assigned to Everyone, with file uploads and unlimited attempts. Saved settings
+confirm shared group submissions and grades using Assignment 4 Groups
+(group set 1757): 20 self-sign-up groups, limit two students per group.
 
-See the [Assignment 4 details](https://fjhickernell.github.io/MATH565Fall2026/assignments/assignment_4.html)
-and [Assignments page](https://fjhickernell.github.io/MATH565Fall2026/pages/homework.html).
-Work individually or with one partner. Join a group in Assignment 4 Groups
-before submitting; one person submits all required files for the group, and
-the submission and grade are shared. Follow the file-naming and identification
-requirements on the Assignments page.
+- Assignment: https://iit.instructure.com/courses/25777/assignments/105796
+- Announcement: https://iit.instructure.com/courses/25777/discussion_topics/106931
+- Group set: https://iit.instructure.com/courses/25777/groups#tab-1757
 
-Keep this announcement unpublished until the website and Canvas assignment
-are verified and the instructor confirms publication to all sections.
+Website checkpoint `e9906ca` is pushed to `origin/main`; deployment succeeded
+and both public course links were verified. The full website and all five
+decks render successfully; all new assignment links resolve. The Assignment 4
+page, schedule tables, and Deck 03 reminder passed visible browser review.
+Only the pre-existing standalone shared bio snippet image-path issue remained
+in the whole-site link scan; the welcome-page image resolves.
+
+The Dashboard and handoff are reconciled. The automatic announcement-closeout
+rule is recorded in `AGENTS.md` and `AUTHOR_WORKFLOW.md`.

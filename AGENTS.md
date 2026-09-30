@@ -193,6 +193,19 @@ unpublished for instructor review. `Publish the assessment announcement`
 authorizes the final Canvas publication after the draft and live links have
 been verified.
 
+### Automatic announcement closeout
+
+After publishing and verifying any course announcement, automatically reconcile
+the course handoff files and the MATH 565 Dashboard entries before reporting
+completion. Do not wait for a separate request or Checkpoint to make these
+updates. Record the verified announcement link and audience, remove completed
+actions under the Dashboard completion rules, and preserve remaining work.
+For an unpublished draft or interrupted workflow, record that state explicitly
+without marking publication complete. Follow the Dashboard's own rules and
+keep private grading and assessment information out of public handoff files.
+This authorizes documentation edits; committing and pushing still follow the
+existing Checkpoint rules.
+
 ### Dashboard reconciliation at Checkpoint
 
 As part of every Checkpoint, read `notes/NEXT.md` from both active teaching

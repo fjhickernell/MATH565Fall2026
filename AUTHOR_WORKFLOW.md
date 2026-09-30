@@ -157,8 +157,10 @@ workflow has two publication gates:
    confirmed, finish those Canvas actions in order without another pause unless
    Canvas exposes a material conflict or unexpected setting.
 
-After Canvas publication and verification, update the tracked handoff and
-status files and request one closeout `Checkpoint` if those completion updates
+After Canvas publication and verification, automatically reconcile the MATH 565
+Dashboard entries and the tracked handoff and status files before reporting
+completion. Do not wait for a separate request to make these documentation
+updates. Request one closeout `Checkpoint` if those completion updates
 are uncommitted. This preserves the finished external state and is not another
 Canvas confirmation.
 
