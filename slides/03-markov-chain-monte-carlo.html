@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-09-30">
+  <meta name="dcterms.date" content="2026-10-01">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -709,7 +709,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">September 30, 2026</p>
+  <p class="date">October 1, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-03-overview">
 <h1>Course Map</h1>
@@ -744,13 +744,10 @@ Course decks
 
 </div><div class="column" style="width:60%;">
 <p><span class="math display">\[\begin{gather*}
-\vU_i\sim\Unif[0,1]^{d+1}
-\;\xrightarrow{\text{propose}}\;
-\vZ_i\sim\varrho_{\mathrm{prop}}(\cdot\mid\vX_{i-1})
-\\[0.2em]
-\xrightarrow{\text{accept or stay}}\;
-\vX_i\sim\varrho_{\mathrm{tar}}
-\qquad\text{at stationarity}
+\vZ_i\mid\vX_i\sim\varrho_{\mathrm{prop}}(\cdot\mid\vX_i)
+\;\xrightarrow{\text{accept or stay}}\;\vX_{i+1}\\
+\vX_i\sim\varrho_{\mathrm{tar}}\ \text{at stationarity},\qquad
+Y_i=f(\vX_i),\quad \mu=\Ex_{\mathrm{tar}}(Y)
 \end{gather*}\]</span></p>
 </div></div>
 <div class="deck-section-links">
@@ -836,13 +833,13 @@ This deck
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
-<p>Assume <span class="math inline">\(Z_0,Z_1,\ldots\ \IIDsim\ \Norm(0,1)\)</span></p>
+<p>Assume <span class="math inline">\(\epsilon_0,\epsilon_1,\ldots\ \IIDsim\ \Norm(0,1)\)</span></p>
 <div class="columns">
 <div class="column" style="width:47%;">
 <h3 id="markov">Markov</h3>
 <p><span class="math display">\[\begin{align*}
-X_0&amp;=0,&amp; X_{i+1}&amp;=X_i+Z_i\\
-X_0&amp;=0,&amp; X_{i+1}&amp;=i+Z_i
+X_0&amp;=0,&amp; X_{i+1}&amp;=X_i+\epsilon_i\\
+X_0&amp;=0,&amp; X_{i+1}&amp;=i+\epsilon_i
 \end{align*}\]</span></p>
 <p>The second chain is <span class="alert">not time homogeneous</span>: its transition law changes with <span class="math inline">\(i\)</span></p>
 </div><div class="column" style="width:6%;">
@@ -851,9 +848,9 @@ X_0&amp;=0,&amp; X_{i+1}&amp;=i+Z_i
 <h3 id="not-markov-as-written">Not Markov as written</h3>
 <p><span class="math display">\[
 X_0=X_1=0,
-\qquad X_{i+1}=X_{i-1}+Z_i
+\qquad X_{i+1}=X_{i-1}+\epsilon_i
 \]</span></p>
-<p>The pair <span class="math inline">\(Y_i=(X_{i-1},X_i)\)</span> <span class="alert">is Markov</span> because its state retains the needed history</p>
+<p>The augmented state <span class="math inline">\(\vH_i=(X_{i-1},X_i)\)</span> <span class="alert">is Markov</span> because its state retains the needed history</p>
 </div></div>
 <p>Only the first is a <span class="alert">martingale</span>: its expected next value, given the history, equals its current value</p>
 </section></section>
@@ -884,24 +881,24 @@ X_0=X_1=0,
 
 <p>For states in <span class="math inline">\(\reals^d\)</span>, suppose</p>
 <ul>
-<li>the target has known, possibly unnormalized density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span></li>
+<li>the target has normalized density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span>, known up to a factor through <span class="math inline">\(\widetilde\varrho_{\mathrm{tar}}\propto\varrho_{\mathrm{tar}}\)</span></li>
 <li><span class="math inline">\(\varrho_{\mathrm{prop}}(\vz\mid \vx)\)</span> proposes a new state <span class="math inline">\(\vz\)</span> from the current state <span class="math inline">\(\vx\)</span></li>
 </ul>
-<p>Given <span class="math inline">\(\vX_0\)</span>, repeat for <span class="math inline">\(i=0,\ldots,n-1\)</span>:</p>
+<p>Given <span class="math inline">\(\vX_0\)</span>, repeat for <span class="math inline">\(i=0,\ldots,n-2\)</span>:</p>
 <ol type="1">
-<li><p>Generate <span class="math inline">\(\vZ\sim\varrho_{\mathrm{prop}}(\cdot\mid \vX_i)\)</span> and <span class="math inline">\(U\sim\Unif[0,1]\)</span></p></li>
+<li><p>Generate <span class="math inline">\(\vZ_i\mid\vX_i\sim\varrho_{\mathrm{prop}}(\cdot\mid \vX_i)\)</span> and <span class="math inline">\(V_i\sim\Unif[0,1]\)</span>, independently of the proposal</p></li>
 <li><p>Compute</p>
 <p><span class="math display">\[
-\alpha(\vX_i,\vZ)=\min\!\left\{1,
-\frac{\varrho_{\mathrm{tar}}(\vZ)\varrho_{\mathrm{prop}}(\vX_i\mid \vZ)}
-{\varrho_{\mathrm{tar}}(\vX_i)\varrho_{\mathrm{prop}}(\vZ\mid \vX_i)}\right\}
+\alpha(\vX_i,\vZ_i)=\min\!\left\{1,
+\frac{\widetilde\varrho_{\mathrm{tar}}(\vZ_i)\varrho_{\mathrm{prop}}(\vX_i\mid \vZ_i)}
+{\widetilde\varrho_{\mathrm{tar}}(\vX_i)\varrho_{\mathrm{prop}}(\vZ_i\mid \vX_i)}\right\}
 =\min\!\left\{1,
-\frac{\text{joint density of first $\vZ$, then $\vX_i$}}
-{\text{joint density of first $\vX_i$, then $\vZ$}}\right\}
+\frac{\text{joint density of first $\vZ_i$, then $\vX_i$}}
+{\text{joint density of first $\vX_i$, then $\vZ_i$}}\right\}
 \]</span></p></li>
-<li><p>Set <span class="math inline">\(\vX_{i+1}=\vZ\)</span> if <span class="math inline">\(U\le\alpha(\vX_i,\vZ)\)</span><br>Otherwise set <span class="math inline">\(\vX_{i+1}=\vX_i\)</span></p></li>
+<li><p>Set <span class="math inline">\(\vX_{i+1}=\vZ_i\)</span> if <span class="math inline">\(V_i\le\alpha(\vX_i,\vZ_i)\)</span><br>Otherwise set <span class="math inline">\(\vX_{i+1}=\vX_i\)</span></p></li>
 </ol>
-<p><span class="alert">Every iteration accepts either the proposal or the current state</span><br>Nothing is discarded</p>
+<p><span class="alert">Every iteration accepts either the proposal or the current state</span><br>Nothing is discarded; use <span class="math inline">\(Y_i=f(\vX_i)\)</span> for output summaries</p>
 </section>
 <section id="why-the-acceptance-ratio-works" class="slide level2 tree-marker-slide" data-tree-marker="mcmc-probability">
 <h2>Why the acceptance ratio works</h2>
@@ -913,19 +910,19 @@ X_0=X_1=0,
 
 <p>The ratio compares the two directions of a proposed transition:</p>
 <p><span class="math display">\[
-\frac{\varrho_{\mathrm{tar}}(\vZ)\varrho_{\mathrm{prop}}(\vX_i\mid \vZ)}
-{\varrho_{\mathrm{tar}}(\vX_i)\varrho_{\mathrm{prop}}(\vZ\mid \vX_i)}
+\frac{\widetilde\varrho_{\mathrm{tar}}(\vZ_i)\varrho_{\mathrm{prop}}(\vX_i\mid \vZ_i)}
+{\widetilde\varrho_{\mathrm{tar}}(\vX_i)\varrho_{\mathrm{prop}}(\vZ_i\mid \vX_i)}
 =
-\frac{\text{target weight at $\vZ$}\times\text{return proposal}}
+\frac{\text{target weight at $\vZ_i$}\times\text{return proposal}}
 {\text{target weight at $\vX_i$}\times\text{forward proposal}}
 \]</span></p>
 <ul>
 <li>Moves toward higher target density are favored</li>
 <li>Asymmetric proposals are corrected by the proposal-density ratio</li>
-<li>The normalizing constant in <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span> cancels</li>
+<li>The unknown factor relating <span class="math inline">\(\widetilde\varrho_{\mathrm{tar}}\)</span> to the target cancels</li>
 </ul>
 <div class="key-point">
-<p>The transition kernel satisfies <span class="alert">detailed balance</span> with the target distribution, making the target invariant under suitable conditions</p>
+<p>Detailed balance preserves the target; convergence from the starting state requires suitable conditions</p>
 </div>
 </section>
 <section id="the-metropolis-algorithm" class="slide level2 tree-marker-slide" data-tree-marker="mcmc">
@@ -943,9 +940,9 @@ X_0=X_1=0,
 <p>then the acceptance probability simplifies to</p>
 <p><span class="math display">\[
 \alpha(\vx,\vz)=\min\!\left\{1,
-\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{tar}}(\vx)}\right\}
+\frac{\widetilde\varrho_{\mathrm{tar}}(\vz)}{\widetilde\varrho_{\mathrm{tar}}(\vx)}\right\}
 \]</span></p>
-<p>For a random-walk proposal <span class="math inline">\(\vZ=\vX_i+\vepsilon_i\)</span> with symmetric <span class="math inline">\(\vepsilon_i\)</span>:</p>
+<p>For a random-walk proposal <span class="math inline">\(\vZ_i=\vX_i+\vepsilon_i\)</span> with symmetric <span class="math inline">\(\vepsilon_i\)</span>:</p>
 <ul>
 <li>accept every move to a state with at least as much target density</li>
 <li>accept some downhill moves, which keeps the chain from becoming trapped immediately</li>
@@ -960,7 +957,7 @@ X_0=X_1=0,
   <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
 </div>
 
-<p>Use the uniform numbers in order and choose a random order of the candidate <span class="math inline">\(x\)</span> values</p>
+<p>Use the uniform numbers in order and choose a random order of the candidate <span class="math inline">\(z\)</span> values</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -977,7 +974,7 @@ X_0=X_1=0,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(U_i\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(V_i\)</span></td>
 <td style="text-align: right;">0.6</td>
 <td style="text-align: right;">0.1</td>
 <td style="text-align: right;">0.3</td>
@@ -1003,7 +1000,7 @@ X_0=X_1=0,
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;"><span class="math inline">\(x\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(z\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(-1.2\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(-0.8\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(-0.5\)</span></th>
@@ -1016,7 +1013,7 @@ X_0=X_1=0,
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(\varrho_{\mathrm{tar}}(x)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\widetilde\varrho_{\mathrm{tar}}(z)\)</span></td>
 <td style="text-align: right;">0.1</td>
 <td style="text-align: right;">0.8</td>
 <td style="text-align: right;">2.0</td>
@@ -1044,7 +1041,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="fe5e02e4" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="4d73d7fe" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1063,7 +1060,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="559f2118" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="6b626dda" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1104,7 +1101,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 <h3 id="parallel-tempering">Parallel tempering: explore hot, estimate cold</h3>
 <p>Run replicas with <span class="alert">inverse temperatures</span> <span class="math inline">\(1=\beta_0&gt;\cdots&gt;\beta_{R-1}&gt;0\)</span></p>
 <p><span class="math display">\[\begin{align*}
-\varrho_{\beta_r}(\vx)&amp;\propto\varrho_{\mathrm{tar}}(\vx)^{\beta_r}
+\varrho_{\beta_r}(\vx)&amp;\propto\widetilde\varrho_{\mathrm{tar}}(\vx)^{\beta_r}
 \end{align*}\]</span></p>
 <ul>
 <li><span class="alert">Cold</span> (<span class="math inline">\(\beta_0=1\)</span>): original target; <span class="alert">hot</span> (<span class="math inline">\(\beta_r&lt;1\)</span>): flatter density, easier valley crossing</li>
@@ -1114,21 +1111,21 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 <p><span class="math display">\[\begin{align*}
 \alpha_{\mathrm{swap}}
 &amp;=\min\left\{1,
-\left[\frac{\varrho_{\mathrm{tar}}(\vx_s)}{\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}\right\}
+\left[\frac{\widetilde\varrho_{\mathrm{tar}}(\vx_s)}{\widetilde\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}\right\}
 \end{align*}\]</span></p>
 <ul>
 <li>Accepted swaps bring hot-chain discoveries into the cold slot</li>
 <li>Use <span class="alert">cold-slot samples only</span> for the original target; inspect mode visits and swap rates</li>
 </ul>
 <aside class="notes">
-<p>Temperature is <span class="math inline">\(T_r=1/\beta_r\)</span>. Raising the whole density to a power below one reduces peak-to-valley density ratios. Each tempered density must have a finite normalizing integral; this holds for the notebook’s Gaussian mixture.</p>
+<p>Temperature is <span class="math inline">\(1/\beta_r\)</span>. Raising the whole density to a power below one reduces peak-to-valley density ratios. Each tempered density must have a finite normalizing integral; this holds for the notebook’s Gaussian mixture.</p>
 <p>The augmented target is the product of the <span class="math inline">\(R\)</span> tempered densities. A symmetric proposal to exchange two states has MH ratio <span class="math display">\[\begin{align*}
-\frac{\varrho_{\mathrm{tar}}(\vx_s)^{\beta_r}
-      \varrho_{\mathrm{tar}}(\vx_r)^{\beta_s}}
-     {\varrho_{\mathrm{tar}}(\vx_r)^{\beta_r}
-      \varrho_{\mathrm{tar}}(\vx_s)^{\beta_s}}
-&amp;=\left[\frac{\varrho_{\mathrm{tar}}(\vx_s)}
-                 {\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}.
+\frac{\widetilde\varrho_{\mathrm{tar}}(\vx_s)^{\beta_r}
+      \widetilde\varrho_{\mathrm{tar}}(\vx_r)^{\beta_s}}
+     {\widetilde\varrho_{\mathrm{tar}}(\vx_r)^{\beta_r}
+      \widetilde\varrho_{\mathrm{tar}}(\vx_s)^{\beta_s}}
+&amp;=\left[\frac{\widetilde\varrho_{\mathrm{tar}}(\vx_s)}
+                 {\widetilde\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}.
 \end{align*}\]</span> All normalizing constants cancel. Local updates and accepted/rejected swaps preserve the product target. Slots retain their temperatures; states move between slots. This is whole-target tempering, including the prior for a posterior target, rather than likelihood-only tempering.</p>
 <p>In the notebook, inverse temperatures are <span class="math inline">\(1,0.5,0.2,0.08,0.025\)</span>; every replica starts in the left mode. Show the flattened densities, then the hot and cold traces. Ask how a state discovered in the right mode can reach the cold slot. The cold slot must visit both modes in the correct proportions, not merely alternate between them. Discard the initial burn-in and keep all retained repeats; never pool unweighted hot and cold samples. Compare methods at equal target-evaluation cost, since each sweep updates <span class="math inline">\(R\)</span> replicas. Frequent swaps alone do not prove adequate exploration.</p>
 <style type="text/css">
@@ -1179,18 +1176,18 @@ R_{\mathrm{swap}}
 &amp;=\frac{\text{density after}}{\text{density before}}
 =\frac{\varrho_{\beta_r}(\vx_s)\,\varrho_{\beta_s}(\vx_r)}
         {\varrho_{\beta_r}(\vx_r)\,\varrho_{\beta_s}(\vx_s)}
-=\left[\frac{\varrho_{\mathrm{tar}}(\vx_s)}{\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}
+=\left[\frac{\widetilde\varrho_{\mathrm{tar}}(\vx_s)}{\widetilde\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}
 \end{align*}\]</span></p>
 <ul>
-<li>Draw <span class="math inline">\(U\sim\Unif(0,1)\)</span>; swap if <span class="math inline">\(U\le\min\{1,R_{\mathrm{swap}}\}\)</span></li>
+<li>Draw <span class="math inline">\(V\sim\Unif(0,1)\)</span>; swap if <span class="math inline">\(V\le\min\{1,R_{\mathrm{swap}}\}\)</span></li>
 <li>Renaming <span class="math inline">\(r\)</span> and <span class="math inline">\(s\)</span>: reciprocal density ratio and opposite exponent → <span class="alert">same rule</span></li>
 </ul>
 <div class="key-point">
-<p>Cold <span class="math inline">\(\beta_r=1\)</span>, hot <span class="math inline">\(\beta_s=1/2\)</span>, and <span class="math inline">\(\varrho_{\mathrm{tar}}(\vx_s)=4\varrho_{\mathrm{tar}}(\vx_r)\)</span>: <span class="math inline">\(R_{\mathrm{swap}}=\sqrt{4}=2\)</span> → always swap; the reverse move is accepted with probability <span class="math inline">\(1/2\)</span></p>
+<p>Cold <span class="math inline">\(\beta_r=1\)</span>, hot <span class="math inline">\(\beta_s=1/2\)</span>, and <span class="math inline">\(\widetilde\varrho_{\mathrm{tar}}(\vx_s)=4\widetilde\varrho_{\mathrm{tar}}(\vx_r)\)</span>: <span class="math inline">\(R_{\mathrm{swap}}=\sqrt{4}=2\)</span> → always swap; the reverse move is accepted with probability <span class="math inline">\(1/2\)</span></p>
 </div>
 <aside class="notes">
 <p>The ratio compares two configurations of the same pair of slots. It does not compare <span class="math inline">\(\varrho_{\beta_r}(\vx_s)\)</span> with <span class="math inline">\(\varrho_{\beta_s}(\vx_r)\)</span>: those are the two factors in the numerator, not competing alternatives.</p>
-<p>Write <span class="math inline">\(\varrho_{\beta}(\vx)=\varrho_{\mathrm{tar}}(\vx)^\beta/C_\beta\)</span>. The constants <span class="math inline">\(C_{\beta_r}\)</span> and <span class="math inline">\(C_{\beta_s}\)</span> appear in both products and cancel. So do the densities for all unchanged slots in the full product target. The exponent matters: a hot density is proportional to a power of the target, not generally to the target itself.</p>
+<p>Write <span class="math inline">\(\varrho_{\beta}(\vx)=\widetilde\varrho_{\mathrm{tar}}(\vx)^\beta/C_\beta\)</span>. The constants <span class="math inline">\(C_{\beta_r}\)</span> and <span class="math inline">\(C_{\beta_s}\)</span> appear in both products and cancel. So do the densities for all unchanged slots in the full product target. The exponent matters: a hot density is proportional to a power of the target, not generally to the target itself.</p>
 <p>For the example, take unnormalized target values 1 at <span class="math inline">\(\vx_r\)</span> and 4 at <span class="math inline">\(\vx_s\)</span>. The before product is <span class="math inline">\(1^1\,4^{1/2}=2\)</span>; the after product is <span class="math inline">\(4^1\,1^{1/2}=4\)</span>. The ratio is <span class="math inline">\(4/2=2\)</span>. After that swap, proposing to move back gives <span class="math inline">\(2/4=1/2\)</span>. The accepted probability flows balance: <span class="math inline">\(2\times1=4\times(1/2)\)</span>, up to the common normalizing constant and proposal probability. Renaming slots changes neither physical configuration; reversing a move exchanges the before and after configurations. This distinction resolves the apparent asymmetry.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1282,49 +1279,42 @@ K(\vt,\vx)&amp;=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
   <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
 </div>
 
-<p>For independent <span class="math inline">\(\vX,\vX'\sim F_{\vX}\)</span> and <span class="math inline">\(\vZ,\vZ'\sim F_{\vZ}\)</span>,</p>
+<p>Compare any two distributions <span class="math inline">\(F,G\)</span> on <span class="math inline">\(\mathcal X\)</span><br> Let <span class="math inline">\(\vR,\vR'\sim F\)</span> and <span class="math inline">\(\vH,\vH'\sim G\)</span> be mutually independent</p>
 <p><span class="math display">\[\begin{align*}
-D^2(F_{\vX},F_{\vZ};K)
-&amp;=\Ex[K(\vX,\vX')]-2\Ex[K(\vX,\vZ)]+\Ex[K(\vZ,\vZ')]\\
-&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')
--2\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vZ}(\vx')\\
-&amp;\qquad \qquad
-+\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vZ}(\vx)\,\dif F_{\vZ}(\vx')\\
-&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif(F_{\vX}-F_{\vZ})(\vx)\,\dif(F_{\vX}-F_{\vZ})(\vx') \ge0
+D^2(F,G;K)
+&amp;=\Ex[K(\vR,\vR')]-2\Ex[K(\vR,\vH)]+\Ex[K(\vH,\vH')]\\
+&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif(F-G)(\vx)\,\dif(F-G)(\vx')\ge0
 \end{align*}\]</span></p>
-<p>If both distributions have densities,</p>
-<p><span class="math display">\[\begin{align*}
-D^2(F_{\vX},F_{\vZ};K)
-&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\varrho_{\vX}(\vx)\,\varrho_{\vX}(\vx')\,\dif \vx\,\dif \vx'
--2\int_{\mathcal X^2}K(\vx,\vx')\,\varrho_{\vX}(\vx)\,\varrho_{\vZ}(\vx')\,\dif \vx\,\dif \vx'\\
-&amp;\qquad \qquad +\int_{\mathcal X^2}K(\vx,\vx')\,\varrho_{\vZ}(\vx)\,\varrho_{\vZ}(\vx')\,\dif \vx\,\dif \vx'\\
-&amp;=\int_{\mathcal X^2}K(\vx,\vx')
-\{\varrho_{\vX}(\vx)-\varrho_{\vZ}(\vx)\}
-\{\varrho_{\vX}(\vx')-\varrho_{\vZ}(\vx')\}\,\dif \vx\,\dif \vx' \ge0
-\end{align*}\]</span></p>
+<p>If <span class="math inline">\(F,G\)</span> have densities <span class="math inline">\(\varrho_F,\varrho_G\)</span>,</p>
+<p><span class="math display">\[
+D^2(F,G;K)=\int_{\mathcal X^2}K(\vx,\vx')
+\{\varrho_F(\vx)-\varrho_G(\vx)\}
+\{\varrho_F(\vx')-\varrho_G(\vx')\}\,\dif\vx\,\dif\vx'
+\]</span></p>
+<p>For sample assessment, compare the <span class="alert">target</span> <span class="math inline">\(F_{\mathrm{tar}}\)</span> with an empirical distribution</p>
 </section>
 <section class="slide level2">
 
 <h3 id="empirical-distributions">Empirical distributions</h3>
-<p>Put mass <span class="math inline">\(1/n\)</span> at each <span class="math inline">\(\vz_i\)</span>: <span class="math inline">\(\widehat F_{\vZ,n}=n^{-1}\sum_{i=0}^{n-1}\delta_{\vz_i}\)</span></p>
-<p>Replace <span class="math inline">\(F_{\vZ}\)</span> by <span class="math inline">\(\widehat F_{\vZ,n}\)</span> in the distribution formula:</p>
+<p>For candidate points in the target space, put mass <span class="math inline">\(1/n\)</span> at each <span class="math inline">\(\vx_i\)</span>: <span class="math inline">\(\widehat F_n=n^{-1}\sum_{i=0}^{n-1}\delta_{\vx_i}\)</span></p>
+<p>Compare <span class="math inline">\(F_{\mathrm{tar}}\)</span> with <span class="math inline">\(\widehat F_n\)</span> in the distribution formula:</p>
 <p><span class="math display">\[\begin{align*}
-D^2(F_{\vX},\{\vz_i\}_{i=0}^{n-1};K)
-&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')\\
-&amp;\quad-\frac{2}{n}\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vz_i)\,\dif F_{\vX}(\vx)\\
-&amp;\quad+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(\vz_i,\vz_j)
+D^2(F_{\mathrm{tar}},\{\vx_i\}_{i=0}^{n-1};K)
+&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\mathrm{tar}}(\vx)\,\dif F_{\mathrm{tar}}(\vx')\\
+&amp;\quad-\frac{2}{n}\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vx_i)\,\dif F_{\mathrm{tar}}(\vx)\\
+&amp;\quad+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(\vx_i,\vx_j)
 \end{align*}\]</span></p>
 <p>Integration against an empirical distribution becomes <span class="alert">averaging over its sample</span></p>
 </section>
 <section class="slide level2">
 
 <h3 id="how-can-we-measure-sample-quality">Two empirical distributions</h3>
-<p>Replace both distributions by empirical distributions: integrals become sums</p>
+<p>Use points <span class="math inline">\(\vx_i^{(F)}\)</span> and <span class="math inline">\(\vx_j^{(G)}\)</span>; replace integrals by sums</p>
 <p><span class="math display">\[\begin{align*}
-D^2\!\left(\{\vx_i\}_{i=0}^{m-1},\{\vz_j\}_{j=0}^{n-1};K\right)
-&amp;=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(\vx_i,\vx_j)\\
-&amp;\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(\vx_i,\vz_j)
-+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(\vz_i,\vz_j)
+D^2\!\left(\{\vx_i^{(F)}\}_{i=0}^{m-1},\{\vx_j^{(G)}\}_{j=0}^{n-1};K\right)
+&amp;=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(\vx_i^{(F)},\vx_j^{(F)})\\
+&amp;\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(\vx_i^{(F)},\vx_j^{(G)})
++\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(\vx_i^{(G)},\vx_j^{(G)})
 \end{align*}\]</span></p>
 <ul>
 <li>The <span class="alert">exact squared discrepancy of these empirical distributions</span>; nonnegative</li>
@@ -1356,11 +1346,11 @@ D^2\!\left(\{\vx_i\}_{i=0}^{m-1},\{\vz_j\}_{j=0}^{n-1};K\right)
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">How different are these empirical distributions?</td>
-<td style="text-align: left;">Exact <span class="math inline">\(D^2(\widehat F_{\vX,m},\widehat F_{\vZ,n};K)\ge0\)</span></td>
+<td style="text-align: left;">Exact <span class="math inline">\(D^2(\widehat F_m^{(F)},\widehat F_n^{(G)};K)\ge0\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">How different are the underlying distributions?</td>
-<td style="text-align: left;">Estimate <span class="math inline">\(D^2(F_{\vX},F_{\vZ};K)\)</span> from random samples</td>
+<td style="text-align: left;">Estimate <span class="math inline">\(D^2(F,G;K)\)</span> from random samples</td>
 </tr>
 </tbody>
 </table>
@@ -1388,13 +1378,13 @@ D^2\!\left(\{\vx_i\}_{i=0}^{m-1},\{\vz_j\}_{j=0}^{n-1};K\right)
 <section class="slide level2">
 
 <h3 id="unbiased-estimates-of-squared-discrepancy">Unbiased estimates of squared discrepancy</h3>
-<p>For two independent IID samples, estimate <span class="math inline">\(D^2(F_{\vX},F_{\vZ};K)\)</span></p>
+<p>For two independent IID samples, estimate <span class="math inline">\(D^2(F,G;K)\)</span></p>
 <p>Replace within-sample sums by <span class="alert">off-diagonal averages</span>:</p>
 <p><span class="math display">\[\begin{align*}
-D_{\mathrm{unb}}^2\!\left(\{\vx_i\}_{i=0}^{m-1},\{\vz_j\}_{j=0}^{n-1};K\right)
-&amp;=\frac{1}{m(m-1)}\sum_{\substack{i,j=0\\i\ne j}}^{m-1}K(\vx_i,\vx_j)\\
-&amp;\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(\vx_i,\vz_j)
-+\frac{1}{n(n-1)}\sum_{\substack{i,j=0\\i\ne j}}^{n-1}K(\vz_i,\vz_j)
+D_{\mathrm{unb}}^2\!\left(\{\vx_i^{(F)}\}_{i=0}^{m-1},\{\vx_j^{(G)}\}_{j=0}^{n-1};K\right)
+&amp;=\frac{1}{m(m-1)}\sum_{\substack{i,j=0\\i\ne j}}^{m-1}K(\vx_i^{(F)},\vx_j^{(F)})\\
+&amp;\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(\vx_i^{(F)},\vx_j^{(G)})
++\frac{1}{n(n-1)}\sum_{\substack{i,j=0\\i\ne j}}^{n-1}K(\vx_i^{(G)},\vx_j^{(G)})
 \end{align*}\]</span></p>
 <p><span class="alert">Unbiased</span> describes the estimator’s expectation, not the sign of each realization</p>
 <p>A more negative realization is <span class="alert">not a better match</span>; it is a larger downward sampling fluctuation</p>
@@ -1403,17 +1393,17 @@ D_{\mathrm{unb}}^2\!\left(\{\vx_i\}_{i=0}^{m-1},\{\vz_j\}_{j=0}^{n-1};K\right)
 
 <h3 id="what-does-unbiased-mean">What does unbiased mean?</h3>
 <div class="exitem roman">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span> Let <span class="math inline">\(\{\vX_i\}_{i=0}^{m-1}\)</span> and <span class="math inline">\(\{\vZ_j\}_{j=0}^{n-1}\)</span> be independent IID samples from <span class="math inline">\(F_{\vX}\)</span> and <span class="math inline">\(F_{\vZ}\)</span> <span class="exsub">Take expectations term by term to show <span class="math inline">\(\Ex[D_{\mathrm{unb}}^2]=D^2(F_{\vX},F_{\vZ};K)\)</span></span> <span class="exsub">What is the expectation when <span class="math inline">\(F_{\vX}=F_{\vZ}\)</span>?</span> <span class="exsub">Why may a realization be negative, and does more negative mean a better match?</span> <span class="exsub">Which step fails when the <span class="math inline">\(\vX_i\)</span> are successive Metropolis states?</span> </span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span> Let <span class="math inline">\(\{\vR_i\}_{i=0}^{m-1}\)</span> and <span class="math inline">\(\{\vH_j\}_{j=0}^{n-1}\)</span> be independent IID samples from <span class="math inline">\(F\)</span> and <span class="math inline">\(G\)</span> <span class="exsub">Take expectations term by term to show <span class="math inline">\(\Ex[D_{\mathrm{unb}}^2]=D^2(F,G;K)\)</span></span> <span class="exsub">What is the expectation when <span class="math inline">\(F=G\)</span>?</span> <span class="exsub">Why may a realization be negative, and does more negative mean a better match?</span> <span class="exsub">Which step fails when the <span class="math inline">\(\vR_i\)</span> are successive Metropolis states?</span> </span></p>
 </div>
 </section>
 <section class="slide level2">
 
 <h3 id="how-small-should-discrepancy-be">How small should discrepancy be?</h3>
 <p><span class="alert">Zero is the ideal</span>; no universal acceptable cutoff</p>
-<p>For a fixed target <span class="math inline">\(F_{\vX}\)</span> and kernel <span class="math inline">\(K\)</span>, normalize by the <span class="alert">no-sample error</span>:</p>
+<p>For a fixed target <span class="math inline">\(F_{\mathrm{tar}}\)</span> and kernel <span class="math inline">\(K\)</span>, normalize by the <span class="alert">no-sample error</span>:</p>
 <p><span class="math display">\[\begin{align*}
-D_0^2&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')&gt;0,
-&amp;\qquad D_{\mathrm{rel},n}^2&amp;=\frac{D^2(F_{\vX},\{\vz_i\}_{i=0}^{n-1};K)}{D_0^2}
+D_0^2&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\mathrm{tar}}(\vx)\,\dif F_{\mathrm{tar}}(\vx')&gt;0,
+&amp;\qquad D_{\mathrm{rel},n}^2&amp;=\frac{D^2(F_{\mathrm{tar}},\{\vx_i\}_{i=0}^{n-1};K)}{D_0^2}
 \end{align*}\]</span></p>
 <ul>
 <li><span class="math inline">\(D_{\mathrm{rel},n}^2&lt;1\)</span>: improvement over estimating the integral by zero</li>
@@ -1472,12 +1462,12 @@ f(\vx)=\langle K(\cdot,\vx),f\rangle_{\mathcal H_K}
 \]</span></p>
 <p>Assume <span class="math inline">\(K\)</span> is measurable and</p>
 <p><span class="math display">\[
-\int_{\mathcal X}\sqrt{K(\vx,\vx)}\,\dif F_{\vX}(\vx)&lt;\infty
+\int_{\mathcal X}\sqrt{K(\vx,\vx)}\,\dif F_{\mathrm{tar}}(\vx)&lt;\infty
 \]</span></p>
 <p>Then both</p>
 <p><span class="math display">\[\begin{align*}
-f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx),\\
-f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vz_i)
+f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx),\\
+f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vx_i)
 \end{align*}\]</span></p>
 <p>are bounded linear functionals on <span class="math inline">\(\mathcal H_K\)</span></p>
 <aside class="notes">
@@ -1503,12 +1493,12 @@ f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n
 
 <p>By the Riesz representation theorem, some <span class="math inline">\(\zeta\in\mathcal H_K\)</span> satisfies</p>
 <p><span class="math display">\[
-\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vz_i)
+\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vx_i)
 =\langle\zeta,f\rangle_{\mathcal H_K}
 \]</span></p>
 <p>Therefore, by Cauchy–Schwarz,</p>
 <p><span class="math display">\[
-\left\lvert\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vz_i)\right\rvert
+\left\lvert\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vx_i)\right\rvert
 \le\norm{\zeta}_{\mathcal H_K}\norm{f}_{\mathcal H_K}
 \]</span></p>
 <p>This separates <span class="alert">sample quality</span>, <span class="math inline">\(\norm{\zeta}_{\mathcal H_K}\)</span>, from <span class="alert">integrand difficulty</span>, <span class="math inline">\(\norm{f}_{\mathcal H_K}\)</span></p>
@@ -1539,8 +1529,8 @@ f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n
 <p><span class="math display">\[\begin{align*}
 \zeta(\vx')
 &amp;=\langle\zeta,K(\cdot,\vx')\rangle_{\mathcal H_K}\\
-&amp;=\int_{\mathcal X}K(\vx,\vx')\,\dif F_{\vX}(\vx)
--\frac1n\sum_{i=0}^{n-1}K(\vz_i,\vx')
+&amp;=\int_{\mathcal X}K(\vx,\vx')\,\dif F_{\mathrm{tar}}(\vx)
+-\frac1n\sum_{i=0}^{n-1}K(\vx_i,\vx')
 \end{align*}\]</span></p>
 <p>Thus <span class="math inline">\(\zeta(\vx')\)</span> is the <span class="alert">true integral minus sample average</span> for the kernel section <span class="math inline">\(K(\cdot,\vx')\)</span></p>
 <div class="key-point">
@@ -1554,16 +1544,16 @@ f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n
 <p><span class="math display">\[
 \norm{\zeta}_{\mathcal H_K}^2
 =\langle\zeta,\zeta\rangle_{\mathcal H_K}
-=\int_{\mathcal X}\zeta(\vx')\,\dif F_{\vX}(\vx')
--\frac1n\sum_{j=0}^{n-1}\zeta(\vz_j)
+=\int_{\mathcal X}\zeta(\vx')\,\dif F_{\mathrm{tar}}(\vx')
+-\frac1n\sum_{j=0}^{n-1}\zeta(\vx_j)
 \]</span></p>
 <p>Substitute the kernel-section error formula for each value of <span class="math inline">\(\zeta\)</span>; symmetry of <span class="math inline">\(K\)</span> combines the two cross terms:</p>
 <p><span class="math display">\[\begin{align*}
 \norm{\zeta}_{\mathcal H_K}^2
-&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')\\
-&amp;\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vz_i)\,\dif F_{\vX}(\vx)
-+\frac1{n^2}\sum_{i,j=0}^{n-1}K(\vz_i,\vz_j)\\
-&amp;=D^2(F_{\vX},\{\vz_i\}_{i=0}^{n-1};K)
+&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\mathrm{tar}}(\vx)\,\dif F_{\mathrm{tar}}(\vx')\\
+&amp;\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vx_i)\,\dif F_{\mathrm{tar}}(\vx)
++\frac1{n^2}\sum_{i,j=0}^{n-1}K(\vx_i,\vx_j)\\
+&amp;=D^2(F_{\mathrm{tar}},\{\vx_i\}_{i=0}^{n-1};K)
 \end{align*}\]</span></p>
 <p>Thus discrepancy is the <span class="alert">worst-case error over <span class="math inline">\(\norm{f}_{\mathcal H_K}\le1\)</span></span></p>
 </section>
@@ -1575,22 +1565,22 @@ f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n
 </div>
 
 <p>Suppose <span class="math inline">\(f\)</span> is modeled as a zero-mean Gaussian process with covariance kernel <span class="math inline">\(K\)</span></p>
-<p>For deterministic <span class="math inline">\(\vz_0,\ldots,\vz_{n-1}\)</span>,</p>
+<p>For deterministic <span class="math inline">\(\vx_0,\ldots,\vx_{n-1}\)</span>,</p>
 <p><span class="math display">\[\begin{align*}
 &amp;\Ex_f\!\left[
-\left\{\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vz_i)\right\}^2
+\left\{\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vx_i)\right\}^2
 \right]\\
-&amp;\quad=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')
--\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vz_i)\,\dif F_{\vX}(\vx)
-+\frac1{n^2}\sum_{i,j=0}^{n-1}K(\vz_i,\vz_j)\\
-&amp;\quad=D^2(F_{\vX},\{\vz_i\}_{i=0}^{n-1};K)
+&amp;\quad=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\mathrm{tar}}(\vx)\,\dif F_{\mathrm{tar}}(\vx')
+-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vx_i)\,\dif F_{\mathrm{tar}}(\vx)
++\frac1{n^2}\sum_{i,j=0}^{n-1}K(\vx_i,\vx_j)\\
+&amp;\quad=D^2(F_{\mathrm{tar}},\{\vx_i\}_{i=0}^{n-1};K)
 \end{align*}\]</span></p>
 <p>Discrepancy is also the <span class="alert">root mean squared error under the Gaussian-process model</span></p>
 <div class="key-point">
 <p><span class="alert">Gaussianity is not required</span>: the same RMSE identity holds for any zero-mean stochastic process with covariance kernel <span class="math inline">\(K\)</span>, provided the required second moments and integrals exist</p>
 </div>
 <aside class="notes">
-<p>For a fixed sample design, expand the square of the integration error. Only <span class="math inline">\(\Ex_f[f(\vx)]=0\)</span> and <span class="math inline">\(\Ex_f[f(\vx)f(\vx')]=K(\vx,\vx')\)</span> enter the calculation; no Gaussian distribution assumption is used. Assume the random integral exists in mean square and expectation can be interchanged with the displayed integrals. A sufficient condition for a measurable second-order process is <span class="math inline">\(\int_{\mathcal X}\sqrt{K(\vx,\vx)}\,\dif F_{\vX}(\vx)&lt;\infty\)</span>, together with finite kernel diagonals at the sample points.</p>
+<p>For a fixed sample design, expand the square of the integration error. Only <span class="math inline">\(\Ex_f[f(\vx)]=0\)</span> and <span class="math inline">\(\Ex_f[f(\vx)f(\vx')]=K(\vx,\vx')\)</span> enter the calculation; no Gaussian distribution assumption is used. Assume the random integral exists in mean square and expectation can be interchanged with the displayed integrals. A sufficient condition for a measurable second-order process is <span class="math inline">\(\int_{\mathcal X}\sqrt{K(\vx,\vx)}\,\dif F_{\mathrm{tar}}(\vx)&lt;\infty\)</span>, together with finite kernel diagonals at the sample points.</p>
 <p>Gaussian processes are a common model and additionally specify finite-dimensional distributions and Gaussian uncertainty statements. Covariance alone determines this RMSE, but not the full error distribution or Gaussian credible intervals. For a nonzero mean function, the mean integration error contributes an additional squared-bias term unless the quadrature rule integrates that mean exactly.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1623,11 +1613,11 @@ f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n
 </ul></li>
 <li>In the average-case setting, hyperparameters may be estimated by empirical Bayes or maximum likelihood</li>
 </ul>
-<p>For IID <span class="math inline">\(\vZ_i\sim F_{\vX}\)</span>,</p>
+<p>For IID <span class="math inline">\(\vX_i\sim F_{\mathrm{tar}}\)</span>,</p>
 <p><span class="math display">\[
-\Ex\!\left[D^2(F_{\vX},\{\vZ_i\}_{i=0}^{n-1};K)\right]
+\Ex\!\left[D^2(F_{\mathrm{tar}},\{\vX_i\}_{i=0}^{n-1};K)\right]
 =\frac1n\left\{
-\int K(\vx,\vx)\,\dif F_{\vX}(\vx)-\int K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')
+\int K(\vx,\vx)\,\dif F_{\mathrm{tar}}(\vx)-\int K(\vx,\vx')\,\dif F_{\mathrm{tar}}(\vx)\,\dif F_{\mathrm{tar}}(\vx')
 \right\}
 \]</span></p>
 </section>
@@ -1667,15 +1657,15 @@ K(\vt,\vx)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 
 <h3 id="relative-entropy-another-comparison">Relative entropy</h3>
 <p><span class="alert">Kullback–Leibler (KL) divergence</span>, also called <span class="alert">relative entropy</span></p>
-<p>For normalized densities <span class="math inline">\(\varrho_{\vX}\)</span> and <span class="math inline">\(\varrho_{\vZ}\)</span>,</p>
+<p>For normalized target density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span> and comparison density <span class="math inline">\(\varrho_G\)</span>,</p>
 <p><span class="math display">\[\begin{align*}
-D_{\mathrm{KL}}(F_{\vX}\Vert F_{\vZ})
-&amp;=\int_{\mathcal X}\varrho_{\vX}(\vx)
-\log\!\left(\frac{\varrho_{\vX}(\vx)}{\varrho_{\vZ}(\vx)}\right)\,\dif \vx
+D_{\mathrm{KL}}(F_{\mathrm{tar}}\Vert G)
+&amp;=\int_{\mathcal X}\varrho_{\mathrm{tar}}(\vx)
+\log\!\left(\frac{\varrho_{\mathrm{tar}}(\vx)}{\varrho_G(\vx)}\right)\,\dif \vx
 \end{align*}\]</span></p>
 <ul>
 <li>Nonnegative; zero exactly when the distributions agree</li>
-<li>Generally asymmetric; infinite if <span class="math inline">\(F_{\vX}\)</span> assigns mass where <span class="math inline">\(F_{\vZ}\)</span> assigns none</li>
+<li>Generally asymmetric; infinite if <span class="math inline">\(F_{\mathrm{tar}}\)</span> assigns mass where <span class="math inline">\(G\)</span> assigns none</li>
 <li>Entropy describes one distribution; <span class="alert">relative entropy compares two</span></li>
 <li>Variational inference fits an approximate density by minimizing KL to the target</li>
 </ul>
@@ -1702,11 +1692,11 @@ D_{\mathrm{KL}}(F_{\vX}\Vert F_{\vZ})
 <section class="slide level2">
 
 <h3 id="kl-minimization-with-an-unnormalized-target">KL minimization with an unnormalized target</h3>
-<p>With <span class="math inline">\(\varrho_{\mathrm{tar}}=\widetilde\varrho/C\)</span> and approximation density <span class="math inline">\(\varrho_{\mathrm{approx}}\)</span>,</p>
+<p>With <span class="math inline">\(\varrho_{\mathrm{tar}}=\widetilde\varrho_{\mathrm{tar}}/C\)</span> and <span class="math inline">\(\vR\sim\varrho_{\mathrm{approx}}\)</span>,</p>
 <p><span class="math display">\[\begin{align*}
 D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})
 &amp;=\Ex_{\mathrm{approx}}\!\left[\log\!\left(
-\frac{\varrho_{\mathrm{approx}}(\vX)}{\widetilde\varrho(\vX)}\right)\right]+\log C
+\frac{\varrho_{\mathrm{approx}}(\vR)}{\widetilde\varrho_{\mathrm{tar}}(\vR)}\right)\right]+\log C
 \end{align*}\]</span></p>
 <p><span class="alert">Fixed target</span>: <span class="math inline">\(\log C\)</span> does not affect minimization over the approximation</p>
 <aside class="notes">
@@ -1726,27 +1716,27 @@ D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})
 <section class="slide level2">
 
 <h3 id="stein-discrepancy">Stein discrepancy</h3>
-<p>For a smooth positive target density <span class="math inline">\(\varrho_{\mathrm{tar}}(\vx)=\widetilde\varrho(\vx)/C\)</span>, the <span class="alert">score</span> removes the unknown normalizing constant</p>
+<p>For a smooth positive target density <span class="math inline">\(\varrho_{\mathrm{tar}}(\vx)=\widetilde\varrho_{\mathrm{tar}}(\vx)/C\)</span>, the <span class="alert">score</span> removes the unknown normalizing constant</p>
 <p><span class="math display">\[\begin{align*}
-s(\vx)&amp;=\nabla_{\vx}\log\varrho_{\mathrm{tar}}(\vx)
-=\nabla_{\vx}\log\widetilde\varrho(\vx)\\
-\mathcal T g(\vx)&amp;=s(\vx)^\mathsf{T}g(\vx)+\nabla\!\cdot g(\vx),
-\qquad g:\mathcal X\to\mathbb R^d
+\boldsymbol s(\vx)&amp;=\nabla_{\vx}\log\varrho_{\mathrm{tar}}(\vx)
+=\nabla_{\vx}\log\widetilde\varrho_{\mathrm{tar}}(\vx)\\
+\mathcal T \boldsymbol g(\vx)&amp;=\boldsymbol s(\vx)^\mathsf{T}\boldsymbol g(\vx)+\nabla\!\cdot \boldsymbol g(\vx),
+\qquad \boldsymbol g:\mathcal X\to\mathbb R^d
 \end{align*}\]</span></p>
-<p><span class="alert">Stein’s identity</span>: <span class="math inline">\(\Ex_{\mathrm{tar}}[\mathcal T g(\vX)]=0\)</span> for suitable <span class="math inline">\(g\)</span></p>
-<p>For candidate points <span class="math inline">\(\vz_0,\ldots,\vz_{n-1}\)</span>, write the error as <span class="alert">true value minus sample average</span>:</p>
+<p><span class="alert">Stein’s identity</span>: <span class="math inline">\(\Ex_{\mathrm{tar}}[\mathcal T \boldsymbol g(\vX)]=0\)</span> for suitable <span class="math inline">\(\boldsymbol g\)</span></p>
+<p>For candidate points <span class="math inline">\(\vx_0,\ldots,\vx_{n-1}\)</span>, write the error as <span class="alert">true value minus sample average</span>:</p>
 <p><span class="math display">\[\begin{align*}
-D_{\mathrm{Stein}}(F_{\mathrm{tar}},\{\vz_i\};\mathcal G)
-&amp;=\sup_{g\in\mathcal G}\left|
-\underbrace{\Ex_{\mathrm{tar}}[\mathcal T g(\vX)]}_{0}
--\frac1n\sum_{i=0}^{n-1}\mathcal T g(\vz_i)\right|
+D_{\mathrm{Stein}}(F_{\mathrm{tar}},\{\vx_i\};\mathcal G)
+&amp;=\sup_{\boldsymbol g\in\mathcal G}\left|
+\underbrace{\Ex_{\mathrm{tar}}[\mathcal T \boldsymbol g(\vX)]}_{0}
+-\frac1n\sum_{i=0}^{n-1}\mathcal T \boldsymbol g(\vx_i)\right|
 \end{align*}\]</span></p>
 <div class="key-point">
 <p>The largest departure from zero over a <span class="alert">size-constrained class</span> <span class="math inline">\(\mathcal G\)</span> of test functions</p>
 </div>
 <aside class="notes">
-<p>This slide describes the common Langevin, score-based Stein operator for a continuous target, not every Stein discrepancy. Here <span class="math inline">\(g\)</span> is a vector field; the identity follows by integration by parts when the boundary term vanishes and the expectations exist. On bounded supports, the function class or operator must enforce the appropriate boundary conditions. Discrete targets require a different operator.</p>
-<p>For candidate points <span class="math inline">\(\vx_0,\ldots,\vx_{n-1}\)</span>, the discrepancy is <span class="math inline">\(\sup_{g\in\mathcal G}|0-n^{-1}\sum_{i=0}^{n-1}\mathcal T g(\vx_i)|\)</span>, with the true target integral first and the sample approximation second. Applying Stein operators to both arguments of a sufficiently smooth base kernel gives a target-dependent Stein kernel and a pairwise-sum formula for KSD squared. Thus KSD is closely related to MMD, using a specially constructed kernel whose target expectation vanishes. It is not a wholly unrelated alternative to kernel discrepancy. Direct pairwise computation is quadratic in sample size.</p>
+<p>This slide describes the common Langevin, score-based Stein operator for a continuous target, not every Stein discrepancy. Here <span class="math inline">\(\boldsymbol g\)</span> is a vector field; the identity follows by integration by parts when the boundary term vanishes and the expectations exist. On bounded supports, the function class or operator must enforce the appropriate boundary conditions. Discrete targets require a different operator.</p>
+<p>For candidate points <span class="math inline">\(\vx_0,\ldots,\vx_{n-1}\)</span>, the discrepancy is <span class="math inline">\(\sup_{\boldsymbol g\in\mathcal G}|0-n^{-1}\sum_{i=0}^{n-1}\mathcal T \boldsymbol g(\vx_i)|\)</span>, with the true target integral first and the sample approximation second. Applying Stein operators to both arguments of a sufficiently smooth base kernel gives a target-dependent Stein kernel and a pairwise-sum formula for KSD squared. Thus KSD is closely related to MMD, using a specially constructed kernel whose target expectation vanishes. It is not a wholly unrelated alternative to kernel discrepancy. Direct pairwise computation is quadratic in sample size.</p>
 <p>Suitable kernels and target assumptions give convergence-determining KSDs; the failure of some kernels is not a universal failure of Stein discrepancy. Weak sensitivity to weights of well-separated modes is a finite-sample testing limitation, distinct from an asymptotic convergence theorem.</p>
 <p>References: <a href="https://proceedings.mlr.press/v48/liub16.html">Liu, Lee, and Jordan (2016)</a>; <a href="https://proceedings.mlr.press/v70/gorham17a.html">Gorham and Mackey (2017)</a>; <a href="https://proceedings.mlr.press/v202/liu23i.html">Liu, Duncan, and Gandy (2023)</a></p>
 <style type="text/css">
@@ -1767,13 +1757,13 @@ D_{\mathrm{Stein}}(F_{\mathrm{tar}},\{\vz_i\};\mathcal G)
 <p>For <span class="alert">kernel Stein discrepancy (KSD)</span>, choose <span class="math inline">\(\mathcal G\)</span> as the unit ball of <span class="math inline">\(\mathcal H_K^d\)</span></p>
 <p>The supremum has an explicit formula using a <span class="alert">Stein kernel</span>:</p>
 <p><span class="math display">\[\begin{align*}
-K_{\mathrm{Stein}}(\vx,\vz)
-&amp;=s(\vx)^\mathsf{T}s(\vz)K(\vx,\vz)
-+s(\vx)^\mathsf{T}\nabla_{\vz} K(\vx,\vz)\\
-&amp;\quad+s(\vz)^\mathsf{T}\nabla_{\vx} K(\vx,\vz)
-+\sum_{\ell=1}^d\frac{\partial^2 K(\vx,\vz)}{\partial x_\ell\,\partial z_\ell}\\[0.5ex]
-\mathrm{KSD}^2(F_{\mathrm{tar}},\{\vz_i\};K)
-&amp;=\frac{1}{n^2}\sum_{i,j=0}^{n-1}K_{\mathrm{Stein}}(\vz_i,\vz_j)\ge0
+K_{\mathrm{Stein}}(\vx,\vx')
+&amp;=\boldsymbol s(\vx)^\mathsf{T}\boldsymbol s(\vx')K(\vx,\vx')
++\boldsymbol s(\vx)^\mathsf{T}\nabla_{\vx'} K(\vx,\vx')\\
+&amp;\quad+\boldsymbol s(\vx')^\mathsf{T}\nabla_{\vx} K(\vx,\vx')
++\sum_{\ell=1}^d\frac{\partial^2 K(\vx,\vx')}{\partial x_\ell\,\partial x'_\ell}\\[0.5ex]
+\mathrm{KSD}^2(F_{\mathrm{tar}},\{\vx_i\};K)
+&amp;=\frac{1}{n^2}\sum_{i,j=0}^{n-1}K_{\mathrm{Stein}}(\vx_i,\vx_j)\ge0
 \end{align*}\]</span></p>
 <ul>
 <li>The target-integral terms vanish: only the <span class="alert">sample-pair sum</span> remains</li>
@@ -1784,7 +1774,7 @@ K_{\mathrm{Stein}}(\vx,\vz)
 <p>Some KSDs fail to detect nonconvergence; separated-mode weights can be hard to assess</p>
 </div>
 <aside class="notes">
-<p>Here <span class="math inline">\(\mathcal H_K^d\)</span> is the space of vector fields whose components belong to the RKHS of the scalar base kernel <span class="math inline">\(K\)</span>, with squared norm equal to the sum of the component squared norms. Its unit ball prevents arbitrary rescaling of <span class="math inline">\(g\)</span>. The smoothness, integrability, and boundary assumptions must allow the Stein identity to hold for the relevant kernel sections and derivatives. Then <span class="math inline">\(\Ex_{\vX\sim F_{\mathrm{tar}}}[K_{\mathrm{Stein}}(\vX,\vz)]=0\)</span>, so the target-target and target-sample terms in ordinary squared discrepancy are zero. The displayed sum includes the diagonal: it is the exact squared KSD of the empirical measure, not the off-diagonal unbiased estimator of a population quantity. No independence assumption is needed for this finite-point formula, though dependence matters for its sampling behavior.</p>
+<p>Here <span class="math inline">\(\mathcal H_K^d\)</span> is the space of vector fields whose components belong to the RKHS of the scalar base kernel <span class="math inline">\(K\)</span>, with squared norm equal to the sum of the component squared norms. Its unit ball prevents arbitrary rescaling of <span class="math inline">\(\boldsymbol g\)</span>. The smoothness, integrability, and boundary assumptions must allow the Stein identity to hold for the relevant kernel sections and derivatives. Then <span class="math inline">\(\Ex_{\vX\sim F_{\mathrm{tar}}}[K_{\mathrm{Stein}}(\vX,\vx')]=0\)</span>, so the target-target and target-sample terms in ordinary squared discrepancy are zero. The displayed sum includes the diagonal: it is the exact squared KSD of the empirical measure, not the off-diagonal unbiased estimator of a population quantity. No independence assumption is needed for this finite-point formula, though dependence matters for its sampling behavior.</p>
 <p>Reference: <a href="https://proceedings.mlr.press/v48/liub16.pdf">Liu, Lee, and Jordan (2016), Theorem 3.6</a></p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1965,17 +1955,17 @@ K_{\mathrm{Stein}}(\vx,\vz)
 
 <h3 id="likelihood-and-maximum-likelihood-estimation">Likelihood and maximum likelihood estimation</h3>
 <p>The <span class="alert">likelihood</span> is the shared starting point for MLE and Bayesian inference</p>
-<p>For observed data <span class="math inline">\(y\)</span> and parameter <span class="math inline">\(\theta\)</span>,</p>
+<p>Let <span class="math inline">\(D\)</span> denote data generated by the observation model<br> For observed data <span class="math inline">\(y_{\mathrm{obs}}\)</span> and parameter <span class="math inline">\(\theta\)</span>,</p>
 <p><span class="math display">\[
-L(\theta;y)=\varrho_{Y\mid\theta}(y\mid\theta)
+L(\theta;y_{\mathrm{obs}})=\varrho_{D\mid\theta}(y_{\mathrm{obs}}\mid\theta)
 \]</span></p>
 <ul>
 <li>Use the sampling model’s density or probability mass function; <span class="alert">no normality assumption</span></li>
-<li>Hold <span class="math inline">\(y\)</span> fixed and compare candidate parameter values <span class="math inline">\(\theta\)</span></li>
+<li>Hold <span class="math inline">\(y_{\mathrm{obs}}\)</span> fixed and compare candidate parameter values <span class="math inline">\(\theta\)</span></li>
 </ul>
 <p>The <span class="alert">maximum likelihood estimator</span> selects a maximizer:</p>
 <p><span class="math display">\[
-\htheta_{\mathrm{MLE}}\in\operatorname*{arg\,max}_{\theta}L(\theta;y)
+\htheta_{\mathrm{MLE}}\in\operatorname*{arg\,max}_{\theta}L(\theta;y_{\mathrm{obs}})
 \]</span></p>
 <div class="key-point">
 <p><span class="alert">MLE:</span> maximize the likelihood for a point estimate<br> <span class="alert">Bayesian inference:</span> combine the same likelihood with a prior for a posterior distribution</p>
@@ -1983,13 +1973,13 @@ L(\theta;y)=\varrho_{Y\mid\theta}(y\mid\theta)
 <aside class="notes">
 <p>MLE is an alternative method of inference, not a required step before Bayes. The likelihood is the precursor common to both. Frequentist inference can add confidence intervals and other uncertainty assessments; it is not limited to point estimation. Bayesian inference can also report point summaries.</p>
 <p>The normal model below is one worked example, not an assumption of the general likelihood definition. The Bayesian notebook uses a normal observation model with known variance to make an exact posterior benchmark available.</p>
-<p>For <span class="math inline">\(Y_0,\ldots,Y_{n-1}\ \IIDsim\ \Norm(\mu,\sigma^2)\)</span>,</p>
+<p>In this worked example, <span class="math inline">\(m\)</span> is the observation-model mean. For <span class="math inline">\(D_0,\ldots,D_{n-1}\ \IIDsim\ \Norm(m,\sigma^2)\)</span>,</p>
 <p><span class="math display">\[\begin{align*}
-L(\mu,\sigma^2;y)
+L(m,\sigma^2;\vy_{\mathrm{obs}})
 &amp;=(2\mpi\sigma^2)^{-n/2}
-\exp\!\left[-\frac1{2\sigma^2}\sum_{i=0}^{n-1}(y_i-\mu)^2\right],\\
-\hmu_{\mathrm{MLE}}&amp;=\frac1n\sum_{i=0}^{n-1}y_i,&amp;
-\hsigma^2_{\mathrm{MLE}}&amp;=\frac1n\sum_{i=0}^{n-1}(y_i-\hmu_{\mathrm{MLE}})^2
+\exp\!\left[-\frac1{2\sigma^2}\sum_{i=0}^{n-1}(y_i-m)^2\right],\\
+\widehat m_{\mathrm{MLE}}&amp;=\frac1n\sum_{i=0}^{n-1}y_i,&amp;
+\hsigma^2_{\mathrm{MLE}}&amp;=\frac1n\sum_{i=0}^{n-1}(y_i-\widehat m_{\mathrm{MLE}})^2
 \end{align*}\]</span></p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -2019,18 +2009,20 @@ L(\mu,\sigma^2;y)
 </ul>
 <p>Keep the sampling likelihood; now add prior information about <span class="math inline">\(\theta\)</span>:</p>
 <p><span class="math display">\[\begin{align*}
-\varrho_{\mathrm{post}}(\theta\mid y)
-&amp;=\frac{L(\theta;y)\varrho_{\mathrm{prior}}(\theta)}{\varrho_Y(y)}\\
-&amp;\propto L(\theta;y)\varrho_{\mathrm{prior}}(\theta)
+\varrho_{\mathrm{post}}(\theta\mid y_{\mathrm{obs}})
+&amp;=\frac{L(\theta;y_{\mathrm{obs}})\varrho_{\mathrm{prior}}(\theta)}{\varrho_D(y_{\mathrm{obs}})}\\
+&amp;\propto L(\theta;y_{\mathrm{obs}})\varrho_{\mathrm{prior}}(\theta)
 \end{align*}\]</span></p>
 </section>
 <section class="slide level2">
 
 <h3 id="computing-posterior-summaries">Computing posterior summaries</h3>
 <ul>
-<li>The evidence <span class="math inline">\(\varrho_Y(y)\)</span> depends only on the observed data</li>
+<li>The evidence <span class="math inline">\(\varrho_D(y_{\mathrm{obs}})\)</span> depends only on the observed data</li>
 <li>MCMC needs only the <span class="alert">unnormalized posterior</span></li>
-<li>Posterior samples estimate means, quantiles, credible intervals, and other summaries</li>
+<li>Target samples <span class="math inline">\(X_i=\Theta_i\)</span> represent <span class="math inline">\(\varrho_{\mathrm{post}}(\cdot\mid y_{\mathrm{obs}})\)</span></li>
+<li>For a summary <span class="math inline">\(Y_i=f(X_i)\)</span>, estimate <span class="math inline">\(\mu=\Ex_{\mathrm{post}}[f(X)]\)</span> by averaging</li>
+<li>Posterior quantiles and credible intervals use the sampled distribution</li>
 <li>Optimization of the unnormalized posterior yields a maximum a posteriori estimate</li>
 </ul>
 <div class="key-point">
@@ -2047,25 +2039,25 @@ L(\mu,\sigma^2;y)
 </div>
 
 <p>First distinguish <span class="alert">full input durations</span> from <span class="alert">event-state clocks</span>.</p>
-<p>Assume the random inputs are mutually independent:</p>
+<p>Full durations are quantile transforms of uniform inputs; assume they are mutually independent:</p>
 <p><span class="math display">\[
-U_k\sim F_A \quad\text{($k$th interarrival duration)},
+D_{k}^{\mathrm{arr}}\sim F_A \quad\text{($k$th interarrival duration)},
 \qquad
-V_j\sim F_S \quad\text{(customer $j$'s full service time)}.
+D_{j}^{\mathrm{srv}}\sim F_S \quad\text{(customer $j$'s full service time)}.
 \]</span></p>
-<p>Immediately after event <span class="math inline">\(i\)</span>, the <span class="alert">state</span> is <span class="math inline">\(\vX_i=(A_i,N_i,S_i), \qquad i=0,1,\ldots\)</span>, where</p>
+<p>Immediately after event <span class="math inline">\(i\)</span>, the <span class="alert">state</span> is <span class="math inline">\(\vQ_i=(A_i,N_i,S_i), \qquad i=0,1,\ldots\)</span>, where</p>
 <p><span class="math display">\[\begin{align*}
 A_i&amp;=\text{time until the next arrival},\\
 N_i&amp;=\text{number of customers in the system},\\
 S_i&amp;=\text{remaining service time}, \qquad S_i=\infty\text{ when the server is idle}
 \end{align*}\]</span></p>
 <ul>
-<li><p>At the <span class="math inline">\(k\)</span>th arrival, load the next arrival clock with <span class="math inline">\(U_{k+1}\)</span></p></li>
-<li><p>When customer <span class="math inline">\(j\)</span> begins service, load the service clock with <span class="math inline">\(V_j\)</span></p></li>
-<li><p>For performance, also track <span class="math inline">\(W_j=\)</span> accumulated time in the system for customer <span class="math inline">\(j\)</span></p></li>
+<li><p>At the <span class="math inline">\(k\)</span>th arrival, load the next arrival clock with <span class="math inline">\(D_{k+1}^{\mathrm{arr}}\)</span></p></li>
+<li><p>When customer <span class="math inline">\(j\)</span> begins service, load the service clock with <span class="math inline">\(D_{j}^{\mathrm{srv}}\)</span></p></li>
+<li><p>For performance, also track <span class="math inline">\(\tau_j=\)</span> accumulated time in the system for customer <span class="math inline">\(j\)</span></p></li>
 </ul>
 <div class="key-point">
-<p>The state <span class="math inline">\(\vX_i\)</span> determines the next-event law. The <span class="math inline">\(W_j\)</span> clocks measure customer time but do not affect that law</p>
+<p>The state <span class="math inline">\(\vQ_i\)</span> determines the next-event law. The <span class="math inline">\(\tau_j\)</span> clocks measure customer time but do not affect that law</p>
 </div>
 </section>
 <section class="slide level2">
@@ -2074,20 +2066,20 @@ S_i&amp;=\text{remaining service time}, \qquad S_i=\infty\text{ when the server 
 <ul>
 <li><p>The next event occurs after <span class="math inline">\(\Delta t_i=\min(A_i,S_i)\)</span></p>
 <ul>
-<li><span class="alert"><strong>Arrival:</strong></span> <span class="math inline">\(A_i&lt;S_i\)</span></li>
-<li><span class="alert"><strong>Service completion:</strong></span> <span class="math inline">\(S_i\leq A_i\)</span></li>
+<li><span class="alert">Arrival:</span> <span class="math inline">\(A_i&lt;S_i\)</span></li>
+<li><span class="alert">Service completion:</span> <span class="math inline">\(S_i\leq A_i\)</span></li>
 </ul></li>
 <li><p>During the interval from event <span class="math inline">\(i\)</span> to event <span class="math inline">\(i+1\)</span></p>
 <ul>
-<li>Simulated time: <span class="math inline">\(T_{i+1}=T_i+\Delta t_i\)</span></li>
+<li>Simulated time: <span class="math inline">\(t_{i+1}=t_i+\Delta t_i\)</span></li>
 <li>Both active state clocks count down by <span class="math inline">\(\Delta t_i\)</span></li>
-<li>Each customer present gains <span class="math inline">\(W_j\leftarrow W_j+\Delta t_i\)</span></li>
+<li>Each customer present gains <span class="math inline">\(\tau_j\leftarrow \tau_j+\Delta t_i\)</span></li>
 </ul></li>
 <li><p>At the event</p>
 <ul>
 <li>Update <span class="math inline">\(N_{i+1}\)</span></li>
-<li>On arrival, set the new customer’s <span class="math inline">\(W_j=0\)</span></li>
-<li>On service completion, record the departing customer’s <span class="math inline">\(W_j\)</span></li>
+<li>On arrival, set the new customer’s <span class="math inline">\(\tau_j=0\)</span></li>
+<li>On service completion, record the departing customer’s <span class="math inline">\(\tau_j\)</span></li>
 <li>Load each clock that starts anew with its next full input duration</li>
 <li>Carry every other active clock’s residual time forward</li>
 </ul></li>
@@ -2097,41 +2089,41 @@ S_i&amp;=\text{remaining service time}, \qquad S_i=\infty\text{ when the server 
 
 <h3 id="markov-interpretation">Markov interpretation</h3>
 <div class="key-point">
-<p>If we jump into the process at <span class="math inline">\(i=47\)</span>, knowing <span class="math inline">\(\vX_{47}=(A_{47},N_{47},S_{47})\)</span> and using future independent input durations lets us continue with <span class="math inline">\(\vX_{48},\vX_{49},\ldots\)</span> without knowing the earlier queue states <span class="math inline">\(\vX_0,\ldots,\vX_{46}\)</span></p>
+<p>If we jump into the process at <span class="math inline">\(i=47\)</span>, knowing <span class="math inline">\(\vQ_{47}=(A_{47},N_{47},S_{47})\)</span> and using future independent input durations lets us continue with <span class="math inline">\(\vQ_{48},\vQ_{49},\ldots\)</span> without knowing the earlier queue states <span class="math inline">\(\vQ_0,\ldots,\vQ_{46}\)</span></p>
 </div>
 <ul>
 <li>The residual clocks belong in the state because a partially elapsed duration generally does not have the same distribution as a newly drawn full duration</li>
 </ul>
-<p><strong>Example.</strong> If <span class="math inline">\(V_j\sim\Unif(4,8)\)</span> and five minutes of customer <span class="math inline">\(j\)</span>’s service have elapsed, the remaining time has distribution</p>
+<p><span class="alert">Example.</span> If <span class="math inline">\(D_{j}^{\mathrm{srv}}\sim\Unif(4,8)\)</span> and five minutes of customer <span class="math inline">\(j\)</span>’s service have elapsed, the remaining time has distribution</p>
 <p><span class="math display">\[
-V_j-5\mid V_j&gt;5\sim\Unif(0,3), \qquad \text{not }\Unif(4,8)
+D_{j}^{\mathrm{srv}}-5\mid D_{j}^{\mathrm{srv}}&gt;5\sim\Unif(0,3), \qquad \text{not }\Unif(4,8)
 \]</span></p>
 <ul>
-<li>In the taxi example, the interarrival durations <span class="math inline">\(U_k\)</span> were exponential and therefore memoryless:</li>
+<li>In the taxi example, the interarrival durations <span class="math inline">\(D_{k}^{\mathrm{arr}}\)</span> were exponential and therefore memoryless:</li>
 </ul>
 <p><span class="math display">\[
-U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
+D_{k}^{\mathrm{arr}}-t\mid D_{k}^{\mathrm{arr}}&gt;t\sim\Exp(\lambda)
 \]</span></p>
 </section>
 <section class="slide level2">
 
 <h3 id="event-driven-queue-simulation">Event-driven queue simulation</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="" aria-label="1"></a>Initialize i = 0, T[0] = 0, A[0] = U_1, N[0] = 0, S[0] = infinity</span>
-<span id="cb1-2"><a href="" aria-label="2"></a>while i &lt; i_max and T[i] &lt; T_max:  # event or simulated-time limit</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource text number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href="" aria-label="1"></a>Initialize i = 0, t[0] = 0, A[0] = arrival_duration[1], N[0] = 0, S[0] = infinity</span>
+<span id="cb1-2"><a href="" aria-label="2"></a>while i &lt; i_max and t[i] &lt; t_max:  # event or simulated-time limit</span>
 <span id="cb1-3"><a href="" aria-label="3"></a>    delta_t_i = min(A[i], S[i])  # S[i] = infinity while idle</span>
-<span id="cb1-4"><a href="" aria-label="4"></a>    if T[i] + delta_t_i &gt;= T_max: stop at T_max without processing the event</span>
-<span id="cb1-5"><a href="" aria-label="5"></a>    T[i+1] = T[i] + delta_t_i</span>
+<span id="cb1-4"><a href="" aria-label="4"></a>    if t[i] + delta_t_i &gt;= t_max: stop at t_max without processing the event</span>
+<span id="cb1-5"><a href="" aria-label="5"></a>    t[i+1] = t[i] + delta_t_i</span>
 <span id="cb1-6"><a href="" aria-label="6"></a>    if A[i] &lt; S[i]:  # arrival</span>
 <span id="cb1-7"><a href="" aria-label="7"></a>        N[i+1] = N[i] + 1</span>
-<span id="cb1-8"><a href="" aria-label="8"></a>        A[i+1] = next unused U_k</span>
+<span id="cb1-8"><a href="" aria-label="8"></a>        A[i+1] = next unused arrival_duration[k]</span>
 <span id="cb1-9"><a href="" aria-label="9"></a>        if N[i] == 0:</span>
-<span id="cb1-10"><a href="" aria-label="10"></a>            S[i+1] = V_j for the arriving customer j</span>
+<span id="cb1-10"><a href="" aria-label="10"></a>            S[i+1] = service_duration[j] for the arriving customer j</span>
 <span id="cb1-11"><a href="" aria-label="11"></a>        else: S[i+1] = S[i] - delta_t_i</span>
 <span id="cb1-12"><a href="" aria-label="12"></a>    else:  # service completion</span>
 <span id="cb1-13"><a href="" aria-label="13"></a>        N[i+1] = N[i] - 1</span>
 <span id="cb1-14"><a href="" aria-label="14"></a>        A[i+1] = A[i] - delta_t_i</span>
 <span id="cb1-15"><a href="" aria-label="15"></a>        if N[i+1] &gt; 0:</span>
-<span id="cb1-16"><a href="" aria-label="16"></a>            S[i+1] = V_j for the next customer j</span>
+<span id="cb1-16"><a href="" aria-label="16"></a>            S[i+1] = service_duration[j] for the next customer j</span>
 <span id="cb1-17"><a href="" aria-label="17"></a>        else: S[i+1] = infinity</span>
 <span id="cb1-18"><a href="" aria-label="18"></a>    i = i + 1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><span class="alert">Events replace fixed time steps</span>, avoiding work when nothing changes</p>
@@ -2152,20 +2144,20 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Interarrival <span class="math inline">\(U_k\)</span></td>
+<td style="text-align: left;">Interarrival <span class="math inline">\(D_{k}^{\mathrm{arr}}\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(2\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(1.5\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(5\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Service <span class="math inline">\(V_j\)</span></td>
+<td style="text-align: left;">Service <span class="math inline">\(D_{j}^{\mathrm{srv}}\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(5\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(1\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(4\)</span></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Example.</strong> Start empty at <span class="math inline">\(T_0=0\)</span>; <span class="math inline">\(\Delta t_i\)</span> is the time to the next event.</p>
+<p><span class="alert">Example.</span> Start empty at <span class="math inline">\(t_0=0\)</span>; <span class="math inline">\(\Delta t_i\)</span> is the time to the next event.</p>
 <div class="columns">
 <div class="column" style="width:63%;">
 <table class="caption-top">
@@ -2173,7 +2165,7 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <tr class="header">
 <th style="text-align: right;"><span class="math inline">\(i\)</span></th>
 <th style="text-align: left;">Event <span class="math inline">\(i\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(T_i\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(t_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(A_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(N_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(S_i\)</span></th>
@@ -2234,8 +2226,8 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <thead>
 <tr class="header">
 <th style="text-align: right;">After event</th>
-<th style="text-align: right;"><span class="math inline">\(W_1\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(W_2\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\tau_1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\tau_2\)</span></th>
 </tr>
 </thead>
 <tbody>
@@ -2268,7 +2260,7 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 </table>
 </div></div>
 <aside class="notes">
-<p>Thus the four transitions are arrival to an idle server, arrival to a busy server, service completion with another customer waiting, and service completion leaving the system empty. The first two arrivals consume all three interarrival draws: the initial draw is 2, then the two arrivals draw 1.5 and 5. Only the first arrival and the first service completion begin service, so the third service draw, 4, remains unused. The third customer has not arrived by event 4, so <span class="math inline">\(W_3\)</span> remains unavailable.</p>
+<p>Thus the four transitions are arrival to an idle server, arrival to a busy server, service completion with another customer waiting, and service completion leaving the system empty. The first two arrivals consume all three interarrival draws: the initial draw is 2, then the two arrivals draw 1.5 and 5. Only the first arrival and the first service completion begin service, so the third service draw, 4, remains unused. The third customer has not arrived by event 4, so <span class="math inline">\(\tau_3\)</span> remains unavailable.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2284,7 +2276,7 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <section class="slide level2">
 
 <h3 id="exstar-queue-simulation-exercise"><span class="math inline">\(\exstar\)</span> Queue simulation exercise</h3>
-<p>For each table, start <span class="alert">empty at <span class="math inline">\(T_0=0\)</span></span>. Process events until the supplied draws <span class="alert">no longer determine which event comes next</span>; do not invent another draw.</p>
+<p>For each table, start <span class="alert">empty at <span class="math inline">\(t_0=0\)</span></span>. Process events until the supplied draws <span class="alert">no longer determine which event comes next</span>; do not invent another draw.</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -2296,13 +2288,13 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Interarrival <span class="math inline">\(U_k\)</span></td>
+<td style="text-align: left;">Interarrival <span class="math inline">\(D_{k}^{\mathrm{arr}}\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(3\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(5\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(4\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Service <span class="math inline">\(V_j\)</span></td>
+<td style="text-align: left;">Service <span class="math inline">\(D_{j}^{\mathrm{srv}}\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(1\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(2\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(6\)</span></td>
@@ -2320,13 +2312,13 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Interarrival <span class="math inline">\(U_k\)</span></td>
+<td style="text-align: left;">Interarrival <span class="math inline">\(D_{k}^{\mathrm{arr}}\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(1\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(2\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(6\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Service <span class="math inline">\(V_j\)</span></td>
+<td style="text-align: left;">Service <span class="math inline">\(D_{j}^{\mathrm{srv}}\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(5\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(2\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(4\)</span></td>
@@ -2344,13 +2336,13 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Interarrival <span class="math inline">\(U_k\)</span></td>
+<td style="text-align: left;">Interarrival <span class="math inline">\(D_{k}^{\mathrm{arr}}\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(2\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(1\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(1\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Service <span class="math inline">\(V_j\)</span></td>
+<td style="text-align: left;">Service <span class="math inline">\(D_{j}^{\mathrm{srv}}\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(5\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(2\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(6\)</span></td>
@@ -2365,7 +2357,7 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 <thead>
 <tr class="header">
 <th style="text-align: right;"><span class="math inline">\(i\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(T_i\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(t_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(A_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(N_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(S_i\)</span></th>
@@ -2430,13 +2422,13 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 </tr>
 </tbody>
 </table>
-<p>The event sequence is arrival 1, service completion 1, arrival 2, service completion 2, arrival 3. The completed customer times are <span class="math inline">\(W_1=1\)</span> and <span class="math inline">\(W_2=2\)</span>; customer 3 has <span class="math inline">\(W_3=0\)</span> so far. All three service draws have been used.</p>
+<p>The event sequence is arrival 1, service completion 1, arrival 2, service completion 2, arrival 3. The completed customer times are <span class="math inline">\(\tau_1=1\)</span> and <span class="math inline">\(\tau_2=2\)</span>; customer 3 has <span class="math inline">\(\tau_3=0\)</span> so far. All three service draws have been used.</p>
 <p>For the second table, the completed state table is</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
 <th style="text-align: right;"><span class="math inline">\(i\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(T_i\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(t_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(A_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(N_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(S_i\)</span></th>
@@ -2501,13 +2493,13 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 </tr>
 </tbody>
 </table>
-<p>The event sequence is arrival 1, arrival 2, service completion 1, service completion 2, arrival 3. The completed customer times are <span class="math inline">\(W_1=5\)</span> and <span class="math inline">\(W_2=5\)</span>; customer 3 has <span class="math inline">\(W_3=0\)</span> so far. All three service draws have been used.</p>
+<p>The event sequence is arrival 1, arrival 2, service completion 1, service completion 2, arrival 3. The completed customer times are <span class="math inline">\(\tau_1=5\)</span> and <span class="math inline">\(\tau_2=5\)</span>; customer 3 has <span class="math inline">\(\tau_3=0\)</span> so far. All three service draws have been used.</p>
 <p>For the third table, the completed state table is</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
 <th style="text-align: right;"><span class="math inline">\(i\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(T_i\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(t_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(A_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(N_i\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(S_i\)</span></th>
@@ -2554,7 +2546,7 @@ U_k-t\mid U_k&gt;t\sim\Exp(\lambda)
 </tr>
 </tbody>
 </table>
-<p>The event sequence is arrival 1, arrival 2, arrival 3. No customer has departed; the accumulated times are <span class="math inline">\(W_1=2\)</span>, <span class="math inline">\(W_2=1\)</span>, and <span class="math inline">\(W_3=0\)</span>. Service draws <span class="math inline">\(V_2=2\)</span> and <span class="math inline">\(V_3=6\)</span> remain unused because only customer 1 has begun service.</p>
+<p>The event sequence is arrival 1, arrival 2, arrival 3. No customer has departed; the accumulated times are <span class="math inline">\(\tau_1=2\)</span>, <span class="math inline">\(\tau_2=1\)</span>, and <span class="math inline">\(\tau_3=0\)</span>. Service draws <span class="math inline">\(D_{2}^{\mathrm{srv}}=2\)</span> and <span class="math inline">\(D_{3}^{\mathrm{srv}}=6\)</span> remain unused because only customer 1 has begun service.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-09-30">
+  <meta name="dcterms.date" content="2026-10-01">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -643,7 +643,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">September 30, 2026</p>
+  <p class="date">October 1, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-04-overview">
 <h1>Course Map</h1>
@@ -681,7 +681,7 @@ Course decks
 
 </div><div class="column" style="width:60%;">
 <div class="deck-map-theme">
-<p><span class="alert">Reducing variance (or variation) <br>per unit of work</span></p>
+<p>Reducing <span class="alert">variance</span> (or <span class="alert">variation</span>) <br>per unit of <span class="alert">work</span></p>
 </div>
 </div></div>
 <div class="deck-section-links">
@@ -721,45 +721,38 @@ This deck
   <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
 </div>
 
-<p>Suppose</p>
-<p><span class="math display">\[
-\mu=\Ex[\underbrace{f(\vX)}_{\text{original}}]
-   =\Ex[\underbrace{g(\vX)}_{\text{alternative}}],
-\qquad \vX\sim\Unif[0,1]^d
-\]</span></p>
-<p>For samples <span class="math inline">\(\vX_0,\ldots,\vX_{n-1}\)</span>, define two sample means:</p>
+<p>Keep the <span class="alert">target</span> quantity, but change its computational representation:</p>
+<p><span class="math display">\[\begin{gather*}
+\vX\sim\varrho_{\mathrm{tar}},\quad Y=f(\vX),\qquad
+\vZ\sim\varrho_{\mathrm{prop}},\quad \widetilde Y=g(\vZ) \\
+\alerttext{And} \quad \mu=\Ex(Y) = \Ex(\widetilde Y)
+\end{gather*}\]</span></p>
+<p>Two sample means estimate the same <span class="math inline">\(\mu\)</span>:</p>
 <p><span class="math display">\[\begin{align*}
 \hmu_{f,n}&amp;=\frac1n\sum_{i=0}^{n-1}f(\vX_i),&amp;
-\hmu_{g,n}&amp;=\frac1n\sum_{i=0}^{n-1}g(\vX_i)
+\hmu_{g,n}&amp;=\frac1n\sum_{i=0}^{n-1}g(\vZ_i)
 \end{align*}\]</span></p>
-<p>Seek an <span class="alert">alternative</span> <span class="math inline">\(g\)</span> that estimates <span class="math inline">\(\mu\)</span> with better accuracy for the same computational work</p>
 <ul>
-<li><p>Often, a useful alternative is <span class="alert">flatter</span> across the input space</p></li>
-<li><p>May not affect the rate of decay of error, but <span class="alert">decrease the leading constant</span></p></li>
+<li>Change the function, the sampling distribution, or both</li>
+<li>Seek lower error for comparable computational <span class="alert">work</span></li>
+<li>Changing only the function gives the special case <span class="math inline">\(g(\vX)\)</span></li>
 </ul>
 </section>
 <section class="slide level2">
 
 <h3 id="variance-reduction">Variance reduction</h3>
-<p>For IID samples, both sample means are unbiased; their MSEs are their variances:</p>
+<p>For IID samples and finite second moments, both sample means are unbiased:</p>
 <p><span class="math display">\[\begin{align*}
-\var(\hmu_{f,n})&amp;=\frac{\var\{f(\vX)\}}n,&amp;
-\var(\hmu_{g,n})&amp;=\frac{\var\{g(\vX)\}}n
+\var(\hmu_{f,n})&amp;=\frac{\var_{\mathrm{tar}}\{f(\vX)\}}n,&amp;
+\var(\hmu_{g,n})&amp;=\frac{\var_{\mathrm{prop}}\{g(\vZ)\}}n
 \end{align*}\]</span></p>
-<p>IID RMSE is <span class="alert"><span class="math inline">\(\Order(n^{-1/2})\)</span></span></p>
-<p>&nbsp;</p>
-<p><span class="alert">Randomized low discrepancy</span> points</p>
-<ul>
-<li><p>Are individually uniform but dependent: the sample means remain unbiased</p></li>
-<li><p>The IID variance formula does not apply</p></li>
-<li><p>For sufficiently smooth <span class="math inline">\(f\)</span> or <span class="math inline">\(g\)</span>, random scrambling gives</p>
-<ul>
-<li><p><span class="math inline">\(\var(\hmu_{n})\)</span> nearly <span class="alert"><span class="math inline">\(\Order(n^{-3})\)</span></span></p></li>
-<li><p>RMSE of nearly <span class="alert"><span class="math inline">\(\Order(n^{-3/2})\)</span></span></p></li>
-</ul></li>
-</ul>
+<p>Their MSEs equal their variances; IID RMSE is <span class="alert"><span class="math inline">\(\Order(n^{-1/2})\)</span></span></p>
+<div class="key-point">
+<p>Equal <span class="alert">means</span> allow different output distributions and different <span class="alert">variances</span></p>
+</div>
+<p>For <span class="alert">randomized</span> low discrepancy inputs, dependence changes the variance formula</p>
 <aside class="notes">
-<p>Deck 01 showed that accepting some bias can reduce MSE. Here the estimators are unbiased, so lower estimator variance means lower RMSE. The rate statement is for nested scrambled nets and sufficiently smooth integrands, not every randomized low discrepancy method or integrand. <a href="https://doi.org/10.1214/aos/1069362380">Owen (1997)</a> provides the variance result. Since the estimator is unbiased, its RMSE is the square root of its variance.</p>
+<p>The two methods need not be independent of one another for these individual variance formulas. Each method needs independent replicates internally. Compare computational costs as well as the variance of one contribution. Deck 01 showed that accepting some bias can reduce MSE; here we compare unbiased estimators. Degenerate zero-variance cases need no asymptotic rate.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -775,43 +768,89 @@ This deck
 <section class="slide level2">
 
 <h3 id="variation-reduction-for-low-discrepancy-sampling">Variation reduction for low discrepancy sampling</h3>
-<p>Keep the nodes <span class="math inline">\(P_n=\{\vx_0,\ldots,\vx_{n-1}\}\)</span> fixed, but choose an equivalent integrand:</p>
+<p>To compare designs on the unit cube, make the uniform inputs explicit:</p>
+<p><span class="math display">\[\begin{align*}
+\vX&amp;=\vT(\vU),&amp; h_f(\vu)&amp;=f\bigl(\vT(\vu)\bigr),\\
+\vZ&amp;=\vS(\vU),&amp; h_g(\vu)&amp;=g\bigl(\vS(\vu)\bigr)
+\end{align*}\]</span></p>
+<p>Both cube integrands have integral <span class="math inline">\(\mu\)</span>; keep the nodes <span class="math inline">\(\vu_0,\ldots,\vu_{n-1}\)</span> fixed</p>
+<p>For <span class="math inline">\(h_g\in\mathcal H_K\)</span> and uniform distribution <span class="math inline">\(F_{\mathrm{unif}}\)</span>,</p>
 <p><span class="math display">\[
-\mu=\int_{[0,1]^d}f(\vx)\,\dif\vx
-   =\int_{[0,1]^d}g(\vx)\,\dif\vx
-\]</span></p>
-<p>For <span class="math inline">\(g\in\mathcal H_K\)</span> and uniform target <span class="math inline">\(F\)</span>, the <a href="03-markov-chain-monte-carlo.html#worst-case-integration-error">worst-case error bound</a> gives</p>
-<p><span class="math display">\[
-\left|\mu-\frac1n\sum_{i=0}^{n-1}g(\vx_i)\right|
-\le D(P_n,F;K)\norm{g}_{\mathcal H_K}
+\left|\mu-\frac1n\sum_{i=0}^{n-1}h_g(\vu_i)\right|
+\le D\bigl(\{\vu_i\}_{i=0}^{n-1},F_{\mathrm{unif}};K\bigr)\norm{h_g}_{\mathcal H_K}
 \]</span></p>
 <ul>
-<li>The nodes determine discrepancy <span class="math inline">\(D(P_n,F;K)\)</span>, which is typically nearly <span class="alert"><span class="math inline">\(\Order(n^{-1})\)</span></span></li>
-<li>The integrand determines its kernel-dependent variation <span class="math inline">\(\norm{g}_{\mathcal H_K}\)</span></li>
+<li>Nodes determine <span class="alert">discrepancy</span>; the composed cube integrand determines <span class="alert">variation</span></li>
+<li>Seek a smaller <span class="math inline">\(\norm{h_g}_{\mathcal H_K}\)</span> for the same nodes and kernel</li>
 </ul>
-<div class="key-point">
-<p>For fixed low discrepancy nodes, seek an equivalent integrand with smaller variation to tighten the error bound</p>
-</div>
+<aside class="notes">
+<p>The notation <span class="math inline">\(\vT\)</span> identifies a transport from uniform inputs to the target; <span class="math inline">\(\vS\)</span> generates proposal draws. Neither map must be displayed when uniform inputs are incidental. This common-cube comparison assumes compatible input dimensions; conditioning can reduce dimension. The bound is the Deck 03 worst-case integration-error bound. For sufficiently smooth composed cube integrands, nested uniform scrambling gives variance nearly <span class="math inline">\(\Order(n^{-3})\)</span> and RMSE nearly <span class="math inline">\(\Order(n^{-3/2})\)</span>. This is not a guarantee for every randomization or integrand. <a href="https://doi.org/10.1214/aos/1069362380">Owen (1997)</a> provides the variance result.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
 <h3 id="the-keister-example">The Keister example</h3>
-<p>Consider</p>
+<p>Write the original integral as a target expectation:</p>
+<p><span class="math display">\[\begin{gather*}
+\mu=\int_{\reals^d}\cos(\norm{\vx})\me^{-\norm{\vx}^2}\,\dif\vx
+=\Ex_{\mathrm{tar}}[f(\vX)],\\
+\vX\sim\Norm(\vzero,\mI_d/2),\qquad
+f(\vx)=\mpi^{d/2}\cos(\norm{\vx})
+\end{gather*}\]</span></p>
+<p>Choose <span class="math inline">\(\vZ_a\sim\Norm(\vzero,\mI_d/a^2)\)</span> and apply a <span class="alert">density correction</span>:</p>
 <p><span class="math display">\[
-\mu=\int_{\reals^d}\cos(\norm{\vt})\exp(-\norm{\vt}^2)\,\dif\vt
+g_a(\vz)=\frac{(2\mpi)^{d/2}}{a^d}
+\cos(\norm{\vz})\exp\bigl[-(1-a^2/2)\norm{\vz}^2\bigr]
 \]</span></p>
-<p>For <span class="math inline">\(j=1,\ldots,d\)</span>, set <span class="math inline">\(x_j=\Phi(a t_j)\)</span>, so <span class="math inline">\(t_j=\Phi^{-1}(x_j)/a\)</span>, where <span class="math inline">\(\Phi\)</span> is the standard normal CDF</p>
-<p>Define <span class="math inline">\(\vz(\vx)=(\Phi^{-1}(x_j))_{j=1}^d\)</span>. For <span class="math inline">\(0&lt;a\le\sqrt2\)</span>:</p>
+<p>Every <span class="math inline">\(a&gt;0\)</span> gives <span class="math inline">\(\Ex[g_a(\vZ_a)]=\mu\)</span>; changing <span class="math inline">\(a\)</span> changes the contribution</p>
+</section>
+<section class="slide level2">
+
+<h3 id="keister-on-the-unit-cube">Keister on the unit cube</h3>
+<p>Set <span class="math inline">\(\vS_a(\vu)=\bigl(\Phi^{-1}(u_j)/a\bigr)_{j=1}^d\)</span> and <span class="math inline">\(h_a(\vu)=g_a\bigl(\vS_a(\vu)\bigr)\)</span></p>
+<p>With <span class="math inline">\(\vq(\vu)=\bigl(\Phi^{-1}(u_j)\bigr)_{j=1}^d\)</span>,</p>
+<p><span class="math display">\[
+h_a(\vu)=\frac{(2\mpi)^{d/2}}{a^d}
+\cos\bigl(\norm{\vq(\vu)}/a\bigr)
+\exp\bigl[-(2-a^2)\norm{\vq(\vu)}^2/(2a^2)\bigr]
+\]</span></p>
 <div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Verify by a change of variables that</span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Verify <span class="math inline">\(g_a=f\varrho_{\mathrm{tar}}/\varrho_{\mathrm{prop},a}\)</span> and <span class="math inline">\(\int_{[0,1]^d}h_a(\vu)\,\dif\vu=\mu\)</span></span></p>
 </div>
-<p><span class="math display">\[\begin{align*}
-\mu
-&amp;=\int_{[0,1]^d}\frac{(2\mpi)^{d/2}}{a^d}
-\cos\bigl(\norm{\vz(\vx)}/a\bigr)\,\exp\bigl[-(2-a^2)\norm{\vz(\vx)}^2/(2a^2)\bigr]\,\dif\vx
-\end{align*}\]</span></p>
-<p>Varying <span class="math inline">\(a\)</span> gives a <span class="alert">family</span> of alternative integrands <span class="math inline">\(g_a\)</span> with the same integral <span class="math inline">\(\mu\)</span>; choose <span class="math inline">\(a\)</span> to reduce estimator variance or integrand variation</p>
-<p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/KeisterExample.ipynb">Explore the choices of <span class="math inline">\(a\)</span> in the Keister notebook</a></p>
+<ul>
+<li><span class="math inline">\(0&lt;a^2\le2\)</span>: <span class="math inline">\(h_a\)</span> is <span class="alert">bounded</span>; <span class="math inline">\(a=\sqrt2\)</span> gives <span class="math inline">\(g_a=f\)</span></li>
+<li><span class="math inline">\(2&lt;a^2&lt;4\)</span>: <span class="math inline">\(h_a\)</span> is <span class="alert">unbounded</span> but has <span class="alert">finite</span> variance, including <span class="math inline">\(a=1.6\)</span></li>
+<li><span class="math inline">\(a^2\ge4\)</span>: <span class="alert">infinite</span> variance</li>
+</ul>
+<p>Choose <span class="math inline">\(a\)</span> by estimator variance or cube-integrand variation</p>
+<aside class="notes">
+<p>Every positive <span class="math inline">\(a\)</span> preserves the mean. The second moment is <span class="math display">\[
+\Ex[g_a(\vZ_a)^2]=\frac{(2\mpi)^{d/2}}{a^d}
+\int_{\reals^d}\cos^2(\norm{\vz})
+\exp\bigl[-(2-a^2/2)\norm{\vz}^2\bigr]\,\dif\vz.
+\]</span> It is finite precisely when <span class="math inline">\(a^2&lt;4\)</span>. For <span class="math inline">\(2&lt;a^2&lt;4\)</span>, the cube-boundary singularity is mild enough for square integrability. At <span class="math inline">\(a^2=4\)</span>, Gaussian decay disappears and the squared cosine cannot provide cancellation; for larger <span class="math inline">\(a^2\)</span>, the envelope grows. The notebook uses <span class="math inline">\(a=1.6\)</span> to explore an unbounded integrand that still has finite variance.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/KeisterExample.ipynb">Explore <span class="math inline">\(a\)</span> in the Keister notebook</a></p>
 </section>
 <section id="transforming-an-integral" class="slide level2 tree-marker-slide" data-tree-marker="analysis-importance">
 <h2>Transforming an integral</h2>
@@ -821,65 +860,89 @@ This deck
   <div class="tree-component__label" data-label-id="importance-sampling" style="--tree-left: 31%; --tree-top: 35%; --tree-align: center;">Importance<br>Sampling</div>
 </div>
 
-<p>To approximate <span class="math inline">\(\mu=\int_{\mathcal T}g(\vt)\,\dif \vt\)</span>, choose an invertible map</p>
-<p><span class="math display">\[
-\vt=\psi(\vx),
-\qquad \psi:\mathcal X\to\mathcal T,\quad \mathcal X,\mathcal T\subseteq\reals^d
-\]</span></p>
-<p>Let <span class="math inline">\(J(\vx;\psi)=\det\{\partial\psi_i/\partial x_j\}_{i,j=1}^d\)</span></p>
-<p>If <span class="math inline">\(\vX\)</span> has density <span class="math inline">\(\varrho_{\vX}\)</span>, then</p>
+<p>Start with <span class="math inline">\(\displaystyle \mu=\Ex_{\mathrm{tar}}[f(\vX)]=\int_{\mathcal X}f(\vx)\varrho_{\mathrm{tar}}(\vx)\,\dif\vx\)</span></p>
+<p>Choose an <span class="alert">invertible</span> differentiable map <span class="math inline">\(\vT:\mathcal Z\to\mathcal X\)</span> and <span class="math inline">\(\vZ\sim\varrho_{\mathrm{prop}}\)</span> covering the required support</p>
 <p><span class="math display">\[\begin{align*}
-\mu
-&amp;=\int_{\mathcal X}g\bigl(\psi(\vx)\bigr)\abs{J(\vx;\psi)}\,\dif \vx\\
-&amp;=\Ex_{\vX\sim\varrho_{\vX}}\!\left[
-\frac{g\bigl(\psi(\vX)\bigr)\abs{J(\vX;\psi)}}{\varrho_{\vX}(\vX)}
-\right]
+g(\vz)&amp;=f\bigl(\vT(\vz)\bigr)w_T(\vz),\\
+w_T(\vz)&amp;=
+\frac{\varrho_{\mathrm{tar}}\bigl(\vT(\vz)\bigr)
+\left|\det\nabla\vT(\vz)\right|}
+{\varrho_{\mathrm{prop}}(\vz)}
 \end{align*}\]</span></p>
-<p>For <span class="math inline">\(\vX\sim\Unif[0,1]^d\)</span>, the density in the denominator is one</p>
+<p>Then <span class="math inline">\(\mu=\Ex_{\mathrm{prop}}[g(\vZ)]\)</span>, where <span class="math inline">\(\nabla\vT(\vz)\)</span> is the <span class="alert">Jacobian</span> matrix of <span class="math inline">\(\vT\)</span> and <span class="math inline">\(\left|\det\nabla\vT(\vz)\right|\)</span> is its volume-scaling factor</p>
+<div class="key-point">
+<p>A general change of variables preserves the integral through a correction <span class="alert">weight</span></p>
+</div>
+<aside class="notes">
+<p>Assume the map and inverse meet the change-of-variables theorem’s conditions, and the proposal is positive wherever the transformed integrand is nonzero. The target density is normalized; integrability is required for the expectation. The transformed proposal need not have the specified target density. For a Lebesgue integral <span class="math inline">\(\int r(\vx)\,\dif\vx\)</span>, the same mechanism gives <span class="math inline">\(g(\vz)=r(\vT(\vz))|\det\nabla\vT(\vz)|/
+\varrho_{\mathrm{prop}}(\vz)\)</span> without introducing a target density.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
 <h3 id="transforming-a-random-variable">Transforming a random variable</h3>
-<p>Let <span class="math inline">\(\vZ\)</span> have proposal density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span> and define <span class="math inline">\(\vX=T(\vZ)\)</span> for an invertible map <span class="math inline">\(T:\mathcal Z\to\mathcal X\)</span></p>
-<p>The densities satisfy</p>
-<p><span class="math display">\[\begin{align*}
-\varrho_{\mathrm{tar}}(\vx)
-&amp;=\varrho_{\mathrm{prop}}\bigl(T^{-1}(\vx)\bigr)
-  \left|\det\nabla T^{-1}(\vx)\right|,\\
-\varrho_{\mathrm{tar}}\bigl(T(\vz)\bigr)
-&amp;=\frac{\varrho_{\mathrm{prop}}(\vz)}
-{\left|\det\nabla T(\vz)\right|}
-\end{align*}\]</span></p>
-<p>Therefore</p>
+<p>An <span class="alert">exact transport</span> <span class="math inline">\(\vT:\mathcal Z\to\mathcal X\)</span> satisfies</p>
 <p><span class="math display">\[
-\Ex_{\mathrm{tar}}[f(\vX)]
-=\Ex_{\mathrm{prop}}[f\bigl(T(\vZ)\bigr)]
+\varrho_{\mathrm{tar}}\bigl(\vT(\vz)\bigr)
+\left|\det\nabla\vT(\vz)\right|
+=\varrho_{\mathrm{prop}}(\vz)
 \]</span></p>
-<p><span class="alert">A change of variables in an integral</span> and <span class="alert">a transformation of a random variable</span> are the same mechanism viewed from opposite directions</p>
+<p>Then <span class="math inline">\(w_T(\vz)=1\)</span> wherever <span class="math inline">\(\varrho_{\mathrm{prop}}(\vz)&gt;0\)</span>, and so <span class="math inline">\(\vX=\vT(\vZ)\sim\varrho_{\mathrm{tar}}\)</span>, and</p>
+<p><span class="math display">\[
+g(\vz)=f\bigl(\vT(\vz)\bigr),\qquad
+g(\vZ)\stackrel d=f(\vX)
+\]</span></p>
+<div class="key-point">
+<p>Exact transport preserves the whole output <span class="alert">distribution</span>, including IID variance</p>
+</div>
+<ul>
+<li>Provides access to target samples; construction and evaluation costs can differ</li>
+<li>Different transports can change low discrepancy performance through the cube integrand</li>
+</ul>
 </section>
 <section class="slide level2">
 
-<h3 id="transport-makes-importance-weights-constant">Transport makes importance weights constant</h3>
-<p>For any invertible map <span class="math inline">\(T\)</span>,</p>
-<p><span class="math display">\[\begin{align*}
-\mu
-&amp;=\int f(\vx)\varrho_{\mathrm{tar}}(\vx)\,\dif \vx\\
-&amp;=\Ex_{\mathrm{prop}}\!\left[
-f\bigl(T(\vZ)\bigr)
-\underbrace{
-\frac{\varrho_{\mathrm{tar}}\bigl(T(\vZ)\bigr)
-\left|\det\nabla T(\vZ)\right|}
-{\varrho_{\mathrm{prop}}(\vZ)}}_{W_T(\vZ)}
-\right]
-\end{align*}\]</span></p>
-<ul>
-<li><span class="alert">Exact transport</span>: choose <span class="math inline">\(T\)</span> so that <span class="math inline">\(W_T(\vz)=1\)</span> everywhere</li>
-<li><span class="alert">Importance sampling</span>: choose <span class="math inline">\(T(\vz)=\vz\)</span> and retain the varying weight <span class="math inline">\(W_T(\vz)=\varrho_{\mathrm{tar}}(\vz)/
-\varrho_{\mathrm{prop}}(\vz)\)</span></li>
-</ul>
+<h3 id="exact-transport-makes-importance-weights-constant">Exact transport makes importance weights constant</h3>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Choice of map</th>
+<th style="text-align: left;">Correction</th>
+<th style="text-align: left;">Alternative contribution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Exact transport <span class="math inline">\(\vT\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(w_T(\vz)=1\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(f\bigl(\vT(\vZ)\bigr)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Identity map <span class="math inline">\(\vT(\vz)=\vz\)</span> <br>(importance sampling)</td>
+<td style="text-align: left;"><span class="math inline">\(w(\vz)=\varrho_{\mathrm{tar}}(\vz)/\varrho_{\mathrm{prop}}(\vz)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(f(\vZ)w(\vZ)\)</span></td>
+</tr>
+</tbody>
+</table>
 <div class="key-point">
-<p>Transport absorbs the density correction into the map</p>
-<p>Importance sampling carries the correction as a weight</p>
+<p>Exact transport changes <span class="alert">samples</span>; importance sampling changes <span class="alert">contributions</span></p>
+<p>Same expectation <span class="math inline">\(\Ex_{\mathrm{tar}}[f(\vX)]=\Ex_{\mathrm{prop}}[g(\vZ)]=\mu\)</span></p>
+<p><span class="alert">but</span> output distributions and variances may differ (want them to)</p>
 </div>
 </section>
 <section id="importance-sampling" class="slide level2 tree-marker-slide" data-tree-marker="importance-sampling">
@@ -889,35 +952,28 @@ f\bigl(T(\vZ)\bigr)
   <div class="tree-component__label" data-label-id="importance-sampling" style="--tree-left: 31%; --tree-top: 35%; --tree-align: center;">Importance<br>Sampling</div>
 </div>
 
-<p>Choose a proposal density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span> that is positive wherever <span class="math inline">\(f\varrho_{\mathrm{tar}}\)</span> is nonzero:</p>
+<p>Choose <span class="math inline">\(\varrho_{\mathrm{prop}}&gt;0\)</span> wherever <span class="math inline">\(f\varrho_{\mathrm{tar}}\ne0\)</span></p>
 <p><span class="math display">\[\begin{align*}
-\mu
-&amp;=\int f(\vx)\varrho_{\mathrm{tar}}(\vx)\,\dif \vx\\
-&amp;=\Ex_{\vZ\sim\varrho_{\mathrm{prop}}}\!\left[
-f(\vZ)\frac{\varrho_{\mathrm{tar}}(\vZ)}
-{\varrho_{\mathrm{prop}}(\vZ)}
-\right]
+w(\vz)&amp;=\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{prop}}(\vz)},&amp;
+g(\vz)&amp;=f(\vz)w(\vz),\\
+\mu&amp;=\Ex_{\mathrm{tar}}[f(\vX)]
+=\Ex_{\mathrm{prop}}[g(\vZ)]
 \end{align*}\]</span></p>
-<p>The ratio <span class="math inline">\(\varrho_{\mathrm{tar}}/\varrho_{\mathrm{prop}}\)</span> is the <span class="alert">importance weight</span></p>
 <p>For <span class="math inline">\(\vZ_0,\ldots,\vZ_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}\)</span>,</p>
 <p><span class="math display">\[
-\hmu_{\mathrm{IS},n}
-=\frac1n\sum_{i=0}^{n-1}f(\vZ_i)
-\frac{\varrho_{\mathrm{tar}}(\vZ_i)}
-{\varrho_{\mathrm{prop}}(\vZ_i)}
+\hmu_{\mathrm{IS},n}=\frac1n\sum_{i=0}^{n-1}g(\vZ_i)
+=\frac1n\sum_{i=0}^{n-1}f(\vZ_i)w(\vZ_i)
 \]</span></p>
+<p><span class="math inline">\(w\)</span> is the <span class="alert">weight</span> function; <span class="math inline">\(W=w(\vZ)\)</span> is its random value</p>
 </section>
 <section class="slide level2">
 
 <h3 id="one-proposal-two-unbiased-estimators">One proposal, two unbiased estimators</h3>
 <p><span class="math display">\[\begin{gather*}
-\varrho_{\mathrm{prop}}(z)=1,
-\qquad
-\varrho_{\mathrm{tar}}(x)=2x,
-\qquad 0&lt;x,z&lt;1,\\
-\mu=\int_0^1 f(x)\varrho_{\mathrm{tar}}(x)\,\dif x,
-\qquad
-Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1)
+\varrho_{\mathrm{prop}}(z)=1,\qquad
+\varrho_{\mathrm{tar}}(x)=2x,\qquad 0&lt;x,z&lt;1,\\
+Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1),\qquad
+\mu=\Ex_{\mathrm{tar}}[f(X)]
 \end{gather*}\]</span></p>
 <table class="caption-top">
 <colgroup>
@@ -934,33 +990,63 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1)
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Correction</td>
+<td style="text-align: left;">Construction</td>
 <td style="text-align: left;"><span class="math inline">\(T(z)=\sqrt z\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(w(z)=\varrho_{\mathrm{tar}}(z)/\varrho_{\mathrm{prop}}(z)=2z\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(w(z)=2z\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Estimator</td>
-<td style="text-align: left;"><span class="math inline">\(\displaystyle \hmu_{\mathrm{T},n}=\frac1n\sum_{i=0}^{n-1}f\bigl(\sqrt{Z_i}\bigr)\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\displaystyle \hmu_{\mathrm{IS},n}=\frac1n\sum_{i=0}^{n-1}2Z_i f(Z_i)\)</span></td>
+<td style="text-align: left;">Alternative <span class="math inline">\(g(z)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(f(\sqrt z)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(2zf(z)\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Contribution</td>
-<td style="text-align: left;">Unweighted target sample</td>
-<td style="text-align: left;">Weighted proposal sample</td>
+<td style="text-align: left;">Estimator</td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle\frac1n\sum_{i=0}^{n-1}f(\sqrt{Z_i})\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle\frac1n\sum_{i=0}^{n-1}2Z_if(Z_i)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Output distribution</td>
+<td style="text-align: left;">Same as <span class="math inline">\(Y=f(X)\)</span></td>
+<td style="text-align: left;">Generally different from <span class="math inline">\(Y\)</span></td>
 </tr>
 </tbody>
 </table>
 <p><a href="02-generating-samples.html#acceptance-rejection-choosing-which-proposals-to-keep">Deck 02 acceptance–rejection</a>: same proposal, keep <span class="math inline">\(Z\)</span> with probability <span class="math inline">\(Z\)</span></p>
-<div class="key-point">
-<p>Transport changes samples; importance sampling changes contributions</p>
+</section>
+<section class="slide level2">
+
+<h3 id="seeing-the-contribution-variances">Seeing the contribution variances</h3>
+<div id="cell-importance-contributions" class="cell" data-fig-format="svg" data-fig-height="4.6" data-fig-width="13" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="04-improving-efficiency_files/figure-revealjs/importance-contributions-output-1.png" id="importance-contributions" class="quarto-figure quarto-figure-center" alt="Two plots overlay exact-transport contributions g_ET(Z)=f(sqrt(Z)) in blue and importance contributions g_IS(Z)=2Zf(Z) in orange, using the same uniform input Z, one plot for each function. For f(x)=x, importance sampling spreads outputs more widely; for f(x)=1-x, it concentrates them more tightly around their common mean. Markers indicate equally spaced uniform input quantiles." width="1259" height="453"></p>
+</figure>
 </div>
+</div>
+</div>
+<p><span class="math inline">\(g_{\mathrm{ET}}(z)=f(\sqrt z)\)</span>; <span class="math inline">\(g_{\mathrm{IS}}(z)=2zf(z)\)</span>; both use <span class="math inline">\(Z\sim\Unif(0,1)\)</span></p>
+<p>Markers: equally probable input quantiles; dashed line: common mean</p>
+<aside class="notes">
+<p>The dots are deterministic quantile illustrations, not a random Monte Carlo sample. For each curve, each marker represents the midpoint of a probability bin of mass 1/20. Both curves use the same uniform input points (i+1/2)/20. Vertical segments show deviations from the mean. Since both inputs are uniform, variance is the integral of the squared vertical deviations. The two curves in each plot share the same axes. For f(x)=x, importance sampling increases contribution variance by a factor 6.4. For f(x)=1-x, it reduces contribution variance by a factor 2.5. The exact-transport output f(sqrt(Z)) has the same distribution as f(X), so the blue curves also represent the target-output variance.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
 <h3 id="variance-depends-on-the-function">Variance depends on the function</h3>
 <ul>
-<li><span class="alert">Displayed variances</span>: one estimator contribution</li>
-<li><span class="alert">Sample-mean variances</span>: divide by <span class="math inline">\(n\)</span></li>
+<li>Displayed variances: <span class="alert">one</span> estimator contribution</li>
+<li>Sample-mean variances: <span class="alert">divide</span> by <span class="math inline">\(n\)</span></li>
 </ul>
 <table class="caption-top">
 <colgroup>
@@ -974,7 +1060,7 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1)
 <tr class="header">
 <th style="text-align: left;"><span class="math inline">\(f(x)\)</span></th>
 <th style="text-align: right;"><span class="math inline">\(\mu\)</span></th>
-<th style="text-align: right;">Transport: <span class="math inline">\(\var\!\left[f(\sqrt Z)\right]\)</span></th>
+<th style="text-align: right;">Transport: <span class="math inline">\(\var[f(\sqrt Z)]\)</span></th>
 <th style="text-align: right;">Importance sampling: <span class="math inline">\(\var[2Zf(Z)]\)</span></th>
 <th style="text-align: left;">Smaller</th>
 </tr>
@@ -997,29 +1083,24 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1)
 </tbody>
 </table>
 <div class="key-point">
-<p><span class="alert">No universal variance winner</span></p>
-<p>Target samples <span class="math inline">\(\longrightarrow\)</span> ordinary averages for every <span class="math inline">\(f\)</span></p>
-<p>Weighted proposal <span class="math inline">\(\longrightarrow\)</span> better or worse for a particular <span class="math inline">\(f\)</span></p>
+<p><span class="alert">No</span> universal variance winner</p>
+<p>Target samples support ordinary averages for every <span class="math inline">\(f\)</span></p>
+<p>Weighted proposals can be <span class="alert">better</span> or <span class="alert">worse</span> for a particular <span class="math inline">\(f\)</span></p>
 </div>
 </section>
 <section class="slide level2">
 
 <h3 id="brownian-motion-with-drift">Brownian motion with drift</h3>
-<p>Positive option payoffs may be rare under a discretized Brownian path</p>
-<p>Let <span class="math inline">\(\vX\sim\Norm(\vzero,\mSigma)\)</span> with <span class="math inline">\(\Sigma_{jk}=\min(t_j,t_k)\)</span> and target density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span></p>
-<p>Use the proposal <span class="math inline">\(\Norm(\va,\mSigma)\)</span> with density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span> and</p>
-<p><span class="math display">\[
-\va=\theta(t_1,\ldots,t_d)^\mathsf T
-\]</span></p>
-<p>The likelihood ratio simplifies to</p>
-<p><span class="math display">\[
-\frac{\varrho_{\mathrm{tar}}(\vx)}{\varrho_{\mathrm{prop}}(\vx)}
-=\exp\!\left(-\theta x_d+\frac{\theta^2t_d}{2}\right)
-\]</span></p>
+<p>Let <span class="math inline">\(\vX\sim\Norm(\vzero,\mSigma)\)</span> be the target Brownian path, with <span class="math inline">\(\Sigma_{jk}=\min(t_j,t_k)\)</span> and discounted payoff <span class="math inline">\(Y=f(\vX)\)</span></p>
+<p>Choose <span class="math inline">\(\vZ\sim\Norm(\va,\mSigma)\)</span>, where <span class="math inline">\(\va=\theta(t_1,\ldots,t_d)^\mathsf T\)</span></p>
+<p><span class="math display">\[\begin{align*}
+w(\vz)&amp;=\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{prop}}(\vz)}
+=\exp\!\left(-\theta z_d+\frac{\theta^2t_d}{2}\right),\\
+g(\vZ)&amp;=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[g(\vZ)]=\mu
+\end{align*}\]</span></p>
 <ul>
-<li>Drift makes positive payoffs more common</li>
-<li>Importance weights compensate to preserve the target expectation</li>
-<li>A good drift can <span class="alert">reduce estimator variance</span></li>
+<li>Drift makes positive payoffs <span class="alert">more common</span></li>
+<li>Weights <span class="alert">preserve</span> the target expectation; a good drift can reduce variance</li>
 </ul>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb">Asian option variance-reduction notebook</a></p>
 </section>
@@ -1042,7 +1123,7 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1)
 <li>Pilot samples can guide the choice of transformation or proposal</li>
 </ul>
 <div class="key-point">
-<p>Place more samples where the <span class="alert">magnitude of the integrand times the target density</span> is large, without creating extreme weights</p>
+<p>Place more samples where the <span class="alert">magnitude</span> of the integrand times the target density is large, without creating <span class="alert">extreme</span> weights</p>
 </div>
 </section></section>
 <section>
@@ -1069,23 +1150,21 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1)
   <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
 </div>
 
-<p>Let <span class="math inline">\(\eta_1,\ldots,\eta_m\)</span> have known zero means</p>
-<p>For any coefficients <span class="math inline">\(\beta_1,\ldots,\beta_m\)</span>,</p>
+<p>Let <span class="math inline">\(\eta_1,\ldots,\eta_m\)</span> have known <span class="alert">zero</span> means</p>
+<p>For fixed coefficients <span class="math inline">\(\vbeta\)</span>, define <span class="math inline">\(\widetilde Y=g(\vX)\)</span> with</p>
 <p><span class="math display">\[
-\mu=\Ex[f(\vX)]
-=\Ex\!\left[f(\vX)-\sum_{j=1}^m\beta_j\eta_j(\vX)\right]
+g(\vx)=f(\vx)-\sum_{j=1}^m\beta_j\eta_j(\vx)
 \]</span></p>
-<p>The estimator</p>
+<p>Then <span class="math inline">\(\Ex[g(\vX)]=\Ex[f(\vX)]=\mu\)</span>, so</p>
 <p><span class="math display">\[
 \hmu_{\mathrm{CV},n}
+=\frac1n\sum_{i=0}^{n-1}g(\vX_i)
 =\frac1n\sum_{i=0}^{n-1}\left[f(\vX_i)-\sum_{j=1}^m\beta_j\eta_j(\vX_i)\right]
 \]</span></p>
-<p>is unbiased for fixed <span class="math inline">\(\vbeta\)</span></p>
-<p>Choose <span class="math inline">\(\vbeta\)</span> to make</p>
-<p><span class="math display">\[
-\var\!\left[f(\vX)-\sum_{j=1}^m\beta_j\eta_j(\vX)\right]
-\]</span></p>
-<p>as small as possible</p>
+<p>is unbiased</p>
+<div class="key-point">
+<p>Choose <span class="math inline">\(\vbeta\)</span> to make <span class="math inline">\(\var[g(\vX)]\)</span> as <span class="alert">small</span> as possible</p>
+</div>
 </section>
 <section id="choosing-coefficients-by-least-squares" class="slide level2 tree-marker-slide" data-tree-marker="variance-linear-algebra">
 <h2>Choosing coefficients by least squares</h2>
@@ -1095,20 +1174,20 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1)
   <div class="tree-component__label" data-label-id="linear-algebra" style="--tree-left: 39%; --tree-top: 89%; --tree-align: center;">Linear<br>Algebra</div>
 </div>
 
-<p>Center the response and control values:</p>
+<p><span class="alert">Center</span> the response and control values:</p>
 <p><span class="math display">\[\begin{align*}
-y_i&amp;=f(\vx_i)-\overline{f},&amp;
+y_i&amp;=f(\vx_i),&amp; c_i&amp;=y_i-\overline y,\\
 H_{ij}&amp;=\eta_j(\vx_i)-\overline{\eta}_j
 \end{align*}\]</span></p>
 <p>Then</p>
 <p><span class="math display">\[
-\hvbeta=\argmin_{\vb}\norm{\vy-\mH\vb}^2
+\hvbeta=\argmin_{\vb}\norm{\vc-\mH\vb}^2
 \]</span></p>
 <p>When <span class="math inline">\(\mH^\mathsf T\mH\)</span> is nonsingular,</p>
 <p><span class="math display">\[
-\hvbeta=(\mH^\mathsf T\mH)^{-1}\mH^\mathsf T\vy
+\hvbeta=(\mH^\mathsf T\mH)^{-1}\mH^\mathsf T\vc
 \]</span></p>
-<p>The residual is orthogonal to the column space of <span class="math inline">\(\mH\)</span>, so least squares removes the component of <span class="math inline">\(f\)</span> explained by the controls</p>
+<p>The residual is <span class="alert">orthogonal</span> to the column space of <span class="math inline">\(\mH\)</span>, so least squares removes the component of <span class="math inline">\(f\)</span> explained by the controls</p>
 </section>
 <section id="practical-control-variate-choices" class="slide level2 tree-marker-slide" data-tree-marker="variance-reduction">
 <h2>Practical control-variate choices</h2>
@@ -1118,14 +1197,14 @@ H_{ij}&amp;=\eta_j(\vx_i)-\overline{\eta}_j
 </div>
 
 <ul>
-<li>Good controls are inexpensive, have known means, and are strongly related to <span class="math inline">\(f\)</span></li>
+<li>Good controls are <span class="alert">inexpensive</span>, have known means, and are <span class="alert">strongly related</span> to <span class="math inline">\(f\)</span></li>
 <li>More controls can reduce the sample size needed for a target accuracy</li>
 <li>Poor controls may increase computation without reducing variance</li>
 <li>For IID sampling, least squares targets variance reduction</li>
 <li>For low discrepancy sampling, choose coefficients to reduce <span class="alert">variation</span>, not sampling variance</li>
 </ul>
 <div class="key-point">
-<p>A control variate turns <span class="alert">known expectations</span> into information about an unknown expectation</p>
+<p>A control variate turns <span class="alert">known</span> expectations into information about an unknown expectation</p>
 </div>
 </section>
 <section id="conditional-monte-carlo" class="slide level2 tree-marker-slide" data-tree-marker="variance-probability">
@@ -1136,21 +1215,21 @@ H_{ij}&amp;=\eta_j(\vx_i)-\overline{\eta}_j
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
-<p>Recall the <a href="01-introduction.html#laws-of-total-expectation-and-variance">laws of total expectation and variance</a></p>
+<p>Let <span class="math inline">\(V\)</span> be a conditioning variable<br> Recall the <a href="01-introduction.html#laws-of-total-expectation-and-variance">laws of total expectation and variance</a></p>
 <p><span class="math display">\[\begin{align*}
-\Ex(Y)&amp;=\Ex_Z\{\Ex(Y\mid Z)\},\\
-\var(Y)&amp;=\Ex_Z\{\var(Y\mid Z)\}+\var_Z\{\Ex(Y\mid Z)\}
+\Ex(Y)&amp;=\Ex_V\{\Ex(Y\mid V)\},\\
+\var(Y)&amp;=\Ex_V\{\var(Y\mid V)\}+\var_V\{\Ex(Y\mid V)\}
 \end{align*}\]</span></p>
 <p>Therefore</p>
 <p><span class="math display">\[
-\var_Z\{\Ex(Y\mid Z)\}\le\var(Y)
+\var_V\{\Ex(Y\mid V)\}\le\var(Y)
 \]</span></p>
 <p>If <span class="math inline">\(Y=f(X_1,\ldots,X_d)\)</span> and</p>
 <p><span class="math display">\[
-g(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
+\widetilde Y=g(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
 \]</span></p>
 <p>is analytic, estimate <span class="math inline">\(\mu\)</span> by sampling <span class="math inline">\(g(\vX_{2:d})\)</span> instead of <span class="math inline">\(Y\)</span></p>
-<p><span class="alert">Analytically averaging over part of the randomness reduces variance</span></p>
+<p><span class="alert">Analytically averaging</span> over part of the randomness <span class="alert">reduces</span> variance</p>
 </section>
 <section id="conditional-density-estimation" class="slide level2 tree-marker-slide" data-tree-marker="density-estimation">
 <h2>Conditional density estimation</h2>
@@ -1159,20 +1238,20 @@ g(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
   <div class="tree-component__label" data-label-id="density-estimation" style="--tree-left: 7%; --tree-top: 7%; --tree-align: center;">Density<br>Estimation</div>
 </div>
 
-<p>Let <span class="math inline">\(Y=f(\vX)\)</span> with <span class="math inline">\(\vX\sim\Unif[0,1]^d\)</span></p>
-<p>Suppose <span class="math inline">\(f\)</span> is increasing in <span class="math inline">\(x_1\)</span> and</p>
+<p>Write the simulator on uniform inputs as <span class="math inline">\(Y=h(\vU)\)</span> with <span class="math inline">\(\vU\sim\Unif[0,1]^d\)</span></p>
+<p>Suppose <span class="math inline">\(h\)</span> is <span class="alert">increasing</span> in <span class="math inline">\(u_1\)</span> and</p>
 <p><span class="math display">\[
-y=f(x_1,\vx_{2:d})\iff x_1=g(y;\vx_{2:d})
+y=h(u_1,\vu_{2:d})\iff u_1=g(y;\vu_{2:d})
 \]</span></p>
-<p>Then</p>
+<p>Extend the inverse by clipping to <span class="math inline">\([0,1]\)</span> outside the conditional support<br> Then</p>
 <p><span class="math display">\[\begin{align*}
-F_{Y\mid \vX_{2:d}}(y\mid \vx_{2:d})
-&amp;=\Prob\{X_1\le g(y;\vx_{2:d})\}\\
-&amp;=g(y;\vx_{2:d}),\\
+F_{Y\mid \vU_{2:d}}(y\mid \vu_{2:d})
+&amp;=\Prob\{U_1\le g(y;\vu_{2:d})\}\\
+&amp;=g(y;\vu_{2:d}),\\
 \varrho_Y(y)
-&amp;=\int_{[0,1]^{d-1}}\frac{\partial g}{\partial y}(y;\vx_{2:d})\,\dif\vx_{2:d}
+&amp;=\int_{[0,1]^{d-1}}\frac{\partial g}{\partial y}(y;\vu_{2:d})\,\dif\vu_{2:d}
 \end{align*}\]</span></p>
-<p>Thus a density value becomes an <span class="alert">expectation of a conditional density</span></p>
+<p>Thus a density value becomes an <span class="alert">expectation</span> of a conditional density</p>
 </section>
 <section id="density-of-a-sum-of-uniforms" class="slide level2 tree-marker-slide" data-tree-marker="density-estimation">
 <h2>Density of a sum of uniforms</h2>
@@ -1183,22 +1262,22 @@ F_{Y\mid \vX_{2:d}}(y\mid \vx_{2:d})
 
 <p>Let</p>
 <p><span class="math display">\[
-Y=\gamma_1X_1+\cdots+\gamma_dX_d,
-\qquad \vX\sim\Unif[0,1]^d,
+Y=\gamma_1U_1+\cdots+\gamma_dU_d,
+\qquad \vU\sim\Unif[0,1]^d,
 \qquad \gamma_j&gt;0
 \]</span></p>
-<p>Solving for <span class="math inline">\(x_1\)</span> gives</p>
+<p>Solving for <span class="math inline">\(u_1\)</span> gives</p>
 <p><span class="math display">\[
-g(y;\vx_{2:d})=\frac{y-\sum_{j=2}^d\gamma_jx_j}{\gamma_1}
+g(y;\vu_{2:d})=\frac{y-\sum_{j=2}^d\gamma_ju_j}{\gamma_1}
 \]</span></p>
-<p>when <span class="math inline">\(\sum_{j=2}^d\gamma_jx_j\le y\le\gamma_1+\sum_{j=2}^d\gamma_jx_j\)</span></p>
+<p>when <span class="math inline">\(\sum_{j=2}^d\gamma_ju_j\le y\le\gamma_1+\sum_{j=2}^d\gamma_ju_j\)</span></p>
 <p>Hence</p>
 <p><span class="math display">\[
 \varrho_Y(y)=\Ex\!\left[
-\frac1{\gamma_1}\indic\!\left{
-\sum_{j=2}^d\gamma_jX_j\le y\le
-\gamma_1+\sum_{j=2}^d\gamma_jX_j
-\right}\right]
+\frac1{\gamma_1}\indic\!\left\{
+\sum_{j=2}^d\gamma_jU_j\le y\le
+\gamma_1+\sum_{j=2}^d\gamma_jU_j
+\right\}\right]
 \]</span></p>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb">Conditional Monte Carlo notebook</a></p>
 </section></section>
@@ -1226,24 +1305,24 @@ g(y;\vx_{2:d})=\frac{y-\sum_{j=2}^d\gamma_jx_j}{\gamma_1}
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
-<p>If <span class="math inline">\(T(\vX)\)</span> has the same distribution as <span class="math inline">\(\vX\)</span>, pair <span class="math inline">\(f(\vX_i)\)</span> with <span class="math inline">\(f\bigl(T(\vX_i)\bigr)\)</span>:</p>
+<p>If <span class="math inline">\(\vA(\vX)\)</span> has the same distribution as <span class="math inline">\(\vX\)</span>, pair <span class="math inline">\(f(\vX_i)\)</span> with <span class="math inline">\(f\bigl(\vA(\vX_i)\bigr)\)</span>:</p>
 <p><span class="math display">\[
 \hmu_{\mathrm{Anti},n}
-=\frac1{2n}\sum_{i=0}^{n-1}\left[f(\vX_i)+f\bigl(T(\vX_i)\bigr)\right]
+=\frac1{2n}\sum_{i=0}^{n-1}\left[f(\vX_i)+f\bigl(\vA(\vX_i)\bigr)\right]
 \]</span></p>
-<p>Examples:</p>
+<p>Examples (uniform-input pairing uses the composed integrand <span class="math inline">\(h\)</span>):</p>
 <p><span class="math display">\[\begin{align*}
-T(\vX)&amp;=\vone-\vX,&amp; \vX&amp;\sim\Unif[0,1]^d,\\
-T(\vX)&amp;=-\vX,&amp; \vX&amp;\sim\Norm(\vzero,\mSigma)
+\vA(\vU)&amp;=\vone-\vU,&amp; \vU&amp;\sim\Unif[0,1]^d,\\
+\vA(\vX)&amp;=-\vX,&amp; \vX&amp;\sim\Norm(\vzero,\mSigma)
 \end{align*}\]</span></p>
-<p>Although <span class="math inline">\(\vX_i\)</span> and <span class="math inline">\(T(\vX_i)\)</span> are dependent, the pairs are independent across <span class="math inline">\(i\)</span></p>
+<p>For IID starting samples, <span class="math inline">\(\vX_i\)</span> and <span class="math inline">\(\vA(\vX_i)\)</span> are <span class="alert">dependent</span> within pairs; pairs are <span class="alert">independent</span> across <span class="math inline">\(i\)</span></p>
 <p>The variance is</p>
 <p><span class="math display">\[
 \var(\hmu_{\mathrm{Anti},n})
 =\frac{\var\{f(\vX)\}}{2n}
-\left[1+\corr\{f(\vX),f(T(\vX))\}\right]
+\left[1+\corr\{f(\vX),f(\vA(\vX))\}\right]
 \]</span></p>
-<p>Antithetic sampling helps when the paired function values are <span class="alert">negatively correlated</span></p>
+<p>Antithetic sampling helps when the paired function values are <span class="alert">negatively</span> correlated</p>
 </section>
 <section id="constructing-an-antithetic-variate" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
 <h2>Constructing an antithetic variate</h2>
@@ -1256,11 +1335,11 @@ T(\vX)&amp;=-\vX,&amp; \vX&amp;\sim\Norm(\vzero,\mSigma)
 <p><span class="math display">\[\begin{gather*}
 U=F(X)\sim\Unif[0,1],\\
 1-U\sim\Unif[0,1],\\
-T(X)=F^{-1}\bigl(1-F(X)\bigr)\sim F
+A(X)=F^{-1}\bigl(1-F(X)\bigr)\sim F
 \end{gather*}\]</span></p>
 <p>For a symmetric distribution, this often reduces to reflection about the center</p>
 <div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>For which monotone functions <span class="math inline">\(f\)</span> does <span class="math inline">\(f(X)\)</span> become negatively correlated with <span class="math inline">\(f\bigl(T(X)\bigr)\)</span>?</span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>For which monotone functions <span class="math inline">\(f\)</span> does <span class="math inline">\(f(X)\)</span> become negatively correlated with <span class="math inline">\(f\bigl(A(X)\bigr)\)</span>?</span></p>
 </div>
 </section>
 <section id="iid-variance-comparison" class="slide level2 tree-marker-slide" data-tree-marker="variance-probability">
@@ -1293,8 +1372,8 @@ T(X)=F^{-1}\bigl(1-F(X)\bigr)\sim F
 <td style="text-align: left;"><span class="math inline">\(\var(f(\vX))/n\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Exact transport, <span class="math inline">\(\psi(\vZ) \stackrel{d}{=} \vX\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(f\bigl(\psi(\vZ)\bigr)\)</span></td>
+<td style="text-align: left;">Exact transport, <span class="math inline">\(\vT(\vZ) \stackrel{d}{=} \vX\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(f\bigl(\vT(\vZ)\bigr)\)</span></td>
 <td style="text-align: left;"><span class="math inline">\(\var(f(\vX))/n\)</span></td>
 </tr>
 <tr class="odd">
@@ -1304,17 +1383,17 @@ T(X)=F^{-1}\bigl(1-F(X)\bigr)\sim F
 </tr>
 <tr class="even">
 <td style="text-align: left;">Control variate</td>
-<td style="text-align: left;"><span class="math inline">\(f(\vX)-\beta\{h(\vX)-\eta\}\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\var\{f(\vX)-\beta[h(\vX)-\eta]\}/n\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(f(\vX)-\beta\eta_1(\vX)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\var\{f(\vX)-\beta\eta_1(\vX)\}/n\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(n/2\)</span> Antithetic pairs <br><span class="math inline">\(A(\vX) \stackrel{d}{=} \vX\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\{f(\vX)+f(A(\vX))\}/2\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\var(f(\vX))(1+\rho)/n\)</span> <br><span class="math inline">\(\rho=\corr\{f(\vX),f(A(\vX))\}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(n/2\)</span> Antithetic pairs <br><span class="math inline">\(\vA(\vX) \stackrel{d}{=} \vX\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\{f(\vX)+f(\vA(\vX))\}/2\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\var(f(\vX))(1+\rho)/n\)</span> <br><span class="math inline">\(\rho=\corr\{f(\vX),f(\vA(\vX))\}\)</span></td>
 </tr>
 </tbody>
 </table>
-<p><span class="math inline">\(\eta=\Ex\{h(\vX)\}\)</span>; <span class="math inline">\(\beta\)</span> is fixed or from an independent pilot; antithetic sampling requires even <span class="math inline">\(n\)</span></p>
+<p><span class="math inline">\(\Ex[\eta_1(\vX)]=0\)</span>; <span class="math inline">\(\beta\)</span> is fixed or from an independent pilot; antithetic sampling requires even <span class="math inline">\(n\)</span></p>
 </section>
 <section class="slide level2">
 
@@ -1344,20 +1423,20 @@ T(X)=F^{-1}\bigl(1-F(X)\bigr)\sim F
   <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
 </div>
 
-<p>Place one independent uniform point in each of <span class="math inline">\(n\)</span> equal strata:</p>
+<p>For the cube integrand <span class="math inline">\(h\)</span>, place <span class="alert">one</span> independent uniform point in each of <span class="math inline">\(n\)</span> equal strata:</p>
 <p><span class="math display">\[
-X_i=\frac{i+U_i}{n},
-\qquad U_i\ \IIDsim\ \Unif[0,1],
+U_i=\frac{i+V_i}{n},
+\qquad V_i\ \IIDsim\ \Unif[0,1],
 \qquad i=0,\ldots,n-1
 \]</span></p>
-<p>Then <span class="math inline">\(X_i\sim\Unif[i/n,(i+1)/n]\)</span> and</p>
+<p>Define <span class="math inline">\(\hmu_{\mathrm{LHS},n}=n^{-1}\sum_i h(U_i)\)</span><br> Then <span class="math inline">\(U_i\sim\Unif[i/n,(i+1)/n]\)</span> and</p>
 <p><span class="math display">\[\begin{align*}
 \Ex(\hmu_{\mathrm{LHS},n})
-&amp;=\frac1n\sum_{i=0}^{n-1}\Ex\{f(X_i)\}\\
-&amp;=\sum_{i=0}^{n-1}\int_{i/n}^{(i+1)/n}f(x)\,\dif x\\
-&amp;=\int_0^1f(x)\,\dif x
+&amp;=\frac1n\sum_{i=0}^{n-1}\Ex\{h(U_i)\}\\
+&amp;=\sum_{i=0}^{n-1}\int_{i/n}^{(i+1)/n}h(u)\,\dif u\\
+&amp;=\int_0^1h(u)\,\dif u
 \end{align*}\]</span></p>
-<p>The <span class="math inline">\(X_i\)</span> are independent but <span class="alert">not identically distributed</span></p>
+<p>The <span class="math inline">\(U_i\)</span> are independent but <span class="alert">not</span> identically distributed</p>
 </section>
 <section class="slide level2">
 
@@ -1365,30 +1444,31 @@ X_i=\frac{i+U_i}{n},
 <p>Because the strata are independent,</p>
 <p><span class="math display">\[
 \var(\hmu_{\mathrm{LHS},n})
-=\frac1{n^2}\sum_{i=0}^{n-1}\var\{f(X_i)\}
+=\frac1{n^2}\sum_{i=0}^{n-1}\var\{h(U_i)\}
 \]</span></p>
-<p>For differentiable <span class="math inline">\(f\)</span>, the mean value and Taylor theorems imply</p>
+<p>For differentiable <span class="math inline">\(h\)</span>, the mean value and Taylor theorems imply</p>
 <p><span class="math display">\[\begin{align*}
 \var(\hmu_{\mathrm{LHS},n})
-&amp;\le\frac{\norm{f'}_\infty^2}{n^3},\\
+&amp;\le\frac{\norm{h'}_\infty^2}{n^3},\\
 \rmse(\hmu_{\mathrm{LHS},n})
-&amp;\le\frac{\norm{f'}_\infty}{n^{3/2}}
+&amp;\le\frac{\norm{h'}_\infty}{n^{3/2}}
 \end{align*}\]</span></p>
-<p>In one dimension, stratification can improve the IID <span class="math inline">\(n^{-1/2}\)</span> RMSE rate to <span class="math inline">\(n^{-3/2}\)</span> for smooth <span class="math inline">\(f\)</span></p>
+<p>In one dimension, stratification can improve the IID <span class="math inline">\(n^{-1/2}\)</span> RMSE rate to <span class="math inline">\(n^{-3/2}\)</span> for smooth <span class="math inline">\(h\)</span></p>
 </section>
 <section class="slide level2">
 
 <h3 id="latin-hypercube-sampling-in-d-dimensions">Latin hypercube sampling in <span class="math inline">\(d\)</span> dimensions</h3>
 <p>Let <span class="math inline">\(\pi_1,\ldots,\pi_d\)</span> be independent random permutations of <span class="math inline">\(0,\ldots,n-1\)</span>:</p>
 <p><span class="math display">\[
-X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
-\qquad U_{i\ell}\ \IIDsim\ \Unif[0,1]
+U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
+\qquad V_{i\ell}\ \IIDsim\ \Unif[0,1]
 \]</span></p>
-<p>Each point is <span class="math inline">\(\vX_i=(X_{i1},\ldots,X_{id})\)</span>; each coordinate uses every stratum exactly once</p>
+<p>Each point is <span class="math inline">\(\vU_i=(U_{i1},\ldots,U_{id})\)</span>; each coordinate uses every stratum <span class="alert">exactly once</span></p>
+<p>Random permutations make every <span class="math inline">\(\vU_i\)</span> marginally uniform; the points are dependent</p>
 <p>For <span class="math inline">\(R\)</span> independent Latin hypercubes,</p>
 <p><span class="math display">\[\begin{align*}
 \hmu_{\mathrm{LHS},n}^{(r)}
-&amp;=\frac1n\sum_{i=0}^{n-1}f(\vX_i^{(r)}),\\
+&amp;=\frac1n\sum_{i=0}^{n-1}h(\vU_i^{(r)}),\\
 \hmu_{\mathrm{LHS},n,R}
 &amp;=\frac1R\sum_{r=1}^R\hmu_{\mathrm{LHS},n}^{(r)},\\
 \widehat{\var}(\hmu_{\mathrm{LHS},n,R})
@@ -1405,11 +1485,11 @@ X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="2c149adb" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="1">
+<div id="d65aace6" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="04-improving-efficiency_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" alt="IID, Latin hypercube, and scrambled Sobol' point sets with 64 points in the unit square" width="1115" height="385"></p>
+<p><img data-src="04-improving-efficiency_files/figure-revealjs/cell-3-output-1.png" class="quarto-figure quarto-figure-center" alt="IID, Latin hypercube, and scrambled Sobol' point sets with 64 points in the unit square" width="1115" height="385"></p>
 </figure>
 </div>
 </div>
@@ -1420,16 +1500,16 @@ X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
 <h3 id="strengths-and-limitations-of-lhs">Strengths and limitations of LHS</h3>
 <h3 id="strengths">Strengths</h3>
 <ul>
-<li>No importance density, control variate, or conditional expectation required</li>
-<li>Can converge faster than IID sampling</li>
-<li>Guarantees one point in every one-dimensional stratum</li>
+<li><span class="alert">No</span> importance density, control variate, or conditional expectation required</li>
+<li>Can converge <span class="alert">faster</span> than IID sampling</li>
+<li>Guarantees one point in every one-dimensional <span class="alert">stratum</span></li>
 </ul>
 <h3 id="limitations">Limitations</h3>
 <ul>
-<li>The sample size is fixed when the design is constructed</li>
-<li>Accuracy assessment requires independent replications</li>
-<li>Too many replications can erase the efficiency gain</li>
-<li>The one-dimensional <span class="math inline">\(n^{-3/2}\)</span> RMSE guarantee does not extend automatically to <span class="math inline">\(d&gt;1\)</span></li>
+<li>The sample size is <span class="alert">fixed</span> when the design is constructed</li>
+<li>Accuracy assessment requires <span class="alert">independent</span> replications</li>
+<li>Too many replications can <span class="alert">erase</span> the efficiency gain</li>
+<li>The one-dimensional <span class="math inline">\(n^{-3/2}\)</span> RMSE guarantee does <span class="alert">not</span> extend automatically to <span class="math inline">\(d&gt;1\)</span></li>
 </ul>
 </section></section>
 <section>
@@ -1442,8 +1522,9 @@ X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
 </div>
 
 <p><span id="from-lhs-to-quasi-monte-carlo"></span></p>
-<p>Deck 02 introduced <a href="02-generating-samples.html#what-does-low-discrepancy-mean">even coverage</a> and <a href="02-generating-samples.html#why-coordinate-order-matters">coordinate order</a>; Deck 03 linked <a href="03-markov-chain-monte-carlo.html#the-discrepancy-identity">discrepancy to integration error</a></p>
-<p>Now we <span class="alert">construct the point sets</span>, randomize them, and assess error</p>
+<p>Deck 02 introduced <a href="02-generating-samples.html#what-does-low-discrepancy-mean">even coverage</a> and <a href="02-generating-samples.html#why-coordinate-order-matters">coordinate order</a></p>
+<p>Deck 03 linked <a href="03-markov-chain-monte-carlo.html#the-discrepancy-identity">discrepancy to integration error</a></p>
+<p>Now we <span class="alert">construct</span> the point sets, randomize them, and assess error</p>
 <ul>
 <li><a href="#/the-van-der-corput-sequence">The van der Corput sequence</a></li>
 <li><a href="#/four-low-discrepancy-families">Four low discrepancy families</a></li>
@@ -1464,7 +1545,7 @@ X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
 <p><span class="math display">\[
 i=(\cdots i_2i_1i_0)_b
 \]</span></p>
-<p>Reverse the digits across the radix point:</p>
+<p><span class="alert">Reverse</span> the digits across the radix point:</p>
 <p><span class="math display">\[
 \phi_b(i)=(0.i_0i_1i_2\cdots)_b
 =\frac{i_0}b+\frac{i_1}{b^2}+\frac{i_2}{b^3}+\cdots
@@ -1475,7 +1556,7 @@ i=(\cdots i_2i_1i_0)_b
 <li>Earlier points keep their order as the sample grows</li>
 </ul>
 <div class="key-point">
-<p>The van der Corput construction turns a fixed-size grid into an <span class="alert">extensible sequence</span></p>
+<p>The van der Corput construction turns a fixed-size grid into an <span class="alert">extensible</span> sequence</p>
 </div>
 </section>
 <section class="slide level2">
@@ -1490,8 +1571,11 @@ i=(\cdots i_2i_1i_0)_b
 <div class="exitem">
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Compute <span class="math inline">\(\phi_2(4)\)</span> and <span class="math inline">\(\phi_2(5)\)</span> and identify the two new eighths</span></p>
 </div>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Compute <span class="math inline">\(\phi_2(9)\)</span>, <span class="math inline">\(\phi_2(14)\)</span>, and <span class="math inline">\(\phi_2(19)\)</span> by <span class="alert">reversing</span> their binary digits</span></p>
+</div>
 <aside class="notes">
-<p>The new values are <span class="math inline">\(1/8\)</span> and <span class="math inline">\(5/8\)</span>, respectively: reverse the three binary digits in <span class="math inline">\(4=100_2\)</span> and <span class="math inline">\(5=101_2\)</span> across the radix point.</p>
+<p>The new values are <span class="math inline">\(1/8\)</span> and <span class="math inline">\(5/8\)</span>, respectively: reverse the three binary digits in <span class="math inline">\(4=100_2\)</span> and <span class="math inline">\(5=101_2\)</span> across the radix point. For the larger indices, <span class="math inline">\(9=1001_2\)</span>, <span class="math inline">\(14=1110_2\)</span>, and <span class="math inline">\(19=10011_2\)</span> give <span class="math inline">\(\phi_2(9)=9/16\)</span>, <span class="math inline">\(\phi_2(14)=7/16\)</span>, and <span class="math inline">\(\phi_2(19)=25/32\)</span>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1523,36 +1607,36 @@ i=(\cdots i_2i_1i_0)_b
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Kronecker</td>
-<td style="text-align: left;"><span class="math inline">\(\vx_i=i\vzeta\bmod1\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\vu_i=i\vzeta\bmod1\)</span></td>
 <td style="text-align: left;">none</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Lattice</td>
-<td style="text-align: left;"><span class="math inline">\(\vx_i=\phi_b(i)\vzeta\bmod1\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\vu_i=\phi_b(i)\vzeta\bmod1\)</span></td>
 <td style="text-align: left;"><span class="math inline">\(n=b^m\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Halton</td>
-<td style="text-align: left;"><span class="math inline">\(\vx_i=(\phi_2(i),\phi_3(i),\phi_5(i),\ldots)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\vu_i=(\phi_2(i),\phi_3(i),\phi_5(i),\ldots)\)</span></td>
 <td style="text-align: left;">none</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Digital</td>
-<td style="text-align: left;"><span class="math inline">\(\vx_i=i_0\vc_0\oplus i_1\vc_1\oplus\cdots\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\vu_i=i_0\vc_0\oplus i_1\vc_1\oplus\cdots\)</span></td>
 <td style="text-align: left;"><span class="math inline">\(n=b^m\)</span></td>
 </tr>
 </tbody>
 </table>
 <p>Here <span class="math inline">\(\oplus\)</span> denotes digitwise addition modulo <span class="math inline">\(b\)</span></p>
 <p>For basic Halton, choosing the coordinate bases fixes the sequence</p>
-<p>Different families balance <span class="alert">extensibility</span>, <span class="alert">projection quality</span>, and <span class="alert">fast construction</span></p>
+<p>Different families balance <span class="alert">extensibility</span>, projection <span class="alert">quality</span>, and <span class="alert">fast</span> construction</p>
 </section>
 <section class="slide level2">
 
 <h3 id="lattice-sequence-eight-points">Lattice sequence: eight points</h3>
 <p>For the lattice sequence with <span class="math inline">\(b=2\)</span>, generator <span class="math inline">\(\vzeta=(1,3)\)</span>, and <span class="math inline">\(n=8\)</span>,</p>
 <p><span class="math display">\[
-\vx_i=\phi_2(i)\vzeta\bmod1
+\vu_i=\phi_2(i)\vzeta\bmod1
 \]</span></p>
 <table class="caption-top">
 <colgroup>
@@ -1567,8 +1651,8 @@ i=(\cdots i_2i_1i_0)_b
 <th style="text-align: center;"><span class="math inline">\(i\)</span></th>
 <th style="text-align: center;"><span class="math inline">\((i)_2\)</span></th>
 <th style="text-align: center;"><span class="math inline">\(\phi_2(i)\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(\zeta_1\phi_2(i)\bmod1=x_{i,1}\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(\zeta_2\phi_2(i)\bmod1=x_{i,2}\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\zeta_1\phi_2(i)\bmod1=u_{i,1}\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\zeta_2\phi_2(i)\bmod1=u_{i,2}\)</span></th>
 </tr>
 </thead>
 <tbody>
@@ -1635,14 +1719,14 @@ i=(\cdots i_2i_1i_0)_b
 <section class="slide level2">
 
 <h3 id="kronecker-sequence-four-points">Kronecker sequence: four points</h3>
-<p>For hand arithmetic, take <span class="math inline">\(\vzeta=(0.41,0.73)\)</span> and <span class="math inline">\(\vx_i=i\vzeta\bmod1\)</span></p>
+<p>For hand arithmetic, take <span class="math inline">\(\vzeta=(0.41,0.73)\)</span> and <span class="math inline">\(\vu_i=i\vzeta\bmod1\)</span></p>
 <table class="caption-top">
 <thead>
 <tr class="header">
 <th style="text-align: center;"><span class="math inline">\(i\)</span></th>
 <th style="text-align: center;"><span class="math inline">\(i\zeta_1\bmod1\)</span></th>
 <th style="text-align: center;"><span class="math inline">\(i\zeta_2\bmod1\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(\vx_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\vu_i\)</span></th>
 </tr>
 </thead>
 <tbody>
@@ -1684,7 +1768,7 @@ i=(\cdots i_2i_1i_0)_b
 <th style="text-align: center;"><span class="math inline">\(i\)</span></th>
 <th style="text-align: center;"><span class="math inline">\((i)_2\)</span></th>
 <th style="text-align: center;">Generators used</th>
-<th style="text-align: center;"><span class="math inline">\(\vx_i=i_0\vc_0\oplus i_1\vc_1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\vu_i=i_0\vc_0\oplus i_1\vc_1\)</span></th>
 </tr>
 </thead>
 <tbody>
@@ -1714,22 +1798,22 @@ i=(\cdots i_2i_1i_0)_b
 </tr>
 </tbody>
 </table>
-<p>For <span class="math inline">\(i=3\)</span>, add binary digits <strong>without carrying</strong>: <span class="math inline">\((0.10_2,0.10_2)\oplus(0.01_2,0.11_2)=(0.11_2,0.01_2)\)</span></p>
+<p>For <span class="math inline">\(i=3\)</span>, add binary digits <span class="alert">without</span> carrying: <span class="math inline">\((0.10_2,0.10_2)\oplus(0.01_2,0.11_2)=(0.11_2,0.01_2)\)</span></p>
 </section>
 <section class="slide level2">
 
 <h3 id="construct-with-new-generators">Construct with new generators</h3>
 <div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span><strong>Lattice:</strong> Keep <span class="math inline">\(b=2\)</span> and <span class="math inline">\(n=8\)</span>, but use <span class="math inline">\(\vzeta=(1,5)\)</span>; find <span class="math inline">\(\vx_4\)</span> and <span class="math inline">\(\vx_5\)</span> using the <span class="math inline">\(\phi_2(i)\)</span> values in the table</span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span><span class="alert">Lattice:</span> Keep <span class="math inline">\(b=2\)</span> and <span class="math inline">\(n=8\)</span>, but use <span class="math inline">\(\vzeta=(1,5)\)</span>; find <span class="math inline">\(\vu_4\)</span> and <span class="math inline">\(\vu_5\)</span> using the <span class="math inline">\(\phi_2(i)\)</span> values in the table</span></p>
 </div>
 <div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span><strong>Kronecker:</strong> Use <span class="math inline">\(\vzeta=(0.73,0.24)\)</span>; find <span class="math inline">\(\vx_2\)</span> and <span class="math inline">\(\vx_3\)</span> to two decimal places</span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span><span class="alert">Kronecker:</span> Use <span class="math inline">\(\vzeta=(0.73,0.24)\)</span>; find <span class="math inline">\(\vu_2\)</span> and <span class="math inline">\(\vu_3\)</span> to two decimal places</span></p>
 </div>
 <div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span><strong>Digital, <span class="math inline">\(b=2\)</span>:</strong> Use <span class="math inline">\(\vc_0=(1/2,1/4)\)</span>, <span class="math inline">\(\vc_1=(1/4,1/2)\)</span>, and <span class="math inline">\(\vc_2=(1/8,3/8)\)</span>; find <span class="math inline">\(\vx_i\)</span> for <span class="math inline">\(i=0,\ldots,7\)</span></span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span><span class="alert">Digital</span>, <span class="math inline">\(b=2\)</span>: Use <span class="math inline">\(\vc_0=(1/2,1/4)\)</span>, <span class="math inline">\(\vc_1=(1/4,1/2)\)</span>, and <span class="math inline">\(\vc_2=(1/8,3/8)\)</span>; find <span class="math inline">\(\vu_i\)</span> for <span class="math inline">\(i=0,\ldots,7\)</span></span></p>
 </div>
 <aside class="notes">
-<p>Lattice: <span class="math inline">\(\vx_4=(1/8,5/8)\)</span> and <span class="math inline">\(\vx_5=(5/8,1/8)\)</span>. Kronecker: <span class="math inline">\(\vx_2=(0.46,0.48)\)</span> and <span class="math inline">\(\vx_3=(0.19,0.72)\)</span>. These rational decimal generators eventually repeat, unlike the irrational generators chosen for long Kronecker sequences; here they isolate the hand calculation of <span class="math inline">\(i\vzeta\bmod1\)</span>. Digital, in order from <span class="math inline">\(i=0\)</span> to <span class="math inline">\(7\)</span>: <span class="math inline">\((0,0),(1/2,1/4),(1/4,1/2),(3/4,3/4),
+<p>Lattice: <span class="math inline">\(\vu_4=(1/8,5/8)\)</span> and <span class="math inline">\(\vu_5=(5/8,1/8)\)</span>. Kronecker: <span class="math inline">\(\vu_2=(0.46,0.48)\)</span> and <span class="math inline">\(\vu_3=(0.19,0.72)\)</span>. These rational decimal generators eventually repeat, unlike the irrational generators chosen for long Kronecker sequences; here they isolate the hand calculation of <span class="math inline">\(i\vzeta\bmod1\)</span>. Digital, in order from <span class="math inline">\(i=0\)</span> to <span class="math inline">\(7\)</span>: <span class="math inline">\((0,0),(1/2,1/4),(1/4,1/2),(3/4,3/4),
 (1/8,3/8),(5/8,1/8),(3/8,7/8),(7/8,5/8)\)</span>. The family table does not privilege a particular discrepancy measure; construction quality depends on the function class and the chosen criterion.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1753,15 +1837,15 @@ i=(\cdots i_2i_1i_0)_b
 <p><span id="why-randomize"></span></p>
 <p>Randomization aims for</p>
 <p><span class="math display">\[
-\vX_{\mathrm{rand},i}\sim\Unif[0,1]^d
+\vU_{\mathrm{rand},i}\sim\Unif[0,1]^d
 \]</span></p>
 <p>for every <span class="math inline">\(i\)</span>, while preserving low discrepancy jointly</p>
 <ul>
-<li><span class="alert">Random shift</span>: <span class="math inline">\(\vX_{\mathrm{rand},i}=\vx_i+\vDelta\bmod1\)</span>, especially for lattices and Kronecker sequences</li>
-<li><span class="alert">Random digital shift</span>: <span class="math inline">\(\vX_{\mathrm{rand},i}=\vx_i\oplus\vDelta\)</span>, especially for digital sequences</li>
-<li><span class="alert">Linear matrix or nested uniform scrambling</span>, especially for digital sequences</li>
+<li><span class="alert">Random shift</span>: <span class="math inline">\(\vU_{\mathrm{rand},i}=\vu_i+\vDelta\bmod1\)</span>, especially for lattices and Kronecker sequences</li>
+<li><span class="alert">Random digital shift</span>: <span class="math inline">\(\vU_{\mathrm{rand},i}=\vu_i\oplus\vDelta\)</span>, especially for digital sequences</li>
+<li>Linear matrix or nested uniform <span class="alert">scrambling</span>, especially for digital sequences</li>
 </ul>
-<p>Independent randomizations support error assessment without reverting to IID point placement; recall the <a href="#/variance-reduction">earlier variance and RMSE comparison</a></p>
+<p><span class="alert">Independent</span> randomizations support error assessment without reverting to IID point placement; recall the <a href="#/variance-reduction">earlier variance and RMSE comparison</a></p>
 <aside class="notes">
 <p>Each randomized point is marginally uniform, so its sample mean is unbiased. Randomization almost surely avoids exact cube-boundary points, making Gaussian quantile transforms finite. The opening variance slide states the nearly <span class="math inline">\(\Order(n^{-3/2})\)</span> RMSE rate for sufficiently smooth integrands under nested scrambling.</p>
 <style type="text/css">
@@ -1780,13 +1864,13 @@ i=(\cdots i_2i_1i_0)_b
 
 <h3 id="shift-the-points-you-constructed">Shift the points you constructed</h3>
 <div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span><strong>Lattice:</strong> For your <span class="math inline">\(\vzeta=(1,5)\)</span> points, suppose the random shift is <span class="math inline">\(\vDelta=(1/4,1/2)\)</span>; find <span class="math inline">\((\vx_4+\vDelta)\bmod1\)</span> and <span class="math inline">\((\vx_5+\vDelta)\bmod1\)</span></span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span><span class="alert">Lattice:</span> For your <span class="math inline">\(\vzeta=(1,5)\)</span> points, suppose the random shift is <span class="math inline">\(\vDelta=(1/4,1/2)\)</span>; find <span class="math inline">\((\vu_4+\vDelta)\bmod1\)</span> and <span class="math inline">\((\vu_5+\vDelta)\bmod1\)</span></span></p>
 </div>
 <div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span><strong>Digital, <span class="math inline">\(b=2\)</span>:</strong> For your points from <span class="math inline">\(\vc_0,\vc_1,\vc_2\)</span>, suppose the digital shift is <span class="math inline">\(\vDelta=(3/8,1/4)\)</span>; find <span class="math inline">\(\vx_0\oplus\vDelta\)</span> and <span class="math inline">\(\vx_7\oplus\vDelta\)</span></span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span><span class="alert">Digital</span>, <span class="math inline">\(b=2\)</span>: For your points from <span class="math inline">\(\vc_0,\vc_1,\vc_2\)</span>, suppose the digital shift is <span class="math inline">\(\vDelta=(3/8,1/4)\)</span>; find <span class="math inline">\(\vu_0\oplus\vDelta\)</span> and <span class="math inline">\(\vu_7\oplus\vDelta\)</span></span></p>
 </div>
 <aside class="notes">
-<p>Lattice: <span class="math inline">\(\vx_4=(1/8,5/8)\)</span> shifts to <span class="math inline">\((3/8,1/8)\)</span>, and <span class="math inline">\(\vx_5=(5/8,1/8)\)</span> shifts to <span class="math inline">\((7/8,5/8)\)</span>. Digital: <span class="math inline">\(\vx_0=(0,0)\)</span> shifts to <span class="math inline">\((3/8,1/4)\)</span>, and <span class="math inline">\(\vx_7=(7/8,5/8)\)</span> shifts by binary digitwise addition to <span class="math inline">\((1/2,7/8)\)</span>. The displayed shifts are particular realizations used for hand calculation; the random shift is uniform on the unit square in the sampling method.</p>
+<p>Lattice: <span class="math inline">\(\vu_4=(1/8,5/8)\)</span> shifts to <span class="math inline">\((3/8,1/8)\)</span>, and <span class="math inline">\(\vu_5=(5/8,1/8)\)</span> shifts to <span class="math inline">\((7/8,5/8)\)</span>. Digital: <span class="math inline">\(\vu_0=(0,0)\)</span> shifts to <span class="math inline">\((3/8,1/4)\)</span>, and <span class="math inline">\(\vu_7=(7/8,5/8)\)</span> shifts by binary digitwise addition to <span class="math inline">\((1/2,7/8)\)</span>. The displayed shifts are particular realizations used for hand calculation; the random shift is uniform on the unit square in the sampling method.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1816,7 +1900,7 @@ i=(\cdots i_2i_1i_0)_b
 <li>Increase <span class="math inline">\(\ell\)</span> and repeat until <span class="math inline">\(\ell=d\)</span></li>
 </ol>
 <div class="key-point">
-<p>A high-dimensional design is built by <span class="alert">optimizing one coordinate at a time</span></p>
+<p>A high-dimensional design is built by optimizing <span class="alert">one coordinate</span> at a time</p>
 </div>
 </section>
 <section id="stopping-criteria" class="slide level2 tree-marker-slide" data-tree-marker="data-driven-error">
@@ -1833,7 +1917,7 @@ i=(\cdots i_2i_1i_0)_b
 \abs{\mu-\hmu_n}&amp;\le\varepsilon
 \quad\text{for what $n$?}
 \end{align*}\]</span></p>
-<p>We want answers based only on the computed data <span class="math inline">\(f(\vx_0),f(\vx_1),\ldots\)</span></p>
+<p>We want answers based only on the computed contributions <span class="math inline">\(Y_i\)</span> or <span class="math inline">\(\widetilde Y_i\)</span></p>
 <ul>
 <li>IID sampling: use a Central Limit Theorem interval when justified</li>
 <li>Randomized low discrepancy sampling: use independent replications</li>
@@ -1844,7 +1928,7 @@ i=(\cdots i_2i_1i_0)_b
 </ul></li>
 </ul>
 <div class="key-point">
-<p>An efficient method needs both <span class="alert">fast error decay</span> and a <span class="alert">reliable stopping rule</span></p>
+<p>An efficient method needs both <span class="alert">fast</span> error decay and a <span class="alert">reliable</span> stopping rule</p>
 </div>
 </section></section>
 <section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="variance-low-discrepancy">
@@ -1856,19 +1940,19 @@ i=(\cdots i_2i_1i_0)_b
 </div>
 
 <ul>
-<li>Equivalent expectations can have dramatically different computational variance</li>
-<li>Exact transport chooses a map that makes the target-to-proposal correction constant<br>Importance sampling retains the correction as unequal weights</li>
-<li>Importance proposals may be tailored to a particular integrand<br>Transported target samples can be reused for many integrands</li>
-<li>Control variates and conditioning remove variability using known structure</li>
-<li>Antithetic sampling and Latin hypercubes introduce useful dependence deliberately</li>
-<li>Low discrepancy sequences replace random clustering with balanced space filling</li>
-<li>Randomization restores unbiasedness and supports error estimation while retaining QMC efficiency</li>
+<li>Equivalent <span class="alert">expectations</span> can have dramatically different computational <span class="alert">variance</span></li>
+<li>Exact transport chooses a map that makes the target-to-proposal correction <span class="alert">constant</span><br>Importance sampling retains the correction as <span class="alert">unequal</span> weights</li>
+<li>Importance proposals may be <span class="alert">tailored</span> to a particular integrand<br>Transported target samples can be <span class="alert">reused</span> for many integrands</li>
+<li>Control variates and conditioning remove variability using <span class="alert">known</span> structure</li>
+<li>Antithetic sampling and Latin hypercubes introduce useful <span class="alert">dependence</span> deliberately</li>
+<li>Low discrepancy sequences replace random <span class="alert">clustering</span> with <span class="alert">balanced</span> space filling</li>
+<li>Randomization restores <span class="alert">unbiasedness</span> and supports error estimation while retaining QMC efficiency</li>
 </ul>
 </section>
 
 <section id="how-far-we-have-come" class="title-slide slide level1 center">
 <h1>How Far We Have Come</h1>
-<p><span class="alert">A complete path from model to efficient estimate</span></p>
+<p>A complete path from <span class="alert">model</span> to efficient <span class="alert">estimate</span></p>
 <ul>
 <li><a href="01-introduction.html#moments-of-random-variables">Formulate</a> — express the target quantity as an expectation</li>
 <li><a href="02-generating-samples.html#from-uniformity-to-a-target-distribution">Sample</a> — use direct transforms or Markov chains to represent the target</li>
@@ -1876,7 +1960,7 @@ i=(\cdots i_2i_1i_0)_b
 <li><a href="04-improving-efficiency.html#variance-reduction">Improve</a> — choose weights, controls, dependence, or low discrepancy points to reduce error</li>
 </ul>
 <div class="key-point">
-<p>Method choice depends on <span class="alert">error, cost, and a credible stopping rule</span></p>
+<p>Method choice depends on <span class="alert">error</span>, <span class="alert">cost</span>, and a credible <span class="alert">stopping rule</span></p>
 </div>
 </section>
 
