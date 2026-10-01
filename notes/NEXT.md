@@ -2,9 +2,10 @@
 
 ## Immediate actions
 
-1. Prepare the October 1 lecture: resume Deck 04 at “Brownian motion with
-   drift,” then “Choosing a transformation” and control variates if time
-   permits. September 29 covered the queue companion notebook and Deck 04
+1. The October 1 lecture is prepared, as confirmed by the instructor on
+   September 30. Resume Deck 04 at “Brownian motion with drift,” then
+   “Choosing a transformation” and control variates if time permits. September
+   29 covered the queue companion notebook and Deck 04
    through “Variance depends on the function.” The October 1 single-occurrence
    Illinois Tech calendar note is verified for PH 109.
 2. Develop `notebooks/sampling/LowDiscrepancyConstructions.ipynb` for Deck 04:
