@@ -689,6 +689,7 @@ Course decks
 This deck
 </h3>
 <ul>
+<li><a href="#/from-sampling-to-efficient-estimation">From Sampling to Efficient Estimation</a></li>
 <li><a href="#/transformations-and-importance-sampling">Transformations and Importance Sampling</a></li>
 <li><a href="#/control-variates-and-conditioning">Control Variates and Conditioning</a></li>
 <li><a href="#/structured-random-sampling">Structured Random Sampling</a></li>
@@ -696,6 +697,33 @@ This deck
 <li><a href="#/big-ideas">Big Ideas</a></li>
 </ul>
 </div>
+</section>
+
+<section id="from-sampling-to-efficient-estimation" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="variance-reduction">
+<h1>From Sampling to Efficient Estimation</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.1; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
+</div>
+
+<h3>
+Recap: How we reached target samples <span class="math inline">\(\vX\)</span> and <span class="math inline">\(Y = f(\vX)\)</span>
+</h3>
+<p><span class="math inline">\(\vU\sim\Unif([0,1]^d),\quad \vZ\sim\varrho_{\mathrm{prop}},\quad
+\vX\sim\varrho_{\mathrm{tar}}\)</span></p>
+<ul>
+<li><a href="02-generating-samples.html#transport-maps">Generating Samples: transport</a>: <span class="math inline">\(\vZ=\vS(\vU)\)</span>, then <span class="math inline">\(\vX=\vT(\vZ)=\vT\bigl(\vS(\vU)\bigr)\)</span>; if <span class="math inline">\(\vS\)</span> is the identity, <span class="math inline">\(\vX=\vT(\vU)\)</span>, E.g., quantile, affine</li>
+<li><a href="02-generating-samples.html#acceptancerejection-sampling">Generating Samples: acceptance–rejection</a>: retain selected proposals as <span class="math inline">\(\vX\)</span></li>
+<li><a href="03-markov-chain-monte-carlo.html#the-metropolishastings-algorithm">Markov Chain Monte Carlo</a>: propose <span class="math inline">\(\vZ_i\mid\vX_i\)</span>; accept or repeat <span class="math inline">\(\vX_i\)</span>; target law at stationarity</li>
+</ul>
+<h3>
+Our plan here
+</h3>
+<p>Keep <span class="math inline">\(\mu=\Ex_{\mathrm{tar}}[f(\vX)]\)</span> fixed, using two complementary levers:</p>
+<ul>
+<li><span class="alert">First</span>, change the contribution: replace <span class="math inline">\(Y=f(\vX)\)</span> by an equal-mean alternative, such as a transformed or weighted <span class="math inline">\(g(\vZ)\)</span>, a control variate, or a conditional expectation</li>
+<li><span class="alert">Then</span>, change how samples are chosen: arrange uniform inputs in antithetic pairs, strata, or low discrepancy patterns before mapping them to target-space samples</li>
+</ul>
 </section>
 
 <section>
@@ -752,7 +780,7 @@ This deck
 </div>
 <p>For <span class="alert">randomized</span> low discrepancy inputs, dependence changes the variance formula</p>
 <aside class="notes">
-<p>The two methods need not be independent of one another for these individual variance formulas. Each method needs independent replicates internally. Compare computational costs as well as the variance of one contribution. Deck 01 showed that accepting some bias can reduce MSE; here we compare unbiased estimators. Degenerate zero-variance cases need no asymptotic rate.</p>
+<p>The two methods need not be independent of one another for these individual variance formulas. Each method needs independent replicates internally. Compare computational costs as well as the variance of one contribution. Introduction showed that accepting some bias can reduce MSE; here we compare unbiased estimators. Degenerate zero-variance cases need no asymptotic rate.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -784,7 +812,7 @@ This deck
 <li>Seek a smaller <span class="math inline">\(\norm{h_g}_{\mathcal H_K}\)</span> for the same nodes and kernel</li>
 </ul>
 <aside class="notes">
-<p>The notation <span class="math inline">\(\vT\)</span> identifies a transport from uniform inputs to the target; <span class="math inline">\(\vS\)</span> generates proposal draws. Neither map must be displayed when uniform inputs are incidental. This common-cube comparison assumes compatible input dimensions; conditioning can reduce dimension. The bound is the Deck 03 worst-case integration-error bound. For sufficiently smooth composed cube integrands, nested uniform scrambling gives variance nearly <span class="math inline">\(\Order(n^{-3})\)</span> and RMSE nearly <span class="math inline">\(\Order(n^{-3/2})\)</span>. This is not a guarantee for every randomization or integrand. <a href="https://doi.org/10.1214/aos/1069362380">Owen (1997)</a> provides the variance result.</p>
+<p>The notation <span class="math inline">\(\vT\)</span> identifies a transport from uniform inputs to the target; <span class="math inline">\(\vS\)</span> generates proposal draws. Neither map must be displayed when uniform inputs are incidental. This common-cube comparison assumes compatible input dimensions; conditioning can reduce dimension. The bound is the Markov Chain Monte Carlo worst-case integration-error bound. For sufficiently smooth composed cube integrands, nested uniform scrambling gives variance nearly <span class="math inline">\(\Order(n^{-3})\)</span> and RMSE nearly <span class="math inline">\(\Order(n^{-3/2})\)</span>. This is not a guarantee for every randomization or integrand. <a href="https://doi.org/10.1214/aos/1069362380">Owen (1997)</a> provides the variance result.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1011,7 +1039,7 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1),\qquad
 </tr>
 </tbody>
 </table>
-<p><a href="02-generating-samples.html#acceptance-rejection-choosing-which-proposals-to-keep">Deck 02 acceptance–rejection</a>: same proposal, keep <span class="math inline">\(Z\)</span> with probability <span class="math inline">\(Z\)</span></p>
+<p><a href="02-generating-samples.html#acceptance-rejection-choosing-which-proposals-to-keep">Generating Samples: acceptance–rejection</a>: same proposal, keep <span class="math inline">\(Z\)</span> with probability <span class="math inline">\(Z\)</span></p>
 </section>
 <section class="slide level2">
 
@@ -1485,7 +1513,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="6209db2e" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="d7209efc" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1522,8 +1550,8 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 </div>
 
 <p><span id="from-lhs-to-quasi-monte-carlo"></span></p>
-<p>Deck 02 introduced <a href="02-generating-samples.html#what-does-low-discrepancy-mean">even coverage</a> and <a href="02-generating-samples.html#why-coordinate-order-matters">coordinate order</a></p>
-<p>Deck 03 linked <a href="03-markov-chain-monte-carlo.html#the-discrepancy-identity">discrepancy to integration error</a></p>
+<p>Generating Samples introduced <a href="02-generating-samples.html#what-does-low-discrepancy-mean">even coverage</a> and <a href="02-generating-samples.html#why-coordinate-order-matters">coordinate order</a></p>
+<p>Markov Chain Monte Carlo linked <a href="03-markov-chain-monte-carlo.html#the-discrepancy-identity">discrepancy to integration error</a></p>
 <p>Now we <span class="alert">construct</span> the point sets, randomize them, and assess error</p>
 <ul>
 <li><a href="#/the-van-der-corput-sequence">The van der Corput sequence</a></li>
