@@ -48,6 +48,10 @@ $$
 Y_i = f(\vX_i)
 $$
 
+$$
+\mu=\Ex(Y),\qquad \hmu_n=\frac1n\sum_{i=0}^{n-1}Y_i
+$$
+
 :::
 :::
 
@@ -526,9 +530,9 @@ Store $n$ sampled vectors as an $n\times d$ array:
 $$
 \mX=
 \begin{pmatrix}
-X_{11} & X_{12} & \cdots & X_{1d}\\
+X_{01} & X_{02} & \cdots & X_{0d}\\
 \vdots & \vdots & & \vdots\\
-X_{n1} & X_{n2} & \cdots & X_{nd}
+X_{n-1,1} & X_{n-1,2} & \cdots & X_{n-1,d}
 \end{pmatrix}
 $$
 
@@ -536,6 +540,7 @@ $$
 
 ## Multivariate normal sampling {.tree-marker-slide tree-marker="random-generation"}
 
+Set $Z_j=\Phi^{-1}(U_j)$ for independent uniform inputs<br>
 Let $\vZ\sim\Norm(\vzero,\mI_d)$ be a column vector of $d$ independent
 standard normal random variables, so
 
@@ -545,7 +550,8 @@ $$
 \Ex(\vZ\vZ^\mathsf{T})=\mI_d
 $$
 
-Define $\vX=\mA\vZ+\vmu$. Then
+The affine transport is $\vT(\vz)=\mA\vz+\vmu$<br>
+Define $\vX=\vT(\vZ)$. Then
 
 \begin{align*}
 \Ex(\vX) &= \vmu,\\
@@ -659,20 +665,20 @@ A Gaussian process is a random function whose values at [any finite collection
 of inputs]{.alert} form a multivariate normal random vector
 
 $$
-g\sim\GP(\mu,K)
+G\sim\GP(m,K)
 $$
 
 means
 
 \begin{align*}
-\Ex[g(t)] &= \mu(t),\\
-\Ex\bigl[\{g(t)-\mu(t)\}\{g(x)-\mu(x)\}\bigr] &= K(t,x)
+\Ex[G(t)] &= m(t),\\
+\Ex\bigl[\{G(t)-m(t)\}\{G(x)-m(x)\}\bigr] &= K(t,x)
 \end{align*}
 
-For inputs $t_1,\ldots,t_d$
+For inputs $t_1,\ldots,t_d$, let $\mu_j=m(t_j)$
 
 $$
-\bigl(g(t_1),\ldots,g(t_d)\bigr)^\mathsf{T}
+\bigl(G(t_1),\ldots,G(t_d)\bigr)^\mathsf{T}
 \sim\Norm(\vmu,\mSigma),
 \qquad
 \Sigma_{jk}=K(t_j,t_k)
@@ -685,7 +691,7 @@ $$
 Brownian motion $B$ is the Gaussian process with
 
 $$
-\mu(t)=0,
+m(t)=0,
 \qquad
 K(t,x)=\min(t,x),
 \qquad t,x\ge0
@@ -741,7 +747,8 @@ In general, $A_{jk}=\sqrt{\Delta t_k}$ for $k\le j$ and $A_{jk}=0$ otherwise
 
 ### Sampling
 
-Let $Z_1,\ldots,Z_d\ \IIDsim\ \Norm(0,1)$ and start from $B(t_0)=0$
+Let $Z_j=\Phi^{-1}(U_j)$, so $Z_1,\ldots,Z_d\ \IIDsim\ \Norm(0,1)$<br>
+Start from $B(t_0)=0$
 
 $$
 B(t_j)=B(t_{j-1})+\sqrt{t_j-t_{j-1}}\,Z_j,
@@ -828,10 +835,11 @@ used to evaluate option payoffs
 
 ## Option payoffs and prices {.tree-marker-slide tree-marker="quant-finance"}
 
-The fair price is the [expected discounted payoff]{.alert}
+Let $\vX=(B(t_1),\ldots,B(t_d))$ be the target Brownian path<br>
+The function $f$ builds the asset path and returns its [discounted payoff]{.alert}
 
 $$
-\mu=\Ex(\text{discounted payoff})
+Y=f(\vX)=\text{discounted payoff},\qquad \mu=\Ex(Y)
 $$
 
 \begin{align*}
@@ -1004,20 +1012,20 @@ In $d$ dimensions
 
 - Start with an easy [proposal]{.alert} density $\varrho_{\mathrm{prop}}$
 - Seek the [target]{.alert} density $\varrho_{\mathrm{tar}}$ through an
-  invertible, differentiable map $T:\reals^d\to\reals^d$<br>Let
-  $\vZ\sim\varrho_{\mathrm{prop}}$ and $\vX=T(\vZ)$
+  invertible, differentiable map $\vT:\reals^d\to\reals^d$<br>Let
+  $\vZ\sim\varrho_{\mathrm{prop}}$ and $\vX=\vT(\vZ)$
 
 The map transports the proposal to the target when
-$\varrho_{\mathrm{tar}}\bigl(T(\vz)\bigr)
-\left|\det\nabla T(\vz)\right|
+$\varrho_{\mathrm{tar}}\bigl(\vT(\vz)\bigr)
+\left|\det\nabla \vT(\vz)\right|
 =\varrho_{\mathrm{prop}}(\vz)$
 
 Then, for every integrable function $f$,
 
 \begin{align*}
 \Ex_{\mathrm{tar}}[f(\vX)]
-&=\Ex_{\mathrm{prop}}[f\bigl(T(\vZ)\bigr)]\\
-&\approx \frac1n\sum_{i=0}^{n-1}f\bigl(T(\vZ_i)\bigr),
+&=\Ex_{\mathrm{prop}}[f\bigl(\vT(\vZ)\bigr)]\\
+&\approx \frac1n\sum_{i=0}^{n-1}f\bigl(\vT(\vZ_i)\bigr),
 \qquad
 \vZ_0,\ldots,\vZ_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}
 \end{align*}
@@ -1028,17 +1036,17 @@ correction weight equal to one
 :::
 
 [Normalizing flow]{.alert} builds a flexible transport by composing
-manageable invertible maps, $T=T_m\circ\cdots\circ T_1$
+manageable invertible maps, $\vT=\vT_m\circ\cdots\circ \vT_1$
 
 ---
 
-### How is $T$ chosen?
+### How is $\vT$ chosen? {#how-is-t-chosen}
 
 ::: {.columns}
 ::: {.column width="47%"}
 <h3>Mechanics</h3>
 
-- Choose a tractable family $T_\theta$: affine, triangular, or a composition
+- Choose a tractable family $\vT_\theta$: affine, triangular, or a composition
   of simple invertible maps
 - Determine $\theta$ analytically when possible<br>Otherwise fit it so the
   density-matching equation holds approximately
@@ -1119,13 +1127,13 @@ $$
 This nonlinear map is easy to invert and has a simple Jacobian:
 
 $$
-T_b^{-1}(\vx)
+\vT_b^{-1}(\vx)
 =\begin{pmatrix}x_1\\x_2-b(x_1^2-1)\end{pmatrix},
 \qquad
-\nabla T_b(\vz)
+\nabla \vT_b(\vz)
 =\begin{pmatrix}1&0\\2bz_1&1\end{pmatrix},
 \qquad
-\det\nabla T_b=1
+\det\nabla \vT_b=1
 $$
 
 Thus, with $\phi$ the standard normal density,
@@ -1149,10 +1157,10 @@ Ingredients
 - [Proposal]{.alert}: sample $\vZ$ from known density
   $\varrho_{\mathrm{prop}}$
 - [Possibly unnormalized target]{.alert}: known
-  $\varrho_{\mathrm{tar}}$<br>The desired $\vX$ density is
-  $c\varrho_{\mathrm{tar}}$ for some $c>0$
+  $\widetilde\varrho_{\mathrm{tar}}$<br>The desired $\vX$ density is
+  $\varrho_{\mathrm{tar}}=c\widetilde\varrho_{\mathrm{tar}}$ for some $c>0$
 - [Global envelope]{.alert}: known $M$ with
-  $\varrho_{\mathrm{tar}}(\vx)\le M\varrho_{\mathrm{prop}}(\vx)$ for all $\vx$
+  $\widetilde\varrho_{\mathrm{tar}}(\vx)\le M\varrho_{\mathrm{prop}}(\vx)$ for all $\vx$
 
 Sampler for $\vX_0,\ldots,\vX_{n-1}$
 
@@ -1161,10 +1169,10 @@ $$
 &i\leftarrow0\\[-0.2em]
 &\texttt{repeat}\\[-0.2em]
 &\qquad \texttt{repeat}\quad
-  \vZ\sim\varrho_{\mathrm{prop}},\quad U\sim\Unif[0,1]
+  \vZ\sim\varrho_{\mathrm{prop}},\quad V\sim\Unif[0,1]
   \quad\text{independently}\\[-0.2em]
 &\qquad \texttt{until}\quad
-  U\le\frac{\varrho_{\mathrm{tar}}(\vZ)}
+  V\le\frac{\widetilde\varrho_{\mathrm{tar}}(\vZ)}
   {M\varrho_{\mathrm{prop}}(\vZ)}\\[-0.2em]
 &\qquad \vX_i\leftarrow \vZ,\quad i\leftarrow i+1\\[-0.2em]
 &\texttt{until}\quad i=n
@@ -1180,9 +1188,9 @@ $$
 [Acceptance indicator]{.alert}
 
 $$
-W:=
+I:=
 \begin{cases}
-1, & U\le \varrho_{\mathrm{tar}}(\vZ)/
+1, & V\le \widetilde\varrho_{\mathrm{tar}}(\vZ)/
            \bigl[M\varrho_{\mathrm{prop}}(\vZ)\bigr],\\
 0, & \text{otherwise}
 \end{cases}
@@ -1191,23 +1199,23 @@ $$
 [Density of an accepted proposal]{.alert}
 
 \begin{align*}
-\varrho_{\vX}(\vz)
-&=\varrho_{\vZ\mid W}(\vz\mid1)\\
-&=\frac{\Prob(W=1\mid \vZ=\vz)\varrho_{\mathrm{prop}}(\vz)}
-        {\Prob(W=1)}
+\varrho_{\mathrm{tar}}(\vz)
+&=\varrho_{\vZ\mid I}(\vz\mid1)\\
+&=\frac{\Prob(I=1\mid \vZ=\vz)\varrho_{\mathrm{prop}}(\vz)}
+        {\Prob(I=1)}
 &&\text{by Bayes' theorem}\\
-&=\frac{\left(\varrho_{\mathrm{tar}}(\vz)/
+&=\frac{\left(\widetilde\varrho_{\mathrm{tar}}(\vz)/
         \bigl[M\varrho_{\mathrm{prop}}(\vz)\bigr]\right)
         \varrho_{\mathrm{prop}}(\vz)}
-        {\Prob(W=1)}
+        {\Prob(I=1)}
 &&\text{by the acceptance rule}\\
-&=\frac{\varrho_{\mathrm{tar}}(\vz)}{M\Prob(W=1)}
-=c\varrho_{\mathrm{tar}}(\vz)
-&&\text{since }c\varrho_{\mathrm{tar}}\text{ is a density}
+&=\frac{\widetilde\varrho_{\mathrm{tar}}(\vz)}{M\Prob(I=1)}
+=c\widetilde\varrho_{\mathrm{tar}}(\vz)
+&&\text{since }c\widetilde\varrho_{\mathrm{tar}}\text{ is a density}
 \end{align*}
 
 - [Acceptance probability]{.alert}:
-  $\Prob(\text{acceptance})=\Prob(W=1)=1/(Mc)$
+  $\Prob(\text{acceptance})=\Prob(I=1)=1/(Mc)$
 - [Expected proposal cost]{.alert}: $n(Mc)$ samples of $\vZ$ for $n$ samples of
   $\vX$
 
@@ -1224,11 +1232,11 @@ $$
 $$
 
 - [Smallest envelope constant]{.alert}: $M=2$
-- Generate independent $Z,U\sim\Unif(0,1)$
+- Generate independent $Z,V\sim\Unif(0,1)$
 - Accept $X=Z$ when
 
 $$
-U\le
+V\le
 \frac{\varrho_{\mathrm{tar}}(Z)}
 {M\varrho_{\mathrm{prop}}(Z)}
 =Z
@@ -1246,7 +1254,7 @@ One uniform input, with the last coordinate making the [decision]{.alert}
 \begin{gather*}
 (\vU,V)=(U_1,\ldots,U_d,U_{d+1})\sim\Unif[0,1]^{d+1},
 \\
-\vZ=S(\vU)\sim\varrho_{\mathrm{prop}}
+\vZ=\vS(\vU)\sim\varrho_{\mathrm{prop}}
 \end{gather*}
 
 For numerical integration: points $(\vu_i,v_i)\in[0,1]^{d+1}$, $i=0,\ldots,n-1$<br>
@@ -1266,30 +1274,30 @@ performance depends on the resulting integrand, including its decision boundary
 
 ## Mixtures: choosing a component {.tree-marker-slide tree-marker="random-generation"}
 
-For $0<p<1$, let $T_k(\vZ)\sim\varrho_k$ and define
+For $0<p<1$, let $\vT_k(\vZ)\sim\varrho_k$ and define
 
 \begin{gather*}
 C(V)=\begin{cases}1,&V\le p,\\2,&V>p,\end{cases}
-\qquad \vX=T_{C(V)}\bigl(S(\vU)\bigr)
+\qquad \vX=\vT_{C(V)}\bigl(\vS(\vU)\bigr)
 \end{gather*}
 
 For every integrable $f$,
 
 \begin{align*}
 \Ex_{\mathrm{mix}}[f(\vX)]
-&=\int_{[0,1]^{d+1}} f\!\left(T_{C(v)}\bigl(S(\vu)\bigr)\right)
+&=\int_{[0,1]^{d+1}} f\!\left(\vT_{C(v)}\bigl(\vS(\vu)\bigr)\right)
 \,\dif\vu\,\dif v\\
 &=\int_{[0,1]^d}\left[
-\int_0^p f\bigl(T_1(S(\vu))\bigr)\,\dif v
-+\int_p^1 f\bigl(T_2(S(\vu))\bigr)\,\dif v\right]\dif\vu\\
+\int_0^p f\bigl(\vT_1(\vS(\vu))\bigr)\,\dif v
++\int_p^1 f\bigl(\vT_2(\vS(\vu))\bigr)\,\dif v\right]\dif\vu\\
 &=p\Ex_{\varrho_1}[f(\vX)]+(1-p)\Ex_{\varrho_2}[f(\vX)]\\
 &\approx\frac1n\sum_{i=0}^{n-1}
-f\!\left(T_{C(v_i)}\bigl(S(\vu_i)\bigr)\right)
+f\!\left(\vT_{C(v_i)}\bigl(\vS(\vu_i)\bigr)\right)
 \end{align*}
 
 ::: {.notes}
-Gaussian mixture: $S$ applies $\Phi^{-1}$ coordinatewise and
-$T_k(\vz)=\vmu_k+\mA_k\vz$, where
+Gaussian mixture: $\vS$ applies $\Phi^{-1}$ coordinatewise and
+$\vT_k(\vz)=\vmu_k+\mA_k\vz$, where
 $\mA_k\mA_k^{\mathsf T}=\mSigma_k$
 :::
 
@@ -1299,27 +1307,27 @@ The decision coordinate $V$ selects a component at the [fixed threshold]{.alert}
 
 ## Acceptance–rejection: choosing which proposals to keep {#acceptance-rejection-choosing-which-proposals-to-keep .tree-marker-slide tree-marker="random-generation"}
 
-Target $c\varrho_{\mathrm{tar}}$, with $\varrho_{\mathrm{tar}}\le M\varrho_{\mathrm{prop}}$; define
+Target $\varrho_{\mathrm{tar}}=c\widetilde\varrho_{\mathrm{tar}}$, with $\widetilde\varrho_{\mathrm{tar}}\le M\varrho_{\mathrm{prop}}$; define
 
 $$
-a(\vz):=\frac{\varrho_{\mathrm{tar}}(\vz)}
+a(\vz):=\frac{\widetilde\varrho_{\mathrm{tar}}(\vz)}
 {M\varrho_{\mathrm{prop}}(\vz)},
 \qquad
-W_i:=\boldsymbol{1}\!\left\{v_i\le a\bigl(S(\vu_i)\bigr)\right\}
+I_i:=\boldsymbol{1}\!\left\{v_i\le a\bigl(\vS(\vu_i)\bigr)\right\}
 $$
 
 \begin{align*}
 \Ex_{\mathrm{tar}}[f(\vX)]
 &=\frac{\displaystyle\int_{[0,1]^{d+1}}
-f\bigl(S(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(S(\vu)\bigr)\right\}
+f\bigl(\vS(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(\vS(\vu)\bigr)\right\}
 \,\dif\vu\,\dif v}
 {\displaystyle\int_{[0,1]^{d+1}}
-\boldsymbol{1}\!\left\{v\le a\bigl(S(\vu)\bigr)\right\}
+\boldsymbol{1}\!\left\{v\le a\bigl(\vS(\vu)\bigr)\right\}
 \,\dif\vu\,\dif v}\\
-&\approx\frac{\displaystyle\frac1n\sum_{i=0}^{n-1}f\bigl(S(\vu_i)\bigr)W_i}
-{\displaystyle\frac1n\sum_{i=0}^{n-1}W_i}
-=\frac{\displaystyle\sum_{i:\,W_i=1}f\bigl(S(\vu_i)\bigr)}
-{\displaystyle\sum_{i=0}^{n-1}W_i}
+&\approx\frac{\displaystyle\frac1n\sum_{i=0}^{n-1}f\bigl(\vS(\vu_i)\bigr)I_i}
+{\displaystyle\frac1n\sum_{i=0}^{n-1}I_i}
+=\frac{\displaystyle\sum_{i:\,I_i=1}f\bigl(\vS(\vu_i)\bigr)}
+{\displaystyle\sum_{i=0}^{n-1}I_i}
 \end{align*}
 
 ::: {.key-point}

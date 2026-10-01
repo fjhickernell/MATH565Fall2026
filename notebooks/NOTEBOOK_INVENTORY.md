@@ -534,7 +534,9 @@ into either performance notebook.
 - **Description:** Introduces the Keister integration problem, variable
   transformations, and accuracy comparisons. Plots transformed integrands for
   several values of $a$ and compares IID, randomized Sobol', and randomized
-  lattice estimates; includes $a=2$ as a boundary-growth counterexample.
+  lattice estimates; includes $a=1.6$ as an unbounded cube integrand with
+  finite variance. The slide and notebook explanations distinguish boundedness
+  ($a^2\le2$) from finite variance ($a^2<4$).
 - **Dependencies:** NumPy, SciPy, Matplotlib, QMCPy, IPython,
   `classlib.plots`, `classlib.nbviz`, and repository-root path setup. No
   external data or image input was found.

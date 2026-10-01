@@ -317,6 +317,16 @@ appropriate phase rather than appended indiscriminately.
 - [x] Load course-wide slide styling consistently across every deck.
 - [x] Link callbacks and forward references across all five decks and audit
   multidimensional vector notation, including Keister and discrepancy formulas.
+- [x] Align Decks 02–04 and nine companions with uniform U, proposal/source Z,
+  target X, scalar Y=f(X), bold vector-valued maps, and normalized/unnormalized
+  density notation. Reframe Deck 04 around equal-mean f(X) and g(Z), distinguish
+  exact transport from weighted changes of variables, and use h for cube
+  integrands. Align discrepancy nodes, MCMC proposals, observed data, queue
+  durations, and antithetic maps; preserve existing slide anchors. All three
+  decks render successfully and all nine companions execute cleanly with qmcpy.
+- [x] Add Deck 04 overlaid exact-transport/importance-sampling contribution
+  plots for two functions, audit keyword highlighting, and add larger-index
+  van der Corput exercises.
 - [x] Validate shared slide styling, metadata, navigation, and assets from
   `classlib`.
 - [x] Add reusable Monte Carlo overview-tree rendering and named course tree

@@ -38,7 +38,7 @@ subtitle: |
 
 ::: {.column width="60%"}
 ::: {.deck-map-theme}
-[Reducing variance (or variation) <br>per unit of work]{.alert}
+Reducing [variance]{.alert} (or [variation]{.alert}) <br>per unit of [work]{.alert}
 :::
 
 :::
@@ -61,308 +61,383 @@ subtitle: |
 - [Importance sampling](#importance-sampling)
 - [Choosing a transformation](#choosing-a-transformation)
 
+
 ## Variance and variation reduction {.tree-marker-slide tree-marker="variance-reduction"}
 
-Suppose
+Keep the [target]{.alert} quantity, but change its computational representation:
 
-$$
-\mu=\Ex[\underbrace{f(\vX)}_{\text{original}}]
-   =\Ex[\underbrace{g(\vX)}_{\text{alternative}}],
-\qquad \vX\sim\Unif[0,1]^d
-$$
+\begin{gather*}
+\vX\sim\varrho_{\mathrm{tar}},\quad Y=f(\vX),\qquad
+\vZ\sim\varrho_{\mathrm{prop}},\quad \widetilde Y=g(\vZ) \\
+ \alerttext{And} \quad \mu=\Ex(Y) = \Ex(\widetilde Y)
+\end{gather*}
 
-For samples $\vX_0,\ldots,\vX_{n-1}$, define two sample means:
+Two sample means estimate the same $\mu$:
 
 \begin{align*}
 \hmu_{f,n}&=\frac1n\sum_{i=0}^{n-1}f(\vX_i),&
-\hmu_{g,n}&=\frac1n\sum_{i=0}^{n-1}g(\vX_i)
+\hmu_{g,n}&=\frac1n\sum_{i=0}^{n-1}g(\vZ_i)
 \end{align*}
 
-Seek an [alternative]{.alert} $g$ that estimates $\mu$ with
-better accuracy for the same computational work
-
-- Often, a useful alternative is [flatter]{.alert} across the input space
-
-- May not affect the rate of decay of error, but [decrease the leading constant]{.alert}
+- Change the function, the sampling distribution, or both
+- Seek lower error for comparable computational [work]{.alert}
+- Changing only the function gives the special case $g(\vX)$
 
 ---
 
 ### Variance reduction
 
-For IID samples, both sample means are unbiased; their MSEs are their variances:
+For IID samples and finite second moments, both sample means are unbiased:
 
 \begin{align*}
-\var(\hmu_{f,n})&=\frac{\var\{f(\vX)\}}n,&
-\var(\hmu_{g,n})&=\frac{\var\{g(\vX)\}}n
+\var(\hmu_{f,n})&=\frac{\var_{\mathrm{tar}}\{f(\vX)\}}n,&
+\var(\hmu_{g,n})&=\frac{\var_{\mathrm{prop}}\{g(\vZ)\}}n
 \end{align*}
 
-IID RMSE is [$\Order(n^{-1/2})$]{.alert}
+Their MSEs equal their variances; IID RMSE is [$\Order(n^{-1/2})$]{.alert}
 
-&nbsp;
+::: {.key-point}
+Equal [means]{.alert} allow different output distributions and different [variances]{.alert}
+:::
 
-[Randomized low discrepancy]{.alert} points
-
-- Are individually uniform but dependent: the sample means remain unbiased
-
-- The IID variance formula does not apply
-
-- For sufficiently smooth $f$ or $g$, random scrambling  gives
-
-    - $\var(\hmu_{n})$ nearly [$\Order(n^{-3})$]{.alert}
-
-    - RMSE of nearly [$\Order(n^{-3/2})$]{.alert}
+For [randomized]{.alert} low discrepancy inputs, dependence changes the variance formula
 
 ::: {.notes}
-Deck 01 showed that accepting some bias can reduce MSE. Here the estimators
-are unbiased, so lower estimator variance means lower RMSE.
-The rate statement is for nested scrambled nets and sufficiently smooth
-integrands, not every randomized low discrepancy method or integrand.
-[Owen (1997)]({{< meta papers.owen_1997_scrambled_net_variance.doi_url >}})
-provides the variance result. Since the estimator is unbiased, its RMSE is
-the square root of its variance.
+The two methods need not be independent of one another for these individual
+variance formulas. Each method needs independent replicates internally.
+Compare computational costs as well as the variance of one contribution.
+Deck 01 showed that accepting some bias can reduce MSE; here we compare
+unbiased estimators. Degenerate zero-variance cases need no asymptotic rate.
 :::
 
 ---
 
 ### Variation reduction for low discrepancy sampling
 
-Keep the nodes $P_n=\{\vx_0,\ldots,\vx_{n-1}\}$ fixed, but choose an
-equivalent integrand:
+To compare designs on the unit cube, make the uniform inputs explicit:
+
+\begin{align*}
+\vX&=\vT(\vU),& h_f(\vu)&=f\bigl(\vT(\vu)\bigr),\\
+\vZ&=\vS(\vU),& h_g(\vu)&=g\bigl(\vS(\vu)\bigr)
+\end{align*}
+
+Both cube integrands have integral $\mu$; keep the nodes $\vu_0,\ldots,\vu_{n-1}$ fixed
+
+For $h_g\in\mathcal H_K$ and uniform distribution $F_{\mathrm{unif}}$,
 
 $$
-\mu=\int_{[0,1]^d}f(\vx)\,\dif\vx
-   =\int_{[0,1]^d}g(\vx)\,\dif\vx
+\left|\mu-\frac1n\sum_{i=0}^{n-1}h_g(\vu_i)\right|
+\le D\bigl(\{\vu_i\}_{i=0}^{n-1},F_{\mathrm{unif}};K\bigr)\norm{h_g}_{\mathcal H_K}
 $$
 
-For $g\in\mathcal H_K$ and uniform target $F$, the
-[worst-case error bound]({{< meta decks.d03.file >}}#worst-case-integration-error) gives
+- Nodes determine [discrepancy]{.alert}; the composed cube integrand determines [variation]{.alert}
+- Seek a smaller $\norm{h_g}_{\mathcal H_K}$ for the same nodes and kernel
 
-$$
-\left|\mu-\frac1n\sum_{i=0}^{n-1}g(\vx_i)\right|
-\le D(P_n,F;K)\norm{g}_{\mathcal H_K}
-$$
-
-- The nodes determine discrepancy $D(P_n,F;K)$, which is typically nearly [$\Order(n^{-1})$]{.alert}
-- The integrand determines its kernel-dependent variation $\norm{g}_{\mathcal H_K}$
-
-::: {.key-point}
-For fixed low discrepancy nodes, seek an equivalent integrand with smaller
-variation to tighten the error bound
+::: {.notes}
+The notation $\vT$ identifies a transport from uniform inputs to the target;
+$\vS$ generates proposal draws. Neither map must be displayed when uniform
+inputs are incidental. This common-cube comparison assumes compatible input
+dimensions; conditioning can reduce dimension.
+The bound is the Deck 03 worst-case integration-error bound.
+For sufficiently smooth composed cube integrands, nested uniform scrambling
+gives variance nearly $\Order(n^{-3})$ and RMSE nearly $\Order(n^{-3/2})$.
+This is not a guarantee for every randomization or integrand.
+[Owen (1997)]({{< meta papers.owen_1997_scrambled_net_variance.doi_url >}})
+provides the variance result.
 :::
 
 ---
 
 ### The Keister example
 
-Consider
+Write the original integral as a target expectation:
+
+\begin{gather*}
+\mu=\int_{\reals^d}\cos(\norm{\vx})\me^{-\norm{\vx}^2}\,\dif\vx
+=\Ex_{\mathrm{tar}}[f(\vX)],\\
+\vX\sim\Norm(\vzero,\mI_d/2),\qquad
+f(\vx)=\mpi^{d/2}\cos(\norm{\vx})
+\end{gather*}
+
+Choose $\vZ_a\sim\Norm(\vzero,\mI_d/a^2)$ and apply a [density correction]{.alert}:
 
 $$
-\mu=\int_{\reals^d}\cos(\norm{\vt})\exp(-\norm{\vt}^2)\,\dif\vt
+g_a(\vz)=\frac{(2\mpi)^{d/2}}{a^d}
+\cos(\norm{\vz})\exp\bigl[-(1-a^2/2)\norm{\vz}^2\bigr]
 $$
 
-For $j=1,\ldots,d$, set $x_j=\Phi(a t_j)$, so
-$t_j=\Phi^{-1}(x_j)/a$, where $\Phi$ is the standard normal CDF
+Every $a>0$ gives $\Ex[g_a(\vZ_a)]=\mu$; changing $a$ changes the contribution
 
-Define $\vz(\vx)=(\Phi^{-1}(x_j))_{j=1}^d$. For $0<a\le\sqrt2$:
+---
+
+### Keister on the unit cube
+
+Set $\vS_a(\vu)=\bigl(\Phi^{-1}(u_j)/a\bigr)_{j=1}^d$ and
+$h_a(\vu)=g_a\bigl(\vS_a(\vu)\bigr)$
+
+With $\vq(\vu)=\bigl(\Phi^{-1}(u_j)\bigr)_{j=1}^d$,
+
+$$
+h_a(\vu)=\frac{(2\mpi)^{d/2}}{a^d}
+\cos\bigl(\norm{\vq(\vu)}/a\bigr)
+\exp\bigl[-(2-a^2)\norm{\vq(\vu)}^2/(2a^2)\bigr]
+$$
 
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>
-<span>Verify by a change of variables that</span>
+<span>Verify $g_a=f\varrho_{\mathrm{tar}}/\varrho_{\mathrm{prop},a}$ and
+$\int_{[0,1]^d}h_a(\vu)\,\dif\vu=\mu$</span>
 :::
 
-\begin{align*}
-\mu
-&=\int_{[0,1]^d}\frac{(2\mpi)^{d/2}}{a^d}
-\cos\bigl(\norm{\vz(\vx)}/a\bigr)\,\exp\bigl[-(2-a^2)\norm{\vz(\vx)}^2/(2a^2)\bigr]\,\dif\vx
-\end{align*}
+- $0<a^2\le2$: $h_a$ is [bounded]{.alert}; $a=\sqrt2$ gives $g_a=f$
+- $2<a^2<4$: $h_a$ is [unbounded]{.alert} but has [finite]{.alert} variance, including $a=1.6$
+- $a^2\ge4$: [infinite]{.alert} variance
 
-Varying $a$ gives a [family]{.alert} of alternative integrands $g_a$ with the
-same integral $\mu$; choose $a$ to reduce estimator variance or integrand variation
+Choose $a$ by estimator variance or cube-integrand variation
 
-[Explore the choices of $a$ in the Keister notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/KeisterExample.ipynb)
+::: {.notes}
+Every positive $a$ preserves the mean. The second moment is
+$$
+\Ex[g_a(\vZ_a)^2]=\frac{(2\mpi)^{d/2}}{a^d}
+\int_{\reals^d}\cos^2(\norm{\vz})
+\exp\bigl[-(2-a^2/2)\norm{\vz}^2\bigr]\,\dif\vz.
+$$
+It is finite precisely when $a^2<4$. For $2<a^2<4$, the cube-boundary
+singularity is mild enough for square integrability. At $a^2=4$, Gaussian
+decay disappears and the squared cosine cannot provide cancellation;
+for larger $a^2$, the envelope grows. The notebook uses $a=1.6$ to explore
+an unbounded integrand that still has finite variance.
+:::
 
+[Explore $a$ in the Keister notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/KeisterExample.ipynb)
 
 ## Transforming an integral {.tree-marker-slide tree-marker="analysis-importance"}
 
-To approximate $\mu=\int_{\mathcal T}g(\vt)\,\dif \vt$, choose an invertible map
+Start with $\displaystyle \mu=\Ex_{\mathrm{tar}}[f(\vX)]=\int_{\mathcal X}f(\vx)\varrho_{\mathrm{tar}}(\vx)\,\dif\vx$
 
-$$
-\vt=\psi(\vx),
-\qquad \psi:\mathcal X\to\mathcal T,\quad \mathcal X,\mathcal T\subseteq\reals^d
-$$
-
-Let $J(\vx;\psi)=\det\{\partial\psi_i/\partial x_j\}_{i,j=1}^d$
-
-If $\vX$ has density $\varrho_{\vX}$, then
+Choose an [invertible]{.alert} differentiable map $\vT:\mathcal Z\to\mathcal X$
+and $\vZ\sim\varrho_{\mathrm{prop}}$ covering the required support
 
 \begin{align*}
-\mu
-&=\int_{\mathcal X}g\bigl(\psi(\vx)\bigr)\abs{J(\vx;\psi)}\,\dif \vx\\
-&=\Ex_{\vX\sim\varrho_{\vX}}\!\left[
-\frac{g\bigl(\psi(\vX)\bigr)\abs{J(\vX;\psi)}}{\varrho_{\vX}(\vX)}
-\right]
+g(\vz)&=f\bigl(\vT(\vz)\bigr)w_T(\vz),\\
+w_T(\vz)&=
+\frac{\varrho_{\mathrm{tar}}\bigl(\vT(\vz)\bigr)
+\left|\det\nabla\vT(\vz)\right|}
+{\varrho_{\mathrm{prop}}(\vz)}
 \end{align*}
 
-For $\vX\sim\Unif[0,1]^d$, the density in the denominator is one
+Then $\mu=\Ex_{\mathrm{prop}}[g(\vZ)]$, where $\nabla\vT(\vz)$ is the [Jacobian]{.alert} matrix
+of $\vT$ and $\left|\det\nabla\vT(\vz)\right|$ is its volume-scaling factor
+
+::: {.key-point}
+A general change of variables preserves the integral through a correction [weight]{.alert}
+:::
+
+::: {.notes}
+Assume the map and inverse meet the change-of-variables theorem's conditions,
+and the proposal is positive wherever the transformed integrand is nonzero.
+The target density is normalized; integrability is required for the expectation.
+The transformed proposal need not have the specified target density.
+For a Lebesgue integral $\int r(\vx)\,\dif\vx$, the same mechanism gives
+$g(\vz)=r(\vT(\vz))|\det\nabla\vT(\vz)|/
+\varrho_{\mathrm{prop}}(\vz)$ without introducing a target density.
+:::
 
 ---
 
 ### Transforming a random variable
 
-Let $\vZ$ have proposal density $\varrho_{\mathrm{prop}}$ and define
-$\vX=T(\vZ)$ for an invertible map $T:\mathcal Z\to\mathcal X$
-
-The densities satisfy
-
-\begin{align*}
-\varrho_{\mathrm{tar}}(\vx)
-&=\varrho_{\mathrm{prop}}\bigl(T^{-1}(\vx)\bigr)
-  \left|\det\nabla T^{-1}(\vx)\right|,\\
-\varrho_{\mathrm{tar}}\bigl(T(\vz)\bigr)
-&=\frac{\varrho_{\mathrm{prop}}(\vz)}
-{\left|\det\nabla T(\vz)\right|}
-\end{align*}
-
-Therefore
+An [exact transport]{.alert} $\vT:\mathcal Z\to\mathcal X$ satisfies
 
 $$
-\Ex_{\mathrm{tar}}[f(\vX)]
-=\Ex_{\mathrm{prop}}[f\bigl(T(\vZ)\bigr)]
+\varrho_{\mathrm{tar}}\bigl(\vT(\vz)\bigr)
+\left|\det\nabla\vT(\vz)\right|
+=\varrho_{\mathrm{prop}}(\vz)
 $$
 
-[A change of variables in an integral]{.alert} and [a transformation of a random variable]{.alert} are the same mechanism viewed from opposite directions
+Then $w_T(\vz)=1$ wherever $\varrho_{\mathrm{prop}}(\vz)>0$, and so
+$\vX=\vT(\vZ)\sim\varrho_{\mathrm{tar}}$, and
+
+$$
+g(\vz)=f\bigl(\vT(\vz)\bigr),\qquad
+g(\vZ)\stackrel d=f(\vX)
+$$
+
+::: {.key-point}
+Exact transport preserves the whole output [distribution]{.alert}, including IID variance
+:::
+
+- Provides access to target samples; construction and evaluation costs can differ
+- Different transports can change low discrepancy performance through the cube integrand
 
 ---
 
-### Transport makes importance weights constant
+### Exact transport makes importance weights constant
 
-For any invertible map $T$,
-
-\begin{align*}
-\mu
-&=\int f(\vx)\varrho_{\mathrm{tar}}(\vx)\,\dif \vx\\
-&=\Ex_{\mathrm{prop}}\!\left[
-f\bigl(T(\vZ)\bigr)
-\underbrace{
-\frac{\varrho_{\mathrm{tar}}\bigl(T(\vZ)\bigr)
-\left|\det\nabla T(\vZ)\right|}
-{\varrho_{\mathrm{prop}}(\vZ)}}_{W_T(\vZ)}
-\right]
-\end{align*}
-
-- [Exact transport]{.alert}: choose $T$ so that $W_T(\vz)=1$ everywhere
-- [Importance sampling]{.alert}: choose $T(\vz)=\vz$ and retain the varying
-  weight $W_T(\vz)=\varrho_{\mathrm{tar}}(\vz)/
-  \varrho_{\mathrm{prop}}(\vz)$
+| Choice of map | Correction | Alternative contribution |
+|:---|:---|:---|
+| Exact transport $\vT$ | $w_T(\vz)=1$ | $f\bigl(\vT(\vZ)\bigr)$ |
+| Identity map  $\vT(\vz)=\vz$ <br>(importance sampling)| $w(\vz)=\varrho_{\mathrm{tar}}(\vz)/\varrho_{\mathrm{prop}}(\vz)$ | $f(\vZ)w(\vZ)$ |
 
 ::: {.key-point}
-Transport absorbs the density correction into the map
+Exact transport changes [samples]{.alert}; importance sampling changes [contributions]{.alert}
 
-Importance sampling carries the correction as a weight
+Same expectation $\Ex_{\mathrm{tar}}[f(\vX)]=\Ex_{\mathrm{prop}}[g(\vZ)]=\mu$
+
+[but]{.alert}
+output distributions and variances may differ (want them to)
 :::
 
 ## Importance sampling {.tree-marker-slide tree-marker="importance-sampling"}
 
-Choose a proposal density $\varrho_{\mathrm{prop}}$ that is positive wherever
-$f\varrho_{\mathrm{tar}}$ is nonzero:
+Choose $\varrho_{\mathrm{prop}}>0$ wherever $f\varrho_{\mathrm{tar}}\ne0$
 
 \begin{align*}
-\mu
-&=\int f(\vx)\varrho_{\mathrm{tar}}(\vx)\,\dif \vx\\
-&=\Ex_{\vZ\sim\varrho_{\mathrm{prop}}}\!\left[
-f(\vZ)\frac{\varrho_{\mathrm{tar}}(\vZ)}
-{\varrho_{\mathrm{prop}}(\vZ)}
-\right]
+w(\vz)&=\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{prop}}(\vz)},&
+g(\vz)&=f(\vz)w(\vz),\\
+\mu&=\Ex_{\mathrm{tar}}[f(\vX)]
+=\Ex_{\mathrm{prop}}[g(\vZ)]
 \end{align*}
-
-The ratio $\varrho_{\mathrm{tar}}/\varrho_{\mathrm{prop}}$ is the
-[importance weight]{.alert}
 
 For $\vZ_0,\ldots,\vZ_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}$,
 
 $$
-\hmu_{\mathrm{IS},n}
-=\frac1n\sum_{i=0}^{n-1}f(\vZ_i)
-\frac{\varrho_{\mathrm{tar}}(\vZ_i)}
-{\varrho_{\mathrm{prop}}(\vZ_i)}
+\hmu_{\mathrm{IS},n}=\frac1n\sum_{i=0}^{n-1}g(\vZ_i)
+=\frac1n\sum_{i=0}^{n-1}f(\vZ_i)w(\vZ_i)
 $$
+
+$w$ is the [weight]{.alert} function; $W=w(\vZ)$ is its random value
 
 ---
 
 ### One proposal, two unbiased estimators
 
 \begin{gather*}
-\varrho_{\mathrm{prop}}(z)=1,
-\qquad
-\varrho_{\mathrm{tar}}(x)=2x,
-\qquad 0<x,z<1,\\
-\mu=\int_0^1 f(x)\varrho_{\mathrm{tar}}(x)\,\dif x,
-\qquad
-Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1)
+\varrho_{\mathrm{prop}}(z)=1,\qquad
+\varrho_{\mathrm{tar}}(x)=2x,\qquad 0<x,z<1,\\
+Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1),\qquad
+\mu=\Ex_{\mathrm{tar}}[f(X)]
 \end{gather*}
 
 | | Exact transport | Importance sampling |
 |:---|:---|:---|
-| Correction | $T(z)=\sqrt z$ | $w(z)=\varrho_{\mathrm{tar}}(z)/\varrho_{\mathrm{prop}}(z)=2z$ |
-| Estimator | $\displaystyle \hmu_{\mathrm{T},n}=\frac1n\sum_{i=0}^{n-1}f\bigl(\sqrt{Z_i}\bigr)$ | $\displaystyle \hmu_{\mathrm{IS},n}=\frac1n\sum_{i=0}^{n-1}2Z_i f(Z_i)$ |
-| Contribution | Unweighted target sample | Weighted proposal sample |
+| Construction | $T(z)=\sqrt z$ | $w(z)=2z$ |
+| Alternative $g(z)$ | $f(\sqrt z)$ | $2zf(z)$ |
+| Estimator | $\displaystyle\frac1n\sum_{i=0}^{n-1}f(\sqrt{Z_i})$ | $\displaystyle\frac1n\sum_{i=0}^{n-1}2Z_if(Z_i)$ |
+| Output distribution | Same as $Y=f(X)$ | Generally different from $Y$ |
 
-[Deck 02 acceptance–rejection]({{< meta decks.d02.file >}}#acceptance-rejection-choosing-which-proposals-to-keep): same proposal, keep $Z$ with
-probability $Z$
+[Deck 02 acceptance–rejection]({{< meta decks.d02.file >}}#acceptance-rejection-choosing-which-proposals-to-keep): same proposal, keep $Z$ with probability $Z$
 
-::: {.key-point}
-Transport changes samples; importance sampling changes contributions
+---
+
+### Seeing the contribution variances
+
+```{python}
+#| label: importance-contributions
+#| echo: false
+#| fig-align: center
+#| fig-alt: "Two plots overlay exact-transport contributions g_ET(Z)=f(sqrt(Z)) in blue and importance contributions g_IS(Z)=2Zf(Z) in orange, using the same uniform input Z, one plot for each function. For f(x)=x, importance sampling spreads outputs more widely; for f(x)=1-x, it concentrates them more tightly around their common mean. Markers indicate equally spaced uniform input quantiles."
+#| fig-width: 13
+#| fig-height: 4.6
+#| fig-format: svg
+#| out-width: 94%
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+plt.rcParams["mathtext.fontset"] = "stix"
+importance_grid = np.linspace(0, 1, 501)
+importance_quantiles = (np.arange(20) + 0.5) / 20
+fig_importance, axes_importance = plt.subplots(
+    1, 2, figsize=(13, 4.6), constrained_layout=True
+)
+importance_cases = [
+    (lambda t: t, lambda t: 2*t**2, 2/3,
+     r"$f(x)=x$", r"$g_{\mathrm{IS}}(z)=2z^2$", "16/45", 2.05),
+    (lambda t: 1-t, lambda t: 2*t*(1-t), 1/3,
+     r"$f(x)=1-x$", r"$g_{\mathrm{IS}}(z)=2z(1-z)$", "1/45", 1.05),
+]
+for ax, (target_f, importance_g, mean, f_label, g_label, is_var, ymax) in zip(axes_importance, importance_cases):
+    for function, points, label, variance, color, marker in [
+        (lambda z: target_f(np.sqrt(z)), importance_quantiles, r"$g_{\mathrm{ET}}(z)=\sqrt{z}$" if mean > 0.5 else r"$g_{\mathrm{ET}}(z)=1-\sqrt{z}$", "1/18", "#1f5a91", "o"),
+        (importance_g, importance_quantiles, g_label, is_var, "#bd5d15", "s"),
+    ]:
+        values = function(points)
+        ax.plot(importance_grid, function(importance_grid), color=color, lw=2.6,
+                label=label + r"; $\mathrm{var}=" + variance + "$")
+        ax.vlines(points, mean, values, color=color, alpha=0.16, lw=1.1)
+        ax.scatter(points, values, color=color, marker=marker, s=24, zorder=3)
+    ax.axhline(mean, color="#666666", ls="--", lw=1.4,
+               label=r"Common mean $\mu=" + ("2/3" if mean > 0.5 else "1/3") + "$")
+    ax.set_title(f_label, fontsize=23)
+    ax.set_xlabel(r"Uniform input $z$", fontsize=19)
+    ax.set_ylabel("Contribution", fontsize=19)
+    ax.set_xlim(0, 1)
+    ax.set_ylim(-0.045*ymax, ymax)
+    ax.tick_params(labelsize=14)
+    ax.legend(loc="upper left" if mean > 0.5 else "upper right", fontsize=16,
+              framealpha=0.95)
+    ax.grid(alpha=0.12)
+plt.show()
+```
+
+$g_{\mathrm{ET}}(z)=f(\sqrt z)$; $g_{\mathrm{IS}}(z)=2zf(z)$; both use $Z\sim\Unif(0,1)$
+
+Markers: equally probable input quantiles; dashed line: common mean
+
+::: {.notes}
+The dots are deterministic quantile illustrations, not a random Monte Carlo sample.
+For each curve, each marker represents the midpoint of a probability bin of mass 1/20.
+Both curves use the same uniform input points (i+1/2)/20.
+Vertical segments show deviations from the mean. Since both inputs are uniform,
+variance is the integral of the squared vertical deviations.
+The two curves in each plot share the same axes.
+For f(x)=x, importance sampling increases contribution variance by a factor 6.4.
+For f(x)=1-x, it reduces contribution variance by a factor 2.5.
+The exact-transport output f(sqrt(Z)) has the same distribution as f(X),
+so the blue curves also represent the target-output variance.
 :::
 
 ---
 
 ### Variance depends on the function
 
-- [Displayed variances]{.alert}: one estimator contribution
-- [Sample-mean variances]{.alert}: divide by $n$
+- Displayed variances: [one]{.alert} estimator contribution
+- Sample-mean variances: [divide]{.alert} by $n$
 
-| $f(x)$ | $\mu$ | Transport: $\var\!\left[f(\sqrt Z)\right]$ | Importance sampling: $\var[2Zf(Z)]$ | Smaller |
+| $f(x)$ | $\mu$ | Transport: $\var[f(\sqrt Z)]$ | Importance sampling: $\var[2Zf(Z)]$ | Smaller |
 |:---|---:|---:|---:|:---|
 | $x$ | $2/3$ | $1/18$ | $16/45$ | transport |
 | $1-x$ | $1/3$ | $1/18$ | $1/45$ | importance sampling |
 
 ::: {.key-point}
-[No universal variance winner]{.alert}
+[No]{.alert} universal variance winner
 
-Target samples $\longrightarrow$ ordinary averages for every $f$
+Target samples support ordinary averages for every $f$
 
-Weighted proposal $\longrightarrow$ better or worse for a particular $f$
+Weighted proposals can be [better]{.alert} or [worse]{.alert} for a particular $f$
 :::
 
 ---
 
 ### Brownian motion with drift
 
-Positive option payoffs may be rare under a discretized Brownian path
+Let $\vX\sim\Norm(\vzero,\mSigma)$ be the target Brownian path, with
+$\Sigma_{jk}=\min(t_j,t_k)$ and discounted payoff $Y=f(\vX)$
 
-Let $\vX\sim\Norm(\vzero,\mSigma)$ with $\Sigma_{jk}=\min(t_j,t_k)$ and
-target density $\varrho_{\mathrm{tar}}$
+Choose $\vZ\sim\Norm(\va,\mSigma)$, where
+$\va=\theta(t_1,\ldots,t_d)^\mathsf T$
 
-Use the proposal $\Norm(\va,\mSigma)$ with density
-$\varrho_{\mathrm{prop}}$ and
+\begin{align*}
+w(\vz)&=\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{prop}}(\vz)}
+=\exp\!\left(-\theta z_d+\frac{\theta^2t_d}{2}\right),\\
+g(\vZ)&=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[g(\vZ)]=\mu
+\end{align*}
 
-$$
-\va=\theta(t_1,\ldots,t_d)^\mathsf T
-$$
-
-The likelihood ratio simplifies to
-
-$$
-\frac{\varrho_{\mathrm{tar}}(\vx)}{\varrho_{\mathrm{prop}}(\vx)}
-=\exp\!\left(-\theta x_d+\frac{\theta^2t_d}{2}\right)
-$$
-
-- Drift makes positive payoffs more common
-- Importance weights compensate to preserve the target expectation
-- A good drift can [reduce estimator variance]{.alert}
+- Drift makes positive payoffs [more common]{.alert}
+- Weights [preserve]{.alert} the target expectation; a good drift can reduce variance
 
 [Asian option variance-reduction notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb)
-
 
 ## Choosing a transformation {.tree-marker-slide tree-marker="analysis-importance"}
 
@@ -374,7 +449,7 @@ $$
 - Pilot samples can guide the choice of transformation or proposal
 
 ::: {.key-point}
-Place more samples where the [magnitude of the integrand times the target density]{.alert} is large, without creating extreme weights
+Place more samples where the [magnitude]{.alert} of the integrand times the target density is large, without creating [extreme]{.alert} weights
 :::
 
 # Control Variates and Conditioning {.tree-marker-slide tree-marker="variance-reduction"}
@@ -388,140 +463,138 @@ Place more samples where the [magnitude of the integrand times the target densit
 
 ## Control variates {.tree-marker-slide tree-marker="variance-reduction"}
 
-Let $\eta_1,\ldots,\eta_m$ have known zero means
+Let $\eta_1,\ldots,\eta_m$ have known [zero]{.alert} means
 
-For any coefficients $\beta_1,\ldots,\beta_m$,
+For fixed coefficients $\vbeta$, define $\widetilde Y=g(\vX)$ with
 
 $$
-\mu=\Ex[f(\vX)]
-=\Ex\!\left[f(\vX)-\sum_{j=1}^m\beta_j\eta_j(\vX)\right]
+g(\vx)=f(\vx)-\sum_{j=1}^m\beta_j\eta_j(\vx)
 $$
 
-The estimator
+Then $\Ex[g(\vX)]=\Ex[f(\vX)]=\mu$, so
 
 $$
 \hmu_{\mathrm{CV},n}
+=\frac1n\sum_{i=0}^{n-1}g(\vX_i)
 =\frac1n\sum_{i=0}^{n-1}\left[f(\vX_i)-\sum_{j=1}^m\beta_j\eta_j(\vX_i)\right]
 $$
 
-is unbiased for fixed $\vbeta$
+is unbiased
 
-Choose $\vbeta$ to make
-
-$$
-\var\!\left[f(\vX)-\sum_{j=1}^m\beta_j\eta_j(\vX)\right]
-$$
-
-as small as possible
+::: {.key-point}
+Choose $\vbeta$ to make $\var[g(\vX)]$ as [small]{.alert} as possible
+:::
 
 ## Choosing coefficients by least squares {.tree-marker-slide tree-marker="variance-linear-algebra"}
 
-Center the response and control values:
+[Center]{.alert} the response and control values:
 
 \begin{align*}
-y_i&=f(\vx_i)-\overline{f},&
+y_i&=f(\vx_i),& c_i&=y_i-\overline y,\\
 H_{ij}&=\eta_j(\vx_i)-\overline{\eta}_j
 \end{align*}
 
 Then
 
 $$
-\hvbeta=\argmin_{\vb}\norm{\vy-\mH\vb}^2
+\hvbeta=\argmin_{\vb}\norm{\vc-\mH\vb}^2
 $$
 
 When $\mH^\mathsf T\mH$ is nonsingular,
 
 $$
-\hvbeta=(\mH^\mathsf T\mH)^{-1}\mH^\mathsf T\vy
+\hvbeta=(\mH^\mathsf T\mH)^{-1}\mH^\mathsf T\vc
 $$
 
-The residual is orthogonal to the column space of $\mH$, so least squares removes the component of $f$ explained by the controls
+The residual is [orthogonal]{.alert} to the column space of $\mH$, so least squares removes the component of $f$ explained by the controls
 
 ## Practical control-variate choices {.tree-marker-slide tree-marker="variance-reduction"}
 
-- Good controls are inexpensive, have known means, and are strongly related to $f$
+- Good controls are [inexpensive]{.alert}, have known means, and are [strongly related]{.alert} to $f$
 - More controls can reduce the sample size needed for a target accuracy
 - Poor controls may increase computation without reducing variance
 - For IID sampling, least squares targets variance reduction
 - For low discrepancy sampling, choose coefficients to reduce [variation]{.alert}, not sampling variance
 
 ::: {.key-point}
-A control variate turns [known expectations]{.alert} into information about an unknown expectation
+A control variate turns [known]{.alert} expectations into information about an unknown expectation
 :::
 
 ## Conditional Monte Carlo {.tree-marker-slide tree-marker="variance-probability"}
 
+Let $V$ be a conditioning variable<br>
 Recall the [laws of total expectation and variance]({{< meta decks.d01.file >}}#laws-of-total-expectation-and-variance)
 
 \begin{align*}
-\Ex(Y)&=\Ex_Z\{\Ex(Y\mid Z)\},\\
-\var(Y)&=\Ex_Z\{\var(Y\mid Z)\}+\var_Z\{\Ex(Y\mid Z)\}
+\Ex(Y)&=\Ex_V\{\Ex(Y\mid V)\},\\
+\var(Y)&=\Ex_V\{\var(Y\mid V)\}+\var_V\{\Ex(Y\mid V)\}
 \end{align*}
 
 Therefore
 
 $$
-\var_Z\{\Ex(Y\mid Z)\}\le\var(Y)
+\var_V\{\Ex(Y\mid V)\}\le\var(Y)
 $$
 
 If $Y=f(X_1,\ldots,X_d)$ and
 
 $$
-g(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
+\widetilde Y=g(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
 $$
 
 is analytic, estimate $\mu$ by sampling $g(\vX_{2:d})$ instead of $Y$
 
-[Analytically averaging over part of the randomness reduces variance]{.alert}
+[Analytically averaging]{.alert} over part of the randomness [reduces]{.alert} variance
 
 ## Conditional density estimation {.tree-marker-slide tree-marker="density-estimation"}
 
-Let $Y=f(\vX)$ with $\vX\sim\Unif[0,1]^d$
+Write the simulator on uniform inputs as $Y=h(\vU)$ with $\vU\sim\Unif[0,1]^d$
 
-Suppose $f$ is increasing in $x_1$ and
+Suppose $h$ is [increasing]{.alert} in $u_1$ and
 
 $$
-y=f(x_1,\vx_{2:d})\iff x_1=g(y;\vx_{2:d})
+y=h(u_1,\vu_{2:d})\iff u_1=g(y;\vu_{2:d})
 $$
 
+Extend the inverse by clipping to $[0,1]$ outside the conditional support<br>
 Then
 
 \begin{align*}
-F_{Y\mid \vX_{2:d}}(y\mid \vx_{2:d})
-&=\Prob\{X_1\le g(y;\vx_{2:d})\}\\
-&=g(y;\vx_{2:d}),\\
+F_{Y\mid \vU_{2:d}}(y\mid \vu_{2:d})
+&=\Prob\{U_1\le g(y;\vu_{2:d})\}\\
+&=g(y;\vu_{2:d}),\\
 \varrho_Y(y)
-&=\int_{[0,1]^{d-1}}\frac{\partial g}{\partial y}(y;\vx_{2:d})\,\dif\vx_{2:d}
+&=\int_{[0,1]^{d-1}}\frac{\partial g}{\partial y}(y;\vu_{2:d})\,\dif\vu_{2:d}
 \end{align*}
 
-Thus a density value becomes an [expectation of a conditional density]{.alert}
+Thus a density value becomes an [expectation]{.alert} of a conditional density
 
 ## Density of a sum of uniforms {.tree-marker-slide tree-marker="density-estimation"}
 
 Let
 
 $$
-Y=\gamma_1X_1+\cdots+\gamma_dX_d,
-\qquad \vX\sim\Unif[0,1]^d,
+Y=\gamma_1U_1+\cdots+\gamma_dU_d,
+\qquad \vU\sim\Unif[0,1]^d,
 \qquad \gamma_j>0
 $$
 
-Solving for $x_1$ gives
+Solving for $u_1$ gives
 
 $$
-g(y;\vx_{2:d})=\frac{y-\sum_{j=2}^d\gamma_jx_j}{\gamma_1}
+g(y;\vu_{2:d})=\frac{y-\sum_{j=2}^d\gamma_ju_j}{\gamma_1}
 $$
 
-when $\sum_{j=2}^d\gamma_jx_j\le y\le\gamma_1+\sum_{j=2}^d\gamma_jx_j$
+when $\sum_{j=2}^d\gamma_ju_j\le y\le\gamma_1+\sum_{j=2}^d\gamma_ju_j$
 
 Hence
 
 $$
 \varrho_Y(y)=\Ex\!\left[
-\frac1{\gamma_1}\indic\!\left{
-\sum_{j=2}^d\gamma_jX_j\le y\le
-\gamma_1+\sum_{j=2}^d\gamma_jX_j
-\right}\right]
+\frac1{\gamma_1}\indic\!\left\{
+\sum_{j=2}^d\gamma_jU_j\le y\le
+\gamma_1+\sum_{j=2}^d\gamma_jU_j
+\right\}\right]
 $$
 
 [Conditional Monte Carlo notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb)
@@ -536,32 +609,32 @@ $$
 
 ## Antithetic sampling {.tree-marker-slide tree-marker="variance-probability"}
 
-If $T(\vX)$ has the same distribution as $\vX$, pair $f(\vX_i)$ with
-$f\bigl(T(\vX_i)\bigr)$:
+If $\vA(\vX)$ has the same distribution as $\vX$, pair $f(\vX_i)$ with
+$f\bigl(\vA(\vX_i)\bigr)$:
 
 $$
 \hmu_{\mathrm{Anti},n}
-=\frac1{2n}\sum_{i=0}^{n-1}\left[f(\vX_i)+f\bigl(T(\vX_i)\bigr)\right]
+=\frac1{2n}\sum_{i=0}^{n-1}\left[f(\vX_i)+f\bigl(\vA(\vX_i)\bigr)\right]
 $$
 
-Examples:
+Examples (uniform-input pairing uses the composed integrand $h$):
 
 \begin{align*}
-T(\vX)&=\vone-\vX,& \vX&\sim\Unif[0,1]^d,\\
-T(\vX)&=-\vX,& \vX&\sim\Norm(\vzero,\mSigma)
+\vA(\vU)&=\vone-\vU,& \vU&\sim\Unif[0,1]^d,\\
+\vA(\vX)&=-\vX,& \vX&\sim\Norm(\vzero,\mSigma)
 \end{align*}
 
-Although $\vX_i$ and $T(\vX_i)$ are dependent, the pairs are independent across $i$
+For IID starting samples, $\vX_i$ and $\vA(\vX_i)$ are [dependent]{.alert} within pairs; pairs are [independent]{.alert} across $i$
 
 The variance is
 
 $$
 \var(\hmu_{\mathrm{Anti},n})
 =\frac{\var\{f(\vX)\}}{2n}
-\left[1+\corr\{f(\vX),f(T(\vX))\}\right]
+\left[1+\corr\{f(\vX),f(\vA(\vX))\}\right]
 $$
 
-Antithetic sampling helps when the paired function values are [negatively correlated]{.alert}
+Antithetic sampling helps when the paired function values are [negatively]{.alert} correlated
 
 ## Constructing an antithetic variate {.tree-marker-slide tree-marker="random-generation"}
 
@@ -570,7 +643,7 @@ If $X$ has continuous CDF $F$, then
 \begin{gather*}
 U=F(X)\sim\Unif[0,1],\\
 1-U\sim\Unif[0,1],\\
-T(X)=F^{-1}\bigl(1-F(X)\bigr)\sim F
+A(X)=F^{-1}\bigl(1-F(X)\bigr)\sim F
 \end{gather*}
 
 For a symmetric distribution, this often reduces to reflection about the center
@@ -578,7 +651,7 @@ For a symmetric distribution, this often reduces to reflection about the center
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>
 <span>For which monotone functions $f$ does $f(X)$ become negatively correlated
-with $f\bigl(T(X)\bigr)$?</span>
+with $f\bigl(A(X)\bigr)$?</span>
 :::
 
 ## IID variance comparison {.tree-marker-slide tree-marker="variance-probability"}
@@ -591,12 +664,12 @@ Compare $n$ evaluations of $f$
 | Method | Contribution | Estimator variance for $n$ evaluations of $f$ |
 |:----|:---|:----|
 | Direct IID | $f(\vX)$ | $\var(f(\vX))/n$ |
-| Exact transport, $\psi(\vZ) \stackrel{d}{=} \vX$ | $f\bigl(\psi(\vZ)\bigr)$ | $\var(f(\vX))/n$ |
+| Exact transport, $\vT(\vZ) \stackrel{d}{=} \vX$ | $f\bigl(\vT(\vZ)\bigr)$ | $\var(f(\vX))/n$ |
 | Importance sampling, $w(\vz)=\varrho_{\mathrm{tar}}(\vz)/\varrho_{\mathrm{prop}}(\vz)$ | $w(\vZ)f(\vZ)$ | $\var\{w(\vZ)f(\vZ)\}/n$ |
-| Control variate | $f(\vX)-\beta\{h(\vX)-\eta\}$ | $\var\{f(\vX)-\beta[h(\vX)-\eta]\}/n$ |
-| $n/2$ Antithetic pairs <br>$A(\vX) \stackrel{d}{=} \vX$ | $\{f(\vX)+f(A(\vX))\}/2$ | $\var(f(\vX))(1+\rho)/n$ <br>$\rho=\corr\{f(\vX),f(A(\vX))\}$|
+| Control variate | $f(\vX)-\beta\eta_1(\vX)$ | $\var\{f(\vX)-\beta\eta_1(\vX)\}/n$ |
+| $n/2$ Antithetic pairs <br>$\vA(\vX) \stackrel{d}{=} \vX$ | $\{f(\vX)+f(\vA(\vX))\}/2$ | $\var(f(\vX))(1+\rho)/n$ <br>$\rho=\corr\{f(\vX),f(\vA(\vX))\}$|
 
-$\eta=\Ex\{h(\vX)\}$; $\beta$ is fixed or from an independent pilot;
+$\Ex[\eta_1(\vX)]=0$; $\beta$ is fixed or from an independent pilot;
 antithetic sampling requires even $n$
 
 ---
@@ -618,24 +691,25 @@ second moments and independent replicates or independent antithetic pairs.
 
 ## Latin hypercube sampling in one dimension {.tree-marker-slide tree-marker="variance-reduction"}
 
-Place one independent uniform point in each of $n$ equal strata:
+For the cube integrand $h$, place [one]{.alert} independent uniform point in each of $n$ equal strata:
 
 $$
-X_i=\frac{i+U_i}{n},
-\qquad U_i\ \IIDsim\ \Unif[0,1],
+U_i=\frac{i+V_i}{n},
+\qquad V_i\ \IIDsim\ \Unif[0,1],
 \qquad i=0,\ldots,n-1
 $$
 
-Then $X_i\sim\Unif[i/n,(i+1)/n]$ and
+Define $\hmu_{\mathrm{LHS},n}=n^{-1}\sum_i h(U_i)$<br>
+Then $U_i\sim\Unif[i/n,(i+1)/n]$ and
 
 \begin{align*}
 \Ex(\hmu_{\mathrm{LHS},n})
-&=\frac1n\sum_{i=0}^{n-1}\Ex\{f(X_i)\}\\
-&=\sum_{i=0}^{n-1}\int_{i/n}^{(i+1)/n}f(x)\,\dif x\\
-&=\int_0^1f(x)\,\dif x
+&=\frac1n\sum_{i=0}^{n-1}\Ex\{h(U_i)\}\\
+&=\sum_{i=0}^{n-1}\int_{i/n}^{(i+1)/n}h(u)\,\dif u\\
+&=\int_0^1h(u)\,\dif u
 \end{align*}
 
-The $X_i$ are independent but [not identically distributed]{.alert}
+The $U_i$ are independent but [not]{.alert} identically distributed
 
 ---
 
@@ -645,19 +719,19 @@ Because the strata are independent,
 
 $$
 \var(\hmu_{\mathrm{LHS},n})
-=\frac1{n^2}\sum_{i=0}^{n-1}\var\{f(X_i)\}
+=\frac1{n^2}\sum_{i=0}^{n-1}\var\{h(U_i)\}
 $$
 
-For differentiable $f$, the mean value and Taylor theorems imply
+For differentiable $h$, the mean value and Taylor theorems imply
 
 \begin{align*}
 \var(\hmu_{\mathrm{LHS},n})
-&\le\frac{\norm{f'}_\infty^2}{n^3},\\
+&\le\frac{\norm{h'}_\infty^2}{n^3},\\
 \rmse(\hmu_{\mathrm{LHS},n})
-&\le\frac{\norm{f'}_\infty}{n^{3/2}}
+&\le\frac{\norm{h'}_\infty}{n^{3/2}}
 \end{align*}
 
-In one dimension, stratification can improve the IID $n^{-1/2}$ RMSE rate to $n^{-3/2}$ for smooth $f$
+In one dimension, stratification can improve the IID $n^{-1/2}$ RMSE rate to $n^{-3/2}$ for smooth $h$
 
 ---
 
@@ -666,17 +740,19 @@ In one dimension, stratification can improve the IID $n^{-1/2}$ RMSE rate to $n^
 Let $\pi_1,\ldots,\pi_d$ be independent random permutations of $0,\ldots,n-1$:
 
 $$
-X_{i\ell}=\frac{\pi_\ell(i)+U_{i\ell}}n,
-\qquad U_{i\ell}\ \IIDsim\ \Unif[0,1]
+U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
+\qquad V_{i\ell}\ \IIDsim\ \Unif[0,1]
 $$
 
-Each point is $\vX_i=(X_{i1},\ldots,X_{id})$; each coordinate uses every stratum exactly once
+Each point is $\vU_i=(U_{i1},\ldots,U_{id})$; each coordinate uses every stratum [exactly once]{.alert}
+
+Random permutations make every $\vU_i$ marginally uniform; the points are dependent
 
 For $R$ independent Latin hypercubes,
 
 \begin{align*}
 \hmu_{\mathrm{LHS},n}^{(r)}
-&=\frac1n\sum_{i=0}^{n-1}f(\vX_i^{(r)}),\\
+&=\frac1n\sum_{i=0}^{n-1}h(\vU_i^{(r)}),\\
 \hmu_{\mathrm{LHS},n,R}
 &=\frac1R\sum_{r=1}^R\hmu_{\mathrm{LHS},n}^{(r)},\\
 \widehat{\var}(\hmu_{\mathrm{LHS},n,R})
@@ -713,8 +789,8 @@ fig, axes = plt.subplots(1, 3, figsize=(11.5, 4.2), constrained_layout=True)
 for ax, (title, points) in zip(axes, designs.items()):
     ax.scatter(points[:, 0], points[:, 1], s=24, color="#1f5a91", alpha=0.9)
     ax.set_title(title, fontsize=17)
-    ax.set_xlabel(r"$x_1$", fontsize=18, math_fontfamily="stix")
-    ax.set_ylabel(r"$x_2$", fontsize=18, math_fontfamily="stix")
+    ax.set_xlabel(r"$u_1$", fontsize=18, math_fontfamily="stix")
+    ax.set_ylabel(r"$u_2$", fontsize=18, math_fontfamily="stix")
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.set_aspect("equal")
@@ -729,26 +805,27 @@ plt.show()
 
 ### Strengths
 
-- No importance density, control variate, or conditional expectation required
-- Can converge faster than IID sampling
-- Guarantees one point in every one-dimensional stratum
+- [No]{.alert} importance density, control variate, or conditional expectation required
+- Can converge [faster]{.alert} than IID sampling
+- Guarantees one point in every one-dimensional [stratum]{.alert}
 
 ### Limitations
 
-- The sample size is fixed when the design is constructed
-- Accuracy assessment requires independent replications
-- Too many replications can erase the efficiency gain
-- The one-dimensional $n^{-3/2}$ RMSE guarantee does not extend automatically to $d>1$
+- The sample size is [fixed]{.alert} when the design is constructed
+- Accuracy assessment requires [independent]{.alert} replications
+- Too many replications can [erase]{.alert} the efficiency gain
+- The one-dimensional $n^{-3/2}$ RMSE guarantee does [not]{.alert} extend automatically to $d>1$
 
 # Low Discrepancy Sampling {.tree-marker-slide tree-marker="low-discrepancy"}
 
 <span id="from-lhs-to-quasi-monte-carlo"></span>
 
 Deck 02 introduced [even coverage]({{< meta decks.d02.file >}}#what-does-low-discrepancy-mean)
-and [coordinate order]({{< meta decks.d02.file >}}#why-coordinate-order-matters);
+and [coordinate order]({{< meta decks.d02.file >}}#why-coordinate-order-matters)
+
 Deck 03 linked [discrepancy to integration error]({{< meta decks.d03.file >}}#the-discrepancy-identity)
 
-Now we [construct the point sets]{.alert}, randomize them, and assess error
+Now we [construct]{.alert} the point sets, randomize them, and assess error
 
 - [The van der Corput sequence](#the-van-der-corput-sequence)
 - [Four low discrepancy families](#four-low-discrepancy-families)
@@ -767,7 +844,7 @@ $$
 i=(\cdots i_2i_1i_0)_b
 $$
 
-Reverse the digits across the radix point:
+[Reverse]{.alert} the digits across the radix point:
 
 $$
 \phi_b(i)=(0.i_0i_1i_2\cdots)_b
@@ -779,7 +856,7 @@ $$
 - Earlier points keep their order as the sample grows
 
 ::: {.key-point}
-The van der Corput construction turns a fixed-size grid into an [extensible sequence]{.alert}
+The van der Corput construction turns a fixed-size grid into an [extensible]{.alert} sequence
 :::
 
 ---
@@ -800,9 +877,16 @@ The first four points form the grid $\{0,1/4,1/2,3/4\}$ in a different order
 <span>Compute $\phi_2(4)$ and $\phi_2(5)$ and identify the two new eighths</span>
 :::
 
+::: {.exitem}
+<span class="exbullet">$\exstar$</span>
+<span>Compute $\phi_2(9)$, $\phi_2(14)$, and $\phi_2(19)$ by [reversing]{.alert} their binary digits</span>
+:::
+
 ::: {.notes}
 The new values are $1/8$ and $5/8$, respectively: reverse the three binary
 digits in $4=100_2$ and $5=101_2$ across the radix point.
+For the larger indices, $9=1001_2$, $14=1110_2$, and $19=10011_2$ give
+$\phi_2(9)=9/16$, $\phi_2(14)=7/16$, and $\phi_2(19)=25/32$.
 :::
 
 ## Four low discrepancy families {.tree-marker-slide tree-marker="low-discrepancy-sampling"}
@@ -811,16 +895,16 @@ For $i=0,1,\ldots$:
 
 | Family | Construction | Typical preferred size |
 |:---|:---|:---|
-| Kronecker | $\vx_i=i\vzeta\bmod1$ | none |
-| Lattice | $\vx_i=\phi_b(i)\vzeta\bmod1$ | $n=b^m$ |
-| Halton | $\vx_i=(\phi_2(i),\phi_3(i),\phi_5(i),\ldots)$ | none |
-| Digital | $\vx_i=i_0\vc_0\oplus i_1\vc_1\oplus\cdots$ | $n=b^m$ |
+| Kronecker | $\vu_i=i\vzeta\bmod1$ | none |
+| Lattice | $\vu_i=\phi_b(i)\vzeta\bmod1$ | $n=b^m$ |
+| Halton | $\vu_i=(\phi_2(i),\phi_3(i),\phi_5(i),\ldots)$ | none |
+| Digital | $\vu_i=i_0\vc_0\oplus i_1\vc_1\oplus\cdots$ | $n=b^m$ |
 
 Here $\oplus$ denotes digitwise addition modulo $b$
 
 For basic Halton, choosing the coordinate bases fixes the sequence
 
-Different families balance [extensibility]{.alert}, [projection quality]{.alert}, and [fast construction]{.alert}
+Different families balance [extensibility]{.alert}, projection [quality]{.alert}, and [fast]{.alert} construction
 
 ---
 
@@ -829,10 +913,10 @@ Different families balance [extensibility]{.alert}, [projection quality]{.alert}
 For the lattice sequence with $b=2$, generator $\vzeta=(1,3)$, and $n=8$,
 
 $$
-\vx_i=\phi_2(i)\vzeta\bmod1
+\vu_i=\phi_2(i)\vzeta\bmod1
 $$
 
-| $i$ | $(i)_2$ | $\phi_2(i)$ | $\zeta_1\phi_2(i)\bmod1=x_{i,1}$ | $\zeta_2\phi_2(i)\bmod1=x_{i,2}$ |
+| $i$ | $(i)_2$ | $\phi_2(i)$ | $\zeta_1\phi_2(i)\bmod1=u_{i,1}$ | $\zeta_2\phi_2(i)\bmod1=u_{i,2}$ |
 |:---:|:---:|:---:|:---:|:---:|
 | 0 | 000 | $0$ | $0$ | $0$ |
 | 1 | 001 | $1/2$ | $1/2$ | $1/2$ |
@@ -849,9 +933,9 @@ For example, $i=5$ gives $\phi_2(5)=5/8$ and $3(5/8)=15/8\equiv7/8\pmod1$
 
 ### Kronecker sequence: four points
 
-For hand arithmetic, take $\vzeta=(0.41,0.73)$ and $\vx_i=i\vzeta\bmod1$
+For hand arithmetic, take $\vzeta=(0.41,0.73)$ and $\vu_i=i\vzeta\bmod1$
 
-| $i$ | $i\zeta_1\bmod1$ | $i\zeta_2\bmod1$ | $\vx_i$ |
+| $i$ | $i\zeta_1\bmod1$ | $i\zeta_2\bmod1$ | $\vu_i$ |
 |:---:|:---:|:---:|:---:|
 | 0 | $0$ | $0$ | $(0,0)$ |
 | 1 | $0.41$ | $0.73$ | $(0.41,0.73)$ |
@@ -867,14 +951,14 @@ The decimal generator keeps this finite example easy to calculate by hand
 In base two, let $i=i_0+2i_1$ and choose
 $\vc_0=(1/2,1/2)$, $\vc_1=(1/4,3/4)$
 
-| $i$ | $(i)_2$ | Generators used | $\vx_i=i_0\vc_0\oplus i_1\vc_1$ |
+| $i$ | $(i)_2$ | Generators used | $\vu_i=i_0\vc_0\oplus i_1\vc_1$ |
 |:---:|:---:|:---:|:---:|
 | 0 | 00 | none | $(0,0)$ |
 | 1 | 01 | $\vc_0$ | $(1/2,1/2)$ |
 | 2 | 10 | $\vc_1$ | $(1/4,3/4)$ |
 | 3 | 11 | $\vc_0\oplus\vc_1$ | $(3/4,1/4)$ |
 
-For $i=3$, add binary digits **without carrying**:
+For $i=3$, add binary digits [without]{.alert} carrying:
 $(0.10_2,0.10_2)\oplus(0.01_2,0.11_2)=(0.11_2,0.01_2)$
 
 ---
@@ -883,25 +967,25 @@ $(0.10_2,0.10_2)\oplus(0.01_2,0.11_2)=(0.11_2,0.01_2)$
 
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>
-<span>**Lattice:** Keep $b=2$ and $n=8$, but use $\vzeta=(1,5)$;
-find $\vx_4$ and $\vx_5$ using the $\phi_2(i)$ values in the table</span>
+<span>[Lattice:]{.alert} Keep $b=2$ and $n=8$, but use $\vzeta=(1,5)$;
+find $\vu_4$ and $\vu_5$ using the $\phi_2(i)$ values in the table</span>
 :::
 
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>
-<span>**Kronecker:** Use $\vzeta=(0.73,0.24)$;
-find $\vx_2$ and $\vx_3$ to two decimal places</span>
+<span>[Kronecker:]{.alert} Use $\vzeta=(0.73,0.24)$;
+find $\vu_2$ and $\vu_3$ to two decimal places</span>
 :::
 
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>
-<span>**Digital, $b=2$:** Use $\vc_0=(1/2,1/4)$, $\vc_1=(1/4,1/2)$, and
-$\vc_2=(1/8,3/8)$; find $\vx_i$ for $i=0,\ldots,7$</span>
+<span>[Digital]{.alert}, $b=2$: Use $\vc_0=(1/2,1/4)$, $\vc_1=(1/4,1/2)$, and
+$\vc_2=(1/8,3/8)$; find $\vu_i$ for $i=0,\ldots,7$</span>
 :::
 
 ::: {.notes}
-Lattice: $\vx_4=(1/8,5/8)$ and $\vx_5=(5/8,1/8)$.
-Kronecker: $\vx_2=(0.46,0.48)$ and $\vx_3=(0.19,0.72)$.
+Lattice: $\vu_4=(1/8,5/8)$ and $\vu_5=(5/8,1/8)$.
+Kronecker: $\vu_2=(0.46,0.48)$ and $\vu_3=(0.19,0.72)$.
 These rational decimal generators eventually repeat, unlike the irrational
 generators chosen for long Kronecker sequences; here they isolate the hand
 calculation of $i\vzeta\bmod1$.
@@ -919,16 +1003,16 @@ construction quality depends on the function class and the chosen criterion.
 Randomization aims for
 
 $$
-\vX_{\mathrm{rand},i}\sim\Unif[0,1]^d
+\vU_{\mathrm{rand},i}\sim\Unif[0,1]^d
 $$
 
 for every $i$, while preserving low discrepancy jointly
 
-- [Random shift]{.alert}: $\vX_{\mathrm{rand},i}=\vx_i+\vDelta\bmod1$, especially for lattices and Kronecker sequences
-- [Random digital shift]{.alert}: $\vX_{\mathrm{rand},i}=\vx_i\oplus\vDelta$, especially for digital sequences
-- [Linear matrix or nested uniform scrambling]{.alert}, especially for digital sequences
+- [Random shift]{.alert}: $\vU_{\mathrm{rand},i}=\vu_i+\vDelta\bmod1$, especially for lattices and Kronecker sequences
+- [Random digital shift]{.alert}: $\vU_{\mathrm{rand},i}=\vu_i\oplus\vDelta$, especially for digital sequences
+- Linear matrix or nested uniform [scrambling]{.alert}, especially for digital sequences
 
-Independent randomizations support error assessment without reverting to IID
+[Independent]{.alert} randomizations support error assessment without reverting to IID
 point placement; recall the [earlier variance and RMSE comparison](#variance-reduction)
 
 ::: {.notes}
@@ -945,23 +1029,23 @@ scrambling.
 
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>
-<span>**Lattice:** For your $\vzeta=(1,5)$ points, suppose the random shift is
-$\vDelta=(1/4,1/2)$; find $(\vx_4+\vDelta)\bmod1$ and
-$(\vx_5+\vDelta)\bmod1$</span>
+<span>[Lattice:]{.alert} For your $\vzeta=(1,5)$ points, suppose the random shift is
+$\vDelta=(1/4,1/2)$; find $(\vu_4+\vDelta)\bmod1$ and
+$(\vu_5+\vDelta)\bmod1$</span>
 :::
 
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>
-<span>**Digital, $b=2$:** For your points from $\vc_0,\vc_1,\vc_2$,
+<span>[Digital]{.alert}, $b=2$: For your points from $\vc_0,\vc_1,\vc_2$,
 suppose the digital shift is $\vDelta=(3/8,1/4)$;
-find $\vx_0\oplus\vDelta$ and $\vx_7\oplus\vDelta$</span>
+find $\vu_0\oplus\vDelta$ and $\vu_7\oplus\vDelta$</span>
 :::
 
 ::: {.notes}
-Lattice: $\vx_4=(1/8,5/8)$ shifts to $(3/8,1/8)$, and
-$\vx_5=(5/8,1/8)$ shifts to $(7/8,5/8)$.
-Digital: $\vx_0=(0,0)$ shifts to $(3/8,1/4)$, and
-$\vx_7=(7/8,5/8)$ shifts by binary digitwise addition to $(1/2,7/8)$.
+Lattice: $\vu_4=(1/8,5/8)$ shifts to $(3/8,1/8)$, and
+$\vu_5=(5/8,1/8)$ shifts to $(7/8,5/8)$.
+Digital: $\vu_0=(0,0)$ shifts to $(3/8,1/4)$, and
+$\vu_7=(7/8,5/8)$ shifts by binary digitwise addition to $(1/2,7/8)$.
 The displayed shifts are particular realizations used for hand calculation;
 the random shift is uniform on the unit square in the sampling method.
 :::
@@ -978,7 +1062,7 @@ The component-by-component strategy:
 4. Increase $\ell$ and repeat until $\ell=d$
 
 ::: {.key-point}
-A high-dimensional design is built by [optimizing one coordinate at a time]{.alert}
+A high-dimensional design is built by optimizing [one coordinate]{.alert} at a time
 :::
 
 ## Stopping criteria {.tree-marker-slide tree-marker="data-driven-error"}
@@ -991,7 +1075,7 @@ Two practical questions are
 \quad\text{for what $n$?}
 \end{align*}
 
-We want answers based only on the computed data $f(\vx_0),f(\vx_1),\ldots$
+We want answers based only on the computed contributions $Y_i$ or $\widetilde Y_i$
 
 - IID sampling: use a Central Limit Theorem interval when justified
 - Randomized low discrepancy sampling: use independent replications
@@ -1000,24 +1084,24 @@ We want answers based only on the computed data $f(\vx_0),f(\vx_1),\ldots$
   - Bayesian credible intervals based on a kernel model
 
 ::: {.key-point}
-An efficient method needs both [fast error decay]{.alert} and a [reliable stopping rule]{.alert}
+An efficient method needs both [fast]{.alert} error decay and a [reliable]{.alert} stopping rule
 :::
 
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="variance-low-discrepancy"}
 
-- Equivalent expectations can have dramatically different computational variance
+- Equivalent [expectations]{.alert} can have dramatically different computational [variance]{.alert}
 - Exact transport chooses a map that makes the target-to-proposal correction
-  constant<br>Importance sampling retains the correction as unequal weights
-- Importance proposals may be tailored to a particular integrand<br>Transported
-  target samples can be reused for many integrands
-- Control variates and conditioning remove variability using known structure
-- Antithetic sampling and Latin hypercubes introduce useful dependence deliberately
-- Low discrepancy sequences replace random clustering with balanced space filling
-- Randomization restores unbiasedness and supports error estimation while retaining QMC efficiency
+  [constant]{.alert}<br>Importance sampling retains the correction as [unequal]{.alert} weights
+- Importance proposals may be [tailored]{.alert} to a particular integrand<br>Transported
+  target samples can be [reused]{.alert} for many integrands
+- Control variates and conditioning remove variability using [known]{.alert} structure
+- Antithetic sampling and Latin hypercubes introduce useful [dependence]{.alert} deliberately
+- Low discrepancy sequences replace random [clustering]{.alert} with [balanced]{.alert} space filling
+- Randomization restores [unbiasedness]{.alert} and supports error estimation while retaining QMC efficiency
 
 # How Far We Have Come
 
-[A complete path from model to efficient estimate]{.alert}
+A complete path from [model]{.alert} to efficient [estimate]{.alert}
 
 - [Formulate]({{< meta decks.d01.file >}}#moments-of-random-variables) — express the target quantity as an expectation
 - [Sample]({{< meta decks.d02.file >}}#from-uniformity-to-a-target-distribution) — use direct transforms or Markov chains to represent the target
@@ -1025,7 +1109,7 @@ An efficient method needs both [fast error decay]{.alert} and a [reliable stoppi
 - [Improve]({{< meta decks.d04.file >}}#variance-reduction) — choose weights, controls, dependence, or low discrepancy points to reduce error
 
 ::: {.key-point}
-Method choice depends on [error, cost, and a credible stopping rule]{.alert}
+Method choice depends on [error]{.alert}, [cost]{.alert}, and a credible [stopping rule]{.alert}
 :::
 
 # What Comes Next

@@ -19,16 +19,27 @@
 3. Maintain the student-facing approval workbook as new topic submissions
    arrive through the October 2 follow-up deadline; verify the updated
    project page when the publishing workflow completes.
-4. Reconcile notation across Deck 04, **Improving Efficiency**, and Deck 02,
-   **Generating Samples**, during the Deck 04 review. Compare the cases and
-   examples side by side; use consistent symbols for the same roles (such as
-   source and target distributions, transformations, samples, integrands, and
-   estimators), and explain any intentional case-specific differences. Keep
-   companion-notebook explanations aligned with the revised slides.
-5. Add the seminar link, then review Deck 04 followed by Deck 05 with the
-   instructor, including their companion-notebook plans.
+4. Add the seminar link, then review Deck 04 followed by Deck 05 with the
+   instructor, including their companion-notebook plans. Include the revised
+   Deck 04 opening and the cross-deck notation pass in that review.
 
 ## Current verified state
+
+The instructor authorized retrospective notation alignment across Decks 02–04
+and their nine linked companions. Uniform inputs are U, proposal/source draws
+Z, target samples X, and scalar outputs Y=f(X). Vector-valued maps are bold;
+T denotes a general change-of-variable map; exact transport is the special
+case with correction weight w_T=1. A denotes an antithetic map.
+Deck 04 now opens with equal-mean f(X) versus g(Z), distinguishing unchanged
+IID variance under exact transport from density-weighted alternatives. Cube
+integrands use h. Discrepancy uses target-space x nodes; MCMC uses conditional
+proposals; queue durations and event states have separate symbols. The durable
+conventions are in AUTHOR_WORKFLOW.md and docs/slide-style.md.
+All three decks render successfully, and all nine companions execute cleanly
+with the qmcpy kernel. Deck 04 also has overlaid exact-transport and
+importance-sampling contribution plots, selective keyword highlighting, and
+larger-index van der Corput exercises. Practical stopping demonstrations
+and their notebook links remain to be developed.
 
 All instructional recordings from August 18 through September 29 have been
 audited or reconciled. September 29 showed the queue-simulation notebook and
@@ -59,7 +70,7 @@ The three Deck 04 companions—Keister transformations, conditional Monte Carlo,
 and Asian-option variance reduction with a discretely monitored lookback
 call—are in the 2026 repository and pass clean local `qmcpy` execution.
 The Keister companion now also compares randomized lattice samples and tests
-$a=2$ as a boundary-growth counterexample in 20 dimensions; its current
+$a=1.6$ as an unbounded, finite-variance example in 20 dimensions; its current
 saved execution has no errors.
 Their saved figures were inspected. All three are linked from the matching
 Deck 04 slides and the notebook page at the instructor's request. Content
@@ -161,9 +172,11 @@ they are developed. The convention is recorded in `docs/slide-style.md`.
 
 All five decks now link callbacks and forward references to the relevant
 slides and consistently distinguish multidimensional vectors from scalar
-coordinates and time arguments. The historical Keister notebook has not yet
-been migrated; its intended comparison across scale parameters needs a
-late-binding lambda correction, recorded in `notebooks/NOTEBOOK_INVENTORY.md`.
+coordinates and time arguments. The Keister companion is migrated and locally
+validated; its scale-family comparison now distinguishes proposal contributions g_a from cube integrands
+h_a. The a=1.6 comparison uses an unbounded cube integrand with finite variance;
+the slides and notebook distinguish the boundedness threshold a^2=2 from
+the infinite-variance threshold a^2=4.
 
 The September 10 lecture follow-up now includes parallel tempering and a
 before/after product-density swap explanation. Discrepancy proceeds from

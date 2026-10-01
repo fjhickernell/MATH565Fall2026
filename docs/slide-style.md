@@ -92,11 +92,28 @@ Deck 01 Course Map synchronized.
   the component. Keep notebook code and worked examples in the same order.
 - Keep notation consistent with the shared macro registry and course
   notebooks.
+- Use the role conventions in `AUTHOR_WORKFLOW.md`: uniform inputs `\vU`,
+  proposal/source draws `\vZ`, target samples `\vX`, and scalar output
+  `Y=f(\vX)`. Bold vector-valued maps (`\vS`, `\vT`, `\vA`); scalar quantiles and scalar transports remain unbold.
+- Deck 04 compares equal-mean representations `f(\vX)` and `g(\vZ)`;
+  use `h` for composed uniform-input integrands. Retain `g(\vX)` for controls
+  and subvectors or conditioning variables where appropriate. Exact transport
+  preserves IID output variance; equal-mean weighted contributions need not.
+- Preserve established slide anchors when notation in a mathematical heading
+  changes, so callbacks from previously published decks remain valid.
 - Keep the [uniform-input, target-sample, and output roles](../AUTHOR_WORKFLOW.md#course-wide-simulation-notation)
   visible when explaining a sampling method. Use `[target]{.alert}` at its
   first definition and key conclusions, with selective reinforcement in
   examples. Keep proposal and target roles distinct; do not highlight every
   occurrence mechanically.
+
+## Highlighting
+
+Prefer highlighting the key word that carries a contrast, condition, or payoff,
+rather than an entire phrase or sentence. Retain a short compound technical term
+when its full name is the concept being introduced. Add selective emphasis to
+important teaching cues; do not highlight every bullet mechanically. For example,
+the LHS strengths highlight “No,” “faster,” and “stratum.”
 
 ## Course-wide styling
 

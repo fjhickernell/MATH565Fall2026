@@ -40,13 +40,10 @@ subtitle: |
 
 ::: {.column width="60%"}
 \begin{gather*}
-\vU_i\sim\Unif[0,1]^{d+1}
-\;\xrightarrow{\text{propose}}\;
-\vZ_i\sim\varrho_{\mathrm{prop}}(\cdot\mid\vX_{i-1})
-\\[0.2em]
-\xrightarrow{\text{accept or stay}}\;
-\vX_i\sim\varrho_{\mathrm{tar}}
-\qquad\text{at stationarity}
+\vZ_i\mid\vX_i\sim\varrho_{\mathrm{prop}}(\cdot\mid\vX_i)
+\;\xrightarrow{\text{accept or stay}}\;\vX_{i+1}\\
+\vX_i\sim\varrho_{\mathrm{tar}}\ \text{at stationarity},\qquad
+Y_i=f(\vX_i),\quad \mu=\Ex_{\mathrm{tar}}(Y)
 \end{gather*}
 
 :::
@@ -105,15 +102,15 @@ We are interested in the [asymptotic behavior of $X_i$]{.alert}
 
 ## Examples of Markov chains {.tree-marker-slide tree-marker="probability"}
 
-Assume $Z_0,Z_1,\ldots\ \IIDsim\ \Norm(0,1)$
+Assume $\epsilon_0,\epsilon_1,\ldots\ \IIDsim\ \Norm(0,1)$
 
 ::: {.columns}
 ::: {.column width="47%"}
 ### Markov
 
 \begin{align*}
-X_0&=0,& X_{i+1}&=X_i+Z_i\\
-X_0&=0,& X_{i+1}&=i+Z_i
+X_0&=0,& X_{i+1}&=X_i+\epsilon_i\\
+X_0&=0,& X_{i+1}&=i+\epsilon_i
 \end{align*}
 
 The second chain is [not time homogeneous]{.alert}: its transition law changes with $i$
@@ -127,10 +124,10 @@ The second chain is [not time homogeneous]{.alert}: its transition law changes w
 
 $$
 X_0=X_1=0,
-\qquad X_{i+1}=X_{i-1}+Z_i
+\qquad X_{i+1}=X_{i-1}+\epsilon_i
 $$
 
-The pair $Y_i=(X_{i-1},X_i)$ [is Markov]{.alert} because its state retains the needed history
+The augmented state $\vH_i=(X_{i-1},X_i)$ [is Markov]{.alert} because its state retains the needed history
 :::
 :::
 
@@ -150,30 +147,30 @@ Only the first is a [martingale]{.alert}: its expected next value, given the his
 
 For states in $\reals^d$, suppose
 
-- the target has known, possibly unnormalized density
-  $\varrho_{\mathrm{tar}}$
+- the target has normalized density $\varrho_{\mathrm{tar}}$, known up to a factor
+  through $\widetilde\varrho_{\mathrm{tar}}\propto\varrho_{\mathrm{tar}}$
 - $\varrho_{\mathrm{prop}}(\vz\mid \vx)$ proposes a new state $\vz$ from the
   current state $\vx$
 
-Given $\vX_0$, repeat for $i=0,\ldots,n-1$:
+Given $\vX_0$, repeat for $i=0,\ldots,n-2$:
 
-1. Generate $\vZ\sim\varrho_{\mathrm{prop}}(\cdot\mid \vX_i)$ and
-   $U\sim\Unif[0,1]$
+1. Generate $\vZ_i\mid\vX_i\sim\varrho_{\mathrm{prop}}(\cdot\mid \vX_i)$ and
+   $V_i\sim\Unif[0,1]$, independently of the proposal
 2. Compute
 
    $$
-   \alpha(\vX_i,\vZ)=\min\!\left\{1,
-   \frac{\varrho_{\mathrm{tar}}(\vZ)\varrho_{\mathrm{prop}}(\vX_i\mid \vZ)}
-   {\varrho_{\mathrm{tar}}(\vX_i)\varrho_{\mathrm{prop}}(\vZ\mid \vX_i)}\right\}
+   \alpha(\vX_i,\vZ_i)=\min\!\left\{1,
+   \frac{\widetilde\varrho_{\mathrm{tar}}(\vZ_i)\varrho_{\mathrm{prop}}(\vX_i\mid \vZ_i)}
+   {\widetilde\varrho_{\mathrm{tar}}(\vX_i)\varrho_{\mathrm{prop}}(\vZ_i\mid \vX_i)}\right\}
    =\min\!\left\{1,
-\frac{\text{joint density of first $\vZ$, then $\vX_i$}}
-{\text{joint density of first $\vX_i$, then $\vZ$}}\right\}
+\frac{\text{joint density of first $\vZ_i$, then $\vX_i$}}
+{\text{joint density of first $\vX_i$, then $\vZ_i$}}\right\}
    $$
 
-3. Set $\vX_{i+1}=\vZ$ if $U\le\alpha(\vX_i,\vZ)$<br>Otherwise set
+3. Set $\vX_{i+1}=\vZ_i$ if $V_i\le\alpha(\vX_i,\vZ_i)$<br>Otherwise set
    $\vX_{i+1}=\vX_i$
 
-[Every iteration accepts either the proposal or the current state]{.alert}<br>Nothing is discarded
+[Every iteration accepts either the proposal or the current state]{.alert}<br>Nothing is discarded; use $Y_i=f(\vX_i)$ for output summaries
 
 
 ## Why the acceptance ratio works {.tree-marker-slide tree-marker="mcmc-probability"}
@@ -181,19 +178,19 @@ Given $\vX_0$, repeat for $i=0,\ldots,n-1$:
 The ratio compares the two directions of a proposed transition:
 
 $$
-\frac{\varrho_{\mathrm{tar}}(\vZ)\varrho_{\mathrm{prop}}(\vX_i\mid \vZ)}
-{\varrho_{\mathrm{tar}}(\vX_i)\varrho_{\mathrm{prop}}(\vZ\mid \vX_i)}
+\frac{\widetilde\varrho_{\mathrm{tar}}(\vZ_i)\varrho_{\mathrm{prop}}(\vX_i\mid \vZ_i)}
+{\widetilde\varrho_{\mathrm{tar}}(\vX_i)\varrho_{\mathrm{prop}}(\vZ_i\mid \vX_i)}
 =
-\frac{\text{target weight at $\vZ$}\times\text{return proposal}}
+\frac{\text{target weight at $\vZ_i$}\times\text{return proposal}}
 {\text{target weight at $\vX_i$}\times\text{forward proposal}}
 $$
 
 - Moves toward higher target density are favored
 - Asymmetric proposals are corrected by the proposal-density ratio
-- The normalizing constant in $\varrho_{\mathrm{tar}}$ cancels
+- The unknown factor relating $\widetilde\varrho_{\mathrm{tar}}$ to the target cancels
 
 ::: {.key-point}
-The transition kernel satisfies [detailed balance]{.alert} with the target distribution, making the target invariant under suitable conditions
+Detailed balance preserves the target; convergence from the starting state requires suitable conditions
 :::
 
 ## The Metropolis algorithm {.tree-marker-slide tree-marker="mcmc"}
@@ -209,10 +206,10 @@ then the acceptance probability simplifies to
 
 $$
 \alpha(\vx,\vz)=\min\!\left\{1,
-\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{tar}}(\vx)}\right\}
+\frac{\widetilde\varrho_{\mathrm{tar}}(\vz)}{\widetilde\varrho_{\mathrm{tar}}(\vx)}\right\}
 $$
 
-For a random-walk proposal $\vZ=\vX_i+\vepsilon_i$ with symmetric $\vepsilon_i$:
+For a random-walk proposal $\vZ_i=\vX_i+\vepsilon_i$ with symmetric $\vepsilon_i$:
 
 - accept every move to a state with at least as much target density
 - accept some downhill moves, which keeps the chain from becoming trapped immediately
@@ -220,15 +217,15 @@ For a random-walk proposal $\vZ=\vX_i+\vepsilon_i$ with symmetric $\vepsilon_i$:
 
 ## Metropolis practice {.tree-marker-slide tree-marker="mcmc-practice"}
 
-Use the uniform numbers in order and choose a random order of the candidate $x$ values
+Use the uniform numbers in order and choose a random order of the candidate $z$ values
 
 | $i$ | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
 |:---|---:|---:|---:|---:|---:|---:|---:|---:|
-| $U_i$ | 0.6 | 0.1 | 0.3 | 0.5 | 0.9 | 0.2 | 0.1 | 0.4 |
+| $V_i$ | 0.6 | 0.1 | 0.3 | 0.5 | 0.9 | 0.2 | 0.1 | 0.4 |
 
-| $x$ | $-1.2$ | $-0.8$ | $-0.5$ | $0.6$ | $1.1$ | $1.4$ | $2.0$ | $2.2$ |
+| $z$ | $-1.2$ | $-0.8$ | $-0.5$ | $0.6$ | $1.1$ | $1.4$ | $2.0$ | $2.2$ |
 |:---|---:|---:|---:|---:|---:|---:|---:|---:|
-| $\varrho_{\mathrm{tar}}(x)$ | 0.1 | 0.8 | 2.0 | 1.6 | 0.5 | 2.6 | 2.4 | 1.0 |
+| $\widetilde\varrho_{\mathrm{tar}}(z)$ | 0.1 | 0.8 | 2.0 | 1.6 | 0.5 | 2.6 | 2.4 | 1.0 |
 
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>
@@ -388,7 +385,7 @@ Diagnose both [exploration]{.alert} of the full state space and [concentration]{
 Run replicas with [inverse temperatures]{.alert} $1=\beta_0>\cdots>\beta_{R-1}>0$
 
 \begin{align*}
-\varrho_{\beta_r}(\vx)&\propto\varrho_{\mathrm{tar}}(\vx)^{\beta_r}
+\varrho_{\beta_r}(\vx)&\propto\widetilde\varrho_{\mathrm{tar}}(\vx)^{\beta_r}
 \end{align*}
 
 - [Cold]{.alert} ($\beta_0=1$): original target; [hot]{.alert} ($\beta_r<1$): flatter density, easier valley crossing
@@ -398,26 +395,26 @@ Run replicas with [inverse temperatures]{.alert} $1=\beta_0>\cdots>\beta_{R-1}>0
 \begin{align*}
 \alpha_{\mathrm{swap}}
 &=\min\left\{1,
-\left[\frac{\varrho_{\mathrm{tar}}(\vx_s)}{\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}\right\}
+\left[\frac{\widetilde\varrho_{\mathrm{tar}}(\vx_s)}{\widetilde\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}\right\}
 \end{align*}
 
 - Accepted swaps bring hot-chain discoveries into the cold slot
 - Use [cold-slot samples only]{.alert} for the original target; inspect mode visits and swap rates
 
 ::: {.notes}
-Temperature is $T_r=1/\beta_r$. Raising the whole density to a power below one
+Temperature is $1/\beta_r$. Raising the whole density to a power below one
 reduces peak-to-valley density ratios. Each tempered density must have a finite
 normalizing integral; this holds for the notebook's Gaussian mixture.
 
 The augmented target is the product of the $R$ tempered densities. A symmetric
 proposal to exchange two states has MH ratio
 \begin{align*}
-\frac{\varrho_{\mathrm{tar}}(\vx_s)^{\beta_r}
-      \varrho_{\mathrm{tar}}(\vx_r)^{\beta_s}}
-     {\varrho_{\mathrm{tar}}(\vx_r)^{\beta_r}
-      \varrho_{\mathrm{tar}}(\vx_s)^{\beta_s}}
-&=\left[\frac{\varrho_{\mathrm{tar}}(\vx_s)}
-                 {\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}.
+\frac{\widetilde\varrho_{\mathrm{tar}}(\vx_s)^{\beta_r}
+      \widetilde\varrho_{\mathrm{tar}}(\vx_r)^{\beta_s}}
+     {\widetilde\varrho_{\mathrm{tar}}(\vx_r)^{\beta_r}
+      \widetilde\varrho_{\mathrm{tar}}(\vx_s)^{\beta_s}}
+&=\left[\frac{\widetilde\varrho_{\mathrm{tar}}(\vx_s)}
+                 {\widetilde\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}.
 \end{align*}
 All normalizing constants cancel. Local updates and accepted/rejected swaps
 preserve the product target. Slots retain their temperatures; states move
@@ -452,14 +449,14 @@ R_{\mathrm{swap}}
 &=\frac{\text{density after}}{\text{density before}}
 =\frac{\varrho_{\beta_r}(\vx_s)\,\varrho_{\beta_s}(\vx_r)}
         {\varrho_{\beta_r}(\vx_r)\,\varrho_{\beta_s}(\vx_s)}
-=\left[\frac{\varrho_{\mathrm{tar}}(\vx_s)}{\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}
+=\left[\frac{\widetilde\varrho_{\mathrm{tar}}(\vx_s)}{\widetilde\varrho_{\mathrm{tar}}(\vx_r)}\right]^{\beta_r-\beta_s}
 \end{align*}
 
-- Draw $U\sim\Unif(0,1)$; swap if $U\le\min\{1,R_{\mathrm{swap}}\}$
+- Draw $V\sim\Unif(0,1)$; swap if $V\le\min\{1,R_{\mathrm{swap}}\}$
 - Renaming $r$ and $s$: reciprocal density ratio and opposite exponent → [same rule]{.alert}
 
 ::: {.key-point}
-Cold $\beta_r=1$, hot $\beta_s=1/2$, and $\varrho_{\mathrm{tar}}(\vx_s)=4\varrho_{\mathrm{tar}}(\vx_r)$:
+Cold $\beta_r=1$, hot $\beta_s=1/2$, and $\widetilde\varrho_{\mathrm{tar}}(\vx_s)=4\widetilde\varrho_{\mathrm{tar}}(\vx_r)$:
 $R_{\mathrm{swap}}=\sqrt{4}=2$ → always swap; the reverse move is accepted with probability $1/2$
 :::
 
@@ -468,7 +465,7 @@ The ratio compares two configurations of the same pair of slots. It does not
 compare $\varrho_{\beta_r}(\vx_s)$ with $\varrho_{\beta_s}(\vx_r)$: those are the
 two factors in the numerator, not competing alternatives.
 
-Write $\varrho_{\beta}(\vx)=\varrho_{\mathrm{tar}}(\vx)^\beta/C_\beta$.
+Write $\varrho_{\beta}(\vx)=\widetilde\varrho_{\mathrm{tar}}(\vx)^\beta/C_\beta$.
 The constants $C_{\beta_r}$ and $C_{\beta_s}$ appear in both products and cancel.
 So do the densities for all unchanged slots in the full product target.
 The exponent matters: a hot density is proportional to a power of the target,
@@ -547,43 +544,38 @@ K(\vt,\vx)&=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 
 ## Discrepancy between distributions {.tree-marker-slide tree-marker="discrepancy"}
 
-For independent $\vX,\vX'\sim F_{\vX}$ and $\vZ,\vZ'\sim F_{\vZ}$,
+Compare any two distributions $F,G$ on $\mathcal X$<br>
+Let $\vR,\vR'\sim F$ and $\vH,\vH'\sim G$ be mutually independent
 
 \begin{align*}
-D^2(F_{\vX},F_{\vZ};K)
-&=\Ex[K(\vX,\vX')]-2\Ex[K(\vX,\vZ)]+\Ex[K(\vZ,\vZ')]\\
-&=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')
--2\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vZ}(\vx')\\
-&\qquad \qquad
-+\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vZ}(\vx)\,\dif F_{\vZ}(\vx')\\
-&=\int_{\mathcal X^2}K(\vx,\vx')\,\dif(F_{\vX}-F_{\vZ})(\vx)\,\dif(F_{\vX}-F_{\vZ})(\vx') \ge0
+D^2(F,G;K)
+&=\Ex[K(\vR,\vR')]-2\Ex[K(\vR,\vH)]+\Ex[K(\vH,\vH')]\\
+&=\int_{\mathcal X^2}K(\vx,\vx')\,\dif(F-G)(\vx)\,\dif(F-G)(\vx')\ge0
 \end{align*}
 
-If both distributions have densities,
+If $F,G$ have densities $\varrho_F,\varrho_G$,
 
-\begin{align*}
-D^2(F_{\vX},F_{\vZ};K)
-&=\int_{\mathcal X^2}K(\vx,\vx')\,\varrho_{\vX}(\vx)\,\varrho_{\vX}(\vx')\,\dif \vx\,\dif \vx'
--2\int_{\mathcal X^2}K(\vx,\vx')\,\varrho_{\vX}(\vx)\,\varrho_{\vZ}(\vx')\,\dif \vx\,\dif \vx'\\
-&\qquad \qquad +\int_{\mathcal X^2}K(\vx,\vx')\,\varrho_{\vZ}(\vx)\,\varrho_{\vZ}(\vx')\,\dif \vx\,\dif \vx'\\
-&=\int_{\mathcal X^2}K(\vx,\vx')
-\{\varrho_{\vX}(\vx)-\varrho_{\vZ}(\vx)\}
-\{\varrho_{\vX}(\vx')-\varrho_{\vZ}(\vx')\}\,\dif \vx\,\dif \vx' \ge0
-\end{align*}
+$$
+D^2(F,G;K)=\int_{\mathcal X^2}K(\vx,\vx')
+\{\varrho_F(\vx)-\varrho_G(\vx)\}
+\{\varrho_F(\vx')-\varrho_G(\vx')\}\,\dif\vx\,\dif\vx'
+$$
+
+For sample assessment, compare the [target]{.alert} $F_{\mathrm{tar}}$ with an empirical distribution
 
 ---
 
 ### Empirical distributions {#empirical-distributions}
 
-Put mass $1/n$ at each $\vz_i$: $\widehat F_{\vZ,n}=n^{-1}\sum_{i=0}^{n-1}\delta_{\vz_i}$
+For candidate points in the target space, put mass $1/n$ at each $\vx_i$: $\widehat F_n=n^{-1}\sum_{i=0}^{n-1}\delta_{\vx_i}$
 
-Replace $F_{\vZ}$ by $\widehat F_{\vZ,n}$ in the distribution formula:
+Compare $F_{\mathrm{tar}}$ with $\widehat F_n$ in the distribution formula:
 
 \begin{align*}
-D^2(F_{\vX},\{\vz_i\}_{i=0}^{n-1};K)
-&=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')\\
-&\quad-\frac{2}{n}\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vz_i)\,\dif F_{\vX}(\vx)\\
-&\quad+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(\vz_i,\vz_j)
+D^2(F_{\mathrm{tar}},\{\vx_i\}_{i=0}^{n-1};K)
+&=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\mathrm{tar}}(\vx)\,\dif F_{\mathrm{tar}}(\vx')\\
+&\quad-\frac{2}{n}\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vx_i)\,\dif F_{\mathrm{tar}}(\vx)\\
+&\quad+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(\vx_i,\vx_j)
 \end{align*}
 
 Integration against an empirical distribution becomes [averaging over its sample]{.alert}
@@ -592,13 +584,13 @@ Integration against an empirical distribution becomes [averaging over its sample
 
 ### Two empirical distributions {#how-can-we-measure-sample-quality}
 
-Replace both distributions by empirical distributions: integrals become sums
+Use points $\vx_i^{(F)}$ and $\vx_j^{(G)}$; replace integrals by sums
 
 \begin{align*}
-D^2\!\left(\{\vx_i\}_{i=0}^{m-1},\{\vz_j\}_{j=0}^{n-1};K\right)
-&=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(\vx_i,\vx_j)\\
-&\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(\vx_i,\vz_j)
-+\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(\vz_i,\vz_j)
+D^2\!\left(\{\vx_i^{(F)}\}_{i=0}^{m-1},\{\vx_j^{(G)}\}_{j=0}^{n-1};K\right)
+&=\frac{1}{m^2}\sum_{i,j=0}^{m-1}K(\vx_i^{(F)},\vx_j^{(F)})\\
+&\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(\vx_i^{(F)},\vx_j^{(G)})
++\frac{1}{n^2}\sum_{i,j=0}^{n-1}K(\vx_i^{(G)},\vx_j^{(G)})
 \end{align*}
 
 - The [exact squared discrepancy of these empirical distributions]{.alert}; nonnegative
@@ -613,8 +605,8 @@ D^2\!\left(\{\vx_i\}_{i=0}^{m-1},\{\vz_j\}_{j=0}^{n-1};K\right)
 
 | Question | Quantity |
 |:--|:--|
-| How different are these empirical distributions? | Exact $D^2(\widehat F_{\vX,m},\widehat F_{\vZ,n};K)\ge0$ |
-| How different are the underlying distributions? | Estimate $D^2(F_{\vX},F_{\vZ};K)$ from random samples |
+| How different are these empirical distributions? | Exact $D^2(\widehat F_m^{(F)},\widehat F_n^{(G)};K)\ge0$ |
+| How different are the underlying distributions? | Estimate $D^2(F,G;K)$ from random samples |
 
 - The ordinary empirical formula answers the first question
 - As an estimator of population discrepancy, it is generally biased
@@ -636,15 +628,15 @@ between the samples. Successive MCMC states do not satisfy the IID condition.
 
 ### Unbiased estimates of squared discrepancy {#unbiased-estimates-of-squared-discrepancy}
 
-For two independent IID samples, estimate $D^2(F_{\vX},F_{\vZ};K)$
+For two independent IID samples, estimate $D^2(F,G;K)$
 
 Replace within-sample sums by [off-diagonal averages]{.alert}:
 
 \begin{align*}
-D_{\mathrm{unb}}^2\!\left(\{\vx_i\}_{i=0}^{m-1},\{\vz_j\}_{j=0}^{n-1};K\right)
-&=\frac{1}{m(m-1)}\sum_{\substack{i,j=0\\i\ne j}}^{m-1}K(\vx_i,\vx_j)\\
-&\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(\vx_i,\vz_j)
-+\frac{1}{n(n-1)}\sum_{\substack{i,j=0\\i\ne j}}^{n-1}K(\vz_i,\vz_j)
+D_{\mathrm{unb}}^2\!\left(\{\vx_i^{(F)}\}_{i=0}^{m-1},\{\vx_j^{(G)}\}_{j=0}^{n-1};K\right)
+&=\frac{1}{m(m-1)}\sum_{\substack{i,j=0\\i\ne j}}^{m-1}K(\vx_i^{(F)},\vx_j^{(F)})\\
+&\quad-\frac{2}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}K(\vx_i^{(F)},\vx_j^{(G)})
++\frac{1}{n(n-1)}\sum_{\substack{i,j=0\\i\ne j}}^{n-1}K(\vx_i^{(G)},\vx_j^{(G)})
 \end{align*}
 
 [Unbiased]{.alert} describes the estimator's expectation, not the sign of each realization
@@ -658,11 +650,11 @@ A more negative realization is [not a better match]{.alert}; it is a larger down
 ::: {.exitem .roman}
 <span class="exbullet">$\exstar$</span>
 <span>
-Let $\{\vX_i\}_{i=0}^{m-1}$ and $\{\vZ_j\}_{j=0}^{n-1}$ be independent IID samples from $F_{\vX}$ and $F_{\vZ}$
-<span class="exsub">Take expectations term by term to show $\Ex[D_{\mathrm{unb}}^2]=D^2(F_{\vX},F_{\vZ};K)$</span>
-<span class="exsub">What is the expectation when $F_{\vX}=F_{\vZ}$?</span>
+Let $\{\vR_i\}_{i=0}^{m-1}$ and $\{\vH_j\}_{j=0}^{n-1}$ be independent IID samples from $F$ and $G$
+<span class="exsub">Take expectations term by term to show $\Ex[D_{\mathrm{unb}}^2]=D^2(F,G;K)$</span>
+<span class="exsub">What is the expectation when $F=G$?</span>
 <span class="exsub">Why may a realization be negative, and does more negative mean a better match?</span>
-<span class="exsub">Which step fails when the $\vX_i$ are successive Metropolis states?</span>
+<span class="exsub">Which step fails when the $\vR_i$ are successive Metropolis states?</span>
 </span>
 :::
 
@@ -672,11 +664,11 @@ Let $\{\vX_i\}_{i=0}^{m-1}$ and $\{\vZ_j\}_{j=0}^{n-1}$ be independent IID sampl
 
 [Zero is the ideal]{.alert}; no universal acceptable cutoff
 
-For a fixed target $F_{\vX}$ and kernel $K$, normalize by the [no-sample error]{.alert}:
+For a fixed target $F_{\mathrm{tar}}$ and kernel $K$, normalize by the [no-sample error]{.alert}:
 
 \begin{align*}
-D_0^2&=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')>0,
-&\qquad D_{\mathrm{rel},n}^2&=\frac{D^2(F_{\vX},\{\vz_i\}_{i=0}^{n-1};K)}{D_0^2}
+D_0^2&=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\mathrm{tar}}(\vx)\,\dif F_{\mathrm{tar}}(\vx')>0,
+&\qquad D_{\mathrm{rel},n}^2&=\frac{D^2(F_{\mathrm{tar}},\{\vx_i\}_{i=0}^{n-1};K)}{D_0^2}
 \end{align*}
 
 - $D_{\mathrm{rel},n}^2<1$: improvement over estimating the integral by zero
@@ -736,14 +728,14 @@ $$
 Assume $K$ is measurable and
 
 $$
-\int_{\mathcal X}\sqrt{K(\vx,\vx)}\,\dif F_{\vX}(\vx)<\infty
+\int_{\mathcal X}\sqrt{K(\vx,\vx)}\,\dif F_{\mathrm{tar}}(\vx)<\infty
 $$
 
 Then both
 
 \begin{align*}
-f&\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx),\\
-f&\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vz_i)
+f&\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx),\\
+f&\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vx_i)
 \end{align*}
 
 are bounded linear functionals on $\mathcal H_K$
@@ -763,14 +755,14 @@ $\abs{K(\vx,\vx')}\le\sqrt{K(\vx,\vx)K(\vx',\vx')}$.
 By the Riesz representation theorem, some $\zeta\in\mathcal H_K$ satisfies
 
 $$
-\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vz_i)
+\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vx_i)
 =\langle\zeta,f\rangle_{\mathcal H_K}
 $$
 
 Therefore, by Cauchy–Schwarz,
 
 $$
-\left\lvert\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vz_i)\right\rvert
+\left\lvert\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vx_i)\right\rvert
 \le\norm{\zeta}_{\mathcal H_K}\norm{f}_{\mathcal H_K}
 $$
 
@@ -797,8 +789,8 @@ with $f=K(\cdot,\vx')$:
 \begin{align*}
 \zeta(\vx')
 &=\langle\zeta,K(\cdot,\vx')\rangle_{\mathcal H_K}\\
-&=\int_{\mathcal X}K(\vx,\vx')\,\dif F_{\vX}(\vx)
--\frac1n\sum_{i=0}^{n-1}K(\vz_i,\vx')
+&=\int_{\mathcal X}K(\vx,\vx')\,\dif F_{\mathrm{tar}}(\vx)
+-\frac1n\sum_{i=0}^{n-1}K(\vx_i,\vx')
 \end{align*}
 
 Thus $\zeta(\vx')$ is the [true integral minus sample average]{.alert}
@@ -817,8 +809,8 @@ Now use $f=\zeta$ in the same error representation:
 $$
 \norm{\zeta}_{\mathcal H_K}^2
 =\langle\zeta,\zeta\rangle_{\mathcal H_K}
-=\int_{\mathcal X}\zeta(\vx')\,\dif F_{\vX}(\vx')
--\frac1n\sum_{j=0}^{n-1}\zeta(\vz_j)
+=\int_{\mathcal X}\zeta(\vx')\,\dif F_{\mathrm{tar}}(\vx')
+-\frac1n\sum_{j=0}^{n-1}\zeta(\vx_j)
 $$
 
 Substitute the kernel-section error formula for each value of $\zeta$;
@@ -826,10 +818,10 @@ symmetry of $K$ combines the two cross terms:
 
 \begin{align*}
 \norm{\zeta}_{\mathcal H_K}^2
-&=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')\\
-&\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vz_i)\,\dif F_{\vX}(\vx)
-+\frac1{n^2}\sum_{i,j=0}^{n-1}K(\vz_i,\vz_j)\\
-&=D^2(F_{\vX},\{\vz_i\}_{i=0}^{n-1};K)
+&=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\mathrm{tar}}(\vx)\,\dif F_{\mathrm{tar}}(\vx')\\
+&\quad-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vx_i)\,\dif F_{\mathrm{tar}}(\vx)
++\frac1{n^2}\sum_{i,j=0}^{n-1}K(\vx_i,\vx_j)\\
+&=D^2(F_{\mathrm{tar}},\{\vx_i\}_{i=0}^{n-1};K)
 \end{align*}
 
 Thus discrepancy is the [worst-case error over $\norm{f}_{\mathcal H_K}\le1$]{.alert}
@@ -838,16 +830,16 @@ Thus discrepancy is the [worst-case error over $\norm{f}_{\mathcal H_K}\le1$]{.a
 
 Suppose $f$ is modeled as a zero-mean Gaussian process with covariance kernel $K$
 
-For deterministic $\vz_0,\ldots,\vz_{n-1}$,
+For deterministic $\vx_0,\ldots,\vx_{n-1}$,
 
 \begin{align*}
 &\Ex_f\!\left[
-\left\{\int_{\mathcal X}f(\vx)\,\dif F_{\vX}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vz_i)\right\}^2
+\left\{\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vx_i)\right\}^2
 \right]\\
-&\quad=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')
--\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vz_i)\,\dif F_{\vX}(\vx)
-+\frac1{n^2}\sum_{i,j=0}^{n-1}K(\vz_i,\vz_j)\\
-&\quad=D^2(F_{\vX},\{\vz_i\}_{i=0}^{n-1};K)
+&\quad=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\mathrm{tar}}(\vx)\,\dif F_{\mathrm{tar}}(\vx')
+-\frac2n\sum_{i=0}^{n-1}\int_{\mathcal X}K(\vx,\vx_i)\,\dif F_{\mathrm{tar}}(\vx)
++\frac1{n^2}\sum_{i,j=0}^{n-1}K(\vx_i,\vx_j)\\
+&\quad=D^2(F_{\mathrm{tar}},\{\vx_i\}_{i=0}^{n-1};K)
 \end{align*}
 
 Discrepancy is also the [root mean squared error under the Gaussian-process model]{.alert}
@@ -863,7 +855,7 @@ $\Ex_f[f(\vx)f(\vx')]=K(\vx,\vx')$ enter the calculation;
 no Gaussian distribution assumption is used. Assume the random integral
 exists in mean square and expectation can be interchanged with the displayed
 integrals. A sufficient condition for a measurable second-order process is
-$\int_{\mathcal X}\sqrt{K(\vx,\vx)}\,\dif F_{\vX}(\vx)<\infty$,
+$\int_{\mathcal X}\sqrt{K(\vx,\vx)}\,\dif F_{\mathrm{tar}}(\vx)<\infty$,
 together with finite kernel diagonals at the sample points.
 
 Gaussian processes are a common model and additionally specify finite-dimensional
@@ -883,12 +875,12 @@ additional squared-bias term unless the quadrature rule integrates that mean exa
   - coordinate importance
 - In the average-case setting, hyperparameters may be estimated by empirical Bayes or maximum likelihood
 
-For IID $\vZ_i\sim F_{\vX}$,
+For IID $\vX_i\sim F_{\mathrm{tar}}$,
 
 $$
-\Ex\!\left[D^2(F_{\vX},\{\vZ_i\}_{i=0}^{n-1};K)\right]
+\Ex\!\left[D^2(F_{\mathrm{tar}},\{\vX_i\}_{i=0}^{n-1};K)\right]
 =\frac1n\left\{
-\int K(\vx,\vx)\,\dif F_{\vX}(\vx)-\int K(\vx,\vx')\,\dif F_{\vX}(\vx)\,\dif F_{\vX}(\vx')
+\int K(\vx,\vx)\,\dif F_{\mathrm{tar}}(\vx)-\int K(\vx,\vx')\,\dif F_{\mathrm{tar}}(\vx)\,\dif F_{\mathrm{tar}}(\vx')
 \right\}
 $$
 
@@ -922,16 +914,16 @@ The weights $\gamma_\ell$ express [coordinate importance]{.alert}
 
 [Kullback–Leibler (KL) divergence]{.alert}, also called [relative entropy]{.alert}
 
-For normalized densities $\varrho_{\vX}$ and $\varrho_{\vZ}$,
+For normalized target density $\varrho_{\mathrm{tar}}$ and comparison density $\varrho_G$,
 
 \begin{align*}
-D_{\mathrm{KL}}(F_{\vX}\Vert F_{\vZ})
-&=\int_{\mathcal X}\varrho_{\vX}(\vx)
-\log\!\left(\frac{\varrho_{\vX}(\vx)}{\varrho_{\vZ}(\vx)}\right)\,\dif \vx
+D_{\mathrm{KL}}(F_{\mathrm{tar}}\Vert G)
+&=\int_{\mathcal X}\varrho_{\mathrm{tar}}(\vx)
+\log\!\left(\frac{\varrho_{\mathrm{tar}}(\vx)}{\varrho_G(\vx)}\right)\,\dif \vx
 \end{align*}
 
 - Nonnegative; zero exactly when the distributions agree
-- Generally asymmetric; infinite if $F_{\vX}$ assigns mass where $F_{\vZ}$ assigns none
+- Generally asymmetric; infinite if $F_{\mathrm{tar}}$ assigns mass where $G$ assigns none
 - Entropy describes one distribution; [relative entropy compares two]{.alert}
 - Variational inference fits an approximate density by minimizing KL to the target
 
@@ -965,12 +957,12 @@ References: [Shalizi, Information Theory I, entropy and divergence](https://www.
 
 ### KL minimization with an unnormalized target
 
-With $\varrho_{\mathrm{tar}}=\widetilde\varrho/C$ and approximation density $\varrho_{\mathrm{approx}}$,
+With $\varrho_{\mathrm{tar}}=\widetilde\varrho_{\mathrm{tar}}/C$ and $\vR\sim\varrho_{\mathrm{approx}}$,
 
 \begin{align*}
 D_{\mathrm{KL}}(F_{\mathrm{approx}}\Vert F_{\mathrm{tar}})
 &=\Ex_{\mathrm{approx}}\!\left[\log\!\left(
-\frac{\varrho_{\mathrm{approx}}(\vX)}{\widetilde\varrho(\vX)}\right)\right]+\log C
+\frac{\varrho_{\mathrm{approx}}(\vR)}{\widetilde\varrho_{\mathrm{tar}}(\vR)}\right)\right]+\log C
 \end{align*}
 
 [Fixed target]{.alert}: $\log C$ does not affect minimization over the approximation
@@ -987,25 +979,25 @@ samples, but that differs from plugging an atomic empirical measure into KL.
 
 ### Stein discrepancy {#stein-discrepancy}
 
-For a smooth positive target density $\varrho_{\mathrm{tar}}(\vx)=\widetilde\varrho(\vx)/C$,
+For a smooth positive target density $\varrho_{\mathrm{tar}}(\vx)=\widetilde\varrho_{\mathrm{tar}}(\vx)/C$,
 the [score]{.alert} removes the unknown normalizing constant
 
 \begin{align*}
-s(\vx)&=\nabla_{\vx}\log\varrho_{\mathrm{tar}}(\vx)
-=\nabla_{\vx}\log\widetilde\varrho(\vx)\\
-\mathcal T g(\vx)&=s(\vx)^\mathsf{T}g(\vx)+\nabla\!\cdot g(\vx),
-\qquad g:\mathcal X\to\mathbb R^d
+\boldsymbol s(\vx)&=\nabla_{\vx}\log\varrho_{\mathrm{tar}}(\vx)
+=\nabla_{\vx}\log\widetilde\varrho_{\mathrm{tar}}(\vx)\\
+\mathcal T \boldsymbol g(\vx)&=\boldsymbol s(\vx)^\mathsf{T}\boldsymbol g(\vx)+\nabla\!\cdot \boldsymbol g(\vx),
+\qquad \boldsymbol g:\mathcal X\to\mathbb R^d
 \end{align*}
 
-[Stein's identity]{.alert}: $\Ex_{\mathrm{tar}}[\mathcal T g(\vX)]=0$ for suitable $g$
+[Stein's identity]{.alert}: $\Ex_{\mathrm{tar}}[\mathcal T \boldsymbol g(\vX)]=0$ for suitable $\boldsymbol g$
 
-For candidate points $\vz_0,\ldots,\vz_{n-1}$, write the error as [true value minus sample average]{.alert}:
+For candidate points $\vx_0,\ldots,\vx_{n-1}$, write the error as [true value minus sample average]{.alert}:
 
 \begin{align*}
-D_{\mathrm{Stein}}(F_{\mathrm{tar}},\{\vz_i\};\mathcal G)
-&=\sup_{g\in\mathcal G}\left|
-\underbrace{\Ex_{\mathrm{tar}}[\mathcal T g(\vX)]}_{0}
--\frac1n\sum_{i=0}^{n-1}\mathcal T g(\vz_i)\right|
+D_{\mathrm{Stein}}(F_{\mathrm{tar}},\{\vx_i\};\mathcal G)
+&=\sup_{\boldsymbol g\in\mathcal G}\left|
+\underbrace{\Ex_{\mathrm{tar}}[\mathcal T \boldsymbol g(\vX)]}_{0}
+-\frac1n\sum_{i=0}^{n-1}\mathcal T \boldsymbol g(\vx_i)\right|
 \end{align*}
 
 ::: {.key-point}
@@ -1014,14 +1006,14 @@ The largest departure from zero over a [size-constrained class]{.alert} $\mathca
 
 ::: {.notes}
 This slide describes the common Langevin, score-based Stein operator for a
-continuous target, not every Stein discrepancy. Here $g$ is a vector field;
+continuous target, not every Stein discrepancy. Here $\boldsymbol g$ is a vector field;
 the identity follows by integration by parts when the boundary term vanishes
 and the expectations exist. On bounded supports, the function class or operator
 must enforce the appropriate boundary conditions. Discrete targets require a
 different operator.
 
 For candidate points $\vx_0,\ldots,\vx_{n-1}$, the discrepancy is
-$\sup_{g\in\mathcal G}|0-n^{-1}\sum_{i=0}^{n-1}\mathcal T g(\vx_i)|$,
+$\sup_{\boldsymbol g\in\mathcal G}|0-n^{-1}\sum_{i=0}^{n-1}\mathcal T \boldsymbol g(\vx_i)|$,
 with the true target integral first and the sample approximation second.
 Applying Stein operators to both arguments of a sufficiently smooth base kernel
 gives a target-dependent Stein kernel and a pairwise-sum formula for KSD squared.
@@ -1048,13 +1040,13 @@ For [kernel Stein discrepancy (KSD)]{.alert}, choose $\mathcal G$ as the unit ba
 The supremum has an explicit formula using a [Stein kernel]{.alert}:
 
 \begin{align*}
-K_{\mathrm{Stein}}(\vx,\vz)
-&=s(\vx)^\mathsf{T}s(\vz)K(\vx,\vz)
-+s(\vx)^\mathsf{T}\nabla_{\vz} K(\vx,\vz)\\
-&\quad+s(\vz)^\mathsf{T}\nabla_{\vx} K(\vx,\vz)
-+\sum_{\ell=1}^d\frac{\partial^2 K(\vx,\vz)}{\partial x_\ell\,\partial z_\ell}\\[0.5ex]
-\mathrm{KSD}^2(F_{\mathrm{tar}},\{\vz_i\};K)
-&=\frac{1}{n^2}\sum_{i,j=0}^{n-1}K_{\mathrm{Stein}}(\vz_i,\vz_j)\ge0
+K_{\mathrm{Stein}}(\vx,\vx')
+&=\boldsymbol s(\vx)^\mathsf{T}\boldsymbol s(\vx')K(\vx,\vx')
++\boldsymbol s(\vx)^\mathsf{T}\nabla_{\vx'} K(\vx,\vx')\\
+&\quad+\boldsymbol s(\vx')^\mathsf{T}\nabla_{\vx} K(\vx,\vx')
++\sum_{\ell=1}^d\frac{\partial^2 K(\vx,\vx')}{\partial x_\ell\,\partial x'_\ell}\\[0.5ex]
+\mathrm{KSD}^2(F_{\mathrm{tar}},\{\vx_i\};K)
+&=\frac{1}{n^2}\sum_{i,j=0}^{n-1}K_{\mathrm{Stein}}(\vx_i,\vx_j)\ge0
 \end{align*}
 
 - The target-integral terms vanish: only the [sample-pair sum]{.alert} remains
@@ -1069,10 +1061,10 @@ Some KSDs fail to detect nonconvergence; separated-mode weights can be hard to a
 ::: {.notes}
 Here $\mathcal H_K^d$ is the space of vector fields whose components belong to
 the RKHS of the scalar base kernel $K$, with squared norm equal to the sum of
-the component squared norms. Its unit ball prevents arbitrary rescaling of $g$.
+the component squared norms. Its unit ball prevents arbitrary rescaling of $\boldsymbol g$.
 The smoothness, integrability, and boundary assumptions must allow the Stein
 identity to hold for the relevant kernel sections and derivatives.
-Then $\Ex_{\vX\sim F_{\mathrm{tar}}}[K_{\mathrm{Stein}}(\vX,\vz)]=0$,
+Then $\Ex_{\vX\sim F_{\mathrm{tar}}}[K_{\mathrm{Stein}}(\vX,\vx')]=0$,
 so the target-target and target-sample terms in ordinary squared discrepancy
 are zero. The displayed sum includes the diagonal: it is the exact squared
 KSD of the empirical measure, not the off-diagonal unbiased estimator of a
@@ -1201,19 +1193,20 @@ An MLE is not a prerequisite for Bayes.
 
 The [likelihood]{.alert} is the shared starting point for MLE and Bayesian inference
 
-For observed data $y$ and parameter $\theta$,
+Let $D$ denote data generated by the observation model<br>
+For observed data $y_{\mathrm{obs}}$ and parameter $\theta$,
 
 $$
-L(\theta;y)=\varrho_{Y\mid\theta}(y\mid\theta)
+L(\theta;y_{\mathrm{obs}})=\varrho_{D\mid\theta}(y_{\mathrm{obs}}\mid\theta)
 $$
 
 - Use the sampling model's density or probability mass function; [no normality assumption]{.alert}
-- Hold $y$ fixed and compare candidate parameter values $\theta$
+- Hold $y_{\mathrm{obs}}$ fixed and compare candidate parameter values $\theta$
 
 The [maximum likelihood estimator]{.alert} selects a maximizer:
 
 $$
-\htheta_{\mathrm{MLE}}\in\operatorname*{arg\,max}_{\theta}L(\theta;y)
+\htheta_{\mathrm{MLE}}\in\operatorname*{arg\,max}_{\theta}L(\theta;y_{\mathrm{obs}})
 $$
 
 ::: {.key-point}
@@ -1231,14 +1224,14 @@ The normal model below is one worked example, not an assumption of the general
 likelihood definition. The Bayesian notebook uses a normal observation model
 with known variance to make an exact posterior benchmark available.
 
-For $Y_0,\ldots,Y_{n-1}\ \IIDsim\ \Norm(\mu,\sigma^2)$,
+In this worked example, $m$ is the observation-model mean. For $D_0,\ldots,D_{n-1}\ \IIDsim\ \Norm(m,\sigma^2)$,
 
 \begin{align*}
-L(\mu,\sigma^2;y)
+L(m,\sigma^2;\vy_{\mathrm{obs}})
 &=(2\mpi\sigma^2)^{-n/2}
-\exp\!\left[-\frac1{2\sigma^2}\sum_{i=0}^{n-1}(y_i-\mu)^2\right],\\
-\hmu_{\mathrm{MLE}}&=\frac1n\sum_{i=0}^{n-1}y_i,&
-\hsigma^2_{\mathrm{MLE}}&=\frac1n\sum_{i=0}^{n-1}(y_i-\hmu_{\mathrm{MLE}})^2
+\exp\!\left[-\frac1{2\sigma^2}\sum_{i=0}^{n-1}(y_i-m)^2\right],\\
+\widehat m_{\mathrm{MLE}}&=\frac1n\sum_{i=0}^{n-1}y_i,&
+\hsigma^2_{\mathrm{MLE}}&=\frac1n\sum_{i=0}^{n-1}(y_i-\widehat m_{\mathrm{MLE}})^2
 \end{align*}
 :::
 
@@ -1251,18 +1244,20 @@ L(\mu,\sigma^2;y)
 Keep the sampling likelihood; now add prior information about $\theta$:
 
 \begin{align*}
-\varrho_{\mathrm{post}}(\theta\mid y)
-&=\frac{L(\theta;y)\varrho_{\mathrm{prior}}(\theta)}{\varrho_Y(y)}\\
-&\propto L(\theta;y)\varrho_{\mathrm{prior}}(\theta)
+\varrho_{\mathrm{post}}(\theta\mid y_{\mathrm{obs}})
+&=\frac{L(\theta;y_{\mathrm{obs}})\varrho_{\mathrm{prior}}(\theta)}{\varrho_D(y_{\mathrm{obs}})}\\
+&\propto L(\theta;y_{\mathrm{obs}})\varrho_{\mathrm{prior}}(\theta)
 \end{align*}
 
 ---
 
 ### Computing posterior summaries
 
-- The evidence $\varrho_Y(y)$ depends only on the observed data
+- The evidence $\varrho_D(y_{\mathrm{obs}})$ depends only on the observed data
 - MCMC needs only the [unnormalized posterior]{.alert}
-- Posterior samples estimate means, quantiles, credible intervals, and other summaries
+- Target samples $X_i=\Theta_i$ represent $\varrho_{\mathrm{post}}(\cdot\mid y_{\mathrm{obs}})$
+- For a summary $Y_i=f(X_i)$, estimate $\mu=\Ex_{\mathrm{post}}[f(X)]$ by averaging
+- Posterior quantiles and credible intervals use the sampled distribution
 - Optimization of the unnormalized posterior yields a maximum a posteriori estimate
 
 ::: {.key-point}
@@ -1275,15 +1270,15 @@ Bayesian inference is a primary reason to sample from complicated unnormalized d
 
 First distinguish [full input durations]{.alert} from [event-state clocks]{.alert}.
 
-Assume the random inputs are mutually independent:
+Full durations are quantile transforms of uniform inputs; assume they are mutually independent:
 
 $$
-U_k\sim F_A \quad\text{($k$th interarrival duration)},
+D_{k}^{\mathrm{arr}}\sim F_A \quad\text{($k$th interarrival duration)},
 \qquad
-V_j\sim F_S \quad\text{(customer $j$'s full service time)}.
+D_{j}^{\mathrm{srv}}\sim F_S \quad\text{(customer $j$'s full service time)}.
 $$
 
-Immediately after event $i$, the [state]{.alert} is $\vX_i=(A_i,N_i,S_i), \qquad i=0,1,\ldots$, where
+Immediately after event $i$, the [state]{.alert} is $\vQ_i=(A_i,N_i,S_i), \qquad i=0,1,\ldots$, where
 
 \begin{align*}
 A_i&=\text{time until the next arrival},\\
@@ -1291,14 +1286,14 @@ N_i&=\text{number of customers in the system},\\
 S_i&=\text{remaining service time}, \qquad S_i=\infty\text{ when the server is idle}
 \end{align*}
 
-- At the $k$th arrival, load the next arrival clock with $U_{k+1}$
-- When customer $j$ begins service, load the service clock with $V_j$
+- At the $k$th arrival, load the next arrival clock with $D_{k+1}^{\mathrm{arr}}$
+- When customer $j$ begins service, load the service clock with $D_{j}^{\mathrm{srv}}$
 
 - For performance, also track
-  $W_j=$ accumulated time in the system for customer $j$
+  $\tau_j=$ accumulated time in the system for customer $j$
 
 ::: {.key-point}
-The state $\vX_i$ determines the next-event law. The $W_j$ clocks measure
+The state $\vQ_i$ determines the next-event law. The $\tau_j$ clocks measure
 customer time but do not affect that law
 :::
 
@@ -1308,18 +1303,18 @@ customer time but do not affect that law
 
 - The next event occurs after $\Delta t_i=\min(A_i,S_i)$
 
-    - [**Arrival:**]{.alert} $A_i<S_i$
-    - [**Service completion:**]{.alert} $S_i\leq A_i$
+    - [Arrival:]{.alert} $A_i<S_i$
+    - [Service completion:]{.alert} $S_i\leq A_i$
 
 - During the interval from event $i$ to event $i+1$
-    - Simulated time: $T_{i+1}=T_i+\Delta t_i$
+    - Simulated time: $t_{i+1}=t_i+\Delta t_i$
     - Both active state clocks count down by $\Delta t_i$
-    - Each customer present gains $W_j\leftarrow W_j+\Delta t_i$
+    - Each customer present gains $\tau_j\leftarrow \tau_j+\Delta t_i$
 
 - At the event
     - Update $N_{i+1}$
-    - On arrival, set the new customer's $W_j=0$
-    - On service completion, record the departing customer's $W_j$
+    - On arrival, set the new customer's $\tau_j=0$
+    - On service completion, record the departing customer's $\tau_j$
     - Load each clock that starts anew with its next full input duration
     - Carry every other active clock's residual time forward
 
@@ -1329,26 +1324,26 @@ customer time but do not affect that law
 
 ::: {.key-point}
 If we jump into the process at $i=47$, knowing
-$\vX_{47}=(A_{47},N_{47},S_{47})$ and using future independent input durations
-lets us continue with $\vX_{48},\vX_{49},\ldots$ without knowing the earlier queue
-states $\vX_0,\ldots,\vX_{46}$
+$\vQ_{47}=(A_{47},N_{47},S_{47})$ and using future independent input durations
+lets us continue with $\vQ_{48},\vQ_{49},\ldots$ without knowing the earlier queue
+states $\vQ_0,\ldots,\vQ_{46}$
 :::
 
 - The residual clocks belong in the state because a partially elapsed duration
   generally does not have the same distribution as a newly drawn full duration
 
-**Example.** If $V_j\sim\Unif(4,8)$ and five minutes of customer $j$'s service
+[Example.]{.alert} If $D_{j}^{\mathrm{srv}}\sim\Unif(4,8)$ and five minutes of customer $j$'s service
 have elapsed, the remaining time has distribution
 
 $$
-V_j-5\mid V_j>5\sim\Unif(0,3), \qquad \text{not }\Unif(4,8)
+D_{j}^{\mathrm{srv}}-5\mid D_{j}^{\mathrm{srv}}>5\sim\Unif(0,3), \qquad \text{not }\Unif(4,8)
 $$
 
-- In the taxi example, the interarrival durations $U_k$ were exponential and
+- In the taxi example, the interarrival durations $D_{k}^{\mathrm{arr}}$ were exponential and
   therefore memoryless:
 
 $$
-U_k-t\mid U_k>t\sim\Exp(\lambda)
+D_{k}^{\mathrm{arr}}-t\mid D_{k}^{\mathrm{arr}}>t\sim\Exp(\lambda)
 $$
 
 ---
@@ -1356,22 +1351,22 @@ $$
 ### Event-driven queue simulation
 
 ```text
-Initialize i = 0, T[0] = 0, A[0] = U_1, N[0] = 0, S[0] = infinity
-while i < i_max and T[i] < T_max:  # event or simulated-time limit
+Initialize i = 0, t[0] = 0, A[0] = arrival_duration[1], N[0] = 0, S[0] = infinity
+while i < i_max and t[i] < t_max:  # event or simulated-time limit
     delta_t_i = min(A[i], S[i])  # S[i] = infinity while idle
-    if T[i] + delta_t_i >= T_max: stop at T_max without processing the event
-    T[i+1] = T[i] + delta_t_i
+    if t[i] + delta_t_i >= t_max: stop at t_max without processing the event
+    t[i+1] = t[i] + delta_t_i
     if A[i] < S[i]:  # arrival
         N[i+1] = N[i] + 1
-        A[i+1] = next unused U_k
+        A[i+1] = next unused arrival_duration[k]
         if N[i] == 0:
-            S[i+1] = V_j for the arriving customer j
+            S[i+1] = service_duration[j] for the arriving customer j
         else: S[i+1] = S[i] - delta_t_i
     else:  # service completion
         N[i+1] = N[i] - 1
         A[i+1] = A[i] - delta_t_i
         if N[i+1] > 0:
-            S[i+1] = V_j for the next customer j
+            S[i+1] = service_duration[j] for the next customer j
         else: S[i+1] = infinity
     i = i + 1
 ```
@@ -1388,14 +1383,14 @@ The full [interarrival and service draws]{.alert} are given. Use each row from l
 
 | Draw | First | Second | Third |
 |:--|--:|--:|--:|
-| Interarrival $U_k$ | $2$ | $1.5$ | $5$ |
-| Service $V_j$ | $5$ | $1$ | $4$ |
+| Interarrival $D_{k}^{\mathrm{arr}}$ | $2$ | $1.5$ | $5$ |
+| Service $D_{j}^{\mathrm{srv}}$ | $5$ | $1$ | $4$ |
 
-**Example.** Start empty at $T_0=0$; $\Delta t_i$ is the time to the next event.
+[Example.]{.alert} Start empty at $t_0=0$; $\Delta t_i$ is the time to the next event.
 
 :::: {.columns}
 ::: {.column width="63%"}
-| $i$ | Event $i$ | $T_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ |
+| $i$ | Event $i$ | $t_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ |
 |--:|:--|--:|--:|--:|--:|--:|
 | 0 | start | 0 | 2 | 0 | $\infty$ | 2 |
 | 1 | arrival 1 | 2 | 1.5 | 1 | 5 | 1.5 |
@@ -1407,7 +1402,7 @@ Draw a new service time [only when a customer begins service]{.alert}
 :::
 
 ::: {.column width="37%"}
-| After event | $W_1$ | $W_2$ |
+| After event | $\tau_1$ | $\tau_2$ |
 |--:|--:|--:|
 | 0 | -- | -- |
 | 1 | 0 | -- |
@@ -1424,31 +1419,31 @@ completion leaving the system empty. The first two arrivals consume all three
 interarrival draws: the initial draw is 2, then the two arrivals draw 1.5 and
 5. Only the first arrival and the first service completion begin service, so
 the third service draw, 4, remains unused. The third customer has not arrived
-by event 4, so $W_3$ remains unavailable.
+by event 4, so $\tau_3$ remains unavailable.
 :::
 
 ---
 
 ### $\exstar$ Queue simulation exercise
 
-For each table, start [empty at $T_0=0$]{.alert}. Process events until the
+For each table, start [empty at $t_0=0$]{.alert}. Process events until the
 supplied draws [no longer determine which event comes next]{.alert}; do not
 invent another draw.
 
 | Draw | First | Second | Third |
 |:--|--:|--:|--:|
-| Interarrival $U_k$ | $3$ | $5$ | $4$ |
-| Service $V_j$ | $1$ | $2$ | $6$ |
+| Interarrival $D_{k}^{\mathrm{arr}}$ | $3$ | $5$ | $4$ |
+| Service $D_{j}^{\mathrm{srv}}$ | $1$ | $2$ | $6$ |
 
 | Draw | First | Second | Third |
 |:--|--:|--:|--:|
-| Interarrival $U_k$ | $1$ | $2$ | $6$ |
-| Service $V_j$ | $5$ | $2$ | $4$ |
+| Interarrival $D_{k}^{\mathrm{arr}}$ | $1$ | $2$ | $6$ |
+| Service $D_{j}^{\mathrm{srv}}$ | $5$ | $2$ | $4$ |
 
 | Draw | First | Second | Third |
 |:--|--:|--:|--:|
-| Interarrival $U_k$ | $2$ | $1$ | $1$ |
-| Service $V_j$ | $5$ | $2$ | $6$ |
+| Interarrival $D_{k}^{\mathrm{arr}}$ | $2$ | $1$ | $1$ |
+| Service $D_{j}^{\mathrm{srv}}$ | $5$ | $2$ | $6$ |
 
 Report the event sequence and customer times. Which service draws remain
 unused, and why?
@@ -1461,7 +1456,7 @@ two tables have five determined events; the third has three.
 
 For the first table, the completed state table is
 
-| $i$ | $T_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
+| $i$ | $t_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
 |--:|--:|--:|--:|--:|--:|:--|
 | 0 | 0 | 3 | 0 | $\infty$ | 3 | arrival 1 |
 | 1 | 3 | 5 | 1 | 1 | 1 | service completion 1 |
@@ -1471,12 +1466,12 @@ For the first table, the completed state table is
 | 5 | 12 | unknown | 1 | 6 | unknown | stop |
 
 The event sequence is arrival 1, service completion 1, arrival 2, service
-completion 2, arrival 3. The completed customer times are $W_1=1$ and
-$W_2=2$; customer 3 has $W_3=0$ so far. All three service draws have been used.
+completion 2, arrival 3. The completed customer times are $\tau_1=1$ and
+$\tau_2=2$; customer 3 has $\tau_3=0$ so far. All three service draws have been used.
 
 For the second table, the completed state table is
 
-| $i$ | $T_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
+| $i$ | $t_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
 |--:|--:|--:|--:|--:|--:|:--|
 | 0 | 0 | 1 | 0 | $\infty$ | 1 | arrival 1 |
 | 1 | 1 | 2 | 1 | 5 | 2 | arrival 2 |
@@ -1486,12 +1481,12 @@ For the second table, the completed state table is
 | 5 | 9 | unknown | 1 | 4 | unknown | stop |
 
 The event sequence is arrival 1, arrival 2, service completion 1, service
-completion 2, arrival 3. The completed customer times are $W_1=5$ and
-$W_2=5$; customer 3 has $W_3=0$ so far. All three service draws have been used.
+completion 2, arrival 3. The completed customer times are $\tau_1=5$ and
+$\tau_2=5$; customer 3 has $\tau_3=0$ so far. All three service draws have been used.
 
 For the third table, the completed state table is
 
-| $i$ | $T_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
+| $i$ | $t_i$ | $A_i$ | $N_i$ | $S_i$ | $\Delta t_i$ | Event $i+1$ |
 |--:|--:|--:|--:|--:|--:|:--|
 | 0 | 0 | 2 | 0 | $\infty$ | 2 | arrival 1 |
 | 1 | 2 | 1 | 1 | 5 | 1 | arrival 2 |
@@ -1499,8 +1494,8 @@ For the third table, the completed state table is
 | 3 | 4 | unknown | 3 | 3 | unknown | stop |
 
 The event sequence is arrival 1, arrival 2, arrival 3. No customer has
-departed; the accumulated times are $W_1=2$, $W_2=1$, and $W_3=0$. Service
-draws $V_2=2$ and $V_3=6$ remain unused because only customer 1 has begun
+departed; the accumulated times are $\tau_1=2$, $\tau_2=1$, and $\tau_3=0$. Service
+draws $D_{2}^{\mathrm{srv}}=2$ and $D_{3}^{\mathrm{srv}}=6$ remain unused because only customer 1 has begun
 service.
 :::
 

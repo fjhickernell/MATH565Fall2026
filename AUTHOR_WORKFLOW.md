@@ -554,7 +554,7 @@ notebooks, slides, and related explanations:
 
 \[
 \boldsymbol U \sim \operatorname{Unif}([0,1]^d), \qquad
-\boldsymbol X = T(\boldsymbol U), \qquad
+\boldsymbol X = \boldsymbol T(\boldsymbol U), \qquad
 Y = f(\boldsymbol X).
 \]
 
@@ -568,23 +568,59 @@ Y = f(\boldsymbol X).
   input, whether its points are IID or low discrepancy. In a one-dimensional
   example, a scalar \(U\) is acceptable when the dimension matters
   pedagogically.
-- Use `\vX` for the sample obtained after a quantile transformation, transport
+- Use `\vX` for the target sample obtained after a quantile transformation, transport
   map, stochastic-process construction, or other transformation of the
-  uniform input. State the transformation \(T\) when students first need it.
+  uniform input. State the transport \(\boldsymbol T\) when students first need it.
 - Use \(Y=f(\boldsymbol X)\) for the output of an integrand, option payoff,
   simulator, or other potentially complicated black box. Use
   \(\boldsymbol Y=f(\boldsymbol X)\) only when the output is genuinely
   vector-valued.
-- When an example naturally introduces a nonuniform proposal or intermediate
-  variable, use \(\boldsymbol Z=S(\boldsymbol U)\) and then
-  \(\boldsymbol X=T(\boldsymbol Z)\). Do not call a nonuniform proposal
-  \(\boldsymbol U\). Define any example-specific exception explicitly and
-  return to the default notation when the distinction is no longer needed.
+- Use \(\boldsymbol Z\sim\varrho_{\mathrm{prop}}\) for a proposal or base/source
+  draw and \(\boldsymbol X\sim\varrho_{\mathrm{tar}}\) for a target draw.
+  A proposal may itself be uniform. Show
+  \(\boldsymbol Z=\boldsymbol S(\boldsymbol U)\) only when the uniform-input
+  construction matters; do not add it merely to complete a diagram.
+- Vector-valued maps are bold (`\vS`, `\vT`, or `\vA`);
+  scalar maps remain unbold. Use \(\boldsymbol T\) for a general change of
+  variables with correction weight \(w_T\). Exact transport is the special
+  case that sends the stated source distribution to the specified target,
+  giving \(w_T=1\) on the proposal support. Use \(\boldsymbol A\) for an
+  antithetic map.
+- Keep the original output \(Y=f(\boldsymbol X)\) distinct from an alternative
+  contribution \(\widetilde Y=g(\boldsymbol Z)\) with the same mean
+  \(\mu=\mathbb E(Y)=\mathbb E(\widetilde Y)\). Controls naturally use
+  \(g(\boldsymbol X)\); conditioning may use a subvector or an auxiliary
+  variable. Equal means do not imply equal output distributions. Exact transport
+  preserves the output distribution and IID variance; its choice can still
+  affect the composed integrand and low discrepancy performance.
+- Use \(h\) for a scalar integrand on the uniform-input cube, such as
+  \(h_g=g\circ\boldsymbol S\). Variation and scrambling-smoothness statements
+  concern that composed cube integrand. Deterministic nodes are
+  \(\boldsymbol u_i\); random uniform-design points are \(\boldsymbol U_i\).
+  Fixed-stratum points need not be individually uniform on the whole cube.
+- Use \(V\) for a decision uniform or a locally defined conditioning variable,
+  \(I\) for an acceptance indicator, \(w\) for a weight function, and
+  \(W=w(\boldsymbol Z)\) for its random value. Keep these roles distinct.
+- Reserve \(\varrho_{\mathrm{tar}}\) for a normalized density and write
+  \(\widetilde\varrho_{\mathrm{tar}}\) for an unnormalized form. MCMC proposals
+  have the conditional law
+  \(\boldsymbol Z_i\mid\boldsymbol X_i\sim
+  \varrho_{\mathrm{prop}}(\cdot\mid\boldsymbol X_i)\); target marginal laws
+  hold at stationarity, not automatically from an arbitrary start.
+- Use target-space nodes \(\boldsymbol x_i\) for discrepancy and quadrature,
+  \(F_{\mathrm{tar}}\) for the target, and \(F,G\) for arbitrary distribution
+  comparisons. Nodes need not already represent the target accurately.
+- Distinguish application state from target sampling: queue event states are
+  \(\boldsymbol Q_i\), full durations are \(D_k^{\mathrm{arr}}\) and
+  \(D_j^{\mathrm{srv}}\), and customer time in the system is \(\tau_j\).
+  Observed data are distinct from Monte Carlo outputs; posterior parameter
+  draws are identified with target samples before defining output summaries.
 
 Keep this notation consistent across the mathematical explanation, Python
 variables, plots, captions, and links between decks and notebooks. Apply it
-prospectively as materials are created or substantially revised; do not make a
-mechanical notation-only rewrite of otherwise untouched material.
+as materials are created or substantially revised. An instructor-authorized
+notation review also applies these conventions to previously taught material.
+Preserve numerical algorithms and align mathematical plot labels and saved figures.
 
 ## Variable accents in notebooks and slides
 
