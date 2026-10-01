@@ -1485,7 +1485,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="d65aace6" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="4324cad0" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1930,6 +1930,32 @@ i=(\cdots i_2i_1i_0)_b
 <div class="key-point">
 <p>An efficient method needs both <span class="alert">fast</span> error decay and a <span class="alert">reliable</span> stopping rule</p>
 </div>
+</section>
+<section class="slide level2">
+
+<h3 id="stopping-rules-in-action">Stopping rules in action</h3>
+<ul>
+<li><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/KeisterExample.ipynb#Practical-stopping-criteria">Keister notebook</a>: IID CLT, independent Sobol’ replications, and a Walsh-coefficient bound</li>
+<li><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb#Stop-when-the-price-uncertainty-meets-a-tolerance">Asian-option notebook</a>: a price tolerance with drift and a pilot-fitted control</li>
+</ul>
+<p>Read each run’s <span class="alert">tolerance</span>, estimate, reported interval or bound, sample count, and <span class="alert">decision</span></p>
+<div class="key-point">
+<p>Budget exhausted <span class="math inline">\(\ne\)</span> tolerance met</p>
+<p>Approximate intervals and conditional bounds need their stated <span class="alert">assumptions</span></p>
+</div>
+<aside class="notes">
+<p>The Keister reference is checked only after stopping. The IID interval uses a pilot-sized final run; the replication interval uses independent scrambles, not the within-scramble sample variance. Nominal fixed-sample interval coverage does not automatically carry over to adaptive stopping. Walsh-decay guarantees assume cone membership, which passing necessary-condition checks cannot prove. For the Asian option, distinguish simulation error from model and discretization error, and include the pilot in the computational budget. The dedicated low discrepancy constructions notebook remains separate planned work.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="variance-low-discrepancy">
 <h1>Big Ideas</h1>

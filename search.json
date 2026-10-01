@@ -88,14 +88,14 @@
     "href": "pages/notebooks.html#applications",
     "title": "Jupyter Notebooks",
     "section": "Applications",
-    "text": "Applications\n\nAre We There Yet? — use a travel-time model to explore Monte Carlo convergence, error assessment, quantiles, conditional Monte Carlo, and randomized Sobol sampling\nBayesian MCMC — compare posterior sampling with exact benchmarks and explore multiple-chain diagnostics and tempering\nQueue Simulation — simulate single-server queues and drive-through blocking with SimPy; compare customer delays, time-average congestion, and stationary benchmarks\nKeister Example — choose among transformed integrands with the same integral\n\nAdditional notebooks will apply Monte Carlo and quasi-Monte Carlo methods to other examples."
+    "text": "Applications\n\nAre We There Yet? — use a travel-time model to explore Monte Carlo convergence, error assessment, quantiles, conditional Monte Carlo, and randomized Sobol sampling\nBayesian MCMC — compare posterior sampling with exact benchmarks and explore multiple-chain diagnostics and tempering\nQueue Simulation — simulate single-server queues and drive-through blocking with SimPy; compare customer delays, time-average congestion, and stationary benchmarks\nKeister Example — choose among transformed integrands with the same integral; compare IID, replicated Sobol’, and Walsh-decay stopping rules, including budget exhaustion\n\nAdditional notebooks will apply Monte Carlo and quasi-Monte Carlo methods to other examples."
   },
   {
     "objectID": "pages/notebooks.html#performance",
     "href": "pages/notebooks.html#performance",
     "title": "Jupyter Notebooks",
     "section": "Performance",
-    "text": "Performance\n\nDiscrepancy — compare empirical distributions using maximum mean discrepancy, kernel scales, and witness functions\nAsian Option Variance Reduction — compare drift, a European-call control variate, randomized Sobol points, and a discretely monitored lookback call"
+    "text": "Performance\n\nDiscrepancy — compare empirical distributions using maximum mean discrepancy, kernel scales, and witness functions\nAsian Option Variance Reduction — compare drift, a European-call control variate, randomized Sobol points, and a discretely monitored lookback call; stop price estimation at a requested uncertainty tolerance and account for pilot work"
   },
   {
     "objectID": "index.html",
