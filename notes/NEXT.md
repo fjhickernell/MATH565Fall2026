@@ -23,7 +23,10 @@
    project page when the publishing workflow completes.
 4. Add the seminar link, then review Deck 04 followed by Deck 05 with the
    instructor, including their companion-notebook plans. Include the revised
-   Deck 04 opening and the cross-deck notation pass in that review.
+   Deck 04 opening and the cross-deck notation pass in that review. The new
+   opening recap links the named Generating Samples and Markov Chain Monte
+   Carlo decks, then distinguishes changing the contribution from changing
+   how samples are chosen. Check its density during the visible-layout review.
 
 ## September 30 follow-ups
 

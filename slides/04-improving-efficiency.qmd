@@ -47,6 +47,7 @@ Reducing [variance]{.alert} (or [variation]{.alert}) <br>per unit of [work]{.ale
 ::: {.deck-section-links}
 <h3>This deck</h3>
 
+- [From Sampling to Efficient Estimation](#from-sampling-to-efficient-estimation)
 - [Transformations and Importance Sampling](#transformations-and-importance-sampling)
 - [Control Variates and Conditioning](#control-variates-and-conditioning)
 - [Structured Random Sampling](#structured-random-sampling)
@@ -54,13 +55,30 @@ Reducing [variance]{.alert} (or [variation]{.alert}) <br>per unit of [work]{.ale
 - [Big Ideas](#big-ideas)
 :::
 
+# From Sampling to Efficient Estimation {.tree-marker-slide tree-marker="variance-reduction"}
+
+<h3>Recap: How we reached target samples $\vX$ and $Y = f(\vX)$</h3>
+
+$\vU\sim\Unif([0,1]^d),\quad \vZ\sim\varrho_{\mathrm{prop}},\quad
+\vX\sim\varrho_{\mathrm{tar}}$
+
+- [Generating Samples: transport]({{< meta decks.d02.file >}}#transport-maps): $\vZ=\vS(\vU)$, then $\vX=\vT(\vZ)=\vT\bigl(\vS(\vU)\bigr)$; if $\vS$ is the identity, $\vX=\vT(\vU)$, E.g., quantile, affine
+- [Generating Samples: acceptance–rejection]({{< meta decks.d02.file >}}#acceptancerejection-sampling): retain selected proposals as $\vX$
+- [Markov Chain Monte Carlo]({{< meta decks.d03.file >}}#the-metropolishastings-algorithm): propose $\vZ_i\mid\vX_i$; accept or repeat $\vX_i$; target law at stationarity
+
+<h3>Our plan here</h3>
+
+Keep $\mu=\Ex_{\mathrm{tar}}[f(\vX)]$ fixed, using two complementary levers:
+
+- [First]{.alert}, change the contribution: replace $Y=f(\vX)$ by an equal-mean alternative, such as a transformed or weighted $g(\vZ)$, a control variate, or a conditional expectation
+- [Then]{.alert}, change how samples are chosen: arrange uniform inputs in antithetic pairs, strata, or low discrepancy patterns before mapping them to target-space samples
+
 # Transformations and Importance Sampling {.tree-marker-slide tree-marker="analysis-importance"}
 
 - [Variance and variation reduction](#variance-and-variation-reduction)
 - [Transforming an integral](#transforming-an-integral)
 - [Importance sampling](#importance-sampling)
 - [Choosing a transformation](#choosing-a-transformation)
-
 
 ## Variance and variation reduction {.tree-marker-slide tree-marker="variance-reduction"}
 
@@ -106,7 +124,7 @@ For [randomized]{.alert} low discrepancy inputs, dependence changes the variance
 The two methods need not be independent of one another for these individual
 variance formulas. Each method needs independent replicates internally.
 Compare computational costs as well as the variance of one contribution.
-Deck 01 showed that accepting some bias can reduce MSE; here we compare
+Introduction showed that accepting some bias can reduce MSE; here we compare
 unbiased estimators. Degenerate zero-variance cases need no asymptotic rate.
 :::
 
@@ -138,7 +156,7 @@ The notation $\vT$ identifies a transport from uniform inputs to the target;
 $\vS$ generates proposal draws. Neither map must be displayed when uniform
 inputs are incidental. This common-cube comparison assumes compatible input
 dimensions; conditioning can reduce dimension.
-The bound is the Deck 03 worst-case integration-error bound.
+The bound is the Markov Chain Monte Carlo worst-case integration-error bound.
 For sufficiently smooth composed cube integrands, nested uniform scrambling
 gives variance nearly $\Order(n^{-3})$ and RMSE nearly $\Order(n^{-3/2})$.
 This is not a guarantee for every randomization or integrand.
@@ -326,7 +344,7 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1),\qquad
 | Estimator | $\displaystyle\frac1n\sum_{i=0}^{n-1}f(\sqrt{Z_i})$ | $\displaystyle\frac1n\sum_{i=0}^{n-1}2Z_if(Z_i)$ |
 | Output distribution | Same as $Y=f(X)$ | Generally different from $Y$ |
 
-[Deck 02 acceptance–rejection]({{< meta decks.d02.file >}}#acceptance-rejection-choosing-which-proposals-to-keep): same proposal, keep $Z$ with probability $Z$
+[Generating Samples: acceptance–rejection]({{< meta decks.d02.file >}}#acceptance-rejection-choosing-which-proposals-to-keep): same proposal, keep $Z$ with probability $Z$
 
 ---
 
@@ -820,10 +838,10 @@ plt.show()
 
 <span id="from-lhs-to-quasi-monte-carlo"></span>
 
-Deck 02 introduced [even coverage]({{< meta decks.d02.file >}}#what-does-low-discrepancy-mean)
+Generating Samples introduced [even coverage]({{< meta decks.d02.file >}}#what-does-low-discrepancy-mean)
 and [coordinate order]({{< meta decks.d02.file >}}#why-coordinate-order-matters)
 
-Deck 03 linked [discrepancy to integration error]({{< meta decks.d03.file >}}#the-discrepancy-identity)
+Markov Chain Monte Carlo linked [discrepancy to integration error]({{< meta decks.d03.file >}}#the-discrepancy-identity)
 
 Now we [construct]{.alert} the point sets, randomize them, and assess error
 
