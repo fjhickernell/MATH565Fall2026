@@ -40,8 +40,8 @@ holidays, and examination details are finalized.
 
 | Week | Date | Topic | Slides / Materials |
 |---:|---|---|---|
-| 7 | Thu Oct 1 | Continue importance sampling with Brownian motion under drift and choosing a transformation; control variates if time permits | [Improving Efficiency](../slides/04-improving-efficiency.html#brownian-motion-with-drift) |
-| 8 | Tue Oct 6 | | |
+| 7 | Thu Oct 1 | Brownian motion with drift and choosing a transformation; control variates, least-squares coefficients, and practical control choices; Asian-option notebook walkthrough | [Improving Efficiency](../slides/04-improving-efficiency.html#brownian-motion-with-drift)<br>[Asian-option notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb) |
+| 8 | Tue Oct 6 | Resume the Asian-option notebook at the lookback-call example, then conditional Monte Carlo | [Asian-option notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb)<br>[Improving Efficiency](../slides/04-improving-efficiency.html#conditional-monte-carlo) |
 | | Wed Oct 7 | **Assignment 4 due** | [{{< meta texts.owen.short >}} Exercises 11.5 and 11.6](../assignments/assignment_4.qmd) |
 | | Thu Oct 8 | | |
 | | Mon Oct 12 | **Midterm course<br>evaluation due** | [Complete in Canvas](https://iit.instructure.com/courses/25777/external_tools/4085)<br>or use your invitation email |

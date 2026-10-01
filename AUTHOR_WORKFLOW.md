@@ -647,6 +647,19 @@ implementations with ArviZ diagnostics. The PyMC quickstart is an optional
 external supplement, not a required package or unfinished prerequisite for
 Deck 03. A course-owned PyMC/NUTS extension requires a distinct teaching purpose.
 
+## Notebook sampling libraries
+
+Use QMCPy for IID and low discrepancy sampling, probability-measure
+transformations, Brownian paths, and supported integration and financial-option
+examples in MATH 565 notebooks. Prefer `IIDStdUniform`, `DigitalNetB2`,
+`Gaussian`, `BrownianMotion`, `CustomFun`, and `FinancialOption` as appropriate.
+Use explicit model settings to preserve the intended payoff, monitoring dates,
+and averaging convention when replacing an implementation.
+SciPy remains appropriate for analytic densities and distribution functions,
+quadrature reference values, optimization, and other supporting calculations
+without a suitable QMCPy interface. A deliberate direct inverse-CDF example
+may expose its formula for teaching; routine simulation should use QMCPy.
+
 ## Notebook execution timing
 
 Every course notebook must set

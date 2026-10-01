@@ -2,12 +2,22 @@
 
 ## Immediate actions
 
-1. The October 1 lecture is prepared, as confirmed by the instructor on
-   September 30. Resume Deck 04 at “Brownian motion with drift,” then
-   “Choosing a transformation” and control variates if time permits. September
-   29 covered the queue companion notebook and Deck 04
-   through “Variance depends on the function.” The October 1 single-occurrence
-   Illinois Tech calendar note is verified for PH 109.
+1. Prepare the October 6 continuation: resume the Asian-option variance
+   reduction notebook at “A lookback call on the same paths,” then Deck 04
+   at “Conditional Monte Carlo.” October 1 covered Brownian motion with
+   drift, choosing a transformation, control variates, least-squares
+   coefficients, practical control choices, and the Asian-option notebook;
+   the lookback example was explicitly deferred. The October 6 single-occurrence
+   Illinois Tech calendar note is saved and verified for PH 109,
+   10:00–11:15 AM America/Chicago. The reconciled schedule is included in the
+   October 1 checkpoint; its remote deployment remains to be verified.
+   The Asian-option, Keister, and conditional Monte Carlo
+   companions now use QMCPy sampling and supported transformations; review the
+   revised examples before the October 6 lecture. All three pass clean-kernel
+   execution with the pinned dependencies; their four saved figures were
+   inspected. Asian/European payoff checks agree with QMCPy FinancialOption,
+   and Keister agrees with the native integrand at a=sqrt(2). The deliberate
+   Keister tight-budget warning remains part of the stopping demonstration.
 2. Develop `notebooks/sampling/LowDiscrepancyConstructions.ipynb` for Deck 04:
    construct small
    lattice, Kronecker, and digital point sets, visualize projections with
@@ -62,12 +72,12 @@ importance-sampling contribution plots, selective keyword highlighting, and
 larger-index van der Corput exercises. Practical stopping demonstrations
 and their notebook links are now implemented and locally validated.
 
-All instructional recordings from August 18 through September 29 have been
-audited or reconciled. September 29 showed the queue-simulation notebook and
-MCMC synthesis, then Deck 04 through the importance-sampling variance
-comparison. The October 1 calendar continuation note was saved and verified.
-September 15 remains assessment-only, and the historical recording audit supersedes the
-accepted September 10 baseline.
+All instructional recordings from August 18 through October 1 have been
+audited or reconciled. October 1 reached practical control-variate choices
+and the Asian-option notebook, with the lookback example explicitly deferred.
+The October 6 calendar continuation note was saved and verified.
+September 15 remains assessment-only, and the historical recording audit
+supersedes the accepted September 10 baseline.
 
 Deck 04 now opens with separate IID variance-reduction and low discrepancy
 variation-reduction slides. Its opening section now lists only four main slides;

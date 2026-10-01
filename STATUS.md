@@ -93,6 +93,11 @@ appropriate phase rather than appended indiscriminately.
         and create the Asian option variance-reduction companion with a
         discretely monitored lookback call; execute all three in clean local
         `qmcpy` kernels and review their saved figures (September 28, 2026).
+      - [x] Use QMCPy IID/Sobol' sampling and Gaussian/Brownian transformations
+        in the three Deck 04 companions; use FinancialOption for the lookback
+        payoff and European reference price. Preserve the Asian-call model,
+        execute all three with pinned dependencies, check native-integrand
+        agreement, and inspect all four figures (October 1, 2026).
       - [ ] Build the Deck 04 low discrepancy constructions companion described
         in `notebooks/NOTEBOOK_INVENTORY.md` and link it after local validation.
       - [x] Migrate `AreWeThereYet.ipynb` to Applications with modern minimal

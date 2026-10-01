@@ -9,9 +9,9 @@
   displayed lecture materials; distinguish substantive coverage from previews
   and deferred explanations.
 
-The schedule is reconciled through September 29. The August 18–September 17
+The schedule is reconciled through October 1. The August 18–September 17
 rows record the historical audit without retroactive calendar edits; the
-October 1 continuation note is the next instructional annotation.
+October 6 continuation note is the next instructional annotation.
 
 | Instructional meeting | Status | Panopto recording | Next instructional event annotated | Checked |
 |---|---|---|---|---|
@@ -27,6 +27,7 @@ October 1 continuation note is the next instructional annotation.
 | September 22, 2026 | Reconciled through Bayesian inference, the mixture-posterior example, and parallel tempering; queueing only previewed near the end | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=ff0780b1-ca15-4d39-a0b4-b4cd0117a8b1) | September 24, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume Deck 03 at “Queueing systems” | September 22, 2026 |
 | September 24, 2026 | Reconciled: queue state, next-event updates, Markov interpretation, worked example, and all three group exercises; simulation code only briefly shown | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=abf2b4f7-923c-4dfb-8e7f-b4cf0114c7b5) | September 29, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume Deck 03 at “Event-driven queue simulation” and its notebook, then closing synthesis | September 24, 2026 |
 | September 29, 2026 | Reconciled: queue-simulation notebook and MCMC synthesis; Deck 04 through importance sampling’s “Variance depends on the function”; remaining importance sampling explicitly deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f9000848-8245-48ea-b294-b4d4011ca72c) | October 1, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume Deck 04 at “Brownian motion with drift,” then “Choosing a transformation” | September 29, 2026 |
+| October 1, 2026 | Reconciled: Brownian motion with drift and choosing a transformation; control variates, least-squares coefficients, and practical control choices; Asian-option notebook walkthrough; lookback call explicitly deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3bedf0ac-86bc-49fd-9798-b4d60116974b) | October 6, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume AsianOptionVarianceReduction at “A lookback call on the same paths,” then Deck 04 at “Conditional Monte Carlo” | October 1, 2026 |
 
 Recording evidence: Deck 02 mixture/acceptance–rejection unit-cube review
 preceded Deck 03 (33:06). Unbiased discrepancy began at 37:06; RKHS and
@@ -73,3 +74,20 @@ importance sampling to the next class, followed by control variates. The
 October 1 single occurrence was reopened and verified on Illinois Tech Fred
 → Calendar with the continuation note, PH 109, and its existing Central
 Daylight Time hours.
+
+## October 1 recording evidence
+
+The Illinois Tech Fred inbox readiness notice identifies the October 1
+recording, starting at 9:59 AM and lasting 1:16:22. The slide-transition
+index places control variates at 48:48 and least-squares coefficients at
+56:24, with the coefficient recap at 1:11:36 and practical control choices
+at 1:12:24. Closing captions discuss inexpensive controls and reducing
+variation for low discrepancy sampling, then the Asian-option notebook.
+At 1:15:40 the displayed notebook section is “A lookback call on the same
+paths”; the instructor explicitly defers it because time has run out
+(1:15:40–1:15:48). Conditional Monte Carlo was not reached.
+
+Playback was paused and muted, and the recording tab was closed afterward.
+The October 6 note was saved using “Only This Event” and reopened to verify
+the note, PH 109, and existing 10:00–11:15 AM Central Daylight Time hours.
+The calendar selector identified Illinois Tech Fred → Calendar.
