@@ -11,8 +11,9 @@
    construct small
    lattice, Kronecker, and digital point sets, visualize projections with
    `plot_proj`, and compare IID and the low discrepancy methods on one common
-   example (Keister or an Asian option). Include randomizations and practical
-   stopping criteria, validate clean `qmcpy` execution and figures, then link
+   example (Keister or an Asian option). Include randomizations and cross-link
+   the existing stopping demonstrations, validate clean `qmcpy` execution and
+   figures, then link
    it from the construction slides and notebook page. Choose the common
    example while shaping the notebook so it does not duplicate the existing
    Keister and Asian-option companions.
@@ -22,6 +23,22 @@
 4. Add the seminar link, then review Deck 04 followed by Deck 05 with the
    instructor, including their companion-notebook plans. Include the revised
    Deck 04 opening and the cross-deck notation pass in that review.
+
+## September 30 follow-ups
+
+The Keister companion now demonstrates IID CLT, replicated Sobol', and
+Walsh-decay stopping, including an explicit budget-exhaustion case. The
+Asian-option companion demonstrates a price tolerance with drift and a
+pilot-fitted control. Deck 04's stopping-rule continuation and the notebook
+page link these examples. Review them with the instructor during Deck 04
+review. These source changes are included in the September 30 checkpoint;
+the resulting remote deployment is not yet verified.
+
+The final notation follow-up is complete: all nine companions were audited,
+remaining labels and formulas corrected, and all nine executed in clean
+`qmcpy` kernels using the pinned dependencies. See
+`notes/NOTEBOOK-NOTATION-AUDIT.md` for scope, corrections, and validation.
+Preserve the earlier slide refinements in commit 281a2ff.
 
 ## Current verified state
 
@@ -39,7 +56,7 @@ All three decks render successfully, and all nine companions execute cleanly
 with the qmcpy kernel. Deck 04 also has overlaid exact-transport and
 importance-sampling contribution plots, selective keyword highlighting, and
 larger-index van der Corput exercises. Practical stopping demonstrations
-and their notebook links remain to be developed.
+and their notebook links are now implemented and locally validated.
 
 All instructional recordings from August 18 through September 29 have been
 audited or reconciled. September 29 showed the queue-simulation notebook and
@@ -64,7 +81,9 @@ or its notes. Existing Deck 03 links to the old headings still resolve. The
 section has hand-calculation examples for lattice, Kronecker, and digital
 sequences, followed by new-generator and shift exercises. It links the existing
 Discrepancy notebook only as a sample-comparison callback; no dedicated
-construction/application/stopping notebook exists yet.
+construction notebook exists yet. Stopping demonstrations now live in the
+Keister and Asian-option companions; reuse their links rather than duplicate
+those demonstrations in the planned construction notebook.
 
 The three Deck 04 companions—Keister transformations, conditional Monte Carlo,
 and Asian-option variance reduction with a discretely monitored lookback

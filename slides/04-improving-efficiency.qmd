@@ -1087,6 +1087,32 @@ We want answers based only on the computed contributions $Y_i$ or $\widetilde Y_
 An efficient method needs both [fast]{.alert} error decay and a [reliable]{.alert} stopping rule
 :::
 
+---
+
+### Stopping rules in action
+
+- [Keister notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/KeisterExample.ipynb#Practical-stopping-criteria): IID CLT, independent Sobol' replications, and a Walsh-coefficient bound
+- [Asian-option notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb#Stop-when-the-price-uncertainty-meets-a-tolerance): a price tolerance with drift and a pilot-fitted control
+
+Read each run's [tolerance]{.alert}, estimate, reported interval or bound, sample count, and [decision]{.alert}
+
+::: {.key-point}
+Budget exhausted $\ne$ tolerance met
+
+Approximate intervals and conditional bounds need their stated [assumptions]{.alert}
+:::
+
+::: {.notes}
+The Keister reference is checked only after stopping. The IID interval uses a
+pilot-sized final run; the replication interval uses independent scrambles,
+not the within-scramble sample variance. Nominal fixed-sample interval coverage
+does not automatically carry over to adaptive stopping. Walsh-decay guarantees
+assume cone membership, which passing necessary-condition checks cannot prove.
+For the Asian option, distinguish simulation error from model and discretization
+error, and include the pilot in the computational budget. The dedicated low
+discrepancy constructions notebook remains separate planned work.
+:::
+
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="variance-low-discrepancy"}
 
 - Equivalent [expectations]{.alert} can have dramatically different computational [variance]{.alert}

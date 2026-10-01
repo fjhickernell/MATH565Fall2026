@@ -327,6 +327,15 @@ appropriate phase rather than appended indiscriminately.
 - [x] Add Deck 04 overlaid exact-transport/importance-sampling contribution
   plots for two functions, audit keyword highlighting, and add larger-index
   van der Corput exercises.
+- [x] Complete the final nine-companion notation audit against Deck 04:
+  identify exact transport and importance contributions, clarify correction
+  weights and cube maps, align observed-data labels, lowercase variance and
+  covariance, and repair the MCMC autocorrelation formula. Execute all nine
+  companions with pinned dependencies and inspect their figures.
+- [x] Demonstrate practical stopping in the Keister and Asian-option companions,
+  including tolerance, estimate, reported interval or bound, sample count,
+  pilot cost, budget exhaustion, and accuracy assumptions. Add the Deck 04
+  continuation links and update the notebook page; validate execution and rendering.
 - [x] Validate shared slide styling, metadata, navigation, and assets from
   `classlib`.
 - [x] Add reusable Monte Carlo overview-tree rendering and named course tree

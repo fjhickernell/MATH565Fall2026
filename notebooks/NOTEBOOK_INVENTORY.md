@@ -136,8 +136,10 @@ absorb transport maps, acceptance--rejection, or MCMC.
 Construct small lattice, Kronecker, and digital point sets by hand and code,
 then visualize their projections with `plot_proj`. Compare IID and the low
 discrepancy methods, including useful randomizations, on one common Keister or
-Asian-option example. Include practical stopping criteria for the applicable
-randomized methods and distinguish them from deterministic error assessment.
+Asian-option example. Cross-link the implemented stopping demonstrations in
+`KeisterExample.ipynb` and `AsianOptionVarianceReduction.ipynb`, distinguishing
+replication intervals from the conditional Walsh-decay bound. Do not duplicate
+their tolerance tables and stopping code in this construction companion.
 Choose the common example during notebook development so this companion does
 not duplicate the existing Keister and Asian-option narratives. Validate clean
 local `qmcpy` execution and figures before linking it from Deck 04 and the

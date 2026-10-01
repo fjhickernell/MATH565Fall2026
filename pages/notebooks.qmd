@@ -50,7 +50,8 @@ sampling methods will appear here.
   — simulate single-server queues and drive-through blocking with SimPy; compare
   customer delays, time-average congestion, and stationary benchmarks
 - [Keister Example](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/KeisterExample.ipynb)
-  — choose among transformed integrands with the same integral
+  — choose among transformed integrands with the same integral; compare IID,
+  replicated Sobol', and Walsh-decay stopping rules, including budget exhaustion
 
 Additional notebooks will apply Monte Carlo and quasi-Monte Carlo methods to
 other examples.
@@ -60,4 +61,6 @@ other examples.
 - [Discrepancy](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/Discrepancy.ipynb)
   — compare empirical distributions using maximum mean discrepancy, kernel scales, and witness functions
 - [Asian Option Variance Reduction](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb)
-  — compare drift, a European-call control variate, randomized Sobol points, and a discretely monitored lookback call
+  — compare drift, a European-call control variate, randomized Sobol points,
+  and a discretely monitored lookback call; stop price estimation at a requested
+  uncertainty tolerance and account for pilot work
