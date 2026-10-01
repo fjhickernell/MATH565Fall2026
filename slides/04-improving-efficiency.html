@@ -828,7 +828,7 @@ Our plan here
 <section class="slide level2">
 
 <h3 id="the-keister-example">The Keister example</h3>
-<p>Write the original integral as a target expectation:</p>
+<p>Write the original integral as a <span class="alert">target expectation</span>:</p>
 <p><span class="math display">\[\begin{gather*}
 \mu=\int_{\reals^d}\cos(\norm{\vx})\me^{-\norm{\vx}^2}\,\dif\vx
 =\Ex_{\mathrm{tar}}[f(\vX)],\\
@@ -841,6 +841,19 @@ g_a(\vz)=\frac{(2\mpi)^{d/2}}{a^d}
 \cos(\norm{\vz})\exp\bigl[-(1-a^2/2)\norm{\vz}^2\bigr]
 \]</span></p>
 <p>Every <span class="math inline">\(a&gt;0\)</span> gives <span class="math inline">\(\Ex[g_a(\vZ_a)]=\mu\)</span>; changing <span class="math inline">\(a\)</span> changes the contribution</p>
+<aside class="notes">
+<p>First identify a probability density in the original integral. Here <span class="math inline">\(\varrho_{\mathrm{tar}}(\vx)=\mpi^{-d/2}\me^{-\norm{\vx}^2}\)</span> is the <span class="math inline">\(\Norm(\vzero,\mI_d/2)\)</span> density, so <span class="math inline">\(\me^{-\norm{\vx}^2}=\mpi^{d/2}\varrho_{\mathrm{tar}}(\vx)\)</span>. The factor <span class="math inline">\(\mpi^{d/2}\)</span> belongs in <span class="math inline">\(f\)</span> when the integral is written as <span class="math inline">\(\Ex_{\mathrm{tar}}[f(\vX)]\)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
@@ -1513,7 +1526,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="d7209efc" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="488fa804" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
