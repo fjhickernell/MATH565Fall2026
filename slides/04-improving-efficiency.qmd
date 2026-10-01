@@ -168,7 +168,7 @@ provides the variance result.
 
 ### The Keister example
 
-Write the original integral as a target expectation:
+Write the original integral as a [target expectation]{.alert}:
 
 \begin{gather*}
 \mu=\int_{\reals^d}\cos(\norm{\vx})\me^{-\norm{\vx}^2}\,\dif\vx
@@ -185,6 +185,15 @@ g_a(\vz)=\frac{(2\mpi)^{d/2}}{a^d}
 $$
 
 Every $a>0$ gives $\Ex[g_a(\vZ_a)]=\mu$; changing $a$ changes the contribution
+
+::: {.notes}
+First identify a probability density in the original integral. Here
+$\varrho_{\mathrm{tar}}(\vx)=\mpi^{-d/2}\me^{-\norm{\vx}^2}$ is the
+$\Norm(\vzero,\mI_d/2)$ density, so
+$\me^{-\norm{\vx}^2}=\mpi^{d/2}\varrho_{\mathrm{tar}}(\vx)$.
+The factor $\mpi^{d/2}$ belongs in $f$ when the integral is written as
+$\Ex_{\mathrm{tar}}[f(\vX)]$.
+:::
 
 ---
 
