@@ -28,10 +28,7 @@
    it from the construction slides and notebook page. Choose the common
    example while shaping the notebook so it does not duplicate the existing
    Keister and Asian-option companions.
-3. Maintain the student-facing approval workbook as new topic submissions
-   arrive through the October 2 follow-up deadline; verify the updated
-   project page when the publishing workflow completes.
-4. Add the seminar link, then review Deck 04 followed by Deck 05 with the
+3. Add the seminar link, then review Deck 04 followed by Deck 05 with the
    instructor, including their companion-notebook plans. Include the revised
    Deck 04 opening and the cross-deck notation pass in that review. The new
    opening recap links the named Generating Samples and Markov Chain Monte
@@ -443,7 +440,7 @@ decks after adding links.
   active MATH 565 students have editing access to the live schedule and view
   access to the separate approval workbook. A combined all-sections Canvas
   announcement was published September 25. The course-page changes are
-  locally rendered; verify the live page after the publishing workflow completes.
+  deployed; its live project-page links were verified October 3, 2026.
 
 ### Project scheduling handoff — September 25, 2026
 
@@ -472,12 +469,23 @@ decks after adding links.
   The updated course page links both workbooks and lists the confirmed Galvin
   Tower 14th Floor West Side Conference Room, October 2 topic deadline,
   November 4 presenter deadline, and November 11 observer deadline. Live-page
-  verification remains.
+  verification completed October 3, 2026.
 - The private Forms response workbook is authoritative for approvals and
   comments. The student-facing approval workbook is a manual copy of current
   A-number, status, and comment; see `AUTHOR_WORKFLOW.md` for resubmissions
-  and `OUTDATED` handling. The combined Canvas announcement is published at
+  and `SUPERSEDED` handling. The combined Canvas announcement is published at
   `https://iit.instructure.com/courses/25777/discussion_topics/106540`.
+- October 3 maintenance pass: the live approval workbook was refreshed from
+  saved instructor decisions, older resubmissions were marked `SUPERSEDED`
+  with earlier feedback retained, and the saved roster view and live course-page
+  link were verified. The matching Dashboard task and Academic reminder are
+  complete. Use `Update 565 project topics` for subsequent maintenance passes;
+  the complete repeatable procedure is in `AUTHOR_WORKFLOW.md`.
+- October 3 student-access check: followed the deployed project's approval
+  link to the current workbook and verified Manage Access lists the owner
+  plus 21 students, each with `Can view`. No group access or broad sharing
+  link exists. The web workbook shows the October 3 as-of date. This verifies
+  permissions and the website route; no student-account login was tested.
 - `quarto render pages/project.qmd --to html` succeeded on Mini on September
   25; `git diff --check` and the six Python tests also passed. No completed
   render was obtained on Intel.

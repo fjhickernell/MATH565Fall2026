@@ -139,6 +139,20 @@ and handoff files with actual coverage and remaining actions. A recording-based
 historical audit supersedes an accepted baseline; do not reopen audited meetings
 solely because older notes describe that baseline.
 
+### Project-topic update shorthand
+
+Interpret `Update 565 project topics` as authorization to complete the
+project-topic approvals and resubmissions workflow in `AUTHOR_WORKFLOW.md`:
+read the instructor's saved decisions in the current private Forms response
+workbook, mark every older response for a resubmitting student `SUPERSEDED`,
+refresh the existing student-facing approval workbook, verify the saved
+results and course-page link, and reconcile the matching Dashboard task and
+iCloud Academic reminder. Preserve prior feedback and submission history;
+never infer approval or put student data in Git. Discover the live workbooks
+afresh and prefer the workbook linked from the course page over an older
+similarly named local copy. Commit/push and new announcements still require
+their existing authorizations.
+
 ### Assignment request shorthand
 
 When the user asks to create, set up, or materially revise an assignment,

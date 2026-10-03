@@ -241,7 +241,7 @@ appropriate phase rather than appended indiscriminately.
       assessment criteria.
     - [x] Validate Quarto rendering and generated page structure.
     - [x] Verify both Project dropdown links in the generated navigation.
-    - [ ] Finalize Fall 2026 links, dates, deadlines, scheduling tools, and
+    - [x] Finalize Fall 2026 links, dates, deadlines, scheduling tools, and
       presentation logistics.
       - [x] Set the November 23–24 presentation windows, four 20-minute
         breaks, and 30 bookable 20-minute slots; prepare an Excel
@@ -250,8 +250,10 @@ appropriate phase rather than appended indiscriminately.
         access to the approval sheet; finalize the room, sign-up deadlines,
         and immediate assessment hand-in procedure; publish the combined
         Canvas announcement.
-      - [ ] Deploy the updated project page and verify both restricted
+      - [x] Deploy the updated project page and verify both restricted
         workbook links on the live site.
+      - [x] Refresh the October 3 topic approvals, preserve resubmission
+        history with `SUPERSEDED`, and verify student view permissions.
     - [ ] Inspect the visible page layout and dropdown behavior in a browser.
   - [ ] Policies (`classlib/classlib/quarto/pages/policies.qmd`)
     - [x] Add a detailed instructor statement describing how ChatGPT and Codex

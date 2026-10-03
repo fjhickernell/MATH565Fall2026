@@ -42,9 +42,12 @@ identities, contact details, proposal text, and article files. Review its
 export a CSV and check the actual cell values before reporting a missing
 comment or approval. Students use the same Project Selection form for initial
 and revised proposals; leave multiple responses enabled. A resubmission
-creates another response row. Mark the superseded row `OUTDATED` in the
-private response workbook and evaluate the newest active response for that
-A-number.
+creates another response row. Mark every older response `SUPERSEDED` in the
+private workbook's approval/status column and evaluate the newest active
+response for that A-number. In its comments, identify the replacement response
+ID and submission date, retaining earlier instructor feedback. Preserve all
+response rows and original submission fields. `SUPERSEDED` replaces the former
+`OUTDATED` convention.
 
 Maintain a separate student-facing approval workbook with only A-number,
 current status, and instructor comment. Omit names, emails, proposal text,
@@ -56,6 +59,50 @@ absent has no recorded current submission. Share the approval workbook as
 `Can view` with the verified active course roster, and check the permission
 list before linking it from Canvas or the course page. Do not create a broad
 organization-wide editing link.
+
+The command **`Update 565 project topics`** authorizes this complete maintenance
+workflow after the instructor has reviewed submissions:
+
+1. Discover the current Forms response workbook and the existing approval
+   workbook linked from `pages/project.qmd`. Prefer the live saved workbook
+   over similarly named historical exports; an open Excel workbook may be
+   authoritative. Save pending edits before reading a file export. On M5 the
+   live workbooks currently sync at the Illinois Tech OneDrive root as
+   `MATH 565 Project Selection — Fall 2026.xlsx` and
+   `MATH565 Project Topic Approval Fall 2026.xlsx`; the older approval export
+   under the course's `Projects/` folder is not the live list. Rediscover these
+   locations on other machines. Begin protected browser access at the Illinois
+   Tech portal, as required by the global authentication workflow.
+2. Normalize A-numbers for matching (trim whitespace, uppercase, add a missing
+   `A` to an eight-digit number). Choose the latest response by completion
+   timestamp and response ID. Do not match by name alone or infer a teammate's
+   approval. Resolve ambiguous identity, timestamps, or decisions with the
+   instructor before changing the affected entry.
+3. Mark older responses `SUPERSEDED` as above. Copy only the newest response's
+   instructor decision and comment into the student-facing list. Map `Yes` to
+   `Approved`, `No` to `Not approved`, and `More info needed` to
+   `More information needed`; retain a blank decision as pending review.
+   Clear obsolete feedback when the current response has no comment. Keep
+   the verified active roster, including `No submission` rows when already
+   present, and exactly one current row per student.
+4. Refresh the as-of date, save both workbooks through Excel/OneDrive, and
+   verify the saved rows against the complete latest-response mapping. Check
+   that no student name, email, proposal text, or file link was introduced
+   into the approval list. Preserve existing sharing permissions and formatting.
+   Verify that the live course page still points to the intended workbook;
+   a stale local export is not evidence that the shared workbook is stale.
+   Follow the approval link from the deployed course page and inspect the
+   workbook's Manage Access list: each verified active student must have
+   `Can view` access. A successful instructor open alone does not verify
+   student access. Students must sign in with their shared Illinois Tech
+   account; anonymous access is not required. Report permission evidence
+   separately from an actual test under a student's account.
+5. Reconcile `notes/NEXT.md`, the matching T1 Dashboard action, and its iCloud
+   Academic reminder under their completion rules. Completing this maintenance
+   pass does not mean that every student has submitted or that all topics are
+   approved. Retain any genuinely unresolved publication/verification action.
+   Record only nonsensitive operational status in Git. Do not create an
+   announcement, commit, or push without the applicable authorization.
 
 ## Project presentation sign-up and audit
 
