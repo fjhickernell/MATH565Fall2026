@@ -10,7 +10,8 @@
    the lookback example was explicitly deferred. The October 6 single-occurrence
    Illinois Tech calendar note is saved and verified for PH 109,
    10:00–11:15 AM America/Chicago. The reconciled schedule is included in the
-   October 1 checkpoint; its remote deployment remains to be verified.
+   October 1 checkpoint. The latest build/publication and Pages workflows
+   succeeded, verified October 3; live schedule content was not rechecked.
    The Asian-option, Keister, and conditional Monte Carlo
    companions now use QMCPy sampling and supported transformations; review the
    revised examples before the October 6 lecture. All three pass clean-kernel
@@ -43,7 +44,8 @@ Asian-option companion demonstrates a price tolerance with drift and a
 pilot-fitted control. Deck 04's stopping-rule continuation and the notebook
 page link these examples. Review them with the instructor during Deck 04
 review. These source changes are included in the September 30 checkpoint;
-the resulting remote deployment is not yet verified.
+the latest build/publication and Pages workflows succeeded, verified October 3.
+Live notebook and slide content was not rechecked in that workflow-status check.
 
 The final notation follow-up is complete: all nine companions were audited,
 remaining labels and formulas corrected, and all nine executed in clean
