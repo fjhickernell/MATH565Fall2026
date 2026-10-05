@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-10-04">
+  <meta name="dcterms.date" content="2026-10-05">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -643,7 +643,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">October 4, 2026</p>
+  <p class="date">October 5, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-04-overview">
 <h1>Course Map</h1>
@@ -1526,7 +1526,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="c7e22f19" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="22e424df" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1671,6 +1671,7 @@ i=(\cdots i_2i_1i_0)_b
 <p>Here <span class="math inline">\(\oplus\)</span> denotes digitwise addition modulo <span class="math inline">\(b\)</span></p>
 <p>For basic Halton, choosing the coordinate bases fixes the sequence</p>
 <p>Different families balance <span class="alert">extensibility</span>, projection <span class="alert">quality</span>, and <span class="alert">fast</span> construction</p>
+<p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/LowDiscrepancyConstructions.ipynb">Low Discrepancy Constructions notebook</a>: recover generators from the first points</p>
 </section>
 <section class="slide level2">
 
@@ -1985,7 +1986,7 @@ i=(\cdots i_2i_1i_0)_b
 <p>Approximate intervals and conditional bounds need their stated <span class="alert">assumptions</span></p>
 </div>
 <aside class="notes">
-<p>The Keister reference is checked only after stopping. The IID interval uses a pilot-sized final run; the replication interval uses independent scrambles, not the within-scramble sample variance. Nominal fixed-sample interval coverage does not automatically carry over to adaptive stopping. Walsh-decay guarantees assume cone membership, which passing necessary-condition checks cannot prove. For the Asian option, distinguish simulation error from model and discretization error, and include the pilot in the computational budget. The dedicated low discrepancy constructions notebook remains separate planned work.</p>
+<p>The Keister reference is checked only after stopping. The IID interval uses a pilot-sized final run; the replication interval uses independent scrambles, not the within-scramble sample variance. Nominal fixed-sample interval coverage does not automatically carry over to adaptive stopping. Walsh-decay guarantees assume cone membership, which passing necessary-condition checks cannot prove. For the Asian option, distinguish simulation error from model and discretization error, and include the pilot in the computational budget. The linked low discrepancy constructions notebook compares fixed sample sizes without duplicating these stopping demonstrations.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
