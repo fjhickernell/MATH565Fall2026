@@ -131,19 +131,25 @@ review may trim or clarify other examples. Deck 04 may call the low discrepancy
 and option sections again, but this already-full survey notebook should not
 absorb transport maps, acceptance--rejection, or MCMC.
 
-### `sampling/LowDiscrepancyConstructions.ipynb` — planned Deck 04 companion
+### `sampling/LowDiscrepancyConstructions.ipynb` — Deck 04 companion
 
-Construct small lattice, Kronecker, and digital point sets by hand and code,
-then visualize their projections with `plot_proj`. Compare IID and the low
-discrepancy methods, including useful randomizations, on one common Keister or
-Asian-option example. Cross-link the implemented stopping demonstrations in
-`KeisterExample.ipynb` and `AsianOptionVarianceReduction.ipynb`, distinguishing
-replication intervals from the conditional Walsh-decay bound. Do not duplicate
-their tolerance tables and stopping code in this construction companion.
-Choose the common example during notebook development so this companion does
-not duplicate the existing Keister and Asian-option narratives. Validate clean
-local `qmcpy` execution and figures before linking it from Deck 04 and the
-notebook page.
+Constructed October 5, 2026 with QMCPy lattice, digital, IID, and Keister APIs.
+Recover lattice generators modulo the observed sample size, Kronecker increments,
+and binary digital columns from early points; verify predictions, prefix
+ambiguity, Gray ordering, and ordinary versus digital shift recovery. Projection
+plots use `plot_proj` for QMCPy samplers. The fixed two-dimensional Keister
+comparison uses 32 independent runs of IID, shifted built-in lattices, shifted
+irrational Kronecker, and scrambled Sobol' across nested powers of two.
+Cross-links lead to the existing Keister and Asian-option stopping demonstrations;
+the construction notebook does not duplicate their stopping code.
+
+Clean local `qmcpy` execution and all five figures were checked before adding
+Deck 04 and notebook-page links. Instructor content review remains open.
+Kronecker currently uses one isolated formula helper because the recorded QMCPy
+version has no Kronecker generator. Once the forthcoming QMCPy implementation
+is pulled in and intentionally pinned by this course, replace that helper with
+the supported API, recheck indexing/randomization equivalence, and rerun the
+complete notebook and inspect its figures.
 
 ### `sampling/TransportMapsAndAcceptanceRejection.ipynb` — Deck 02, with Decks 03–04 returns
 

@@ -933,6 +933,8 @@ For basic Halton, choosing the coordinate bases fixes the sequence
 
 Different families balance [extensibility]{.alert}, projection [quality]{.alert}, and [fast]{.alert} construction
 
+[Low Discrepancy Constructions notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/LowDiscrepancyConstructions.ipynb): recover generators from the first points
+
 ---
 
 ### Lattice sequence: eight points
@@ -1136,8 +1138,9 @@ not the within-scramble sample variance. Nominal fixed-sample interval coverage
 does not automatically carry over to adaptive stopping. Walsh-decay guarantees
 assume cone membership, which passing necessary-condition checks cannot prove.
 For the Asian option, distinguish simulation error from model and discretization
-error, and include the pilot in the computational budget. The dedicated low
-discrepancy constructions notebook remains separate planned work.
+error, and include the pilot in the computational budget. The linked low
+discrepancy constructions notebook compares fixed sample sizes without
+duplicating these stopping demonstrations.
 :::
 
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="variance-low-discrepancy"}

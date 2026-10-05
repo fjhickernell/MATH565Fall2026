@@ -29,6 +29,9 @@ sampling methods will appear here.
   — construct and transform IID and low discrepancy samples, including
   binomial, zero-inflated exponential, Gaussian-process, Brownian-motion, and
   financial-option examples
+- [Low Discrepancy Constructions](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/LowDiscrepancyConstructions.ipynb)
+  — recover lattice generators and digital columns from the first points;
+  explore Kronecker increments, randomization, projections, and a fixed-integrand comparison
 - [Transport Maps and Acceptance–Rejection](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/TransportMapsAndAcceptanceRejection.ipynb)
   — compare transport maps and rejection sampling using scalar and banana-shaped targets
 - [Metropolis–Hastings](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/MetropolisHastings.ipynb)

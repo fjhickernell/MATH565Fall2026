@@ -19,16 +19,18 @@
    inspected. Asian/European payoff checks agree with QMCPy FinancialOption,
    and Keister agrees with the native integrand at a=sqrt(2). The deliberate
    Keister tight-budget warning remains part of the stopping demonstration.
-2. Develop `notebooks/sampling/LowDiscrepancyConstructions.ipynb` for Deck 04:
-   construct small
-   lattice, Kronecker, and digital point sets, visualize projections with
-   `plot_proj`, and compare IID and the low discrepancy methods on one common
-   example (Keister or an Asian option). Include randomizations and cross-link
-   the existing stopping demonstrations, validate clean `qmcpy` execution and
-   figures, then link
-   it from the construction slides and notebook page. Choose the common
-   example while shaping the notebook so it does not duplicate the existing
-   Keister and Asian-option companions.
+2. Review `notebooks/sampling/LowDiscrepancyConstructions.ipynb` with the
+   instructor. It is constructed and linked from Deck 04 and the notebook page:
+   early-point lattice/digital generator recovery, Kronecker increments, prefix
+   ambiguity, Gray ordering, shifts, projections, and a fixed two-dimensional
+   Keister comparison (32 independent runs per method). All code runs in a clean
+   `qmcpy` kernel with the pinned dependencies; five saved figures were checked.
+   Kronecker uses an isolated formula helper until the forthcoming QMCPy
+   generator is pulled in and intentionally pinned by this course. Replace the
+   helper with that API, verify indexing and shift behavior, and reexecute/review
+   the complete notebook after that update. Existing stopping demonstrations are
+   cross-linked rather than duplicated. Notebook and course links pass local
+   execution, rendering, and visible review; verify deployment after publication.
 3. Add the seminar link, then review Deck 04 followed by Deck 05 with the
    instructor, including their companion-notebook plans. Include the revised
    Deck 04 opening and the cross-deck notation pass in that review. The new
@@ -93,10 +95,11 @@ were removed, with their needed points retained in the randomization slide
 or its notes. Existing Deck 03 links to the old headings still resolve. The
 section has hand-calculation examples for lattice, Kronecker, and digital
 sequences, followed by new-generator and shift exercises. It links the existing
-Discrepancy notebook only as a sample-comparison callback; no dedicated
-construction notebook exists yet. Stopping demonstrations now live in the
+Discrepancy notebook as a sample-comparison callback and the new constructions
+companion for generator recovery and randomized integration comparisons.
+Stopping demonstrations now live in the
 Keister and Asian-option companions; reuse their links rather than duplicate
-those demonstrations in the planned construction notebook.
+those demonstrations in the construction notebook.
 
 The three Deck 04 companions—Keister transformations, conditional Monte Carlo,
 and Asian-option variance reduction with a discretely monitored lookback

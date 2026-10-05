@@ -98,8 +98,13 @@ appropriate phase rather than appended indiscriminately.
         payoff and European reference price. Preserve the Asian-call model,
         execute all three with pinned dependencies, check native-integrand
         agreement, and inspect all four figures (October 1, 2026).
-      - [ ] Build the Deck 04 low discrepancy constructions companion described
-        in `notebooks/NOTEBOOK_INVENTORY.md` and link it after local validation.
+      - [x] Build and link the Deck 04 low discrepancy constructions companion:
+        early-point generator recovery, randomization, projections, and a fixed
+        Keister comparison; clean `qmcpy` execution and five figures checked
+        (October 5, 2026).
+      - [ ] Complete instructor review of the constructions companion; replace
+        its isolated Kronecker helper after the new QMCPy API is pulled in and
+        intentionally pinned, then revalidate.
       - [x] Migrate `AreWeThereYet.ipynb` to Applications with modern minimal
         `classlib`/`nbviz` initialization and validate clean execution.
       - [x] Complete instructor review of `AreWeThereYet.ipynb` and finalize
