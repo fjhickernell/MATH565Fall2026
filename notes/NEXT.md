@@ -11,14 +11,20 @@
    Illinois Tech calendar note is saved and verified for PH 109,
    10:00–11:15 AM America/Chicago. The reconciled schedule is included in the
    October 1 checkpoint. The latest build/publication and Pages workflows
-   succeeded, verified October 3; live schedule content was not rechecked.
-   The Asian-option, Keister, and conditional Monte Carlo
-   companions now use QMCPy sampling and supported transformations; review the
-   revised examples before the October 6 lecture. All three pass clean-kernel
-   execution with the pinned dependencies; their four saved figures were
-   inspected. Asian/European payoff checks agree with QMCPy FinancialOption,
-   and Keister agrees with the native integrand at a=sqrt(2). The deliberate
-   Keister tight-budget warning remains part of the stopping demonstration.
+   succeeded, verified October 5; live schedule content was not rechecked.
+   Review the revised QMCPy companions and Deck 04 density slides before class.
+   Generating Samples offers lattice/Sobol' (saved lattice outputs). Asian
+   Option defaults to Sobol' with lattice/Halton alternatives throughout the
+   plain/drift/control/both, lookback, and stopping comparisons; preserve d=52,
+   n=2**14, and tolerance=0.05. All choices passed clean-kernel execution.
+   Conditional Monte Carlo now compares histogram, KDE, IID CMC, and Sobol'
+   CMC, including 16-run weighted-sum errors and the weekly Asian-average
+   density. Its saved finance sample size is the instructor's n=2**18.
+   Factorization, CDF/density, and right-endpoint QMCPy payoff checks pass;
+   the call's zero atom is separate from its positive density. Four figures
+   were reviewed. Deck 04 has matching estimator and Asian-density formulas;
+   Deck 01 links histogram/KDE terms. Local renders and changed layouts pass.
+   Instructor review remains; rerun all cells after changing a sampler.
 2. Review `notebooks/sampling/LowDiscrepancyConstructions.ipynb` with the
    instructor. It is constructed and linked from Deck 04 and the notebook page:
    early-point lattice/digital generator recovery, Kronecker increments, prefix

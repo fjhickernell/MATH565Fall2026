@@ -487,6 +487,10 @@ Place more samples where the [magnitude]{.alert} of the integrand times the targ
 - [Conditional Monte Carlo](#conditional-monte-carlo)
 - [Conditional density estimation](#conditional-density-estimation)
 - [Density of a sum of uniforms](#density-of-a-sum-of-uniforms)
+- [Histograms, KDE, and conditional density](#histograms-kde-and-conditional-density)
+- [Conditioning an Asian average](#conditioning-an-asian-average)
+- [Conditional density of an Asian average](#conditional-density-of-an-asian-average)
+- [Asian-call payoff distribution](#asian-call-payoff-distribution)
 
 ## Control variates {.tree-marker-slide tree-marker="variance-reduction"}
 
@@ -625,6 +629,85 @@ $$
 $$
 
 [Conditional Monte Carlo notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb)
+
+
+## Histograms, KDE, and conditional density {.tree-marker-slide tree-marker="density-estimation"}
+
+Output samples $Y_i$, equal-width bins $I_k$ of width $b$, kernel $\kappa$ with $\int\kappa=1$
+
+\begin{align*}
+\widehat\varrho_{\mathrm{Hist}}(y)
+&=\frac1{nb}\sum_{i=0}^{n-1}\indic\{Y_i\in I_k\},\quad y\in I_k\\
+\widehat\varrho_{\mathrm{KDE}}(y)
+&=\frac1{nb}\sum_{i=0}^{n-1}\kappa\!\left(\frac{y-Y_i}{b}\right)\\
+\widehat\varrho_{\mathrm{CMC}}(y)
+&=\frac1n\sum_{i=0}^{n-1}\varrho_{Y\mid V}(y\mid V_i)
+\end{align*}
+
+- Histogram and KDE: choose [bin width or bandwidth]{.alert}; finite-width smoothing generally introduces bias
+- CMC: average the [analytic]{.alert} conditional density; no smoothing bandwidth
+- Density error still depends on conditioning, sample design, and work
+
+[Notebook: curves and repeated-run errors](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb)
+
+## Conditioning an Asian average {.tree-marker-slide tree-marker="quant-finance"}
+
+Equally spaced dates $t_j=j\Delta t$, $\Delta t=T/d$, arithmetic average $A$
+
+\begin{align*}
+S(t_j)&=S_0\exp\{(r-\sigma^2/2)t_j+\sigma B(t_j)\}\\
+A&=\frac1d\sum_{j=1}^d S(t_j)
+\end{align*}
+
+[Integrate out]{.alert} the first Brownian increment
+
+$$
+B(t_j)=\sqrt{\Delta t}\,Z_1+R_j,\qquad Z_1\sim\Norm(0,1),\qquad R_1=0
+$$
+
+$Z_1$ independent of $\vR=(R_2,\ldots,R_d)$, formed from the remaining increments
+
+\begin{align*}
+C(\vR)&=\frac{S_0}{d}\sum_{j=1}^d
+\exp\{(r-\sigma^2/2)t_j+\sigma R_j\}\\
+A&=C(\vR)\exp(sZ_1),\qquad s=\sigma\sqrt{\Delta t}>0
+\end{align*}
+
+## Conditional density of an Asian average {.tree-marker-slide tree-marker="density-estimation"}
+
+Given $C$, the average $A=C\exp(sZ_1)$ is [lognormal]{.alert}<br>
+$\phi$ and $\Phi$: standard normal density and CDF
+
+For $a>0$,
+
+\begin{align*}
+F_{A\mid C}(a\mid C)&=\Phi\!\left(\frac{\log(a/C)}s\right)\\
+\varrho_{A\mid C}(a\mid C)&=\frac1{as}\phi\!\left(\frac{\log(a/C)}s\right)\\
+\varrho_A(a)&=\Ex\!\left[\frac1{as}\phi\!\left(\frac{\log(a/C)}s\right)\right]
+\end{align*}
+
+- Sample the $d-1$ residual increments with IID or randomized low discrepancy points
+- Average conditional densities; no exact arithmetic-Asian density needed
+- Notebook: weekly $d=52$; compare CMC, histogram, and KDE at the selected $n$
+
+## Asian-call payoff distribution {.tree-marker-slide tree-marker="quant-finance"}
+
+Discounted call payoff $P=e^{-rT}(A-K)_+$
+
+\begin{align*}
+\Prob(P=0)&=F_A(K)
+=\Ex\!\left[\Phi\!\left(\frac{\log(K/C)}s\right)\right]\\
+\varrho_P(p)&=e^{rT}\varrho_A(K+e^{rT}p),\qquad p>0\\
+\int_0^\infty\varrho_P(p)\,\dif p&=1-F_A(K)
+\end{align*}
+
+::: {.key-point}
+The [atom at zero]{.alert} and the density on positive payoffs are separate parts of the distribution
+:::
+
+Ordinary KDE on all payoffs blurs the zero-payoff atom into a smooth bump
+
+[Notebook: average density, payoff density, and CMC option price](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb)
 
 # Structured Random Sampling {.tree-marker-slide tree-marker="variance-reduction"}
 

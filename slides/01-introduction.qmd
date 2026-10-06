@@ -446,6 +446,7 @@ Canvas<br>Only one person per group submits the assignment
 - [Generalized inverse](02-generating-samples.html#the-quantile-transform)
 - [Geometric Brownian motion](02-generating-samples.html#geometric-brownian-motion)
 - [Gradient descent](05-selected-topics.html#gradient-descent)
+- [Histogram](04-improving-efficiency.html#histograms-kde-and-conditional-density)
 - [Independent marginals](02-generating-samples.html#independent-marginals)
 - [Importance sampling](04-improving-efficiency.html#importance-sampling)
 - [Importance weight](04-improving-efficiency.html#importance-sampling)
@@ -456,6 +457,7 @@ Canvas<br>Only one person per group submits the assignment
 
 ::: {.columns}
 ::: {.column width="50%"}
+- [Kernel density estimator (KDE)](04-improving-efficiency.html#histograms-kde-and-conditional-density)
 - [Kernel discrepancy](03-markov-chain-monte-carlo.html#kernel-discrepancy)
 - [Kullback–Leibler (KL) divergence](03-markov-chain-monte-carlo.html#relative-entropy-another-comparison)
 - [Latin hypercube sampling](04-improving-efficiency.html#latin-hypercube-sampling-in-d-dimensions)

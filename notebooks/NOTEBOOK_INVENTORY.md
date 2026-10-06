@@ -103,7 +103,7 @@ pattern, not a permanent ownership contract.
 | Deck 01, Introduction | `applications/AreWeThereYet.ipynb` | Main introductory Monte Carlo application; preview of randomized Sobol sampling and later efficiency ideas |
 | Deck 02, Generating Samples | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb` | Main direct-sampling development; early low discrepancy and financial-option examples intentionally prepare later decks |
 | Deck 03, Markov Chain Monte Carlo | `sampling/TransportMapsAndAcceptanceRejection.ipynb`; `sampling/MetropolisHastings.ipynb`; `applications/BayesianMCMC.ipynb`; `performance/Discrepancy.ipynb`; `applications/QueueSimulation.ipynb` | Return to acceptance--rejection as motivation; main MCMC, distribution-comparison, Bayesian, and queueing development |
-| Deck 04, Improving Efficiency | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb`; planned `sampling/LowDiscrepancyConstructions.ipynb`; `applications/KeisterExample.ipynb`; `sampling/ConditionalMonteCarlo.ipynb`; `performance/AsianOptionVarianceReduction.ipynb`; `performance/Discrepancy.ipynb` | Return to earlier low discrepancy, transport, and option examples; main importance-sampling, variance-reduction, discrepancy, and QMC development |
+| Deck 04, Improving Efficiency | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb`; `sampling/LowDiscrepancyConstructions.ipynb`; `applications/KeisterExample.ipynb`; `sampling/ConditionalMonteCarlo.ipynb`; `performance/AsianOptionVarianceReduction.ipynb`; `performance/Discrepancy.ipynb` | Return to earlier low discrepancy, transport, and option examples; main importance-sampling, variance-reduction, discrepancy, and QMC development |
 | Deck 05, Selected Topics | A consolidated gradient/stochastic-gradient notebook and the GPU Monte Carlo notebook, if retained after review; earlier application notebooks when a selected topic extends them | Flexible continuation into selected methods; queueing may recur if it becomes a substantial application, and future MCTS or multilevel notebooks should remain coherent rather than omnibus |
 
 The broad inherited `QMCPy_Introduction.ipynb` has no required deck call. It
@@ -310,9 +310,14 @@ deck review; that later use does not require moving or renaming it.
 ### `performance/AsianOptionVarianceReduction.ipynb` — Deck 04, continuing Deck 02
 
 Created September 28, 2026 from the variance-reduction portions of the inherited
-`AsianOptionExample.ipynb`. It compares IID and randomized Sobol sampling,
-importance sampling through drift, a European-call control variate with a
-separate pilot coefficient, and the combined drift-plus-control method. A
+`AsianOptionExample.ipynb`. The `LD_METHOD` chooser defaults to scrambled
+Sobol' and also offers randomized lattice and Halton for comparisons,
+lookback pricing, and replicated stopping. The saved model uses 52 weekly
+monitoring dates, 2**14 main samples per comparison estimate, and a 0.05
+absolute price tolerance.
+Both IID and the selected low discrepancy sampler are compared plain, with
+importance sampling through drift, with a European-call control variate using
+a separate pilot coefficient, and with drift plus control. A
 discretely monitored lookback call reuses the simulated paths. Clean local
 `qmcpy` execution and saved-figure review are complete. The established
 recorded-commit Colab setup remains available if a problem is reported.
@@ -408,25 +413,26 @@ into either performance notebook.
 
 ### `ConditionalMonteCarlo.ipynb`
 
-- **Status:** Migrated to `sampling/ConditionalMonteCarlo.ipynb` and validated
-  in a clean local `qmcpy` kernel on September 28, 2026.
+- **Status:** Migrated to `sampling/ConditionalMonteCarlo.ipynb`; expanded
+  October 5, 2026 with histogram/KDE comparisons and a finance density.
+  Complete clean local `qmcpy` execution and four-figure review passed.
 - **Source:** `MATH565Fall2025/notebooks/ConditionalMonteCarlo.ipynb`
-- **Proposed target:**
-  `MATH565Fall2026/notebooks/sampling/ConditionalMonteCarlo.ipynb`
-- **Description:** Demonstrates conditional Monte Carlo for density
-  estimation and compares error measures and sampling schemes.
-- **Dependencies:** NumPy, SciPy, Matplotlib, QMCPy, IPython,
-  `classlib.distributions`, `classlib.generators`,
-  `classlib.options.asian`, `classlib.plots`, `classlib.nbviz`, and
-  repository-root path setup.
-- **Related versions:** No direct competing version was found. The checkpoint
-  is Jupyter-generated state rather than a source candidate.
-- **Migration concerns:** The Colab badge incorrectly targets
-  `KeisterExample.ipynb`. Review whether the Asian-option helpers and other
-  broad imports are used. Confirm current `UniformSumDistribution` and
-  `Kronecker` interfaces.
+- **Current target:** `sampling/ConditionalMonteCarlo.ipynb`
+- **Description:** Weighted-uniform density estimates compare histograms,
+  Gaussian KDE, IID CMC, and randomized Sobol' CMC, with exact-reference
+  grid errors over 16 independent runs. The finance example conditions out
+  the first Brownian increment to obtain a conditionally lognormal arithmetic
+  Asian average (weekly d=52, current n=2**18). It compares the four density curves,
+  separates the discounted call's mass at zero from its continuous density,
+  and gives a CMC price. No exact arithmetic-Asian density is claimed.
+- **Validation:** First-increment factorization agrees with the full QMCPy
+  Cholesky path map; density agrees with the conditional CDF derivative;
+  direct payoffs agree with `FinancialOption` using explicit right-endpoint
+  arithmetic averaging. CDF limits and monotonicity checks pass.
+- **Dependencies:** NumPy, SciPy, Matplotlib, QMCPy, IPython, and
+  `classlib.distributions`. Recorded-commit Colab setup is preserved.
 - **Classification:** Conditional Monte Carlo is both a sampling technique
-  and a variance-reduction method. Sampling is recommended because the
+  and a variance-reduction method. Sampling is retained because the
   conditional sampling construction organizes the notebook.
 
 ### `Discrepancy.ipynb`
@@ -505,8 +511,11 @@ into either performance notebook.
   is linked from the course notebook page and Deck 02. Instructor review was
   completed September 10, 2026. The compact Deck 02 Gaussian-mixture section is now included
   after the zero-inflated exponential. The low discrepancy section compares
-  IID and randomized Sobol' mixture samples using maximum CDF error across
-  32 independent repetitions. The full notebook executes cleanly
+  IID and the selected randomized lattice or scrambled Sobol' mixture samples
+  using maximum CDF error across 32 independent repetitions. An `LD_METHOD`
+  chooser also drives binomial, zero-inflated exponential, and Asian-option
+  comparisons. Both choices passed full clean-kernel execution and changed
+  figure review on October 5, 2026. The full notebook executes cleanly
   with the local `qmcpy` kernel. The instructor reports successful Colab
   execution.
 - **Source:** `MATH565Fall2025/notebooks/GeneratingSamples.ipynb`

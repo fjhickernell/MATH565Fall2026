@@ -28,7 +28,8 @@ sampling methods will appear here.
 - [Generating Samples](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb)
   — construct and transform IID and low discrepancy samples, including
   binomial, zero-inflated exponential, Gaussian-process, Brownian-motion, and
-  financial-option examples
+  financial-option examples; choose randomized lattice or Sobol' in the
+  low discrepancy comparisons
 - [Low Discrepancy Constructions](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/LowDiscrepancyConstructions.ipynb)
   — recover lattice generators and digital columns from the first points;
   explore Kronecker increments, randomization, projections, and a fixed-integrand comparison
@@ -37,7 +38,9 @@ sampling methods will appear here.
 - [Metropolis–Hastings](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/MetropolisHastings.ipynb)
   — explore proposal scales, repeated states, separated-mode trapping, and parallel tempering
 - [Conditional Monte Carlo](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb)
-  — estimate a weighted-sum density by conditioning; compare IID and randomized Sobol points
+  — compare conditional density estimates with histograms and KDE using IID
+  and randomized Sobol' points; estimate an arithmetic Asian-average density
+  and separate the Asian call's zero-payoff mass from its positive-payoff density
 
 ## Applications
 
@@ -64,6 +67,7 @@ other examples.
 - [Discrepancy](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/Discrepancy.ipynb)
   — compare empirical distributions using maximum mean discrepancy, kernel scales, and witness functions
 - [Asian Option Variance Reduction](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb)
-  — compare drift, a European-call control variate, randomized Sobol points,
-  and a discretely monitored lookback call; stop price estimation at a requested
+  — choose randomized Sobol' (default), lattice, or Halton sampling and compare drift, a
+  European-call control variate, and their combination; price a discretely
+  monitored lookback call and stop price estimation at a requested
   uncertainty tolerance and account for pilot work

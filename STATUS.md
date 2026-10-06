@@ -102,6 +102,22 @@ appropriate phase rather than appended indiscriminately.
         early-point generator recovery, randomization, projections, and a fixed
         Keister comparison; clean `qmcpy` execution and five figures checked
         (October 5, 2026).
+      - [x] Add a lattice/Sobol' chooser to Generating Samples and Asian Option
+        Variance Reduction; compare low discrepancy sampling plain, with drift,
+        with control, and with both. Both complete notebooks execute cleanly
+        with each choice; changed figures checked (October 5, 2026).
+      - [x] Default Asian Option Variance Reduction to Sobol' with lattice and
+        Halton alternatives; preserve weekly d=52, n=2**14, and tolerance=0.05.
+        All three choices execute cleanly and meet the tolerance; saved Sobol'
+        figure checked (October 5, 2026).
+      - [x] Compare CMC density estimates with histograms and KDE; add weekly
+        arithmetic-Asian average and call-payoff distributions, including the
+        zero-payoff atom. Clean execution, mathematical consistency checks,
+        and four-figure review passed (October 5, 2026).
+      - [x] Add histogram/KDE/CMC formulas and Asian-density conditioning,
+        density, and payoff-atom math to Deck 04; align notebook formulas and
+        update Deck 01 terms index. Both decks rendered and changed slides
+        visually checked (October 5, 2026).
       - [ ] Complete instructor review of the constructions companion; replace
         its isolated Kronecker helper after the new QMCPy API is pulled in and
         intentionally pinned, then revalidate.
