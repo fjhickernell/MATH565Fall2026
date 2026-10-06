@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-10-05">
+  <meta name="dcterms.date" content="2026-10-06">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -643,7 +643,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">October 5, 2026</p>
+  <p class="date">October 6, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-04-overview">
 <h1>Course Map</h1>
@@ -1182,6 +1182,10 @@ g(\vZ)&amp;=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[g(\vZ)]=\mu
 <li><a href="#/conditional-monte-carlo">Conditional Monte Carlo</a></li>
 <li><a href="#/conditional-density-estimation">Conditional density estimation</a></li>
 <li><a href="#/density-of-a-sum-of-uniforms">Density of a sum of uniforms</a></li>
+<li><a href="#/histograms-kde-and-conditional-density">Histograms, KDE, and conditional density</a></li>
+<li><a href="#/conditioning-an-asian-average">Conditioning an Asian average</a></li>
+<li><a href="#/conditional-density-of-an-asian-average">Conditional density of an Asian average</a></li>
+<li><a href="#/asian-call-payoff-distribution">Asian-call payoff distribution</a></li>
 </ul>
 </section>
 <section id="control-variates" class="slide level2 tree-marker-slide" data-tree-marker="variance-reduction">
@@ -1321,6 +1325,92 @@ g(y;\vu_{2:d})=\frac{y-\sum_{j=2}^d\gamma_ju_j}{\gamma_1}
 \right\}\right]
 \]</span></p>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb">Conditional Monte Carlo notebook</a></p>
+</section>
+<section id="histograms-kde-and-conditional-density" class="slide level2 tree-marker-slide" data-tree-marker="density-estimation">
+<h2>Histograms, KDE, and conditional density</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.1; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="density-estimation" style="--tree-left: 7%; --tree-top: 7%; --tree-align: center;">Density<br>Estimation</div>
+</div>
+
+<p>Output samples <span class="math inline">\(Y_i\)</span>, equal-width bins <span class="math inline">\(I_k\)</span> of width <span class="math inline">\(b\)</span>, kernel <span class="math inline">\(\kappa\)</span> with <span class="math inline">\(\int\kappa=1\)</span></p>
+<p><span class="math display">\[\begin{align*}
+\widehat\varrho_{\mathrm{Hist}}(y)
+&amp;=\frac1{nb}\sum_{i=0}^{n-1}\indic\{Y_i\in I_k\},\quad y\in I_k\\
+\widehat\varrho_{\mathrm{KDE}}(y)
+&amp;=\frac1{nb}\sum_{i=0}^{n-1}\kappa\!\left(\frac{y-Y_i}{b}\right)\\
+\widehat\varrho_{\mathrm{CMC}}(y)
+&amp;=\frac1n\sum_{i=0}^{n-1}\varrho_{Y\mid V}(y\mid V_i)
+\end{align*}\]</span></p>
+<ul>
+<li>Histogram and KDE: choose <span class="alert">bin width or bandwidth</span>; finite-width smoothing generally introduces bias</li>
+<li>CMC: average the <span class="alert">analytic</span> conditional density; no smoothing bandwidth</li>
+<li>Density error still depends on conditioning, sample design, and work</li>
+</ul>
+<p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb">Notebook: curves and repeated-run errors</a></p>
+</section>
+<section id="conditioning-an-asian-average" class="slide level2 tree-marker-slide" data-tree-marker="quant-finance">
+<h2>Conditioning an Asian average</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="qf" style="--tree-left: 5%; --tree-top: 33%; --tree-align: center;">Quantitative<br>Finance</div>
+</div>
+
+<p>Equally spaced dates <span class="math inline">\(t_j=j\Delta t\)</span>, <span class="math inline">\(\Delta t=T/d\)</span>, arithmetic average <span class="math inline">\(A\)</span></p>
+<p><span class="math display">\[\begin{align*}
+S(t_j)&amp;=S_0\exp\{(r-\sigma^2/2)t_j+\sigma B(t_j)\}\\
+A&amp;=\frac1d\sum_{j=1}^d S(t_j)
+\end{align*}\]</span></p>
+<p><span class="alert">Integrate out</span> the first Brownian increment</p>
+<p><span class="math display">\[
+B(t_j)=\sqrt{\Delta t}\,Z_1+R_j,\qquad Z_1\sim\Norm(0,1),\qquad R_1=0
+\]</span></p>
+<p><span class="math inline">\(Z_1\)</span> independent of <span class="math inline">\(\vR=(R_2,\ldots,R_d)\)</span>, formed from the remaining increments</p>
+<p><span class="math display">\[\begin{align*}
+C(\vR)&amp;=\frac{S_0}{d}\sum_{j=1}^d
+\exp\{(r-\sigma^2/2)t_j+\sigma R_j\}\\
+A&amp;=C(\vR)\exp(sZ_1),\qquad s=\sigma\sqrt{\Delta t}&gt;0
+\end{align*}\]</span></p>
+</section>
+<section id="conditional-density-of-an-asian-average" class="slide level2 tree-marker-slide" data-tree-marker="density-estimation">
+<h2>Conditional density of an Asian average</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.1; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="density-estimation" style="--tree-left: 7%; --tree-top: 7%; --tree-align: center;">Density<br>Estimation</div>
+</div>
+
+<p>Given <span class="math inline">\(C\)</span>, the average <span class="math inline">\(A=C\exp(sZ_1)\)</span> is <span class="alert">lognormal</span><br> <span class="math inline">\(\phi\)</span> and <span class="math inline">\(\Phi\)</span>: standard normal density and CDF</p>
+<p>For <span class="math inline">\(a&gt;0\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+F_{A\mid C}(a\mid C)&amp;=\Phi\!\left(\frac{\log(a/C)}s\right)\\
+\varrho_{A\mid C}(a\mid C)&amp;=\frac1{as}\phi\!\left(\frac{\log(a/C)}s\right)\\
+\varrho_A(a)&amp;=\Ex\!\left[\frac1{as}\phi\!\left(\frac{\log(a/C)}s\right)\right]
+\end{align*}\]</span></p>
+<ul>
+<li>Sample the <span class="math inline">\(d-1\)</span> residual increments with IID or randomized low discrepancy points</li>
+<li>Average conditional densities; no exact arithmetic-Asian density needed</li>
+<li>Notebook: weekly <span class="math inline">\(d=52\)</span>; compare CMC, histogram, and KDE at the selected <span class="math inline">\(n\)</span></li>
+</ul>
+</section>
+<section id="asian-call-payoff-distribution" class="slide level2 tree-marker-slide" data-tree-marker="quant-finance">
+<h2>Asian-call payoff distribution</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="qf" style="--tree-left: 5%; --tree-top: 33%; --tree-align: center;">Quantitative<br>Finance</div>
+</div>
+
+<p>Discounted call payoff <span class="math inline">\(P=e^{-rT}(A-K)_+\)</span></p>
+<p><span class="math display">\[\begin{align*}
+\Prob(P=0)&amp;=F_A(K)
+=\Ex\!\left[\Phi\!\left(\frac{\log(K/C)}s\right)\right]\\
+\varrho_P(p)&amp;=e^{rT}\varrho_A(K+e^{rT}p),\qquad p&gt;0\\
+\int_0^\infty\varrho_P(p)\,\dif p&amp;=1-F_A(K)
+\end{align*}\]</span></p>
+<div class="key-point">
+<p>The <span class="alert">atom at zero</span> and the density on positive payoffs are separate parts of the distribution</p>
+</div>
+<p>Ordinary KDE on all payoffs blurs the zero-payoff atom into a smooth bump</p>
+<p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb">Notebook: average density, payoff density, and CMC option price</a></p>
 </section></section>
 <section>
 <section id="structured-random-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="variance-reduction">
@@ -1526,7 +1616,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="22e424df" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="147e2134" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>

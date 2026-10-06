@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-10-05">
+  <meta name="dcterms.date" content="2026-10-06">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -643,7 +643,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">October 5, 2026</p>
+  <p class="date">October 6, 2026</p>
 </section>
 <section id="we-begin-this-semester-amid-significant-change" class="slide level2">
 <h2>We begin this semester amid significant change</h2>
@@ -1480,6 +1480,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="02-generating-samples.html#the-quantile-transform">Generalized inverse</a></li>
 <li><a href="02-generating-samples.html#geometric-brownian-motion">Geometric Brownian motion</a></li>
 <li><a href="05-selected-topics.html#gradient-descent">Gradient descent</a></li>
+<li><a href="04-improving-efficiency.html#histograms-kde-and-conditional-density">Histogram</a></li>
 <li><a href="02-generating-samples.html#independent-marginals">Independent marginals</a></li>
 <li><a href="04-improving-efficiency.html#importance-sampling">Importance sampling</a></li>
 <li><a href="04-improving-efficiency.html#importance-sampling">Importance weight</a></li>
@@ -1491,6 +1492,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
+<li><a href="04-improving-efficiency.html#histograms-kde-and-conditional-density">Kernel density estimator (KDE)</a></li>
 <li><a href="03-markov-chain-monte-carlo.html#kernel-discrepancy">Kernel discrepancy</a></li>
 <li><a href="03-markov-chain-monte-carlo.html#relative-entropy-another-comparison">Kullback–Leibler (KL) divergence</a></li>
 <li><a href="04-improving-efficiency.html#latin-hypercube-sampling-in-d-dimensions">Latin hypercube sampling</a></li>
@@ -1743,7 +1745,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points<br>Compare how its <span class="math inline">\(x_1\)</span>–<span class="math inline">\(x_2\)</span> projection fills the unit square</p>
-<div id="5bbc6519" class="cell" data-execution_count="4">
+<div id="86a48ce3" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1756,7 +1758,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="grid-n64">Grid, <span class="math inline">\(n=64\)</span></h3>
-<div id="62eb5b56" class="cell" data-execution_count="5">
+<div id="8351c034" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1769,7 +1771,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="orthogonal-array-n64">Orthogonal array, <span class="math inline">\(n=64\)</span></h3>
-<div id="f893266d" class="cell" data-execution_count="6">
+<div id="b15731a5" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1782,7 +1784,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="iid-n64">IID, <span class="math inline">\(n=64\)</span></h3>
-<div id="1e926cf2" class="cell" data-execution_count="7">
+<div id="cb3b46a5" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1795,7 +1797,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="scrambled-sobol-n64">Scrambled Sobol’, <span class="math inline">\(n=64\)</span></h3>
-<div id="e087011a" class="cell" data-execution_count="8">
+<div id="8fa9cd9d" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
