@@ -9,9 +9,9 @@
   displayed lecture materials; distinguish substantive coverage from previews
   and deferred explanations.
 
-The schedule is reconciled through October 1. The August 18–September 17
+The schedule is reconciled through October 6. The August 18–September 17
 rows record the historical audit without retroactive calendar edits; the
-October 6 continuation note is the next instructional annotation.
+October 8 continuation note is the next instructional annotation.
 
 | Instructional meeting | Status | Panopto recording | Next instructional event annotated | Checked |
 |---|---|---|---|---|
@@ -28,6 +28,7 @@ October 6 continuation note is the next instructional annotation.
 | September 24, 2026 | Reconciled: queue state, next-event updates, Markov interpretation, worked example, and all three group exercises; simulation code only briefly shown | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=abf2b4f7-923c-4dfb-8e7f-b4cf0114c7b5) | September 29, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume Deck 03 at “Event-driven queue simulation” and its notebook, then closing synthesis | September 24, 2026 |
 | September 29, 2026 | Reconciled: queue-simulation notebook and MCMC synthesis; Deck 04 through importance sampling’s “Variance depends on the function”; remaining importance sampling explicitly deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f9000848-8245-48ea-b294-b4d4011ca72c) | October 1, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume Deck 04 at “Brownian motion with drift,” then “Choosing a transformation” | September 29, 2026 |
 | October 1, 2026 | Reconciled: Brownian motion with drift and choosing a transformation; control variates, least-squares coefficients, and practical control choices; Asian-option notebook walkthrough; lookback call explicitly deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3bedf0ac-86bc-49fd-9798-b4d60116974b) | October 6, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume AsianOptionVarianceReduction at “A lookback call on the same paths,” then Deck 04 at “Conditional Monte Carlo” | October 1, 2026 |
+| October 6, 2026 | Reconciled: control-variate recap, conditional Monte Carlo, sum-of-uniforms conditional densities, histogram/KDE/CMC comparisons, Asian-average density and Asian-call zero atom; antithetic sampling deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=5e57e5a3-0bbd-4971-81b9-b4db0118d1e9) | October 8, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume Deck 04 at “Antithetic sampling” | October 7, 2026 |
 
 Recording evidence: Deck 02 mixture/acceptance–rejection unit-cube review
 preceded Deck 03 (33:06). Unbiased discrepancy began at 37:06; RKHS and
@@ -91,3 +92,19 @@ Playback was paused and muted, and the recording tab was closed afterward.
 The October 6 note was saved using “Only This Event” and reopened to verify
 the note, PH 109, and existing 10:00–11:15 AM Central Daylight Time hours.
 The calendar selector identified Illinois Tech Fred → Calendar.
+
+## October 6 recording evidence
+
+The October 6 readiness notice identifies a 10:02 AM start and 1:13:50
+recording. Conditional Monte Carlo begins at 29:54, conditional density at
+44:39, and the histogram/KDE/conditional-density comparison at 1:05:06. The
+Asian-call payoff distribution appears at 1:08:21. Closing captions
+explicitly name antithetic variates as the next topic and say Latin
+hypercube sampling will be skipped. The lookback example was introduced but
+its missing saved output interrupted the comparison; do not count that
+comparison as completed.
+
+The October 8 occurrence was saved using “Only This Event” and reopened in
+Illinois Tech Fred → Calendar to verify the continuation note, PH 109, and
+existing meeting hours. Fantastical independently confirms the saved note
+and Chicago times. Recording tabs were closed after inspection.

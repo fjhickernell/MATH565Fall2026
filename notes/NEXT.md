@@ -2,16 +2,16 @@
 
 ## Immediate actions
 
-1. Prepare the October 6 continuation: resume the Asian-option variance
-   reduction notebook at “A lookback call on the same paths,” then Deck 04
-   at “Conditional Monte Carlo.” October 1 covered Brownian motion with
-   drift, choosing a transformation, control variates, least-squares
-   coefficients, practical control choices, and the Asian-option notebook;
-   the lookback example was explicitly deferred. The October 6 single-occurrence
-   Illinois Tech calendar note is saved and verified for PH 109,
-   10:00–11:15 AM America/Chicago. The reconciled schedule is included in the
-   October 1 checkpoint. The latest build/publication and Pages workflows
-   succeeded, verified October 5; live schedule content was not rechecked.
+1. Prepare the October 8 continuation: resume Deck 04 at “Antithetic
+   sampling.” October 6 completed conditional Monte Carlo and conditional
+   density examples, including sums of uniforms and Asian-option densities.
+   Latin hypercube sampling will be skipped, as announced in class. The
+   lookback saved-output comparison was interrupted and remains incomplete.
+   The schedule and lecture ledger are reconciled through October 6. The
+   October 8 single-occurrence Illinois Tech calendar note is saved and
+   verified in Calendar and Fantastical for PH 109, 10:00–11:15 AM Chicago.
+   These schedule and handoff changes are included in the October 7 checkpoint;
+   remote deployment is pending.
    Review the revised QMCPy companions and Deck 04 density slides before class.
    Generating Samples offers lattice/Sobol' (saved lattice outputs). Asian
    Option defaults to Sobol' with lattice/Halton alternatives throughout the
@@ -79,10 +79,10 @@ importance-sampling contribution plots, selective keyword highlighting, and
 larger-index van der Corput exercises. Practical stopping demonstrations
 and their notebook links are now implemented and locally validated.
 
-All instructional recordings from August 18 through October 1 have been
-audited or reconciled. October 1 reached practical control-variate choices
-and the Asian-option notebook, with the lookback example explicitly deferred.
-The October 6 calendar continuation note was saved and verified.
+All instructional recordings from August 18 through October 6 have been
+audited or reconciled. October 6 completed conditional Monte Carlo and
+conditional density examples; the lookback comparison remains incomplete.
+The October 8 calendar continuation note was saved and verified.
 September 15 remains assessment-only, and the historical recording audit
 supersedes the accepted September 10 baseline.
 
