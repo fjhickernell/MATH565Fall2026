@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-10-07">
+  <meta name="dcterms.date" content="2026-10-08">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -643,7 +643,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">October 7, 2026</p>
+  <p class="date">October 8, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-04-overview">
 <h1>Course Map</h1>
@@ -752,8 +752,8 @@ Our plan here
 <p>Keep the <span class="alert">target</span> quantity, but change its computational representation:</p>
 <p><span class="math display">\[\begin{gather*}
 \vX\sim\varrho_{\mathrm{tar}},\quad Y=f(\vX),\qquad
-\vZ\sim\varrho_{\mathrm{prop}},\quad \widetilde Y=g(\vZ) \\
-\alerttext{And} \quad \mu=\Ex(Y) = \Ex(\widetilde Y)
+\vZ\sim\varrho_{\mathrm{prop}},\quad Y_g=g(\vZ) \\
+\alerttext{And} \quad \mu=\Ex(Y) = \Ex(Y_g)
 \end{gather*}\]</span></p>
 <p>Two sample means estimate the same <span class="math inline">\(\mu\)</span>:</p>
 <p><span class="math display">\[\begin{align*}
@@ -764,6 +764,7 @@ Our plan here
 <li>Change the function, the sampling distribution, or both</li>
 <li>Seek lower error for comparable computational <span class="alert">work</span></li>
 <li>Changing only the function gives the special case <span class="math inline">\(g(\vX)\)</span></li>
+<li>Label contributions by method: <span class="math inline">\(Y_{\mathrm{IS}}\)</span>, <span class="math inline">\(Y_{\mathrm{CV}}\)</span>, <span class="math inline">\(Y_{\mathrm{CMC}}\)</span></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -1002,7 +1003,10 @@ g(\vz)&amp;=f(\vz)w(\vz),\\
 \end{align*}\]</span></p>
 <p>For <span class="math inline">\(\vZ_0,\ldots,\vZ_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}\)</span>,</p>
 <p><span class="math display">\[
-\hmu_{\mathrm{IS},n}=\frac1n\sum_{i=0}^{n-1}g(\vZ_i)
+Y_{\mathrm{IS}}=g(\vZ)=f(\vZ)w(\vZ),\qquad \Ex(Y_{\mathrm{IS}})=\mu
+\]</span></p>
+<p><span class="math display">\[
+\hmu_{\mathrm{IS},n}=\frac1n\sum_{i=0}^{n-1}Y_{\mathrm{IS},i}
 =\frac1n\sum_{i=0}^{n-1}f(\vZ_i)w(\vZ_i)
 \]</span></p>
 <p><span class="math inline">\(w\)</span> is the <span class="alert">weight</span> function; <span class="math inline">\(W=w(\vZ)\)</span> is its random value</p>
@@ -1137,7 +1141,7 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1),\qquad
 <p><span class="math display">\[\begin{align*}
 w(\vz)&amp;=\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{prop}}(\vz)}
 =\exp\!\left(-\theta z_d+\frac{\theta^2t_d}{2}\right),\\
-g(\vZ)&amp;=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[g(\vZ)]=\mu
+Y_{\mathrm{IS}}&amp;=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[Y_{\mathrm{IS}}]=\mu
 \end{align*}\]</span></p>
 <ul>
 <li>Drift makes positive payoffs <span class="alert">more common</span></li>
@@ -1177,6 +1181,7 @@ g(\vZ)&amp;=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[g(\vZ)]=\mu
 
 <ul>
 <li><a href="#/control-variates">Control variates</a></li>
+<li><a href="#/optimal-coefficients-from-covariances">Optimal coefficients from covariances</a></li>
 <li><a href="#/choosing-coefficients-by-least-squares">Choosing coefficients by least squares</a></li>
 <li><a href="#/practical-control-variate-choices">Practical control-variate choices</a></li>
 <li><a href="#/conditional-monte-carlo">Conditional Monte Carlo</a></li>
@@ -1195,21 +1200,79 @@ g(\vZ)&amp;=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[g(\vZ)]=\mu
   <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
 </div>
 
-<p>Let <span class="math inline">\(\eta_1,\ldots,\eta_m\)</span> have known <span class="alert">zero</span> means</p>
-<p>For fixed coefficients <span class="math inline">\(\vbeta\)</span>, define <span class="math inline">\(\widetilde Y=g(\vX)\)</span> with</p>
+<p>Let <span class="math inline">\(\boldsymbol{\eta}(\vX)=(\eta_1(\vX),\ldots,\eta_m(\vX))^\mathsf T\)</span> have known <span class="alert">zero</span> mean</p>
+<p>For fixed coefficients <span class="math inline">\(\vbeta\)</span>, define</p>
 <p><span class="math display">\[
-g(\vx)=f(\vx)-\sum_{j=1}^m\beta_j\eta_j(\vx)
+Y_{\mathrm{CV}}=g(\vX)=f(\vX)-\vbeta^\mathsf T\boldsymbol{\eta}(\vX)
 \]</span></p>
-<p>Then <span class="math inline">\(\Ex[g(\vX)]=\Ex[f(\vX)]=\mu\)</span>, so</p>
+<p>Then <span class="math inline">\(\Ex(Y_{\mathrm{CV}})=\Ex[f(\vX)]=\mu\)</span>, so</p>
 <p><span class="math display">\[
 \hmu_{\mathrm{CV},n}
-=\frac1n\sum_{i=0}^{n-1}g(\vX_i)
-=\frac1n\sum_{i=0}^{n-1}\left[f(\vX_i)-\sum_{j=1}^m\beta_j\eta_j(\vX_i)\right]
+=\frac1n\sum_{i=0}^{n-1}Y_{\mathrm{CV},i}
 \]</span></p>
 <p>is unbiased</p>
 <div class="key-point">
-<p>Choose <span class="math inline">\(\vbeta\)</span> to make <span class="math inline">\(\var[g(\vX)]\)</span> as <span class="alert">small</span> as possible</p>
+<p>Choose <span class="math inline">\(\vbeta\)</span> to make <span class="math inline">\(\var(Y_{\mathrm{CV}})\)</span> as <span class="alert">small</span> as possible</p>
 </div>
+</section>
+<section id="optimal-coefficients-from-covariances" class="slide level2 tree-marker-slide" data-tree-marker="variance-linear-algebra">
+<h2>Optimal coefficients from covariances</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
+  <div class="tree-component__label" data-label-id="linear-algebra" style="--tree-left: 39%; --tree-top: 89%; --tree-align: center;">Linear<br>Algebra</div>
+</div>
+
+<p><span class="math inline">\(Y=f(\vX)\)</span>, <span class="math inline">\(\boldsymbol{\eta}=\boldsymbol{\eta}(\vX)\)</span>, <span class="math inline">\(\Ex(\boldsymbol{\eta})=\vzero\)</span></p>
+<p>Define the control covariance matrix and response–control covariances:</p>
+<p><span class="math display">\[\begin{align*}
+\mSigma_\eta&amp;=\cov(\boldsymbol{\eta},\boldsymbol{\eta}),&amp;
+(\mSigma_\eta)_{jk}&amp;=\cov(\eta_j,\eta_k),\\
+\boldsymbol{\kappa}&amp;=\cov(\boldsymbol{\eta},Y),&amp;
+\kappa_j&amp;=\cov\{\eta_j(\vX),f(\vX)\}
+\end{align*}\]</span></p>
+<p>Since <span class="math inline">\(Y_{\mathrm{CV}}-\mu=(Y-\mu)-\vbeta^\mathsf T\boldsymbol{\eta}\)</span>,</p>
+<p><span class="math display">\[\begin{align*}
+\var(Y_{\mathrm{CV}})
+&amp;=\Ex\bigl[((Y-\mu)-\vbeta^\mathsf T\boldsymbol{\eta})^2\bigr]\\
+&amp;=\var(Y)-2\vbeta^\mathsf T\boldsymbol{\kappa}
+  +\vbeta^\mathsf T\mSigma_\eta\vbeta
+\end{align*}\]</span></p>
+<p>The variance is a <span class="alert">quadratic</span> function of the coefficients</p>
+</section>
+<section class="slide level2">
+
+<h3 id="minimize-the-control-variate-variance">Minimize the control-variate variance</h3>
+<p>For <span class="alert">nonsingular</span> <span class="math inline">\(\mSigma_\eta\)</span>, differentiate and set the gradient to zero:</p>
+<p><span class="math display">\[\begin{align*}
+\nabla_{\vbeta}\var(Y_{\mathrm{CV}})
+&amp;=-2\boldsymbol{\kappa}+2\mSigma_\eta\vbeta=\vzero,\\
+\mSigma_\eta\vbeta_*&amp;=\boldsymbol{\kappa},\qquad
+\vbeta_*=\mSigma_\eta^{-1}\boldsymbol{\kappa}
+\end{align*}\]</span></p>
+<p>Completing the square confirms the minimum:</p>
+<p><span class="math display">\[\begin{align*}
+\var(Y_{\mathrm{CV}})
+&amp;=\var(Y)-\boldsymbol{\kappa}^\mathsf T\mSigma_\eta^{-1}\boldsymbol{\kappa}\\
+&amp;\quad +(\vbeta-\vbeta_*)^\mathsf T\mSigma_\eta(\vbeta-\vbeta_*)
+\end{align*}\]</span></p>
+<ul>
+<li>Minimum variance: <span class="math inline">\(\var(Y)-\boldsymbol{\kappa}^\mathsf T\mSigma_\eta^{-1}\boldsymbol{\kappa}\)</span></li>
+<li>One control: <span class="math inline">\(\beta_*=\cov\{f(\vX),\eta_1(\vX)\}/\var\{\eta_1(\vX)\}\)</span></li>
+</ul>
+<aside class="notes">
+<p>Assume finite second moments. A nonsingular covariance matrix is positive definite, so the final quadratic term is nonnegative and the minimizer is unique. With redundant controls, the covariance matrix can be singular; remove redundant controls or solve the normal equations with a pseudoinverse. The cross-covariance vector is in the covariance matrix’s range, and the optimal residual is unchanged by coefficient directions in its null space. At the optimum, cov(eta, Y_CV)=kappa-Sigma_eta beta_*=0: the residual is uncorrelated with every control. In practice, solve the covariance system rather than explicitly forming the inverse.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="choosing-coefficients-by-least-squares" class="slide level2 tree-marker-slide" data-tree-marker="variance-linear-algebra">
 <h2>Choosing coefficients by least squares</h2>
@@ -1232,7 +1295,21 @@ H_{ij}&amp;=\eta_j(\vx_i)-\overline{\eta}_j
 <p><span class="math display">\[
 \hvbeta=(\mH^\mathsf T\mH)^{-1}\mH^\mathsf T\vc
 \]</span></p>
-<p>The residual is <span class="alert">orthogonal</span> to the column space of <span class="math inline">\(\mH\)</span>, so least squares removes the component of <span class="math inline">\(f\)</span> explained by the controls</p>
+<p>Sample covariances: <span class="math inline">\(\widehat{\mSigma}_\eta=\mH^\mathsf T\mH/(n-1)\)</span>, <span class="math inline">\(\widehat{\boldsymbol{\kappa}}=\mH^\mathsf T\vc/(n-1)\)</span></p>
+<p>The residual is <span class="alert">orthogonal</span> to the column space of <span class="math inline">\(\mH\)</span></p>
+<aside class="notes">
+<p>Use an independent pilot to estimate beta if exact unbiasedness of the final IID estimator is required.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="practical-control-variate-choices" class="slide level2 tree-marker-slide" data-tree-marker="variance-reduction">
 <h2>Practical control-variate choices</h2>
@@ -1271,9 +1348,9 @@ H_{ij}&amp;=\eta_j(\vx_i)-\overline{\eta}_j
 \]</span></p>
 <p>If <span class="math inline">\(Y=f(X_1,\ldots,X_d)\)</span> and</p>
 <p><span class="math display">\[
-\widetilde Y=g(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
+Y_{\mathrm{CMC}}=g(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
 \]</span></p>
-<p>is analytic, estimate <span class="math inline">\(\mu\)</span> by sampling <span class="math inline">\(g(\vX_{2:d})\)</span> instead of <span class="math inline">\(Y\)</span></p>
+<p>is analytic, estimate <span class="math inline">\(\mu\)</span> by averaging <span class="math inline">\(Y_{\mathrm{CMC},i}\)</span> instead of <span class="math inline">\(Y_i\)</span></p>
 <p><span class="alert">Analytically averaging</span> over part of the randomness <span class="alert">reduces</span> variance</p>
 </section>
 <section id="conditional-density-estimation" class="slide level2 tree-marker-slide" data-tree-marker="density-estimation">
@@ -1438,15 +1515,17 @@ F_{A\mid C}(a\mid C)&amp;=\Phi\!\left(\frac{\log(a/C)}s\right)\\
 
 <p>If <span class="math inline">\(\vA(\vX)\)</span> has the same distribution as <span class="math inline">\(\vX\)</span>, pair <span class="math inline">\(f(\vX_i)\)</span> with <span class="math inline">\(f\bigl(\vA(\vX_i)\bigr)\)</span>:</p>
 <p><span class="math display">\[
-\hmu_{\mathrm{Anti},n}
-=\frac1{2n}\sum_{i=0}^{n-1}\left[f(\vX_i)+f\bigl(\vA(\vX_i)\bigr)\right]
+Y_{\mathrm{Anti}}=\{f(\vX)+f(\vA(\vX))\}/2
+\]</span></p>
+<p><span class="math display">\[
+\hmu_{\mathrm{Anti},n}=\frac1n\sum_{i=0}^{n-1}Y_{\mathrm{Anti},i}\qquad (n\text{ pairs})
 \]</span></p>
 <p>Examples (uniform-input pairing uses the composed integrand <span class="math inline">\(h\)</span>):</p>
 <p><span class="math display">\[\begin{align*}
 \vA(\vU)&amp;=\vone-\vU,&amp; \vU&amp;\sim\Unif[0,1]^d,\\
 \vA(\vX)&amp;=-\vX,&amp; \vX&amp;\sim\Norm(\vzero,\mSigma)
 \end{align*}\]</span></p>
-<p>For IID starting samples, <span class="math inline">\(\vX_i\)</span> and <span class="math inline">\(\vA(\vX_i)\)</span> are <span class="alert">dependent</span> within pairs; pairs are <span class="alert">independent</span> across <span class="math inline">\(i\)</span></p>
+<p><span class="alert">Dependent</span> values within each pair; <span class="alert">independent</span> pairs across <span class="math inline">\(i\)</span></p>
 <p>The variance is</p>
 <p><span class="math display">\[
 \var(\hmu_{\mathrm{Anti},n})
@@ -1473,68 +1552,93 @@ A(X)=F^{-1}\bigl(1-F(X)\bigr)\sim F
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>For which monotone functions <span class="math inline">\(f\)</span> does <span class="math inline">\(f(X)\)</span> become negatively correlated with <span class="math inline">\(f\bigl(A(X)\bigr)\)</span>?</span></p>
 </div>
 </section>
-<section id="iid-variance-comparison" class="slide level2 tree-marker-slide" data-tree-marker="variance-probability">
+<section id="iid-variance-comparison" class="slide level2">
 <h2>IID variance comparison</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
-  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
-</div>
-
-<p>Let <span class="math inline">\(\vX\)</span> and <span class="math inline">\(\vZ\)</span> have target density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span> and proposal density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span>, respectively</p>
-<p>Compare <span class="math inline">\(n\)</span> evaluations of <span class="math inline">\(f\)</span></p>
+<p><span class="math inline">\(Y=f(\vX)\)</span>, <span class="math inline">\(\vX\sim\varrho_{\mathrm{tar}}\)</span>, <span class="math inline">\(\vZ\sim\varrho_{\mathrm{prop}}\)</span>; <span class="math inline">\(w=\varrho_{\mathrm{tar}}/\varrho_{\mathrm{prop}}\)</span></p>
+<p>Use <span class="math inline">\(n\)</span> independent contributions, or <span class="math inline">\(n/2\)</span> independent antithetic pairs</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 35%">
-<col style="width: 28%">
-<col style="width: 35%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Method</th>
 <th style="text-align: left;">Contribution</th>
-<th style="text-align: left;">Estimator variance for <span class="math inline">\(n\)</span> evaluations of <span class="math inline">\(f\)</span></th>
+<th style="text-align: left;">Estimator variance</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Direct IID</td>
-<td style="text-align: left;"><span class="math inline">\(f(\vX)\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\var(f(\vX))/n\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(Y=f(\vX)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\var(Y)/n\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Exact transport, <span class="math inline">\(\vT(\vZ) \stackrel{d}{=} \vX\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(f\bigl(\vT(\vZ)\bigr)\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\var(f(\vX))/n\)</span></td>
+<td style="text-align: left;">Exact transport</td>
+<td style="text-align: left;"><span class="math inline">\(Y_T=f(\vT(\vZ))\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\var(Y)/n\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Importance sampling, <span class="math inline">\(w(\vz)=\varrho_{\mathrm{tar}}(\vz)/\varrho_{\mathrm{prop}}(\vz)\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(w(\vZ)f(\vZ)\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\var\{w(\vZ)f(\vZ)\}/n\)</span></td>
+<td style="text-align: left;">Importance sampling</td>
+<td style="text-align: left;"><span class="math inline">\(Y_{\mathrm{IS}}=w(\vZ)f(\vZ)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\var(Y_{\mathrm{IS}})/n\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Control variate</td>
-<td style="text-align: left;"><span class="math inline">\(f(\vX)-\beta\eta_1(\vX)\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\var\{f(\vX)-\beta\eta_1(\vX)\}/n\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(Y_{\mathrm{CV}}=Y-\vbeta^\mathsf T\boldsymbol{\eta}(\vX)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\var(Y_{\mathrm{CV}})/n\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(n/2\)</span> Antithetic pairs <br><span class="math inline">\(\vA(\vX) \stackrel{d}{=} \vX\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\{f(\vX)+f(\vA(\vX))\}/2\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\var(f(\vX))(1+\rho)/n\)</span> <br><span class="math inline">\(\rho=\corr\{f(\vX),f(\vA(\vX))\}\)</span></td>
+<td style="text-align: left;">Conditional Monte Carlo</td>
+<td style="text-align: left;"><span class="math inline">\(Y_{\mathrm{CMC}}=\Ex(Y\mid V)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\var(Y_{\mathrm{CMC}})/n\le\var(Y)/n\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Antithetic pairs</td>
+<td style="text-align: left;"><span class="math inline">\(Y_{\mathrm{Anti}}=\{Y+f(\vA(\vX))\}/2\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\var(Y)(1+\rho)/n\)</span></td>
 </tr>
 </tbody>
 </table>
-<p><span class="math inline">\(\Ex[\eta_1(\vX)]=0\)</span>; <span class="math inline">\(\beta\)</span> is fixed or from an independent pilot; antithetic sampling requires even <span class="math inline">\(n\)</span></p>
+<p><span class="alert">Equal sample counts</span> need not mean equal computational <span class="alert">work</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="conditions-behind-the-comparison">Conditions behind the comparison</h3>
+<ul>
+<li>Exact transport: <span class="math inline">\(\vT(\vZ)\stackrel d=\vX\)</span></li>
+<li>Importance sampling: proposal covers the required support</li>
+<li>Control: <span class="math inline">\(\Ex[\boldsymbol{\eta}(\vX)]=\vzero\)</span>; <span class="math inline">\(\vbeta\)</span> fixed or from an independent pilot</li>
+<li>Conditioning: compute <span class="math inline">\(\Ex(Y\mid V)\)</span> analytically, then sample <span class="math inline">\(V\)</span></li>
+<li>Antithetic: even <span class="math inline">\(n\)</span>, <span class="math inline">\(\vA(\vX)\stackrel d=\vX\)</span>; <span class="math inline">\(\rho=\corr\{Y,f(\vA(\vX))\}\)</span></li>
+</ul>
+<aside class="notes">
+<p>All formulas assume finite second moments and independent contributions or independent antithetic pairs. The antithetic row uses n evaluations of f; the other rows use n contributions, whose evaluation costs can differ. Conditional Monte Carlo may reduce dimension and avoid evaluating the full original function. Compare variance times cost per contribution when choosing between methods. Exact transport preserves the distribution of f(X).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
 <h3 id="beyond-the-iid-variance-formulas">Beyond the IID variance formulas</h3>
 <ul>
-<li>Map, weight, and control calculations add work beyond evaluations of <span class="math inline">\(f\)</span></li>
-<li>For deterministic or randomized low discrepancy points, error depends on integrand variation and point structure; the IID formulas do not apply</li>
+<li>Maps, weights, controls, and conditional expectations have different costs</li>
+<li>Latin hypercubes and randomized low discrepancy points use dependent inputs</li>
+<li>For low discrepancy sampling, error depends on integrand variation and point structure</li>
+<li>Use independent replications to assess randomized designs</li>
 </ul>
 <aside class="notes">
-<p>Exact transport preserves the distribution of <span class="math inline">\(f(\vX)\)</span>, so it has the same IID variance as direct target sampling, though it can be better than weighted importance sampling for a particular <span class="math inline">\(f\)</span>. This does not say that every change of variables preserves variance: the Keister example changes the unit-cube integrand, including its Jacobian. The formulas assume finite second moments and independent replicates or independent antithetic pairs.</p>
+<p>The IID formulas do not apply to within-design sample variance for LHS or randomized low discrepancy sampling. Exact transport can be better than weighted importance sampling for a particular f; it does not imply that every change of variables preserves variance. The Keister example changes the unit-cube integrand, including its Jacobian.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1616,7 +1720,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="1ef7d22a" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="0cbbf2d1" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2049,7 +2153,7 @@ i=(\cdots i_2i_1i_0)_b
 \abs{\mu-\hmu_n}&amp;\le\varepsilon
 \quad\text{for what $n$?}
 \end{align*}\]</span></p>
-<p>We want answers based only on the computed contributions <span class="math inline">\(Y_i\)</span> or <span class="math inline">\(\widetilde Y_i\)</span></p>
+<p>Use the computed contributions: <span class="math inline">\(Y_i\)</span>, <span class="math inline">\(Y_{\mathrm{IS},i}\)</span>, <span class="math inline">\(Y_{\mathrm{CV},i}\)</span>, or <span class="math inline">\(Y_{\mathrm{CMC},i}\)</span></p>
 <ul>
 <li>IID sampling: use a Central Limit Theorem interval when justified</li>
 <li>Randomized low discrepancy sampling: use independent replications</li>
