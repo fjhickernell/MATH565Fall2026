@@ -14,6 +14,12 @@
    plot is visually checked and the payoff agrees with QMCPy.
    Review this expanded comparison with the instructor; the interrupted
    in-class comparison still remains to be taught.
+   Four additional starred continuations now cover transport versus importance
+   sampling, one control's variance and cost, conditional density for two
+   uniforms, and interpretation of stopping decisions. Presenter notes contain
+   answers; local rendering and visible layout checks pass. Review these with
+   Deck 04. Keister and Asian Option remain the two stopping companions;
+   Bayesian credible intervals are labeled as a further approach.
    The efficiency audit refinements are implemented: consistent antithetic
    evaluation counts, IID antithetic comparisons for both options, timed
    accuracy/work tables (with fresh independent pilots charged to controlled
@@ -26,8 +32,9 @@
    for Improving Efficiency and 6 for Selected Topics (40 hours total).
    The first three allocations are independently rounded mixed-meeting
    estimates, excluding Test 1. Efficiency remains in progress; LHS is optional.
-   Source and saved outputs are included in the October 8 checkpoint;
-   its remote build and deployment remain to be verified.
+   Source and saved outputs are included in October 8 checkpoint 5f4f94b;
+   its publishing and Pages workflows succeeded. The four additional starred
+   exercises are included in the following checkpoint; verify its deployment.
    The schedule and lecture ledger are reconciled through October 6. The
    October 8 single-occurrence Illinois Tech calendar note is saved and
    verified in Calendar and Fantastical for PH 109, 10:00–11:15 AM Chicago.

@@ -497,6 +497,36 @@ so the blue curves also represent the target-output variance.
 
 ---
 
+### Compare transport and importance sampling
+
+$Z\sim\Unif(0,1)$; target density $\varrho_{\mathrm{tar}}(x)=2x$ on $(0,1)$
+
+\begin{align*}
+Y_T&=f(\sqrt Z),&Y_{\mathrm{IS}}&=2Zf(Z)
+\end{align*}
+
+::: {.exitem .lettered}
+<span class="exbullet">$\exstar$</span>
+<span>Compare the two contributions
+<span class="exsub">For $f(x)=x$, compute their means and variances</span>
+<span class="exsub">Repeat for $f(x)=1-x$</span>
+<span class="exsub">Explain why the variance ranking reverses</span>
+</span>
+:::
+
+::: {.notes}
+For f(x)=x, both means are 2/3; the transport variance is 1/18 and
+the IS variance is 16/45. For f(x)=1-x, both means are 1/3; the
+transport variance remains 1/18 and the IS variance is 1/45.
+Compute each variance as its second moment minus the squared mean.
+The contribution's shape, not the target density alone, determines the
+variance. In the second case, the factor 2Z partly offsets the decrease
+in 1-Z. The next slide collects the results. These compare equal numbers
+of contributions, without claiming equal computational cost.
+:::
+
+---
+
 ### Variance depends on the function
 
 - Displayed variances: [one]{.alert} estimator contribution
@@ -643,6 +673,38 @@ rather than explicitly forming the inverse.
 
 ---
 
+### One control: variance and cost
+
+Suppose $\Ex(\eta)=0$ and
+
+$$
+\var(Y)=9,\qquad \var(\eta)=4,\qquad \cov(Y,\eta)=3
+$$
+
+::: {.exitem .lettered}
+<span class="exbullet">$\exstar$</span>
+<span>Use $Y_{\mathrm{CV}}=Y-\beta\eta$
+<span class="exsub">Find $\beta_*$ and the minimum contribution variance</span>
+<span class="exsub">If a controlled contribution costs twice as much, which method needs less work for the same IID RMSE?</span>
+<span class="exsub">Why fit $\beta$ on an independent pilot?</span>
+</span>
+:::
+
+Ignore setup and pilot cost for the work comparison; assume independent contributions
+
+::: {.notes}
+The optimal coefficient is 3/4, and the minimum variance is
+9-3^2/4=27/4=6.75. If a direct contribution costs c, compare 9c
+with (27/4)(2c)=13.5c. The direct method needs less work for the same
+IID RMSE, ignoring setup, pilot costs, and integer sample counts.
+An independent pilot makes the fitted coefficient independent of the
+main samples. Conditional on the pilot, the control still has mean zero,
+so the final mean remains unbiased, assuming integrability. Fitting on
+the main samples does not generally retain exact unbiasedness.
+:::
+
+---
+
 ### Choosing coefficients by least squares
 
 [Center]{.alert} the response and control values:
@@ -770,6 +832,32 @@ $$
 
 [Conditional Monte Carlo notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb)
 
+
+---
+
+### Condition a sum of two uniforms
+
+Let $U_1,U_2\ \IIDsim\Unif(0,1)$ and $Y=U_1+U_2$
+
+::: {.exitem .lettered}
+<span class="exbullet">$\exstar$</span>
+<span>Condition on $U_2=v$
+<span class="exsub">Find $F_{Y\mid U_2}(y\mid v)$ and $\varrho_{Y\mid U_2}(y\mid v)$</span>
+<span class="exsub">Average over $v$ to obtain the triangular density of $Y$</span>
+<span class="exsub">Why is the sample average of these conditional densities unbiased at each fixed $y$?</span>
+</span>
+:::
+
+::: {.notes}
+The conditional CDF is min(1,max(0,y-v)); a conditional-density version
+is the indicator of v<y<v+1. Averaging over v in (0,1) gives y for
+0<y<=1, 2-y for 1<y<2, and zero outside (0,2), with endpoint values
+chosen consistently. For independent uniform conditioning draws V_i,
+the sample average of the indicators has expectation equal to this
+density by the law of total expectation. This estimates a density value;
+it does not construct a new sample of Y. Avoid differentiating at the
+conditional CDF's corners; density versions can differ on null sets.
+:::
 
 ---
 
@@ -1407,9 +1495,8 @@ Use the computed contributions: $Y_i$, $Y_{\mathrm{IS},i}$, $Y_{\mathrm{CV},i}$,
 
 - IID sampling: use a Central Limit Theorem interval when justified
 - Randomized low discrepancy sampling: use independent replications
-- Deterministic low discrepancy sampling: possible criteria include
-  - decay of estimated Fourier coefficients
-  - Bayesian credible intervals based on a kernel model
+- Coefficient-decay bounds: Fourier for lattices, Walsh for digital nets
+- Further approach: Bayesian credible intervals based on a kernel model
 
 ::: {.key-point}
 An efficient method needs both [fast]{.alert} error decay and a [reliable]{.alert} stopping rule
@@ -1440,6 +1527,41 @@ For the Asian option, distinguish simulation error from model and discretization
 error, and include the pilot in the computational budget. The linked low
 discrepancy constructions notebook compares fixed sample sizes without
 duplicating these stopping demonstrations.
+:::
+
+---
+
+### Read a stopping decision
+
+Results from the [Keister stopping comparison](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/KeisterExample.ipynb#Practical-stopping-criteria)
+
+| Rule | Tolerance | Reported radius | Actual error |
+|:---|---:|---:|---:|
+| IID CLT | $0.005$ | $0.00472$ | $0.00117$ |
+| Walsh bound | $0.005$ | $0.00284$ | $0.000118$ |
+| Sobol', tight budget | $10^{-7}$ | $0.00184$ | $0.00094$ |
+
+::: {.exitem .lettered}
+<span class="exbullet">$\exstar$</span>
+<span>Interpret the reported uncertainty
+<span class="exsub">Which runs meet the reported tolerance?</span>
+<span class="exsub">Why must the reference stay out of the stopping decision?</span>
+<span class="exsub">What assumptions qualify the IID interval and Walsh bound?</span>
+</span>
+:::
+
+::: {.notes}
+The first two reported radii meet their requested tolerances; the tight-budget
+run does not. Reaching the budget is not success. The reference is an
+independent diagnostic available for this benchmark, not information normally
+available to choose the sample count for an unknown integral. One observed
+actual error also cannot establish coverage or a general guarantee.
+The IID interval is approximate, based on a CLT, estimated variance, and the
+independent-pilot design. The Walsh bound assumes membership in its specified
+function cone; passing necessary-condition checks does not prove membership.
+Adaptive replication intervals need the additional coverage qualification
+already stated in the notebook. Numbers are rounded from the saved run;
+random seeds, tolerances, or code changes can produce different results.
 :::
 
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="variance-low-discrepancy"}

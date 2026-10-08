@@ -374,6 +374,11 @@ appropriate phase rather than appended indiscriminately.
   including tolerance, estimate, reported interval or bound, sample count,
   pilot cost, budget exhaustion, and accuracy assumptions. Add the Deck 04
   continuation links and update the notebook page; validate execution and rendering.
+- [x] Add four starred Deck 04 exercises in the sparsest sections: transport
+  versus importance sampling, control variance and cost, conditional density,
+  and stopping decisions. Include presenter-note answers, retain the three
+  main control/conditioning headings, and check rendering and visible layouts
+  (October 8, 2026).
 - [x] Validate shared slide styling, metadata, navigation, and assets from
   `classlib`.
 - [x] Add reusable Monte Carlo overview-tree rendering and named course tree
