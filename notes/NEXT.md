@@ -2,11 +2,14 @@
 
 ## Immediate actions
 
-1. Prepare the October 8 continuation: resume Deck 04 at “Antithetic
-   sampling.” October 6 completed conditional Monte Carlo and conditional
-   density examples, including sums of uniforms and Asian-option densities.
-   Latin hypercube sampling will be skipped, as announced in class. The
-   lookback saved-output comparison was interrupted and remains incomplete.
+1. Prepare the October 15 continuation: briefly recap van der Corput,
+   then resume Deck 04 at “Four low discrepancy families.” October 8
+   completed antithetic sampling and its variance derivation, examined the
+   IID Asian/lookback comparison, and introduced binary digit reversal.
+   Return to the Asian-option SD² × time interpretation, explicitly deferred
+   in class. October 13 is Fall Break. Latin hypercube sampling remains
+   skipped; the earlier four-method lookback saved-output comparison remains
+   incomplete.
    The lookback notebook now repeats the Asian-call comparison: plain,
    drift, control, and both for IID and the selected Sobol', lattice, or
    Halton sampler, with its own pilot-fitted coefficients and an SD plot.
@@ -36,12 +39,15 @@
    its publishing and Pages workflows succeeded. The four additional starred
    exercises are included in checkpoint `c930827`; its publishing and Pages
    deployment workflows succeeded.
-   The schedule and lecture ledger are reconciled through October 6. The
-   October 8 single-occurrence Illinois Tech calendar note is saved and
+   The schedule and lecture ledger are reconciled through October 8. The
+   October 15 single-occurrence Illinois Tech calendar note is saved and
    verified in Calendar and Fantastical for PH 109, 10:00–11:15 AM Chicago.
-   These schedule and handoff changes are included in the earlier October 7
-   checkpoint; its publishing workflow succeeded.
-   Review the revised QMCPy companions and Deck 04 density slides before class.
+   The schedule renders successfully and passes desktop and phone layout
+   checks. Its date columns now stay separate from topics; phone dates wrap
+   within their cells. Check the publishing and Pages workflows before relying
+   on the deployed update.
+   Review the low discrepancy constructions companion and the deferred
+   Asian-option cost comparison before class.
    Importance sampling now includes a weighted empirical-distribution
    continuation using the discrepancy notes' notation, with normalized
    weights, consistency, and finite-sample bias distinguished from ordinary

@@ -9,9 +9,9 @@
   displayed lecture materials; distinguish substantive coverage from previews
   and deferred explanations.
 
-The schedule is reconciled through October 6. The August 18–September 17
+The schedule is reconciled through October 8. The August 18–September 17
 rows record the historical audit without retroactive calendar edits; the
-October 8 continuation note is the next instructional annotation.
+October 15 continuation note is the next instructional annotation.
 
 | Instructional meeting | Status | Panopto recording | Next instructional event annotated | Checked |
 |---|---|---|---|---|
@@ -29,6 +29,7 @@ October 8 continuation note is the next instructional annotation.
 | September 29, 2026 | Reconciled: queue-simulation notebook and MCMC synthesis; Deck 04 through importance sampling’s “Variance depends on the function”; remaining importance sampling explicitly deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f9000848-8245-48ea-b294-b4d4011ca72c) | October 1, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume Deck 04 at “Brownian motion with drift,” then “Choosing a transformation” | September 29, 2026 |
 | October 1, 2026 | Reconciled: Brownian motion with drift and choosing a transformation; control variates, least-squares coefficients, and practical control choices; Asian-option notebook walkthrough; lookback call explicitly deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3bedf0ac-86bc-49fd-9798-b4d60116974b) | October 6, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume AsianOptionVarianceReduction at “A lookback call on the same paths,” then Deck 04 at “Conditional Monte Carlo” | October 1, 2026 |
 | October 6, 2026 | Reconciled: control-variate recap, conditional Monte Carlo, sum-of-uniforms conditional densities, histogram/KDE/CMC comparisons, Asian-average density and Asian-call zero atom; antithetic sampling deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=5e57e5a3-0bbd-4971-81b9-b4db0118d1e9) | October 8, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume Deck 04 at “Antithetic sampling” | October 7, 2026 |
+| October 8, 2026 | Reconciled: transformation and control-variate cost comparisons; antithetic pairs, variance derivation, and IID Asian/lookback comparison; van der Corput digit reversal introduced; Asian-option variance/time interpretation deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3e54f9a3-1129-4057-bba0-b4dd011bcf4d) | October 15, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; recap van der Corput, resume Deck 04 at “Four low discrepancy families,” and return to deferred Asian-option variance/time interpretation | October 8, 2026 |
 
 Recording evidence: Deck 02 mixture/acceptance–rejection unit-cube review
 preceded Deck 03 (33:06). Unbiased discrepancy began at 37:06; RKHS and
@@ -108,3 +109,36 @@ The October 8 occurrence was saved using “Only This Event” and reopened in
 Illinois Tech Fred → Calendar to verify the continuation note, PH 109, and
 existing meeting hours. Fantastical independently confirms the saved note
 and Chicago times. Recording tabs were closed after inspection.
+
+## October 8 recording evidence
+
+The Illinois Tech Fred inbox readiness notice and Panopto Details identify
+a 9:57 AM start and 1:18:40 recording. The slide-transition index shows
+transformation review at 2:45, control variates at 16:27, optimal
+coefficients at 18:36, and the one-control variance/cost exercise at 20:18.
+The IID method comparison is discussed before antithetic sampling at 46:36.
+The class develops independence between pairs, dependence within each pair,
+and the variance formula at equal total function-evaluation count through
+1:05:55, including the negative-correlation benefit and possible factor-two
+penalty. The quantile/CDF construction is discussed at 1:06:04–1:08:10;
+the starred construction exercise is left for students.
+
+The Asian-option notebook's IID Asian/lookback antithetic comparison begins
+at 1:09:25. The instructor changes the stock/strike setting and reruns the
+comparison, then explicitly defers interpretation of SD² × seconds at
+1:13:23. Do not count that interpretation or the earlier interrupted
+four-method lookback comparison as completed. At 1:13:50–1:17:49 the board
+introduces van der Corput: binary digit reversal, the first points, the
+left-endpoint asymmetry and random shifts, and its connection to the later
+multidimensional families. The instructor says to pick up here next
+Thursday. No lattice/digital generator constructions or stopping criteria
+were developed; LHS remains skipped as announced October 6.
+
+October 13 is Fall Break: both Calendar and Fantastical have no course
+occurrence, and the recording names next Thursday. Resume October 15 with
+a brief van der Corput recap, then “Four low discrepancy families”; return
+to the deferred notebook cost interpretation. The single October 15
+Illinois Tech Fred → Calendar occurrence was saved using “Only This Event,”
+closed, and reopened to verify PH 109, 10:00–11:15 AM America/Chicago, and
+the saved note. Fantastical independently confirms the note and Chicago
+times. Playback was paused and muted.

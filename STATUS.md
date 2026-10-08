@@ -61,7 +61,7 @@ appropriate phase rather than appended indiscriminately.
     - [x] Verify page renders correctly.
     - [ ] Inspect visible browser layout.
     - [x] Confirm no course-specific customization is presently required.
-  - [ ] Schedule (`pages/schedule.qmd`)
+  - [x] Schedule (`pages/schedule.qmd`)
     - [x] Create the Fall 2026 Tuesday/Thursday meeting calendar.
     - [x] Verify the August 18 start date and December 3 final regular
       meeting.
@@ -79,7 +79,8 @@ appropriate phase rather than appended indiscriminately.
     - [x] Include the historical schedule audit in the September 17 Checkpoint
       and verify the resulting remote deployment.
     - [x] Validate Quarto rendering and generated page structure.
-    - [ ] Inspect the visible page layout in a browser.
+    - [x] Inspect every monthly table at desktop and phone widths; correct
+      cramped Week/Date columns and phone wrapping.
   - [ ] Notebooks (`pages/notebooks.qmd`)
     - [x] Introduce the role of notebooks in MATH 565.
     - [x] Organize future links under Sampling, Applications, and
