@@ -1147,6 +1147,30 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1),\qquad
 </section>
 <section class="slide level2">
 
+<h3 id="compare-transport-and-importance-sampling">Compare transport and importance sampling</h3>
+<p><span class="math inline">\(Z\sim\Unif(0,1)\)</span>; target density <span class="math inline">\(\varrho_{\mathrm{tar}}(x)=2x\)</span> on <span class="math inline">\((0,1)\)</span></p>
+<p><span class="math display">\[\begin{align*}
+Y_T&amp;=f(\sqrt Z),&amp;Y_{\mathrm{IS}}&amp;=2Zf(Z)
+\end{align*}\]</span></p>
+<div class="exitem lettered">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Compare the two contributions <span class="exsub">For <span class="math inline">\(f(x)=x\)</span>, compute their means and variances</span> <span class="exsub">Repeat for <span class="math inline">\(f(x)=1-x\)</span></span> <span class="exsub">Explain why the variance ranking reverses</span> </span></p>
+</div>
+<aside class="notes">
+<p>For f(x)=x, both means are 2/3; the transport variance is 1/18 and the IS variance is 16/45. For f(x)=1-x, both means are 1/3; the transport variance remains 1/18 and the IS variance is 1/45. Compute each variance as its second moment minus the squared mean. The contribution’s shape, not the target density alone, determines the variance. In the second case, the factor 2Z partly offsets the decrease in 1-Z. The next slide collects the results. These compare equal numbers of contributions, without claiming equal computational cost.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
 <h3 id="variance-depends-on-the-function">Variance depends on the function</h3>
 <ul>
 <li>Displayed variances: <span class="alert">one</span> estimator contribution</li>
@@ -1322,6 +1346,31 @@ Y_{\mathrm{CV}}=g(\vX)=f(\vX)-\vbeta^\mathsf T\boldsymbol{\eta}(\vX)
 </section>
 <section class="slide level2">
 
+<h3 id="one-control-variance-and-cost">One control: variance and cost</h3>
+<p>Suppose <span class="math inline">\(\Ex(\eta)=0\)</span> and</p>
+<p><span class="math display">\[
+\var(Y)=9,\qquad \var(\eta)=4,\qquad \cov(Y,\eta)=3
+\]</span></p>
+<div class="exitem lettered">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Use <span class="math inline">\(Y_{\mathrm{CV}}=Y-\beta\eta\)</span> <span class="exsub">Find <span class="math inline">\(\beta_*\)</span> and the minimum contribution variance</span> <span class="exsub">If a controlled contribution costs twice as much, which method needs less work for the same IID RMSE?</span> <span class="exsub">Why fit <span class="math inline">\(\beta\)</span> on an independent pilot?</span> </span></p>
+</div>
+<p>Ignore setup and pilot cost for the work comparison; assume independent contributions</p>
+<aside class="notes">
+<p>The optimal coefficient is 3/4, and the minimum variance is 9-3^2/4=27/4=6.75. If a direct contribution costs c, compare 9c with (27/4)(2c)=13.5c. The direct method needs less work for the same IID RMSE, ignoring setup, pilot costs, and integer sample counts. An independent pilot makes the fitted coefficient independent of the main samples. Conditional on the pilot, the control still has mean zero, so the final mean remains unbiased, assuming integrability. Fitting on the main samples does not generally retain exact unbiasedness.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
 <h3 id="choosing-coefficients-by-least-squares">Choosing coefficients by least squares</h3>
 <p><span class="alert">Center</span> the response and control values:</p>
 <p><span class="math display">\[\begin{align*}
@@ -1431,6 +1480,27 @@ g(y;\vu_{2:d})=\frac{y-\sum_{j=2}^d\gamma_ju_j}{\gamma_1}
 \right\}\right]
 \]</span></p>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb">Conditional Monte Carlo notebook</a></p>
+</section>
+<section class="slide level2">
+
+<h3 id="condition-a-sum-of-two-uniforms">Condition a sum of two uniforms</h3>
+<p>Let <span class="math inline">\(U_1,U_2\ \IIDsim\Unif(0,1)\)</span> and <span class="math inline">\(Y=U_1+U_2\)</span></p>
+<div class="exitem lettered">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Condition on <span class="math inline">\(U_2=v\)</span> <span class="exsub">Find <span class="math inline">\(F_{Y\mid U_2}(y\mid v)\)</span> and <span class="math inline">\(\varrho_{Y\mid U_2}(y\mid v)\)</span></span> <span class="exsub">Average over <span class="math inline">\(v\)</span> to obtain the triangular density of <span class="math inline">\(Y\)</span></span> <span class="exsub">Why is the sample average of these conditional densities unbiased at each fixed <span class="math inline">\(y\)</span>?</span> </span></p>
+</div>
+<aside class="notes">
+<p>The conditional CDF is min(1,max(0,y-v)); a conditional-density version is the indicator of v&lt;y&lt;v+1. Averaging over v in (0,1) gives y for 0&lt;y&lt;=1, 2-y for 1&lt;y&lt;2, and zero outside (0,2), with endpoint values chosen consistently. For independent uniform conditioning draws V_i, the sample average of the indicators has expectation equal to this density by the law of total expectation. This estimates a density value; it does not construct a new sample of Y. Avoid differentiating at the conditional CDF’s corners; density versions can differ on null sets.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
@@ -1766,7 +1836,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="948ece75" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="5f995523" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2203,11 +2273,8 @@ i=(\cdots i_2i_1i_0)_b
 <ul>
 <li>IID sampling: use a Central Limit Theorem interval when justified</li>
 <li>Randomized low discrepancy sampling: use independent replications</li>
-<li>Deterministic low discrepancy sampling: possible criteria include
-<ul>
-<li>decay of estimated Fourier coefficients</li>
-<li>Bayesian credible intervals based on a kernel model</li>
-</ul></li>
+<li>Coefficient-decay bounds: Fourier for lattices, Walsh for digital nets</li>
+<li>Further approach: Bayesian credible intervals based on a kernel model</li>
 </ul>
 <div class="key-point">
 <p>An efficient method needs both <span class="alert">fast</span> error decay and a <span class="alert">reliable</span> stopping rule</p>
@@ -2227,6 +2294,57 @@ i=(\cdots i_2i_1i_0)_b
 </div>
 <aside class="notes">
 <p>The Keister reference is checked only after stopping. The IID interval uses a pilot-sized final run; the replication interval uses independent scrambles, not the within-scramble sample variance. Nominal fixed-sample interval coverage does not automatically carry over to adaptive stopping. Walsh-decay guarantees assume cone membership, which passing necessary-condition checks cannot prove. For the Asian option, distinguish simulation error from model and discretization error, and include the pilot in the computational budget. The linked low discrepancy constructions notebook compares fixed sample sizes without duplicating these stopping demonstrations.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="read-a-stopping-decision">Read a stopping decision</h3>
+<p>Results from the <a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/KeisterExample.ipynb#Practical-stopping-criteria">Keister stopping comparison</a></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Rule</th>
+<th style="text-align: right;">Tolerance</th>
+<th style="text-align: right;">Reported radius</th>
+<th style="text-align: right;">Actual error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">IID CLT</td>
+<td style="text-align: right;"><span class="math inline">\(0.005\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.00472\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.00117\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Walsh bound</td>
+<td style="text-align: right;"><span class="math inline">\(0.005\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.00284\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.000118\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sobol’, tight budget</td>
+<td style="text-align: right;"><span class="math inline">\(10^{-7}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.00184\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.00094\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="exitem lettered">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Interpret the reported uncertainty <span class="exsub">Which runs meet the reported tolerance?</span> <span class="exsub">Why must the reference stay out of the stopping decision?</span> <span class="exsub">What assumptions qualify the IID interval and Walsh bound?</span> </span></p>
+</div>
+<aside class="notes">
+<p>The first two reported radii meet their requested tolerances; the tight-budget run does not. Reaching the budget is not success. The reference is an independent diagnostic available for this benchmark, not information normally available to choose the sample count for an unknown integral. One observed actual error also cannot establish coverage or a general guarantee. The IID interval is approximate, based on a CLT, estimated variance, and the independent-pilot design. The Walsh bound assumes membership in its specified function cone; passing necessary-condition checks does not prove membership. Adaptive replication intervals need the additional coverage qualification already stated in the notebook. Numbers are rounded from the saved run; random seeds, tolerances, or code changes can produce different results.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
