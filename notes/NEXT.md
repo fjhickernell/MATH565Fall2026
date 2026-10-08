@@ -10,9 +10,19 @@
    The schedule and lecture ledger are reconciled through October 6. The
    October 8 single-occurrence Illinois Tech calendar note is saved and
    verified in Calendar and Fantastical for PH 109, 10:00–11:15 AM Chicago.
-   These schedule and handoff changes are included in the October 7 checkpoint;
-   remote deployment is pending.
+   These schedule and handoff changes are included in the earlier October 7
+   checkpoint; its publishing workflow succeeded.
    Review the revised QMCPy companions and Deck 04 density slides before class.
+   The IID variance comparison now includes conditional Monte Carlo and
+   method-specific outputs Y_IS, Y_CV, Y_CMC, Y_Anti, and Y_T. The opening
+   uses Y_g for a general alternative; no tilde-Y notation remains.
+   Control variates now derive the optimal coefficients from the control
+   covariance matrix and response–control covariances, complete the square,
+   give the one-control case, and connect population covariances to the pilot
+   least-squares fit. All affected slides pass typesetting, internal-link,
+   and layout checks at 1600×1000 and 1200×800. These refinements are included
+   in the October 7 efficiency checkpoint; remote deployment and instructor
+   review remain to be verified.
    Generating Samples offers lattice/Sobol' (saved lattice outputs). Asian
    Option defaults to Sobol' with lattice/Halton alternatives throughout the
    plain/drift/control/both, lookback, and stopping comparisons; preserve d=52,

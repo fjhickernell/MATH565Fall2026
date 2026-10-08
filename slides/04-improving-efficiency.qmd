@@ -86,8 +86,8 @@ Keep the [target]{.alert} quantity, but change its computational representation:
 
 \begin{gather*}
 \vX\sim\varrho_{\mathrm{tar}},\quad Y=f(\vX),\qquad
-\vZ\sim\varrho_{\mathrm{prop}},\quad \widetilde Y=g(\vZ) \\
- \alerttext{And} \quad \mu=\Ex(Y) = \Ex(\widetilde Y)
+\vZ\sim\varrho_{\mathrm{prop}},\quad Y_g=g(\vZ) \\
+ \alerttext{And} \quad \mu=\Ex(Y) = \Ex(Y_g)
 \end{gather*}
 
 Two sample means estimate the same $\mu$:
@@ -100,6 +100,7 @@ Two sample means estimate the same $\mu$:
 - Change the function, the sampling distribution, or both
 - Seek lower error for comparable computational [work]{.alert}
 - Changing only the function gives the special case $g(\vX)$
+- Label contributions by method: $Y_{\mathrm{IS}}$, $Y_{\mathrm{CV}}$, $Y_{\mathrm{CMC}}$
 
 ---
 
@@ -329,7 +330,11 @@ g(\vz)&=f(\vz)w(\vz),\\
 For $\vZ_0,\ldots,\vZ_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}$,
 
 $$
-\hmu_{\mathrm{IS},n}=\frac1n\sum_{i=0}^{n-1}g(\vZ_i)
+Y_{\mathrm{IS}}=g(\vZ)=f(\vZ)w(\vZ),\qquad \Ex(Y_{\mathrm{IS}})=\mu
+$$
+
+$$
+\hmu_{\mathrm{IS},n}=\frac1n\sum_{i=0}^{n-1}Y_{\mathrm{IS},i}
 =\frac1n\sum_{i=0}^{n-1}f(\vZ_i)w(\vZ_i)
 $$
 
@@ -458,7 +463,7 @@ $\va=\theta(t_1,\ldots,t_d)^\mathsf T$
 \begin{align*}
 w(\vz)&=\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{prop}}(\vz)}
 =\exp\!\left(-\theta z_d+\frac{\theta^2t_d}{2}\right),\\
-g(\vZ)&=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[g(\vZ)]=\mu
+Y_{\mathrm{IS}}&=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[Y_{\mathrm{IS}}]=\mu
 \end{align*}
 
 - Drift makes positive payoffs [more common]{.alert}
@@ -482,6 +487,7 @@ Place more samples where the [magnitude]{.alert} of the integrand times the targ
 # Control Variates and Conditioning {.tree-marker-slide tree-marker="variance-reduction"}
 
 - [Control variates](#control-variates)
+- [Optimal coefficients from covariances](#optimal-coefficients-from-covariances)
 - [Choosing coefficients by least squares](#choosing-coefficients-by-least-squares)
 - [Practical control-variate choices](#practical-control-variate-choices)
 - [Conditional Monte Carlo](#conditional-monte-carlo)
@@ -494,26 +500,86 @@ Place more samples where the [magnitude]{.alert} of the integrand times the targ
 
 ## Control variates {.tree-marker-slide tree-marker="variance-reduction"}
 
-Let $\eta_1,\ldots,\eta_m$ have known [zero]{.alert} means
+Let $\boldsymbol{\eta}(\vX)=(\eta_1(\vX),\ldots,\eta_m(\vX))^\mathsf T$
+have known [zero]{.alert} mean
 
-For fixed coefficients $\vbeta$, define $\widetilde Y=g(\vX)$ with
+For fixed coefficients $\vbeta$, define
 
 $$
-g(\vx)=f(\vx)-\sum_{j=1}^m\beta_j\eta_j(\vx)
+Y_{\mathrm{CV}}=g(\vX)=f(\vX)-\vbeta^\mathsf T\boldsymbol{\eta}(\vX)
 $$
 
-Then $\Ex[g(\vX)]=\Ex[f(\vX)]=\mu$, so
+Then $\Ex(Y_{\mathrm{CV}})=\Ex[f(\vX)]=\mu$, so
 
 $$
 \hmu_{\mathrm{CV},n}
-=\frac1n\sum_{i=0}^{n-1}g(\vX_i)
-=\frac1n\sum_{i=0}^{n-1}\left[f(\vX_i)-\sum_{j=1}^m\beta_j\eta_j(\vX_i)\right]
+=\frac1n\sum_{i=0}^{n-1}Y_{\mathrm{CV},i}
 $$
 
 is unbiased
 
 ::: {.key-point}
-Choose $\vbeta$ to make $\var[g(\vX)]$ as [small]{.alert} as possible
+Choose $\vbeta$ to make $\var(Y_{\mathrm{CV}})$ as [small]{.alert} as possible
+:::
+
+## Optimal coefficients from covariances {.tree-marker-slide tree-marker="variance-linear-algebra"}
+
+$Y=f(\vX)$, $\boldsymbol{\eta}=\boldsymbol{\eta}(\vX)$, $\Ex(\boldsymbol{\eta})=\vzero$
+
+Define the control covariance matrix and response–control covariances:
+
+\begin{align*}
+\mSigma_\eta&=\cov(\boldsymbol{\eta},\boldsymbol{\eta}),&
+(\mSigma_\eta)_{jk}&=\cov(\eta_j,\eta_k),\\
+\boldsymbol{\kappa}&=\cov(\boldsymbol{\eta},Y),&
+\kappa_j&=\cov\{\eta_j(\vX),f(\vX)\}
+\end{align*}
+
+Since $Y_{\mathrm{CV}}-\mu=(Y-\mu)-\vbeta^\mathsf T\boldsymbol{\eta}$,
+
+\begin{align*}
+\var(Y_{\mathrm{CV}})
+&=\Ex\bigl[((Y-\mu)-\vbeta^\mathsf T\boldsymbol{\eta})^2\bigr]\\
+&=\var(Y)-2\vbeta^\mathsf T\boldsymbol{\kappa}
+  +\vbeta^\mathsf T\mSigma_\eta\vbeta
+\end{align*}
+
+The variance is a [quadratic]{.alert} function of the coefficients
+
+---
+
+### Minimize the control-variate variance
+
+For [nonsingular]{.alert} $\mSigma_\eta$, differentiate and set the gradient to zero:
+
+\begin{align*}
+\nabla_{\vbeta}\var(Y_{\mathrm{CV}})
+&=-2\boldsymbol{\kappa}+2\mSigma_\eta\vbeta=\vzero,\\
+\mSigma_\eta\vbeta_*&=\boldsymbol{\kappa},\qquad
+\vbeta_*=\mSigma_\eta^{-1}\boldsymbol{\kappa}
+\end{align*}
+
+Completing the square confirms the minimum:
+
+\begin{align*}
+\var(Y_{\mathrm{CV}})
+&=\var(Y)-\boldsymbol{\kappa}^\mathsf T\mSigma_\eta^{-1}\boldsymbol{\kappa}\\
+&\quad +(\vbeta-\vbeta_*)^\mathsf T\mSigma_\eta(\vbeta-\vbeta_*)
+\end{align*}
+
+- Minimum variance: $\var(Y)-\boldsymbol{\kappa}^\mathsf T\mSigma_\eta^{-1}\boldsymbol{\kappa}$
+- One control: $\beta_*=\cov\{f(\vX),\eta_1(\vX)\}/\var\{\eta_1(\vX)\}$
+
+::: {.notes}
+Assume finite second moments. A nonsingular covariance matrix is positive
+definite, so the final quadratic term is nonnegative and the minimizer is
+unique. With redundant controls, the covariance matrix can be singular;
+remove redundant controls or solve the normal equations with a pseudoinverse.
+The cross-covariance vector is in the covariance matrix's range, and the
+optimal residual is unchanged by coefficient directions in its null space.
+At the optimum, cov(eta, Y_CV)=kappa-Sigma_eta beta_*=0: the residual is
+uncorrelated with every control. In practice, solve the covariance system
+rather than explicitly forming the inverse.
 :::
 
 ## Choosing coefficients by least squares {.tree-marker-slide tree-marker="variance-linear-algebra"}
@@ -537,7 +603,14 @@ $$
 \hvbeta=(\mH^\mathsf T\mH)^{-1}\mH^\mathsf T\vc
 $$
 
-The residual is [orthogonal]{.alert} to the column space of $\mH$, so least squares removes the component of $f$ explained by the controls
+Sample covariances: $\widehat{\mSigma}_\eta=\mH^\mathsf T\mH/(n-1)$, $\widehat{\boldsymbol{\kappa}}=\mH^\mathsf T\vc/(n-1)$
+
+The residual is [orthogonal]{.alert} to the column space of $\mH$
+
+::: {.notes}
+Use an independent pilot to estimate beta
+if exact unbiasedness of the final IID estimator is required.
+:::
 
 ## Practical control-variate choices {.tree-marker-slide tree-marker="variance-reduction"}
 
@@ -570,10 +643,10 @@ $$
 If $Y=f(X_1,\ldots,X_d)$ and
 
 $$
-\widetilde Y=g(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
+Y_{\mathrm{CMC}}=g(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
 $$
 
-is analytic, estimate $\mu$ by sampling $g(\vX_{2:d})$ instead of $Y$
+is analytic, estimate $\mu$ by averaging $Y_{\mathrm{CMC},i}$ instead of $Y_i$
 
 [Analytically averaging]{.alert} over part of the randomness [reduces]{.alert} variance
 
@@ -723,8 +796,11 @@ If $\vA(\vX)$ has the same distribution as $\vX$, pair $f(\vX_i)$ with
 $f\bigl(\vA(\vX_i)\bigr)$:
 
 $$
-\hmu_{\mathrm{Anti},n}
-=\frac1{2n}\sum_{i=0}^{n-1}\left[f(\vX_i)+f\bigl(\vA(\vX_i)\bigr)\right]
+Y_{\mathrm{Anti}}=\{f(\vX)+f(\vA(\vX))\}/2
+$$
+
+$$
+\hmu_{\mathrm{Anti},n}=\frac1n\sum_{i=0}^{n-1}Y_{\mathrm{Anti},i}\qquad (n\text{ pairs})
 $$
 
 Examples (uniform-input pairing uses the composed integrand $h$):
@@ -734,7 +810,7 @@ Examples (uniform-input pairing uses the composed integrand $h$):
 \vA(\vX)&=-\vX,& \vX&\sim\Norm(\vzero,\mSigma)
 \end{align*}
 
-For IID starting samples, $\vX_i$ and $\vA(\vX_i)$ are [dependent]{.alert} within pairs; pairs are [independent]{.alert} across $i$
+[Dependent]{.alert} values within each pair; [independent]{.alert} pairs across $i$
 
 The variance is
 
@@ -764,39 +840,59 @@ For a symmetric distribution, this often reduces to reflection about the center
 with $f\bigl(A(X)\bigr)$?</span>
 :::
 
-## IID variance comparison {.tree-marker-slide tree-marker="variance-probability"}
+## IID variance comparison
 
-Let $\vX$ and $\vZ$ have target density $\varrho_{\mathrm{tar}}$ and proposal
-density $\varrho_{\mathrm{prop}}$, respectively
+$Y=f(\vX)$, $\vX\sim\varrho_{\mathrm{tar}}$, $\vZ\sim\varrho_{\mathrm{prop}}$;
+$w=\varrho_{\mathrm{tar}}/\varrho_{\mathrm{prop}}$
 
-Compare $n$ evaluations of $f$
+Use $n$ independent contributions, or $n/2$ independent antithetic pairs
 
-| Method | Contribution | Estimator variance for $n$ evaluations of $f$ |
-|:----|:---|:----|
-| Direct IID | $f(\vX)$ | $\var(f(\vX))/n$ |
-| Exact transport, $\vT(\vZ) \stackrel{d}{=} \vX$ | $f\bigl(\vT(\vZ)\bigr)$ | $\var(f(\vX))/n$ |
-| Importance sampling, $w(\vz)=\varrho_{\mathrm{tar}}(\vz)/\varrho_{\mathrm{prop}}(\vz)$ | $w(\vZ)f(\vZ)$ | $\var\{w(\vZ)f(\vZ)\}/n$ |
-| Control variate | $f(\vX)-\beta\eta_1(\vX)$ | $\var\{f(\vX)-\beta\eta_1(\vX)\}/n$ |
-| $n/2$ Antithetic pairs <br>$\vA(\vX) \stackrel{d}{=} \vX$ | $\{f(\vX)+f(\vA(\vX))\}/2$ | $\var(f(\vX))(1+\rho)/n$ <br>$\rho=\corr\{f(\vX),f(\vA(\vX))\}$|
+| Method | Contribution | Estimator variance |
+|:---|:---|:---|
+| Direct IID | $Y=f(\vX)$ | $\var(Y)/n$ |
+| Exact transport | $Y_T=f(\vT(\vZ))$ | $\var(Y)/n$ |
+| Importance sampling | $Y_{\mathrm{IS}}=w(\vZ)f(\vZ)$ | $\var(Y_{\mathrm{IS}})/n$ |
+| Control variate | $Y_{\mathrm{CV}}=Y-\vbeta^\mathsf T\boldsymbol{\eta}(\vX)$ | $\var(Y_{\mathrm{CV}})/n$ |
+| Conditional Monte Carlo | $Y_{\mathrm{CMC}}=\Ex(Y\mid V)$ | $\var(Y_{\mathrm{CMC}})/n\le\var(Y)/n$ |
+| Antithetic pairs | $Y_{\mathrm{Anti}}=\{Y+f(\vA(\vX))\}/2$ | $\var(Y)(1+\rho)/n$ |
 
-$\Ex[\eta_1(\vX)]=0$; $\beta$ is fixed or from an independent pilot;
-antithetic sampling requires even $n$
+[Equal sample counts]{.alert} need not mean equal computational [work]{.alert}
+
+---
+
+### Conditions behind the comparison
+
+- Exact transport: $\vT(\vZ)\stackrel d=\vX$
+- Importance sampling: proposal covers the required support
+- Control: $\Ex[\boldsymbol{\eta}(\vX)]=\vzero$; $\vbeta$ fixed or from an independent pilot
+- Conditioning: compute $\Ex(Y\mid V)$ analytically, then sample $V$
+- Antithetic: even $n$, $\vA(\vX)\stackrel d=\vX$;
+  $\rho=\corr\{Y,f(\vA(\vX))\}$
+
+::: {.notes}
+All formulas assume finite second moments and independent contributions or
+independent antithetic pairs. The antithetic row uses n evaluations of f;
+the other rows use n contributions, whose evaluation costs can differ.
+Conditional Monte Carlo may reduce dimension and avoid evaluating the full
+original function. Compare variance times cost per contribution when choosing
+between methods. Exact transport preserves the distribution of f(X).
+:::
 
 ---
 
 ### Beyond the IID variance formulas
 
-- Map, weight, and control calculations add work beyond evaluations of $f$
-- For deterministic or randomized low discrepancy points, error depends on
-  integrand variation and point structure; the IID formulas do not apply
+- Maps, weights, controls, and conditional expectations have different costs
+- Latin hypercubes and randomized low discrepancy points use dependent inputs
+- For low discrepancy sampling, error depends on integrand variation and point structure
+- Use independent replications to assess randomized designs
 
 ::: {.notes}
-Exact transport preserves the distribution of $f(\vX)$, so it has the same
-IID variance as direct target sampling, though it can be better than weighted
-importance sampling for a particular $f$. This does not say that every
-change of variables preserves variance: the Keister example changes the
-unit-cube integrand, including its Jacobian. The formulas assume finite
-second moments and independent replicates or independent antithetic pairs.
+The IID formulas do not apply to within-design sample variance for LHS or
+randomized low discrepancy sampling. Exact transport can be better than
+weighted importance sampling for a particular f; it does not imply that every
+change of variables preserves variance. The Keister example changes the
+unit-cube integrand, including its Jacobian.
 :::
 
 ## Latin hypercube sampling in one dimension {.tree-marker-slide tree-marker="variance-reduction"}
@@ -1187,7 +1283,7 @@ Two practical questions are
 \quad\text{for what $n$?}
 \end{align*}
 
-We want answers based only on the computed contributions $Y_i$ or $\widetilde Y_i$
+Use the computed contributions: $Y_i$, $Y_{\mathrm{IS},i}$, $Y_{\mathrm{CV},i}$, or $Y_{\mathrm{CMC},i}$
 
 - IID sampling: use a Central Limit Theorem interval when justified
 - Randomized low discrepancy sampling: use independent replications

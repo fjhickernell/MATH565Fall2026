@@ -99,6 +99,10 @@ Deck 01 Course Map synchronized.
   use `h` for composed uniform-input integrands. Retain `g(\vX)` for controls
   and subvectors or conditioning variables where appropriate. Exact transport
   preserves IID output variance; equal-mean weighted contributions need not.
+- In Improving Efficiency, label scalar contributions by method:
+  `Y_{\mathrm{IS}}`, `Y_{\mathrm{CV}}`, `Y_{\mathrm{CMC}}`,
+  `Y_{\mathrm{Anti}}`, and `Y_T` for exact transport. Use `Y_g` for the
+  opening general alternative; reserve unadorned `Y` for `f(\vX)`.
 - Preserve established slide anchors when notation in a mathematical heading
   changes, so callbacks from previously published decks remain valid.
 - Keep the [uniform-input, target-sample, and output roles](../AUTHOR_WORKFLOW.md#course-wide-simulation-notation)
