@@ -695,6 +695,7 @@ This deck
 <li><a href="#/structured-random-sampling">Structured Random Sampling</a></li>
 <li><a href="#/low-discrepancy-sampling">Low Discrepancy Sampling</a></li>
 <li><a href="#/big-ideas">Big Ideas</a></li>
+<li><a href="#/choose-the-method-for-the-task">Choose the Method for the Task</a></li>
 </ul>
 </div>
 </section>
@@ -721,7 +722,7 @@ Our plan here
 </h3>
 <p>Keep <span class="math inline">\(\mu=\Ex_{\mathrm{tar}}[f(\vX)]\)</span> fixed, using two complementary levers:</p>
 <ul>
-<li><span class="alert">First</span>, change the contribution: replace <span class="math inline">\(Y=f(\vX)\)</span> by an equal-mean alternative, such as a transformed or weighted <span class="math inline">\(g(\vZ)\)</span>, a control variate, or a conditional expectation</li>
+<li><span class="alert">First</span>, change the contribution: replace <span class="math inline">\(Y=f(\vX)\)</span> by an equal-mean alternative, such as a transformed or weighted <span class="math inline">\(Y_{g} = g(\vZ)\)</span>, a control variate, or a conditional expectation</li>
 <li><span class="alert">Then</span>, change how samples are chosen: arrange uniform inputs in antithetic pairs, strata, or low discrepancy patterns before mapping them to target-space samples</li>
 </ul>
 </section>
@@ -779,7 +780,7 @@ Our plan here
 <div class="key-point">
 <p>Equal <span class="alert">means</span> allow different output distributions and different <span class="alert">variances</span></p>
 </div>
-<p>For <span class="alert">randomized</span> low discrepancy inputs, dependence changes the variance formula</p>
+<p>For <span class="alert">randomized</span> low discrepancy inputs, dependence <span class="alert">changes</span> the variance formula</p>
 <aside class="notes">
 <p>The two methods need not be independent of one another for these individual variance formulas. Each method needs independent replicates internally. Compare computational costs as well as the variance of one contribution. Introduction showed that accepting some bias can reduce MSE; here we compare unbiased estimators. Degenerate zero-variance cases need no asymptotic rate.</p>
 <style type="text/css">
@@ -1013,7 +1014,46 @@ Y_{\mathrm{IS}}=g(\vZ)=f(\vZ)w(\vZ),\qquad \Ex(Y_{\mathrm{IS}})=\mu
 </section>
 <section class="slide level2">
 
-<h3 id="one-proposal-two-unbiased-estimators">One proposal, two unbiased estimators</h3>
+<h3 id="weighted-empirical-distributions">Weighted empirical distributions</h3>
+<p>As in <a href="03-markov-chain-monte-carlo.html#empirical-distributions">Markov Chain Monte Carlo: empirical distributions</a>, put mass at each sample point</p>
+<p>For <span class="math inline">\(\vZ_i\ \IIDsim\ F_{\mathrm{prop}}\)</span>, require <span class="math inline">\(\varrho_{\mathrm{prop}}&gt;0\)</span> wherever <span class="math inline">\(\varrho_{\mathrm{tar}}&gt;0\)</span></p>
+<p><span class="math display">\[\begin{align*}
+\widehat F_{n,w}
+&amp;=\frac{\sum_{i=0}^{n-1}w(\vZ_i)\,\delta_{\vZ_i}}
+        {\sum_{i=0}^{n-1}w(\vZ_i)},
+&amp; w(\vz)&amp;=\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{prop}}(\vz)},\\
+\int f(\vx)\,\dif\widehat F_{n,w}(\vx)
+&amp;=\frac{\sum_{i=0}^{n-1}w(\vZ_i)f(\vZ_i)}
+        {\sum_{i=0}^{n-1}w(\vZ_i)}
+&amp; &amp;\xrightarrow[n\to\infty]{\mathrm{a.s.}}\mu
+\end{align*}\]</span></p>
+<ul>
+<li><span class="alert">Normalized</span> weights sum to one; require a positive denominator</li>
+<li><span class="math inline">\(\widehat F_{n,w} \approx F_{\mathrm{tar}}\)</span>; generally <span class="alert">different</span> at finite <span class="math inline">\(n\)</span></li>
+<li>Self-normalized estimates: consistent, generally biased at finite <span class="math inline">\(n\)</span></li>
+</ul>
+<aside class="notes">
+<p>Use the same <span class="math inline">\(\widehat F_n\)</span> and point-mass <span class="math inline">\(\delta_{\vx_i}\)</span> notation as the empirical-distribution development in Markov Chain Monte Carlo, with the subscript <span class="math inline">\(w\)</span> recording the weights. The points still have the proposal law; weighting changes their empirical masses, not their locations or sampling law. The almost-sure limit assumes IID proposal draws, normalized target and proposal densities, target-support coverage, and <span class="math inline">\(\Ex_{\mathrm{tar}}|f(\vX)|&lt;\infty\)</span>. The denominator can be zero at finite <span class="math inline">\(n\)</span> if every sampled weight is zero.</p>
+<p>Without self-normalization, the weighted empirical measure is <span class="math display">\[\begin{align*}
+\widehat M_{n,w}&amp;=\frac1n\sum_{i=0}^{n-1}w(\vZ_i)\delta_{\vZ_i},\\
+\int f(\vx)\,\dif\widehat M_{n,w}(\vx)&amp;=\hmu_{\mathrm{IS},n},&amp;
+\Ex[\widehat M_{n,w}(A)]&amp;=F_{\mathrm{tar}}(A)
+\end{align*}\]</span> for measurable sets <span class="math inline">\(A\)</span>. Its total mass <span class="math inline">\(n^{-1}\sum_i w(\vZ_i)\)</span> has expectation one, but generally is not exactly one, so it need not be a probability measure. Ordinary importance sampling is unbiased for integrable <span class="math inline">\(f\)</span>; self-normalization produces a probability measure but generally loses finite-sample unbiasedness. Full support coverage is needed to approximate the whole target distribution, which is stronger than covering only the support of <span class="math inline">\(f\varrho_{\mathrm{tar}}\)</span> for one particular integral. A weighted empirical approximation to the target also does not imply that the scalar importance contribution <span class="math inline">\(f(\vZ)w(\vZ)\)</span> has the same distribution as <span class="math inline">\(f(\vX)\)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="one-proposal-two-unbiased-estimators">One proposal, three unbiased estimators</h3>
 <p><span class="math display">\[\begin{gather*}
 \varrho_{\mathrm{prop}}(z)=1,\qquad
 \varrho_{\mathrm{tar}}(x)=2x,\qquad 0&lt;x,z&lt;1,\\
@@ -1021,16 +1061,12 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1),\qquad
 \mu=\Ex_{\mathrm{tar}}[f(X)]
 \end{gather*}\]</span></p>
 <table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
 <th style="text-align: left;">Exact transport</th>
 <th style="text-align: left;">Importance sampling</th>
+<th style="text-align: left;"><a href="02-generating-samples.html#the-same-target-by-acceptancerejection">Acceptance–rejection</a></th>
 </tr>
 </thead>
 <tbody>
@@ -1038,25 +1074,48 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1),\qquad
 <td style="text-align: left;">Construction</td>
 <td style="text-align: left;"><span class="math inline">\(T(z)=\sqrt z\)</span></td>
 <td style="text-align: left;"><span class="math inline">\(w(z)=2z\)</span></td>
+<td style="text-align: left;">Accept <span class="math inline">\(X=Z\)</span> if <span class="math inline">\(V\le Z\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Alternative <span class="math inline">\(g(z)\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(f(\sqrt z)\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(2zf(z)\)</span></td>
+<td style="text-align: left;">Contribution</td>
+<td style="text-align: left;"><span class="math inline">\(f(\sqrt Z)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(2Zf(Z)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(f(X)\)</span> for accepted <span class="math inline">\(X\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Estimator</td>
 <td style="text-align: left;"><span class="math inline">\(\displaystyle\frac1n\sum_{i=0}^{n-1}f(\sqrt{Z_i})\)</span></td>
 <td style="text-align: left;"><span class="math inline">\(\displaystyle\frac1n\sum_{i=0}^{n-1}2Z_if(Z_i)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle\frac1n\sum_{i=0}^{n-1}f(X_i)\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Output distribution</td>
 <td style="text-align: left;">Same as <span class="math inline">\(Y=f(X)\)</span></td>
 <td style="text-align: left;">Generally different from <span class="math inline">\(Y\)</span></td>
+<td style="text-align: left;">Same as <span class="math inline">\(Y=f(X)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Proposal cost</td>
+<td style="text-align: left;"><span class="math inline">\(n\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(n\)</span></td>
+<td style="text-align: left;">Average <span class="math inline">\(2n\)</span> for <span class="math inline">\(n\)</span> accepted</td>
 </tr>
 </tbody>
 </table>
-<p><a href="02-generating-samples.html#acceptance-rejection-choosing-which-proposals-to-keep">Generating Samples: acceptance–rejection</a>: same proposal, keep <span class="math inline">\(Z\)</span> with probability <span class="math inline">\(Z\)</span></p>
+<p>Acceptance–rejection: independent <span class="math inline">\(V\sim\Unif(0,1)\)</span> for each proposal; continue until <span class="math inline">\(n\)</span> accepted points <span class="math inline">\(X_0,\ldots,X_{n-1}\)</span></p>
+<aside class="notes">
+<p>All three estimates are unbiased for the same target expectation when <span class="math inline">\(f\)</span> is integrable. The acceptance–rejection column links to the matching triangular target example in Generating Samples. Its envelope constant is <span class="math inline">\(M=2\)</span>, so the acceptance probability is <span class="math inline">\(1/2\)</span>. Accepted points are indexed separately from the proposal stream; continue drawing fresh independent proposal/decision pairs until exactly <span class="math inline">\(n\)</span> acceptances have been collected. The number of proposals is random, with mean <span class="math inline">\(2n\)</span>. The other two columns use exactly <span class="math inline">\(n\)</span> proposals. Thus equal numbers of averaged contributions do not mean equal proposal costs. Each rejection attempt also requires an independent decision uniform <span class="math inline">\(V\)</span>. The acceptance–rejection estimator here averages a fixed number of accepted points, not a random number obtained from a fixed proposal budget.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
@@ -1181,16 +1240,8 @@ Y_{\mathrm{IS}}&amp;=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[Y_{\mathrm{IS}}]=\m
 
 <ul>
 <li><a href="#/control-variates">Control variates</a></li>
-<li><a href="#/optimal-coefficients-from-covariances">Optimal coefficients from covariances</a></li>
-<li><a href="#/choosing-coefficients-by-least-squares">Choosing coefficients by least squares</a></li>
-<li><a href="#/practical-control-variate-choices">Practical control-variate choices</a></li>
 <li><a href="#/conditional-monte-carlo">Conditional Monte Carlo</a></li>
-<li><a href="#/conditional-density-estimation">Conditional density estimation</a></li>
-<li><a href="#/density-of-a-sum-of-uniforms">Density of a sum of uniforms</a></li>
-<li><a href="#/histograms-kde-and-conditional-density">Histograms, KDE, and conditional density</a></li>
 <li><a href="#/conditioning-an-asian-average">Conditioning an Asian average</a></li>
-<li><a href="#/conditional-density-of-an-asian-average">Conditional density of an Asian average</a></li>
-<li><a href="#/asian-call-payoff-distribution">Asian-call payoff distribution</a></li>
 </ul>
 </section>
 <section id="control-variates" class="slide level2 tree-marker-slide" data-tree-marker="variance-reduction">
@@ -1215,14 +1266,9 @@ Y_{\mathrm{CV}}=g(\vX)=f(\vX)-\vbeta^\mathsf T\boldsymbol{\eta}(\vX)
 <p>Choose <span class="math inline">\(\vbeta\)</span> to make <span class="math inline">\(\var(Y_{\mathrm{CV}})\)</span> as <span class="alert">small</span> as possible</p>
 </div>
 </section>
-<section id="optimal-coefficients-from-covariances" class="slide level2 tree-marker-slide" data-tree-marker="variance-linear-algebra">
-<h2>Optimal coefficients from covariances</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
-  <div class="tree-component__label" data-label-id="linear-algebra" style="--tree-left: 39%; --tree-top: 89%; --tree-align: center;">Linear<br>Algebra</div>
-</div>
+<section class="slide level2">
 
+<h3 id="optimal-coefficients-from-covariances">Optimal coefficients from covariances</h3>
 <p><span class="math inline">\(Y=f(\vX)\)</span>, <span class="math inline">\(\boldsymbol{\eta}=\boldsymbol{\eta}(\vX)\)</span>, <span class="math inline">\(\Ex(\boldsymbol{\eta})=\vzero\)</span></p>
 <p>Define the control covariance matrix and response–control covariances:</p>
 <p><span class="math display">\[\begin{align*}
@@ -1274,14 +1320,9 @@ Y_{\mathrm{CV}}=g(\vX)=f(\vX)-\vbeta^\mathsf T\boldsymbol{\eta}(\vX)
           display:block!important;
       }</style></aside>
 </section>
-<section id="choosing-coefficients-by-least-squares" class="slide level2 tree-marker-slide" data-tree-marker="variance-linear-algebra">
-<h2>Choosing coefficients by least squares</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
-  <div class="tree-component__label" data-label-id="linear-algebra" style="--tree-left: 39%; --tree-top: 89%; --tree-align: center;">Linear<br>Algebra</div>
-</div>
+<section class="slide level2">
 
+<h3 id="choosing-coefficients-by-least-squares">Choosing coefficients by least squares</h3>
 <p><span class="alert">Center</span> the response and control values:</p>
 <p><span class="math display">\[\begin{align*}
 y_i&amp;=f(\vx_i),&amp; c_i&amp;=y_i-\overline y,\\
@@ -1311,13 +1352,9 @@ H_{ij}&amp;=\eta_j(\vx_i)-\overline{\eta}_j
           display:block!important;
       }</style></aside>
 </section>
-<section id="practical-control-variate-choices" class="slide level2 tree-marker-slide" data-tree-marker="variance-reduction">
-<h2>Practical control-variate choices</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.1; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
-</div>
+<section class="slide level2">
 
+<h3 id="practical-control-variate-choices">Practical control-variate choices</h3>
 <ul>
 <li>Good controls are <span class="alert">inexpensive</span>, have known means, and are <span class="alert">strongly related</span> to <span class="math inline">\(f\)</span></li>
 <li>More controls can reduce the sample size needed for a target accuracy</li>
@@ -1353,13 +1390,9 @@ Y_{\mathrm{CMC}}=g(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
 <p>is analytic, estimate <span class="math inline">\(\mu\)</span> by averaging <span class="math inline">\(Y_{\mathrm{CMC},i}\)</span> instead of <span class="math inline">\(Y_i\)</span></p>
 <p><span class="alert">Analytically averaging</span> over part of the randomness <span class="alert">reduces</span> variance</p>
 </section>
-<section id="conditional-density-estimation" class="slide level2 tree-marker-slide" data-tree-marker="density-estimation">
-<h2>Conditional density estimation</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.1; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="density-estimation" style="--tree-left: 7%; --tree-top: 7%; --tree-align: center;">Density<br>Estimation</div>
-</div>
+<section class="slide level2">
 
+<h3 id="conditional-density-estimation">Conditional density estimation</h3>
 <p>Write the simulator on uniform inputs as <span class="math inline">\(Y=h(\vU)\)</span> with <span class="math inline">\(\vU\sim\Unif[0,1]^d\)</span></p>
 <p>Suppose <span class="math inline">\(h\)</span> is <span class="alert">increasing</span> in <span class="math inline">\(u_1\)</span> and</p>
 <p><span class="math display">\[
@@ -1375,13 +1408,9 @@ F_{Y\mid \vU_{2:d}}(y\mid \vu_{2:d})
 \end{align*}\]</span></p>
 <p>Thus a density value becomes an <span class="alert">expectation</span> of a conditional density</p>
 </section>
-<section id="density-of-a-sum-of-uniforms" class="slide level2 tree-marker-slide" data-tree-marker="density-estimation">
-<h2>Density of a sum of uniforms</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.1; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="density-estimation" style="--tree-left: 7%; --tree-top: 7%; --tree-align: center;">Density<br>Estimation</div>
-</div>
+<section class="slide level2">
 
+<h3 id="density-of-a-sum-of-uniforms">Density of a sum of uniforms</h3>
 <p>Let</p>
 <p><span class="math display">\[
 Y=\gamma_1U_1+\cdots+\gamma_dU_d,
@@ -1403,13 +1432,9 @@ g(y;\vu_{2:d})=\frac{y-\sum_{j=2}^d\gamma_ju_j}{\gamma_1}
 \]</span></p>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb">Conditional Monte Carlo notebook</a></p>
 </section>
-<section id="histograms-kde-and-conditional-density" class="slide level2 tree-marker-slide" data-tree-marker="density-estimation">
-<h2>Histograms, KDE, and conditional density</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.1; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="density-estimation" style="--tree-left: 7%; --tree-top: 7%; --tree-align: center;">Density<br>Estimation</div>
-</div>
+<section class="slide level2">
 
+<h3 id="histograms-kde-and-conditional-density">Histograms, KDE, and conditional density</h3>
 <p>Output samples <span class="math inline">\(Y_i\)</span>, equal-width bins <span class="math inline">\(I_k\)</span> of width <span class="math inline">\(b\)</span>, kernel <span class="math inline">\(\kappa\)</span> with <span class="math inline">\(\int\kappa=1\)</span></p>
 <p><span class="math display">\[\begin{align*}
 \widehat\varrho_{\mathrm{Hist}}(y)
@@ -1449,13 +1474,9 @@ C(\vR)&amp;=\frac{S_0}{d}\sum_{j=1}^d
 A&amp;=C(\vR)\exp(sZ_1),\qquad s=\sigma\sqrt{\Delta t}&gt;0
 \end{align*}\]</span></p>
 </section>
-<section id="conditional-density-of-an-asian-average" class="slide level2 tree-marker-slide" data-tree-marker="density-estimation">
-<h2>Conditional density of an Asian average</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.1; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="density-estimation" style="--tree-left: 7%; --tree-top: 7%; --tree-align: center;">Density<br>Estimation</div>
-</div>
+<section class="slide level2">
 
+<h3 id="conditional-density-of-an-asian-average">Conditional density of an Asian average</h3>
 <p>Given <span class="math inline">\(C\)</span>, the average <span class="math inline">\(A=C\exp(sZ_1)\)</span> is <span class="alert">lognormal</span><br> <span class="math inline">\(\phi\)</span> and <span class="math inline">\(\Phi\)</span>: standard normal density and CDF</p>
 <p>For <span class="math inline">\(a&gt;0\)</span>,</p>
 <p><span class="math display">\[\begin{align*}
@@ -1469,13 +1490,9 @@ F_{A\mid C}(a\mid C)&amp;=\Phi\!\left(\frac{\log(a/C)}s\right)\\
 <li>Notebook: weekly <span class="math inline">\(d=52\)</span>; compare CMC, histogram, and KDE at the selected <span class="math inline">\(n\)</span></li>
 </ul>
 </section>
-<section id="asian-call-payoff-distribution" class="slide level2 tree-marker-slide" data-tree-marker="quant-finance">
-<h2>Asian-call payoff distribution</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="qf" style="--tree-left: 5%; --tree-top: 33%; --tree-align: center;">Quantitative<br>Finance</div>
-</div>
+<section class="slide level2">
 
+<h3 id="asian-call-payoff-distribution">Asian-call payoff distribution</h3>
 <p>Discounted call payoff <span class="math inline">\(P=e^{-rT}(A-K)_+\)</span></p>
 <p><span class="math display">\[\begin{align*}
 \Prob(P=0)&amp;=F_A(K)
@@ -1488,6 +1505,35 @@ F_{A\mid C}(a\mid C)&amp;=\Phi\!\left(\frac{\log(a/C)}s\right)\\
 </div>
 <p>Ordinary KDE on all payoffs blurs the zero-payoff atom into a smooth bump</p>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb">Notebook: average density, payoff density, and CMC option price</a></p>
+</section>
+<section class="slide level2">
+
+<h3 id="combining-efficiency-methods">Combining efficiency methods</h3>
+<div class="key-point">
+<p><span class="alert">Usually yes</span>: combine compatible methods<br> Their gains need <span class="alert">neither add nor multiply</span></p>
+</div>
+<ul>
+<li>One method changes the contribution seen by the next; benefits may <span class="alert">overlap</span></li>
+<li>Refit controls and reconsider the proposal after changing the contribution</li>
+<li>Apply antithetic, stratified, or low discrepancy inputs to the resulting cube integrand</li>
+<li>Compare the <span class="alert">combined</span> method at equal computational work using independent replications</li>
+</ul>
+<p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb#Compare-independent-replications">Asian-option notebook: plain, drift, control, and both</a><br> Repeat the comparison with IID and randomized low discrepancy inputs</p>
+<aside class="notes">
+<p>This is a bridge from changing contributions to changing sampling designs. Students need not wait until the end of the deck for an answer to whether the methods can be combined. The Asian-option companion already combines importance sampling and control variates with IID or randomized low discrepancy inputs, and repeats the comparisons for the lookback payoff.</p>
+<p>There is no general rule that the separate reductions in variance add, or that their reduction factors multiply. Each method acts on the contribution remaining after the previous changes. For example, importance sampling alters the covariance with a control, and conditioning can remove variation that a control was already explaining. Refit controls for the resulting contribution; under importance sampling, weight the control consistently and retain its correct known mean. Conditional expectations must use the appropriate law. Antithetic maps must preserve the sampling law to which they are applied.</p>
+<p>For finite-variance contributions, exact conditioning cannot increase IID variance relative to the contribution being conditioned. Optimally chosen population control coefficients cannot increase IID variance because zero coefficients remain available. These guarantees do not make the separate gains additive or multiplicative, and do not guarantee lower computational cost. Estimated coefficients, an unsuitable importance proposal, or a sampling design that interacts poorly with the new integrand may give less benefit or worse performance. Low discrepancy performance depends on the resulting cube integrand and cannot be inferred from IID variance alone. Assess the final estimator, include pilot and transformation work, and use independent replications rather than within-design IID error formulas for dependent inputs.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
 <section id="structured-random-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="variance-reduction">
@@ -1518,7 +1564,7 @@ F_{A\mid C}(a\mid C)&amp;=\Phi\!\left(\frac{\log(a/C)}s\right)\\
 Y_{\mathrm{Anti}}=\{f(\vX)+f(\vA(\vX))\}/2
 \]</span></p>
 <p><span class="math display">\[
-\hmu_{\mathrm{Anti},n}=\frac1n\sum_{i=0}^{n-1}Y_{\mathrm{Anti},i}\qquad (n\text{ pairs})
+\hmu_{\mathrm{Anti},n}=\frac1m\sum_{i=0}^{m-1}Y_{\mathrm{Anti},i},\qquad n=2m\text{ evaluations}
 \]</span></p>
 <p>Examples (uniform-input pairing uses the composed integrand <span class="math inline">\(h\)</span>):</p>
 <p><span class="math display">\[\begin{align*}
@@ -1529,10 +1575,10 @@ Y_{\mathrm{Anti}}=\{f(\vX)+f(\vA(\vX))\}/2
 <p>The variance is</p>
 <p><span class="math display">\[
 \var(\hmu_{\mathrm{Anti},n})
-=\frac{\var\{f(\vX)\}}{2n}
+=\frac{\var\{f(\vX)\}}{n}
 \left[1+\corr\{f(\vX),f(\vA(\vX))\}\right]
 \]</span></p>
-<p>Antithetic sampling helps when the paired function values are <span class="alert">negatively</span> correlated</p>
+<p>Antithetic sampling helps with <span class="alert">negatively</span> correlated pairs · <a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb#Antithetic-pairs-at-equal-payoff-cost">Notebook comparison</a></p>
 </section>
 <section id="constructing-an-antithetic-variate" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
 <h2>Constructing an antithetic variate</h2>
@@ -1720,7 +1766,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="0cbbf2d1" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="948ece75" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2224,6 +2270,45 @@ i=(\cdots i_2i_1i_0)_b
 <div class="key-point">
 <p>Method choice depends on <span class="alert">error</span>, <span class="alert">cost</span>, and a credible <span class="alert">stopping rule</span></p>
 </div>
+</section>
+
+<section id="choose-the-method-for-the-task" class="title-slide slide level1 center" data-state="goldborder">
+<h1>Choose the Method for the Task</h1>
+<ul>
+<li><span class="alert">Task</span>: generate samples <span class="math inline">\(\vX_i\)</span>, evaluate contributions <span class="math inline">\(Y_i\)</span>, assess error</li>
+<li><span class="alert">Cost–benefit</span>: compare total work for the required accuracy
+<ul>
+<li>Setup</li>
+<li>Pilots</li>
+<li>Generation</li>
+<li>Transforms</li>
+<li>Weights</li>
+<li>Evaluation</li>
+</ul></li>
+<li><span class="alert">Use</span>
+<ul>
+<li>Mean requires the correct <span class="alert">expectation</span></li>
+<li>Density, probability, or quantile requires the appropriate <span class="alert">distributional</span> calculation</li>
+</ul></li>
+</ul>
+<div class="key-point">
+<p>Additional machinery must <span class="alert">earn its cost</span><br> Choose the complete method by <span class="alert">accuracy per unit of work</span>, for the intended output</p>
+</div>
+<aside class="notes">
+<p>The gamma convention here is shape k and rate lambda; the sum-of-exponentials construction requires a positive integer shape. The quantile construction uses one uniform input and a generally numerical inverse CDF, whereas the sum uses k independent uniforms and k logarithms. Benchmark the actual implementations rather than assuming either is faster. For IID draws the two constructions produce the same target law and hence the same distribution of f(X), assuming exact transforms; their costs differ. With low discrepancy inputs, dimension and smoothness also affect integration error.</p>
+<p>Define the desired output before choosing a method. For an unbiased IID mean estimator with finite variance and per-contribution cost c, ignoring setup, work to reach RMSE epsilon is approximately c Var(Y)/epsilon^2. Include setup, pilot fitting, sampling, transformations, and evaluation in the actual budget. A variance reduction alone does not establish an overall efficiency gain; compare complete estimators at the required accuracy. Dependent designs, adaptive stopping, density estimation, and quantiles require their appropriate error assessment, not an automatic substitution into this IID formula.</p>
+<p>Probability is itself an expectation of an indicator, so one does not always need unweighted target draws to estimate it. Importance weights can estimate probabilities and CDFs; an appropriately normalized weighted empirical CDF can be inverted for quantiles. Conditional methods can estimate probabilities and densities directly, as the Asian example shows. These methods need valid weights or conditional formulas for the requested distributional quantity. A control-adjusted or weighted scalar contribution with the correct mean does not generally have the original output distribution; do not use its raw histogram or quantiles as those of the original output. If reusable unweighted target samples are required, choose a method that actually produces them.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 
 <section id="what-comes-next" class="title-slide slide level1 center">

@@ -375,15 +375,18 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="course-outline" class="level2">
 <h2 class="anchored" data-anchor-id="course-outline">Course Outline</h2>
-<p>Hours are approximate 50-minute classroom hours; each 75-minute class meeting counts as 1.5 hours.</p>
+<p>Hours are approximate 50-minute classroom hours; each 75-minute class meeting counts as 1.5 hours. The outline allocates about 40 hours, including projected coverage for the remaining units.</p>
 <details>
 <summary>
 <strong>Introduction</strong> — 5 hours
 </summary>
+<p><a href="slides/01-introduction.html">Introduction slides</a></p>
 <ul>
-<li>What is a Monte Carlo method?</li>
+<li>Monte Carlo simulation for uncertainty</li>
 <li>Probability review</li>
-<li>Point and interval estimators of means, variances, probability distribution functions, and quantile functions</li>
+<li>Sampling schemes, estimators, and estimates</li>
+<li>Bias, variance, and mean squared error</li>
+<li>Central limit theorem and confidence intervals</li>
 <li>Conditional Monte Carlo</li>
 </ul>
 </details>
@@ -391,46 +394,55 @@ ul.task-list li input[type="checkbox"] {
 <summary>
 <strong>Generating Samples</strong> — 5 hours
 </summary>
+<p><a href="slides/02-generating-samples.html">Generating Samples slides</a></p>
 <ul>
-<li>Pseudo-random numbers</li>
-<li>Random vectors with different distributions</li>
+<li>Pseudo-random numbers and quantile transforms</li>
+<li>Discrete, continuous, and mixture distributions</li>
+<li>Multivariate normal sampling: Cholesky and PCA</li>
+<li>Brownian motion, asset paths, and option payoffs</li>
 <li>Low discrepancy sampling</li>
-<li>Acceptance-rejection sampling</li>
+<li>Transport maps and acceptance–rejection</li>
 </ul>
 </details>
 <details>
 <summary>
-<strong>Markov Chain Monte Carlo + Discrepancy</strong> — 9 hours
+<strong>Markov Chain Monte Carlo and Discrepancy</strong> — 8 hours
 </summary>
+<p><a href="slides/03-markov-chain-monte-carlo.html">Markov Chain Monte Carlo slides</a></p>
 <ul>
-<li>Markov chains</li>
-<li>Metropolis-Hastings</li>
-<li>Kernel-based discrepancies and maximum mean discrepancy</li>
-<li>Discrepancy as a measure of cubature error</li>
-<li>Sample quality</li>
-<li>Gibbs sampler</li>
-<li>Convergence diagnostics</li>
-<li>Error estimation</li>
+<li>Markov chains and Metropolis–Hastings</li>
+<li>Tuning, diagnostics, and parallel tempering</li>
+<li>Kernel discrepancy and sample quality</li>
+<li>Discrepancy and integration error</li>
+<li>Likelihood and Bayesian inference</li>
+<li>Queueing and event-driven simulation</li>
 </ul>
 </details>
-<details>
+<details open="">
 <summary>
-<strong>Enhancing Efficiency</strong> — 15 hours
+<strong>Improving Efficiency</strong> — 16 hours
 </summary>
+<p><a href="slides/04-improving-efficiency.html">Improving Efficiency slides</a></p>
 <ul>
+<li>Transformations and importance sampling</li>
 <li>Control variates</li>
-<li>Importance sampling</li>
-<li>Antithetic variates</li>
-<li>Stratified sampling and Latin hypercube</li>
-<li>Quasi-Monte Carlo sampling</li>
+<li>Conditional Monte Carlo and density estimation</li>
+<li>Antithetic sampling</li>
+<li>Randomized low discrepancy sampling</li>
+<li>Latin hypercube sampling (optional)</li>
+<li>Asian and lookback option comparisons</li>
+<li>Error assessment, stopping criteria, and computational cost</li>
 </ul>
 </details>
 <details>
 <summary>
 <strong>Selected Topics</strong> — 6 hours
 </summary>
+<p><a href="slides/05-selected-topics.html">Selected Topics slides</a></p>
 <ul>
-<li><em>(TBA)</em></li>
+<li>Parallel computing</li>
+<li>Gradient and stochastic-gradient descent</li>
+<li>Two-level and multilevel Monte Carlo</li>
 </ul>
 </details>
 </section>
