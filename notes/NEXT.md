@@ -7,12 +7,48 @@
    density examples, including sums of uniforms and Asian-option densities.
    Latin hypercube sampling will be skipped, as announced in class. The
    lookback saved-output comparison was interrupted and remains incomplete.
+   The lookback notebook now repeats the Asian-call comparison: plain,
+   drift, control, and both for IID and the selected Sobol', lattice, or
+   Halton sampler, with its own pilot-fitted coefficients and an SD plot.
+   Full clean-kernel runs pass for all three samplers; the saved Sobol'
+   plot is visually checked and the payoff agrees with QMCPy.
+   Review this expanded comparison with the instructor; the interrupted
+   in-class comparison still remains to be taught.
+   The efficiency audit refinements are implemented: consistent antithetic
+   evaluation counts, IID antithetic comparisons for both options, timed
+   accuracy/work tables (with fresh independent pilots charged to controlled
+   estimates), empirical-distribution notation, and shorter teaching prose.
+   Asian density/CDF evaluation now uses blocks, preserving n_finance=2**18.
+   All five companions pass fresh pinned-kernel execution; Asian Sobol',
+   lattice, and Halton variants are verified. The Course Outline is reconciled
+   through October 6: Introduction 5 hours, Generating Samples 5 hours,
+   MCMC/discrepancy about 8 hours, with projected allocations of 16 hours
+   for Improving Efficiency and 6 for Selected Topics (40 hours total).
+   The first three allocations are independently rounded mixed-meeting
+   estimates, excluding Test 1. Efficiency remains in progress; LHS is optional.
+   Source and saved outputs are included in the October 8 checkpoint;
+   its remote build and deployment remain to be verified.
    The schedule and lecture ledger are reconciled through October 6. The
    October 8 single-occurrence Illinois Tech calendar note is saved and
    verified in Calendar and Fantastical for PH 109, 10:00–11:15 AM Chicago.
    These schedule and handoff changes are included in the earlier October 7
    checkpoint; its publishing workflow succeeded.
    Review the revised QMCPy companions and Deck 04 density slides before class.
+   Importance sampling now includes a weighted empirical-distribution
+   continuation using the discrepancy notes' notation, with normalized
+   weights, consistency, and finite-sample bias distinguished from ordinary
+   unbiased importance sampling in presenter notes. The triangular-target
+   comparison now includes acceptance–rejection, linked to Generating
+   Samples, with the average proposal cost for a fixed accepted sample size.
+   Control Variates and Conditioning now has three main slides: control
+   variates, conditional Monte Carlo, and conditioning an Asian average;
+   supporting derivations and examples are marker-free continuations.
+   A closing continuation before Structured Random Sampling explains that
+   compatible methods can usually be combined, but their gains need not
+   add or multiply; it links the Asian-option comparisons. A closing gold-border
+   synthesis organizes method choice by task, total cost for accuracy, and
+   intended output, including gamma quantile versus sums of exponentials
+   and the distinction between a mean contribution and a target distribution.
    The IID variance comparison now includes conditional Monte Carlo and
    method-specific outputs Y_IS, Y_CV, Y_CMC, Y_Anti, and Y_T. The opening
    uses Y_g for a general alternative; no tilde-Y notation remains.
@@ -21,8 +57,8 @@
    give the one-control case, and connect population covariances to the pilot
    least-squares fit. All affected slides pass typesetting, internal-link,
    and layout checks at 1600×1000 and 1200×800. These refinements are included
-   in the October 7 efficiency checkpoint; remote deployment and instructor
-   review remain to be verified.
+   in the October 7 efficiency checkpoint; its publishing and Pages workflows
+   succeeded. Instructor review remains in progress.
    Generating Samples offers lattice/Sobol' (saved lattice outputs). Asian
    Option defaults to Sobol' with lattice/Halton alternatives throughout the
    plain/drift/control/both, lookback, and stopping comparisons; preserve d=52,

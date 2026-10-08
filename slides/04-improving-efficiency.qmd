@@ -53,6 +53,7 @@ Reducing [variance]{.alert} (or [variation]{.alert}) <br>per unit of [work]{.ale
 - [Structured Random Sampling](#structured-random-sampling)
 - [Low Discrepancy Sampling](#low-discrepancy-sampling)
 - [Big Ideas](#big-ideas)
+- [Choose the Method for the Task](#choose-the-method-for-the-task)
 :::
 
 # From Sampling to Efficient Estimation {.tree-marker-slide tree-marker="variance-reduction"}
@@ -70,7 +71,7 @@ $\vU\sim\Unif([0,1]^d),\quad \vZ\sim\varrho_{\mathrm{prop}},\quad
 
 Keep $\mu=\Ex_{\mathrm{tar}}[f(\vX)]$ fixed, using two complementary levers:
 
-- [First]{.alert}, change the contribution: replace $Y=f(\vX)$ by an equal-mean alternative, such as a transformed or weighted $g(\vZ)$, a control variate, or a conditional expectation
+- [First]{.alert}, change the contribution: replace $Y=f(\vX)$ by an equal-mean alternative, such as a transformed or weighted $Y_{g} = g(\vZ)$, a control variate, or a conditional expectation
 - [Then]{.alert}, change how samples are chosen: arrange uniform inputs in antithetic pairs, strata, or low discrepancy patterns before mapping them to target-space samples
 
 # Transformations and Importance Sampling {.tree-marker-slide tree-marker="analysis-importance"}
@@ -119,7 +120,7 @@ Their MSEs equal their variances; IID RMSE is [$\Order(n^{-1/2})$]{.alert}
 Equal [means]{.alert} allow different output distributions and different [variances]{.alert}
 :::
 
-For [randomized]{.alert} low discrepancy inputs, dependence changes the variance formula
+For [randomized]{.alert} low discrepancy inputs, dependence [changes]{.alert} the variance formula
 
 ::: {.notes}
 The two methods need not be independent of one another for these individual
@@ -342,7 +343,56 @@ $w$ is the [weight]{.alert} function; $W=w(\vZ)$ is its random value
 
 ---
 
-### One proposal, two unbiased estimators
+### Weighted empirical distributions {#weighted-empirical-distributions}
+
+As in [Markov Chain Monte Carlo: empirical distributions]({{< meta decks.d03.file >}}#empirical-distributions), put mass at each sample point
+
+For $\vZ_i\ \IIDsim\ F_{\mathrm{prop}}$, require $\varrho_{\mathrm{prop}}>0$ wherever $\varrho_{\mathrm{tar}}>0$
+
+\begin{align*}
+\widehat F_{n,w}
+&=\frac{\sum_{i=0}^{n-1}w(\vZ_i)\,\delta_{\vZ_i}}
+        {\sum_{i=0}^{n-1}w(\vZ_i)},
+& w(\vz)&=\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{prop}}(\vz)},\\
+\int f(\vx)\,\dif\widehat F_{n,w}(\vx)
+&=\frac{\sum_{i=0}^{n-1}w(\vZ_i)f(\vZ_i)}
+        {\sum_{i=0}^{n-1}w(\vZ_i)}
+& &\xrightarrow[n\to\infty]{\mathrm{a.s.}}\mu
+\end{align*}
+
+- [Normalized]{.alert} weights sum to one; require a positive denominator
+- $\widehat F_{n,w} \approx F_{\mathrm{tar}}$; generally [different]{.alert} at finite $n$
+- Self-normalized estimates: consistent, generally biased at finite $n$
+
+::: {.notes}
+Use the same $\widehat F_n$ and point-mass $\delta_{\vx_i}$ notation as the
+empirical-distribution development in Markov Chain Monte Carlo, with the
+subscript $w$ recording the weights. The points still have the proposal law;
+weighting changes their empirical masses, not their locations or sampling law.
+The almost-sure limit assumes IID proposal draws, normalized target and proposal
+densities, target-support coverage, and $\Ex_{\mathrm{tar}}|f(\vX)|<\infty$.
+The denominator can be zero at finite $n$ if every sampled weight is zero.
+
+Without self-normalization, the weighted empirical measure is
+\begin{align*}
+\widehat M_{n,w}&=\frac1n\sum_{i=0}^{n-1}w(\vZ_i)\delta_{\vZ_i},\\
+\int f(\vx)\,\dif\widehat M_{n,w}(\vx)&=\hmu_{\mathrm{IS},n},&
+\Ex[\widehat M_{n,w}(A)]&=F_{\mathrm{tar}}(A)
+\end{align*}
+for measurable sets $A$. Its total mass $n^{-1}\sum_i w(\vZ_i)$ has expectation
+one, but generally is not exactly one, so it need not be a probability measure.
+Ordinary importance sampling is unbiased for integrable $f$; self-normalization
+produces a probability measure but generally loses finite-sample unbiasedness.
+Full support coverage is needed to approximate the whole target distribution,
+which is stronger than covering only the support of $f\varrho_{\mathrm{tar}}$
+for one particular integral. A weighted empirical approximation to the target
+also does not imply that the scalar importance contribution $f(\vZ)w(\vZ)$
+has the same distribution as $f(\vX)$.
+:::
+
+---
+
+### One proposal, three unbiased estimators {#one-proposal-two-unbiased-estimators}
 
 \begin{gather*}
 \varrho_{\mathrm{prop}}(z)=1,\qquad
@@ -351,14 +401,29 @@ Z_0,\ldots,Z_{n-1}\ \IIDsim\ \Unif(0,1),\qquad
 \mu=\Ex_{\mathrm{tar}}[f(X)]
 \end{gather*}
 
-| | Exact transport | Importance sampling |
-|:---|:---|:---|
-| Construction | $T(z)=\sqrt z$ | $w(z)=2z$ |
-| Alternative $g(z)$ | $f(\sqrt z)$ | $2zf(z)$ |
-| Estimator | $\displaystyle\frac1n\sum_{i=0}^{n-1}f(\sqrt{Z_i})$ | $\displaystyle\frac1n\sum_{i=0}^{n-1}2Z_if(Z_i)$ |
-| Output distribution | Same as $Y=f(X)$ | Generally different from $Y$ |
+| | Exact transport | Importance sampling | [Acceptance–rejection]({{< meta decks.d02.file >}}#the-same-target-by-acceptancerejection) |
+|:---|:---|:---|:---|
+| Construction | $T(z)=\sqrt z$ | $w(z)=2z$ | Accept $X=Z$ if $V\le Z$ |
+| Contribution | $f(\sqrt Z)$ | $2Zf(Z)$ | $f(X)$ for accepted $X$ |
+| Estimator | $\displaystyle\frac1n\sum_{i=0}^{n-1}f(\sqrt{Z_i})$ | $\displaystyle\frac1n\sum_{i=0}^{n-1}2Z_if(Z_i)$ | $\displaystyle\frac1n\sum_{i=0}^{n-1}f(X_i)$ |
+| Output distribution | Same as $Y=f(X)$ | Generally different from $Y$ | Same as $Y=f(X)$ |
+| Proposal cost | $n$ | $n$ | Average $2n$ for $n$ accepted |
 
-[Generating Samples: acceptance–rejection]({{< meta decks.d02.file >}}#acceptance-rejection-choosing-which-proposals-to-keep): same proposal, keep $Z$ with probability $Z$
+Acceptance–rejection: independent $V\sim\Unif(0,1)$ for each proposal; continue until $n$ accepted points $X_0,\ldots,X_{n-1}$
+
+::: {.notes}
+All three estimates are unbiased for the same target expectation when $f$ is
+integrable. The acceptance–rejection column links to the matching triangular
+target example in Generating Samples. Its envelope constant is $M=2$, so the
+acceptance probability is $1/2$. Accepted points are indexed separately from
+the proposal stream; continue drawing fresh independent proposal/decision
+pairs until exactly $n$ acceptances have been collected. The number of
+proposals is random, with mean $2n$. The other two columns use exactly $n$
+proposals. Thus equal numbers of averaged contributions do not mean equal
+proposal costs. Each rejection attempt also requires an independent decision
+uniform $V$. The acceptance–rejection estimator here averages a fixed number
+of accepted points, not a random number obtained from a fixed proposal budget.
+:::
 
 ---
 
@@ -487,16 +552,8 @@ Place more samples where the [magnitude]{.alert} of the integrand times the targ
 # Control Variates and Conditioning {.tree-marker-slide tree-marker="variance-reduction"}
 
 - [Control variates](#control-variates)
-- [Optimal coefficients from covariances](#optimal-coefficients-from-covariances)
-- [Choosing coefficients by least squares](#choosing-coefficients-by-least-squares)
-- [Practical control-variate choices](#practical-control-variate-choices)
 - [Conditional Monte Carlo](#conditional-monte-carlo)
-- [Conditional density estimation](#conditional-density-estimation)
-- [Density of a sum of uniforms](#density-of-a-sum-of-uniforms)
-- [Histograms, KDE, and conditional density](#histograms-kde-and-conditional-density)
 - [Conditioning an Asian average](#conditioning-an-asian-average)
-- [Conditional density of an Asian average](#conditional-density-of-an-asian-average)
-- [Asian-call payoff distribution](#asian-call-payoff-distribution)
 
 ## Control variates {.tree-marker-slide tree-marker="variance-reduction"}
 
@@ -522,7 +579,9 @@ is unbiased
 Choose $\vbeta$ to make $\var(Y_{\mathrm{CV}})$ as [small]{.alert} as possible
 :::
 
-## Optimal coefficients from covariances {.tree-marker-slide tree-marker="variance-linear-algebra"}
+---
+
+### Optimal coefficients from covariances
 
 $Y=f(\vX)$, $\boldsymbol{\eta}=\boldsymbol{\eta}(\vX)$, $\Ex(\boldsymbol{\eta})=\vzero$
 
@@ -582,7 +641,9 @@ uncorrelated with every control. In practice, solve the covariance system
 rather than explicitly forming the inverse.
 :::
 
-## Choosing coefficients by least squares {.tree-marker-slide tree-marker="variance-linear-algebra"}
+---
+
+### Choosing coefficients by least squares
 
 [Center]{.alert} the response and control values:
 
@@ -612,7 +673,9 @@ Use an independent pilot to estimate beta
 if exact unbiasedness of the final IID estimator is required.
 :::
 
-## Practical control-variate choices {.tree-marker-slide tree-marker="variance-reduction"}
+---
+
+### Practical control-variate choices
 
 - Good controls are [inexpensive]{.alert}, have known means, and are [strongly related]{.alert} to $f$
 - More controls can reduce the sample size needed for a target accuracy
@@ -650,7 +713,9 @@ is analytic, estimate $\mu$ by averaging $Y_{\mathrm{CMC},i}$ instead of $Y_i$
 
 [Analytically averaging]{.alert} over part of the randomness [reduces]{.alert} variance
 
-## Conditional density estimation {.tree-marker-slide tree-marker="density-estimation"}
+---
+
+### Conditional density estimation
 
 Write the simulator on uniform inputs as $Y=h(\vU)$ with $\vU\sim\Unif[0,1]^d$
 
@@ -673,7 +738,9 @@ F_{Y\mid \vU_{2:d}}(y\mid \vu_{2:d})
 
 Thus a density value becomes an [expectation]{.alert} of a conditional density
 
-## Density of a sum of uniforms {.tree-marker-slide tree-marker="density-estimation"}
+---
+
+### Density of a sum of uniforms
 
 Let
 
@@ -704,7 +771,9 @@ $$
 [Conditional Monte Carlo notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb)
 
 
-## Histograms, KDE, and conditional density {.tree-marker-slide tree-marker="density-estimation"}
+---
+
+### Histograms, KDE, and conditional density
 
 Output samples $Y_i$, equal-width bins $I_k$ of width $b$, kernel $\kappa$ with $\int\kappa=1$
 
@@ -746,7 +815,9 @@ C(\vR)&=\frac{S_0}{d}\sum_{j=1}^d
 A&=C(\vR)\exp(sZ_1),\qquad s=\sigma\sqrt{\Delta t}>0
 \end{align*}
 
-## Conditional density of an Asian average {.tree-marker-slide tree-marker="density-estimation"}
+---
+
+### Conditional density of an Asian average
 
 Given $C$, the average $A=C\exp(sZ_1)$ is [lognormal]{.alert}<br>
 $\phi$ and $\Phi$: standard normal density and CDF
@@ -763,7 +834,9 @@ F_{A\mid C}(a\mid C)&=\Phi\!\left(\frac{\log(a/C)}s\right)\\
 - Average conditional densities; no exact arithmetic-Asian density needed
 - Notebook: weekly $d=52$; compare CMC, histogram, and KDE at the selected $n$
 
-## Asian-call payoff distribution {.tree-marker-slide tree-marker="quant-finance"}
+---
+
+### Asian-call payoff distribution
 
 Discounted call payoff $P=e^{-rT}(A-K)_+$
 
@@ -781,6 +854,53 @@ The [atom at zero]{.alert} and the density on positive payoffs are separate part
 Ordinary KDE on all payoffs blurs the zero-payoff atom into a smooth bump
 
 [Notebook: average density, payoff density, and CMC option price](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb)
+
+---
+
+### Combining efficiency methods {#combining-efficiency-methods}
+
+::: {.key-point}
+[Usually yes]{.alert}: combine compatible methods<br>
+Their gains need [neither add nor multiply]{.alert}
+:::
+
+- One method changes the contribution seen by the next; benefits may [overlap]{.alert}
+- Refit controls and reconsider the proposal after changing the contribution
+- Apply antithetic, stratified, or low discrepancy inputs to the resulting cube integrand
+- Compare the [combined]{.alert} method at equal computational work using independent replications
+
+[Asian-option notebook: plain, drift, control, and both](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb#Compare-independent-replications)<br>
+Repeat the comparison with IID and randomized low discrepancy inputs
+
+::: {.notes}
+This is a bridge from changing contributions to changing sampling designs.
+Students need not wait until the end of the deck for an answer to whether the
+methods can be combined. The Asian-option companion already combines
+importance sampling and control variates with IID or randomized low
+discrepancy inputs, and repeats the comparisons for the lookback payoff.
+
+There is no general rule that the separate reductions in variance add, or
+that their reduction factors multiply. Each method acts on the contribution
+remaining after the previous changes. For example, importance sampling alters
+the covariance with a control, and conditioning can remove variation that a
+control was already explaining. Refit controls for the resulting contribution;
+under importance sampling, weight the control consistently and retain its
+correct known mean. Conditional expectations must use the appropriate law.
+Antithetic maps must preserve the sampling law to which they are applied.
+
+For finite-variance contributions, exact conditioning cannot increase IID
+variance relative to the contribution being conditioned. Optimally chosen
+population control coefficients cannot increase IID variance because zero
+coefficients remain available. These guarantees do not make the separate
+gains additive or multiplicative, and do not guarantee lower computational
+cost. Estimated coefficients, an unsuitable importance proposal, or a
+sampling design that interacts poorly with the new integrand may give less
+benefit or worse performance. Low discrepancy performance depends on the
+resulting cube integrand and cannot be inferred from IID variance alone.
+Assess the final estimator, include pilot and transformation work, and use
+independent replications rather than within-design IID error formulas for
+dependent inputs.
+:::
 
 # Structured Random Sampling {.tree-marker-slide tree-marker="variance-reduction"}
 
@@ -800,7 +920,7 @@ Y_{\mathrm{Anti}}=\{f(\vX)+f(\vA(\vX))\}/2
 $$
 
 $$
-\hmu_{\mathrm{Anti},n}=\frac1n\sum_{i=0}^{n-1}Y_{\mathrm{Anti},i}\qquad (n\text{ pairs})
+\hmu_{\mathrm{Anti},n}=\frac1m\sum_{i=0}^{m-1}Y_{\mathrm{Anti},i},\qquad n=2m\text{ evaluations}
 $$
 
 Examples (uniform-input pairing uses the composed integrand $h$):
@@ -816,11 +936,11 @@ The variance is
 
 $$
 \var(\hmu_{\mathrm{Anti},n})
-=\frac{\var\{f(\vX)\}}{2n}
+=\frac{\var\{f(\vX)\}}{n}
 \left[1+\corr\{f(\vX),f(\vA(\vX))\}\right]
 $$
 
-Antithetic sampling helps when the paired function values are [negatively]{.alert} correlated
+Antithetic sampling helps with [negatively]{.alert} correlated pairs · [Notebook comparison](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb#Antithetic-pairs-at-equal-payoff-cost)
 
 ## Constructing an antithetic variate {.tree-marker-slide tree-marker="random-generation"}
 
@@ -1345,6 +1465,57 @@ A complete path from [model]{.alert} to efficient [estimate]{.alert}
 
 ::: {.key-point}
 Method choice depends on [error]{.alert}, [cost]{.alert}, and a credible [stopping rule]{.alert}
+:::
+
+# Choose the Method for the Task {data-state="goldborder"}
+
+- [Task]{.alert}: generate samples $\vX_i$, evaluate contributions $Y_i$, assess error
+- [Cost–benefit]{.alert}: compare total work for the required accuracy
+    - Setup
+    - Pilots
+    - Generation
+    - Transforms
+    - Weights
+    - Evaluation
+- [Use]{.alert}
+    - Mean requires the correct [expectation]{.alert}
+    - Density, probability, or quantile requires the appropriate [distributional]{.alert} calculation
+
+
+::: {.key-point}
+Additional machinery must [earn its cost]{.alert}<br>
+Choose the complete method by [accuracy per unit of work]{.alert}, for the intended output
+:::
+
+::: {.notes}
+The gamma convention here is shape k and rate lambda; the sum-of-exponentials
+construction requires a positive integer shape. The quantile construction uses
+one uniform input and a generally numerical inverse CDF, whereas the sum uses
+k independent uniforms and k logarithms. Benchmark the actual implementations
+rather than assuming either is faster. For IID draws the two constructions
+produce the same target law and hence the same distribution of f(X), assuming
+exact transforms; their costs differ. With low discrepancy inputs, dimension
+and smoothness also affect integration error.
+
+Define the desired output before choosing a method. For an unbiased IID mean
+estimator with finite variance and per-contribution cost c, ignoring setup,
+work to reach RMSE epsilon is approximately c Var(Y)/epsilon^2. Include setup,
+pilot fitting, sampling, transformations, and evaluation in the actual budget.
+A variance reduction alone does not establish an overall efficiency gain;
+compare complete estimators at the required accuracy. Dependent designs,
+adaptive stopping, density estimation, and quantiles require their appropriate
+error assessment, not an automatic substitution into this IID formula.
+
+Probability is itself an expectation of an indicator, so one does not always
+need unweighted target draws to estimate it. Importance weights can estimate
+probabilities and CDFs; an appropriately normalized weighted empirical CDF can
+be inverted for quantiles. Conditional methods can estimate probabilities and
+densities directly, as the Asian example shows. These methods need valid
+weights or conditional formulas for the requested distributional quantity.
+A control-adjusted or weighted scalar contribution with the correct mean does
+not generally have the original output distribution; do not use its raw
+histogram or quantiles as those of the original output. If reusable unweighted
+target samples are required, choose a method that actually produces them.
 :::
 
 # What Comes Next

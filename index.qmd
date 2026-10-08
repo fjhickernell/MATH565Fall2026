@@ -99,58 +99,75 @@ By the end of this course, students will be able to:
 ## Course Outline
 
 Hours are approximate 50-minute classroom hours; each 75-minute class meeting
-counts as 1.5 hours.
+counts as 1.5 hours. The outline allocates about 40 hours, including projected
+coverage for the remaining units.
 
 <details>
 <summary><strong>Introduction</strong> — 5 hours</summary>
 
-- What is a Monte Carlo method?
+[Introduction slides](slides/01-introduction.html)
+
+- Monte Carlo simulation for uncertainty
 - Probability review
-- Point and interval estimators of means, variances, probability distribution functions, and quantile functions
+- Sampling schemes, estimators, and estimates
+- Bias, variance, and mean squared error
+- Central limit theorem and confidence intervals
 - Conditional Monte Carlo
 
 </details>
 
-
 <details>
 <summary><strong>Generating Samples</strong> — 5 hours</summary>
 
-- Pseudo-random numbers
-- Random vectors with different distributions
+[Generating Samples slides](slides/02-generating-samples.html)
+
+- Pseudo-random numbers and quantile transforms
+- Discrete, continuous, and mixture distributions
+- Multivariate normal sampling: Cholesky and PCA
+- Brownian motion, asset paths, and option payoffs
 - Low discrepancy sampling
-- Acceptance-rejection sampling
+- Transport maps and acceptance–rejection
 
 </details>
 
 <details>
-<summary><strong>Markov Chain Monte Carlo + Discrepancy</strong> — 9 hours</summary>
+<summary><strong>Markov Chain Monte Carlo and Discrepancy</strong> — 8 hours</summary>
 
-- Markov chains
-- Metropolis-Hastings
-- Kernel-based discrepancies and maximum mean discrepancy
-- Discrepancy as a measure of cubature error
-- Sample quality
-- Gibbs sampler
-- Convergence diagnostics
-- Error estimation
+[Markov Chain Monte Carlo slides](slides/03-markov-chain-monte-carlo.html)
+
+- Markov chains and Metropolis–Hastings
+- Tuning, diagnostics, and parallel tempering
+- Kernel discrepancy and sample quality
+- Discrepancy and integration error
+- Likelihood and Bayesian inference
+- Queueing and event-driven simulation
 
 </details>
 
-<details>
-<summary><strong>Enhancing Efficiency</strong> — 15 hours</summary>
+<details open>
+<summary><strong>Improving Efficiency</strong> — 16 hours</summary>
 
+[Improving Efficiency slides](slides/04-improving-efficiency.html)
+
+- Transformations and importance sampling
 - Control variates
-- Importance sampling
-- Antithetic variates
-- Stratified sampling and Latin hypercube
-- Quasi-Monte Carlo sampling
+- Conditional Monte Carlo and density estimation
+- Antithetic sampling
+- Randomized low discrepancy sampling
+- Latin hypercube sampling (optional)
+- Asian and lookback option comparisons
+- Error assessment, stopping criteria, and computational cost
 
 </details>
 
 <details>
 <summary><strong>Selected Topics</strong> — 6 hours</summary>
 
-- *(TBA)*
+[Selected Topics slides](slides/05-selected-topics.html)
+
+- Parallel computing
+- Gradient and stochastic-gradient descent
+- Two-level and multilevel Monte Carlo
 
 </details>
 

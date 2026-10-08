@@ -48,6 +48,9 @@ appropriate phase rather than appended indiscriminately.
     - [x] Review textbook and recommended resources.
     - [x] Review prerequisites and requirements.
     - [x] Review course objectives and outline.
+    - [x] Reconcile the outline with coverage through October 6 and projected
+      remaining units, totaling about 40 lecture hours; condense subtopics and
+      use Improving Efficiency consistently (October 8, 2026).
     - [x] Verify “Where to Find It” and other internal course links.
     - [x] Review assessment categories, percentages, and links.
     - [x] Correct Markdown and Quarto formatting issues.
@@ -102,6 +105,13 @@ appropriate phase rather than appended indiscriminately.
         early-point generator recovery, randomization, projections, and a fixed
         Keister comparison; clean `qmcpy` execution and five figures checked
         (October 5, 2026).
+      - [x] Audit the efficiency companions: expand lookback to the eight-method
+        Asian comparison, add equal-cost IID antithetic comparisons, charge
+        independent control pilots and sample generation in timing tables,
+        block Asian density calculations, and align empirical-distribution
+        notation. All five affected notebooks execute cleanly with pinned
+        dependencies; Asian Sobol', lattice, and Halton variants pass
+        (October 8, 2026).
       - [x] Add a lattice/Sobol' chooser to Generating Samples and Asian Option
         Variance Reduction; compare low discrepancy sampling plain, with drift,
         with control, and with both. Both complete notebooks execute cleanly
