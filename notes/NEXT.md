@@ -34,7 +34,8 @@
    estimates, excluding Test 1. Efficiency remains in progress; LHS is optional.
    Source and saved outputs are included in October 8 checkpoint 5f4f94b;
    its publishing and Pages workflows succeeded. The four additional starred
-   exercises are included in the following checkpoint; verify its deployment.
+   exercises are included in checkpoint `c930827`; its publishing and Pages
+   deployment workflows succeeded.
    The schedule and lecture ledger are reconciled through October 6. The
    October 8 single-occurrence Illinois Tech calendar note is saved and
    verified in Calendar and Fantastical for PH 109, 10:00–11:15 AM Chicago.
