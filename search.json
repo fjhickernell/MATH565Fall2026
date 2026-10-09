@@ -448,6 +448,13 @@
     "text": "Unless otherwise stated, you may work on assignments individually or in pairs, and your choice may change from one assignment to the next.\nFor each assignment, I will create a group set in Canvas; you will sign up to form your group.\nOnly one person per group submits the assignment in Canvas. The submission is automatically shared with all group members.\nGrades and feedback are shared with the whole group. By default, all members receive the same grade.\nEvery submitted filename must include the names of all group members (or your name if working individually), for example, HW2_Jane_Doe_John_Smith.pdf and HW2_Jane_Doe_John_Smith.ipynb.\nThe contents of every submitted file must include the full names and A-numbers (student IDs) of all group members, or your own if working individually. Put this information at the beginning of each PDF, in the first Markdown cell of each notebook, and in a header comment in each source-code file.\nAssignments are due by 11:59 PM Chicago Time on the due date. Canvas displays due dates in your time zone.\nEach submission must include all relevant files:\n\nA self-contained, working copy of any code used.\nA PDF version of item 1, including the output, plus any analytical work. Legible handwriting and typed work are both acceptable. You may embed analytical work as Markdown in the code."
   },
   {
+    "objectID": "pages/homework.html#homework-grading",
+    "href": "pages/homework.html#homework-grading",
+    "title": "Assignments",
+    "section": "Homework grading",
+    "text": "Homework grading\nEach numbered homework assignment is worth 20 points. Your lowest homework score will be dropped when calculating your homework grade. The 10-point Diagnostic Survey is not eligible to be dropped."
+  },
+  {
     "objectID": "pages/homework.html#list-of-assignments",
     "href": "pages/homework.html#list-of-assignments",
     "title": "Assignments",
