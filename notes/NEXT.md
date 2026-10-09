@@ -44,8 +44,9 @@
    verified in Calendar and Fantastical for PH 109, 10:00–11:15 AM Chicago.
    The schedule renders successfully and passes desktop and phone layout
    checks. Its date columns now stay separate from topics; phone dates wrap
-   within their cells. Check the publishing and Pages workflows before relying
-   on the deployed update.
+   within their cells. The October 8 schedule/pacing publication and the latest
+   pinned-dependency update have successful publishing and Pages deployment
+   runs, verified October 9.
    Review the low discrepancy constructions companion and the deferred
    Asian-option cost comparison before class.
    Importance sampling now includes a weighted empirical-distribution
