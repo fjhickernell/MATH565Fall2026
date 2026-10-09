@@ -35,6 +35,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="02-generating-samples_files/libs/revealjs/dist/theme/quarto-76662ad55f7698349918606375d5bc3e.css">
   <link href="02-generating-samples_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -840,7 +906,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="4a0b1391" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="64cea94d" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -884,7 +950,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="85698869" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="d770162d" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -916,7 +982,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="441ff1ce" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="6667583c" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1000,7 +1066,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="f9d337ce" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="aa6af18f" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1024,6 +1090,10 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 <li><a href="#/multivariate-normal-sampling">Multivariate normal sampling</a></li>
 <li><a href="#/cholesky-factorization">Cholesky factorization</a></li>
 <li><a href="#/principal-component-factorization">Principal-component (PCA) factorization</a></li>
+<li><a href="#/copula-sampling">Copulas separate marginals from dependence</a></li>
+<li><a href="#/gaussian-copula-sampling">Gaussian-copula sampling</a></li>
+<li><a href="#/example-dependent-exponential-samples">Example: dependent exponential samples</a></li>
+<li><a href="#/the-same-copula-different-marginal-scales">The same copula, different marginal scales</a></li>
 <li><a href="#/gaussian-processes">Gaussian processes</a></li>
 <li><a href="#/brownian-motion">Brownian motion</a></li>
 <li><a href="#/geometric-brownian-motion">Geometric Brownian motion</a></li>
@@ -1161,6 +1231,147 @@ a_{11}=\sqrt3,
 \]</span></p>
 <p>Thus <span class="math inline">\(\mA_{\mathrm{PCA}}\mA_{\mathrm{PCA}}^\mathsf{T}
 =\mV\mLambda\mV^\mathsf{T}=\mSigma\)</span>, just as for the Cholesky factor</p>
+</section>
+<section id="copula-sampling" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>Copulas separate marginals from dependence</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<p>A <span class="alert">copula</span> is a joint CDF on <span class="math inline">\([0,1]^d\)</span> with uniform marginals</p>
+<p><span class="math display">\[\begin{align*}
+C(\vv)&amp;=\Prob(V_1\le v_1,\ldots,V_d\le v_d),
+&amp;V_j&amp;\sim\Unif[0,1]
+\end{align*}\]</span></p>
+<p>The coordinates of <span class="math inline">\(\vV\)</span> need <span class="alert">not</span> be independent</p>
+<p>Choose marginal CDFs <span class="math inline">\(F_j\)</span> and quantiles <span class="math inline">\(Q_j\)</span> for the <span class="alert">target</span></p>
+<p><span class="math display">\[
+X_j=Q_j(V_j),\qquad j=1,\ldots,d
+\]</span></p>
+<p>For continuous marginals,</p>
+<p><span class="math display">\[
+F_{\vX}(\vx)=C\bigl(F_1(x_1),\ldots,F_d(x_d)\bigr)
+\]</span></p>
+<div class="key-point">
+<p>Choose the <span class="alert">marginals</span> and the <span class="alert">dependence</span> separately</p>
+<p>Independent uniforms give the independence copula <span class="math inline">\(C(\vv)=\prod_{j=1}^d v_j\)</span></p>
+</div>
+<aside class="notes">
+<p>Sklar’s theorem supplies this representation for all marginal CDFs; the copula is unique when the marginals are continuous. Quantile sampling also works for discrete marginals, but their copula representation need not be unique. The uniform vector V has uniform coordinate marginals, rather than the joint uniform distribution on the cube used for the independent input vector U.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="gaussian-copula-sampling" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>Gaussian-copula sampling</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<p>Choose a positive-definite <span class="alert">correlation matrix</span> <span class="math inline">\(\mR\)</span><br> Factor <span class="math inline">\(\mR=\mA\mA^{\mathsf T}\)</span> using <a href="#/cholesky-factorization">Cholesky</a></p>
+<p><span class="math display">\[\begin{align*}
+\vU&amp;\sim\Unif[0,1]^d,
+&amp;Z_j&amp;=\Phi^{-1}(U_j)\\
+\vW&amp;=\mA\vZ\sim\Norm(\vzero,\mR),
+&amp;V_j&amp;=\Phi(W_j)\\
+X_j&amp;=Q_j(V_j),
+&amp;X_j&amp;\sim F_j
+\end{align*}\]</span></p>
+<ul>
+<li>Each <span class="math inline">\(W_j\)</span> is standard normal, so each <span class="math inline">\(V_j\)</span> is uniform</li>
+<li>The <span class="alert">joint</span> distribution of <span class="math inline">\(\vV\)</span> is the Gaussian copula</li>
+<li>Changing <span class="math inline">\(Q_j\)</span> changes the marginals while retaining this copula for continuous marginals</li>
+</ul>
+<div class="key-point">
+<p><span class="math inline">\(R_{jk}\)</span> is the correlation of the <span class="alert">latent normals</span> <span class="math inline">\(W_j,W_k\)</span></p>
+<p>It generally differs from <span class="math inline">\(\operatorname{Corr}(X_j,X_k)\)</span></p>
+</div>
+<aside class="notes">
+<p>This is an exact transport from independent uniform inputs to the target. A positive-semidefinite correlation matrix also defines a Gaussian copula, but a singular matrix requires an appropriate factorization instead of an ordinary nonsingular Cholesky factor. Matching target Pearson correlations would require calibration after specifying the marginal transforms. Reference: https://www.statsmodels.org/v0.13.5/generated/statsmodels.distributions.copula.api.GaussianCopula.html</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="example-dependent-exponential-samples" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>Example: dependent exponential samples</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<p>Choose <span class="math inline">\(X_1\sim\Exp(1)\)</span>, <span class="math inline">\(X_2\sim\Exp(2)\)</span> and a Gaussian copula with <span class="math inline">\(\rho=0.7\)</span></p>
+<p><span class="math display">\[\begin{align*}
+W_1&amp;=Z_1,
+&amp;W_2&amp;=\rho Z_1+\sqrt{1-\rho^2}\,Z_2\\
+X_1&amp;=-\log\bigl(1-\Phi(W_1)\bigr),
+&amp;X_2&amp;=-\tfrac12\log\bigl(1-\Phi(W_2)\bigr)
+\end{align*}\]</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="" aria-label="2"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb1-3"><a href="" aria-label="3"></a></span>
+<span id="cb1-4"><a href="" aria-label="4"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">56502</span>)</span>
+<span id="cb1-5"><a href="" aria-label="5"></a>z <span class="op">=</span> rng.standard_normal((<span class="dv">10_000</span>, <span class="dv">2</span>))</span>
+<span id="cb1-6"><a href="" aria-label="6"></a>w <span class="op">=</span> z <span class="op">@</span> np.array([[<span class="dv">1</span>, <span class="dv">0</span>], [<span class="fl">0.7</span>, np.sqrt(<span class="dv">1</span> <span class="op">-</span> <span class="fl">0.7</span><span class="op">**</span><span class="dv">2</span>)]]).T</span>
+<span id="cb1-7"><a href="" aria-label="7"></a>x <span class="op">=</span> <span class="op">-</span>norm.logsf(w) <span class="op">/</span> np.array([<span class="fl">1.0</span>, <span class="fl">2.0</span>])</span>
+<span id="cb1-8"><a href="" aria-label="8"></a>rho_hat <span class="op">=</span> np.corrcoef(x, rowvar<span class="op">=</span><span class="va">False</span>)[<span class="dv">0</span>, <span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Rows are sampled vectors; columns are coordinates</li>
+<li><code>norm.logsf(w)</code> evaluates <span class="math inline">\(\log(1-\Phi(w))\)</span> without subtracting nearly equal numbers</li>
+<li><span class="math inline">\(\widehat\rho\)</span> estimates the <span class="alert">target correlation</span>, not the input parameter <span class="math inline">\(0.7\)</span></li>
+</ul>
+<aside class="notes">
+<p>Here Exp(lambda) uses the rate parameter lambda, so the marginal means are 1 and 1/2. logsf avoids rounding Phi(w) to one in the upper tail; no clipping or truncation of the desired marginal distribution is needed.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-same-copula-different-marginal-scales" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
+<h2>The same copula, different marginal scales</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
+</div>
+
+<p>The same paired samples pass through <span class="alert">coordinatewise</span> transforms</p>
+<div id="882fa697" class="cell" data-fig-height="4.1" data-fig-width="12" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="02-generating-samples_files/figure-revealjs/cell-6-output-1.png" class="quarto-figure quarto-figure-center" alt="Three scatterplots of the same paired samples: correlated standard normals, dependent uniforms, and dependent exponential targets, showing how monotone marginal transforms change scales and shape" width="1163" height="405"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="key-point">
+<p>Strictly increasing marginal transforms preserve <span class="alert">ranks</span> and the copula</p>
+<p>They generally change <span class="alert">Pearson correlation</span></p>
+</div>
 </section>
 <section id="gaussian-processes" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Gaussian processes</h2>
@@ -1840,6 +2051,7 @@ f\bigl(\vS(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(\vS(\vu)\bigr)\right\}
 <li>Start with <span class="alert">uniform</span> samples and transform them to the <span class="alert">target</span> distribution</li>
 <li>The generalized inverse works for discrete and continuous distributions</li>
 <li>Independent marginal transforms do not create dependence<br>Correlated normal vectors require a matrix factorization<br>PCA can concentrate variation in early coordinates for low discrepancy sampling</li>
+<li>Copulas separate marginal distributions from dependence<br>Gaussian-copula sampling reuses correlated normals and marginal quantile transforms</li>
 <li>Gaussian-process sampling reduces finite collections of function values to multivariate normal sampling</li>
 <li><a href="#/option-payoffs-and-prices">Option pricing</a>: simulate asset paths, evaluate European, Asian, or barrier payoffs, and average discounted payoffs</li>
 </ul>
