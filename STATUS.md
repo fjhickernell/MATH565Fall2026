@@ -420,6 +420,9 @@ appropriate phase rather than appended indiscriminately.
   assessments, and supporting resources in the course-material reference.
 - [x] Convert remaining lecture decks in coherent teaching units.
   - [x] Draft Lecture 02, Generating Samples, from the Fall 2025 Keynote deck.
+  - [x] Add the copula introduction, Gaussian-copula algorithm, dependent-
+    exponential Python example, transformation plots, and cumulative terms-
+    index links to Generating Samples (October 9, 2026).
   - [x] Complete instructor review of Lecture 02 and refine its scope,
     narrative, and mathematical presentation.
   - [ ] Extend Lecture 02 with additional instructor-directed examples and

@@ -508,6 +508,10 @@ plt.show()
 - [Multivariate normal sampling](#multivariate-normal-sampling)
 - [Cholesky factorization](#cholesky-factorization)
 - [Principal-component (PCA) factorization](#principal-component-factorization)
+- [Copulas separate marginals from dependence](#copula-sampling)
+- [Gaussian-copula sampling](#gaussian-copula-sampling)
+- [Example: dependent exponential samples](#example-dependent-exponential-samples)
+- [The same copula, different marginal scales](#the-same-copula-different-marginal-scales)
 - [Gaussian processes](#gaussian-processes)
 - [Brownian motion](#brownian-motion)
 - [Geometric Brownian motion](#geometric-brownian-motion)
@@ -658,6 +662,155 @@ $$
 Thus
 $\mA_{\mathrm{PCA}}\mA_{\mathrm{PCA}}^\mathsf{T}
 =\mV\mLambda\mV^\mathsf{T}=\mSigma$, just as for the Cholesky factor
+
+## Copulas separate marginals from dependence {#copula-sampling .tree-marker-slide tree-marker="random-generation"}
+
+A [copula]{.alert} is a joint CDF on $[0,1]^d$ with uniform marginals
+
+\begin{align*}
+C(\vv)&=\Prob(V_1\le v_1,\ldots,V_d\le v_d),
+&V_j&\sim\Unif[0,1]
+\end{align*}
+
+The coordinates of $\vV$ need [not]{.alert} be independent
+
+Choose marginal CDFs $F_j$ and quantiles $Q_j$ for the [target]{.alert}
+
+$$
+X_j=Q_j(V_j),\qquad j=1,\ldots,d
+$$
+
+For continuous marginals,
+
+$$
+F_{\vX}(\vx)=C\bigl(F_1(x_1),\ldots,F_d(x_d)\bigr)
+$$
+
+::: {.key-point}
+Choose the [marginals]{.alert} and the [dependence]{.alert} separately
+
+Independent uniforms give the independence copula $C(\vv)=\prod_{j=1}^d v_j$
+:::
+
+::: {.notes}
+Sklar's theorem supplies this representation for all marginal CDFs; the copula
+is unique when the marginals are continuous. Quantile sampling also works for
+discrete marginals, but their copula representation need not be unique.
+The uniform vector V has uniform coordinate marginals, rather than the joint
+uniform distribution on the cube used for the independent input vector U.
+:::
+
+## Gaussian-copula sampling {.tree-marker-slide tree-marker="random-generation"}
+
+Choose a positive-definite [correlation matrix]{.alert} $\mR$<br>
+Factor $\mR=\mA\mA^{\mathsf T}$ using [Cholesky](#cholesky-factorization)
+
+\begin{align*}
+\vU&\sim\Unif[0,1]^d,
+&Z_j&=\Phi^{-1}(U_j)\\
+\vW&=\mA\vZ\sim\Norm(\vzero,\mR),
+&V_j&=\Phi(W_j)\\
+X_j&=Q_j(V_j),
+&X_j&\sim F_j
+\end{align*}
+
+- Each $W_j$ is standard normal, so each $V_j$ is uniform
+- The [joint]{.alert} distribution of $\vV$ is the Gaussian copula
+- Changing $Q_j$ changes the marginals while retaining this copula for
+  continuous marginals
+
+::: {.key-point}
+$R_{jk}$ is the correlation of the [latent normals]{.alert} $W_j,W_k$
+
+It generally differs from $\operatorname{Corr}(X_j,X_k)$
+:::
+
+::: {.notes}
+This is an exact transport from independent uniform inputs to the target.
+A positive-semidefinite correlation matrix also defines a Gaussian copula,
+but a singular matrix requires an appropriate factorization instead of an
+ordinary nonsingular Cholesky factor. Matching target Pearson correlations
+would require calibration after specifying the marginal transforms.
+Reference: https://www.statsmodels.org/v0.13.5/generated/statsmodels.distributions.copula.api.GaussianCopula.html
+:::
+
+## Example: dependent exponential samples {.tree-marker-slide tree-marker="random-generation"}
+
+Choose $X_1\sim\Exp(1)$, $X_2\sim\Exp(2)$ and a Gaussian copula with $\rho=0.7$
+
+\begin{align*}
+W_1&=Z_1,
+&W_2&=\rho Z_1+\sqrt{1-\rho^2}\,Z_2\\
+X_1&=-\log\bigl(1-\Phi(W_1)\bigr),
+&X_2&=-\tfrac12\log\bigl(1-\Phi(W_2)\bigr)
+\end{align*}
+
+```python
+import numpy as np
+from scipy.stats import norm
+
+rng = np.random.default_rng(56502)
+z = rng.standard_normal((10_000, 2))
+w = z @ np.array([[1, 0], [0.7, np.sqrt(1 - 0.7**2)]]).T
+x = -norm.logsf(w) / np.array([1.0, 2.0])
+rho_hat = np.corrcoef(x, rowvar=False)[0, 1]
+```
+
+- Rows are sampled vectors; columns are coordinates
+- `norm.logsf(w)` evaluates $\log(1-\Phi(w))$ without subtracting nearly equal numbers
+- $\widehat\rho$ estimates the [target correlation]{.alert}, not the input parameter $0.7$
+
+::: {.notes}
+Here Exp(lambda) uses the rate parameter lambda, so the marginal means are
+1 and 1/2. logsf avoids rounding Phi(w) to one in the upper tail; no clipping
+or truncation of the desired marginal distribution is needed.
+:::
+
+## The same copula, different marginal scales {.tree-marker-slide tree-marker="random-generation"}
+
+The same paired samples pass through [coordinatewise]{.alert} transforms
+
+```{python}
+#| echo: false
+#| fig-align: center
+#| fig-alt: "Three scatterplots of the same paired samples: correlated standard normals, dependent uniforms, and dependent exponential targets, showing how monotone marginal transforms change scales and shape"
+#| fig-width: 12
+#| fig-height: 4.1
+#| out-width: 95%
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+
+copula_rng = np.random.default_rng(56502)
+copula_z = copula_rng.standard_normal((1800, 2))
+copula_a = np.array([[1.0, 0.0], [0.7, np.sqrt(1 - 0.7**2)]])
+copula_w = copula_z @ copula_a.T
+copula_v = norm.cdf(copula_w)
+copula_x = -norm.logsf(copula_w) / np.array([1.0, 2.0])
+fig, axes = plt.subplots(1, 3, figsize=(12, 4.1), constrained_layout=True)
+for ax, values, title, labels in zip(
+    axes, [copula_w, copula_v, copula_x],
+    ["Latent normals", "Uniform marginals", "Exponential targets"],
+    [(r"$W_1$", r"$W_2$"), (r"$V_1$", r"$V_2$"), (r"$X_1$", r"$X_2$")],
+):
+    ax.scatter(values[:, 0], values[:, 1], s=7, alpha=0.3,
+               color="#1f5a91", edgecolors="none")
+    ax.set_title(title, fontsize=18)
+    ax.set_xlabel(labels[0], fontsize=19)
+    ax.set_ylabel(labels[1], fontsize=19)
+    ax.tick_params(labelsize=12)
+    ax.spines[["top", "right"]].set_visible(False)
+axes[1].set_xlim(0, 1)
+axes[1].set_ylim(0, 1)
+plt.show()
+```
+
+::: {.key-point}
+Strictly increasing marginal transforms preserve [ranks]{.alert} and the copula
+
+They generally change [Pearson correlation]{.alert}
+:::
 
 ## Gaussian processes {.tree-marker-slide tree-marker="probability"}
 
@@ -1342,6 +1495,8 @@ Defined when at least one proposal is accepted
 - Independent marginal transforms do not create dependence<br>Correlated normal
   vectors require a matrix factorization<br>PCA can concentrate variation in
   early coordinates for low discrepancy sampling
+- Copulas separate marginal distributions from dependence<br>Gaussian-copula
+  sampling reuses correlated normals and marginal quantile transforms
 - Gaussian-process sampling reduces finite collections of function values to
   multivariate normal sampling
 - [Option pricing](#option-payoffs-and-prices): simulate asset paths, evaluate

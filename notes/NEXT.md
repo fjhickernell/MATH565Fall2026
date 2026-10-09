@@ -758,4 +758,29 @@ course-page links, and publication workflow before releasing either draft.
 The student-facing Assignments page now records the 20-point homework and
 lowest-score-drop policy, including the Diagnostic Survey exception.
 Affected pages render successfully and pass desktop/390-pixel browser layout
-checks. Remote deployment of these policy updates remains to be verified.
+checks. The policy updates have successful publishing and Pages deployment runs,
+verified October 9.
+
+## Copula sampling addition — October 9, 2026
+
+Generating Samples now includes four slides after the PCA factorization:
+copulas and marginal quantile transforms, Gaussian-copula sampling, a
+reproducible dependent-exponential Python example, and three transformation
+scatterplots. The latent-normal versus target Pearson correlation distinction
+is explicit. Introduction's cumulative terms index links Copula and Gaussian
+copula to their first substantive treatment.
+
+Both affected decks render successfully with the qmcpy kernel. The numerical
+example and visible slide, outline, index, and Big Ideas layouts pass review.
+This addition prepares future teaching; it does not change the recorded 2026
+lecture coverage. An optional Selected Topics extension remains a later
+decision in `notes/TODO-LATER.md`. These slide changes are included in the October 9 teaching Checkpoint.
+
+## Assignment 3 grading release — October 9, 2026
+
+The instructor-reviewed Assignment 3 grades and individual feedback are posted
+to Everyone in Canvas. Shared group grades were verified. The all-sections
+announcement was published and its saved text verified:
+[Assignment 3 grades and feedback are posted](https://iit.instructure.com/courses/25777/discussion_topics/107709).
+The matching Dashboard grading task and Academic reminder are complete.
+Private grading records remain in the private course homework workspace.

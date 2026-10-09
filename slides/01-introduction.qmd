@@ -421,6 +421,7 @@ Canvas<br>Only one person per group submits the assignment
 - [Conditional probability](#conditional-probability)
 - [Confidence interval](#monte-carlo-estimates-of-properties-of-y)
 - [Control variate](04-improving-efficiency.html#control-variates)
+- [Copula](02-generating-samples.html#copula-sampling)
 - [Covariance matrix](#moments-of-random-variables)
 - [Cumulative distribution function (CDF)](#random-variables-and-distributions)
 :::
@@ -441,6 +442,7 @@ Canvas<br>Only one person per group submits the assignment
 :::
 
 ::: {.column width="50%"}
+- [Gaussian copula](02-generating-samples.html#gaussian-copula-sampling)
 - [Gaussian mixture](02-generating-samples.html#gaussian-mixture-random-numbers)
 - [Gaussian process](02-generating-samples.html#gaussian-processes)
 - [Generalized inverse](02-generating-samples.html#the-quantile-transform)

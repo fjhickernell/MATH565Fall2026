@@ -51,6 +51,10 @@ multiple decks.
 
 ## Deck 05 — Selected Topics
 
+- Decide later whether to extend the core Gaussian-copula sampling introduction
+  in Generating Samples with conditional sampling, other copula families, and
+  tail dependence; the introductory material is available for next year's course.
+
 - Add an accessible introduction to Monte Carlo tree search (MCTS), including
   exploration versus exploitation, upper confidence bounds for trees (UCT),
   and connections to stochastic optimization. It may be a short module or
