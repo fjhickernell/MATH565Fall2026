@@ -198,6 +198,9 @@ appropriate phase rather than appended indiscriminately.
     - [x] Validate Quarto rendering and generated page structure.
     - [ ] Inspect the visible page layout in a browser.
   - [ ] Assignments (`pages/homework.qmd`)
+    - [x] Record the 20-point homework and lowest-score-drop policy, protect
+      the 10-point Diagnostic Survey from dropping, and save unpublished
+      Canvas placeholders for Assignments 5–6 (October 9, 2026).
     - [x] Prepare Assignment 4 as Owen Exercises 11.5 and 11.6, due October 7
       at 11:59 PM Chicago; save unpublished Canvas draft 105796 and its metadata.
     - [x] Deploy and verify the public Assignment 4 and Assignments pages

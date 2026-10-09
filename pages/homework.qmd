@@ -29,6 +29,12 @@ title: "Assignments"
      Legible handwriting and typed work are both acceptable. You may embed
      analytical work as Markdown in the code.
 
+## Homework grading
+
+Each numbered homework assignment is worth **20 points**. Your lowest
+homework score will be dropped when calculating your homework grade.
+The **10-point Diagnostic Survey** is not eligible to be dropped.
+
 ## List of assignments
 
 Assignment details and due dates will be added as they are finalized.

@@ -154,6 +154,17 @@ sheet.
 
 ## Adding or updating an assignment
 
+### Fall 2026 Canvas grading policy
+
+Each numbered homework assignment is worth 20 points. Canvas drops one
+lowest homework score in the Assignments group; the 10-point Diagnostic
+Survey retains its point value and is marked Never Drop.
+
+When setting up a future assignment, reuse its existing unpublished Canvas
+placeholder recorded in `notes/NEXT.md`, rather than creating a duplicate.
+A placeholder reserves the grade item and schedule date; complete the normal
+assignment workflow before publication.
+
 ### Dates before assignment details
 
 When due dates are set before assignment content, add numbered, unlinked

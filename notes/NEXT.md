@@ -738,3 +738,24 @@ in the whole-site link scan; the welcome-page image resolves.
 
 The Dashboard and handoff are reconciled. The automatic announcement-closeout
 rule is recorded in `AGENTS.md` and `AUTHOR_WORKFLOW.md`.
+
+## Canvas homework and quiz setup — October 9, 2026
+
+All six numbered homework assignments are 20 points. The Assignments group
+drops one lowest score and excludes the unchanged 10-point Diagnostic Survey
+with Never Drop. No quizzes are listed in the MATH 565 schedule.
+
+The following Canvas placeholders are saved and verified, **unpublished**,
+with no submission requested yet. Due dates reserve the schedule date at
+11:59 PM America/Chicago. Reuse these IDs during the full assignment setup:
+
+- Assignment 5: [106678](https://iit.instructure.com/courses/25777/assignments/106678), due October 21, 2026.
+- Assignment 6: [106679](https://iit.instructure.com/courses/25777/assignments/106679), due November 13, 2026.
+
+Complete the assignment-specific partner group set, file-upload submission,
+course-page links, and publication workflow before releasing either draft.
+
+The student-facing Assignments page now records the 20-point homework and
+lowest-score-drop policy, including the Diagnostic Survey exception.
+Affected pages render successfully and pass desktop/390-pixel browser layout
+checks. Remote deployment of these policy updates remains to be verified.
