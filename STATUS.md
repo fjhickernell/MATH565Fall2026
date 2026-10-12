@@ -198,6 +198,14 @@ appropriate phase rather than appended indiscriminately.
     - [x] Validate Quarto rendering and generated page structure.
     - [ ] Inspect the visible page layout in a browser.
   - [ ] Assignments (`pages/homework.qmd`)
+    - [x] Prepare Assignment 5 as Owen Exercises 8.4 and 8.20, due October 21
+      at 11:59 PM Chicago; add course-page links, metadata for existing Canvas
+      item 106678, and the Improving Efficiency title-slide reminder.
+      Full website/slide rendering, assembled links, and desktop/mobile layout
+      checks pass (October 12, 2026).
+    - [ ] Deploy and verify Assignment 5's public links, finish partner-group
+      and file-upload configuration in Canvas 106678, then obtain combined
+      publication approval and publish/verify the all-sections announcement.
     - [x] Record the 20-point homework and lowest-score-drop policy, protect
       the 10-point Diagnostic Survey from dropping, and save unpublished
       Canvas placeholders for Assignments 5–6 (October 9, 2026).

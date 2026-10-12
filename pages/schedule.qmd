@@ -48,7 +48,7 @@ holidays, and examination details are finalized.
 | 9 | Tue Oct 13 | **No Class — Fall Break** | |
 | | Thu Oct 15 | Recap van der Corput; resume at “Four low discrepancy families”; return to the deferred Asian-option variance/time interpretation | [Improving Efficiency](../slides/04-improving-efficiency.html#four-low-discrepancy-families)<br>[Asian-option notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb) |
 | 10 | Tue Oct 20 | | |
-| | Wed Oct 21 | **Assignment 5 due** | Details TBD |
+| | Wed Oct 21 | **Assignment 5 due** | [{{< meta texts.owen.short >}} Exercises 8.4 and 8.20](../assignments/assignment_5.qmd) |
 | | Thu Oct 22 | | |
 | 11 | Tue Oct 27 | **Test 2** | Coverage TBD |
 | | Thu Oct 29 | | |
