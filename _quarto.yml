@@ -74,7 +74,7 @@ website:
             href: https://qmcpy.org
 
   page-footer:
-    left: "© 2026 Fred J. Hickernell · Illinois Institute of Technology"
+    left: "© 2026 [Fred J. Hickernell](https://fjhickernell.github.io/) · Illinois Institute of Technology"
 
 course_repo: "https://github.com/fjhickernell/MATH565Fall2026"
 course_repo_label: "MATH565Fall2026 on GitHub"
