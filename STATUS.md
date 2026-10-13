@@ -203,9 +203,12 @@ appropriate phase rather than appended indiscriminately.
       item 106678, and the Improving Efficiency title-slide reminder.
       Full website/slide rendering, assembled links, and desktop/mobile layout
       checks pass (October 12, 2026).
-    - [ ] Deploy and verify Assignment 5's public links, finish partner-group
-      and file-upload configuration in Canvas 106678, then obtain combined
-      publication approval and publish/verify the all-sections announcement.
+    - [x] Verify Assignment 5's live public links and publish Canvas 106678:
+      20 points, October 21 at 11:59 PM Chicago, file uploads, unlimited
+      attempts, and shared group submission/grade with 20 self-sign-up groups
+      limited to two (group set 1784). All Sections announcement 107879 posted
+      and verified October 12, 2026. Dashboard/reminder publication task closed;
+      grading remains due October 27.
     - [x] Record the 20-point homework and lowest-score-drop policy, protect
       the 10-point Diagnostic Survey from dropping, and save unpublished
       Canvas placeholders for Assignments 5–6 (October 9, 2026).

@@ -2,40 +2,20 @@
 
 ## Immediate actions
 
-### Assignment 5 — prepared, awaiting website publication
+### Assignment 5 — published and verified
 
-Owen Exercises **8.4 and 8.20** are instructor-selected. The assignment page,
-Assignments table, Schedule link, Canvas metadata, and Improving Efficiency
-title-slide reminder are prepared. Due **October 21, 2026, 11:59 PM
-America/Chicago**; 20 points with the standard individual-or-pair submission.
-Preserve Owen's option of analytical work or simulation for Exercise 8.4.
-Full website and slide renders pass; assembled local links and desktop/mobile
-layouts are verified. This Checkpoint publishes the prepared website sources;
-remote deployment and Canvas publication remain to be verified.
-
-Next: verify the live assignment and Assignments pages after deployment, then
-finish the existing unpublished Canvas item
-[106678](https://iit.instructure.com/courses/25777/assignments/106678).
-Its course identity, 20 points, October 21 at 11:59 PM, unpublished state,
-and current text-entry placeholder were verified October 12. Audit groups and
-announcements for duplicates before configuring `Assignment 5 Groups`
-(20 self-sign-up groups, limit two), shared group grade/submission,
-file uploads, and unlimited attempts. Request one combined Canvas publication
-confirmation after the live links and configuration are verified.
-The Dashboard already tracks grading by **October 27, 2026**.
-
-Prepared Canvas description:
-“See [Assignment 5](https://fjhickernell.github.io/MATH565Fall2026/assignments/assignment_5.html)
-and the [Assignments page](https://fjhickernell.github.io/MATH565Fall2026/pages/homework.html).”
-
-Prepared all-sections announcement — **Assignment 5 is available**:
-“[Assignment 5](https://fjhickernell.github.io/MATH565Fall2026/assignments/assignment_5.html)
-is available. You may work individually or with one partner. Join an
-Assignment 5 group in Canvas; only one person per group submits, and both
-members receive the same grade. Follow the file and identification requirements
-on the [Assignments page](https://fjhickernell.github.io/MATH565Fall2026/pages/homework.html).”
-This text is prepared locally; no Canvas announcement draft is saved yet.
-
+Owen Exercises **8.4 and 8.20** are published on the course website and in
+[Canvas 106678](https://iit.instructure.com/courses/25777/assignments/106678),
+verified **October 12, 2026**. Due **October 21, 2026, 11:59 PM
+America/Chicago**; 20 points. Live assignment and Assignments pages verified.
+Canvas uses file uploads, unlimited attempts, and one shared submission/grade
+with `Assignment 5 Groups` (group set 1784): 20 self-sign-up groups, limit two.
+The description links to both live course pages without duplicating details.
+The all-sections [Assignment 5 is available announcement](https://iit.instructure.com/courses/25777/discussion_topics/107879)
+was posted and verified October 12. No further publication steps remain.
+The Dashboard publication task and matching Academic reminder are complete;
+grading remains due **October 27, 2026**. Preserve Owen's analytical-work or
+simulation option for Exercise 8.4.
 
 1. Prepare the October 15 continuation: briefly recap van der Corput,
    then resume Deck 04 at “Four low discrepancy families.” October 8
