@@ -1041,7 +1041,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="c33bb1f2" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="f7289faf" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1060,7 +1060,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="7f24d369" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="fd01e450" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1442,6 +1442,7 @@ D_0^2&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\mathrm{tar}}(\vx)\,\dif F_{\
 <li><a href="#/a-reproducing-kernel-hilbert-space">A reproducing kernel Hilbert space</a></li>
 <li><a href="#/worst-case-integration-error">Worst-case integration error</a></li>
 <li><a href="#/the-discrepancy-identity">The discrepancy identity</a></li>
+<li><a href="#/variation-ignores-constants">Variation ignores constants</a></li>
 <li><a href="#/average-case-integration-error">Average-case integration error</a></li>
 <li><a href="#/what-the-kernel-controls">What the kernel controls</a></li>
 <li><a href="#/centered-discrepancy-and-smoothness">Centered discrepancy and smoothness</a></li>
@@ -1501,7 +1502,7 @@ f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx)-\frac1n\sum
 \left\lvert\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx)-\frac1n\sum_{i=0}^{n-1}f(\vx_i)\right\rvert
 \le\norm{\zeta}_{\mathcal H_K}\norm{f}_{\mathcal H_K}
 \]</span></p>
-<p>This separates <span class="alert">sample quality</span>, <span class="math inline">\(\norm{\zeta}_{\mathcal H_K}\)</span>, from <span class="alert">integrand difficulty</span>, <span class="math inline">\(\norm{f}_{\mathcal H_K}\)</span></p>
+<p>This separates <span class="alert">sample quality</span> <span class="math inline">\(\norm{\zeta}_{\mathcal H_K}\)</span> from <span class="alert">variation</span> <span class="math inline">\(\operatorname{vtn}_K(f)=\norm{f}_{\mathcal H_K}\)</span></p>
 <p>For <span class="math inline">\(\zeta\ne0\)</span>, the unit-norm integrand <span class="math inline">\(f=\zeta/\norm{\zeta}_{\mathcal H_K}\)</span> <span class="alert">attains the bound</span></p>
 <aside class="notes">
 <p>For this choice, <span class="math inline">\(\norm{f}_{\mathcal H_K}=1\)</span> and <span class="math inline">\(\langle\zeta,f\rangle_{\mathcal H_K}=\norm{\zeta}_{\mathcal H_K}\)</span>. Thus the bound is the actual supremum over the unit ball, not merely an upper bound. If <span class="math inline">\(\zeta=0\)</span>, every integrand in the space has zero integration error, so the worst-case error is zero without dividing by its norm.</p>
@@ -1556,6 +1557,79 @@ f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx)-\frac1n\sum
 &amp;=D^2(F_{\mathrm{tar}},\{\vx_i\}_{i=0}^{n-1};K)
 \end{align*}\]</span></p>
 <p>Thus discrepancy is the <span class="alert">worst-case error over <span class="math inline">\(\norm{f}_{\mathcal H_K}\le1\)</span></span></p>
+</section>
+<section id="variation-ignores-constants" class="slide level2 tree-marker-slide" data-tree-marker="discrepancy-analysis">
+<h2>Variation ignores constants</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+  <div class="tree-component__label" data-label-id="analysis" style="--tree-left: 26%; --tree-top: 81%; --tree-align: left;">Analysis</div>
+</div>
+
+<p>For equal-weight sample averages assume <span class="math inline">\(1\in\mathcal H_K\)</span></p>
+<p>Both the target distribution and sample average integrate constants exactly</p>
+<p><span class="math display">\[
+\operatorname{error}(f)=\operatorname{error}(f-c)
+\qquad\text{for every constant }c
+\]</span></p>
+<p>We may <span class="alert">sharpen</span> the full-norm variation to</p>
+<p><span class="math display">\[
+\operatorname{vtn}_K(f)=\min_{c\in\reals}\norm{f-c}_{\mathcal H_K}
+\]</span></p>
+<p>Then the discrepancy bound becomes</p>
+<p><span class="math display">\[
+\abs{\operatorname{error}(f)}\le D_n(K)\operatorname{vtn}_K(f)
+\]</span></p>
+<div class="key-point">
+<p>Adding a constant changes neither the integration error nor the variation</p>
+</div>
+<aside class="notes">
+<p>Here error(f)=integral f dF_tar - n^{-1} sum_i f(x_i), and D_n(K) abbreviates the discrepancy already defined for those nodes and that target. The preceding general definition uses vtn_K(f)=||f||_H. This slide adopts the smaller constant-shift variation when the space and rule permit it; it does not assert that the full norm equals the reduced seminorm. The statement also holds for weighted quadrature whose weights sum to one. Constant exactness is essential: it gives error(f)=error(f-c), to which the existing RKHS bound applies for every c.&nbsp;Minimize over c afterward.</p>
+<p>In a Hilbert space containing 1, the constants form a closed one-dimensional subspace, so the minimum exists. The minimizer is c_* = &lt;f,1&gt;_H / ||1||_H^2, which need not equal the integral of f. The reduced variation is a seminorm on H and a norm on functions modulo constants. It depends on K and the domain; it is not a universal property of f. The error representer is orthogonal to constants because error(1)=0. Consequently subtracting the constant does not change the discrepancy or the norm of the error representer.</p>
+<p>For a general normed function space, define variation by the infimum over admissible constant shifts; write min only when attainment is established. If constants do not belong to H, arbitrary shifts f-c need not belong to H. Do not apply this minimum formula without specifying the function space. In particular, do not assume a Gaussian-kernel RKHS on an unbounded domain contains constants. The centered-discrepancy space below does contain them.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="variance-as-squared-l_2-variation">Variance as squared <span class="math inline">\(L_2\)</span> variation</h3>
+<p>For <span class="math inline">\(\vX\sim F_{\mathrm{tar}}\)</span> and square-integrable <span class="math inline">\(f\)</span></p>
+<p><span class="math display">\[\begin{align*}
+\norm{f-c}_{L_2(F_{\mathrm{tar}})}^2
+&amp;=\Ex\{[f(\vX)-c]^2\}\\
+&amp;=\var\{f(\vX)\}+[\Ex\{f(\vX)\}-c]^2
+\end{align*}\]</span></p>
+<p>The minimizing constant is <span class="math inline">\(c=\Ex\{f(\vX)\}\)</span></p>
+<p><span class="math display">\[
+\operatorname{vtn}_{L_2}(f)
+=\min_{c\in\reals}\norm{f-c}_{L_2(F_{\mathrm{tar}})}
+=\sqrt{\var\{f(\vX)\}}
+\]</span></p>
+<div class="key-point">
+<p>Standard deviation is the target <span class="math inline">\(L_2\)</span> distance to constants</p>
+</div>
+<aside class="notes">
+<p>The cross term vanishes when expanding around the target expectation. Thus variance is the squared distance from f to the constant functions in L2 of the target probability measure. The analogous RKHS variation uses its own norm and its own minimizing constant. IID RMSE is controlled by this L2 variation; low discrepancy bounds use variation matched to the design and function space. An arbitrary L2 function need not have bounded point evaluations, so this analogy does not supply a deterministic pointwise quadrature bound for every L2 function.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="average-case-integration-error" class="slide level2 tree-marker-slide" data-tree-marker="error-assessment">
 <h2>Average-case integration error</h2>
@@ -1646,6 +1720,36 @@ K(\vt,\vx)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 {\gamma_1\cdots\gamma_d\partial x_1\cdots\partial x_d}}_2^2
 \end{align*}\]</span></p>
 <p>The weights <span class="math inline">\(\gamma_\ell\)</span> express <span class="alert">coordinate importance</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="variation-for-the-centered-kernel">Variation for the centered kernel</h3>
+<p>Subtracting <span class="math inline">\(c\)</span> changes only the function value at the center</p>
+<p><span class="math display">\[
+c_*=f(1/2,\ldots,1/2)
+\]</span></p>
+<p>Thus</p>
+<p><span class="math display">\[
+\operatorname{vtn}_K^2(f)
+=\norm{f}_{\mathcal H_K}^2-\abs{f(1/2,\ldots,1/2)}^2
+\]</span></p>
+<p>The remaining mixed-derivative terms measure <span class="alert">variation</span></p>
+<div class="key-point">
+<p>The integral may be large even when the variation is small</p>
+</div>
+<aside class="notes">
+<p>In the centered anchored Sobolev norm just displayed, the derivatives of f-c equal those of f.&nbsp;Minimizing the norm therefore sets the anchor value to zero. This is a concrete instance of min_c ||f-c||, not a claim that the minimizer is the target expectation for every norm. A nonzero constant has positive full RKHS norm but zero variation and zero quadrature error.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="alternative-comparisons" class="slide level2 tree-marker-slide" data-tree-marker="discrepancy-statistics">
 <h2>Alternative comparisons</h2>
@@ -2038,12 +2142,12 @@ L(m,\sigma^2;\vy_{\mathrm{obs}})
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
-<p>First distinguish <span class="alert">full input durations</span> from <span class="alert">event-state clocks</span>.</p>
+<p>First distinguish <span class="alert">full input durations</span> from <span class="alert">event-state clocks</span></p>
 <p>Full durations are quantile transforms of uniform inputs; assume they are mutually independent:</p>
 <p><span class="math display">\[
 D_{k}^{\mathrm{arr}}\sim F_A \quad\text{($k$th interarrival duration)},
 \qquad
-D_{j}^{\mathrm{srv}}\sim F_S \quad\text{(customer $j$'s full service time)}.
+D_{j}^{\mathrm{srv}}\sim F_S \quad\text{(customer $j$'s full service time)}
 \]</span></p>
 <p>Immediately after event <span class="math inline">\(i\)</span>, the <span class="alert">state</span> is <span class="math inline">\(\vQ_i=(A_i,N_i,S_i), \qquad i=0,1,\ldots\)</span>, where</p>
 <p><span class="math display">\[\begin{align*}
@@ -2157,7 +2261,7 @@ D_{k}^{\mathrm{arr}}-t\mid D_{k}^{\mathrm{arr}}&gt;t\sim\Exp(\lambda)
 </tr>
 </tbody>
 </table>
-<p><span class="alert">Example.</span> Start empty at <span class="math inline">\(t_0=0\)</span>; <span class="math inline">\(\Delta t_i\)</span> is the time to the next event.</p>
+<p><span class="alert">Example</span> Start empty at <span class="math inline">\(t_0=0\)</span>; <span class="math inline">\(\Delta t_i\)</span> is the time to the next event</p>
 <div class="columns">
 <div class="column" style="width:63%;">
 <table class="caption-top">
@@ -2276,7 +2380,7 @@ D_{k}^{\mathrm{arr}}-t\mid D_{k}^{\mathrm{arr}}&gt;t\sim\Exp(\lambda)
 <section class="slide level2">
 
 <h3 id="exstar-queue-simulation-exercise"><span class="math inline">\(\exstar\)</span> Queue simulation exercise</h3>
-<p>For each table, start <span class="alert">empty at <span class="math inline">\(t_0=0\)</span></span>. Process events until the supplied draws <span class="alert">no longer determine which event comes next</span>; do not invent another draw.</p>
+<p>For each table, start <span class="alert">empty at <span class="math inline">\(t_0=0\)</span></span>. Process events until the supplied draws <span class="alert">no longer determine which event comes next</span>; do not invent another draw</p>
 <table class="caption-top">
 <thead>
 <tr class="header">

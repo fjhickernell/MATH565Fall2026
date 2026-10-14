@@ -741,6 +741,7 @@ Our plan here
 <li><a href="#/transforming-an-integral">Transforming an integral</a></li>
 <li><a href="#/importance-sampling">Importance sampling</a></li>
 <li><a href="#/choosing-a-transformation">Choosing a transformation</a></li>
+<li><a href="#/cost-for-iid-accuracy">Cost of an accurate IID estimate</a></li>
 </ul>
 </section>
 <section id="variance-and-variation-reduction" class="slide level2 tree-marker-slide" data-tree-marker="variance-reduction">
@@ -804,14 +805,17 @@ Our plan here
 \vZ&amp;=\vS(\vU),&amp; h_g(\vu)&amp;=g\bigl(\vS(\vu)\bigr)
 \end{align*}\]</span></p>
 <p>Both cube integrands have integral <span class="math inline">\(\mu\)</span>; keep the nodes <span class="math inline">\(\vu_0,\ldots,\vu_{n-1}\)</span> fixed</p>
-<p>For <span class="math inline">\(h_g\in\mathcal H_K\)</span> and uniform distribution <span class="math inline">\(F_{\mathrm{unif}}\)</span>,</p>
+<p>For equal-weight averages in a space containing constants use the <a href="03-markov-chain-monte-carlo.html#variation-ignores-constants">sharper variation</a></p>
+<p><span class="math display">\[
+\operatorname{vtn}_K(h)=\min_{c\in\reals}\norm{h-c}_{\mathcal H_K}
+\]</span></p>
 <p><span class="math display">\[
 \left|\mu-\frac1n\sum_{i=0}^{n-1}h_g(\vu_i)\right|
-\le D\bigl(\{\vu_i\}_{i=0}^{n-1},F_{\mathrm{unif}};K\bigr)\norm{h_g}_{\mathcal H_K}
+\le D\bigl(\{\vu_i\}_{i=0}^{n-1},F_{\mathrm{unif}};K\bigr)\operatorname{vtn}_K(h_g)
 \]</span></p>
 <ul>
 <li>Nodes determine <span class="alert">discrepancy</span>; the composed cube integrand determines <span class="alert">variation</span></li>
-<li>Seek a smaller <span class="math inline">\(\norm{h_g}_{\mathcal H_K}\)</span> for the same nodes and kernel</li>
+<li>Seek smaller <span class="math inline">\(\operatorname{vtn}_K(h_g)\)</span> for the same nodes and kernel</li>
 </ul>
 <aside class="notes">
 <p>The notation <span class="math inline">\(\vT\)</span> identifies a transport from uniform inputs to the target; <span class="math inline">\(\vS\)</span> generates proposal draws. Neither map must be displayed when uniform inputs are incidental. This common-cube comparison assumes compatible input dimensions; conditioning can reduce dimension. The bound is the Markov Chain Monte Carlo worst-case integration-error bound. For sufficiently smooth composed cube integrands, nested uniform scrambling gives variance nearly <span class="math inline">\(\Order(n^{-3})\)</span> and RMSE nearly <span class="math inline">\(\Order(n^{-3/2})\)</span>. This is not a guarantee for every randomization or integrand. <a href="https://doi.org/10.1214/aos/1069362380">Owen (1997)</a> provides the variance result.</p>
@@ -998,13 +1002,13 @@ g(\vZ)\stackrel d=f(\vX)
 <p>Choose <span class="math inline">\(\varrho_{\mathrm{prop}}&gt;0\)</span> wherever <span class="math inline">\(f\varrho_{\mathrm{tar}}\ne0\)</span></p>
 <p><span class="math display">\[\begin{align*}
 w(\vz)&amp;=\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{prop}}(\vz)},&amp;
-g(\vz)&amp;=f(\vz)w(\vz),\\
+g_{\mathrm{IS}}(\vz)&amp;=f(\vz)w(\vz),\\
 \mu&amp;=\Ex_{\mathrm{tar}}[f(\vX)]
-=\Ex_{\mathrm{prop}}[g(\vZ)]
+=\Ex_{\mathrm{prop}}[g_{\mathrm{IS}}(\vZ)]
 \end{align*}\]</span></p>
 <p>For <span class="math inline">\(\vZ_0,\ldots,\vZ_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}\)</span>,</p>
 <p><span class="math display">\[
-Y_{\mathrm{IS}}=g(\vZ)=f(\vZ)w(\vZ),\qquad \Ex(Y_{\mathrm{IS}})=\mu
+Y_{\mathrm{IS}}=g_{\mathrm{IS}}(\vZ)=f(\vZ)w(\vZ),\qquad \Ex(Y_{\mathrm{IS}})=\mu
 \]</span></p>
 <p><span class="math display">\[
 \hmu_{\mathrm{IS},n}=\frac1n\sum_{i=0}^{n-1}Y_{\mathrm{IS},i}
@@ -1224,7 +1228,7 @@ Y_T&amp;=f(\sqrt Z),&amp;Y_{\mathrm{IS}}&amp;=2Zf(Z)
 <p><span class="math display">\[\begin{align*}
 w(\vz)&amp;=\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{prop}}(\vz)}
 =\exp\!\left(-\theta z_d+\frac{\theta^2t_d}{2}\right),\\
-Y_{\mathrm{IS}}&amp;=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[Y_{\mathrm{IS}}]=\mu
+Y_{\mathrm{IS}}&amp;=g_{\mathrm{IS}}(\vZ)=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[Y_{\mathrm{IS}}]=\mu
 \end{align*}\]</span></p>
 <ul>
 <li>Drift makes positive payoffs <span class="alert">more common</span></li>
@@ -1253,6 +1257,80 @@ Y_{\mathrm{IS}}&amp;=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[Y_{\mathrm{IS}}]=\m
 <div class="key-point">
 <p>Place more samples where the <span class="alert">magnitude</span> of the integrand times the target density is large, without creating <span class="alert">extreme</span> weights</p>
 </div>
+</section>
+<section id="cost-for-iid-accuracy" class="slide level2 tree-marker-slide" data-tree-marker="variance-error">
+<h2>Cost of an accurate IID estimate</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
+  <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
+</div>
+
+<p>For <span class="math inline">\(Y_g=g(\vZ)\)</span> with mean <span class="math inline">\(\mu\)</span>, write <span class="math inline">\(\sigma^2(g)=\var\{g(\vZ)\}\)</span></p>
+<ul>
+<li><span class="math inline">\(\$(g)\)</span>: generate <span class="math inline">\(\vZ_i\)</span> and evaluate <span class="math inline">\(g(\vZ_i)\)</span> with all required transforms</li>
+<li><span class="math inline">\(S(g)\)</span>: setup and independent-pilot cost</li>
+</ul>
+<p><span class="math display">\[\begin{align*}
+\text{Time cost for }n\text{ samples}\qquad T(n;g)&amp;=S(g)+n\$(g)\\
+\varepsilon&amp;=\rmse(\hmu_{g,n})=\frac{\sigma(g)}{\sqrt n}\\
+\varepsilon^2&amp;=\frac{\sigma^2(g)}n
+\implies n=\frac{\sigma^2(g)}{\varepsilon^2}\\
+\text{Time cost for }\alerttext{RMSE } \varepsilon\qquad C(\varepsilon;g)&amp;=T\!\left(\frac{\sigma^2(g)}{\varepsilon^2};g\right)
+=S(g)+\frac{\sigma^2(g)\$(g)}{\varepsilon^2}
+\end{align*}\]</span></p>
+<ul>
+<li>For simplicity, we may <span class="alert">omit</span> <span class="math inline">\(S(g)\)</span></li>
+<li>Practical comparisons should compare <span class="math inline">\(C(\varepsilon;g)\)</span>, not <span class="math inline">\(T(n;g)\)</span></li>
+</ul>
+<aside class="notes">
+<p>This is a planning model for independent, identically distributed, unbiased contributions with finite variance and a fixed sample count. The sampling law is part of the notation sigma(g). Cost includes random-input generation, transforms, weights, controls, and the final evaluation, not just calling a payoff function. Use one consistent unit: seconds, operation counts, or money. T denotes time when those units are seconds; C denotes cost at a specified accuracy. Setup is charged once per final calculation. Retain S(g) in the complete model for completeness, but exercises and simple method comparisons may explicitly ignore setup and pilot cost. This is a modeling simplification, not a claim that those costs vanish or are always negligible. When actual runtimes are measured, charge the work performed.</p>
+<p>For known variance and positive epsilon, the exact sample count in this model is max{1, ceil(sigma<sup>2(g)/epsilon</sup>2)}; the displayed approximation ignores integer rounding. The one-contribution minimum also covers zero variance. Unknown variance requires estimation and an error-assessment procedure; this formula alone is not a certified adaptive stopping rule. An RMSE target is not a deterministic absolute-error guarantee. A nominal CLT confidence radius z sigma(g)/sqrt(n) instead introduces z^2 into the leading cost.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="compare-work-at-the-same-accuracy">Compare work at the same accuracy</h3>
+<p>Ignoring setup and integer rounding, an equal-mean alternative <span class="math inline">\(g(\vZ)\)</span> improves on <span class="math inline">\(f(\vX)\)</span> when</p>
+<p><span class="math display">\[
+\sigma^2(g)\$(g)&lt;\sigma^2(f)\$(f)
+\]</span></p>
+<ul>
+<li>Half the variance at twice the cost: the <span class="alert">same</span> leading work</li>
+<li>Setup and pilot fitting can change the winner at a finite tolerance</li>
+</ul>
+<p>More generally, compare</p>
+<p><span class="math display">\[
+S(g)+\frac{\sigma^2(g)\$(g)}{\varepsilon^2}
+\quad\text{with}\quad
+S(f)+\frac{\sigma^2(f)\$(f)}{\varepsilon^2}
+\]</span></p>
+<div class="key-point">
+<p>For IID means, compare <span class="alert">variance <span class="math inline">\(\times\)</span> cost per contribution</span></p>
+</div>
+<aside class="notes">
+<p>For fixed representations, setup costs, and sampling laws, the leading epsilon^{-2} rate is the same. Variance reduction changes the constant. If a_g=sigma^2(g) cost(g) is smaller than a_f but S(g)&gt;S(f), the approximation favors g only when epsilon^2 &lt; (a_f-a_g)/(S(g)-S(f)). This explains why an expensive pilot may pay off for a tight tolerance but not for a loose one. If a representation or pilot size is retuned as epsilon changes, retain that dependence rather than treating S(g) and a_g as constants. Exact transport preserves the output variance but can change sampling cost; importance sampling can change both factors. Later, apply this same comparison to a controlled or conditional contribution. These are costs for estimating a mean, not for producing a target-distributed sample.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
 <section id="control-variates-and-conditioning" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="variance-reduction">
@@ -1278,7 +1356,7 @@ Y_{\mathrm{IS}}&amp;=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[Y_{\mathrm{IS}}]=\m
 <p>Let <span class="math inline">\(\boldsymbol{\eta}(\vX)=(\eta_1(\vX),\ldots,\eta_m(\vX))^\mathsf T\)</span> have known <span class="alert">zero</span> mean</p>
 <p>For fixed coefficients <span class="math inline">\(\vbeta\)</span>, define</p>
 <p><span class="math display">\[
-Y_{\mathrm{CV}}=g(\vX)=f(\vX)-\vbeta^\mathsf T\boldsymbol{\eta}(\vX)
+Y_{\mathrm{CV}}=g_{\mathrm{CV}}(\vX)=f(\vX)-\vbeta^\mathsf T\boldsymbol{\eta}(\vX)
 \]</span></p>
 <p>Then <span class="math inline">\(\Ex(Y_{\mathrm{CV}})=\Ex[f(\vX)]=\mu\)</span>, so</p>
 <p><span class="math display">\[
@@ -1354,9 +1432,9 @@ Y_{\mathrm{CV}}=g(\vX)=f(\vX)-\vbeta^\mathsf T\boldsymbol{\eta}(\vX)
 <div class="exitem lettered">
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Use <span class="math inline">\(Y_{\mathrm{CV}}=Y-\beta\eta\)</span> <span class="exsub">Find <span class="math inline">\(\beta_*\)</span> and the minimum contribution variance</span> <span class="exsub">If a controlled contribution costs twice as much, which method needs less work for the same IID RMSE?</span> <span class="exsub">Why fit <span class="math inline">\(\beta\)</span> on an independent pilot?</span> </span></p>
 </div>
-<p>Ignore setup and pilot cost for the work comparison; assume independent contributions</p>
+<p>Use <span class="math inline">\(\sigma^2(g_{\mathrm{CV}})\$(g_{\mathrm{CV}})\)</span> versus <span class="math inline">\(\sigma^2(f)\$(f)\)</span>; ignore setup and pilot cost</p>
 <aside class="notes">
-<p>The optimal coefficient is 3/4, and the minimum variance is 9-3^2/4=27/4=6.75. If a direct contribution costs c, compare 9c with (27/4)(2c)=13.5c. The direct method needs less work for the same IID RMSE, ignoring setup, pilot costs, and integer sample counts. An independent pilot makes the fitted coefficient independent of the main samples. Conditional on the pilot, the control still has mean zero, so the final mean remains unbiased, assuming integrability. Fitting on the main samples does not generally retain exact unbiasedness.</p>
+<p>The optimal coefficient is 3/4, and the minimum variance is 9-3^2/4=27/4=6.75. If a direct contribution costs c, compare 9c with (27/4)(2c)=13.5c. The direct method needs less work for the same IID RMSE, ignoring setup, pilot costs, and integer sample counts. An independent pilot makes the fitted coefficient independent of the main samples. Conditional on the pilot, the control still has mean zero, so the final mean remains unbiased, assuming integrability. Fitting on the main samples does not generally retain exact unbiasedness. Use the earlier cost model with g_CV(x)=f(x)-beta eta(x), so cost(g_CV) charges for the whole controlled contribution. For one optimal control with correlation rho, sigma<sup>2(g_CV)=sigma</sup>2(f)(1-rho^2). Ignoring setup, CV saves work exactly when (1-rho^2) cost(g_CV)&lt;cost(f). If cost(g_CV)=2 cost(f), this requires rho^2&gt;1/2; here rho^2=1/4. For coefficients fitted on an independent pilot, the conditional IID formula uses the realized residual variance. Unconditionally, average that variance over the pilot, assuming the required finite moments, and charge the pilot.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1434,7 +1512,7 @@ H_{ij}&amp;=\eta_j(\vx_i)-\overline{\eta}_j
 \]</span></p>
 <p>If <span class="math inline">\(Y=f(X_1,\ldots,X_d)\)</span> and</p>
 <p><span class="math display">\[
-Y_{\mathrm{CMC}}=g(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
+Y_{\mathrm{CMC}}=g_{\mathrm{CMC}}(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
 \]</span></p>
 <p>is analytic, estimate <span class="math inline">\(\mu\)</span> by averaging <span class="math inline">\(Y_{\mathrm{CMC},i}\)</span> instead of <span class="math inline">\(Y_i\)</span></p>
 <p><span class="alert">Analytically averaging</span> over part of the randomness <span class="alert">reduces</span> variance</p>
@@ -1836,7 +1914,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="478f5f0e" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="3da9479f" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1875,12 +1953,16 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 <p><span id="from-lhs-to-quasi-monte-carlo"></span></p>
 <p>Generating Samples introduced <a href="02-generating-samples.html#what-does-low-discrepancy-mean">even coverage</a> and <a href="02-generating-samples.html#why-coordinate-order-matters">coordinate order</a></p>
 <p>Markov Chain Monte Carlo linked <a href="03-markov-chain-monte-carlo.html#the-discrepancy-identity">discrepancy to integration error</a></p>
-<p>Now we <span class="alert">construct</span> the point sets, randomize them, and assess error</p>
 <ul>
 <li><a href="#/the-van-der-corput-sequence">The van der Corput sequence</a></li>
 <li><a href="#/four-low-discrepancy-families">Four low discrepancy families</a></li>
 <li><a href="#/randomized-low-discrepancy-sampling">Randomized low discrepancy sampling</a></li>
+<li><a href="#/rqmc-estimator-variance">Variance of a randomized low discrepancy estimate</a></li>
 <li><a href="#/component-by-component-construction">Component-by-component construction</a></li>
+<li><a href="#/deterministic-ld-cost">Cost of deterministic low discrepancy sampling</a></li>
+<li><a href="#/randomized-ld-cost">Cost of randomized low discrepancy sampling</a></li>
+<li><a href="#/comparing-representations-with-the-same-design">Compare low discrepancy costs</a></li>
+<li><a href="#/sd-squared-times-runtime">Interpreting SD squared times runtime</a></li>
 <li><a href="#/stopping-criteria">Stopping criteria</a></li>
 </ul>
 <p>The <a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/Discrepancy.ipynb">Discrepancy notebook</a> compares IID and Metropolis samples using a kernel measure</p>
@@ -2235,6 +2317,44 @@ i=(\cdots i_2i_1i_0)_b
           display:block!important;
       }</style></aside>
 </section>
+<section id="rqmc-estimator-variance" class="slide level2 tree-marker-slide" data-tree-marker="variance-low-discrepancy">
+<h2>Variance of a randomized low discrepancy estimate</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+</div>
+
+<p>Each <span class="math inline">\(\vU_i\sim\Unif[0,1]^d\)</span> but the points within a run are <span class="alert">dependent</span></p>
+<p><span class="math display">\[\begin{align*}
+\hmu_n(h)&amp;=\frac1n\sum_{i=0}^{n-1}h(\vU_i)
+&amp;\Ex_{\mathrm{rand}}\{\hmu_n(h)\}&amp;=\mu\\
+\rmse^2\{\hmu_n(h)\}
+&amp;=\var_{\mathrm{rand}}\{\hmu_n(h)\}\\
+&amp;=\frac1{n^2}\sum_{i,j=0}^{n-1}
+\cov_{\mathrm{rand}}\{h(\vU_i),h(\vU_j)\}
+\end{align*}\]</span></p>
+<ul>
+<li>IID points: off-diagonal covariances vanish</li>
+<li>Randomized LD: the <span class="alert">whole design</span> determines the estimator variance</li>
+</ul>
+<div class="key-point">
+<p>Use <span class="math inline">\(\var\{\hmu_n(h)\}\)</span> for RQMC error assessment</p>
+</div>
+<aside class="notes">
+<p>Randomness here is in the points, with h fixed. It differs from the Gaussian-process average-case interpretation in Markov Chain Monte Carlo, where the points are fixed and the integrand is random. Marginal uniformity and integrability give unbiasedness. Finite second moments justify the covariance expansion. The diagonal terms sum to var{h(U)}/n, but RQMC also has off-diagonal terms. Do not discard them or substitute within-run sample variance divided by n as an RQMC variance estimate. Independent shifts or scrambles provide independent complete-run estimates. Their across-run sample variance estimates the variance of one whole run; divide by the number of runs only when reporting the variance of their mean. Source: <a href="https://arxiv.org/abs/2608.17143">Owen (2026), Randomized quasi-Monte Carlo integration</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="component-by-component-construction" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
 <h2>Component-by-component construction</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
@@ -2254,6 +2374,163 @@ i=(\cdots i_2i_1i_0)_b
 <div class="key-point">
 <p>A high-dimensional design is built by optimizing <span class="alert">one coordinate</span> at a time</p>
 </div>
+</section>
+<section id="deterministic-ld-cost" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<h2>Cost of deterministic low discrepancy sampling</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
+
+<p><span id="from-error-decay-to-cost"></span></p>
+<p>For fixed cube points write <span class="math inline">\(Q_n(h)=n^{-1}\sum_{i=0}^{n-1}h(\vu_i)\)</span></p>
+<p>Assume a <span class="alert">discrepancy bound</span> <span class="math inline">\(D_n(K)\le a_{\mathrm D}n^{-\alpha_{\mathrm D}}\)</span></p>
+<p><span class="math display">\[\begin{align*}
+\abs{\mu-Q_n(h)}
+&amp;\le D_n(K)\operatorname{vtn}_K(h)
+\le a_{\mathrm D}\operatorname{vtn}_K(h)n^{-\alpha_{\mathrm D}}\\
+\text{Set the bound to }\varepsilon
+&amp;\implies n\approx
+\left(\frac{a_{\mathrm D}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/\alpha_{\mathrm D}}\\
+\text{Cost}\qquad C(\varepsilon;h,\mathrm{QMC})
+&amp;\approx S(h)+\$(h)
+\left(\frac{a_{\mathrm D}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/\alpha_{\mathrm D}}
+\end{align*}\]</span></p>
+<p>This plans work for an <span class="alert">absolute-error bound</span> at most <span class="math inline">\(\varepsilon\)</span></p>
+<p><span class="math inline">\(\$(h)\)</span> includes <span class="alert">point generation</span> and the full evaluation of <span class="math inline">\(h(\vu_i)\)</span></p>
+<aside class="notes">
+<p>This is the cost of a sufficient sample size obtained from the stated bound, not the unknown smallest cost for the realized integration error. Assume a fixed kernel and domain, h in the associated space, positive finite variation, a_D&gt;0, and alpha_D&gt;0. The zero-variation case is a constant integrand and needs no asymptotic rate model. Use the full RKHS norm as variation in general. If constants belong to the space, these equal-weight averages allow the reduced min_c ||h-c|| variation.</p>
+<p>Round up to an admissible sample size and retain logarithmic factors if they occur in the discrepancy bound. Cost includes the cube-point generator and complete integrand evaluation; linear per-point cost is a model. Use the actual T(n;h) if generating n points has a different cost law. The design and its implementation are implicit in S(h) and cost(h). Setup may be explicitly ignored for simple comparisons.</p>
+<p>A deterministic estimate has no randomization variance, but that says nothing about its integration error. The bound requires justified values or bounds for both discrepancy and variation. Different kernels or scalings change both factors; compare their product rather than variation alone.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="randomized-ld-cost" class="slide level2 tree-marker-slide" data-tree-marker="variance-low-discrepancy">
+<h2>Cost of randomized low discrepancy sampling</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+</div>
+
+<p>Suppose a justified <span class="alert">variance bound</span> for the chosen randomization is</p>
+<p><span class="math display">\[
+\var_{\mathrm{rand}}\{\hmu_n(h)\}
+\le a_{\mathrm R}^2\operatorname{vtn}_K^2(h)n^{-2\alpha_{\mathrm R}}
+\]</span></p>
+<p><span class="math display">\[\begin{align*}
+\rmse\{\hmu_n(h)\}
+&amp;\le a_{\mathrm R}\operatorname{vtn}_K(h)n^{-\alpha_{\mathrm R}}\\
+\text{Set the bound to }\varepsilon
+&amp;\implies n\approx
+\left(\frac{a_{\mathrm R}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/\alpha_{\mathrm R}}\\
+\text{Cost}\qquad C(\varepsilon;h,\mathrm{RQMC})
+&amp;\approx S(h)+\$(h)
+\left(\frac{a_{\mathrm R}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/\alpha_{\mathrm R}}
+\end{align*}\]</span></p>
+<p>This plans work for <span class="alert">RMSE</span> at most <span class="math inline">\(\varepsilon\)</span></p>
+<p><span class="math inline">\(\$(h)\)</span> includes <span class="alert">point generation</span> and the full evaluation of <span class="math inline">\(h(\vU_i)\)</span></p>
+<aside class="notes">
+<p>The variance is over randomizations of a fixed integrand, and unbiasedness is assumed. Variation is a deterministic seminorm of that integrand. The displayed bound must be established for this function space, design, and randomization; it does not follow from the definition of variation alone. One sufficient route from the deterministic bound is var_rand(hat_mu_n(h)) &lt;= E_rand[D_n(K)^2] vtn_K(h)^2. Thus an RMS-discrepancy rate supplies such a bound. This sufficient route may be conservative; a direct estimator-variance analysis can be sharper. An arbitrary kernel need not give the best known RQMC convergence rate.</p>
+<p>Keep alpha_R distinct from alpha_D. Some smooth integrands under suitable scrambling admit RMSE nearly n^{-3/2}, but not every integrand or randomization has that rate. State the smoothness assumptions and retain logarithmic terms or use a justified exponent slightly below 3/2. More generally alpha_R, the constant, and the relevant norm must be matched.</p>
+<p>These formulas invert a bound to plan a sufficient sample size. They ignore integer rounding and assume linear sampling work after setup. The design is implicit in S(h) and cost(h). A target RMSE is different from a deterministic absolute-error guarantee and from a confidence interval.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="comparing-representations-with-the-same-design" class="slide level2 tree-marker-slide" data-tree-marker="variance-low-discrepancy">
+<h2>Compare low discrepancy costs</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+</div>
+
+<p>Keep the error criterion and rate bound <span class="math inline">\(a\operatorname{vtn}_K(h)n^{-\alpha}\)</span> fixed</p>
+<p>For equal-integral <span class="math inline">\(h_f\)</span> and <span class="math inline">\(h_g\)</span> ignore setup and integer rounding</p>
+<p><span class="math display">\[
+\frac{C(\varepsilon;h_g)}{C(\varepsilon;h_f)}
+\approx\frac{\$(h_g)}{\$(h_f)}
+\left(\frac{\operatorname{vtn}_K(h_g)}{\operatorname{vtn}_K(h_f)}\right)^{1/\alpha}
+\]</span></p>
+<p>An alternative must reduce <span class="alert">variation enough</span> to pay for its evaluation cost</p>
+<div class="key-point">
+<p>Compare <span class="math inline">\(\$(h)\operatorname{vtn}_K(h)^{1/\alpha}\)</span> when <span class="math inline">\(a\)</span> and <span class="math inline">\(\alpha\)</span> are shared</p>
+</div>
+<aside class="notes">
+<p>This comparison applies separately to deterministic absolute-error bounds and randomized RMSE bounds. The design, norm, constant a, exponent alpha, domain, and input dimension must be compatible and shared. A lower bound-based planned cost need not imply a smaller actual error for a particular run. If changing the representation changes any of these assumptions, compare the complete method-specific cost expressions instead of canceling factors. Conditioning may change the input dimension and the design constant.</p>
+<p>For an example, halving variation while doubling cost gives a work ratio 2^{1-1/alpha}. This is 1/2 at alpha=1/2, 1 at alpha=1, and 2^{1/3} at alpha=3/2. Faster decay can make extra per-sample expense harder to justify solely by reducing the error constant. Actual setup and pilot costs can change these finite-tolerance comparisons.</p>
+<p>With constants removed in IID’s L2 norm, variation is sigma(h) and alpha=1/2, recovering cost(h) sigma^2(h). Under RQMC, least-squares controls fitted to minimize IID variance do not automatically minimize this design-specific variation or the variance of a complete randomized estimate.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="sd-squared-times-runtime" class="slide level2 tree-marker-slide" data-tree-marker="variance-error">
+<h2>Interpreting SD squared times runtime</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
+  <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
+</div>
+
+<p>Fix the sample size and method within <span class="alert">one complete run</span></p>
+<p>Write <span class="math inline">\(v=\var_{\mathrm{rand}}\{\hmu_n(h)\}\)</span> and <span class="math inline">\(t=T(n;h)\)</span></p>
+<p>For the average of <span class="math inline">\(R\)</span> independent runs,</p>
+<p><span class="math display">\[\begin{align*}
+\rmse^2&amp;=\frac vR,&amp;
+T&amp;\approx Rt,&amp;
+C(\varepsilon;n,h)&amp;\approx\frac{vt}{\varepsilon^2}
+\end{align*}\]</span></p>
+<ul>
+<li>Notebook estimate of <span class="math inline">\(vt\)</span>: across-run <span class="math inline">\(s_R^2\times\overline t\)</span></li>
+<li>Include each run’s independent control pilot and sample-generation work</li>
+<li>Changing the <span class="alert">sample size</span> changes both <span class="math inline">\(v\)</span> and <span class="math inline">\(t\)</span></li>
+</ul>
+<p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb">Asian/lookback comparison</a></p>
+<div class="key-point">
+<p>Compare independent complete runs without assuming IID points <span class="alert">within</span> a run</p>
+</div>
+<aside class="notes">
+<p>This is the earlier IID cost model applied to complete run estimates rather than individual payoff evaluations. It therefore applies to independent scrambles or shifts even though points within a run are dependent. Distinguish the observed number of pilot replications used to estimate v and t from a future number of runs chosen to reach epsilon. R here denotes independent complete runs; the notebook’s s_R is an empirical across-run SD.</p>
+<p>In the Asian notebook, every controlled run regenerates and charges its independent pilot, so that pilot is part of t. If a different design reuses one fitted control across runs, charge its pilot once as setup and analyze the residual variance conditional on that pilot; unconditional run estimates need not be independent, even though their cross-covariances are zero when each conditional mean is exactly mu. The variance formula follows by conditioning and averaging the conditional variance when moments exist.</p>
+<p>Ignore integer rounding in R and separately charge any one-time setup. The sample product s_R^2 times mean runtime has sampling and timing uncertainty. It is a fixed-run-size efficiency diagnostic, not a prediction of QMC error decay as n increases, a confidence guarantee, or evidence that one method is universally best. This comparison concerns unbiased estimation of the same discretely monitored contract; model or discretization bias is a separate error component.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="stopping-criteria" class="slide level2 tree-marker-slide" data-tree-marker="data-driven-error">
 <h2>Stopping criteria</h2>
@@ -2414,7 +2691,7 @@ i=(\cdots i_2i_1i_0)_b
 </div>
 <aside class="notes">
 <p>The gamma convention here is shape k and rate lambda; the sum-of-exponentials construction requires a positive integer shape. The quantile construction uses one uniform input and a generally numerical inverse CDF, whereas the sum uses k independent uniforms and k logarithms. Benchmark the actual implementations rather than assuming either is faster. For IID draws the two constructions produce the same target law and hence the same distribution of f(X), assuming exact transforms; their costs differ. With low discrepancy inputs, dimension and smoothness also affect integration error.</p>
-<p>Define the desired output before choosing a method. For an unbiased IID mean estimator with finite variance and per-contribution cost c, ignoring setup, work to reach RMSE epsilon is approximately c Var(Y)/epsilon^2. Include setup, pilot fitting, sampling, transformations, and evaluation in the actual budget. A variance reduction alone does not establish an overall efficiency gain; compare complete estimators at the required accuracy. Dependent designs, adaptive stopping, density estimation, and quantiles require their appropriate error assessment, not an automatic substitution into this IID formula.</p>
+<p>Define the desired output before choosing a method. For an unbiased IID mean estimator with finite variance and per-contribution cost c, ignoring setup, work to reach RMSE epsilon is approximately c var(Y)/epsilon^2. Include setup, pilot fitting, sampling, transformations, and evaluation in the actual budget. A variance reduction alone does not establish an overall efficiency gain; compare complete estimators at the required accuracy. Dependent designs, adaptive stopping, density estimation, and quantiles require their appropriate error assessment, not an automatic substitution into this IID formula.</p>
 <p>Probability is itself an expectation of an indicator, so one does not always need unweighted target draws to estimate it. Importance weights can estimate probabilities and CDFs; an appropriately normalized weighted empirical CDF can be inverted for quantiles. Conditional methods can estimate probabilities and densities directly, as the Asian example shows. These methods need valid weights or conditional formulas for the requested distributional quantity. A control-adjusted or weighted scalar contribution with the correct mean does not generally have the original output distribution; do not use its raw histogram or quantiles as those of the original output. If reusable unweighted target samples are required, choose a method that actually produces them.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {

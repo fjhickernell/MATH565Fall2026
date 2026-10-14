@@ -785,7 +785,7 @@ This deck
 </div>
 
 <p>Both methods minimize the same quadratic loss<br>Stochastic gradients use one randomly selected component at each step</p>
-<div id="7a59b092" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
+<div id="d8fd6ac7" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -968,6 +968,37 @@ Y_\ell&amp;=f_{d_\ell}(\vX_{1:d_\ell})
 =\sum_{\ell=1}^L\Ex(Y_\ell)
 \]</span></p>
 <p>with a remaining truncation bias <span class="math inline">\(\mu-\Ex\{f_{d_L}(\vX_{1:d_L})\}\)</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="multilevel-cost-for-accuracy">Cost for a multilevel error tolerance</h3>
+<p>Let <span class="math inline">\(\mu_L=\Ex\{f_{d_L}(\vX_{1:d_L})\}\)</span> and <span class="math inline">\(b_L=\mu-\mu_L\)</span></p>
+<p>Write <span class="math inline">\(Y_\ell=g_\ell(\vZ_\ell)\)</span>, <span class="math inline">\(\$_\ell=\$(g_\ell)\)</span>; use independent level means</p>
+<p><span class="math display">\[
+\rmse^2(\hmu)=b_L^2+\sum_{\ell=1}^L\frac{V_\ell}{n_\ell}
+\]</span></p>
+<p>Choose <span class="math inline">\(L\)</span> with <span class="math inline">\(b_L^2&lt;\varepsilon^2\)</span>; write <span class="math inline">\(\varepsilon_{\mathrm s}^2=\varepsilon^2-b_L^2\)</span></p>
+<p>With optimal allocation, ignoring setup and integer rounding,</p>
+<p><span class="math display">\[
+C(\varepsilon;g_1,\ldots,g_L)\approx\frac1{\varepsilon_{\mathrm s}^2}
+\left(\sum_{\ell=1}^L\sqrt{V_\ell\$_\ell}\right)^2
+\]</span></p>
+<p>For one unbiased level: <span class="math inline">\(C(\varepsilon;g_1)\approx V_1\$_1/\varepsilon^2\)</span>, as in <a href="04-improving-efficiency.html#cost-for-iid-accuracy">Improving Efficiency</a></p>
+<aside class="notes">
+<p>This extends the earlier variance-times-cost model. Conditional on a fixed chosen L and sample counts, the variance contributions add because level estimators are independent; within each coupled difference the coarse and fine simulations deliberately share randomness. V_l is the variance of one coupled difference, and $_l charges for generating that entire difference.</p>
+<p>For V_l&gt;0 and positive per-sample costs, continuous optimal counts are n_l=epsilon_s^{-2} sqrt(V_l/$_l) sum_k sqrt(V_k $_k). Round up to positive integer sample counts for implemented nonconstant levels and add setup, pilot, and bias-estimation costs. A common sufficient budget is to bound squared bias and sampling variance by epsilon^2/2 each; the actual bias is usually unknown and needs a justified bound or estimate. The displayed identity defines the ideal budget, not a procedure for discovering the bias.</p>
+<p>L, V_l, and $_l can depend on epsilon. The epsilon_s^{-2} factor alone therefore does not establish the overall complexity rate. This is why the next slide examines how correction variance and evaluation cost vary by level. For an exact finite decomposition, b_L=0. For L=1 and no bias, the formula reduces to the IID cost model. A control variate with a known mean supplies its cheap expectation exactly; multilevel methods estimate the cheap-level expectation too and allocate work among levels. Source: <a href="https://people.maths.ox.ac.uk/gilesm/files/acta15.pdf">Giles, Multilevel Monte Carlo methods (2015)</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="why-telescoping-helps" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
 <h2>Why telescoping helps</h2>

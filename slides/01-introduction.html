@@ -1426,7 +1426,8 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="#/terms-a-c">A–C</a></li>
 <li><a href="#/terms-d-i">D–I</a></li>
 <li><a href="#/terms-k-o">K–O</a></li>
-<li><a href="#/terms-p-z">P–Z</a></li>
+<li><a href="#/terms-p-r">P–R</a></li>
+<li><a href="#/terms-s-z">S–Z</a></li>
 </ul>
 </section>
 <section id="terms-a-c" class="slide level2">
@@ -1522,8 +1523,9 @@ Dates mark representative introductions or inflection points; adoption overlappe
 </ul>
 </div></div>
 </section>
-<section id="terms-p-z" class="slide level2">
-<h2>P–Z</h2>
+<section id="terms-p-r" class="slide level2">
+<h2>P–R</h2>
+<p><span id="terms-p-z"></span></p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
@@ -1534,6 +1536,9 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="#/random-variables-and-distributions">Probability mass function (PMF)</a></li>
 <li><a href="02-generating-samples.html#transport-maps">Proposal distribution</a></li>
 <li><a href="02-generating-samples.html#where-do-random-variables-come-from">Pseudorandom number generator</a></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
 <li><a href="02-generating-samples.html#the-quantile-transform">Quantile function</a></li>
 <li><a href="02-generating-samples.html#the-quantile-transform">Quantile transform</a></li>
 <li><a href="#/random-variables-and-distributions">Random variable</a></li>
@@ -1542,7 +1547,12 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="03-markov-chain-monte-carlo.html#a-reproducing-kernel-hilbert-space">Reproducing kernel Hilbert space</a></li>
 <li><a href="#/under-random-sampling">Root mean squared error (RMSE)</a></li>
 </ul>
-</div><div class="column" style="width:50%;">
+</div></div>
+</section>
+<section id="terms-s-z" class="slide level2">
+<h2>S–Z</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
 <ul>
 <li><a href="#/sampling">Sample</a></li>
 <li><a href="#/sampling">Sample mean</a></li>
@@ -1552,12 +1562,16 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="03-markov-chain-monte-carlo.html#stein-discrepancy">Stein discrepancy</a></li>
 <li><a href="05-selected-topics.html#stochastic-gradient-descent">Stochastic gradient descent</a></li>
 <li><a href="03-markov-chain-monte-carlo.html#symmetric-positive-definite-kernels">Symmetric positive definite kernel</a></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
 <li><a href="02-generating-samples.html#transport-maps">Target distribution</a></li>
 <li><a href="02-generating-samples.html#transport-maps">Transport map</a></li>
 <li><a href="#/mean-squared-error-bias-and-variance">Unbiased estimator</a></li>
 <li><a href="04-improving-efficiency.html#the-van-der-corput-sequence">van der Corput sequence</a></li>
 <li><a href="#/moments-of-random-variables">Variance</a></li>
 <li><a href="#/conditional-monte-carlo">Variance reduction</a></li>
+<li><a href="03-markov-chain-monte-carlo.html#worst-case-integration-error">Variation</a></li>
 </ul>
 </div></div>
 </section></section>
@@ -1747,7 +1761,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points<br>Compare how its <span class="math inline">\(x_1\)</span>–<span class="math inline">\(x_2\)</span> projection fills the unit square</p>
-<div id="6875c675" class="cell" data-execution_count="4">
+<div id="66093fb3" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1760,7 +1774,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="grid-n64">Grid, <span class="math inline">\(n=64\)</span></h3>
-<div id="95a3cc80" class="cell" data-execution_count="5">
+<div id="2a0beae6" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1773,7 +1787,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="orthogonal-array-n64">Orthogonal array, <span class="math inline">\(n=64\)</span></h3>
-<div id="cb672b23" class="cell" data-execution_count="6">
+<div id="393501e4" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1786,7 +1800,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="iid-n64">IID, <span class="math inline">\(n=64\)</span></h3>
-<div id="a17668eb" class="cell" data-execution_count="7">
+<div id="0461633e" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1799,7 +1813,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="scrambled-sobol-n64">Scrambled Sobol’, <span class="math inline">\(n=64\)</span></h3>
-<div id="868faad1" class="cell" data-execution_count="8">
+<div id="9f947ecb" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
