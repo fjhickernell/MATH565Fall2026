@@ -333,6 +333,56 @@ $$
 
 with a remaining truncation bias $\mu-\Ex\{f_{d_L}(\vX_{1:d_L})\}$
 
+---
+
+### Cost for a multilevel error tolerance {#multilevel-cost-for-accuracy}
+
+Let $\mu_L=\Ex\{f_{d_L}(\vX_{1:d_L})\}$ and $b_L=\mu-\mu_L$
+
+Write $Y_\ell=g_\ell(\vZ_\ell)$, $\$_\ell=\$(g_\ell)$; use independent level means
+
+$$
+\rmse^2(\hmu)=b_L^2+\sum_{\ell=1}^L\frac{V_\ell}{n_\ell}
+$$
+
+Choose $L$ with $b_L^2<\varepsilon^2$; write
+$\varepsilon_{\mathrm s}^2=\varepsilon^2-b_L^2$
+
+With optimal allocation, ignoring setup and integer rounding,
+
+$$
+C(\varepsilon;g_1,\ldots,g_L)\approx\frac1{\varepsilon_{\mathrm s}^2}
+\left(\sum_{\ell=1}^L\sqrt{V_\ell\$_\ell}\right)^2
+$$
+
+For one unbiased level: $C(\varepsilon;g_1)\approx V_1\$_1/\varepsilon^2$,
+as in [Improving Efficiency]({{< meta decks.d04.file >}}#cost-for-iid-accuracy)
+
+::: {.notes}
+This extends the earlier variance-times-cost model. Conditional on a fixed
+chosen L and sample counts, the variance contributions add because level
+estimators are independent; within each coupled difference the coarse and
+fine simulations deliberately share randomness. V_l is the variance of one
+coupled difference, and $_l charges for generating that entire difference.
+
+For V_l>0 and positive per-sample costs, continuous optimal counts are
+n_l=epsilon_s^{-2} sqrt(V_l/$_l) sum_k sqrt(V_k $_k).
+Round up to positive integer sample counts for implemented nonconstant levels
+and add setup, pilot, and bias-estimation costs. A common sufficient budget is
+to bound squared bias and sampling variance by epsilon^2/2 each; the actual
+bias is usually unknown and needs a justified bound or estimate. The displayed
+identity defines the ideal budget, not a procedure for discovering the bias.
+
+L, V_l, and $_l can depend on epsilon. The epsilon_s^{-2} factor alone
+therefore does not establish the overall complexity rate. This is why the
+next slide examines how correction variance and evaluation cost vary by level.
+For an exact finite decomposition, b_L=0. For L=1 and no bias, the formula
+reduces to the IID cost model. A control variate with a known mean supplies
+its cheap expectation exactly; multilevel methods estimate the cheap-level
+expectation too and allocate work among levels.
+Source: [Giles, Multilevel Monte Carlo methods (2015)](https://people.maths.ox.ac.uk/gilesm/files/acta15.pdf).
+:::
+
 ## Why telescoping helps {.tree-marker-slide tree-marker="estimation"}
 
 - Fine approximations are expensive

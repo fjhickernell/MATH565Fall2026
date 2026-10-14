@@ -17,6 +17,25 @@ The Dashboard publication task and matching Academic reminder are complete;
 grading remains due **October 27, 2026**. Preserve Owen's analytical-work or
 simulation option for Exercise 8.4.
 
+### Asian-option cost and stopping follow-up
+
+- Review the saved SD-squared-times-seconds tables alongside the SD plots.
+  The product compares independent complete runs at a fixed main sample size;
+  it includes input generation, payoff evaluation, and each control pilot.
+  It does not infer how error changes when the main sample size changes.
+- The current price stopping example remains `CubQMCRepStudentT` with an
+  independently fitted fixed control. It has not been replaced.
+- Verified in pinned QMCPy `143dcdeb`: `CubQMCNetG` exposes native controls
+  and coefficient updates. `CubQMCLatticeG` currently passes empty controls;
+  consider its Fourier bound on an explicitly controlled cube integrand.
+- Next implementation: [compare coefficient-based stopping with controls,
+  issue 2](https://github.com/fjhickernell/MATH565Fall2026/issues/2), including
+  Walsh versus Fourier coefficients, total work, and bound assumptions.
+  Preserve the pinned dependencies and existing examples during that review.
+- The instructor refreshed the Asian-option notebook outputs on October 14.
+  All 11 code cells have successful saved executions; code and prose are
+  unchanged. Preserve those timings as machine-specific measurements.
+
 1. Prepare the October 15 continuation: briefly recap van der Corput,
    then resume Deck 04 at “Four low discrepancy families.” October 8
    completed antithetic sampling and its variance derivation, examined the
@@ -64,6 +83,29 @@ simulation option for Exercise 8.4.
    runs, verified October 9.
    Review the low discrepancy constructions companion and the deferred
    Asian-option cost comparison before class.
+   A main cost-model slide introduces `C(epsilon; g)` after choosing a
+   transformation, immediately before Control Variates and Conditioning;
+   its equal-accuracy comparison is a continuation. The section outline links
+   the main cost slide, before the control-cost exercise.
+   They compare IID variance times complete-contribution cost, including
+   separate setup/pilot cost, which simple hand calculations may explicitly
+   omit. Review the new main slides on deterministic LD cost, RQMC estimator
+   variance, RQMC cost, and fixed-run SD-squared-times-runtime interpretation.
+   The two LD cost models use `vtn_K(h)` and distinguish absolute-error bounds
+   from RMSE bounds. A main shared-design comparison compares evaluation cost
+   times variation to the power `1/alpha`. Deck 03 first defines variation as
+   the full RKHS norm in the worst-case bound, then sharpens it to distance
+   to constants after the discrepancy identity when constants belong to the
+   space and the rule integrates them exactly. It includes the target
+   L2/standard-deviation analogy and centered-kernel example; Deck 04 recalls
+   it and Deck 01 links it from the terms index, whose last range is now
+   split into P–R and S–Z for room. Per-contribution costs explicitly include
+   generating inputs and evaluating the complete integrand with transforms. Selected
+   Topics reuses this notation after the multilevel bias decomposition.
+   Instructor review of these additions remains part of lecture preparation.
+   The changed decks render locally; changed equations and slide layouts were
+   checked at 1600×1000 and 1200×800. Live deployment of these additions has
+   not yet been verified.
    Importance sampling now includes a weighted empirical-distribution
    continuation using the discrepancy notes' notation, with normalized
    weights, consistency, and finite-sample bias distinguished from ordinary

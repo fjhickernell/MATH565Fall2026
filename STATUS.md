@@ -394,6 +394,17 @@ appropriate phase rather than appended indiscriminately.
   and stopping decisions. Include presenter-note answers, retain the three
   main control/conditioning headings, and check rendering and visible layouts
   (October 8, 2026).
+- [x] Add a staged cost-to-accuracy model: IID variance times complete-sample
+  cost before the control-cost exercise; error-rate and fixed-run timing
+  interpretations after low discrepancy randomization; multilevel cost with
+  a separate bias budget in Deck 05. Use `C(epsilon; g)` and named contribution
+  functions; keep instructor review open with the remaining Deck 04–05 review.
+- [x] Define RKHS variation first by the full norm, then sharpen it to distance
+  to constants for constant-exact rules in Deck 03 and
+  connect it to standard deviation in target L2 and the centered-kernel norm.
+  Recall it in Deck 04; add main slides for deterministic LD cost, RQMC
+  estimator variance, RQMC cost, and fixed-run timing, with a shared-design
+  representation comparison. Link variation from the Deck 01 terms index.
 - [x] Validate shared slide styling, metadata, navigation, and assets from
   `classlib`.
 - [x] Add reusable Monte Carlo overview-tree rendering and named course tree

@@ -395,7 +395,8 @@ Canvas<br>Only one person per group submits the assignment
 - [A–C](#terms-a-c)
 - [D–I](#terms-d-i)
 - [K–O](#terms-k-o)
-- [P–Z](#terms-p-z)
+- [P–R](#terms-p-r)
+- [S–Z](#terms-s-z)
 
 ## A–C {#terms-a-c}
 
@@ -487,7 +488,9 @@ Canvas<br>Only one person per group submits the assignment
 :::
 :::
 
-## P–Z {#terms-p-z}
+## P–R {#terms-p-r}
+
+<span id="terms-p-z"></span>
 
 ::: {.columns}
 ::: {.column width="50%"}
@@ -498,6 +501,9 @@ Canvas<br>Only one person per group submits the assignment
 - [Probability mass function (PMF)](#random-variables-and-distributions)
 - [Proposal distribution](02-generating-samples.html#transport-maps)
 - [Pseudorandom number generator](02-generating-samples.html#where-do-random-variables-come-from)
+:::
+
+::: {.column width="50%"}
 - [Quantile function](02-generating-samples.html#the-quantile-transform)
 - [Quantile transform](02-generating-samples.html#the-quantile-transform)
 - [Random variable](#random-variables-and-distributions)
@@ -506,7 +512,11 @@ Canvas<br>Only one person per group submits the assignment
 - [Reproducing kernel Hilbert space](03-markov-chain-monte-carlo.html#a-reproducing-kernel-hilbert-space)
 - [Root mean squared error (RMSE)](#under-random-sampling)
 :::
+:::
 
+## S–Z {#terms-s-z}
+
+::: {.columns}
 ::: {.column width="50%"}
 - [Sample](#sampling)
 - [Sample mean](#sampling)
@@ -516,15 +526,18 @@ Canvas<br>Only one person per group submits the assignment
 - [Stein discrepancy](03-markov-chain-monte-carlo.html#stein-discrepancy)
 - [Stochastic gradient descent](05-selected-topics.html#stochastic-gradient-descent)
 - [Symmetric positive definite kernel](03-markov-chain-monte-carlo.html#symmetric-positive-definite-kernels)
+:::
+
+::: {.column width="50%"}
 - [Target distribution](02-generating-samples.html#transport-maps)
 - [Transport map](02-generating-samples.html#transport-maps)
 - [Unbiased estimator](#mean-squared-error-bias-and-variance)
 - [van der Corput sequence](04-improving-efficiency.html#the-van-der-corput-sequence)
 - [Variance](#moments-of-random-variables)
 - [Variance reduction](#conditional-monte-carlo)
+- [Variation]({{< meta decks.d03.file >}}#worst-case-integration-error)
 :::
 :::
-
 
 # Probability Review {.tree-marker-slide tree-marker="probability"}
 

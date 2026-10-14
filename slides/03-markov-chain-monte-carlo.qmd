@@ -712,6 +712,7 @@ The off-diagonal estimator can be negative and is not itself a squared norm.
 - [A reproducing kernel Hilbert space](#a-reproducing-kernel-hilbert-space)
 - [Worst-case integration error](#worst-case-integration-error)
 - [The discrepancy identity](#the-discrepancy-identity)
+- [Variation ignores constants](#variation-ignores-constants)
 - [Average-case integration error](#average-case-integration-error)
 - [What the kernel controls](#what-the-kernel-controls)
 - [Centered discrepancy and smoothness](#centered-discrepancy-and-smoothness)
@@ -766,7 +767,8 @@ $$
 \le\norm{\zeta}_{\mathcal H_K}\norm{f}_{\mathcal H_K}
 $$
 
-This separates [sample quality]{.alert}, $\norm{\zeta}_{\mathcal H_K}$, from [integrand difficulty]{.alert}, $\norm{f}_{\mathcal H_K}$
+This separates [sample quality]{.alert} $\norm{\zeta}_{\mathcal H_K}$
+from [variation]{.alert} $\operatorname{vtn}_K(f)=\norm{f}_{\mathcal H_K}$
 
 For $\zeta\ne0$, the unit-norm integrand
 $f=\zeta/\norm{\zeta}_{\mathcal H_K}$ [attains the bound]{.alert}
@@ -825,6 +827,95 @@ symmetry of $K$ combines the two cross terms:
 \end{align*}
 
 Thus discrepancy is the [worst-case error over $\norm{f}_{\mathcal H_K}\le1$]{.alert}
+
+## Variation ignores constants {.tree-marker-slide tree-marker="discrepancy-analysis"}
+
+For equal-weight sample averages assume $1\in\mathcal H_K$
+
+Both the target distribution and sample average integrate constants exactly
+
+$$
+\operatorname{error}(f)=\operatorname{error}(f-c)
+\qquad\text{for every constant }c
+$$
+
+We may [sharpen]{.alert} the full-norm variation to
+
+$$
+\operatorname{vtn}_K(f)=\min_{c\in\reals}\norm{f-c}_{\mathcal H_K}
+$$
+
+Then the discrepancy bound becomes
+
+$$
+\abs{\operatorname{error}(f)}\le D_n(K)\operatorname{vtn}_K(f)
+$$
+
+::: {.key-point}
+Adding a constant changes neither the integration error nor the variation
+:::
+
+::: {.notes}
+Here error(f)=integral f dF_tar - n^{-1} sum_i f(x_i), and D_n(K)
+abbreviates the discrepancy already defined for those nodes and that target.
+The preceding general definition uses vtn_K(f)=||f||_H. This slide adopts
+the smaller constant-shift variation when the space and rule permit it;
+it does not assert that the full norm equals the reduced seminorm.
+The statement also holds for weighted quadrature whose weights sum to one.
+Constant exactness is essential: it gives error(f)=error(f-c), to which
+the existing RKHS bound applies for every c. Minimize over c afterward.
+
+In a Hilbert space containing 1, the constants form a closed one-dimensional
+subspace, so the minimum exists. The minimizer is
+c_* = <f,1>_H / ||1||_H^2, which need not equal the integral of f.
+The reduced variation is a seminorm on H and a norm on functions modulo constants.
+It depends on K and the domain; it is not a universal property of f.
+The error representer is orthogonal to constants because error(1)=0.
+Consequently subtracting the constant does not change the discrepancy or
+the norm of the error representer.
+
+For a general normed function space, define variation by the infimum over
+admissible constant shifts; write min only when attainment is established.
+If constants do not belong to H, arbitrary shifts f-c need not belong to H.
+Do not apply this minimum formula without specifying the function space.
+In particular, do not assume a Gaussian-kernel RKHS on an unbounded domain
+contains constants. The centered-discrepancy space below does contain them.
+:::
+
+---
+
+### Variance as squared $L_2$ variation
+
+For $\vX\sim F_{\mathrm{tar}}$ and square-integrable $f$
+
+\begin{align*}
+\norm{f-c}_{L_2(F_{\mathrm{tar}})}^2
+&=\Ex\{[f(\vX)-c]^2\}\\
+&=\var\{f(\vX)\}+[\Ex\{f(\vX)\}-c]^2
+\end{align*}
+
+The minimizing constant is $c=\Ex\{f(\vX)\}$
+
+$$
+\operatorname{vtn}_{L_2}(f)
+=\min_{c\in\reals}\norm{f-c}_{L_2(F_{\mathrm{tar}})}
+=\sqrt{\var\{f(\vX)\}}
+$$
+
+::: {.key-point}
+Standard deviation is the target $L_2$ distance to constants
+:::
+
+::: {.notes}
+The cross term vanishes when expanding around the target expectation.
+Thus variance is the squared distance from f to the constant functions in
+L2 of the target probability measure. The analogous RKHS variation uses
+its own norm and its own minimizing constant. IID RMSE is controlled by
+this L2 variation; low discrepancy bounds use variation matched to the
+design and function space. An arbitrary L2 function need not have bounded
+point evaluations, so this analogy does not supply a deterministic
+pointwise quadrature bound for every L2 function.
+:::
 
 ## Average-case integration error {.tree-marker-slide tree-marker="error-assessment"}
 
@@ -907,6 +998,37 @@ Its norm combines the function value at the center with weighted square-integral
 \end{align*}
 
 The weights $\gamma_\ell$ express [coordinate importance]{.alert}
+
+---
+
+### Variation for the centered kernel
+
+Subtracting $c$ changes only the function value at the center
+
+$$
+c_*=f(1/2,\ldots,1/2)
+$$
+
+Thus
+
+$$
+\operatorname{vtn}_K^2(f)
+=\norm{f}_{\mathcal H_K}^2-\abs{f(1/2,\ldots,1/2)}^2
+$$
+
+The remaining mixed-derivative terms measure [variation]{.alert}
+
+::: {.key-point}
+The integral may be large even when the variation is small
+:::
+
+::: {.notes}
+In the centered anchored Sobolev norm just displayed, the derivatives of
+f-c equal those of f. Minimizing the norm therefore sets the anchor value
+to zero. This is a concrete instance of min_c ||f-c||, not a claim that
+the minimizer is the target expectation for every norm. A nonzero constant
+has positive full RKHS norm but zero variation and zero quadrature error.
+:::
 
 ## Alternative comparisons {#alternative-comparisons .tree-marker-slide tree-marker="discrepancy-statistics"}
 
@@ -1268,14 +1390,14 @@ Bayesian inference is a primary reason to sample from complicated unnormalized d
 
 ## Queueing systems {.tree-marker-slide tree-marker="probability-practice"}
 
-First distinguish [full input durations]{.alert} from [event-state clocks]{.alert}.
+First distinguish [full input durations]{.alert} from [event-state clocks]{.alert}
 
 Full durations are quantile transforms of uniform inputs; assume they are mutually independent:
 
 $$
 D_{k}^{\mathrm{arr}}\sim F_A \quad\text{($k$th interarrival duration)},
 \qquad
-D_{j}^{\mathrm{srv}}\sim F_S \quad\text{(customer $j$'s full service time)}.
+D_{j}^{\mathrm{srv}}\sim F_S \quad\text{(customer $j$'s full service time)}
 $$
 
 Immediately after event $i$, the [state]{.alert} is $\vQ_i=(A_i,N_i,S_i), \qquad i=0,1,\ldots$, where
@@ -1386,7 +1508,7 @@ The full [interarrival and service draws]{.alert} are given. Use each row from l
 | Interarrival $D_{k}^{\mathrm{arr}}$ | $2$ | $1.5$ | $5$ |
 | Service $D_{j}^{\mathrm{srv}}$ | $5$ | $1$ | $4$ |
 
-[Example.]{.alert} Start empty at $t_0=0$; $\Delta t_i$ is the time to the next event.
+[Example]{.alert} Start empty at $t_0=0$; $\Delta t_i$ is the time to the next event
 
 :::: {.columns}
 ::: {.column width="63%"}
@@ -1428,7 +1550,7 @@ by event 4, so $\tau_3$ remains unavailable.
 
 For each table, start [empty at $t_0=0$]{.alert}. Process events until the
 supplied draws [no longer determine which event comes next]{.alert}; do not
-invent another draw.
+invent another draw
 
 | Draw | First | Second | Third |
 |:--|--:|--:|--:|

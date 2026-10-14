@@ -81,6 +81,7 @@ Keep $\mu=\Ex_{\mathrm{tar}}[f(\vX)]$ fixed, using two complementary levers:
 - [Transforming an integral](#transforming-an-integral)
 - [Importance sampling](#importance-sampling)
 - [Choosing a transformation](#choosing-a-transformation)
+- [Cost of an accurate IID estimate](#cost-for-iid-accuracy)
 
 ## Variance and variation reduction {.tree-marker-slide tree-marker="variance-reduction"}
 
@@ -144,15 +145,20 @@ To compare designs on the unit cube, make the uniform inputs explicit:
 
 Both cube integrands have integral $\mu$; keep the nodes $\vu_0,\ldots,\vu_{n-1}$ fixed
 
-For $h_g\in\mathcal H_K$ and uniform distribution $F_{\mathrm{unif}}$,
+For equal-weight averages in a space containing constants use the
+[sharper variation]({{< meta decks.d03.file >}}#variation-ignores-constants)
+
+$$
+\operatorname{vtn}_K(h)=\min_{c\in\reals}\norm{h-c}_{\mathcal H_K}
+$$
 
 $$
 \left|\mu-\frac1n\sum_{i=0}^{n-1}h_g(\vu_i)\right|
-\le D\bigl(\{\vu_i\}_{i=0}^{n-1},F_{\mathrm{unif}};K\bigr)\norm{h_g}_{\mathcal H_K}
+\le D\bigl(\{\vu_i\}_{i=0}^{n-1},F_{\mathrm{unif}};K\bigr)\operatorname{vtn}_K(h_g)
 $$
 
 - Nodes determine [discrepancy]{.alert}; the composed cube integrand determines [variation]{.alert}
-- Seek a smaller $\norm{h_g}_{\mathcal H_K}$ for the same nodes and kernel
+- Seek smaller $\operatorname{vtn}_K(h_g)$ for the same nodes and kernel
 
 ::: {.notes}
 The notation $\vT$ identifies a transport from uniform inputs to the target;
@@ -324,15 +330,15 @@ Choose $\varrho_{\mathrm{prop}}>0$ wherever $f\varrho_{\mathrm{tar}}\ne0$
 
 \begin{align*}
 w(\vz)&=\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{prop}}(\vz)},&
-g(\vz)&=f(\vz)w(\vz),\\
+g_{\mathrm{IS}}(\vz)&=f(\vz)w(\vz),\\
 \mu&=\Ex_{\mathrm{tar}}[f(\vX)]
-=\Ex_{\mathrm{prop}}[g(\vZ)]
+=\Ex_{\mathrm{prop}}[g_{\mathrm{IS}}(\vZ)]
 \end{align*}
 
 For $\vZ_0,\ldots,\vZ_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}$,
 
 $$
-Y_{\mathrm{IS}}=g(\vZ)=f(\vZ)w(\vZ),\qquad \Ex(Y_{\mathrm{IS}})=\mu
+Y_{\mathrm{IS}}=g_{\mathrm{IS}}(\vZ)=f(\vZ)w(\vZ),\qquad \Ex(Y_{\mathrm{IS}})=\mu
 $$
 
 $$
@@ -559,7 +565,7 @@ $\va=\theta(t_1,\ldots,t_d)^\mathsf T$
 \begin{align*}
 w(\vz)&=\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{prop}}(\vz)}
 =\exp\!\left(-\theta z_d+\frac{\theta^2t_d}{2}\right),\\
-Y_{\mathrm{IS}}&=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[Y_{\mathrm{IS}}]=\mu
+Y_{\mathrm{IS}}&=g_{\mathrm{IS}}(\vZ)=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[Y_{\mathrm{IS}}]=\mu
 \end{align*}
 
 - Drift makes positive payoffs [more common]{.alert}
@@ -580,6 +586,88 @@ Y_{\mathrm{IS}}&=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[Y_{\mathrm{IS}}]=\mu
 Place more samples where the [magnitude]{.alert} of the integrand times the target density is large, without creating [extreme]{.alert} weights
 :::
 
+## Cost of an accurate IID estimate {#cost-for-iid-accuracy .tree-marker-slide tree-marker="variance-error"}
+
+For $Y_g=g(\vZ)$ with mean $\mu$, write $\sigma^2(g)=\var\{g(\vZ)\}$
+
+- $\$(g)$: generate $\vZ_i$ and evaluate $g(\vZ_i)$ with all required transforms
+- $S(g)$: setup and independent-pilot cost
+
+\begin{align*}
+\text{Time cost for }n\text{ samples}\qquad T(n;g)&=S(g)+n\$(g)\\
+\varepsilon&=\rmse(\hmu_{g,n})=\frac{\sigma(g)}{\sqrt n}\\
+\varepsilon^2&=\frac{\sigma^2(g)}n
+\implies n=\frac{\sigma^2(g)}{\varepsilon^2}\\
+\text{Time cost for }\alerttext{RMSE } \varepsilon\qquad C(\varepsilon;g)&=T\!\left(\frac{\sigma^2(g)}{\varepsilon^2};g\right)
+=S(g)+\frac{\sigma^2(g)\$(g)}{\varepsilon^2}
+\end{align*}
+
+- For simplicity, we may [omit]{.alert} $S(g)$
+- Practical comparisons should compare $C(\varepsilon;g)$, not $T(n;g)$
+
+::: {.notes}
+This is a planning model for independent, identically distributed,
+unbiased contributions with finite variance and a fixed sample count.
+The sampling law is part of the notation sigma(g). Cost includes random-input
+generation, transforms, weights, controls, and the final evaluation, not just
+calling a payoff function. Use one consistent unit: seconds, operation counts,
+or money. T denotes time when those units are seconds; C denotes cost at a
+specified accuracy. Setup is charged once per final calculation.
+Retain S(g) in the complete model for completeness, but exercises and simple
+method comparisons may explicitly ignore setup and pilot cost. This is a
+modeling simplification, not a claim that those costs vanish or are always
+negligible. When actual runtimes are measured, charge the work performed.
+
+For known variance and positive epsilon, the exact sample count in this model
+is max{1, ceil(sigma^2(g)/epsilon^2)}; the displayed approximation ignores
+integer rounding. The one-contribution minimum also covers zero variance.
+Unknown variance requires estimation and an error-assessment procedure;
+this formula alone is not a certified adaptive stopping rule. An RMSE target
+is not a deterministic absolute-error guarantee. A nominal CLT confidence
+radius z sigma(g)/sqrt(n) instead introduces z^2 into the leading cost.
+:::
+
+---
+
+### Compare work at the same accuracy
+
+Ignoring setup and integer rounding, an equal-mean alternative $g(\vZ)$
+improves on $f(\vX)$ when
+
+$$
+\sigma^2(g)\$(g)<\sigma^2(f)\$(f)
+$$
+
+- Half the variance at twice the cost: the [same]{.alert} leading work
+- Setup and pilot fitting can change the winner at a finite tolerance
+
+More generally, compare
+
+$$
+S(g)+\frac{\sigma^2(g)\$(g)}{\varepsilon^2}
+\quad\text{with}\quad
+S(f)+\frac{\sigma^2(f)\$(f)}{\varepsilon^2}
+$$
+
+::: {.key-point}
+For IID means, compare [variance $\times$ cost per contribution]{.alert}
+:::
+
+::: {.notes}
+For fixed representations, setup costs, and sampling laws, the leading
+epsilon^{-2} rate is the same. Variance reduction changes the constant.
+If a_g=sigma^2(g) cost(g) is smaller than a_f but S(g)>S(f),
+the approximation favors g only when
+epsilon^2 < (a_f-a_g)/(S(g)-S(f)). This explains why an expensive pilot may
+pay off for a tight tolerance but not for a loose one. If a representation
+or pilot size is retuned as epsilon changes, retain that dependence rather
+than treating S(g) and a_g as constants.
+Exact transport preserves the output variance but can change sampling cost;
+importance sampling can change both factors. Later, apply this same
+comparison to a controlled or conditional contribution. These are costs for
+estimating a mean, not for producing a target-distributed sample.
+:::
+
 # Control Variates and Conditioning {.tree-marker-slide tree-marker="variance-reduction"}
 
 - [Control variates](#control-variates)
@@ -594,7 +682,7 @@ have known [zero]{.alert} mean
 For fixed coefficients $\vbeta$, define
 
 $$
-Y_{\mathrm{CV}}=g(\vX)=f(\vX)-\vbeta^\mathsf T\boldsymbol{\eta}(\vX)
+Y_{\mathrm{CV}}=g_{\mathrm{CV}}(\vX)=f(\vX)-\vbeta^\mathsf T\boldsymbol{\eta}(\vX)
 $$
 
 Then $\Ex(Y_{\mathrm{CV}})=\Ex[f(\vX)]=\mu$, so
@@ -691,7 +779,7 @@ $$
 </span>
 :::
 
-Ignore setup and pilot cost for the work comparison; assume independent contributions
+Use $\sigma^2(g_{\mathrm{CV}})\$(g_{\mathrm{CV}})$ versus $\sigma^2(f)\$(f)$; ignore setup and pilot cost
 
 ::: {.notes}
 The optimal coefficient is 3/4, and the minimum variance is
@@ -702,6 +790,14 @@ An independent pilot makes the fitted coefficient independent of the
 main samples. Conditional on the pilot, the control still has mean zero,
 so the final mean remains unbiased, assuming integrability. Fitting on
 the main samples does not generally retain exact unbiasedness.
+Use the earlier cost model with g_CV(x)=f(x)-beta eta(x), so cost(g_CV)
+charges for the whole controlled contribution. For one optimal control with
+correlation rho, sigma^2(g_CV)=sigma^2(f)(1-rho^2). Ignoring setup,
+CV saves work exactly when (1-rho^2) cost(g_CV)<cost(f).
+If cost(g_CV)=2 cost(f), this requires rho^2>1/2; here rho^2=1/4.
+For coefficients fitted on an independent pilot, the conditional IID formula
+uses the realized residual variance. Unconditionally, average that variance
+over the pilot, assuming the required finite moments, and charge the pilot.
 :::
 
 ---
@@ -769,7 +865,7 @@ $$
 If $Y=f(X_1,\ldots,X_d)$ and
 
 $$
-Y_{\mathrm{CMC}}=g(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
+Y_{\mathrm{CMC}}=g_{\mathrm{CMC}}(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
 $$
 
 is analytic, estimate $\mu$ by averaging $Y_{\mathrm{CMC},i}$ instead of $Y_i$
@@ -1240,12 +1336,15 @@ and [coordinate order]({{< meta decks.d02.file >}}#why-coordinate-order-matters)
 
 Markov Chain Monte Carlo linked [discrepancy to integration error]({{< meta decks.d03.file >}}#the-discrepancy-identity)
 
-Now we [construct]{.alert} the point sets, randomize them, and assess error
-
 - [The van der Corput sequence](#the-van-der-corput-sequence)
 - [Four low discrepancy families](#four-low-discrepancy-families)
 - [Randomized low discrepancy sampling](#randomized-low-discrepancy-sampling)
+- [Variance of a randomized low discrepancy estimate](#rqmc-estimator-variance)
 - [Component-by-component construction](#component-by-component-construction)
+- [Cost of deterministic low discrepancy sampling](#deterministic-ld-cost)
+- [Cost of randomized low discrepancy sampling](#randomized-ld-cost)
+- [Compare low discrepancy costs](#comparing-representations-with-the-same-design)
+- [Interpreting SD squared times runtime](#sd-squared-times-runtime)
 - [Stopping criteria](#stopping-criteria)
 
 The [Discrepancy notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/Discrepancy.ipynb)
@@ -1467,6 +1566,40 @@ The displayed shifts are particular realizations used for hand calculation;
 the random shift is uniform on the unit square in the sampling method.
 :::
 
+## Variance of a randomized low discrepancy estimate {#rqmc-estimator-variance .tree-marker-slide tree-marker="variance-low-discrepancy"}
+
+Each $\vU_i\sim\Unif[0,1]^d$ but the points within a run are [dependent]{.alert}
+
+\begin{align*}
+\hmu_n(h)&=\frac1n\sum_{i=0}^{n-1}h(\vU_i)
+&\Ex_{\mathrm{rand}}\{\hmu_n(h)\}&=\mu\\
+\rmse^2\{\hmu_n(h)\}
+&=\var_{\mathrm{rand}}\{\hmu_n(h)\}\\
+&=\frac1{n^2}\sum_{i,j=0}^{n-1}
+\cov_{\mathrm{rand}}\{h(\vU_i),h(\vU_j)\}
+\end{align*}
+
+- IID points: off-diagonal covariances vanish
+- Randomized LD: the [whole design]{.alert} determines the estimator variance
+
+::: {.key-point}
+Use $\var\{\hmu_n(h)\}$ for RQMC error assessment
+:::
+
+::: {.notes}
+Randomness here is in the points, with h fixed. It differs from the
+Gaussian-process average-case interpretation in Markov Chain Monte Carlo,
+where the points are fixed and the integrand is random. Marginal uniformity
+and integrability give unbiasedness. Finite second moments justify the
+covariance expansion. The diagonal terms sum to var{h(U)}/n, but RQMC
+also has off-diagonal terms. Do not discard them or substitute within-run
+sample variance divided by n as an RQMC variance estimate.
+Independent shifts or scrambles provide independent complete-run estimates.
+Their across-run sample variance estimates the variance of one whole run;
+divide by the number of runs only when reporting the variance of their mean.
+Source: [Owen (2026), Randomized quasi-Monte Carlo integration](https://arxiv.org/abs/2608.17143).
+:::
+
 ## Component-by-component construction {.tree-marker-slide tree-marker="low-discrepancy"}
 
 Generators for lattice rules and digital nets may be chosen by number theory or computer search
@@ -1480,6 +1613,187 @@ The component-by-component strategy:
 
 ::: {.key-point}
 A high-dimensional design is built by optimizing [one coordinate]{.alert} at a time
+:::
+
+## Cost of deterministic low discrepancy sampling {#deterministic-ld-cost .tree-marker-slide tree-marker="low-discrepancy"}
+
+<span id="from-error-decay-to-cost"></span>
+
+For fixed cube points write $Q_n(h)=n^{-1}\sum_{i=0}^{n-1}h(\vu_i)$
+
+Assume a [discrepancy bound]{.alert} $D_n(K)\le a_{\mathrm D}n^{-\alpha_{\mathrm D}}$
+
+\begin{align*}
+\abs{\mu-Q_n(h)}
+&\le D_n(K)\operatorname{vtn}_K(h)
+\le a_{\mathrm D}\operatorname{vtn}_K(h)n^{-\alpha_{\mathrm D}}\\
+\text{Set the bound to }\varepsilon
+&\implies n\approx
+\left(\frac{a_{\mathrm D}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/\alpha_{\mathrm D}}\\
+\text{Cost}\qquad C(\varepsilon;h,\mathrm{QMC})
+&\approx S(h)+\$(h)
+\left(\frac{a_{\mathrm D}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/\alpha_{\mathrm D}}
+\end{align*}
+
+This plans work for an [absolute-error bound]{.alert} at most $\varepsilon$
+
+$\$(h)$ includes [point generation]{.alert} and the full evaluation of $h(\vu_i)$
+
+::: {.notes}
+This is the cost of a sufficient sample size obtained from the stated bound,
+not the unknown smallest cost for the realized integration error. Assume a
+fixed kernel and domain, h in the associated space,
+positive finite variation, a_D>0, and alpha_D>0. The zero-variation case
+is a constant integrand and needs no asymptotic rate model.
+Use the full RKHS norm as variation in general. If constants belong to the
+space, these equal-weight averages allow the reduced min_c ||h-c|| variation.
+
+Round up to an admissible sample size and retain logarithmic factors if
+they occur in the discrepancy bound. Cost includes the cube-point generator
+and complete integrand evaluation; linear per-point cost is a model.
+Use the actual T(n;h) if generating n points has a different cost law.
+The design and its implementation are implicit in S(h) and cost(h).
+Setup may be explicitly ignored for simple comparisons.
+
+A deterministic estimate has no randomization variance, but that says
+nothing about its integration error. The bound requires justified values
+or bounds for both discrepancy and variation. Different kernels or scalings
+change both factors; compare their product rather than variation alone.
+:::
+
+## Cost of randomized low discrepancy sampling {#randomized-ld-cost .tree-marker-slide tree-marker="variance-low-discrepancy"}
+
+Suppose a justified [variance bound]{.alert} for the chosen randomization is
+
+$$
+\var_{\mathrm{rand}}\{\hmu_n(h)\}
+\le a_{\mathrm R}^2\operatorname{vtn}_K^2(h)n^{-2\alpha_{\mathrm R}}
+$$
+
+\begin{align*}
+\rmse\{\hmu_n(h)\}
+&\le a_{\mathrm R}\operatorname{vtn}_K(h)n^{-\alpha_{\mathrm R}}\\
+\text{Set the bound to }\varepsilon
+&\implies n\approx
+\left(\frac{a_{\mathrm R}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/\alpha_{\mathrm R}}\\
+\text{Cost}\qquad C(\varepsilon;h,\mathrm{RQMC})
+&\approx S(h)+\$(h)
+\left(\frac{a_{\mathrm R}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/\alpha_{\mathrm R}}
+\end{align*}
+
+This plans work for [RMSE]{.alert} at most $\varepsilon$
+
+$\$(h)$ includes [point generation]{.alert} and the full evaluation of $h(\vU_i)$
+
+::: {.notes}
+The variance is over randomizations of a fixed integrand, and unbiasedness
+is assumed. Variation is a deterministic seminorm of that integrand.
+The displayed bound must be established for this function space, design,
+and randomization; it does not follow from the definition of variation alone.
+One sufficient route from the deterministic bound is
+var_rand(hat_mu_n(h)) <= E_rand[D_n(K)^2] vtn_K(h)^2.
+Thus an RMS-discrepancy rate supplies such a bound. This sufficient route
+may be conservative; a direct estimator-variance analysis can be sharper.
+An arbitrary kernel need not give the best known RQMC convergence rate.
+
+Keep alpha_R distinct from alpha_D. Some smooth integrands under suitable
+scrambling admit RMSE nearly n^{-3/2}, but not every integrand or
+randomization has that rate. State the smoothness assumptions and retain
+logarithmic terms or use a justified exponent slightly below 3/2. More
+generally alpha_R, the constant, and the relevant norm must be matched.
+
+These formulas invert a bound to plan a sufficient sample size. They ignore
+integer rounding and assume linear sampling work after setup. The design
+is implicit in S(h) and cost(h). A target RMSE is different from a
+deterministic absolute-error guarantee and from a confidence interval.
+:::
+
+## Compare low discrepancy costs {#comparing-representations-with-the-same-design .tree-marker-slide tree-marker="variance-low-discrepancy"}
+
+Keep the error criterion and rate bound $a\operatorname{vtn}_K(h)n^{-\alpha}$ fixed
+
+For equal-integral $h_f$ and $h_g$ ignore setup and integer rounding
+
+$$
+\frac{C(\varepsilon;h_g)}{C(\varepsilon;h_f)}
+\approx\frac{\$(h_g)}{\$(h_f)}
+\left(\frac{\operatorname{vtn}_K(h_g)}{\operatorname{vtn}_K(h_f)}\right)^{1/\alpha}
+$$
+
+An alternative must reduce [variation enough]{.alert} to pay for its evaluation cost
+
+::: {.key-point}
+Compare $\$(h)\operatorname{vtn}_K(h)^{1/\alpha}$ when $a$ and $\alpha$ are shared
+:::
+
+::: {.notes}
+This comparison applies separately to deterministic absolute-error bounds
+and randomized RMSE bounds. The design, norm, constant a, exponent alpha,
+domain, and input dimension must be compatible and shared. A lower bound-based
+planned cost need not imply a smaller actual error for a particular run.
+If changing the representation changes any of these assumptions, compare the
+complete method-specific cost expressions instead of canceling factors.
+Conditioning may change the input dimension and the design constant.
+
+For an example, halving variation while doubling cost gives a work ratio
+2^{1-1/alpha}. This is 1/2 at alpha=1/2, 1 at alpha=1, and
+2^{1/3} at alpha=3/2. Faster decay can make extra per-sample expense harder
+to justify solely by reducing the error constant. Actual setup and pilot
+costs can change these finite-tolerance comparisons.
+
+With constants removed in IID's L2 norm, variation is sigma(h) and alpha=1/2, recovering
+cost(h) sigma^2(h). Under RQMC, least-squares controls fitted to minimize
+IID variance do not automatically minimize this design-specific variation
+or the variance of a complete randomized estimate.
+:::
+
+## Interpreting SD squared times runtime {#sd-squared-times-runtime .tree-marker-slide tree-marker="variance-error"}
+
+Fix the sample size and method within [one complete run]{.alert}
+
+Write $v=\var_{\mathrm{rand}}\{\hmu_n(h)\}$ and $t=T(n;h)$
+
+For the average of $R$ independent runs,
+
+\begin{align*}
+\rmse^2&=\frac vR,&
+T&\approx Rt,&
+C(\varepsilon;n,h)&\approx\frac{vt}{\varepsilon^2}
+\end{align*}
+
+- Notebook estimate of $vt$: across-run $s_R^2\times\overline t$
+- Include each run's independent control pilot and sample-generation work
+- Changing the [sample size]{.alert} changes both $v$ and $t$
+
+[Asian/lookback comparison](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb)
+
+::: {.key-point}
+Compare independent complete runs without assuming IID points [within]{.alert} a run
+:::
+
+::: {.notes}
+This is the earlier IID cost model applied to complete run estimates rather
+than individual payoff evaluations. It therefore applies to independent
+scrambles or shifts even though points within a run are dependent. Distinguish
+the observed number of pilot replications used to estimate v and t from a
+future number of runs chosen to reach epsilon. R here denotes independent
+complete runs; the notebook's s_R is an empirical across-run SD.
+
+In the Asian notebook, every controlled run regenerates and charges its
+independent pilot, so that pilot is part of t. If a different design reuses
+one fitted control across runs, charge its pilot once as setup and analyze
+the residual variance conditional on that pilot; unconditional run estimates
+need not be independent, even though their cross-covariances are zero when
+each conditional mean is exactly mu. The variance formula follows by
+conditioning and averaging the conditional variance when moments exist.
+
+Ignore integer rounding in R and separately charge any one-time setup.
+The sample product s_R^2 times mean runtime has sampling and timing
+uncertainty. It is a fixed-run-size efficiency diagnostic, not a prediction
+of QMC error decay as n increases, a confidence guarantee, or evidence
+that one method is universally best. This comparison concerns unbiased
+estimation of the same discretely monitored contract; model or discretization
+bias is a separate error component.
 :::
 
 ## Stopping criteria {.tree-marker-slide tree-marker="data-driven-error"}
@@ -1622,7 +1936,7 @@ and smoothness also affect integration error.
 
 Define the desired output before choosing a method. For an unbiased IID mean
 estimator with finite variance and per-contribution cost c, ignoring setup,
-work to reach RMSE epsilon is approximately c Var(Y)/epsilon^2. Include setup,
+work to reach RMSE epsilon is approximately c var(Y)/epsilon^2. Include setup,
 pilot fitting, sampling, transformations, and evaluation in the actual budget.
 A variance reduction alone does not establish an overall efficiency gain;
 compare complete estimators at the required accuracy. Dependent designs,

@@ -103,6 +103,25 @@ Deck 01 Course Map synchronized.
   `Y_{\mathrm{IS}}`, `Y_{\mathrm{CV}}`, `Y_{\mathrm{CMC}}`,
   `Y_{\mathrm{Anti}}`, and `Y_T` for exact transport. Use `Y_g` for the
   opening general alternative; reserve unadorned `Y` for `f(\vX)`.
+- Name the corresponding complete contribution functions `g_{\mathrm{IS}}`,
+  `g_{\mathrm{CV}}`, and `g_{\mathrm{CMC}}`. For cost comparisons, use
+  `C(\varepsilon;g)` for cost at an error tolerance, `T(n;g)` for runtime at
+  sample size `n`, `S(g)` for setup/pilot cost, and `\$(g)` for generating
+  the input and evaluating one complete contribution at that input, including
+  all required transformations. For cube integrands, `\$(h)` includes both
+  point generation and evaluating `h(\vU_i)`. Specify the error criterion;
+  distinguish IID variance from the variation or smoothness governing QMC.
+  Retain setup in the complete model; simple hand calculations may explicitly
+  omit it as a stated simplifying assumption.
+- Use `\operatorname{vtn}_K(f)=\norm{f}_{\mathcal H_K}` as the general RKHS
+  variation. When constants belong to the space and the quadrature rule
+  integrates them exactly, the variation may be sharpened to
+  `\min_{c\in\reals}\norm{f-c}_{\mathcal H_K}`. Equal-weight sample averages
+  have the required exactness. In general normed spaces use an infimum unless
+  attainment is established. Define this alongside the discrepancy error bound in
+  Markov Chain Monte Carlo and recall it in Improving Efficiency. Distinguish
+  the fixed integrand's variation from variance over randomized designs;
+  the constant-shift variation in target `L_2` is the standard deviation.
 - Preserve established slide anchors when notation in a mathematical heading
   changes, so callbacks from previously published decks remain valid.
 - Keep the [uniform-input, target-sample, and output roles](../AUTHOR_WORKFLOW.md#course-wide-simulation-notation)
@@ -112,6 +131,10 @@ Deck 01 Course Map synchronized.
   occurrence mechanically.
 
 ## Highlighting
+
+Omit unnecessary commas and periods in visible slide text and displayed
+equations, including punctuation at the ends of equation rows. Preserve
+punctuation needed for mathematical meaning or clear grammar.
 
 Prefer highlighting the key word that carries a contrast, condition, or payoff,
 rather than an entire phrase or sentence. Retain a short compound technical term
