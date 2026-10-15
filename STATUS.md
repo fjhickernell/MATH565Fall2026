@@ -263,8 +263,11 @@ appropriate phase rather than appended indiscriminately.
     - [x] Adopt the established test and examination instructions.
     - [x] Schedule Test 2 for October 27 in PH 109; set the published
       On Paper Canvas item for 11:15 AM; add the date to the course
-      website sources; and post the all-sections announcement. Coverage
-      remains TBD.
+      website sources; and post the all-sections announcement.
+    - [x] Confirm Test 2 coverage as Markov Chain Monte Carlo and Improving
+      Efficiency; update Schedule, Tests page, and Deck 04 title-slide notice;
+      post and verify all-sections Canvas coverage announcement `108092`
+      (October 15). Local renders pass; live deployment verification remains pending.
     - [x] State that final-examination dates will be posted when scheduled by
       the Registrar and that the cumulative examination will emphasize
       material not covered by Test 1 or Test 2.

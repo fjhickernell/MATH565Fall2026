@@ -18,7 +18,7 @@ include-after-body:
 subtitle: |
   <span class="deck-title">{{< meta deck_title >}}</span><br>
   <span class="deck-meta">{{< meta texts.owen.short >}}, Chapters 8–10 and 15–17</span><br>
-  <span class="deck-meta">[Assignment 5](../assignments/assignment_5.html) due Oct 21</span>
+  <span class="deck-meta">[Assignment 5](../assignments/assignment_5.html) due Oct 21<br>Test 2 · Oct 27</span>
 ---
 
 # Course Map {.deck-course-map tree-marker="deck-04-overview"}
@@ -1339,12 +1339,8 @@ Markov Chain Monte Carlo linked [discrepancy to integration error]({{< meta deck
 - [The van der Corput sequence](#the-van-der-corput-sequence)
 - [Four low discrepancy families](#four-low-discrepancy-families)
 - [Randomized low discrepancy sampling](#randomized-low-discrepancy-sampling)
-- [Variance of a randomized low discrepancy estimate](#rqmc-estimator-variance)
 - [Component-by-component construction](#component-by-component-construction)
 - [Cost of deterministic low discrepancy sampling](#deterministic-ld-cost)
-- [Cost of randomized low discrepancy sampling](#randomized-ld-cost)
-- [Compare low discrepancy costs](#comparing-representations-with-the-same-design)
-- [Interpreting SD squared times runtime](#sd-squared-times-runtime)
 - [Stopping criteria](#stopping-criteria)
 
 The [Discrepancy notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/Discrepancy.ipynb)
@@ -1566,7 +1562,9 @@ The displayed shifts are particular realizations used for hand calculation;
 the random shift is uniform on the unit square in the sampling method.
 :::
 
-## Variance of a randomized low discrepancy estimate {#rqmc-estimator-variance .tree-marker-slide tree-marker="variance-low-discrepancy"}
+---
+
+### Variance of a randomized low discrepancy estimate {#rqmc-estimator-variance}
 
 Each $\vU_i\sim\Unif[0,1]^d$ but the points within a run are [dependent]{.alert}
 
@@ -1661,7 +1659,9 @@ or bounds for both discrepancy and variation. Different kernels or scalings
 change both factors; compare their product rather than variation alone.
 :::
 
-## Cost of randomized low discrepancy sampling {#randomized-ld-cost .tree-marker-slide tree-marker="variance-low-discrepancy"}
+---
+
+### Cost of randomized low discrepancy sampling {#randomized-ld-cost}
 
 Suppose a justified [variance bound]{.alert} for the chosen randomization is
 
@@ -1708,7 +1708,9 @@ is implicit in S(h) and cost(h). A target RMSE is different from a
 deterministic absolute-error guarantee and from a confidence interval.
 :::
 
-## Compare low discrepancy costs {#comparing-representations-with-the-same-design .tree-marker-slide tree-marker="variance-low-discrepancy"}
+---
+
+### Compare low discrepancy costs {#comparing-representations-with-the-same-design}
 
 Keep the error criterion and rate bound $a\operatorname{vtn}_K(h)n^{-\alpha}$ fixed
 
@@ -1747,7 +1749,9 @@ IID variance do not automatically minimize this design-specific variation
 or the variance of a complete randomized estimate.
 :::
 
-## Interpreting SD squared times runtime {#sd-squared-times-runtime .tree-marker-slide tree-marker="variance-error"}
+---
+
+### Interpreting SD squared times runtime {#sd-squared-times-runtime}
 
 Fix the sample size and method within [one complete run]{.alert}
 

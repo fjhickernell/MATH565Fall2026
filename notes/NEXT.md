@@ -36,12 +36,16 @@ simulation option for Exercise 8.4.
   All 11 code cells have successful saved executions; code and prose are
   unchanged. Preserve those timings as machine-specific measurements.
 
-1. Prepare the October 15 continuation: briefly recap van der Corput,
-   then resume Deck 04 at “Four low discrepancy families.” October 8
+1. Prepare the October 15 continuation: revisit Deck 02's copulas and
+   Gaussian-copula sampling, then introduce Deck 04's cost model for an
+   accurate estimate, then proceed to low discrepancy constructions at
+   “Four low discrepancy families,” with a brief van der Corput recap.
+   Defer the Asian-option notebook and SD² × time interpretation for now
+   to keep the new material manageable. October 8
    completed antithetic sampling and its variance derivation, examined the
    IID Asian/lookback comparison, and introduced binary digit reversal.
-   Return to the Asian-option SD² × time interpretation, explicitly deferred
-   in class. October 13 is Fall Break. Latin hypercube sampling remains
+   The Asian-option SD² × time interpretation remains untaught after its
+   in-class deferral. October 13 is Fall Break. Latin hypercube sampling remains
    skipped; the earlier four-method lookback saved-output comparison remains
    incomplete.
    The lookback notebook now repeats the Asian-call comparison: plain,
@@ -551,8 +555,13 @@ decks after adding links.
   remains a draft pending instructor review.
 - Test 2 is scheduled for Tuesday, October 27, 2026, in PH 109. Published
   Canvas On Paper assignment `95838` is due at the 11:15 AM class end for
-  Everyone in the Tests group; coverage remains TBD. All-sections announcement
-  `106296` is posted. The announcement and Tests page state that final-exam
+  Everyone in the Tests group. Coverage is Markov Chain Monte Carlo and
+  Improving Efficiency (Decks 03 and 04). The all-sections
+  [coverage announcement](https://iit.instructure.com/courses/25777/discussion_topics/108092)
+  was posted and verified October 15. Schedule, Tests page, and Deck 04's
+  title-slide notice are updated and render locally; live deployment verification remains
+  pending. Grading is due November 2, 2026. Earlier all-sections announcement
+  `106296` is posted. That announcement and the Tests page state that final-exam
   dates will be posted when scheduled by the Registrar and that the cumulative
   examination will emphasize material not covered by Test 1 or Test 2.
 - The Fall 2026 project-selection deadline is Friday, September 18. A live
@@ -826,6 +835,14 @@ reproducible dependent-exponential Python example, and three transformation
 scatterplots. The latent-normal versus target Pearson correlation distinction
 is explicit. Introduction's cumulative terms index links Copula and Gaussian
 copula to their first substantive treatment.
+October 15 refinements highlight possible dependence of the uniform marginals,
+credit Abe Sklar with a biographical link, and distinguish Gaussian latent
+normals from freely chosen target marginals. The three supporting slides
+are marker-free continuations; the section outline lists the copula overview.
+Low Discrepancy Sampling in Deck 04 likewise keeps six main outline entries;
+RQMC variance, randomized cost, cost comparison, and SD² × runtime are
+continuations with their existing anchors preserved. The website Related
+menu now links to MATH 332 Fall 2026.
 
 Both affected decks render successfully with the qmcpy kernel. The numerical
 example and visible slide, outline, index, and Big Ideas layouts pass review.

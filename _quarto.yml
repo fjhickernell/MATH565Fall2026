@@ -64,6 +64,8 @@ website:
     right:
       - text: Related
         menu:
+          - text: MATH 332 — Fall 2026
+            href: https://fjhickernell.github.io/MATH332Fall2026/
           - text: MATH 565 — Fall 2025
             href: https://qmcsoftware.github.io/MATH565Fall2025/
           - text: MATH 476 — Statistics

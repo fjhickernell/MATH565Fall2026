@@ -509,9 +509,6 @@ plt.show()
 - [Cholesky factorization](#cholesky-factorization)
 - [Principal-component (PCA) factorization](#principal-component-factorization)
 - [Copulas separate marginals from dependence](#copula-sampling)
-- [Gaussian-copula sampling](#gaussian-copula-sampling)
-- [Example: dependent exponential samples](#example-dependent-exponential-samples)
-- [The same copula, different marginal scales](#the-same-copula-different-marginal-scales)
 - [Gaussian processes](#gaussian-processes)
 - [Brownian motion](#brownian-motion)
 - [Geometric Brownian motion](#geometric-brownian-motion)
@@ -665,7 +662,9 @@ $\mA_{\mathrm{PCA}}\mA_{\mathrm{PCA}}^\mathsf{T}
 
 ## Copulas separate marginals from dependence {#copula-sampling .tree-marker-slide tree-marker="random-generation"}
 
-A [copula]{.alert} is a joint CDF on $[0,1]^d$ with uniform marginals
+A [copula]{.alert} is a joint CDF on $[0,1]^d$ with uniform but possibly [dependent]{.alert} marginals
+
+Introduced by [Abe Sklar](https://en.wikipedia.org/wiki/Abe_Sklar), Illinois Tech professor
 
 \begin{align*}
 C(\vv)&=\Prob(V_1\le v_1,\ldots,V_d\le v_d),
@@ -680,7 +679,7 @@ $$
 X_j=Q_j(V_j),\qquad j=1,\ldots,d
 $$
 
-For continuous marginals,
+Sklar's theorem gives, for continuous marginals,
 
 $$
 F_{\vX}(\vx)=C\bigl(F_1(x_1),\ldots,F_d(x_d)\bigr)
@@ -700,7 +699,9 @@ The uniform vector V has uniform coordinate marginals, rather than the joint
 uniform distribution on the cube used for the independent input vector U.
 :::
 
-## Gaussian-copula sampling {.tree-marker-slide tree-marker="random-generation"}
+---
+
+### Gaussian-copula sampling
 
 Choose a positive-definite [correlation matrix]{.alert} $\mR$<br>
 Factor $\mR=\mA\mA^{\mathsf T}$ using [Cholesky](#cholesky-factorization)
@@ -715,9 +716,10 @@ X_j&=Q_j(V_j),
 \end{align*}
 
 - Each $W_j$ is standard normal, so each $V_j$ is uniform
-- The [joint]{.alert} distribution of $\vV$ is the Gaussian copula
-- Changing $Q_j$ changes the marginals while retaining this copula for
-  continuous marginals
+- The Gaussian copula supplies the [dependence]{.alert} among these uniforms
+- Choose $Q_j$ for any desired [target marginal]{.alert} $F_j$<br>
+  The $X_j$ need [not]{.alert} have Gaussian marginals
+- For continuous marginals, $\vX$ retains this copula
 
 ::: {.key-point}
 $R_{jk}$ is the correlation of the [latent normals]{.alert} $W_j,W_k$
@@ -734,7 +736,9 @@ would require calibration after specifying the marginal transforms.
 Reference: https://www.statsmodels.org/v0.13.5/generated/statsmodels.distributions.copula.api.GaussianCopula.html
 :::
 
-## Example: dependent exponential samples {.tree-marker-slide tree-marker="random-generation"}
+---
+
+### Example: dependent exponential samples
 
 Choose $X_1\sim\Exp(1)$, $X_2\sim\Exp(2)$ and a Gaussian copula with $\rho=0.7$
 
@@ -766,7 +770,9 @@ Here Exp(lambda) uses the rate parameter lambda, so the marginal means are
 or truncation of the desired marginal distribution is needed.
 :::
 
-## The same copula, different marginal scales {.tree-marker-slide tree-marker="random-generation"}
+---
+
+### The same copula, different marginal scales
 
 The same paired samples pass through [coordinatewise]{.alert} transforms
 
