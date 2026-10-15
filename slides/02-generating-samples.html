@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-10-14">
+  <meta name="dcterms.date" content="2026-10-15">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -709,7 +709,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">October 14, 2026</p>
+  <p class="date">October 15, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-02-overview">
 <h1>Course Map</h1>
@@ -906,7 +906,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="7f5d80a2" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="036ad527" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -950,7 +950,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="b3874e96" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="9b161e16" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -982,7 +982,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="1a511ef4" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="7e621cf9" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1066,7 +1066,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="cfb5de7a" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="f2fe55f6" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1091,9 +1091,6 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 <li><a href="#/cholesky-factorization">Cholesky factorization</a></li>
 <li><a href="#/principal-component-factorization">Principal-component (PCA) factorization</a></li>
 <li><a href="#/copula-sampling">Copulas separate marginals from dependence</a></li>
-<li><a href="#/gaussian-copula-sampling">Gaussian-copula sampling</a></li>
-<li><a href="#/example-dependent-exponential-samples">Example: dependent exponential samples</a></li>
-<li><a href="#/the-same-copula-different-marginal-scales">The same copula, different marginal scales</a></li>
 <li><a href="#/gaussian-processes">Gaussian processes</a></li>
 <li><a href="#/brownian-motion">Brownian motion</a></li>
 <li><a href="#/geometric-brownian-motion">Geometric Brownian motion</a></li>
@@ -1239,7 +1236,8 @@ a_{11}=\sqrt3,
   <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
 </div>
 
-<p>A <span class="alert">copula</span> is a joint CDF on <span class="math inline">\([0,1]^d\)</span> with uniform marginals</p>
+<p>A <span class="alert">copula</span> is a joint CDF on <span class="math inline">\([0,1]^d\)</span> with uniform but possibly <span class="alert">dependent</span> marginals</p>
+<p>Introduced by <a href="https://en.wikipedia.org/wiki/Abe_Sklar">Abe Sklar</a>, Illinois Tech professor</p>
 <p><span class="math display">\[\begin{align*}
 C(\vv)&amp;=\Prob(V_1\le v_1,\ldots,V_d\le v_d),
 &amp;V_j&amp;\sim\Unif[0,1]
@@ -1249,7 +1247,7 @@ C(\vv)&amp;=\Prob(V_1\le v_1,\ldots,V_d\le v_d),
 <p><span class="math display">\[
 X_j=Q_j(V_j),\qquad j=1,\ldots,d
 \]</span></p>
-<p>For continuous marginals,</p>
+<p>Sklar’s theorem gives, for continuous marginals,</p>
 <p><span class="math display">\[
 F_{\vX}(\vx)=C\bigl(F_1(x_1),\ldots,F_d(x_d)\bigr)
 \]</span></p>
@@ -1271,13 +1269,9 @@ F_{\vX}(\vx)=C\bigl(F_1(x_1),\ldots,F_d(x_d)\bigr)
           display:block!important;
       }</style></aside>
 </section>
-<section id="gaussian-copula-sampling" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
-<h2>Gaussian-copula sampling</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
-</div>
+<section class="slide level2">
 
+<h3 id="gaussian-copula-sampling">Gaussian-copula sampling</h3>
 <p>Choose a positive-definite <span class="alert">correlation matrix</span> <span class="math inline">\(\mR\)</span><br> Factor <span class="math inline">\(\mR=\mA\mA^{\mathsf T}\)</span> using <a href="#/cholesky-factorization">Cholesky</a></p>
 <p><span class="math display">\[\begin{align*}
 \vU&amp;\sim\Unif[0,1]^d,
@@ -1289,8 +1283,9 @@ X_j&amp;=Q_j(V_j),
 \end{align*}\]</span></p>
 <ul>
 <li>Each <span class="math inline">\(W_j\)</span> is standard normal, so each <span class="math inline">\(V_j\)</span> is uniform</li>
-<li>The <span class="alert">joint</span> distribution of <span class="math inline">\(\vV\)</span> is the Gaussian copula</li>
-<li>Changing <span class="math inline">\(Q_j\)</span> changes the marginals while retaining this copula for continuous marginals</li>
+<li>The Gaussian copula supplies the <span class="alert">dependence</span> among these uniforms</li>
+<li>Choose <span class="math inline">\(Q_j\)</span> for any desired <span class="alert">target marginal</span> <span class="math inline">\(F_j\)</span><br> The <span class="math inline">\(X_j\)</span> need <span class="alert">not</span> have Gaussian marginals</li>
+<li>For continuous marginals, <span class="math inline">\(\vX\)</span> retains this copula</li>
 </ul>
 <div class="key-point">
 <p><span class="math inline">\(R_{jk}\)</span> is the correlation of the <span class="alert">latent normals</span> <span class="math inline">\(W_j,W_k\)</span></p>
@@ -1310,13 +1305,9 @@ X_j&amp;=Q_j(V_j),
           display:block!important;
       }</style></aside>
 </section>
-<section id="example-dependent-exponential-samples" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
-<h2>Example: dependent exponential samples</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
-</div>
+<section class="slide level2">
 
+<h3 id="example-dependent-exponential-samples">Example: dependent exponential samples</h3>
 <p>Choose <span class="math inline">\(X_1\sim\Exp(1)\)</span>, <span class="math inline">\(X_2\sim\Exp(2)\)</span> and a Gaussian copula with <span class="math inline">\(\rho=0.7\)</span></p>
 <p><span class="math display">\[\begin{align*}
 W_1&amp;=Z_1,
@@ -1351,15 +1342,11 @@ X_1&amp;=-\log\bigl(1-\Phi(W_1)\bigr),
           display:block!important;
       }</style></aside>
 </section>
-<section id="the-same-copula-different-marginal-scales" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
-<h2>The same copula, different marginal scales</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
-</div>
+<section class="slide level2">
 
+<h3 id="the-same-copula-different-marginal-scales">The same copula, different marginal scales</h3>
 <p>The same paired samples pass through <span class="alert">coordinatewise</span> transforms</p>
-<div id="1304b823" class="cell" data-fig-height="4.1" data-fig-width="12" data-execution_count="5">
+<div id="f177f746" class="cell" data-fig-height="4.1" data-fig-width="12" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>

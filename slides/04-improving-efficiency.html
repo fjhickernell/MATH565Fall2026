@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-10-14">
+  <meta name="dcterms.date" content="2026-10-15">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -633,7 +633,7 @@
 
 <section id="title-slide" data-background-color="#f5f7fb" data-background-image="https://fjhickernell.github.io/MATH565Fall2026/classlib/classlib/quarto/assets/images/normal-scatter.png" data-background-position="top left" data-background-size="55%" class="quarto-title-block center">
   <h1 class="title">MATH 565 — Fall 2026</h1>
-  <p class="subtitle"><span class="deck-title">Improving Efficiency</span><br> <span class="deck-meta">Owen, Chapters 8–10 and 15–17</span><br> <span class="deck-meta"><a href="../assignments/assignment_5.html">Assignment 5</a> due Oct 21</span></p>
+  <p class="subtitle"><span class="deck-title">Improving Efficiency</span><br> <span class="deck-meta">Owen, Chapters 8–10 and 15–17</span><br> <span class="deck-meta"><a href="../assignments/assignment_5.html">Assignment 5</a> due Oct 21<br>Test 2 · Oct 27</span></p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -643,7 +643,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">October 14, 2026</p>
+  <p class="date">October 15, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-04-overview">
 <h1>Course Map</h1>
@@ -1914,7 +1914,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="3da9479f" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="d8e06db4" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1957,12 +1957,8 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 <li><a href="#/the-van-der-corput-sequence">The van der Corput sequence</a></li>
 <li><a href="#/four-low-discrepancy-families">Four low discrepancy families</a></li>
 <li><a href="#/randomized-low-discrepancy-sampling">Randomized low discrepancy sampling</a></li>
-<li><a href="#/rqmc-estimator-variance">Variance of a randomized low discrepancy estimate</a></li>
 <li><a href="#/component-by-component-construction">Component-by-component construction</a></li>
 <li><a href="#/deterministic-ld-cost">Cost of deterministic low discrepancy sampling</a></li>
-<li><a href="#/randomized-ld-cost">Cost of randomized low discrepancy sampling</a></li>
-<li><a href="#/comparing-representations-with-the-same-design">Compare low discrepancy costs</a></li>
-<li><a href="#/sd-squared-times-runtime">Interpreting SD squared times runtime</a></li>
 <li><a href="#/stopping-criteria">Stopping criteria</a></li>
 </ul>
 <p>The <a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/Discrepancy.ipynb">Discrepancy notebook</a> compares IID and Metropolis samples using a kernel measure</p>
@@ -2317,14 +2313,9 @@ i=(\cdots i_2i_1i_0)_b
           display:block!important;
       }</style></aside>
 </section>
-<section id="rqmc-estimator-variance" class="slide level2 tree-marker-slide" data-tree-marker="variance-low-discrepancy">
-<h2>Variance of a randomized low discrepancy estimate</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
-  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-</div>
+<section class="slide level2">
 
+<h3 id="rqmc-estimator-variance">Variance of a randomized low discrepancy estimate</h3>
 <p>Each <span class="math inline">\(\vU_i\sim\Unif[0,1]^d\)</span> but the points within a run are <span class="alert">dependent</span></p>
 <p><span class="math display">\[\begin{align*}
 \hmu_n(h)&amp;=\frac1n\sum_{i=0}^{n-1}h(\vU_i)
@@ -2415,14 +2406,9 @@ i=(\cdots i_2i_1i_0)_b
           display:block!important;
       }</style></aside>
 </section>
-<section id="randomized-ld-cost" class="slide level2 tree-marker-slide" data-tree-marker="variance-low-discrepancy">
-<h2>Cost of randomized low discrepancy sampling</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
-  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-</div>
+<section class="slide level2">
 
+<h3 id="randomized-ld-cost">Cost of randomized low discrepancy sampling</h3>
 <p>Suppose a justified <span class="alert">variance bound</span> for the chosen randomization is</p>
 <p><span class="math display">\[
 \var_{\mathrm{rand}}\{\hmu_n(h)\}
@@ -2456,14 +2442,9 @@ i=(\cdots i_2i_1i_0)_b
           display:block!important;
       }</style></aside>
 </section>
-<section id="comparing-representations-with-the-same-design" class="slide level2 tree-marker-slide" data-tree-marker="variance-low-discrepancy">
-<h2>Compare low discrepancy costs</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
-  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-</div>
+<section class="slide level2">
 
+<h3 id="comparing-representations-with-the-same-design">Compare low discrepancy costs</h3>
 <p>Keep the error criterion and rate bound <span class="math inline">\(a\operatorname{vtn}_K(h)n^{-\alpha}\)</span> fixed</p>
 <p>For equal-integral <span class="math inline">\(h_f\)</span> and <span class="math inline">\(h_g\)</span> ignore setup and integer rounding</p>
 <p><span class="math display">\[
@@ -2491,14 +2472,9 @@ i=(\cdots i_2i_1i_0)_b
           display:block!important;
       }</style></aside>
 </section>
-<section id="sd-squared-times-runtime" class="slide level2 tree-marker-slide" data-tree-marker="variance-error">
-<h2>Interpreting SD squared times runtime</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
-  <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
-</div>
+<section class="slide level2">
 
+<h3 id="sd-squared-times-runtime">Interpreting SD squared times runtime</h3>
 <p>Fix the sample size and method within <span class="alert">one complete run</span></p>
 <p>Write <span class="math inline">\(v=\var_{\mathrm{rand}}\{\hmu_n(h)\}\)</span> and <span class="math inline">\(t=T(n;h)\)</span></p>
 <p>For the average of <span class="math inline">\(R\)</span> independent runs,</p>
