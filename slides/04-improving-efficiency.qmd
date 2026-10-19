@@ -59,21 +59,74 @@ Reducing [variance]{.alert} (or [variation]{.alert}) <br>per unit of [work]{.ale
 
 # From Sampling to Efficient Estimation {.tree-marker-slide tree-marker="variance-reduction"}
 
-<h3>Recap: How we reached target samples $\vX$ and $Y = f(\vX)$</h3>
+<span id="functions-and-inputs"></span>
 
-$\vU\sim\Unif([0,1]^d),\quad \vZ\sim\varrho_{\mathrm{prop}},\quad
+Keep $\mu=\Ex_{\mathrm{tar}}[f(\vX)]$ fixed, while changing how we compute it
+
+| Inputs | Output | Role |
+|:---|:---|:---|
+| $\vX\sim\varrho_{\mathrm{tar}}$ | $f(\vX)$ | Target output |
+| $\vZ=\vS(\vU)\sim\varrho_{\mathrm{prop}}$ | $g(\vZ)$ | Alternative contribution |
+| $\vU\sim\Unif[0,1]^d$ | $h(\vU)=g\bigl(\vS(\vU)\bigr)$ | Complete calculation from uniforms |
+
+$$
+\mu=\Ex_{\mathrm{tar}}[f(\vX)]
+=\Ex_{\mathrm{prop}}[g(\vZ)]
+=\Ex_{\Unif[0,1]^d}[h(\vU)]
+=\int_{[0,1]^d}h(\vu)\,\dif\vu
+$$
+
+- Change the [contribution]{.alert}: replace $f(\vX)$ by an equal-mean $g(\vZ)$
+- Change the [point design]{.alert}: arrange uniform inputs before evaluating $h$
+
+::: {.key-point}
+Equal means [do not imply]{.alert} $g(\vZ)\stackrel d=f(\vX)$
+
+Exact transport [implies]{.alert} $h(\vU) \stackrel d=g(\vZ)$
+:::
+
+::: {.notes}
+The equality concerns expectations, not equality of individual outputs or
+output distributions. An alternative contribution may include importance
+weights, controls, or a conditional expectation. Its sampling law belongs
+with g. Exact transport is a useful case where the output distributions
+agree: if T(Z) has the target law and g=f composed with T, then g(Z) and
+f(X) have the same distribution. Other equal-mean contributions may change
+the distribution and variance. The function h includes that contribution and all transforms from
+the uniform input. If the input is already uniform, S is the identity and
+h=g. Different constructions may require different cube dimensions.
+Use h_f=f composed with T and h_g=g composed with S when comparing two
+representations; generic h avoids carrying that subscript through every
+QMC or RQMC formula. Low discrepancy sampling places its points on the unit
+cube, which explains the switch from g to h in those formulas.
+:::
+
+---
+
+### Recall the sampling paths
+
+$\vU\sim\Unif[0,1]^d,\quad \vZ\sim\varrho_{\mathrm{prop}},\quad
 \vX\sim\varrho_{\mathrm{tar}}$
 
-- [Generating Samples: transport]({{< meta decks.d02.file >}}#transport-maps): $\vZ=\vS(\vU)$, then $\vX=\vT(\vZ)=\vT\bigl(\vS(\vU)\bigr)$; if $\vS$ is the identity, $\vX=\vT(\vU)$, E.g., quantile, affine
+- [Generating Samples: transport]({{< meta decks.d02.file >}}#transport-maps): $\vZ=\vS(\vU)$, then $\vX=\vT(\vZ)$
 - [Generating Samples: acceptance–rejection]({{< meta decks.d02.file >}}#acceptancerejection-sampling): retain selected proposals as $\vX$
 - [Markov Chain Monte Carlo]({{< meta decks.d03.file >}}#the-metropolishastings-algorithm): propose $\vZ_i\mid\vX_i$; accept or repeat $\vX_i$; target law at stationarity
 
-<h3>Our plan here</h3>
+For a direct target transport $\vX=\vT(\vU)$ use $h_f=f\circ\vT$<br>
+For the alternative $\vZ=\vS(\vU)$ use $h_g=g\circ\vS$
 
-Keep $\mu=\Ex_{\mathrm{tar}}[f(\vX)]$ fixed, using two complementary levers:
+::: {.key-point}
+Write $h$ for either complete [unit-cube integrand]{.alert}
+:::
 
-- [First]{.alert}, change the contribution: replace $Y=f(\vX)$ by an equal-mean alternative, such as a transformed or weighted $Y_{g} = g(\vZ)$, a control variate, or a conditional expectation
-- [Then]{.alert}, change how samples are chosen: arrange uniform inputs in antithetic pairs, strata, or low discrepancy patterns before mapping them to target-space samples
+::: {.notes}
+Here the direct target map T includes the proposal-generation map when
+needed. The first bullet shows the more general composition T(S(U)) used
+in Generating Samples. Acceptance–rejection and MCMC have additional
+selection or history structure; this recap does not assert IID target
+outputs from those constructions or a fixed d-input formula for a whole
+rejection or Markov-chain run.
+:::
 
 # Transformations and Importance Sampling {.tree-marker-slide tree-marker="analysis-importance"}
 
@@ -154,7 +207,7 @@ $$
 
 $$
 \left|\mu-\frac1n\sum_{i=0}^{n-1}h_g(\vu_i)\right|
-\le D\bigl(\{\vu_i\}_{i=0}^{n-1},F_{\mathrm{unif}};K\bigr)\operatorname{vtn}_K(h_g)
+\le D\bigl(F_{\mathrm{unif}},\{\vu_i\}_{i=0}^{n-1};K\bigr)\operatorname{vtn}_K(h_g)
 $$
 
 - Nodes determine [discrepancy]{.alert}; the composed cube integrand determines [variation]{.alert}
@@ -1338,8 +1391,8 @@ Markov Chain Monte Carlo linked [discrepancy to integration error]({{< meta deck
 
 - [The van der Corput sequence](#the-van-der-corput-sequence)
 - [Four low discrepancy families](#four-low-discrepancy-families)
-- [Randomized low discrepancy sampling](#randomized-low-discrepancy-sampling)
 - [Component-by-component construction](#component-by-component-construction)
+- [Randomized low discrepancy sampling](#randomized-low-discrepancy-sampling)
 - [Cost of deterministic low discrepancy sampling](#deterministic-ld-cost)
 - [Stopping criteria](#stopping-criteria)
 
@@ -1544,6 +1597,21 @@ The family table does not privilege a particular discrepancy measure;
 construction quality depends on the function class and the chosen criterion.
 :::
 
+## Component-by-component construction {.tree-marker-slide tree-marker="low-discrepancy"}
+
+Generators for lattice rules and digital nets may be chosen by number theory or computer search
+
+The component-by-component strategy:
+
+1. Choose a one-dimensional generator that minimizes a discrepancy criterion over relevant sample sizes
+2. Freeze the first $\ell$ components
+3. Search for component $\ell+1$ that minimizes discrepancy
+4. Increase $\ell$ and repeat until $\ell=d$
+
+::: {.key-point}
+A high-dimensional design is built by optimizing [one coordinate]{.alert} at a time
+:::
+
 ## Randomized low discrepancy sampling {.tree-marker-slide tree-marker="low-discrepancy-sampling"}
 
 <span id="why-randomize"></span>
@@ -1602,6 +1670,8 @@ the random shift is uniform on the unit square in the sampling method.
 
 ### Variance of a randomized low discrepancy estimate {#rqmc-estimator-variance}
 
+Recall $h(\vu)=g\bigl(\vS(\vu)\bigr)$, the complete calculation from [uniform inputs]{.alert}
+
 Each $\vU_i\sim\Unif[0,1]^d$ but the points within a run are [dependent]{.alert}
 
 \begin{align*}
@@ -1617,7 +1687,9 @@ Each $\vU_i\sim\Unif[0,1]^d$ but the points within a run are [dependent]{.alert}
 - Randomized LD: the [whole design]{.alert} determines the estimator variance
 
 ::: {.key-point}
-Use $\var\{\hmu_n(h)\}$ for RQMC error assessment
+For unbiased RQMC, RMSE is the SD of the [whole estimate]{.alert}
+
+Estimate that SD using [independent runs under Stopping criteria](#stopping-criteria)
 :::
 
 ::: {.notes}
@@ -1634,227 +1706,444 @@ divide by the number of runs only when reporting the variance of their mean.
 Source: [Owen (2026), Randomized quasi-Monte Carlo integration](https://arxiv.org/abs/2608.17143).
 :::
 
-## Component-by-component construction {.tree-marker-slide tree-marker="low-discrepancy"}
-
-Generators for lattice rules and digital nets may be chosen by number theory or computer search
-
-The component-by-component strategy:
-
-1. Choose a one-dimensional generator that minimizes a discrepancy criterion over relevant sample sizes
-2. Freeze the first $\ell$ components
-3. Search for component $\ell+1$ that minimizes discrepancy
-4. Increase $\ell$ and repeat until $\ell=d$
-
-::: {.key-point}
-A high-dimensional design is built by optimizing [one coordinate]{.alert} at a time
-:::
-
 ## Cost of deterministic low discrepancy sampling {#deterministic-ld-cost .tree-marker-slide tree-marker="low-discrepancy"}
 
 <span id="from-error-decay-to-cost"></span>
 
-For fixed cube points write $Q_n(h)=n^{-1}\sum_{i=0}^{n-1}h(\vu_i)$
+For fixed cube points write $\hmu_n(h)=n^{-1}\sum_{i=0}^{n-1}h(\vu_i)$
 
-Assume a [discrepancy bound]{.alert} $D_n(K)\le a_{\mathrm D}n^{-\alpha_{\mathrm D}}$
+Recall $D_n(K)=D\bigl(F_{\mathrm{unif}},\{\vu_i\}_{i=0}^{n-1};K\bigr)$
+
+For the chosen QMC design, assume a [discrepancy bound]{.alert} $D_n(K)\le a_{\mathrm{QMC}}n^{-p_{\mathrm{QMC}}}$
 
 \begin{align*}
-\abs{\mu-Q_n(h)}
+\abs{\mu-\hmu_n(h)}
 &\le D_n(K)\operatorname{vtn}_K(h)
-\le a_{\mathrm D}\operatorname{vtn}_K(h)n^{-\alpha_{\mathrm D}}\\
-\text{Set the bound to }\varepsilon
-&\implies n\approx
-\left(\frac{a_{\mathrm D}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/\alpha_{\mathrm D}}\\
+\le a_{\mathrm{QMC}}\operatorname{vtn}_K(h)n^{-p_{\mathrm{QMC}}}\\
+\text{Choose }n
+&\ge
+\left(\frac{a_{\mathrm{QMC}}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/p_{\mathrm{QMC}}}\\
 \text{Cost}\qquad C(\varepsilon;h,\mathrm{QMC})
-&\approx S(h)+\$(h)
-\left(\frac{a_{\mathrm D}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/\alpha_{\mathrm D}}
+&\lesssim S_{\mathrm{QMC}}(h)+\$_{\mathrm{QMC}}(h)
+\left(\frac{a_{\mathrm{QMC}}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/p_{\mathrm{QMC}}}
 \end{align*}
 
-This plans work for an [absolute-error bound]{.alert} at most $\varepsilon$
-
-$\$(h)$ includes [point generation]{.alert} and the full evaluation of $h(\vu_i)$
+- [Absolute-error]{.alert} target $\varepsilon$; $\lesssim$ allows rounding up to the next design size
+- $S_{\mathrm{QMC}}$ is setup; $\$_{\mathrm{QMC}}$ includes point generation and the full $h$ evaluation
+- $\operatorname{vtn}_K(h)$ is usually [hard to know or estimate]{.alert}
 
 ::: {.notes}
-This is the cost of a sufficient sample size obtained from the stated bound,
-not the unknown smallest cost for the realized integration error. Assume a
-fixed kernel and domain, h in the associated space,
-positive finite variation, a_D>0, and alpha_D>0. The zero-variation case
+The discrepancy-variation inequality and the assumed discrepancy-rate
+upper bound give a sufficient sample size. Choose the smallest allowed
+sample size at least as large as the displayed threshold. C denotes the
+work needed to meet the specified accuracy; this construction gives an
+upper bound on that work, not its unknown exact minimum. The symbol
+lesssim absorbs fixed factors from rounding or admissible sample sizes.
+It is not an equality or a claim that the realized error attains its bound.
+Assume a fixed kernel and domain, h in the associated space,
+positive finite variation, a_QMC>0, and p_QMC>0. The zero-variation case
 is a constant integrand and needs no asymptotic rate model.
 Use the full RKHS norm as variation in general. If constants belong to the
 space, these equal-weight averages allow the reduced min_c ||h-c|| variation.
 
 Round up to an admissible sample size and retain logarithmic factors if
-they occur in the discrepancy bound. Cost includes the cube-point generator
+they occur in the discrepancy bound. The displayed asymptotic cost assumes
+the sample-size threshold is at least one; otherwise retain the one-point
+minimum. Allowed sample sizes must have bounded successive ratios for the
+rounding factor to be absorbed by lesssim. Cost includes the cube-point generator
 and complete integrand evaluation; linear per-point cost is a model.
 Use the actual T(n;h) if generating n points has a different cost law.
-The design and its implementation are implicit in S(h) and cost(h).
+The chosen QMC construction and its implementation determine a_QMC,
+p_QMC, S_QMC(h), and cost_QMC(h); these are not universal QMC constants.
 Setup may be explicitly ignored for simple comparisons.
 
 A deterministic estimate has no randomization variance, but that says
 nothing about its integration error. The bound requires justified values
 or bounds for both discrepancy and variation. Different kernels or scalings
 change both factors; compare their product rather than variation alone.
+In practice, variation is typically difficult to know or estimate. This is
+primarily a theoretical cost comparison, not a directly computable stopping
+rule. The stopping section explains error assessments from computed values
+and their assumptions; those need not estimate the full variation explicitly.
 :::
 
 ---
 
 ### Cost of randomized low discrepancy sampling {#randomized-ld-cost}
 
-Suppose a justified [variance bound]{.alert} for the chosen randomization is
+For one unbiased $n$-point run, model the [estimator variance]{.alert} by
 
 $$
 \var_{\mathrm{rand}}\{\hmu_n(h)\}
-\le a_{\mathrm R}^2\operatorname{vtn}_K^2(h)n^{-2\alpha_{\mathrm R}}
+\approx A_{\mathrm{RQMC}}^2(h)n^{-2p_{\mathrm{RQMC}}}
 $$
 
 \begin{align*}
 \rmse\{\hmu_n(h)\}
-&\le a_{\mathrm R}\operatorname{vtn}_K(h)n^{-\alpha_{\mathrm R}}\\
-\text{Set the bound to }\varepsilon
-&\implies n\approx
-\left(\frac{a_{\mathrm R}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/\alpha_{\mathrm R}}\\
+&\approx A_{\mathrm{RQMC}}(h)n^{-p_{\mathrm{RQMC}}}\\
+\text{For target RMSE }\varepsilon:\quad n
+&\approx
+\left(\frac{A_{\mathrm{RQMC}}(h)}{\varepsilon}\right)^{1/p_{\mathrm{RQMC}}}\\
 \text{Cost}\qquad C(\varepsilon;h,\mathrm{RQMC})
-&\approx S(h)+\$(h)
-\left(\frac{a_{\mathrm R}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/\alpha_{\mathrm R}}
+&\approx S_{\mathrm{RQMC}}(h)+\$_{\mathrm{RQMC}}(h)
+\left(\frac{A_{\mathrm{RQMC}}(h)}{\varepsilon}\right)^{1/p_{\mathrm{RQMC}}}
 \end{align*}
 
-This plans work for [RMSE]{.alert} at most $\varepsilon$
-
-$\$(h)$ includes [point generation]{.alert} and the full evaluation of $h(\vU_i)$
+- Predicts work for an [RMSE target]{.alert} $\varepsilon$, averaged over randomizations
+- $A_{\mathrm{RQMC}}(h)$ captures dependence on $h$ and the chosen randomization
+- With modest [smoothness]{.alert}, often $p_{\mathrm{RQMC}}>p_{\mathrm{QMC}}$
+- The [replication interval below](#stopping-criteria) estimates uncertainty from data
 
 ::: {.notes}
 The variance is over randomizations of a fixed integrand, and unbiasedness
-is assumed. Variation is a deterministic seminorm of that integrand.
-The displayed bound must be established for this function space, design,
-and randomization; it does not follow from the definition of variation alone.
-One sufficient route from the deterministic bound is
-var_rand(hat_mu_n(h)) <= E_rand[D_n(K)^2] vtn_K(h)^2.
-Thus an RMS-discrepancy rate supplies such a bound. This sufficient route
-may be conservative; a direct estimator-variance analysis can be sharper.
-An arbitrary kernel need not give the best known RQMC convergence rate.
+is assumed. The power law is an approximate model for the chosen integrand,
+RQMC construction, randomization, and range of allowed sample sizes.
+A_RQMC(h) is its nonnegative error amplitude. It may reflect design-specific
+spectral or ANOVA structure and need not factor as a universal method
+constant times deterministic RKHS variation. Do not identify it with vtn_K(h).
+The squared amplitude is written A_RQMC^2(h), with the square on A.
 
-Keep alpha_R distinct from alpha_D. Some smooth integrands under suitable
-scrambling admit RMSE nearly n^{-3/2}, but not every integrand or
-randomization has that rate. State the smoothness assumptions and retain
-logarithmic terms or use a justified exponent slightly below 3/2. More
-generally alpha_R, the constant, and the relevant norm must be matched.
+Unbiasedness makes RMSE squared equal to estimator variance exactly; the
+power-law expression for that variance, and the resulting RMSE, sample-size,
+and cost formulas, are approximate. They do not assert upper bounds.
+Keep p_RQMC distinct from p_QMC. With modest smoothness, randomized
+designs often have a larger RMSE decay exponent than the deterministic
+error-decay exponent for the corresponding setting. Some smooth integrands under suitable
+scrambling admit RMSE nearly n^{-3/2}, but not every integrand or randomization
+has that rate. Match the exponent and amplitude to the setting, retaining
+logarithmic terms when relevant.
 
-These formulas invert a bound to plan a sufficient sample size. They ignore
-integer rounding and assume linear sampling work after setup. The design
-is implicit in S(h) and cost(h). A target RMSE is different from a
-deterministic absolute-error guarantee and from a confidence interval.
+Invert the approximate RMSE law to predict a sample size, then round up to
+an admissible size and charge the actual setup and sampling work. Linear
+sampling work after setup is a model. A_RQMC(h) is generally unknown, so
+this calculation alone does not supply a practical stopping rule. A target
+RMSE differs from a deterministic absolute-error guarantee and from a
+confidence interval.
 :::
 
 ---
 
 ### Compare low discrepancy costs {#comparing-representations-with-the-same-design}
 
-Keep the error criterion and rate bound $a\operatorname{vtn}_K(h)n^{-\alpha}$ fixed
+Compare equal-integral $h_f$ and $h_g$ using the [same design]{.alert} and rate exponent
 
-For equal-integral $h_f$ and $h_g$ ignore setup and integer rounding
+Omit setup and rounding; for a common tolerance $\varepsilon$, compare
 
-$$
-\frac{C(\varepsilon;h_g)}{C(\varepsilon;h_f)}
-\approx\frac{\$(h_g)}{\$(h_f)}
-\left(\frac{\operatorname{vtn}_K(h_g)}{\operatorname{vtn}_K(h_f)}\right)^{1/\alpha}
-$$
+| Method and error criterion | Integrand-dependent factor in leading work |
+|:---|:---|
+| QMC: absolute-error bound | $\displaystyle\$_{\mathrm{QMC}}(h)\bigl[a_{\mathrm{QMC}}\operatorname{vtn}_K(h)\bigr]^{1/p_{\mathrm{QMC}}}$ |
+| RQMC: RMSE model | $\displaystyle\$_{\mathrm{RQMC}}(h)A_{\mathrm{RQMC}}^{1/p_{\mathrm{RQMC}}}(h)$ |
 
-An alternative must reduce [variation enough]{.alert} to pay for its evaluation cost
+Within each comparison, the common $\varepsilon^{-1/p}$ factor cancels
 
 ::: {.key-point}
-Compare $\$(h)\operatorname{vtn}_K(h)^{1/\alpha}$ when $a$ and $\alpha$ are shared
+A smaller [error constant]{.alert} must compensate for greater [cost per point]{.alert}
 :::
 
 ::: {.notes}
-This comparison applies separately to deterministic absolute-error bounds
-and randomized RMSE bounds. The design, norm, constant a, exponent alpha,
-domain, and input dimension must be compatible and shared. A lower bound-based
-planned cost need not imply a smaller actual error for a particular run.
-If changing the representation changes any of these assumptions, compare the
-complete method-specific cost expressions instead of canceling factors.
-Conditioning may change the input dimension and the design constant.
+Compare the two representations separately within one method and error
+criterion. The QMC row gives a leading work-bound factor; the RQMC row
+gives a leading work-model factor. Neither is measured runtime or an unknown
+minimum cost. Method, domain, input dimension, exponent, and assumptions
+must be compatible. For deterministic QMC, the kernel,
+variation definition, and discrepancy-rate constant must also be shared.
+Conditioning or a different transformation may change dimension or the
+valid rate; then compare the complete method-specific cost expressions instead.
 
-For an example, halving variation while doubling cost gives a work ratio
-2^{1-1/alpha}. This is 1/2 at alpha=1/2, 1 at alpha=1, and
-2^{1/3} at alpha=3/2. Faster decay can make extra per-sample expense harder
-to justify solely by reducing the error constant. Actual setup and pilot
-costs can change these finite-tolerance comparisons.
+The QMC error amplitude is a_QMC vtn_K(h). The RQMC error amplitude is
+A_RQMC(h), which captures the chosen design's estimator-variance behavior.
+Do not substitute the deterministic variation for that RQMC quantity.
+With a shared exponent p, halving the relevant error amplitude while
+doubling per-point cost gives the predicted leading-work ratio 2^{1-1/p}.
+It is 1/2 at p=1/2, 1 at p=1, and 2^{1/3} at p=3/2.
+Setup and pilot costs may change these finite-tolerance comparisons.
 
-With constants removed in IID's L2 norm, variation is sigma(h) and alpha=1/2, recovering
-cost(h) sigma^2(h). Under RQMC, least-squares controls fitted to minimize
-IID variance do not automatically minimize this design-specific variation
-or the variance of a complete randomized estimate.
-:::
-
----
-
-### Interpreting SD squared times runtime {#sd-squared-times-runtime}
-
-Fix the sample size and method within [one complete run]{.alert}
-
-Write $v=\var_{\mathrm{rand}}\{\hmu_n(h)\}$ and $t=T(n;h)$
-
-For the average of $R$ independent runs,
-
-\begin{align*}
-\rmse^2&=\frac vR,&
-T&\approx Rt,&
-C(\varepsilon;n,h)&\approx\frac{vt}{\varepsilon^2}
-\end{align*}
-
-- Notebook estimate of $vt$: across-run $s_R^2\times\overline t$
-- Include each run's independent control pilot and sample-generation work
-- Changing the [sample size]{.alert} changes both $v$ and $t$
-
-[Asian/lookback comparison](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb)
-
-::: {.key-point}
-Compare independent complete runs without assuming IID points [within]{.alert} a run
-:::
-
-::: {.notes}
-This is the earlier IID cost model applied to complete run estimates rather
-than individual payoff evaluations. It therefore applies to independent
-scrambles or shifts even though points within a run are dependent. Distinguish
-the observed number of pilot replications used to estimate v and t from a
-future number of runs chosen to reach epsilon. R here denotes independent
-complete runs; the notebook's s_R is an empirical across-run SD.
-
-In the Asian notebook, every controlled run regenerates and charges its
-independent pilot, so that pilot is part of t. If a different design reuses
-one fitted control across runs, charge its pilot once as setup and analyze
-the residual variance conditional on that pilot; unconditional run estimates
-need not be independent, even though their cross-covariances are zero when
-each conditional mean is exactly mu. The variance formula follows by
-conditioning and averaging the conditional variance when moments exist.
-
-Ignore integer rounding in R and separately charge any one-time setup.
-The sample product s_R^2 times mean runtime has sampling and timing
-uncertainty. It is a fixed-run-size efficiency diagnostic, not a prediction
-of QMC error decay as n increases, a confidence guarantee, or evidence
-that one method is universally best. This comparison concerns unbiased
-estimation of the same discretely monitored contract; model or discretization
-bias is a separate error component.
+For IID uniform sampling, the RMSE amplitude is sigma(h), p=1/2,
+and the factor reduces to cost(h) sigma^2(h). Under RQMC, controls fitted
+to minimize IID contribution variance do not automatically minimize
+A_RQMC(h) or the variance of a complete randomized estimate.
 :::
 
 ## Stopping criteria {.tree-marker-slide tree-marker="data-driven-error"}
 
-Two practical questions are
+The factors $\operatorname{vtn}_K(h)$ and $A_{\mathrm{RQMC}}(h)$ are often [unknown]{.alert}<br>
+Practical stopping needs an error assessment from the [computed values]{.alert}
 
-\begin{align*}
-\abs{\mu-\hmu_n}&\le\text{what?}\\
-\abs{\mu-\hmu_n}&\le\varepsilon
-\quad\text{for what $n$?}
-\end{align*}
+- IID contributions: a CLT interval when justified
+- RQMC: an interval from independent [whole-design replications]{.alert}
+- Fourier (lattices) or Walsh (digital nets): a coefficient-decay bound under stated assumptions
+- Further approach: a Bayesian credible interval based on a kernel model
 
-Use the computed contributions: $Y_i$, $Y_{\mathrm{IS},i}$, $Y_{\mathrm{CV},i}$, or $Y_{\mathrm{CMC},i}$
-
-- IID sampling: use a Central Limit Theorem interval when justified
-- Randomized low discrepancy sampling: use independent replications
-- Coefficient-decay bounds: Fourier for lattices, Walsh for digital nets
-- Further approach: Bayesian credible intervals based on a kernel model
+An [RMSE target]{.alert} controls root mean squared error over randomizations<br>
+A [confidence interval]{.alert} also specifies a coverage level
 
 ::: {.key-point}
-An efficient method needs both [fast]{.alert} error decay and a [reliable]{.alert} stopping rule
+Compare the reported error bound or interval radius with $\varepsilon$
+
+Budget exhausted $\ne$ tolerance met
+:::
+
+::: {.notes}
+Cost planning uses a deterministic error bound or an approximate RQMC
+variance model. A stopping procedure must
+supply a computable bound or interval and state the assumptions supporting it.
+A theoretical variation bound may be unavailable; coefficient-decay methods
+replace it with data-driven bounds for a specified function class.
+Confidence and credible intervals have different interpretations. Neither
+should be identified with an RMSE bound or an unconditional absolute-error
+guarantee. IID CLT intervals were introduced earlier; the next slides explain
+what replaces their standard-error calculation for RQMC.
+:::
+
+---
+
+### RQMC error assessment by independent replications {#rqmc-error-replications}
+
+Independently randomize the [whole $n$-point design]{.alert} $R\ge2$ times
+
+\begin{align*}
+\hmu_n^{(r)}&=\frac1n\sum_{i=0}^{n-1}h(\vU_i^{(r)})
+&&r=0,\ldots,R-1\\
+\hmu_{R,n}&=\frac1R\sum_{r=0}^{R-1}\hmu_n^{(r)}
+& \hat\sigma^2_{R,n}&=\frac1{R-1}\sum_{r=0}^{R-1}(\hmu_n^{(r)}-\hmu_{R,n})^2
+\end{align*}
+
+| Quantity | Meaning |
+|:---|:---|
+| $\hat\sigma^2_{R,n}$ | Estimates the variance $\sigma_n^2$ of one $n$-point run |
+| $\hat\sigma^2_{R,n}/R$ | Estimates the variance of the reported mean $\hmu_{R,n}$ |
+
+::: {.key-point}
+Our $R$ observations are [independent sample averages]{.alert}, not individual function values
+:::
+
+::: {.notes}
+Fix h, n, the design, and its randomization law across replications. The
+$\hmu_n^{(r)}$ are IID and unbiased, with variance $\sigma_n^2$ when second
+moments exist. Here $\hmu_{R,n}$ averages $R$ whole-run estimates, each based
+on $n$ points, so the total point count is $Rn$. The observations used in
+the sample-variance calculation are these R sample averages, not the
+individual outputs h(U_i) within them. The latter are dependent within a run.
+Then $\Ex[\hat\sigma^2_{R,n}]=\sigma_n^2$ and
+$\var(\hmu_{R,n})=\sigma_n^2/R$ exactly at fixed $n$ and $R$.
+The sample variance of the n function values within one randomized design
+is not a substitute: it does not account for their covariances.
+Each run uses an independent shift or scramble. Any fitted control must be
+fixed in advance or have an appropriate independent-pilot analysis.
+Source: [Owen (2026), Section 5.6](https://arxiv.org/html/2608.17143v1#S5.SS6).
+:::
+
+---
+
+### A stopping criterion from replications {#rqmc-replication-stopping}
+
+For a fixed $n$ and $R$, an approximate $(1-\alpha)$ confidence interval is
+
+$$
+\hmu_{R,n}\ \pm\ t_{1-\alpha/2,R-1}\,\frac{\hat\sigma_{R,n}}{\sqrt R}
+$$
+
+$t_{1-\alpha/2,R-1}$ is a Student-$t$ quantile; $\alpha$ is the nominal failure probability
+
+A candidate rule: increase $n$ and recompute until $t_{1-\alpha/2,R-1}\hat\sigma_{R,n}/\sqrt R\le\varepsilon$
+
+- [Interval approximation]{.alert}: normality or a suitable CLT must justify Student-$t$
+- [Adaptive stopping]{.alert}: repeated checks do not automatically preserve $1-\alpha$ coverage
+
+::: {.key-point}
+Even exact fixed-$n$ intervals need a [separate justification]{.alert} for data-dependent stopping
+:::
+
+::: {.notes}
+At fixed n and R, this Student-t interval is exact for normal replicate
+means; otherwise it is an approximation whose adequacy depends on their
+distribution and R. Unbiasedness and finite variance alone do not make a
+small-R t interval exact. Larger n does not universally make an individual
+RQMC replicate asymptotically normal.
+For nested designs, grow each run's n through admissible sizes, retaining
+its randomization. Recompute the independent run means and their across-run
+variance at the new n. A nominal fixed-sample interval does not automatically
+retain its coverage at a data-dependent stopping time. This is a separate
+issue from the normal/CLT approximation: even exact coverage at each fixed
+n does not imply the same coverage at a data-dependent n. Merely changing
+n on a predetermined schedule is not the problem; choosing when to report
+an interval using the observed estimates or widths is.
+Count all Rn function evaluations and the error-assessment work, including
+any discarded pilot work. Increasing R until an interval is narrow enough
+also requires a stopping-time coverage argument.
+A justified sequential procedure can address this, for example by allocating
+failure probabilities across a predetermined sequence of checks whose sum
+is at most alpha, provided each check has the claimed valid marginal
+coverage. Allocating alpha does not repair an unjustified t approximation.
+Time-uniform intervals are another possibility under suitable assumptions;
+ordinary fixed-sample t intervals do not automatically have that property.
+The next two slides explain why the IID pilot strategy does not transfer
+automatically and why growing R instead can sacrifice RQMC efficiency.
+Sources: [Owen (2026), Section 5.6](https://arxiv.org/html/2608.17143v1#S5.SS6)
+for replication intervals; [Howard et al. (2021)](https://arxiv.org/abs/1810.08240)
+for the distinction between fixed-sample and time-uniform coverage. The latter
+is general sequential-inference guidance, not a ready-made confidence
+sequence for arbitrary RQMC designs.
+:::
+
+---
+
+### Why a small pilot does not determine RQMC error {#rqmc-pilot-sample-size}
+
+\begin{align*}
+\text{IID:}\quad\var(\hmu_n)&=\frac{\sigma^2(h)}n\\
+\text{RQMC:}\quad\sigma_n^2=\var_{\mathrm{rand}}(\hmu_n)
+&\approx A_{\mathrm{RQMC}}^2(h)n^{-2p_{\mathrm{RQMC}}}
+\end{align*}
+
+- IID: a pilot estimates $\sigma^2(h)$, which is [independent of $n$]{.alert}
+- RQMC: $\hat\sigma^2_{R,n_0}$ estimates the variance of an [$n_0$-point run]{.alert}
+- Changing $n$ changes the design and the covariances within each run
+
+::: {.key-point}
+A pilot at $n_0$ estimates $\sigma_{n_0}$; a large-$n$ interval needs $\sigma_n$
+
+Extrapolation needs an additional, justified [scaling model]{.alert}
+:::
+
+::: {.notes}
+For IID contributions, an independent pilot estimates the same one-observation
+variance used in the final sample-mean formula for any n. Its uncertainty
+still matters, as in the earlier IID stopping discussion.
+For RQMC, the across-run sample variance at n0 targets sigma_n0 squared,
+not sigma_n squared for a larger design. There is no automatic IID scaling
+sigma_n = sigma_n0 sqrt(n0/n): the off-diagonal covariances also change.
+If an appropriate rate model and its validity range are known, extrapolation
+may be possible, but a single small design does not establish that model.
+To assess the new n directly, extend each independently randomized design
+and recompute its mean before estimating the across-run variance.
+:::
+
+---
+
+### Replication, efficiency, and interval justification {#rqmc-replication-efficiency}
+
+| How the calculation grows | Accuracy and confidence intervals |
+|:---|:---|
+| Fix $n$, increase $R$ | Independent-run CLT as $R\to\infty$; RMSE decreases as $R^{-1/2}$ |
+| Use large $n$ and modest $R$ | Exploit RQMC error decay; Student-$t$ intervals remain approximate |
+
+For a fixed evaluation budget $N=Rn$, the RQMC model gives
+
+$$
+\rmse(\hmu_{R,n})\approx
+\frac{A_{\mathrm{RQMC}}(h)n^{-p_{\mathrm{RQMC}}}}{\sqrt R}
+=A_{\mathrm{RQMC}}(h)N^{-p_{\mathrm{RQMC}}}R^{p_{\mathrm{RQMC}}-1/2}
+$$
+
+When $p_{\mathrm{RQMC}}>1/2$, more replications leave fewer points per design
+
+::: {.key-point}
+Large $R$ supports [CLT justification]{.alert}; large $n$ delivers [RQMC efficiency]{.alert}
+
+Choosing $n$ adaptively also needs a [stopping-time coverage argument]{.alert}
+:::
+
+::: {.notes}
+At fixed n, the independent run means have a fixed distribution. With finite
+positive variance, increasing R supports the standard CLT and asymptotically
+valid studentized intervals. This is not exact finite-R coverage in general.
+With the approximate variance model, averaging R runs gives RMSE approximately
+A(h) n^{-p}/sqrt(R). Substituting n=N/R yields the displayed relation.
+For p>1/2, at fixed N, increasing R worsens this modeled RMSE. Sampling
+and setup costs can further affect the allocation; the formula omits overhead.
+
+The practical tension is strong replication-based CLT justification with
+less efficient point allocation, versus efficient large RQMC designs with
+approximate intervals from modest replication counts. Large n alone does
+not provide a general normal limit for a fixed number of replications.
+This describes the usual Student-t replication approach, not an impossibility
+claim about all confidence procedures. Adaptive stopping needs the additional
+coverage qualifications already stated.
+Source: [Owen (2026), Section 5.6](https://arxiv.org/html/2608.17143v1#S5.SS6).
+:::
+
+---
+
+### Comparing IID and RQMC at the same RMSE target {#sd-squared-times-runtime}
+
+Ignore setup; choose $n$ for each method, with [$R$ fixed for RQMC]{.alert}
+
+| Quantity | IID: $\hmu_n$ | RQMC: $\hmu_{R,n}$ |
+|:---|:---|:---|
+| Variance of one $n$-point estimate | $\displaystyle\sigma_{\mathrm{IID},n}^2=\frac{\sigma^2(h)}n$<br>$\sigma^2(h)=\var\{h(\vU)\}$ | $\displaystyle\sigma_{\mathrm{RQMC},n}^2\approx A_{\mathrm{RQMC}}^2(h)n^{-2p_{\mathrm{RQMC}}}$ |
+| Variance of the reported estimate | $\displaystyle\frac{\sigma^2(h)}n\approx\frac{\hat\sigma_n^2(h)}n$ | $\displaystyle\frac{\sigma_{\mathrm{RQMC},n}^2}R\approx\frac{\hat\sigma_{R,n}^2}R$ |
+| Choose $n$ for RMSE $\varepsilon$ | $\displaystyle n\approx\frac{\sigma^2(h)}{\varepsilon^2}$ | $\displaystyle n\approx\left(\frac{A_{\mathrm{RQMC}}(h)}{\varepsilon\sqrt R}\right)^{1/p_{\mathrm{RQMC}}}$ |
+| Work | $\displaystyle\approx\frac{\$_{\mathrm{IID}}(h)\sigma^2(h)}{\varepsilon^2}$ | $\displaystyle\approx\frac{\$_{\mathrm{RQMC}}(h)A_{\mathrm{RQMC}}^{1/p_{\mathrm{RQMC}}}(h)R^{1-1/(2p_{\mathrm{RQMC}})}}{\varepsilon^{1/p_{\mathrm{RQMC}}}}$ |
+
+Work: $n\$_{\mathrm{IID}}(h)$ for IID; $Rn\$_{\mathrm{RQMC}}(h)$ for RQMC
+
+::: {.key-point}
+Work scales as $\varepsilon^{-2}$ for IID; $\varepsilon^{-1/p_{\mathrm{RQMC}}}$ for RQMC with [fixed $R$]{.alert}
+:::
+
+::: {.notes}
+Compare unbiased estimates of the same target integral, using the same cube
+integrand h. For IID sampling, sigma^2(h)=var{h(U)} is the finite variance of
+one function value. Independence gives the variance of an n-point average
+as sigma_IID,n^2=sigma^2(h)/n. This one-value variance is defined in the IID
+column because the RQMC model uses the variance of the complete design.
+For RQMC, sigma_RQMC,n^2 is the randomization variance of the entire n-point
+estimate, modeled approximately by A_RQMC^2(h)n^{-2p_RQMC}. The points
+within a run are dependent; independent randomizations give independent
+complete run estimates.
+
+The reported-variance row pairs each population variance with its sample
+estimate. For IID, hat sigma_n^2(h) is the ordinary sample variance of the
+n individual function values, with denominator n-1:
+$\hat\sigma_n^2(h)=(n-1)^{-1}\sum_{i=0}^{n-1}[h(\vU_i)-\hmu_n]^2$.
+Divide by n to estimate the variance of their average. For RQMC,
+hat sigma_{R,n}^2 is the across-run sample variance of the R independent
+n-point averages, with denominator R-1, defined on the replication slide.
+Divide by R to estimate the variance of their reported average. These
+approximation signs indicate estimated variances, not error bounds or a
+claim of exact agreement with the population variances.
+
+IID reports one average of n independent function values, with no replication
+count R. Its variance is sigma^2(h)/n, so choosing n approximately
+sigma^2(h)/epsilon^2 targets RMSE epsilon.
+For RQMC, fix R in advance and average R independently randomized n-point
+run estimates. Their mean has variance equal to the complete-run variance
+divided by R. Equating this to epsilon^2 gives n approximately
+[A_RQMC(h)/(epsilon sqrt(R))]^{1/p_RQMC}. Choose n separately for each method.
+
+Ignore setup and assume linear work: n times the IID per-point cost, and
+Rn times the RQMC per-point cost. Each cost includes point generation and
+the complete h evaluation. Substituting the chosen n gives the last row.
+IID work is approximately cost_IID(h) sigma^2(h) epsilon^{-2}.
+RQMC work is approximately
+cost_RQMC(h) A_RQMC^{1/p_RQMC}(h)
+R^{1-1/(2p_RQMC)} epsilon^{-1/p_RQMC}.
+Both costs are approximations: the model ignores rounding and setup, and
+the RQMC variance rate is itself approximate. For p_RQMC>1/2, more replications
+increase predicted work at a common RMSE because they require more total
+points. At p_RQMC=1/2 the R factor cancels, as for an IID rate.
+
+Round n up to an admissible size and retain at least one point per run.
+The asymptotic work formulas apply when the predicted n is at least one
+and within the rate model's valid range. Retain logarithmic factors or
+nonlinear generation costs when present. A_RQMC(h) and its valid rate may
+be unknown, so these formulas plan theoretical work; they are not a practical
+stopping rule or a confidence-coverage claim.
+
+This comparison increases n as the requested RMSE decreases, keeping the
+RQMC replication count R fixed. The IID calculation uses one sample average
+throughout. Holding the RQMC design size n fixed and only increasing R would
+give an epsilon^{-2} replication work law; that is a different allocation.
+
+The notebook timings charge actual work. Each controlled Asian-option run
+regenerates an independent pilot, so its measured runtime includes that
+pilot even though this simple table omits setup. If another design reuses
+one fitted control, analyze residual variance conditional on that pilot and
+charge its setup once; unconditional run estimates need not be independent.
+The comparison concerns the same discretely monitored contract; model or
+discretization bias is separate.
+[Asian/lookback comparison](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb).
 :::
 
 ---
@@ -1888,13 +2177,13 @@ duplicating these stopping demonstrations.
 
 ### Read a stopping decision
 
-Results from the [Keister stopping comparison](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/KeisterExample.ipynb#Practical-stopping-criteria)
+Six-dimensional results from the [Keister stopping comparison](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/KeisterExample.ipynb#Practical-stopping-criteria)
 
-| Rule | Tolerance | Reported radius | Actual error |
-|:---|---:|---:|---:|
-| IID CLT | $0.005$ | $0.00472$ | $0.00117$ |
-| Walsh bound | $0.005$ | $0.00284$ | $0.000118$ |
-| Sobol', tight budget | $10^{-7}$ | $0.00184$ | $0.00094$ |
+| Rule | Tolerance | Reported radius | Actual error | Time (s) |
+|:---|---:|---:|---:|---:|
+| IID CLT | $0.05$ | $0.049$ | $0.0121$ | 0.0882 |
+| Walsh bound | $0.05$ | $0.0258$ | $0.00125$ | 0.0018 |
+| Sobol', tight budget | $10^{-7}$ | $0.054$ | $0.00131$ | 0.0009 |
 
 ::: {.exitem .lettered}
 <span class="exbullet">$\exstar$</span>
@@ -1917,6 +2206,11 @@ function cone; passing necessary-condition checks does not prove membership.
 Adaptive replication intervals need the additional coverage qualification
 already stated in the notebook. Numbers are rounded from the saved run;
 random seeds, tolerances, or code changes can produce different results.
+Times are elapsed seconds for integration and adaptive error assessment from
+that same saved notebook run; they exclude the independent reference and
+plot, and vary by machine and timing conditions. The saved stopping settings
+are d=6, tolerance=0.05, replications=32, and alpha=0.01; all are editable
+parameters in the notebook.
 :::
 
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="variance-low-discrepancy"}

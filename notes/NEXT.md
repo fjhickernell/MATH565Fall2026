@@ -96,11 +96,25 @@ simulation option for Exercise 8.4.
    the main cost slide, before the control-cost exercise.
    They compare IID variance times complete-contribution cost, including
    separate setup/pilot cost, which simple hand calculations may explicitly
-   omit. Review the new main slides on deterministic LD cost, RQMC estimator
-   variance, RQMC cost, and fixed-run SD-squared-times-runtime interpretation.
-   The two LD cost models use `vtn_K(h)` and distinguish absolute-error bounds
-   from RMSE bounds. A main shared-design comparison compares evaluation cost
-   times variation to the power `1/alpha`. Deck 03 first defines variation as
+   omit. The October 19 instructor review revised the deterministic LD and
+   RQMC cost/stopping sequence. The opening defines f(X), g(Z), and
+   h(U)=g(S(U)); construction now precedes randomization. RQMC variance
+   uses its own amplitude A_RQMC(h), separate from deterministic variation,
+   with an approximate power law rather than an upper bound. The replication
+   slides distinguish run averages, their mean and sample variance, pilot
+   limitations, CLT approximation, and adaptive-stopping coverage. Confidence
+   uses 1-alpha; rate orders use p_QMC and p_RQMC. The same-RMSE table uses
+   one IID average and fixed R only for RQMC, showing its replication factor
+   and epsilon^{-1/p_RQMC} work law. Detailed conventions are in
+   docs/slide-style.md; retain these distinctions during lecture preparation.
+   The Keister stopping cell exposes d=6, tolerance=0.05, replications=32,
+   alpha=0.01, and budgets. All three standard rules meet their reported
+   tolerance; the separate tight-budget case has radius 0.054 and fails
+   even the 0.05 criterion. The explanation below its graph distinguishes
+   the benchmark's green band from interval widths. Complete pinned-kernel
+   execution and nondefault R/alpha checks pass; slide timings match the
+   current saved notebook run. Continue the October 20 preparation above.
+   Deck 03 first defines variation as
    the full RKHS norm in the worst-case bound, then sharpens it to distance
    to constants after the discrepancy identity when constants belong to the
    space and the rule integrates them exactly. It includes the target
@@ -109,7 +123,8 @@ simulation option for Exercise 8.4.
    split into P–R and S–Z for room. Per-contribution costs explicitly include
    generating inputs and evaluating the complete integrand with transforms. Selected
    Topics reuses this notation after the multilevel bias decomposition.
-   Instructor review of these additions remains part of lecture preparation.
+   The cost/stopping edits incorporate the October 19 instructor review;
+   broader lecture preparation remains.
    The changed decks render locally; changed equations and slide layouts were
    checked at 1600×1000 and 1200×800. Live deployment of these additions has
    not yet been verified.
@@ -843,8 +858,10 @@ credit Abe Sklar with a biographical link, and distinguish Gaussian latent
 normals from freely chosen target marginals. The three supporting slides
 are marker-free continuations; the section outline lists the copula overview.
 Low Discrepancy Sampling in Deck 04 likewise keeps six main outline entries;
-RQMC variance, randomized cost, cost comparison, and SD² × runtime are
-continuations with their existing anchors preserved. The website Related
+RQMC variance, randomized cost, cost comparison, and the same-RMSE IID/RQMC
+comparison are continuations with their existing anchors preserved. The
+stopping section develops replication intervals, pilot limitations, and
+allocation/coverage tradeoffs before the comparison. The website Related
 menu now links to MATH 332 Fall 2026.
 
 October 19 refinements explicitly connect the independence copula to the

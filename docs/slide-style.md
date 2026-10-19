@@ -99,6 +99,9 @@ Deck 01 Course Map synchronized.
   use `h` for composed uniform-input integrands. Retain `g(\vX)` for controls
   and subvectors or conditioning variables where appropriate. Exact transport
   preserves IID output variance; equal-mean weighted contributions need not.
+  Introduce `f(\vX)`, `g(\vZ)`, and `h(\vU)=g(\vS(\vU))` together on
+  the opening big-picture slide; recall the composition when developing
+  low discrepancy variance and cost models.
 - In Improving Efficiency, label scalar contributions by method:
   `Y_{\mathrm{IS}}`, `Y_{\mathrm{CV}}`, `Y_{\mathrm{CMC}}`,
   `Y_{\mathrm{Anti}}`, and `Y_T` for exact transport. Use `Y_g` for the
@@ -109,10 +112,45 @@ Deck 01 Course Map synchronized.
   sample size `n`, `S(g)` for setup/pilot cost, and `\$(g)` for generating
   the input and evaluating one complete contribution at that input, including
   all required transformations. For cube integrands, `\$(h)` includes both
-  point generation and evaluating `h(\vU_i)`. Specify the error criterion;
+  point generation and evaluating `h(\vU_i)`. Use `\hmu_n(h)` for both
+  deterministic and randomized cube estimates; fixed `\vu_i` versus random
+  `\vU_i` distinguishes their defining averages. For RQMC replications use
+  `\hmu_n^{(r)}` for an n-point run and `\hmu_{R,n}` for the average of R
+  runs, with nR total point evaluations. Use `\hat\sigma^2_{R,n}` for the
+  across-run sample variance, estimating the variance of one n-point run;
+  divide it by R for the variance of the reported average. Write the
+  replication interval directly without a separate radius symbol. Reserve
+  `\alpha` for nominal failure probability and write confidence as
+  `1-\alpha`; use `p_{\mathrm{QMC}}` and `p_{\mathrm{RQMC}}` for
+  decay orders. When comparing IID and RQMC, label complete-estimate
+  variances `\sigma_{\mathrm{IID},n}^2` and
+  `\sigma_{\mathrm{RQMC},n}^2`; distinguish both from the one-value
+  variance `\sigma^2(h)`, defining the latter in the IID column.
+  For same-RMSE work comparisons, IID uses one n-point average with no R;
+  fix R only for RQMC and choose n separately for each method to expose
+  the RQMC epsilon exponent `-1/p_RQMC` and replication
+  factor `R^{1-1/(2p_RQMC)}`. Do not substitute the fixed-n, growing-R
+  variance-times-runtime diagnostic for that comparison.
+  Separate normal/CLT approximation from the additional
+  coverage justification required by data-dependent stopping; even exact
+  fixed-sample intervals do not automatically justify repeated checks.
+  Specify the error criterion;
   distinguish IID variance from the variation or smoothness governing QMC.
   Retain setup in the complete model; simple hand calculations may explicitly
   omit it as a stated simplifying assumption.
+  When the method is an explicit cost argument, match it with QMC or RQMC
+  subscripts on rate constants, exponents, setup, and per-point costs.
+  Use `\lesssim` for sufficient-work bounds that absorb bounded sample-size
+  rounding factors. Recall `D_n(K)=D(F_{\mathrm{unif}},\{\vu_i\};K)` when
+  introducing its shorthand for the current cube points and kernel.
+  For randomized QMC use an integrand-dependent error constant
+  `A_{\mathrm{RQMC}}(h)` in the approximate variance model
+  `var_rand{\hmu_n(h)} approx A_{\mathrm{RQMC}}^2(h) n^{-2 p_RQMC}`.
+  Put every power on `A`, including `A_{\mathrm{RQMC}}^{1/p_{\mathrm{RQMC}}}(h)`
+  in cost comparisons, and use approximation signs consistently in its
+  derived RMSE, sample-size, and cost models; do not label them upper bounds.
+  Keep this design-dependent quantity separate from deterministic RKHS
+  variation, including in RMSE, cost, and representation comparisons.
 - Use `\operatorname{vtn}_K(f)=\norm{f}_{\mathcal H_K}` as the general RKHS
   variation. When constants belong to the space and the quadrature rule
   integrates them exactly, the variation may be sharpened to

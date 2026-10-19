@@ -398,15 +398,15 @@ appropriate phase rather than appended indiscriminately.
   main control/conditioning headings, and check rendering and visible layouts
   (October 8, 2026).
 - [x] Add a staged cost-to-accuracy model: IID variance times complete-sample
-  cost before the control-cost exercise; error-rate and fixed-run timing
-  interpretations after low discrepancy randomization; multilevel cost with
+  cost before the control-cost exercise; error-rate and same-RMSE cost
+  comparisons after low discrepancy randomization; multilevel cost with
   a separate bias budget in Deck 05. Use `C(epsilon; g)` and named contribution
   functions; keep instructor review open with the remaining Deck 04–05 review.
 - [x] Define RKHS variation first by the full norm, then sharpen it to distance
   to constants for constant-exact rules in Deck 03 and
   connect it to standard deviation in target L2 and the centered-kernel norm.
-  Recall it in Deck 04; add main slides for deterministic LD cost, RQMC
-  estimator variance, RQMC cost, and fixed-run timing, with a shared-design
+  Recall it in Deck 04; develop deterministic LD cost, RQMC estimator
+  variance, RQMC cost, replication/stopping continuations, and a shared-design
   representation comparison. Link variation from the Deck 01 terms index.
 - [x] Validate shared slide styling, metadata, navigation, and assets from
   `classlib`.
@@ -513,6 +513,13 @@ appropriate phase rather than appended indiscriminately.
   - [x] Add the eight-point digital-sequence board continuation with
     points 6–7 left as an exercise and answers in presenter notes
     (October 19, 2026).
+  - [x] Audit the low discrepancy cost and stopping flow: define f/g/h
+    input roles in the opening big picture, group construction before
+    randomization, distinguish error-bound planning from data-based
+    assessment, develop replication variance and intervals, and compare IID
+    with fixed-replication RQMC at the same RMSE target. Parameterize the
+    six-dimensional Keister stopping example, explain its graph, and include
+    elapsed times in the slide comparison (October 19, 2026).
   - [x] Draft Lecture 05, Selected Topics, from the Fall 2025 Keynote deck,
     including parallel computation, stochastic gradient descent, and
     multilevel Monte Carlo.
