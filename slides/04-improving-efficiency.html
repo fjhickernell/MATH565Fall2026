@@ -700,6 +700,7 @@ This deck
 </div>
 </section>
 
+<section>
 <section id="from-sampling-to-efficient-estimation" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="variance-reduction">
 <h1>From Sampling to Efficient Estimation</h1>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.1; --tree-aspect-ratio: 4 / 3;">
@@ -707,26 +708,95 @@ This deck
   <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
 </div>
 
-<h3>
-Recap: How we reached target samples <span class="math inline">\(\vX\)</span> and <span class="math inline">\(Y = f(\vX)\)</span>
-</h3>
-<p><span class="math inline">\(\vU\sim\Unif([0,1]^d),\quad \vZ\sim\varrho_{\mathrm{prop}},\quad
+<p><span id="functions-and-inputs"></span></p>
+<p>Keep <span class="math inline">\(\mu=\Ex_{\mathrm{tar}}[f(\vX)]\)</span> fixed, while changing how we compute it</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Inputs</th>
+<th style="text-align: left;">Output</th>
+<th style="text-align: left;">Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\vX\sim\varrho_{\mathrm{tar}}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(f(\vX)\)</span></td>
+<td style="text-align: left;">Target output</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\vZ=\vS(\vU)\sim\varrho_{\mathrm{prop}}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(g(\vZ)\)</span></td>
+<td style="text-align: left;">Alternative contribution</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\vU\sim\Unif[0,1]^d\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(h(\vU)=g\bigl(\vS(\vU)\bigr)\)</span></td>
+<td style="text-align: left;">Complete calculation from uniforms</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[
+\mu=\Ex_{\mathrm{tar}}[f(\vX)]
+=\Ex_{\mathrm{prop}}[g(\vZ)]
+=\Ex_{\Unif[0,1]^d}[h(\vU)]
+=\int_{[0,1]^d}h(\vu)\,\dif\vu
+\]</span></p>
+<ul>
+<li>Change the <span class="alert">contribution</span>: replace <span class="math inline">\(f(\vX)\)</span> by an equal-mean <span class="math inline">\(g(\vZ)\)</span></li>
+<li>Change the <span class="alert">point design</span>: arrange uniform inputs before evaluating <span class="math inline">\(h\)</span></li>
+</ul>
+<div class="key-point">
+<p>Equal means <span class="alert">do not imply</span> <span class="math inline">\(g(\vZ)\stackrel d=f(\vX)\)</span></p>
+<p>Exact transport <span class="alert">implies</span> <span class="math inline">\(h(\vU) \stackrel d=g(\vZ)\)</span></p>
+</div>
+<aside class="notes">
+<p>The equality concerns expectations, not equality of individual outputs or output distributions. An alternative contribution may include importance weights, controls, or a conditional expectation. Its sampling law belongs with g. Exact transport is a useful case where the output distributions agree: if T(Z) has the target law and g=f composed with T, then g(Z) and f(X) have the same distribution. Other equal-mean contributions may change the distribution and variance. The function h includes that contribution and all transforms from the uniform input. If the input is already uniform, S is the identity and h=g. Different constructions may require different cube dimensions. Use h_f=f composed with T and h_g=g composed with S when comparing two representations; generic h avoids carrying that subscript through every QMC or RQMC formula. Low discrepancy sampling places its points on the unit cube, which explains the switch from g to h in those formulas.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="recall-the-sampling-paths">Recall the sampling paths</h3>
+<p><span class="math inline">\(\vU\sim\Unif[0,1]^d,\quad \vZ\sim\varrho_{\mathrm{prop}},\quad
 \vX\sim\varrho_{\mathrm{tar}}\)</span></p>
 <ul>
-<li><a href="02-generating-samples.html#transport-maps">Generating Samples: transport</a>: <span class="math inline">\(\vZ=\vS(\vU)\)</span>, then <span class="math inline">\(\vX=\vT(\vZ)=\vT\bigl(\vS(\vU)\bigr)\)</span>; if <span class="math inline">\(\vS\)</span> is the identity, <span class="math inline">\(\vX=\vT(\vU)\)</span>, E.g., quantile, affine</li>
+<li><a href="02-generating-samples.html#transport-maps">Generating Samples: transport</a>: <span class="math inline">\(\vZ=\vS(\vU)\)</span>, then <span class="math inline">\(\vX=\vT(\vZ)\)</span></li>
 <li><a href="02-generating-samples.html#acceptancerejection-sampling">Generating Samples: acceptance–rejection</a>: retain selected proposals as <span class="math inline">\(\vX\)</span></li>
 <li><a href="03-markov-chain-monte-carlo.html#the-metropolishastings-algorithm">Markov Chain Monte Carlo</a>: propose <span class="math inline">\(\vZ_i\mid\vX_i\)</span>; accept or repeat <span class="math inline">\(\vX_i\)</span>; target law at stationarity</li>
 </ul>
-<h3>
-Our plan here
-</h3>
-<p>Keep <span class="math inline">\(\mu=\Ex_{\mathrm{tar}}[f(\vX)]\)</span> fixed, using two complementary levers:</p>
-<ul>
-<li><span class="alert">First</span>, change the contribution: replace <span class="math inline">\(Y=f(\vX)\)</span> by an equal-mean alternative, such as a transformed or weighted <span class="math inline">\(Y_{g} = g(\vZ)\)</span>, a control variate, or a conditional expectation</li>
-<li><span class="alert">Then</span>, change how samples are chosen: arrange uniform inputs in antithetic pairs, strata, or low discrepancy patterns before mapping them to target-space samples</li>
-</ul>
-</section>
-
+<p>For a direct target transport <span class="math inline">\(\vX=\vT(\vU)\)</span> use <span class="math inline">\(h_f=f\circ\vT\)</span><br> For the alternative <span class="math inline">\(\vZ=\vS(\vU)\)</span> use <span class="math inline">\(h_g=g\circ\vS\)</span></p>
+<div class="key-point">
+<p>Write <span class="math inline">\(h\)</span> for either complete <span class="alert">unit-cube integrand</span></p>
+</div>
+<aside class="notes">
+<p>Here the direct target map T includes the proposal-generation map when needed. The first bullet shows the more general composition T(S(U)) used in Generating Samples. Acceptance–rejection and MCMC have additional selection or history structure; this recap does not assert IID target outputs from those constructions or a fixed d-input formula for a whole rejection or Markov-chain run.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
 <section>
 <section id="transformations-and-importance-sampling" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="analysis-importance">
 <h1>Transformations and Importance Sampling</h1>
@@ -811,7 +881,7 @@ Our plan here
 \]</span></p>
 <p><span class="math display">\[
 \left|\mu-\frac1n\sum_{i=0}^{n-1}h_g(\vu_i)\right|
-\le D\bigl(\{\vu_i\}_{i=0}^{n-1},F_{\mathrm{unif}};K\bigr)\operatorname{vtn}_K(h_g)
+\le D\bigl(F_{\mathrm{unif}},\{\vu_i\}_{i=0}^{n-1};K\bigr)\operatorname{vtn}_K(h_g)
 \]</span></p>
 <ul>
 <li>Nodes determine <span class="alert">discrepancy</span>; the composed cube integrand determines <span class="alert">variation</span></li>
@@ -1914,7 +1984,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="6204ea71" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="2cc77f7a" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1956,8 +2026,8 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 <ul>
 <li><a href="#/the-van-der-corput-sequence">The van der Corput sequence</a></li>
 <li><a href="#/four-low-discrepancy-families">Four low discrepancy families</a></li>
-<li><a href="#/randomized-low-discrepancy-sampling">Randomized low discrepancy sampling</a></li>
 <li><a href="#/component-by-component-construction">Component-by-component construction</a></li>
+<li><a href="#/randomized-low-discrepancy-sampling">Randomized low discrepancy sampling</a></li>
 <li><a href="#/deterministic-ld-cost">Cost of deterministic low discrepancy sampling</a></li>
 <li><a href="#/stopping-criteria">Stopping criteria</a></li>
 </ul>
@@ -2318,6 +2388,26 @@ i=(\cdots i_2i_1i_0)_b
           display:block!important;
       }</style></aside>
 </section>
+<section id="component-by-component-construction" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
+<h2>Component-by-component construction</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
+  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
+</div>
+
+<p>Generators for lattice rules and digital nets may be chosen by number theory or computer search</p>
+<p>The component-by-component strategy:</p>
+<ol type="1">
+<li>Choose a one-dimensional generator that minimizes a discrepancy criterion over relevant sample sizes</li>
+<li>Freeze the first <span class="math inline">\(\ell\)</span> components</li>
+<li>Search for component <span class="math inline">\(\ell+1\)</span> that minimizes discrepancy</li>
+<li>Increase <span class="math inline">\(\ell\)</span> and repeat until <span class="math inline">\(\ell=d\)</span></li>
+</ol>
+<div class="key-point">
+<p>A high-dimensional design is built by optimizing <span class="alert">one coordinate</span> at a time</p>
+</div>
+</section>
 <section id="randomized-low-discrepancy-sampling" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy-sampling">
 <h2>Randomized low discrepancy sampling</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
@@ -2377,6 +2467,7 @@ i=(\cdots i_2i_1i_0)_b
 <section class="slide level2">
 
 <h3 id="rqmc-estimator-variance">Variance of a randomized low discrepancy estimate</h3>
+<p>Recall <span class="math inline">\(h(\vu)=g\bigl(\vS(\vu)\bigr)\)</span>, the complete calculation from <span class="alert">uniform inputs</span></p>
 <p>Each <span class="math inline">\(\vU_i\sim\Unif[0,1]^d\)</span> but the points within a run are <span class="alert">dependent</span></p>
 <p><span class="math display">\[\begin{align*}
 \hmu_n(h)&amp;=\frac1n\sum_{i=0}^{n-1}h(\vU_i)
@@ -2391,7 +2482,8 @@ i=(\cdots i_2i_1i_0)_b
 <li>Randomized LD: the <span class="alert">whole design</span> determines the estimator variance</li>
 </ul>
 <div class="key-point">
-<p>Use <span class="math inline">\(\var\{\hmu_n(h)\}\)</span> for RQMC error assessment</p>
+<p>For unbiased RQMC, RMSE is the SD of the <span class="alert">whole estimate</span></p>
+<p>Estimate that SD using <a href="#/stopping-criteria">independent runs under Stopping criteria</a></p>
 </div>
 <aside class="notes">
 <p>Randomness here is in the points, with h fixed. It differs from the Gaussian-process average-case interpretation in Markov Chain Monte Carlo, where the points are fixed and the integrand is random. Marginal uniformity and integrability give unbiasedness. Finite second moments justify the covariance expansion. The diagonal terms sum to var{h(U)}/n, but RQMC also has off-diagonal terms. Do not discard them or substitute within-run sample variance divided by n as an RQMC variance estimate. Independent shifts or scrambles provide independent complete-run estimates. Their across-run sample variance estimates the variance of one whole run; divide by the number of runs only when reporting the variance of their mean. Source: <a href="https://arxiv.org/abs/2608.17143">Owen (2026), Randomized quasi-Monte Carlo integration</a>.</p>
@@ -2407,26 +2499,6 @@ i=(\cdots i_2i_1i_0)_b
           display:block!important;
       }</style></aside>
 </section>
-<section id="component-by-component-construction" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
-<h2>Component-by-component construction</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
-</div>
-
-<p>Generators for lattice rules and digital nets may be chosen by number theory or computer search</p>
-<p>The component-by-component strategy:</p>
-<ol type="1">
-<li>Choose a one-dimensional generator that minimizes a discrepancy criterion over relevant sample sizes</li>
-<li>Freeze the first <span class="math inline">\(\ell\)</span> components</li>
-<li>Search for component <span class="math inline">\(\ell+1\)</span> that minimizes discrepancy</li>
-<li>Increase <span class="math inline">\(\ell\)</span> and repeat until <span class="math inline">\(\ell=d\)</span></li>
-</ol>
-<div class="key-point">
-<p>A high-dimensional design is built by optimizing <span class="alert">one coordinate</span> at a time</p>
-</div>
-</section>
 <section id="deterministic-ld-cost" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
 <h2>Cost of deterministic low discrepancy sampling</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
@@ -2436,25 +2508,29 @@ i=(\cdots i_2i_1i_0)_b
 </div>
 
 <p><span id="from-error-decay-to-cost"></span></p>
-<p>For fixed cube points write <span class="math inline">\(Q_n(h)=n^{-1}\sum_{i=0}^{n-1}h(\vu_i)\)</span></p>
-<p>Assume a <span class="alert">discrepancy bound</span> <span class="math inline">\(D_n(K)\le a_{\mathrm D}n^{-\alpha_{\mathrm D}}\)</span></p>
+<p>For fixed cube points write <span class="math inline">\(\hmu_n(h)=n^{-1}\sum_{i=0}^{n-1}h(\vu_i)\)</span></p>
+<p>Recall <span class="math inline">\(D_n(K)=D\bigl(F_{\mathrm{unif}},\{\vu_i\}_{i=0}^{n-1};K\bigr)\)</span></p>
+<p>For the chosen QMC design, assume a <span class="alert">discrepancy bound</span> <span class="math inline">\(D_n(K)\le a_{\mathrm{QMC}}n^{-p_{\mathrm{QMC}}}\)</span></p>
 <p><span class="math display">\[\begin{align*}
-\abs{\mu-Q_n(h)}
+\abs{\mu-\hmu_n(h)}
 &amp;\le D_n(K)\operatorname{vtn}_K(h)
-\le a_{\mathrm D}\operatorname{vtn}_K(h)n^{-\alpha_{\mathrm D}}\\
-\text{Set the bound to }\varepsilon
-&amp;\implies n\approx
-\left(\frac{a_{\mathrm D}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/\alpha_{\mathrm D}}\\
+\le a_{\mathrm{QMC}}\operatorname{vtn}_K(h)n^{-p_{\mathrm{QMC}}}\\
+\text{Choose }n
+&amp;\ge
+\left(\frac{a_{\mathrm{QMC}}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/p_{\mathrm{QMC}}}\\
 \text{Cost}\qquad C(\varepsilon;h,\mathrm{QMC})
-&amp;\approx S(h)+\$(h)
-\left(\frac{a_{\mathrm D}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/\alpha_{\mathrm D}}
+&amp;\lesssim S_{\mathrm{QMC}}(h)+\$_{\mathrm{QMC}}(h)
+\left(\frac{a_{\mathrm{QMC}}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/p_{\mathrm{QMC}}}
 \end{align*}\]</span></p>
-<p>This plans work for an <span class="alert">absolute-error bound</span> at most <span class="math inline">\(\varepsilon\)</span></p>
-<p><span class="math inline">\(\$(h)\)</span> includes <span class="alert">point generation</span> and the full evaluation of <span class="math inline">\(h(\vu_i)\)</span></p>
+<ul>
+<li><span class="alert">Absolute-error</span> target <span class="math inline">\(\varepsilon\)</span>; <span class="math inline">\(\lesssim\)</span> allows rounding up to the next design size</li>
+<li><span class="math inline">\(S_{\mathrm{QMC}}\)</span> is setup; <span class="math inline">\(\$_{\mathrm{QMC}}\)</span> includes point generation and the full <span class="math inline">\(h\)</span> evaluation</li>
+<li><span class="math inline">\(\operatorname{vtn}_K(h)\)</span> is usually <span class="alert">hard to know or estimate</span></li>
+</ul>
 <aside class="notes">
-<p>This is the cost of a sufficient sample size obtained from the stated bound, not the unknown smallest cost for the realized integration error. Assume a fixed kernel and domain, h in the associated space, positive finite variation, a_D&gt;0, and alpha_D&gt;0. The zero-variation case is a constant integrand and needs no asymptotic rate model. Use the full RKHS norm as variation in general. If constants belong to the space, these equal-weight averages allow the reduced min_c ||h-c|| variation.</p>
-<p>Round up to an admissible sample size and retain logarithmic factors if they occur in the discrepancy bound. Cost includes the cube-point generator and complete integrand evaluation; linear per-point cost is a model. Use the actual T(n;h) if generating n points has a different cost law. The design and its implementation are implicit in S(h) and cost(h). Setup may be explicitly ignored for simple comparisons.</p>
-<p>A deterministic estimate has no randomization variance, but that says nothing about its integration error. The bound requires justified values or bounds for both discrepancy and variation. Different kernels or scalings change both factors; compare their product rather than variation alone.</p>
+<p>The discrepancy-variation inequality and the assumed discrepancy-rate upper bound give a sufficient sample size. Choose the smallest allowed sample size at least as large as the displayed threshold. C denotes the work needed to meet the specified accuracy; this construction gives an upper bound on that work, not its unknown exact minimum. The symbol lesssim absorbs fixed factors from rounding or admissible sample sizes. It is not an equality or a claim that the realized error attains its bound. Assume a fixed kernel and domain, h in the associated space, positive finite variation, a_QMC&gt;0, and p_QMC&gt;0. The zero-variation case is a constant integrand and needs no asymptotic rate model. Use the full RKHS norm as variation in general. If constants belong to the space, these equal-weight averages allow the reduced min_c ||h-c|| variation.</p>
+<p>Round up to an admissible sample size and retain logarithmic factors if they occur in the discrepancy bound. The displayed asymptotic cost assumes the sample-size threshold is at least one; otherwise retain the one-point minimum. Allowed sample sizes must have bounded successive ratios for the rounding factor to be absorbed by lesssim. Cost includes the cube-point generator and complete integrand evaluation; linear per-point cost is a model. Use the actual T(n;h) if generating n points has a different cost law. The chosen QMC construction and its implementation determine a_QMC, p_QMC, S_QMC(h), and cost_QMC(h); these are not universal QMC constants. Setup may be explicitly ignored for simple comparisons.</p>
+<p>A deterministic estimate has no randomization variance, but that says nothing about its integration error. The bound requires justified values or bounds for both discrepancy and variation. Different kernels or scalings change both factors; compare their product rather than variation alone. In practice, variation is typically difficult to know or estimate. This is primarily a theoretical cost comparison, not a directly computable stopping rule. The stopping section explains error assessments from computed values and their assumptions; those need not estimate the full variation explicitly.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2470,27 +2546,31 @@ i=(\cdots i_2i_1i_0)_b
 <section class="slide level2">
 
 <h3 id="randomized-ld-cost">Cost of randomized low discrepancy sampling</h3>
-<p>Suppose a justified <span class="alert">variance bound</span> for the chosen randomization is</p>
+<p>For one unbiased <span class="math inline">\(n\)</span>-point run, model the <span class="alert">estimator variance</span> by</p>
 <p><span class="math display">\[
 \var_{\mathrm{rand}}\{\hmu_n(h)\}
-\le a_{\mathrm R}^2\operatorname{vtn}_K^2(h)n^{-2\alpha_{\mathrm R}}
+\approx A_{\mathrm{RQMC}}^2(h)n^{-2p_{\mathrm{RQMC}}}
 \]</span></p>
 <p><span class="math display">\[\begin{align*}
 \rmse\{\hmu_n(h)\}
-&amp;\le a_{\mathrm R}\operatorname{vtn}_K(h)n^{-\alpha_{\mathrm R}}\\
-\text{Set the bound to }\varepsilon
-&amp;\implies n\approx
-\left(\frac{a_{\mathrm R}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/\alpha_{\mathrm R}}\\
+&amp;\approx A_{\mathrm{RQMC}}(h)n^{-p_{\mathrm{RQMC}}}\\
+\text{For target RMSE }\varepsilon:\quad n
+&amp;\approx
+\left(\frac{A_{\mathrm{RQMC}}(h)}{\varepsilon}\right)^{1/p_{\mathrm{RQMC}}}\\
 \text{Cost}\qquad C(\varepsilon;h,\mathrm{RQMC})
-&amp;\approx S(h)+\$(h)
-\left(\frac{a_{\mathrm R}\operatorname{vtn}_K(h)}{\varepsilon}\right)^{1/\alpha_{\mathrm R}}
+&amp;\approx S_{\mathrm{RQMC}}(h)+\$_{\mathrm{RQMC}}(h)
+\left(\frac{A_{\mathrm{RQMC}}(h)}{\varepsilon}\right)^{1/p_{\mathrm{RQMC}}}
 \end{align*}\]</span></p>
-<p>This plans work for <span class="alert">RMSE</span> at most <span class="math inline">\(\varepsilon\)</span></p>
-<p><span class="math inline">\(\$(h)\)</span> includes <span class="alert">point generation</span> and the full evaluation of <span class="math inline">\(h(\vU_i)\)</span></p>
+<ul>
+<li>Predicts work for an <span class="alert">RMSE target</span> <span class="math inline">\(\varepsilon\)</span>, averaged over randomizations</li>
+<li><span class="math inline">\(A_{\mathrm{RQMC}}(h)\)</span> captures dependence on <span class="math inline">\(h\)</span> and the chosen randomization</li>
+<li>With modest <span class="alert">smoothness</span>, often <span class="math inline">\(p_{\mathrm{RQMC}}&gt;p_{\mathrm{QMC}}\)</span></li>
+<li>The <a href="#/stopping-criteria">replication interval below</a> estimates uncertainty from data</li>
+</ul>
 <aside class="notes">
-<p>The variance is over randomizations of a fixed integrand, and unbiasedness is assumed. Variation is a deterministic seminorm of that integrand. The displayed bound must be established for this function space, design, and randomization; it does not follow from the definition of variation alone. One sufficient route from the deterministic bound is var_rand(hat_mu_n(h)) &lt;= E_rand[D_n(K)^2] vtn_K(h)^2. Thus an RMS-discrepancy rate supplies such a bound. This sufficient route may be conservative; a direct estimator-variance analysis can be sharper. An arbitrary kernel need not give the best known RQMC convergence rate.</p>
-<p>Keep alpha_R distinct from alpha_D. Some smooth integrands under suitable scrambling admit RMSE nearly n^{-3/2}, but not every integrand or randomization has that rate. State the smoothness assumptions and retain logarithmic terms or use a justified exponent slightly below 3/2. More generally alpha_R, the constant, and the relevant norm must be matched.</p>
-<p>These formulas invert a bound to plan a sufficient sample size. They ignore integer rounding and assume linear sampling work after setup. The design is implicit in S(h) and cost(h). A target RMSE is different from a deterministic absolute-error guarantee and from a confidence interval.</p>
+<p>The variance is over randomizations of a fixed integrand, and unbiasedness is assumed. The power law is an approximate model for the chosen integrand, RQMC construction, randomization, and range of allowed sample sizes. A_RQMC(h) is its nonnegative error amplitude. It may reflect design-specific spectral or ANOVA structure and need not factor as a universal method constant times deterministic RKHS variation. Do not identify it with vtn_K(h). The squared amplitude is written A_RQMC^2(h), with the square on A.</p>
+<p>Unbiasedness makes RMSE squared equal to estimator variance exactly; the power-law expression for that variance, and the resulting RMSE, sample-size, and cost formulas, are approximate. They do not assert upper bounds. Keep p_RQMC distinct from p_QMC. With modest smoothness, randomized designs often have a larger RMSE decay exponent than the deterministic error-decay exponent for the corresponding setting. Some smooth integrands under suitable scrambling admit RMSE nearly n^{-3/2}, but not every integrand or randomization has that rate. Match the exponent and amplitude to the setting, retaining logarithmic terms when relevant.</p>
+<p>Invert the approximate RMSE law to predict a sample size, then round up to an admissible size and charge the actual setup and sampling work. Linear sampling work after setup is a model. A_RQMC(h) is generally unknown, so this calculation alone does not supply a practical stopping rule. A target RMSE differs from a deterministic absolute-error guarantee and from a confidence interval.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2506,57 +2586,38 @@ i=(\cdots i_2i_1i_0)_b
 <section class="slide level2">
 
 <h3 id="comparing-representations-with-the-same-design">Compare low discrepancy costs</h3>
-<p>Keep the error criterion and rate bound <span class="math inline">\(a\operatorname{vtn}_K(h)n^{-\alpha}\)</span> fixed</p>
-<p>For equal-integral <span class="math inline">\(h_f\)</span> and <span class="math inline">\(h_g\)</span> ignore setup and integer rounding</p>
-<p><span class="math display">\[
-\frac{C(\varepsilon;h_g)}{C(\varepsilon;h_f)}
-\approx\frac{\$(h_g)}{\$(h_f)}
-\left(\frac{\operatorname{vtn}_K(h_g)}{\operatorname{vtn}_K(h_f)}\right)^{1/\alpha}
-\]</span></p>
-<p>An alternative must reduce <span class="alert">variation enough</span> to pay for its evaluation cost</p>
+<p>Compare equal-integral <span class="math inline">\(h_f\)</span> and <span class="math inline">\(h_g\)</span> using the <span class="alert">same design</span> and rate exponent</p>
+<p>Omit setup and rounding; for a common tolerance <span class="math inline">\(\varepsilon\)</span>, compare</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Method and error criterion</th>
+<th style="text-align: left;">Integrand-dependent factor in leading work</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">QMC: absolute-error bound</td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle\$_{\mathrm{QMC}}(h)\bigl[a_{\mathrm{QMC}}\operatorname{vtn}_K(h)\bigr]^{1/p_{\mathrm{QMC}}}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RQMC: RMSE model</td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle\$_{\mathrm{RQMC}}(h)A_{\mathrm{RQMC}}^{1/p_{\mathrm{RQMC}}}(h)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Within each comparison, the common <span class="math inline">\(\varepsilon^{-1/p}\)</span> factor cancels</p>
 <div class="key-point">
-<p>Compare <span class="math inline">\(\$(h)\operatorname{vtn}_K(h)^{1/\alpha}\)</span> when <span class="math inline">\(a\)</span> and <span class="math inline">\(\alpha\)</span> are shared</p>
+<p>A smaller <span class="alert">error constant</span> must compensate for greater <span class="alert">cost per point</span></p>
 </div>
 <aside class="notes">
-<p>This comparison applies separately to deterministic absolute-error bounds and randomized RMSE bounds. The design, norm, constant a, exponent alpha, domain, and input dimension must be compatible and shared. A lower bound-based planned cost need not imply a smaller actual error for a particular run. If changing the representation changes any of these assumptions, compare the complete method-specific cost expressions instead of canceling factors. Conditioning may change the input dimension and the design constant.</p>
-<p>For an example, halving variation while doubling cost gives a work ratio 2^{1-1/alpha}. This is 1/2 at alpha=1/2, 1 at alpha=1, and 2^{1/3} at alpha=3/2. Faster decay can make extra per-sample expense harder to justify solely by reducing the error constant. Actual setup and pilot costs can change these finite-tolerance comparisons.</p>
-<p>With constants removed in IID’s L2 norm, variation is sigma(h) and alpha=1/2, recovering cost(h) sigma^2(h). Under RQMC, least-squares controls fitted to minimize IID variance do not automatically minimize this design-specific variation or the variance of a complete randomized estimate.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level2">
-
-<h3 id="sd-squared-times-runtime">Interpreting SD squared times runtime</h3>
-<p>Fix the sample size and method within <span class="alert">one complete run</span></p>
-<p>Write <span class="math inline">\(v=\var_{\mathrm{rand}}\{\hmu_n(h)\}\)</span> and <span class="math inline">\(t=T(n;h)\)</span></p>
-<p>For the average of <span class="math inline">\(R\)</span> independent runs,</p>
-<p><span class="math display">\[\begin{align*}
-\rmse^2&amp;=\frac vR,&amp;
-T&amp;\approx Rt,&amp;
-C(\varepsilon;n,h)&amp;\approx\frac{vt}{\varepsilon^2}
-\end{align*}\]</span></p>
-<ul>
-<li>Notebook estimate of <span class="math inline">\(vt\)</span>: across-run <span class="math inline">\(s_R^2\times\overline t\)</span></li>
-<li>Include each run’s independent control pilot and sample-generation work</li>
-<li>Changing the <span class="alert">sample size</span> changes both <span class="math inline">\(v\)</span> and <span class="math inline">\(t\)</span></li>
-</ul>
-<p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb">Asian/lookback comparison</a></p>
-<div class="key-point">
-<p>Compare independent complete runs without assuming IID points <span class="alert">within</span> a run</p>
-</div>
-<aside class="notes">
-<p>This is the earlier IID cost model applied to complete run estimates rather than individual payoff evaluations. It therefore applies to independent scrambles or shifts even though points within a run are dependent. Distinguish the observed number of pilot replications used to estimate v and t from a future number of runs chosen to reach epsilon. R here denotes independent complete runs; the notebook’s s_R is an empirical across-run SD.</p>
-<p>In the Asian notebook, every controlled run regenerates and charges its independent pilot, so that pilot is part of t. If a different design reuses one fitted control across runs, charge its pilot once as setup and analyze the residual variance conditional on that pilot; unconditional run estimates need not be independent, even though their cross-covariances are zero when each conditional mean is exactly mu. The variance formula follows by conditioning and averaging the conditional variance when moments exist.</p>
-<p>Ignore integer rounding in R and separately charge any one-time setup. The sample product s_R^2 times mean runtime has sampling and timing uncertainty. It is a fixed-run-size efficiency diagnostic, not a prediction of QMC error decay as n increases, a confidence guarantee, or evidence that one method is universally best. This comparison concerns unbiased estimation of the same discretely monitored contract; model or discretization bias is a separate error component.</p>
+<p>Compare the two representations separately within one method and error criterion. The QMC row gives a leading work-bound factor; the RQMC row gives a leading work-model factor. Neither is measured runtime or an unknown minimum cost. Method, domain, input dimension, exponent, and assumptions must be compatible. For deterministic QMC, the kernel, variation definition, and discrepancy-rate constant must also be shared. Conditioning or a different transformation may change dimension or the valid rate; then compare the complete method-specific cost expressions instead.</p>
+<p>The QMC error amplitude is a_QMC vtn_K(h). The RQMC error amplitude is A_RQMC(h), which captures the chosen design’s estimator-variance behavior. Do not substitute the deterministic variation for that RQMC quantity. With a shared exponent p, halving the relevant error amplitude while doubling per-point cost gives the predicted leading-work ratio 2^{1-1/p}. It is 1/2 at p=1/2, 1 at p=1, and 2^{1/3} at p=3/2. Setup and pilot costs may change these finite-tolerance comparisons.</p>
+<p>For IID uniform sampling, the RMSE amplitude is sigma(h), p=1/2, and the factor reduces to cost(h) sigma^2(h). Under RQMC, controls fitted to minimize IID contribution variance do not automatically minimize A_RQMC(h) or the variance of a complete randomized estimate.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2577,22 +2638,256 @@ C(\varepsilon;n,h)&amp;\approx\frac{vt}{\varepsilon^2}
   <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
 </div>
 
-<p>Two practical questions are</p>
-<p><span class="math display">\[\begin{align*}
-\abs{\mu-\hmu_n}&amp;\le\text{what?}\\
-\abs{\mu-\hmu_n}&amp;\le\varepsilon
-\quad\text{for what $n$?}
-\end{align*}\]</span></p>
-<p>Use the computed contributions: <span class="math inline">\(Y_i\)</span>, <span class="math inline">\(Y_{\mathrm{IS},i}\)</span>, <span class="math inline">\(Y_{\mathrm{CV},i}\)</span>, or <span class="math inline">\(Y_{\mathrm{CMC},i}\)</span></p>
+<p>The factors <span class="math inline">\(\operatorname{vtn}_K(h)\)</span> and <span class="math inline">\(A_{\mathrm{RQMC}}(h)\)</span> are often <span class="alert">unknown</span><br> Practical stopping needs an error assessment from the <span class="alert">computed values</span></p>
 <ul>
-<li>IID sampling: use a Central Limit Theorem interval when justified</li>
-<li>Randomized low discrepancy sampling: use independent replications</li>
-<li>Coefficient-decay bounds: Fourier for lattices, Walsh for digital nets</li>
-<li>Further approach: Bayesian credible intervals based on a kernel model</li>
+<li>IID contributions: a CLT interval when justified</li>
+<li>RQMC: an interval from independent <span class="alert">whole-design replications</span></li>
+<li>Fourier (lattices) or Walsh (digital nets): a coefficient-decay bound under stated assumptions</li>
+<li>Further approach: a Bayesian credible interval based on a kernel model</li>
+</ul>
+<p>An <span class="alert">RMSE target</span> controls root mean squared error over randomizations<br> A <span class="alert">confidence interval</span> also specifies a coverage level</p>
+<div class="key-point">
+<p>Compare the reported error bound or interval radius with <span class="math inline">\(\varepsilon\)</span></p>
+<p>Budget exhausted <span class="math inline">\(\ne\)</span> tolerance met</p>
+</div>
+<aside class="notes">
+<p>Cost planning uses a deterministic error bound or an approximate RQMC variance model. A stopping procedure must supply a computable bound or interval and state the assumptions supporting it. A theoretical variation bound may be unavailable; coefficient-decay methods replace it with data-driven bounds for a specified function class. Confidence and credible intervals have different interpretations. Neither should be identified with an RMSE bound or an unconditional absolute-error guarantee. IID CLT intervals were introduced earlier; the next slides explain what replaces their standard-error calculation for RQMC.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="rqmc-error-replications">RQMC error assessment by independent replications</h3>
+<p>Independently randomize the <span class="alert">whole <span class="math inline">\(n\)</span>-point design</span> <span class="math inline">\(R\ge2\)</span> times</p>
+<p><span class="math display">\[\begin{align*}
+\hmu_n^{(r)}&amp;=\frac1n\sum_{i=0}^{n-1}h(\vU_i^{(r)})
+&amp;&amp;r=0,\ldots,R-1\\
+\hmu_{R,n}&amp;=\frac1R\sum_{r=0}^{R-1}\hmu_n^{(r)}
+&amp; \hat\sigma^2_{R,n}&amp;=\frac1{R-1}\sum_{r=0}^{R-1}(\hmu_n^{(r)}-\hmu_{R,n})^2
+\end{align*}\]</span></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Quantity</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\hat\sigma^2_{R,n}\)</span></td>
+<td style="text-align: left;">Estimates the variance <span class="math inline">\(\sigma_n^2\)</span> of one <span class="math inline">\(n\)</span>-point run</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\hat\sigma^2_{R,n}/R\)</span></td>
+<td style="text-align: left;">Estimates the variance of the reported mean <span class="math inline">\(\hmu_{R,n}\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="key-point">
+<p>Our <span class="math inline">\(R\)</span> observations are <span class="alert">independent sample averages</span>, not individual function values</p>
+</div>
+<aside class="notes">
+<p>Fix h, n, the design, and its randomization law across replications. The <span class="math inline">\(\hmu_n^{(r)}\)</span> are IID and unbiased, with variance <span class="math inline">\(\sigma_n^2\)</span> when second moments exist. Here <span class="math inline">\(\hmu_{R,n}\)</span> averages <span class="math inline">\(R\)</span> whole-run estimates, each based on <span class="math inline">\(n\)</span> points, so the total point count is <span class="math inline">\(Rn\)</span>. The observations used in the sample-variance calculation are these R sample averages, not the individual outputs h(U_i) within them. The latter are dependent within a run. Then <span class="math inline">\(\Ex[\hat\sigma^2_{R,n}]=\sigma_n^2\)</span> and <span class="math inline">\(\var(\hmu_{R,n})=\sigma_n^2/R\)</span> exactly at fixed <span class="math inline">\(n\)</span> and <span class="math inline">\(R\)</span>. The sample variance of the n function values within one randomized design is not a substitute: it does not account for their covariances. Each run uses an independent shift or scramble. Any fitted control must be fixed in advance or have an appropriate independent-pilot analysis. Source: <a href="https://arxiv.org/html/2608.17143v1#S5.SS6">Owen (2026), Section 5.6</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="rqmc-replication-stopping">A stopping criterion from replications</h3>
+<p>For a fixed <span class="math inline">\(n\)</span> and <span class="math inline">\(R\)</span>, an approximate <span class="math inline">\((1-\alpha)\)</span> confidence interval is</p>
+<p><span class="math display">\[
+\hmu_{R,n}\ \pm\ t_{1-\alpha/2,R-1}\,\frac{\hat\sigma_{R,n}}{\sqrt R}
+\]</span></p>
+<p><span class="math inline">\(t_{1-\alpha/2,R-1}\)</span> is a Student-<span class="math inline">\(t\)</span> quantile; <span class="math inline">\(\alpha\)</span> is the nominal failure probability</p>
+<p>A candidate rule: increase <span class="math inline">\(n\)</span> and recompute until <span class="math inline">\(t_{1-\alpha/2,R-1}\hat\sigma_{R,n}/\sqrt R\le\varepsilon\)</span></p>
+<ul>
+<li><span class="alert">Interval approximation</span>: normality or a suitable CLT must justify Student-<span class="math inline">\(t\)</span></li>
+<li><span class="alert">Adaptive stopping</span>: repeated checks do not automatically preserve <span class="math inline">\(1-\alpha\)</span> coverage</li>
 </ul>
 <div class="key-point">
-<p>An efficient method needs both <span class="alert">fast</span> error decay and a <span class="alert">reliable</span> stopping rule</p>
+<p>Even exact fixed-<span class="math inline">\(n\)</span> intervals need a <span class="alert">separate justification</span> for data-dependent stopping</p>
 </div>
+<aside class="notes">
+<p>At fixed n and R, this Student-t interval is exact for normal replicate means; otherwise it is an approximation whose adequacy depends on their distribution and R. Unbiasedness and finite variance alone do not make a small-R t interval exact. Larger n does not universally make an individual RQMC replicate asymptotically normal. For nested designs, grow each run’s n through admissible sizes, retaining its randomization. Recompute the independent run means and their across-run variance at the new n.&nbsp;A nominal fixed-sample interval does not automatically retain its coverage at a data-dependent stopping time. This is a separate issue from the normal/CLT approximation: even exact coverage at each fixed n does not imply the same coverage at a data-dependent n.&nbsp;Merely changing n on a predetermined schedule is not the problem; choosing when to report an interval using the observed estimates or widths is. Count all Rn function evaluations and the error-assessment work, including any discarded pilot work. Increasing R until an interval is narrow enough also requires a stopping-time coverage argument. A justified sequential procedure can address this, for example by allocating failure probabilities across a predetermined sequence of checks whose sum is at most alpha, provided each check has the claimed valid marginal coverage. Allocating alpha does not repair an unjustified t approximation. Time-uniform intervals are another possibility under suitable assumptions; ordinary fixed-sample t intervals do not automatically have that property. The next two slides explain why the IID pilot strategy does not transfer automatically and why growing R instead can sacrifice RQMC efficiency. Sources: <a href="https://arxiv.org/html/2608.17143v1#S5.SS6">Owen (2026), Section 5.6</a> for replication intervals; <a href="https://arxiv.org/abs/1810.08240">Howard et al.&nbsp;(2021)</a> for the distinction between fixed-sample and time-uniform coverage. The latter is general sequential-inference guidance, not a ready-made confidence sequence for arbitrary RQMC designs.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="rqmc-pilot-sample-size">Why a small pilot does not determine RQMC error</h3>
+<p><span class="math display">\[\begin{align*}
+\text{IID:}\quad\var(\hmu_n)&amp;=\frac{\sigma^2(h)}n\\
+\text{RQMC:}\quad\sigma_n^2=\var_{\mathrm{rand}}(\hmu_n)
+&amp;\approx A_{\mathrm{RQMC}}^2(h)n^{-2p_{\mathrm{RQMC}}}
+\end{align*}\]</span></p>
+<ul>
+<li>IID: a pilot estimates <span class="math inline">\(\sigma^2(h)\)</span>, which is <span class="alert">independent of <span class="math inline">\(n\)</span></span></li>
+<li>RQMC: <span class="math inline">\(\hat\sigma^2_{R,n_0}\)</span> estimates the variance of an <span class="alert"><span class="math inline">\(n_0\)</span>-point run</span></li>
+<li>Changing <span class="math inline">\(n\)</span> changes the design and the covariances within each run</li>
+</ul>
+<div class="key-point">
+<p>A pilot at <span class="math inline">\(n_0\)</span> estimates <span class="math inline">\(\sigma_{n_0}\)</span>; a large-<span class="math inline">\(n\)</span> interval needs <span class="math inline">\(\sigma_n\)</span></p>
+<p>Extrapolation needs an additional, justified <span class="alert">scaling model</span></p>
+</div>
+<aside class="notes">
+<p>For IID contributions, an independent pilot estimates the same one-observation variance used in the final sample-mean formula for any n.&nbsp;Its uncertainty still matters, as in the earlier IID stopping discussion. For RQMC, the across-run sample variance at n0 targets sigma_n0 squared, not sigma_n squared for a larger design. There is no automatic IID scaling sigma_n = sigma_n0 sqrt(n0/n): the off-diagonal covariances also change. If an appropriate rate model and its validity range are known, extrapolation may be possible, but a single small design does not establish that model. To assess the new n directly, extend each independently randomized design and recompute its mean before estimating the across-run variance.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="rqmc-replication-efficiency">Replication, efficiency, and interval justification</h3>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">How the calculation grows</th>
+<th style="text-align: left;">Accuracy and confidence intervals</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Fix <span class="math inline">\(n\)</span>, increase <span class="math inline">\(R\)</span></td>
+<td style="text-align: left;">Independent-run CLT as <span class="math inline">\(R\to\infty\)</span>; RMSE decreases as <span class="math inline">\(R^{-1/2}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Use large <span class="math inline">\(n\)</span> and modest <span class="math inline">\(R\)</span></td>
+<td style="text-align: left;">Exploit RQMC error decay; Student-<span class="math inline">\(t\)</span> intervals remain approximate</td>
+</tr>
+</tbody>
+</table>
+<p>For a fixed evaluation budget <span class="math inline">\(N=Rn\)</span>, the RQMC model gives</p>
+<p><span class="math display">\[
+\rmse(\hmu_{R,n})\approx
+\frac{A_{\mathrm{RQMC}}(h)n^{-p_{\mathrm{RQMC}}}}{\sqrt R}
+=A_{\mathrm{RQMC}}(h)N^{-p_{\mathrm{RQMC}}}R^{p_{\mathrm{RQMC}}-1/2}
+\]</span></p>
+<p>When <span class="math inline">\(p_{\mathrm{RQMC}}&gt;1/2\)</span>, more replications leave fewer points per design</p>
+<div class="key-point">
+<p>Large <span class="math inline">\(R\)</span> supports <span class="alert">CLT justification</span>; large <span class="math inline">\(n\)</span> delivers <span class="alert">RQMC efficiency</span></p>
+<p>Choosing <span class="math inline">\(n\)</span> adaptively also needs a <span class="alert">stopping-time coverage argument</span></p>
+</div>
+<aside class="notes">
+<p>At fixed n, the independent run means have a fixed distribution. With finite positive variance, increasing R supports the standard CLT and asymptotically valid studentized intervals. This is not exact finite-R coverage in general. With the approximate variance model, averaging R runs gives RMSE approximately A(h) n^{-p}/sqrt(R). Substituting n=N/R yields the displayed relation. For p&gt;1/2, at fixed N, increasing R worsens this modeled RMSE. Sampling and setup costs can further affect the allocation; the formula omits overhead.</p>
+<p>The practical tension is strong replication-based CLT justification with less efficient point allocation, versus efficient large RQMC designs with approximate intervals from modest replication counts. Large n alone does not provide a general normal limit for a fixed number of replications. This describes the usual Student-t replication approach, not an impossibility claim about all confidence procedures. Adaptive stopping needs the additional coverage qualifications already stated. Source: <a href="https://arxiv.org/html/2608.17143v1#S5.SS6">Owen (2026), Section 5.6</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="sd-squared-times-runtime">Comparing IID and RQMC at the same RMSE target</h3>
+<p>Ignore setup; choose <span class="math inline">\(n\)</span> for each method, with <span class="alert"><span class="math inline">\(R\)</span> fixed for RQMC</span></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Quantity</th>
+<th style="text-align: left;">IID: <span class="math inline">\(\hmu_n\)</span></th>
+<th style="text-align: left;">RQMC: <span class="math inline">\(\hmu_{R,n}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Variance of one <span class="math inline">\(n\)</span>-point estimate</td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle\sigma_{\mathrm{IID},n}^2=\frac{\sigma^2(h)}n\)</span><br><span class="math inline">\(\sigma^2(h)=\var\{h(\vU)\}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle\sigma_{\mathrm{RQMC},n}^2\approx A_{\mathrm{RQMC}}^2(h)n^{-2p_{\mathrm{RQMC}}}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Variance of the reported estimate</td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle\frac{\sigma^2(h)}n\approx\frac{\hat\sigma_n^2(h)}n\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle\frac{\sigma_{\mathrm{RQMC},n}^2}R\approx\frac{\hat\sigma_{R,n}^2}R\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Choose <span class="math inline">\(n\)</span> for RMSE <span class="math inline">\(\varepsilon\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle n\approx\frac{\sigma^2(h)}{\varepsilon^2}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle n\approx\left(\frac{A_{\mathrm{RQMC}}(h)}{\varepsilon\sqrt R}\right)^{1/p_{\mathrm{RQMC}}}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Work</td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle\approx\frac{\$_{\mathrm{IID}}(h)\sigma^2(h)}{\varepsilon^2}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\displaystyle\approx\frac{\$_{\mathrm{RQMC}}(h)A_{\mathrm{RQMC}}^{1/p_{\mathrm{RQMC}}}(h)R^{1-1/(2p_{\mathrm{RQMC}})}}{\varepsilon^{1/p_{\mathrm{RQMC}}}}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Work: <span class="math inline">\(n\$_{\mathrm{IID}}(h)\)</span> for IID; <span class="math inline">\(Rn\$_{\mathrm{RQMC}}(h)\)</span> for RQMC</p>
+<div class="key-point">
+<p>Work scales as <span class="math inline">\(\varepsilon^{-2}\)</span> for IID; <span class="math inline">\(\varepsilon^{-1/p_{\mathrm{RQMC}}}\)</span> for RQMC with <span class="alert">fixed <span class="math inline">\(R\)</span></span></p>
+</div>
+<aside class="notes">
+<p>Compare unbiased estimates of the same target integral, using the same cube integrand h. For IID sampling, sigma^2(h)=var{h(U)} is the finite variance of one function value. Independence gives the variance of an n-point average as sigma_IID,n<sup>2=sigma</sup>2(h)/n.&nbsp;This one-value variance is defined in the IID column because the RQMC model uses the variance of the complete design. For RQMC, sigma_RQMC,n^2 is the randomization variance of the entire n-point estimate, modeled approximately by A_RQMC<sup>2(h)n</sup>{-2p_RQMC}. The points within a run are dependent; independent randomizations give independent complete run estimates.</p>
+<p>The reported-variance row pairs each population variance with its sample estimate. For IID, hat sigma_n^2(h) is the ordinary sample variance of the n individual function values, with denominator n-1: <span class="math inline">\(\hat\sigma_n^2(h)=(n-1)^{-1}\sum_{i=0}^{n-1}[h(\vU_i)-\hmu_n]^2\)</span>. Divide by n to estimate the variance of their average. For RQMC, hat sigma_{R,n}^2 is the across-run sample variance of the R independent n-point averages, with denominator R-1, defined on the replication slide. Divide by R to estimate the variance of their reported average. These approximation signs indicate estimated variances, not error bounds or a claim of exact agreement with the population variances.</p>
+<p>IID reports one average of n independent function values, with no replication count R. Its variance is sigma^2(h)/n, so choosing n approximately sigma<sup>2(h)/epsilon</sup>2 targets RMSE epsilon. For RQMC, fix R in advance and average R independently randomized n-point run estimates. Their mean has variance equal to the complete-run variance divided by R. Equating this to epsilon^2 gives n approximately [A_RQMC(h)/(epsilon sqrt(R))]^{1/p_RQMC}. Choose n separately for each method.</p>
+<p>Ignore setup and assume linear work: n times the IID per-point cost, and Rn times the RQMC per-point cost. Each cost includes point generation and the complete h evaluation. Substituting the chosen n gives the last row. IID work is approximately cost_IID(h) sigma^2(h) epsilon^{-2}. RQMC work is approximately cost_RQMC(h) A_RQMC^{1/p_RQMC}(h) R^{1-1/(2p_RQMC)} epsilon^{-1/p_RQMC}. Both costs are approximations: the model ignores rounding and setup, and the RQMC variance rate is itself approximate. For p_RQMC&gt;1/2, more replications increase predicted work at a common RMSE because they require more total points. At p_RQMC=1/2 the R factor cancels, as for an IID rate.</p>
+<p>Round n up to an admissible size and retain at least one point per run. The asymptotic work formulas apply when the predicted n is at least one and within the rate model’s valid range. Retain logarithmic factors or nonlinear generation costs when present. A_RQMC(h) and its valid rate may be unknown, so these formulas plan theoretical work; they are not a practical stopping rule or a confidence-coverage claim.</p>
+<p>This comparison increases n as the requested RMSE decreases, keeping the RQMC replication count R fixed. The IID calculation uses one sample average throughout. Holding the RQMC design size n fixed and only increasing R would give an epsilon^{-2} replication work law; that is a different allocation.</p>
+<p>The notebook timings charge actual work. Each controlled Asian-option run regenerates an independent pilot, so its measured runtime includes that pilot even though this simple table omits setup. If another design reuses one fitted control, analyze residual variance conditional on that pilot and charge its setup once; unconditional run estimates need not be independent. The comparison concerns the same discretely monitored contract; model or discretization bias is separate. <a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb">Asian/lookback comparison</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
@@ -2623,7 +2918,7 @@ C(\varepsilon;n,h)&amp;\approx\frac{vt}{\varepsilon^2}
 <section class="slide level2">
 
 <h3 id="read-a-stopping-decision">Read a stopping decision</h3>
-<p>Results from the <a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/KeisterExample.ipynb#Practical-stopping-criteria">Keister stopping comparison</a></p>
+<p>Six-dimensional results from the <a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/KeisterExample.ipynb#Practical-stopping-criteria">Keister stopping comparison</a></p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -2631,26 +2926,30 @@ C(\varepsilon;n,h)&amp;\approx\frac{vt}{\varepsilon^2}
 <th style="text-align: right;">Tolerance</th>
 <th style="text-align: right;">Reported radius</th>
 <th style="text-align: right;">Actual error</th>
+<th style="text-align: right;">Time (s)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">IID CLT</td>
-<td style="text-align: right;"><span class="math inline">\(0.005\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(0.00472\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(0.00117\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.05\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.049\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.0121\)</span></td>
+<td style="text-align: right;">0.0882</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Walsh bound</td>
-<td style="text-align: right;"><span class="math inline">\(0.005\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(0.00284\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(0.000118\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.05\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.0258\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.00125\)</span></td>
+<td style="text-align: right;">0.0018</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Sobol’, tight budget</td>
 <td style="text-align: right;"><span class="math inline">\(10^{-7}\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(0.00184\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(0.00094\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.054\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.00131\)</span></td>
+<td style="text-align: right;">0.0009</td>
 </tr>
 </tbody>
 </table>
@@ -2658,7 +2957,7 @@ C(\varepsilon;n,h)&amp;\approx\frac{vt}{\varepsilon^2}
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Interpret the reported uncertainty <span class="exsub">Which runs meet the reported tolerance?</span> <span class="exsub">Why must the reference stay out of the stopping decision?</span> <span class="exsub">What assumptions qualify the IID interval and Walsh bound?</span> </span></p>
 </div>
 <aside class="notes">
-<p>The first two reported radii meet their requested tolerances; the tight-budget run does not. Reaching the budget is not success. The reference is an independent diagnostic available for this benchmark, not information normally available to choose the sample count for an unknown integral. One observed actual error also cannot establish coverage or a general guarantee. The IID interval is approximate, based on a CLT, estimated variance, and the independent-pilot design. The Walsh bound assumes membership in its specified function cone; passing necessary-condition checks does not prove membership. Adaptive replication intervals need the additional coverage qualification already stated in the notebook. Numbers are rounded from the saved run; random seeds, tolerances, or code changes can produce different results.</p>
+<p>The first two reported radii meet their requested tolerances; the tight-budget run does not. Reaching the budget is not success. The reference is an independent diagnostic available for this benchmark, not information normally available to choose the sample count for an unknown integral. One observed actual error also cannot establish coverage or a general guarantee. The IID interval is approximate, based on a CLT, estimated variance, and the independent-pilot design. The Walsh bound assumes membership in its specified function cone; passing necessary-condition checks does not prove membership. Adaptive replication intervals need the additional coverage qualification already stated in the notebook. Numbers are rounded from the saved run; random seeds, tolerances, or code changes can produce different results. Times are elapsed seconds for integration and adaptive error assessment from that same saved notebook run; they exclude the independent reference and plot, and vary by machine and timing conditions. The saved stopping settings are d=6, tolerance=0.05, replications=32, and alpha=0.01; all are editable parameters in the notebook.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
