@@ -1475,6 +1475,42 @@ $(0.10_2,0.10_2)\oplus(0.01_2,0.11_2)=(0.11_2,0.01_2)$
 
 ---
 
+### Digital sequence: extend to eight points {#digital-sequence-eight-points}
+
+Keep $\vc_0=(1/2,1/2)$ and $\vc_1=(1/4,3/4)$<br>
+Add $\vc_2=(1/8,3/8)$, as in our [board example]{.alert}
+
+For $i=i_0+2i_1+4i_2$,
+
+$$
+\vu_i=i_0\vc_0\oplus i_1\vc_1\oplus i_2\vc_2
+$$
+
+| $i$ | $(i)_2$ | Generators used | $\vu_i$ |
+|:---:|:---:|:---:|:---:|
+| 4 | 100 | $\vc_2$ | $(1/8,3/8)$ |
+| 5 | 101 | $\vc_0\oplus\vc_2$ | $(5/8,7/8)$ |
+| 6 | 110 | $\vc_1\oplus\vc_2$ | $?$ |
+| 7 | 111 | $\vc_0\oplus\vc_1\oplus\vc_2$ | $?$ |
+
+::: {.exitem}
+<span class="exbullet">$\exstar$</span>
+<span>Find $\vu_6$ and $\vu_7$ by adding binary digits [without carrying]{.alert}</span>
+:::
+
+::: {.notes}
+This continues the October 15 board example, retaining the first two
+generators from the preceding four-point slide. It differs from the next
+exercise, which changes the first two generators.
+In eighths, c0=(4,4)/8, c1=(2,6)/8, and c2=(1,3)/8.
+For i=6=110_2, u6=c1 XOR c2=(2 XOR 1,6 XOR 3)/8=(3/8,5/8).
+For i=7=111_2, u7=c0 XOR c1 XOR c2=(7/8,1/8).
+Equivalently, the second coordinates are 0.110 XOR 0.011=0.101
+and 0.100 XOR 0.110 XOR 0.011=0.001, respectively.
+:::
+
+---
+
 ### Construct with new generators
 
 ::: {.exitem}

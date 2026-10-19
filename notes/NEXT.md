@@ -43,8 +43,11 @@ simulation option for Exercise 8.4.
    sampling, the IID accuracy/cost model and equal-accuracy comparison,
    van der Corput recap, lattice and Kronecker examples, and digital XOR
    construction through point 5. The recording explicitly leaves the final
-   two points for the next meeting. The Asian-option SD² × time interpretation
-   remains deferred; Latin hypercube sampling remains skipped. The earlier
+   two points for the next meeting. The board extension is now a Deck 04
+   continuation before “Construct with new generators,” with points 4–5
+   worked, points 6–7 left as an exercise, and answers in presenter notes.
+   The Asian-option SD² × time interpretation remains deferred; Latin
+   hypercube sampling remains skipped. The earlier
    four-method lookback saved-output comparison remains incomplete.
    The lookback notebook now repeats the Asian-call comparison: plain,
    drift, control, and both for IID and the selected Sobol', lattice, or
@@ -78,8 +81,8 @@ simulation option for Exercise 8.4.
    The schedule and lecture ledger are reconciled through October 15. The
    October 20 single-occurrence Illinois Tech calendar note is saved and
    verified in Fantastical for PH 109, 10:00–11:15 AM Chicago.
-   The October 18 pacing changes are included in this checkpoint; remote
-   deployment is pending.
+   The October 18 pacing changes are deployed; the live October 20
+   continuation was verified October 19.
    The schedule renders successfully and passes desktop and phone layout
    checks. Its date columns now stay separate from topics; phone dates wrap
    within their cells. The October 8 schedule/pacing publication and the latest
@@ -559,8 +562,8 @@ decks after adding links.
   Improving Efficiency (Decks 03 and 04). The all-sections
   [coverage announcement](https://iit.instructure.com/courses/25777/discussion_topics/108092)
   was posted and verified October 15. Schedule, Tests page, and Deck 04's
-  title-slide notice are updated and render locally; live deployment verification remains
-  pending. Grading is due November 2, 2026. Earlier all-sections announcement
+  title-slide notice are deployed and were verified live October 19.
+  Grading is due November 2, 2026. Earlier all-sections announcement
   `106296` is posted. That announcement and the Tests page state that final-exam
   dates will be posted when scheduled by the Registrar and that the cumulative
   examination will emphasize material not covered by Test 1 or Test 2.
@@ -843,6 +846,17 @@ Low Discrepancy Sampling in Deck 04 likewise keeps six main outline entries;
 RQMC variance, randomized cost, cost comparison, and SD² × runtime are
 continuations with their existing anchors preserved. The website Related
 menu now links to MATH 332 Fall 2026.
+
+October 19 refinements explicitly connect the independence copula to the
+ordinary coordinatewise quantile transport. The Gaussian algorithm recalls
+the standard-normal input distribution and explains uniformity using
+$R_{jj}=1$; any target marginals are allowed, with continuity ensuring a
+unique copula representation. The transformation plots compare Gaussian
+and independence copulas using the same 400 seeded normal draws, blue and
+orange dots at 70% opacity, and exponential targets on log-log axes with
+common sample-based limits. The instructor reviewed these plots. The new
+Deck 04 digital-sequence continuation passes visible layout review; its
+final two points remain an in-class exercise with answers in presenter notes.
 
 Both affected decks render successfully with the qmcpy kernel. The numerical
 example and visible slide, outline, index, and Big Ideas layouts pass review.

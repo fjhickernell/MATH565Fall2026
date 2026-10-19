@@ -448,6 +448,10 @@ appropriate phase rather than appended indiscriminately.
   - [x] Add the copula introduction, Gaussian-copula algorithm, dependent-
     exponential Python example, transformation plots, and cumulative terms-
     index links to Generating Samples (October 9, 2026).
+  - [x] Clarify Gaussian-copula uniformity and arbitrary target marginals,
+    connect the independence copula to coordinatewise quantile transport,
+    and compare both copulas using shared draws and log-log exponential
+    plots (October 19, 2026).
   - [x] Complete instructor review of Lecture 02 and refine its scope,
     narrative, and mathematical presentation.
   - [ ] Extend Lecture 02 with additional instructor-directed examples and
@@ -506,6 +510,9 @@ appropriate phase rather than appended indiscriminately.
     mapping in `notes/OWEN-COVERAGE-AUDIT.md`.
   - [x] Draft Lecture 04, Improving Efficiency, from the Fall 2025 Keynote
     deck, including executable comparisons of sampling designs.
+  - [x] Add the eight-point digital-sequence board continuation with
+    points 6–7 left as an exercise and answers in presenter notes
+    (October 19, 2026).
   - [x] Draft Lecture 05, Selected Topics, from the Fall 2025 Keynote deck,
     including parallel computation, stochastic gradient descent, and
     multilevel Monte Carlo.

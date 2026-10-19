@@ -688,7 +688,8 @@ $$
 ::: {.key-point}
 Choose the [marginals]{.alert} and the [dependence]{.alert} separately
 
-Independent uniforms give the independence copula $C(\vv)=\prod_{j=1}^d v_j$
+Independent uniforms give the independence copula $C(\vv)=\prod_{j=1}^d v_j$<br>
+This is our [independent-marginal transport](#independent-marginals): $X_j=Q_j(U_j)$ with independent $U_j$
 :::
 
 ::: {.notes}
@@ -708,18 +709,16 @@ Factor $\mR=\mA\mA^{\mathsf T}$ using [Cholesky](#cholesky-factorization)
 
 \begin{align*}
 \vU&\sim\Unif[0,1]^d,
-&Z_j&=\Phi^{-1}(U_j)\\
+&Z_j&=\Phi^{-1}(U_j)\sim\Norm(0,1)\\
 \vW&=\mA\vZ\sim\Norm(\vzero,\mR),
-&V_j&=\Phi(W_j)\\
+&V_j&=\Phi(W_j)\sim\Unif[0,1] \text{ since } R_{jj}=1\\
 X_j&=Q_j(V_j),
 &X_j&\sim F_j
 \end{align*}
 
-- Each $W_j$ is standard normal, so each $V_j$ is uniform
 - The Gaussian copula supplies the [dependence]{.alert} among these uniforms
-- Choose $Q_j$ for any desired [target marginal]{.alert} $F_j$<br>
-  The $X_j$ need [not]{.alert} have Gaussian marginals
-- For continuous marginals, $\vX$ retains this copula
+- Choose $Q_j$ for [any desired target marginal]{.alert} $F_j$, need [not]{.alert} be Gaussian
+- Any target marginals may be used; continuous marginals make the copula representation unique
 
 ::: {.key-point}
 $R_{jk}$ is the correlation of the [latent normals]{.alert} $W_j,W_k$
@@ -774,12 +773,12 @@ or truncation of the desired marginal distribution is needed.
 
 ### The same copula, different marginal scales
 
-The same paired samples pass through [coordinatewise]{.alert} transforms
+Both colors start from the [same independent normal draws]{.alert}
 
 ```{python}
 #| echo: false
 #| fig-align: center
-#| fig-alt: "Three scatterplots of the same paired samples: correlated standard normals, dependent uniforms, and dependent exponential targets, showing how monotone marginal transforms change scales and shape"
+#| fig-alt: "Three scatterplots: latent correlated standard normals, uniform marginals, and exponential targets on log-log axes. Blue dots show a Gaussian copula with correlation 0.7. Orange dots overlay the independence copula in the uniform and exponential panels, with the same marginal distributions and no dependence."
 #| fig-width: 12
 #| fig-height: 4.1
 #| out-width: 95%
@@ -789,19 +788,27 @@ import matplotlib.pyplot as plt
 from scipy.stats import norm
 
 copula_rng = np.random.default_rng(56502)
-copula_z = copula_rng.standard_normal((1800, 2))
+copula_z = copula_rng.standard_normal((400, 2))
 copula_a = np.array([[1.0, 0.0], [0.7, np.sqrt(1 - 0.7**2)]])
 copula_w = copula_z @ copula_a.T
 copula_v = norm.cdf(copula_w)
 copula_x = -norm.logsf(copula_w) / np.array([1.0, 2.0])
+copula_v_ind = norm.cdf(copula_z)
+copula_x_ind = -norm.logsf(copula_z) / np.array([1.0, 2.0])
 fig, axes = plt.subplots(1, 3, figsize=(12, 4.1), constrained_layout=True)
-for ax, values, title, labels in zip(
+for ax, values, independent, title, labels in zip(
     axes, [copula_w, copula_v, copula_x],
-    ["Latent normals", "Uniform marginals", "Exponential targets"],
+    [None, copula_v_ind, copula_x_ind],
+    ["Latent normals", "Uniform marginals", "Exponential targets (log-log)"],
     [(r"$W_1$", r"$W_2$"), (r"$V_1$", r"$V_2$"), (r"$X_1$", r"$X_2$")],
 ):
-    ax.scatter(values[:, 0], values[:, 1], s=7, alpha=0.3,
-               color="#1f5a91", edgecolors="none")
+    if independent is not None:
+        ax.scatter(independent[:, 0], independent[:, 1], s=24, alpha=0.7,
+                   color="#bd5d15", edgecolors="none",
+                   label="Independence copula")
+    ax.scatter(values[:, 0], values[:, 1], s=22, alpha=0.7,
+               color="#1f5a91", edgecolors="none",
+               label=r"Gaussian copula ($\rho=0.7$)")
     ax.set_title(title, fontsize=18)
     ax.set_xlabel(labels[0], fontsize=19)
     ax.set_ylabel(labels[1], fontsize=19)
@@ -809,6 +816,17 @@ for ax, values, title, labels in zip(
     ax.spines[["top", "right"]].set_visible(False)
 axes[1].set_xlim(0, 1)
 axes[1].set_ylim(0, 1)
+axes[2].set_xscale("log")
+axes[2].set_yscale("log")
+copula_x_limits = (
+    min(copula_x.min(), copula_x_ind.min()),
+    max(copula_x.max(), copula_x_ind.max()),
+)
+axes[2].set_xlim(copula_x_limits)
+axes[2].set_ylim(copula_x_limits)
+handles, labels = axes[1].get_legend_handles_labels()
+fig.legend(handles[::-1], labels[::-1], loc="outside lower center",
+           ncol=2, fontsize=13, markerscale=1.6, frameon=False)
 plt.show()
 ```
 
@@ -816,6 +834,17 @@ plt.show()
 Strictly increasing marginal transforms preserve [ranks]{.alert} and the copula
 
 They generally change [Pearson correlation]{.alert}
+:::
+
+::: {.notes}
+Both comparisons reuse the same seeded copula_z array; no new random draws
+are made for the independence case. Blue uses W=A Z and orange uses W=Z.
+The orange comparison sets the latent correlation matrix to the identity:
+W=Z, V_j=Phi(Z_j), and X_j=Q_j(V_j). Equivalently, start with independent
+uniforms U_j and use the usual coordinatewise quantile transport X_j=Q_j(U_j).
+Both colors use the same exponential marginal rates, 1 and 2; only the
+copula changes. Within either color, the uniform and exponential panels
+use the same paired samples, so their ranks are preserved.
 :::
 
 ## Gaussian processes {.tree-marker-slide tree-marker="probability"}
