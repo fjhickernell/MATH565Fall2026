@@ -1914,7 +1914,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="96163eb1" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="6204ea71" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2229,6 +2229,67 @@ i=(\cdots i_2i_1i_0)_b
 </tbody>
 </table>
 <p>For <span class="math inline">\(i=3\)</span>, add binary digits <span class="alert">without</span> carrying: <span class="math inline">\((0.10_2,0.10_2)\oplus(0.01_2,0.11_2)=(0.11_2,0.01_2)\)</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="digital-sequence-eight-points">Digital sequence: extend to eight points</h3>
+<p>Keep <span class="math inline">\(\vc_0=(1/2,1/2)\)</span> and <span class="math inline">\(\vc_1=(1/4,3/4)\)</span><br> Add <span class="math inline">\(\vc_2=(1/8,3/8)\)</span>, as in our <span class="alert">board example</span></p>
+<p>For <span class="math inline">\(i=i_0+2i_1+4i_2\)</span>,</p>
+<p><span class="math display">\[
+\vu_i=i_0\vc_0\oplus i_1\vc_1\oplus i_2\vc_2
+\]</span></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\((i)_2\)</span></th>
+<th style="text-align: center;">Generators used</th>
+<th style="text-align: center;"><span class="math inline">\(\vu_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">100</td>
+<td style="text-align: center;"><span class="math inline">\(\vc_2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((1/8,3/8)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">101</td>
+<td style="text-align: center;"><span class="math inline">\(\vc_0\oplus\vc_2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((5/8,7/8)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">110</td>
+<td style="text-align: center;"><span class="math inline">\(\vc_1\oplus\vc_2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(?\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">111</td>
+<td style="text-align: center;"><span class="math inline">\(\vc_0\oplus\vc_1\oplus\vc_2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(?\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Find <span class="math inline">\(\vu_6\)</span> and <span class="math inline">\(\vu_7\)</span> by adding binary digits <span class="alert">without carrying</span></span></p>
+</div>
+<aside class="notes">
+<p>This continues the October 15 board example, retaining the first two generators from the preceding four-point slide. It differs from the next exercise, which changes the first two generators. In eighths, c0=(4,4)/8, c1=(2,6)/8, and c2=(1,3)/8. For i=6=110_2, u6=c1 XOR c2=(2 XOR 1,6 XOR 3)/8=(3/8,5/8). For i=7=111_2, u7=c0 XOR c1 XOR c2=(7/8,1/8). Equivalently, the second coordinates are 0.110 XOR 0.011=0.101 and 0.100 XOR 0.110 XOR 0.011=0.001, respectively.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 

@@ -906,7 +906,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="bdf851f6" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="130dd184" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -950,7 +950,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="ad469215" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="33067a6d" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -982,7 +982,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="21c8fc2a" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="2c49c99a" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1066,7 +1066,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="6445c014" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="8849a5ec" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1253,7 +1253,7 @@ F_{\vX}(\vx)=C\bigl(F_1(x_1),\ldots,F_d(x_d)\bigr)
 \]</span></p>
 <div class="key-point">
 <p>Choose the <span class="alert">marginals</span> and the <span class="alert">dependence</span> separately</p>
-<p>Independent uniforms give the independence copula <span class="math inline">\(C(\vv)=\prod_{j=1}^d v_j\)</span></p>
+<p>Independent uniforms give the independence copula <span class="math inline">\(C(\vv)=\prod_{j=1}^d v_j\)</span><br> This is our <a href="#/independent-marginals">independent-marginal transport</a>: <span class="math inline">\(X_j=Q_j(U_j)\)</span> with independent <span class="math inline">\(U_j\)</span></p>
 </div>
 <aside class="notes">
 <p>Sklar’s theorem supplies this representation for all marginal CDFs; the copula is unique when the marginals are continuous. Quantile sampling also works for discrete marginals, but their copula representation need not be unique. The uniform vector V has uniform coordinate marginals, rather than the joint uniform distribution on the cube used for the independent input vector U.</p>
@@ -1275,17 +1275,16 @@ F_{\vX}(\vx)=C\bigl(F_1(x_1),\ldots,F_d(x_d)\bigr)
 <p>Choose a positive-definite <span class="alert">correlation matrix</span> <span class="math inline">\(\mR\)</span><br> Factor <span class="math inline">\(\mR=\mA\mA^{\mathsf T}\)</span> using <a href="#/cholesky-factorization">Cholesky</a></p>
 <p><span class="math display">\[\begin{align*}
 \vU&amp;\sim\Unif[0,1]^d,
-&amp;Z_j&amp;=\Phi^{-1}(U_j)\\
+&amp;Z_j&amp;=\Phi^{-1}(U_j)\sim\Norm(0,1)\\
 \vW&amp;=\mA\vZ\sim\Norm(\vzero,\mR),
-&amp;V_j&amp;=\Phi(W_j)\\
+&amp;V_j&amp;=\Phi(W_j)\sim\Unif[0,1] \text{ since } R_{jj}=1\\
 X_j&amp;=Q_j(V_j),
 &amp;X_j&amp;\sim F_j
 \end{align*}\]</span></p>
 <ul>
-<li>Each <span class="math inline">\(W_j\)</span> is standard normal, so each <span class="math inline">\(V_j\)</span> is uniform</li>
 <li>The Gaussian copula supplies the <span class="alert">dependence</span> among these uniforms</li>
-<li>Choose <span class="math inline">\(Q_j\)</span> for any desired <span class="alert">target marginal</span> <span class="math inline">\(F_j\)</span><br> The <span class="math inline">\(X_j\)</span> need <span class="alert">not</span> have Gaussian marginals</li>
-<li>For continuous marginals, <span class="math inline">\(\vX\)</span> retains this copula</li>
+<li>Choose <span class="math inline">\(Q_j\)</span> for <span class="alert">any desired target marginal</span> <span class="math inline">\(F_j\)</span>, need <span class="alert">not</span> be Gaussian</li>
+<li>Any target marginals may be used; continuous marginals make the copula representation unique</li>
 </ul>
 <div class="key-point">
 <p><span class="math inline">\(R_{jk}\)</span> is the correlation of the <span class="alert">latent normals</span> <span class="math inline">\(W_j,W_k\)</span></p>
@@ -1345,12 +1344,12 @@ X_1&amp;=-\log\bigl(1-\Phi(W_1)\bigr),
 <section class="slide level2">
 
 <h3 id="the-same-copula-different-marginal-scales">The same copula, different marginal scales</h3>
-<p>The same paired samples pass through <span class="alert">coordinatewise</span> transforms</p>
-<div id="71a12203" class="cell" data-fig-height="4.1" data-fig-width="12" data-execution_count="5">
+<p>Both colors start from the <span class="alert">same independent normal draws</span></p>
+<div id="fa50a5df" class="cell" data-fig-height="4.1" data-fig-width="12" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="02-generating-samples_files/figure-revealjs/cell-6-output-1.png" class="quarto-figure quarto-figure-center" alt="Three scatterplots of the same paired samples: correlated standard normals, dependent uniforms, and dependent exponential targets, showing how monotone marginal transforms change scales and shape" width="1163" height="405"></p>
+<p><img data-src="02-generating-samples_files/figure-revealjs/cell-6-output-1.png" class="quarto-figure quarto-figure-center" alt="Three scatterplots: latent correlated standard normals, uniform marginals, and exponential targets on log-log axes. Blue dots show a Gaussian copula with correlation 0.7. Orange dots overlay the independence copula in the uniform and exponential panels, with the same marginal distributions and no dependence." width="1182" height="400"></p>
 </figure>
 </div>
 </div>
@@ -1359,6 +1358,19 @@ X_1&amp;=-\log\bigl(1-\Phi(W_1)\bigr),
 <p>Strictly increasing marginal transforms preserve <span class="alert">ranks</span> and the copula</p>
 <p>They generally change <span class="alert">Pearson correlation</span></p>
 </div>
+<aside class="notes">
+<p>Both comparisons reuse the same seeded copula_z array; no new random draws are made for the independence case. Blue uses W=A Z and orange uses W=Z. The orange comparison sets the latent correlation matrix to the identity: W=Z, V_j=Phi(Z_j), and X_j=Q_j(V_j). Equivalently, start with independent uniforms U_j and use the usual coordinatewise quantile transport X_j=Q_j(U_j). Both colors use the same exponential marginal rates, 1 and 2; only the copula changes. Within either color, the uniform and exponential panels use the same paired samples, so their ranks are preserved.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="gaussian-processes" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Gaussian processes</h2>
