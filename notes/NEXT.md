@@ -36,7 +36,8 @@ simulation option for Exercise 8.4.
   All 11 code cells have successful saved executions; code and prose are
   unchanged. Preserve those timings as machine-specific measurements.
 
-1. Prepare the October 20 continuation in Deck 04: finish the digital-sequence
+1. The October 20 continuation in Deck 04 is prepared, confirmed by the
+   instructor October 19. Begin with the digital-sequence
    board exercise (points 6 and 7, using c0=(1/2,1/2), c1=(1/4,3/4),
    c2=(1/8,3/8)), then “Construct with new generators” and “Randomized low
    discrepancy sampling.” October 15 completed copulas/Gaussian-copula
@@ -88,8 +89,8 @@ simulation option for Exercise 8.4.
    within their cells. The October 8 schedule/pacing publication and the latest
    pinned-dependency update have successful publishing and Pages deployment
    runs, verified October 9.
-   Review the low discrepancy constructions companion and the deferred
-   Asian-option cost comparison before class.
+   The low discrepancy constructions companion and deferred Asian-option
+   cost comparison remain separate follow-ups, not prerequisites for October 20.
    A main cost-model slide introduces `C(epsilon; g)` after choosing a
    transformation, immediately before Control Variates and Conditioning;
    its equal-accuracy comparison is a continuation. The section outline links
@@ -106,14 +107,14 @@ simulation option for Exercise 8.4.
    uses 1-alpha; rate orders use p_QMC and p_RQMC. The same-RMSE table uses
    one IID average and fixed R only for RQMC, showing its replication factor
    and epsilon^{-1/p_RQMC} work law. Detailed conventions are in
-   docs/slide-style.md; retain these distinctions during lecture preparation.
+   docs/slide-style.md; retain these distinctions in future revisions.
    The Keister stopping cell exposes d=6, tolerance=0.05, replications=32,
    alpha=0.01, and budgets. All three standard rules meet their reported
    tolerance; the separate tight-budget case has radius 0.054 and fails
    even the 0.05 criterion. The explanation below its graph distinguishes
    the benchmark's green band from interval widths. Complete pinned-kernel
    execution and nondefault R/alpha checks pass; slide timings match the
-   current saved notebook run. Continue the October 20 preparation above.
+   current saved notebook run. October 20 lecture preparation is complete.
    Deck 03 first defines variation as
    the full RKHS norm in the worst-case bound, then sharpens it to distance
    to constants after the discrepancy identity when constants belong to the
@@ -124,7 +125,7 @@ simulation option for Exercise 8.4.
    generating inputs and evaluating the complete integrand with transforms. Selected
    Topics reuses this notation after the multilevel bias decomposition.
    The cost/stopping edits incorporate the October 19 instructor review;
-   broader lecture preparation remains.
+   the broader course-material reviews below remain separate follow-ups.
    The changed decks render locally; changed equations and slide layouts were
    checked at 1600×1000 and 1200×800. Live deployment of these additions has
    not yet been verified.
