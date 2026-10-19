@@ -483,7 +483,7 @@
     // the shared MathJax 3 configuration can load without a MathJax.Hub error.
     (() => {
       const defaultMathJax3Url =
-        "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js";
+        "../classlib/classlib/quarto/assets/mathjax/tex-svg-full.js";
 
       const mathJax3Plugin = {
         id: "mathjax3",
@@ -494,7 +494,7 @@
           script.src = configuredUrl || defaultMathJax3Url;
           script.async = true;
 
-          // Reveal must remain usable while the remote math script is loading.
+          // Reveal must remain usable while the math script is loading.
           // The shared MathJax configuration typesets and relayouts the deck
           // after MathJax starts, even if Reveal is already ready by then.
           script.addEventListener(
@@ -1761,7 +1761,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points<br>Compare how its <span class="math inline">\(x_1\)</span>–<span class="math inline">\(x_2\)</span> projection fills the unit square</p>
-<div id="259b3e3d" class="cell" data-execution_count="4">
+<div id="50d1003f" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1774,7 +1774,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="grid-n64">Grid, <span class="math inline">\(n=64\)</span></h3>
-<div id="602739bf" class="cell" data-execution_count="5">
+<div id="a13cbdda" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1787,7 +1787,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="orthogonal-array-n64">Orthogonal array, <span class="math inline">\(n=64\)</span></h3>
-<div id="b74fc5ee" class="cell" data-execution_count="6">
+<div id="0927181d" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1800,7 +1800,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="iid-n64">IID, <span class="math inline">\(n=64\)</span></h3>
-<div id="8d5af9e7" class="cell" data-execution_count="7">
+<div id="23f26f6b" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1813,7 +1813,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="scrambled-sobol-n64">Scrambled Sobol’, <span class="math inline">\(n=64\)</span></h3>
-<div id="bcad272c" class="cell" data-execution_count="8">
+<div id="6dbbc060" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2364,7 +2364,7 @@ g(\vZ):=\Ex(Y\mid \vZ)
         margin: 0,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js',
+          mathjax: '../classlib/classlib/quarto/assets/mathjax/tex-svg-full.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
