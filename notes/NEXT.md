@@ -36,18 +36,16 @@ simulation option for Exercise 8.4.
   All 11 code cells have successful saved executions; code and prose are
   unchanged. Preserve those timings as machine-specific measurements.
 
-1. Prepare the October 15 continuation: revisit Deck 02's copulas and
-   Gaussian-copula sampling, then introduce Deck 04's cost model for an
-   accurate estimate, then proceed to low discrepancy constructions at
-   “Four low discrepancy families,” with a brief van der Corput recap.
-   Defer the Asian-option notebook and SD² × time interpretation for now
-   to keep the new material manageable. October 8
-   completed antithetic sampling and its variance derivation, examined the
-   IID Asian/lookback comparison, and introduced binary digit reversal.
-   The Asian-option SD² × time interpretation remains untaught after its
-   in-class deferral. October 13 is Fall Break. Latin hypercube sampling remains
-   skipped; the earlier four-method lookback saved-output comparison remains
-   incomplete.
+1. Prepare the October 20 continuation in Deck 04: finish the digital-sequence
+   board exercise (points 6 and 7, using c0=(1/2,1/2), c1=(1/4,3/4),
+   c2=(1/8,3/8)), then “Construct with new generators” and “Randomized low
+   discrepancy sampling.” October 15 completed copulas/Gaussian-copula
+   sampling, the IID accuracy/cost model and equal-accuracy comparison,
+   van der Corput recap, lattice and Kronecker examples, and digital XOR
+   construction through point 5. The recording explicitly leaves the final
+   two points for the next meeting. The Asian-option SD² × time interpretation
+   remains deferred; Latin hypercube sampling remains skipped. The earlier
+   four-method lookback saved-output comparison remains incomplete.
    The lookback notebook now repeats the Asian-call comparison: plain,
    drift, control, and both for IID and the selected Sobol', lattice, or
    Halton sampler, with its own pilot-fitted coefficients and an SD plot.
@@ -77,9 +75,11 @@ simulation option for Exercise 8.4.
    its publishing and Pages workflows succeeded. The four additional starred
    exercises are included in checkpoint `c930827`; its publishing and Pages
    deployment workflows succeeded.
-   The schedule and lecture ledger are reconciled through October 8. The
-   October 15 single-occurrence Illinois Tech calendar note is saved and
-   verified in Calendar and Fantastical for PH 109, 10:00–11:15 AM Chicago.
+   The schedule and lecture ledger are reconciled through October 15. The
+   October 20 single-occurrence Illinois Tech calendar note is saved and
+   verified in Fantastical for PH 109, 10:00–11:15 AM Chicago.
+   The October 18 pacing changes are included in this checkpoint; remote
+   deployment is pending.
    The schedule renders successfully and passes desktop and phone layout
    checks. Its date columns now stay separate from topics; phone dates wrap
    within their cells. The October 8 schedule/pacing publication and the latest

@@ -9,9 +9,9 @@
   displayed lecture materials; distinguish substantive coverage from previews
   and deferred explanations.
 
-The schedule is reconciled through October 8. The August 18–September 17
+The schedule is reconciled through October 15. The August 18–September 17
 rows record the historical audit without retroactive calendar edits; the
-October 15 continuation note is the next instructional annotation.
+October 20 continuation note is the next instructional annotation.
 
 | Instructional meeting | Status | Panopto recording | Next instructional event annotated | Checked |
 |---|---|---|---|---|
@@ -30,6 +30,7 @@ October 15 continuation note is the next instructional annotation.
 | October 1, 2026 | Reconciled: Brownian motion with drift and choosing a transformation; control variates, least-squares coefficients, and practical control choices; Asian-option notebook walkthrough; lookback call explicitly deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3bedf0ac-86bc-49fd-9798-b4d60116974b) | October 6, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume AsianOptionVarianceReduction at “A lookback call on the same paths,” then Deck 04 at “Conditional Monte Carlo” | October 1, 2026 |
 | October 6, 2026 | Reconciled: control-variate recap, conditional Monte Carlo, sum-of-uniforms conditional densities, histogram/KDE/CMC comparisons, Asian-average density and Asian-call zero atom; antithetic sampling deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=5e57e5a3-0bbd-4971-81b9-b4db0118d1e9) | October 8, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume Deck 04 at “Antithetic sampling” | October 7, 2026 |
 | October 8, 2026 | Reconciled: transformation and control-variate cost comparisons; antithetic pairs, variance derivation, and IID Asian/lookback comparison; van der Corput digit reversal introduced; Asian-option variance/time interpretation deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3e54f9a3-1129-4057-bba0-b4dd011bcf4d) | October 15, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; recap van der Corput, resume Deck 04 at “Four low discrepancy families,” and return to deferred Asian-option variance/time interpretation | October 8, 2026 |
+| October 15, 2026 | Reconciled: copulas/Gaussian-copula sampling; IID accuracy/cost model and equal-accuracy comparison; van der Corput recap; lattice, Kronecker, and digital constructions through point 5 of the board example; final two points deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=37356fdf-5d86-4468-8110-b4e40118d2e1) | October 20, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Fred → Calendar occurrence only; finish digital board points 6 and 7, then “Construct with new generators” and “Randomized low discrepancy sampling” | October 18, 2026 |
 
 Recording evidence: Deck 02 mixture/acceptance–rejection unit-cube review
 preceded Deck 03 (33:06). Unbiased discrepancy began at 37:06; RKHS and
@@ -142,3 +143,29 @@ Illinois Tech Fred → Calendar occurrence was saved using “Only This Event,�
 closed, and reopened to verify PH 109, 10:00–11:15 AM America/Chicago, and
 the saved note. Fantastical independently confirms the note and Chicago
 times. Playback was paused and muted.
+
+
+## October 15 recording evidence
+
+The Illinois Tech Fred readiness notice identifies a 10:03 AM start;
+Panopto runs 1:13:12. Its slide index places copulas at 5:18,
+Gaussian-copula sampling at 9:09, dependent exponentials at 16:27,
+IID cost for accuracy at 19:36, and equal-accuracy comparison at 26:33.
+The latter's visible slide and captions confirm variance times contribution
+cost and separate setup cost. Low discrepancy families begin at 31:51,
+lattice at 37:24, Kronecker at 48:42, and digital construction at 52:33.
+
+At 1:06:48–1:07:33 the slide and captions develop binary digitwise XOR.
+The board extension beginning around 1:08 uses c0=(1/2,1/2),
+c1=(1/4,3/4), c2=(1/8,3/8); points 4 and 5 are worked through.
+At 1:12:09–1:12:20 the instructor assigns points 6 and 7 to the class,
+then explicitly defers them at 1:12:29–1:12:45, mentioning the five-day
+wait until next class. Resume this board example before the separate
+“Construct with new generators” exercise, whose first two generators differ.
+Randomization and later stopping criteria were not reached. The earlier
+Asian-option cost interpretation remains deferred.
+
+The October 20 occurrence was saved in Fantastical with “Only This Event”
+and reopened to verify its saved note, PH 109, and 10:00–11:15 AM Chicago
+hours; the calendar menu identifies Illinois Tech Fred → Calendar and
+Central Time (GMT-5). Playback was paused and muted during inspection.
