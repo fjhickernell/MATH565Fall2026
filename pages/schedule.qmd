@@ -47,9 +47,9 @@ holidays, and examination details are finalized.
 | | Mon Oct 12 | **Midterm course<br>evaluation due** | [Complete in Canvas](https://iit.instructure.com/courses/25777/external_tools/4085)<br>or use your invitation email |
 | 9 | Tue Oct 13 | **No Class — Fall Break** | |
 | | Thu Oct 15 | Copulas and Gaussian-copula sampling; IID cost for accuracy; van der Corput recap; lattice, Kronecker, and digital sequence constructions | [Generating Samples: copulas](../slides/02-generating-samples.html#copula-sampling)<br>[Improving Efficiency: cost model](../slides/04-improving-efficiency.html#cost-for-iid-accuracy)<br>[Low discrepancy families](../slides/04-improving-efficiency.html#four-low-discrepancy-families) |
-| 10 | Tue Oct 20 | Finish the digital-sequence board exercise; construct with new generators; randomized low discrepancy sampling | [Improving Efficiency](../slides/04-improving-efficiency.html#digital-sequence-four-points)<br>[New generators](../slides/04-improving-efficiency.html#construct-with-new-generators)<br>[Randomized sampling](../slides/04-improving-efficiency.html#randomized-low-discrepancy-sampling) |
+| 10 | Tue Oct 20 | Low discrepancy constructions; copula clarification; component-by-component construction; randomized sampling, RQMC variance, independent replications, and stopping-rule caveats | [Improving Efficiency](../slides/04-improving-efficiency.html)<br>[Generating Samples: copulas](../slides/02-generating-samples.html#copula-sampling) |
 | | Wed Oct 21 | **Assignment 5 due** | [{{< meta texts.owen.short >}} Exercises 8.4 and 8.20](../assignments/assignment_5.qmd) |
-| | Thu Oct 22 | | |
+| | Thu Oct 22 | Recap replication-based error assessment and stopping; pilot limitations and efficiency comparisons | [Improving Efficiency](../slides/04-improving-efficiency.html#rqmc-error-replications) |
 | 11 | Tue Oct 27 | **Test 2** | [Markov Chain Monte Carlo](../slides/03-markov-chain-monte-carlo.html)<br>[Improving Efficiency](../slides/04-improving-efficiency.html) |
 | | Thu Oct 29 | | |
 

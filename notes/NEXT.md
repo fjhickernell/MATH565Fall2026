@@ -1,5 +1,9 @@
 # Next task
 
+## October 22 lecture continuation
+
+October 20 recording coverage is verified. Recap “RQMC error assessment by independent replications” and “A stopping criterion from replications,” then “Why a small pilot does not determine RQMC error.” The single-occurrence October 22 note is saved and reopened in Fantastical; schedule and ledger are reconciled through October 20. This Checkpoint publishes the schedule changes; remote deployment and live-page verification remain pending. See `notes/LECTURE-UPDATES.md` for evidence; retain the older preparation details below as historical context.
+
 ## Immediate actions
 
 ### Assignment 5 — published and verified

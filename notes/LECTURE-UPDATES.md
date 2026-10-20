@@ -9,9 +9,9 @@
   displayed lecture materials; distinguish substantive coverage from previews
   and deferred explanations.
 
-The schedule is reconciled through October 15. The August 18–September 17
+The schedule is reconciled through October 20. The August 18–September 17
 rows record the historical audit without retroactive calendar edits; the
-October 20 continuation note is the next instructional annotation.
+October 22 continuation note is saved and verified in Fantastical.
 
 | Instructional meeting | Status | Panopto recording | Next instructional event annotated | Checked |
 |---|---|---|---|---|
@@ -31,6 +31,7 @@ October 20 continuation note is the next instructional annotation.
 | October 6, 2026 | Reconciled: control-variate recap, conditional Monte Carlo, sum-of-uniforms conditional densities, histogram/KDE/CMC comparisons, Asian-average density and Asian-call zero atom; antithetic sampling deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=5e57e5a3-0bbd-4971-81b9-b4db0118d1e9) | October 8, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; resume Deck 04 at “Antithetic sampling” | October 7, 2026 |
 | October 8, 2026 | Reconciled: transformation and control-variate cost comparisons; antithetic pairs, variance derivation, and IID Asian/lookback comparison; van der Corput digit reversal introduced; Asian-option variance/time interpretation deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3e54f9a3-1129-4057-bba0-b4dd011bcf4d) | October 15, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; recap van der Corput, resume Deck 04 at “Four low discrepancy families,” and return to deferred Asian-option variance/time interpretation | October 8, 2026 |
 | October 15, 2026 | Reconciled: copulas/Gaussian-copula sampling; IID accuracy/cost model and equal-accuracy comparison; van der Corput recap; lattice, Kronecker, and digital constructions through point 5 of the board example; final two points deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=37356fdf-5d86-4468-8110-b4e40118d2e1) | October 20, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Fred → Calendar occurrence only; finish digital board points 6 and 7, then “Construct with new generators” and “Randomized low discrepancy sampling” | October 18, 2026 |
+| October 20, 2026 | Reconciled: low discrepancy constructions; copula clarification; component-by-component construction; randomized sampling, RQMC variance, independent replications, and stopping-rule caveats | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=9fc4759d-09e7-447b-989c-b4e9011b62b2) | October 22, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Fred → Calendar occurrence only; Recap “RQMC error assessment by independent replications” and “A stopping criterion from replications,” then “Why a small pilot does not determine RQMC error” | October 20, 2026 |
 
 Recording evidence: Deck 02 mixture/acceptance–rejection unit-cube review
 preceded Deck 03 (33:06). Unbiased discrepancy began at 37:06; RKHS and
@@ -169,3 +170,11 @@ The October 20 occurrence was saved in Fantastical with “Only This Event”
 and reopened to verify its saved note, PH 109, and 10:00–11:15 AM Chicago
 hours; the calendar menu identifies Illinois Tech Fred → Calendar and
 Central Time (GMT-5). Playback was paused and muted during inspection.
+
+## October 20 recording evidence
+
+The readiness notice in Illinois Tech Fred identifies a 10:02 AM start and a 1:12:28 recording. The transition index shows copula review at 39:24, component-by-component construction at 47:45, randomization at 51:09, RQMC variance at 1:03:27, independent replications at 1:05:54, and the stopping criterion at 1:09:33. Closing captions at 1:08:03–1:11:16 discuss allocation to points versus replications, Student-t approximation, doubling the point count, and the failure of repeated fixed-level checks to preserve coverage. The visible slide at 1:11:03 is “A stopping criterion from replications.” At 1:11:27–1:12:09 the instructor explicitly excludes error estimation and stopping criteria from Test 2; existing assessment coverage entries were preserved under this workflow. Pilot limitations, detailed efficiency comparisons, and the deferred notebook cost interpretation remain follow-ups. The October 22 note was saved with Only This Event and reopened in Fantastical; account Calendar under Illinois Tech Fred, PH 109, 10:00–11:15 AM Chicago, and saved text were verified.
+
+Playback was paused and muted; the temporary recording tab was closed. The schedule changes are included in the October 20 Checkpoint; remote deployment and live-page verification remain pending.
+
+Validation: the changed schedule page renders successfully in Quarto; updated October rows and surrounding tables were inspected at desktop and 390-pixel widths. Continuation source files and explicit anchors resolve. `git diff --check` passes.
