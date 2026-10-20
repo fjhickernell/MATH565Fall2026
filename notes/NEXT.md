@@ -643,6 +643,12 @@ decks after adding links.
   plus 21 students, each with `Can view`. No group access or broad sharing
   link exists. The web workbook shows the October 3 as-of date. This verifies
   permissions and the website route; no student-account login was tested.
+- October 20 maintenance: refreshed the live approval view from saved
+  instructor decisions and verified the complete latest-response mapping;
+  19 approved topics and two students without submissions remain. All 21
+  active students retain `Can view` permission. Two individual project-update
+  emails are saved, unsent, in Illinois Tech Mail Drafts for instructor review.
+  Student identities, addresses, and assessment records remain private.
 - `quarto render pages/project.qmd --to html` succeeded on Mini on September
   25; `git diff --check` and the six Python tests also passed. No completed
   render was obtained on Intel.

@@ -46,6 +46,8 @@ appropriate phase rather than appended indiscriminately.
     - [x] Add a public-safe Math Tutoring Center notice that routes enrolled
       students through Canvas to the live coordinator-maintained schedule.
     - [x] Review textbook and recommended resources.
+    - [x] Add Nuyens’s 2026 lattice-rule lecture notes to recommended resources
+      using the shared papers registry and public arXiv link.
     - [x] Review prerequisites and requirements.
     - [x] Review course objectives and outline.
     - [x] Reconcile the outline with coverage through October 6 and projected

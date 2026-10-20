@@ -33,6 +33,12 @@ on the course [Canvas website]({{< meta canvas.course >}}).
 <details>
 <summary><strong>Recommended resources</strong></summary>
 
+[{{< meta papers.nuyens_2026_lattice_rules_function_spaces.full >}}]({{< meta papers.nuyens_2026_lattice_rules_function_spaces.arxiv_url >}})
+
+Optional reading for lattice rules and QMC function spaces. Sections 1–3
+introduce lattice rules with Julia examples; Section 4 develops function
+spaces and error bounds.
+
 * [Python](https://www.python.org)
 * [Anaconda / Miniconda](https://www.anaconda.com)
 * [pip (Python package manager)](https://pip.pypa.io/en/stable/)

@@ -21,6 +21,7 @@ metadata:
 metadata-files:
   - course-metadata.yml
   - classlib/classlib/quarto/metadata/hickernell-texts.yml
+  - classlib/classlib/quarto/metadata/hickernell-papers.yml
 
 # Navigation must live here (cannot be delegated via metadata-files).
 # Styling/layout lives in HickernellAcademicLib (hickernell-website.yml).
