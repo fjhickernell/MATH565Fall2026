@@ -88,7 +88,9 @@ Exact transport [implies]{.alert} $h(\vU) \stackrel d=g(\vZ)$
 ::: {.notes}
 The equality concerns expectations, not equality of individual outputs or
 output distributions. An alternative contribution may include importance
-weights, controls, or a conditional expectation. Its sampling law belongs
+weights, controls, or a conditional expectation. The self-normalized IS
+subsection later introduces a ratio estimator as a separate extension, not
+a fixed equal-mean contribution average. Its sampling law belongs
 with g. Exact transport is a useful case where the output distributions
 agree: if T(Z) has the target law and g=f composed with T, then g(Z) and
 f(X) have the same distribution. Other equal-mean contributions may change
@@ -133,6 +135,7 @@ rejection or Markov-chain run.
 - [Variance and variation reduction](#variance-and-variation-reduction)
 - [Transforming an integral](#transforming-an-integral)
 - [Importance sampling](#importance-sampling)
+- [Self-normalized importance sampling](#self-normalized-importance-sampling)
 - [Choosing a transformation](#choosing-a-transformation)
 - [Cost of an accurate IID estimate](#cost-for-iid-accuracy)
 
@@ -403,55 +406,6 @@ $w$ is the [weight]{.alert} function; $W=w(\vZ)$ is its random value
 
 ---
 
-### Weighted empirical distributions {#weighted-empirical-distributions}
-
-As in [Markov Chain Monte Carlo: empirical distributions]({{< meta decks.d03.file >}}#empirical-distributions), put mass at each sample point
-
-For $\vZ_i\ \IIDsim\ F_{\mathrm{prop}}$, require $\varrho_{\mathrm{prop}}>0$ wherever $\varrho_{\mathrm{tar}}>0$
-
-\begin{align*}
-\widehat F_{n,w}
-&=\frac{\sum_{i=0}^{n-1}w(\vZ_i)\,\delta_{\vZ_i}}
-        {\sum_{i=0}^{n-1}w(\vZ_i)},
-& w(\vz)&=\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{prop}}(\vz)},\\
-\int f(\vx)\,\dif\widehat F_{n,w}(\vx)
-&=\frac{\sum_{i=0}^{n-1}w(\vZ_i)f(\vZ_i)}
-        {\sum_{i=0}^{n-1}w(\vZ_i)}
-& &\xrightarrow[n\to\infty]{\mathrm{a.s.}}\mu
-\end{align*}
-
-- [Normalized]{.alert} weights sum to one; require a positive denominator
-- $\widehat F_{n,w} \approx F_{\mathrm{tar}}$; generally [different]{.alert} at finite $n$
-- Self-normalized estimates: consistent, generally biased at finite $n$
-
-::: {.notes}
-Use the same $\widehat F_n$ and point-mass $\delta_{\vx_i}$ notation as the
-empirical-distribution development in Markov Chain Monte Carlo, with the
-subscript $w$ recording the weights. The points still have the proposal law;
-weighting changes their empirical masses, not their locations or sampling law.
-The almost-sure limit assumes IID proposal draws, normalized target and proposal
-densities, target-support coverage, and $\Ex_{\mathrm{tar}}|f(\vX)|<\infty$.
-The denominator can be zero at finite $n$ if every sampled weight is zero.
-
-Without self-normalization, the weighted empirical measure is
-\begin{align*}
-\widehat M_{n,w}&=\frac1n\sum_{i=0}^{n-1}w(\vZ_i)\delta_{\vZ_i},\\
-\int f(\vx)\,\dif\widehat M_{n,w}(\vx)&=\hmu_{\mathrm{IS},n},&
-\Ex[\widehat M_{n,w}(A)]&=F_{\mathrm{tar}}(A)
-\end{align*}
-for measurable sets $A$. Its total mass $n^{-1}\sum_i w(\vZ_i)$ has expectation
-one, but generally is not exactly one, so it need not be a probability measure.
-Ordinary importance sampling is unbiased for integrable $f$; self-normalization
-produces a probability measure but generally loses finite-sample unbiasedness.
-Full support coverage is needed to approximate the whole target distribution,
-which is stronger than covering only the support of $f\varrho_{\mathrm{tar}}$
-for one particular integral. A weighted empirical approximation to the target
-also does not imply that the scalar importance contribution $f(\vZ)w(\vZ)$
-has the same distribution as $f(\vX)$.
-:::
-
----
-
 ### One proposal, three unbiased estimators {#one-proposal-two-unbiased-estimators}
 
 \begin{gather*}
@@ -626,6 +580,381 @@ Y_{\mathrm{IS}}&=g_{\mathrm{IS}}(\vZ)=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[Y_
 
 [Asian option variance-reduction notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb)
 
+## Self-normalized importance sampling {#self-normalized-importance-sampling .tree-marker-slide tree-marker="importance-sampling"}
+
+Suppose the [target normalizer]{.alert} is unknown
+
+\begin{align*}
+C_{\mathrm{tar}}&=\int\widetilde\varrho_{\mathrm{tar}}(\vx)\,\dif\vx,&
+\varrho_{\mathrm{tar}}(\vx)&=\frac{\widetilde\varrho_{\mathrm{tar}}(\vx)}{C_{\mathrm{tar}}}
+\end{align*}
+
+For $\vZ_0,\ldots,\vZ_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}$, use
+
+$$
+\widetilde w(\vz)=\frac{\widetilde\varrho_{\mathrm{tar}}(\vz)}
+{\varrho_{\mathrm{prop}}(\vz)}=C_{\mathrm{tar}}w(\vz)
+$$
+
+$$
+\hmu_{\mathrm{SN},n}
+=\frac{\sum_{i=0}^{n-1}f(\vZ_i)\widetilde w(\vZ_i)}
+       {\sum_{i=0}^{n-1}\widetilde w(\vZ_i)}
+$$
+
+- Any common positive weight multiplier [cancels]{.alert}
+- Require proposal coverage of the target support and a [positive denominator]{.alert}
+
+::: {.key-point}
+A [ratio of sample averages]{.alert} handles the unknown normalization
+:::
+
+::: {.notes}
+Owen, Section 9.2, calls this self-normalized importance sampling; the same
+ratio appears in equation (11.27). Assume 0<C_tar<infinity, IID proposal
+draws, full target-support coverage up to null sets, and integrability of f
+under the target. Unlike ordinary IS for a single integrand, the denominator
+requires coverage even where f is zero but the target density is positive.
+The denominator can be zero at finite n when every proposed weight is zero;
+the estimator is defined only when it is positive.
+
+The proposal is normalized in the visible formula. If only an unnormalized
+proposal is evaluable but sampling from its normalized law is available,
+use tilde_varrho_tar/tilde_varrho_prop instead. The resulting weights differ
+by a common positive constant, which also cancels. Self-normalization estimates
+a normalized expectation, not the unnormalized integral of f times the target.
+
+When the normalized density ratio is computable, ordinary IS remains available
+and is unbiased for integrable f. Both individual normalizers need not be
+known: a known ratio suffices. Self-normalization is still an option, with
+different finite-sample properties; neither estimator universally dominates.
+This ratio method belongs to IS, independently of MCMC, and does not turn
+proposal draws into target draws.
+:::
+
+---
+
+### Posterior means by likelihood weighting {#posterior-means-by-likelihood-weighting}
+
+Recall [Bayes' theorem]({{< meta decks.d03.file >}}#bayesian-inference) with likelihood $L(\theta;y_{\mathrm{obs}})$ and prior density $\varrho_{\mathrm{prior}}$
+
+$$
+\mu_{\mathrm{post}}=\Ex(\Theta\mid y_{\mathrm{obs}})
+=\frac{\int\theta L(\theta;y_{\mathrm{obs}})\varrho_{\mathrm{prior}}(\theta)\,\dif\theta}
+       {\int L(\theta;y_{\mathrm{obs}})\varrho_{\mathrm{prior}}(\theta)\,\dif\theta}
+$$
+
+Draw $Z_i\ \IIDsim\ \varrho_{\mathrm{prior}}$ and use [likelihood weights]{.alert}
+
+$$
+\hmu_{\mathrm{post},n}
+=\frac{\sum_{i=0}^{n-1}Z_iL(Z_i;y_{\mathrm{obs}})}
+       {\sum_{i=0}^{n-1}L(Z_i;y_{\mathrm{obs}})}
+$$
+
+- The unknown evidence $\varrho_D(y_{\mathrm{obs}})$ [cancels]{.alert}
+- A posterior concentrated in a small part of the prior can make weights very uneven
+
+::: {.key-point}
+Prior proposals with likelihood weighting give [self-normalized IS]{.alert}
+:::
+
+::: {.notes}
+This uses the same likelihood, prior, posterior, and evidence notation as
+the Bayesian-inference slide in Markov Chain Monte Carlo. Here the proposal
+is the prior, so the unnormalized target is
+tilde_varrho_tar(theta)=L(theta;y_obs)varrho_prior(theta), the target
+normalizer C_tar is the evidence varrho_D(y_obs), and the unnormalized
+importance weight is just L(theta;y_obs). The proposal draws are named Z_i
+to preserve their role; their distribution is the prior, not the posterior.
+Require finite positive evidence, an integrable posterior first moment,
+and a positive sample denominator. The same construction estimates any
+integrable posterior expectation by replacing Z_i in the numerator by f(Z_i).
+
+The exact posterior mean is a ratio of integrals. The displayed numerical
+estimator is self-normalized IS because it estimates those integrals using
+prior proposals. It is generally biased at finite n and consistent under
+the preceding assumptions. If IID posterior draws are available instead,
+their ordinary sample mean is unbiased for the posterior mean. An ordinary
+average of MCMC posterior states is a different estimator too; it does not
+become self-normalized IS merely because its target is a posterior.
+
+For a two-point illustration, take prior probabilities 1/2,1/2 on theta=0,1
+and likelihood values 1,3. The posterior probabilities are 1/4,3/4, giving
+posterior mean 3/4. With one prior proposal the likelihood cancels, so the
+displayed estimate has expectation 1/2. This makes the finite-sample bias
+concrete without requiring any MCMC construction. A better proposal can
+help when prior proposals rarely reach the concentrated posterior.
+:::
+
+---
+
+### Bias and consistency {#self-normalization-bias-and-consistency}
+
+Two sample averages estimate two integrals
+
+\begin{align*}
+\frac1n\sum_{i=0}^{n-1}f(\vZ_i)\widetilde w(\vZ_i)
+&\xrightarrow[n\to\infty]{\mathrm{a.s.}}C_{\mathrm{tar}}\mu\\
+\frac1n\sum_{i=0}^{n-1}\widetilde w(\vZ_i)
+&\xrightarrow[n\to\infty]{\mathrm{a.s.}}C_{\mathrm{tar}}>0
+\end{align*}
+
+Hence $\hmu_{\mathrm{SN},n}\to\mu$ almost surely under the stated conditions
+
+- [Generally biased]{.alert} at finite $n$: unbiased components do not imply an unbiased ratio
+- [Exact for constants]{.alert}: $f\equiv c$ gives $\hmu_{\mathrm{SN},n}=c$
+- A ratio estimator needs its own [bias and variance]{.alert} analysis
+
+::: {.exitem}
+<span class="exbullet">$\exstar$</span>
+<span>Target density $2x$ on $(0,1)$, uniform proposal, and $f(x)=x$
+<span class="exsub">For $n=1$, simplify $\hmu_{\mathrm{SN},1}$ and compare its expectation with $\mu$</span>
+</span>
+:::
+
+::: {.notes}
+The strong law applies separately to the numerator and denominator sample
+averages; their limits are C_tar times mu and C_tar. The ratio then converges
+almost surely. Positive C_tar makes the sample denominator eventually positive
+almost surely, though an initial finite sample can have zero denominator.
+
+For the exercise, tilde_varrho_tar(x)=x is enough, so tilde_w(z)=z. A uniform
+proposal lies in (0,1) almost surely and its weight is positive. With n=1,
+the weight cancels and the estimate is Z_0. Its expectation is 1/2, whereas
+the target mean is 2/3; the bias is -1/6. More observations give consistency,
+not a claim of exact finite-sample unbiasedness or a universal variance gain.
+
+The sample-normalized weights are nonnegative and sum to one, so the estimate
+is a weighted average of the observed f values and integrates constants exactly.
+Statements about finite-sample bias assume the estimator's expectation exists.
+When the relevant moments exist, MSE = variance + bias squared. The earlier
+equal-mean IID contribution formulas and their variance-only cost comparison
+do not apply automatically to this ratio estimator. No confidence interval or
+stopping rule for the ratio is asserted here.
+:::
+
+---
+
+### Acceptance–rejection with a fixed proposal budget {#acceptance-rejection-with-a-fixed-proposal-budget}
+
+Use independent proposals and a fixed valid envelope<br>
+Let $I_i$ indicate acceptance and $K_N=\sum_{i=0}^{N-1}I_i$
+
+$$
+\hmu_{\mathrm{AR},N}
+=\frac{\sum_{i=0}^{N-1}I_i f(\vZ_i)}{K_N},\qquad K_N>0
+$$
+
+This is normalization by a sample total, with [zero–one weights]{.alert}
+
+| Stopping rule | Accepted-sample average |
+|:---|:---|
+| Fix $n$ acceptances | Unbiased average of $n$ IID target draws |
+| Fix $N$ proposals | Unbiased conditional on $K_N>0$ |
+
+If $K_N=0$, the ratio is undefined; a fill-in value can introduce bias
+
+::: {.key-point}
+A random denominator does [not by itself imply bias]{.alert}
+:::
+
+::: {.notes}
+Let tilde_w=tilde_varrho_tar/varrho_prop, and use a known fixed envelope
+M >= sup tilde_w with independent uniform decisions. Then
+Prob(I_i=1 | Z_i)=tilde_w(Z_i)/M and the unconditional acceptance probability
+is a=C_tar/M. Assume 0<a<=1 and integrable f under the target. Conditional
+on any specified acceptance pattern, the accepted proposals are independent
+and each has the normalized target law. Therefore, for every k>0,
+E(hatmu_AR,N | K_N=k)=mu, and E(hatmu_AR,N | K_N>0)=mu.
+This conditional unbiasedness is a special property of rejection sampling,
+so random sample count alone does not establish ratio-estimator bias.
+
+Here K_N is binomial(N,a), so Prob(K_N=0)=(1-a)^N. The ratio itself is
+undefined on that event. If an implementation returns a fixed value b
+when no proposal is accepted, its unconditional bias is
+(b-mu)(1-a)^N. For zero fill this is -mu(1-a)^N. Discarding an empty batch
+and trying again gives the conditional unbiased average, but then the
+overall proposal count is random. Fixing the number n of accepted draws
+also gives an unbiased target average, with a random proposal count.
+
+The connection to ordinary self-normalized IS is algebraic: replacing each
+acceptance indicator I_i by its conditional mean tilde_w(Z_i)/M in both
+sums gives the self-normalized importance ratio. The ratio of conditional
+expectations is not generally the conditional expectation of the ratio.
+Do not infer a Rao–Blackwell variance inequality or exact unbiasedness for
+SNIS from that replacement. In particular, the one-proposal bias example
+on the preceding slides remains valid.
+
+Owen, Section 9.5, writes the fixed-proposal rejection-sampling average as
+a ratio with a random number of acceptances. Keep the zero-acceptance event
+explicit when comparing it with self-normalized IS. The fixed-envelope and
+independence assumptions matter; no adaptive rejection scheme is claimed here.
+:::
+
+---
+
+### Transport with an unknown normalizer {#transport-with-unknown-normalizer}
+
+For an invertible differentiable map $\vT$ and normalized source density
+$\varrho_{\mathrm{prop}}$, define
+
+$$
+\widetilde w_T(\vz)=
+\frac{\widetilde\varrho_{\mathrm{tar}}\bigl(\vT(\vz)\bigr)
+\left|\det\nabla\vT(\vz)\right|}{\varrho_{\mathrm{prop}}(\vz)}
+$$
+
+If $\vT$ is an [exact transport]{.alert}, then $\widetilde w_T(\vz)=C_{\mathrm{tar}}$
+
+\begin{align*}
+\hmu_{\mathrm{SN},T,n}
+&=\frac{\sum_{i=0}^{n-1}f\bigl(\vT(\vZ_i)\bigr)\widetilde w_T(\vZ_i)}
+       {\sum_{i=0}^{n-1}\widetilde w_T(\vZ_i)}\\
+&=\frac1n\sum_{i=0}^{n-1}f\bigl(\vT(\vZ_i)\bigr)
+\end{align*}
+
+- The exact map [encodes]{.alert} normalization; constructing it can be difficult
+- An approximate map need not produce exact target draws
+
+::: {.key-point}
+An unknown target normalizer does [not rule out]{.alert} exact transport
+:::
+
+::: {.notes}
+This follows directly from the earlier change-of-variables formula: the
+normalized transport correction is w_T=1, so the unnormalized correction
+is C_tar. Both sums contain the same factor C_tar. Integrable f and IID
+source draws therefore give an ordinary unbiased target average in this
+constant-weight case. General nonconstant-weight self-normalization is
+generally biased at finite n.
+
+The existing triangular example works without supplying the target normalizer
+as a separate input. With tilde_varrho_tar(x)=x on (0,1), a uniform source,
+and T(z)=sqrt(z), the unnormalized correction is
+sqrt(z)/(2 sqrt(z))=1/2, which equals C_tar. In contrast, the identity map
+has tilde_w(z)=z and gives the nonconstant-weight ratio from the preceding
+exercise. An arbitrary positive multiplier on the target shape changes only
+the common correction constant, not the normalized distribution or exact map.
+
+For a general one-dimensional target, the quantile map uses the ratio of
+the cumulative integral of tilde_varrho to its total integral. That ratio
+is insensitive to an arbitrary density scale, but computing and inverting
+it can still require difficult global information. In higher dimensions,
+maps can be fitted against an unnormalized target without separately computing
+its normalizer. A fitted flow generally approximates the target; exactness
+must not be inferred merely from calling the map a transport or normalizing
+flow. Importance weighting or Metropolis correction can address the mismatch,
+with the appropriate finite-sample qualifications.
+
+Supporting reference: [Marzouk, Moselhy, Parno, and Spantini, Sections 3.1--3.3](https://arxiv.org/abs/1602.05023).
+The existence and the practical construction of an exact transport are
+different questions. Keep this clarification here in Improving Efficiency;
+it does not require reopening Generating Samples or Markov Chain Monte Carlo.
+:::
+
+
+---
+
+### Weighted empirical distributions {#weighted-empirical-distributions}
+
+As in [Markov Chain Monte Carlo: empirical distributions]({{< meta decks.d03.file >}}#empirical-distributions), put mass at each sample point
+
+Use the same IID proposals and unnormalized weights $\widetilde w$; require a positive denominator
+
+\begin{align*}
+\widehat F_{n,w}
+&=\frac{\sum_{i=0}^{n-1}\widetilde w(\vZ_i)\,\delta_{\vZ_i}}
+        {\sum_{i=0}^{n-1}\widetilde w(\vZ_i)}\\
+\int f(\vx)\,\dif\widehat F_{n,w}(\vx)
+&=\hmu_{\mathrm{SN},n}\xrightarrow[n\to\infty]{\mathrm{a.s.}}\mu
+\end{align*}
+
+- [Normalized]{.alert} weights sum to one; require a positive denominator
+- $\widehat F_{n,w} \approx F_{\mathrm{tar}}$; generally [different]{.alert} at finite $n$
+- The weighted measure gives the [self-normalized]{.alert} estimate of every integrable $f$
+
+::: {.notes}
+Use the same $\widehat F_n$ and point-mass $\delta_{\vx_i}$ notation as the
+empirical-distribution development in Markov Chain Monte Carlo, with the
+subscript $w$ recording the weights. The points still have the proposal law;
+weighting changes their empirical masses, not their locations or sampling law.
+The almost-sure limit uses the support and integrability assumptions stated
+on the self-normalization slides. The weights need only be proportional to
+the normalized density ratio.
+The denominator can be zero at finite $n$ if every sampled weight is zero.
+
+When the normalized ratio w is available, without self-normalization the
+weighted empirical measure is
+\begin{align*}
+\widehat M_{n,w}&=\frac1n\sum_{i=0}^{n-1}w(\vZ_i)\delta_{\vZ_i},\\
+\int f(\vx)\,\dif\widehat M_{n,w}(\vx)&=\hmu_{\mathrm{IS},n},&
+\Ex[\widehat M_{n,w}(A)]&=F_{\mathrm{tar}}(A)
+\end{align*}
+for measurable sets $A$. Its total mass $n^{-1}\sum_i w(\vZ_i)$ has expectation
+one, but generally is not exactly one, so it need not be a probability measure.
+Ordinary importance sampling is unbiased for integrable $f$; self-normalization
+produces a probability measure but generally loses finite-sample unbiasedness.
+Full support coverage is needed to approximate the whole target distribution,
+which is stronger than covering only the support of $f\varrho_{\mathrm{tar}}$
+for one particular integral. A weighted empirical approximation to the target
+also does not imply that the scalar importance contribution $f(\vZ)w(\vZ)$
+has the same distribution as $f(\vX)$.
+:::
+
+---
+
+### One importance ratio, three methods {#one-importance-ratio-three-methods}
+
+For [ordinary IS]{.alert}, acceptance–rejection, and the independence sampler, use
+$w=\varrho_{\mathrm{tar}}/\varrho_{\mathrm{prop}}$ with the same IID proposal law
+
+| | [Ordinary IS](#importance-sampling) | [Acceptance–rejection]({{< meta decks.d02.file >}}#acceptancerejection-sampling) | [Metropolized<br>independence]({{< meta decks.d03.file >}}#the-independence-sampler) |
+|:---|:---|:---|:---|
+| Rule | Contribution $f(\vZ_i)w(\vZ_i)$ | Accept with $w(\vz)/M$ | Accept with $\min\{1,w(\vz)/w(\vx)\}$ |
+| Rejection | None; keep every proposal | Discard; try again | Repeat current state |
+| Output | IID weighted contributions | IID target draws | Chain states;<br>target invariant |
+| Global envelope | None required | Known $M\ge\sup_{\vx}w(\vx)$ | None required |
+
+::: {.key-point}
+[Weight contributions]{.alert} · [select observations]{.alert} · [update a chain]{.alert}
+:::
+
+::: {.notes}
+The three columns target the same expectation but use the importance ratio
+differently. Ordinary importance sampling averages all f(Z_i)w(Z_i), with the
+normalized ratio available and f integrable under the target. The proposals
+retain their proposal distribution; weighting does not turn them into target
+draws. The independence-sampler column recalls the construction in Markov Chain
+Monte Carlo; its states are generally dependent.
+
+Acceptance–rejection needs a known global envelope. The displayed w uses
+normalized target and proposal densities. As in Generating Samples, it is
+enough to know an unnormalized target and a matching envelope: neither the
+target normalizer nor a normalized importance ratio is required. Use fresh
+independent proposals and decision uniforms, and continue until the required
+number of acceptances; only accepted observations enter its target average.
+
+Self-normalized IS uses all proposals too, but forms a ratio of averages
+instead of the ordinary IS contribution average shown in this table. Its
+finite-sample bias and consistency were developed separately above.
+
+Metropolized independence requires ratios of importance weights, without a
+global envelope. Record a state at every iteration, including repeats after
+rejection. Longer residence in a high-weight state supplies representation
+through repetition, whereas importance sampling uses explicit contribution
+weights. The chain has the target as an invariant distribution; this does not
+give exact target marginals from an arbitrary start or finite-sample unbiasedness
+of its average. Bounded weights can help its mixing even though a known global
+bound is not needed to implement it.
+
+All columns here use IID proposal draws and proposal coverage of the entire
+target support. For one importance-sampling integral, covering only the support
+of f times the target density suffices. For the ideal proposal equal to the
+target, w=1 and acceptance–rejection with M=1 and Metropolized independence
+both accept every proposal. All three then give ordinary target Monte Carlo.
+:::
+
 ## Choosing a transformation {.tree-marker-slide tree-marker="analysis-importance"}
 
 - Variable transformation and importance sampling are intertwined
@@ -641,7 +970,8 @@ Place more samples where the [magnitude]{.alert} of the integrand times the targ
 
 ## Cost of an accurate IID estimate {#cost-for-iid-accuracy .tree-marker-slide tree-marker="variance-error"}
 
-For $Y_g=g(\vZ)$ with mean $\mu$, write $\sigma^2(g)=\var\{g(\vZ)\}$
+For an [unbiased IID sample mean]{.alert} of $Y_g=g(\vZ)$, write
+$\Ex(Y_g)=\mu$ and $\sigma^2(g)=\var\{g(\vZ)\}$
 
 - $\$(g)$: generate $\vZ_i$ and evaluate $g(\vZ_i)$ with all required transforms
 - $S(g)$: setup and independent-pilot cost
@@ -2220,6 +2550,10 @@ parameters in the notebook.
   [constant]{.alert}<br>Importance sampling retains the correction as [unequal]{.alert} weights
 - Importance proposals may be [tailored]{.alert} to a particular integrand<br>Transported
   target samples can be [reused]{.alert} for many integrands
+- Self-normalized IS cancels unknown density [scale]{.alert}<br>Its ratio is consistent under suitable conditions, but generally [biased]{.alert} at finite $n$
+
+## Big Ideas (continued) {data-state="goldborder"}
+
 - Control variates and conditioning remove variability using [known]{.alert} structure
 - Antithetic sampling and Latin hypercubes introduce useful [dependence]{.alert} deliberately
 - Low discrepancy sequences replace random [clustering]{.alert} with [balanced]{.alert} space filling

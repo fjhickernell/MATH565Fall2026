@@ -92,6 +92,9 @@ Deck 01 Course Map synchronized.
   the component. Keep notebook code and worked examples in the same order.
 - Keep notation consistent with the shared macro registry and course
   notebooks.
+- Density notation uses `\varrho`, normalized or unnormalized; `\rho` denotes
+  correlation. State the normalization and use a tilde when both density
+  forms need to be distinguished in one calculation.
 - Use the role conventions in `AUTHOR_WORKFLOW.md`: uniform inputs `\vU`,
   proposal/source draws `\vZ`, target samples `\vX`, and scalar output
   `Y=f(\vX)`. Bold vector-valued maps (`\vS`, `\vT`, `\vA`); scalar quantiles and scalar transports remain unbold.
@@ -102,6 +105,14 @@ Deck 01 Course Map synchronized.
   Introduce `f(\vX)`, `g(\vZ)`, and `h(\vU)=g(\vS(\vU))` together on
   the opening big-picture slide; recall the composition when developing
   low discrepancy variance and cost models.
+- Introduce self-normalized IS separately from fixed equal-mean contribution
+  averages: its finite-sample bias and consistency belong beside its ratio
+  formula. Keep the transport/normalization connection and method comparison
+  in Improving Efficiency after ordinary IS has been developed.
+  Posterior likelihood weighting supplies an example independent of MCMC.
+  For fixed-budget acceptance–rejection, distinguish unbiasedness conditional
+  on at least one acceptance from the convention used for an empty batch;
+  a random denominator alone does not imply bias.
 - In Improving Efficiency, label scalar contributions by method:
   `Y_{\mathrm{IS}}`, `Y_{\mathrm{CV}}`, `Y_{\mathrm{CMC}}`,
   `Y_{\mathrm{Anti}}`, and `Y_T` for exact transport. Use `Y_g` for the

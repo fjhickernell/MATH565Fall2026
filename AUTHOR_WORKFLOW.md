@@ -662,9 +662,14 @@ Y = f(\boldsymbol X).
 - Use \(V\) for a decision uniform or a locally defined conditioning variable,
   \(I\) for an acceptance indicator, \(w\) for a weight function, and
   \(W=w(\boldsymbol Z)\) for its random value. Keep these roles distinct.
-- Reserve \(\varrho_{\mathrm{tar}}\) for a normalized density and write
-  \(\widetilde\varrho_{\mathrm{tar}}\) for an unnormalized form. MCMC proposals
-  have the conditional law
+- Use \(\varrho\) for probability masses and densities, whether normalized or
+  unnormalized; reserve \(\rho\) for correlation. State normalization explicitly.
+  When both forms appear together, distinguish them with a tilde, for example
+  \(\varrho_{\mathrm{tar}}=\widetilde\varrho_{\mathrm{tar}}/C_{\mathrm{tar}}\),
+  where \(C_{\mathrm{tar}}\) is the integral of the unnormalized form.
+  Self-normalized IS is a ratio estimator, generally biased at finite sample
+  size; keep it distinct from fixed equal-mean IID contribution averages.
+  MCMC proposals have the conditional law
   \(\boldsymbol Z_i\mid\boldsymbol X_i\sim
   \varrho_{\mathrm{prop}}(\cdot\mid\boldsymbol X_i)\); target marginal laws
   hold at stationarity, not automatically from an arbitrary start.

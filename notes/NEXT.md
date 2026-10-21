@@ -6,6 +6,32 @@ October 20 recording coverage is verified. Recap “RQMC error assessment by ind
 
 ## Immediate actions
 
+### Lecture preparation — new material awaiting review
+
+Deck 04 develops self-normalized IS after the ordinary IS examples: posterior
+means by likelihood weighting, finite-sample bias and consistency, the
+fixed-proposal acceptance–rejection qualification, and exact transport with an
+unknown normalizer. Weighted empirical distributions and the three-method
+comparison follow. Densities use `\varrho`; `\rho` is reserved for correlation.
+The new material stays in Deck 04, with the Deck 01 terms index updated.
+
+The earlier independence-sampler slide remains in Deck 03 after “Why the
+acceptance ratio works” and before “The Metropolis algorithm.” Decks 02–03
+are unchanged by the normalization additions. Decks 01 and 04 render cleanly;
+All local slide-fragment links pass across the five decks. Exact finite
+examples verify the bias and conditional-unbiasedness distinctions. Review
+the teaching flow. Visual inspection remains pending
+because the browser security policy blocked the local `file://` preview.
+Keep this as newly prepared material without advancing the lecture ledger.
+Source rendering and link checks pass; remote deployment verification remains
+pending.
+
+### Test 2 — private draft reviewed
+
+The private draft is reviewed and validated; final printing remains for the
+October 27 test in PH 109. The standing grading-completion
+deadline is November 2. Keep all unreleased assessment material private.
+
 ### Assignment 5 — published and verified
 
 Owen Exercises **8.4 and 8.20** are published on the course website and in
@@ -900,3 +926,16 @@ announcement was published and its saved text verified:
 [Assignment 3 grades and feedback are posted](https://iit.instructure.com/courses/25777/discussion_topics/107709).
 The matching Dashboard grading task and Academic reminder are complete.
 Private grading records remain in the private course homework workspace.
+
+## Assignment 4 grading release — October 21, 2026
+
+The instructor-reviewed grades and individual feedback are posted to Everyone.
+Current groups, group propagation, saved comments, and “All grades posted”
+were verified. Test Student remains ungraded. The approved all-sections
+announcement is published and its saved text and audience are verified:
+[Assignment 4 grades and feedback are posted](https://iit.instructure.com/courses/25777/discussion_topics/108622).
+The Dashboard grading task and matching Academic reminder are complete;
+announcement review is closed. Private grading records contain the detailed
+verification. The instructor's Gradebook view is preserved, and the published
+announcement is available in its own tab. No grade reload or duplicate
+announcement is needed.

@@ -137,6 +137,7 @@ Only the first is a [martingale]{.alert}: its expected next value, given the his
 
 - [The Metropolis–Hastings algorithm](#the-metropolishastings-algorithm)
 - [Why the acceptance ratio works](#why-the-acceptance-ratio-works)
+- [The independence sampler](#the-independence-sampler)
 - [The Metropolis algorithm](#the-metropolis-algorithm)
 - [Metropolis practice](#metropolis-practice)
 - [A random-walk Metropolis example](#a-random-walk-metropolis-example)
@@ -191,6 +192,58 @@ $$
 
 ::: {.key-point}
 Detailed balance preserves the target; convergence from the starting state requires suitable conditions
+:::
+
+## The independence sampler {#the-independence-sampler .tree-marker-slide tree-marker="mcmc"}
+
+Choose [IID proposals]{.alert}, independent of the current state
+
+$$
+\varrho_{\mathrm{prop}}(\vz\mid\vx)=\varrho_{\mathrm{prop}}(\vz)
+$$
+
+The Metropolis–Hastings acceptance probability becomes
+
+$$
+\alpha(\vx,\vz)=\min\!\left\{1,
+\frac{\widetilde\varrho_{\mathrm{tar}}(\vz)\varrho_{\mathrm{prop}}(\vx)}
+{\widetilde\varrho_{\mathrm{tar}}(\vx)\varrho_{\mathrm{prop}}(\vz)}\right\}
+$$
+
+- Unknown target and proposal normalizers [cancel]{.alert} from the ratio
+- A rejected proposal gives another [repeat]{.alert} of the current state
+
+::: {.key-point}
+[Independent proposals]{.alert} can produce [dependent chain states]{.alert}
+:::
+
+::: {.exitem}
+<span class="exbullet">$\exstar$</span>
+<span>What happens when $\varrho_{\mathrm{prop}}=\varrho_{\mathrm{tar}}$?</span>
+:::
+
+::: {.notes}
+Owen, Chapter 11, Section 11.6, calls this the independence sampler or
+Metropolized independence sampler. Require the proposal to cover the target
+support and initialize in the positive target support. Separate unknown
+normalizing constants for the target and the state-independent proposal
+cancel from this product of density ratios. Keep the importance-ratio
+interpretation and the three-way method comparison in Improving Efficiency,
+after importance sampling is introduced.
+
+The proposals are IID; the chain is generally dependent because each decision
+uses the current state, and a rejected proposal repeats that state. Count every
+repeat in averages. Removing the repeats and keeping only accepted moves
+generally changes the sampled distribution. Target marginals hold at
+stationarity; convergence from another start needs the usual suitable
+conditions. Fresh independent proposals do not remove the dependence created
+by state-dependent acceptance and rejection.
+
+Exercise: if the normalized proposal equals the target, the acceptance ratio is one on its positive
+support and every proposal is accepted. States X_1,X_2,... are then IID target
+draws. A fixed starting value X_0 is not itself an IID target draw. In a discrete
+state space, consecutive IID draws can coincide without rejection. This is the
+same ideal-proposal case as Owen Exercise 11.5.
 :::
 
 ## The Metropolis algorithm {.tree-marker-slide tree-marker="mcmc"}

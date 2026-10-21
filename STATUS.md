@@ -222,6 +222,13 @@ appropriate phase rather than appended indiscriminately.
       submission/grade, and unlimited file uploads; publish assignment 105796
       and all-sections announcement 106931 after instructor approval on
       September 30, 2026; verify saved settings and publication.
+    - [x] Load, verify, and post the instructor-approved Assignment 4 grades
+      and feedback to Everyone on October 21, 2026. Verify current groups,
+      group propagation, saved comments, and “All Grades Posted”; preserve
+      private grading records. Publish and verify the instructor-approved
+      all-sections [grades-posted announcement](https://iit.instructure.com/courses/25777/discussion_topics/108622)
+      on October 21; close the Dashboard grading/review tasks and matching
+      Academic reminder.
     - [x] Create the initial Fall 2026 assignments-page structure.
     - [x] Create the `assignments/` source directory and an Assignment 1
       Quarto template based on the architecture and course-material
@@ -366,6 +373,22 @@ appropriate phase rather than appended indiscriminately.
   deck emphasis; add themes to Decks 04–05 and validate layouts.
 - [x] Audit Decks 02–03 navigation markers against taught content, including
   Error Assessment for the worst-case and GP error derivations.
+- [x] Add the independence sampler after Deck 03's general MH acceptance-ratio
+  explanation, with the ideal-proposal exercise and presenter notes. Place
+  the three-way importance-ratio comparison in Deck 04 after the ordinary IS
+  examples and self-normalization sequence, preserving the teaching order.
+  Update the section outline and Deck 01 terms index. All three affected decks render; source
+  and link checks pass. Visual inspection and instructor review remain in
+  `notes/NEXT.md`.
+- [x] Develop self-normalized IS in Deck 04 after the ordinary IS examples,
+  including posterior means by likelihood weighting, bias and consistency,
+  fixed-proposal acceptance–rejection conditional on a nonempty accepted set,
+  and exact transport with an unknown normalizer. Use `\varrho` for densities
+  and `\rho` for correlation. Keep the normalization additions out of Decks
+  02–03; update the Deck 01 index and closing Big Ideas. Affected renders,
+  local slide-fragment links across all five decks, and exact finite-example
+  checks pass.
+  Instructor and visual review remain in `notes/NEXT.md`.
 - [x] Add cumulative closing slides to the developed decks: Big Ideas and
   What Comes Next throughout, How Far We Have Come from Deck 03 onward, and
   a gold-bordered Big Ideas continuation in Deck 02; keep only Big Ideas in
