@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-10-20">
+  <meta name="dcterms.date" content="2026-10-21">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -643,7 +643,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">October 20, 2026</p>
+  <p class="date">October 21, 2026</p>
 </section>
 <section id="we-begin-this-semester-amid-significant-change" class="slide level2">
 <h2>We begin this semester amid significant change</h2>
@@ -1484,9 +1484,10 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="02-generating-samples.html#geometric-brownian-motion">Geometric Brownian motion</a></li>
 <li><a href="05-selected-topics.html#gradient-descent">Gradient descent</a></li>
 <li><a href="04-improving-efficiency.html#histograms-kde-and-conditional-density">Histogram</a></li>
-<li><a href="02-generating-samples.html#independent-marginals">Independent marginals</a></li>
+<li><a href="04-improving-efficiency.html#importance-sampling">Importance ratio / weight</a></li>
 <li><a href="04-improving-efficiency.html#importance-sampling">Importance sampling</a></li>
-<li><a href="04-improving-efficiency.html#importance-sampling">Importance weight</a></li>
+<li><a href="03-markov-chain-monte-carlo.html#the-independence-sampler">Independence sampler</a></li>
+<li><a href="02-generating-samples.html#independent-marginals">Independent marginals</a></li>
 </ul>
 </div></div>
 </section>
@@ -1515,6 +1516,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="#/mean-squared-error-bias-and-variance">Mean squared error (MSE)</a></li>
 <li><a href="#/moments-of-random-variables">Median</a></li>
 <li><a href="03-markov-chain-monte-carlo.html#the-metropolishastings-algorithm">Metropolis–Hastings algorithm</a></li>
+<li><a href="03-markov-chain-monte-carlo.html#the-independence-sampler">Metropolized independence sampler</a></li>
 <li><a href="#/central-limit-theorem">Monte Carlo error</a></li>
 <li><a href="#/how-is-uncertainty-expressed-quantitatively">Monte Carlo method</a></li>
 <li><a href="05-selected-topics.html#multilevel-monte-carlo">Multilevel Monte Carlo</a></li>
@@ -1531,6 +1533,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <ul>
 <li><a href="03-markov-chain-monte-carlo.html#parallel-tempering">Parallel tempering</a></li>
 <li><a href="#/monte-carlo-estimates-of-properties-of-y">Point estimator</a></li>
+<li><a href="04-improving-efficiency.html#posterior-means-by-likelihood-weighting">Posterior mean</a></li>
 <li><a href="02-generating-samples.html#principal-component-factorization">Principal-component (PCA) factorization</a></li>
 <li><a href="#/random-variables-and-distributions">Probability density function (PDF)</a></li>
 <li><a href="#/random-variables-and-distributions">Probability mass function (PMF)</a></li>
@@ -1557,6 +1560,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="#/sampling">Sample</a></li>
 <li><a href="#/sampling">Sample mean</a></li>
 <li><a href="#/sampling">Sample variance</a></li>
+<li><a href="04-improving-efficiency.html#self-normalized-importance-sampling">Self-normalized importance sampling</a></li>
 <li><a href="#/shrinkage-estimators">Shrinkage estimator</a></li>
 <li><a href="#/moments-of-random-variables">Standard deviation</a></li>
 <li><a href="03-markov-chain-monte-carlo.html#stein-discrepancy">Stein discrepancy</a></li>
@@ -1761,7 +1765,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points<br>Compare how its <span class="math inline">\(x_1\)</span>–<span class="math inline">\(x_2\)</span> projection fills the unit square</p>
-<div id="4035181a" class="cell" data-execution_count="4">
+<div id="7ff2f155" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1774,7 +1778,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="grid-n64">Grid, <span class="math inline">\(n=64\)</span></h3>
-<div id="9a71881a" class="cell" data-execution_count="5">
+<div id="88435087" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1787,7 +1791,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="orthogonal-array-n64">Orthogonal array, <span class="math inline">\(n=64\)</span></h3>
-<div id="a97e5899" class="cell" data-execution_count="6">
+<div id="ff8e2514" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1800,7 +1804,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="iid-n64">IID, <span class="math inline">\(n=64\)</span></h3>
-<div id="ec7e39cc" class="cell" data-execution_count="7">
+<div id="a0cd87fa" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1813,7 +1817,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="scrambled-sobol-n64">Scrambled Sobol’, <span class="math inline">\(n=64\)</span></h3>
-<div id="6093026a" class="cell" data-execution_count="8">
+<div id="3fdb9e4b" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>

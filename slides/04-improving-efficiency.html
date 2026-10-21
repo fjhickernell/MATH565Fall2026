@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-10-20">
+  <meta name="dcterms.date" content="2026-10-21">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -643,7 +643,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">October 20, 2026</p>
+  <p class="date">October 21, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-04-overview">
 <h1>Course Map</h1>
@@ -756,7 +756,7 @@ This deck
 <p>Exact transport <span class="alert">implies</span> <span class="math inline">\(h(\vU) \stackrel d=g(\vZ)\)</span></p>
 </div>
 <aside class="notes">
-<p>The equality concerns expectations, not equality of individual outputs or output distributions. An alternative contribution may include importance weights, controls, or a conditional expectation. Its sampling law belongs with g. Exact transport is a useful case where the output distributions agree: if T(Z) has the target law and g=f composed with T, then g(Z) and f(X) have the same distribution. Other equal-mean contributions may change the distribution and variance. The function h includes that contribution and all transforms from the uniform input. If the input is already uniform, S is the identity and h=g. Different constructions may require different cube dimensions. Use h_f=f composed with T and h_g=g composed with S when comparing two representations; generic h avoids carrying that subscript through every QMC or RQMC formula. Low discrepancy sampling places its points on the unit cube, which explains the switch from g to h in those formulas.</p>
+<p>The equality concerns expectations, not equality of individual outputs or output distributions. An alternative contribution may include importance weights, controls, or a conditional expectation. The self-normalized IS subsection later introduces a ratio estimator as a separate extension, not a fixed equal-mean contribution average. Its sampling law belongs with g. Exact transport is a useful case where the output distributions agree: if T(Z) has the target law and g=f composed with T, then g(Z) and f(X) have the same distribution. Other equal-mean contributions may change the distribution and variance. The function h includes that contribution and all transforms from the uniform input. If the input is already uniform, S is the identity and h=g. Different constructions may require different cube dimensions. Use h_f=f composed with T and h_g=g composed with S when comparing two representations; generic h avoids carrying that subscript through every QMC or RQMC formula. Low discrepancy sampling places its points on the unit cube, which explains the switch from g to h in those formulas.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -810,6 +810,7 @@ This deck
 <li><a href="#/variance-and-variation-reduction">Variance and variation reduction</a></li>
 <li><a href="#/transforming-an-integral">Transforming an integral</a></li>
 <li><a href="#/importance-sampling">Importance sampling</a></li>
+<li><a href="#/self-normalized-importance-sampling">Self-normalized importance sampling</a></li>
 <li><a href="#/choosing-a-transformation">Choosing a transformation</a></li>
 <li><a href="#/cost-for-iid-accuracy">Cost of an accurate IID estimate</a></li>
 </ul>
@@ -1088,45 +1089,6 @@ Y_{\mathrm{IS}}=g_{\mathrm{IS}}(\vZ)=f(\vZ)w(\vZ),\qquad \Ex(Y_{\mathrm{IS}})=\m
 </section>
 <section class="slide level2">
 
-<h3 id="weighted-empirical-distributions">Weighted empirical distributions</h3>
-<p>As in <a href="03-markov-chain-monte-carlo.html#empirical-distributions">Markov Chain Monte Carlo: empirical distributions</a>, put mass at each sample point</p>
-<p>For <span class="math inline">\(\vZ_i\ \IIDsim\ F_{\mathrm{prop}}\)</span>, require <span class="math inline">\(\varrho_{\mathrm{prop}}&gt;0\)</span> wherever <span class="math inline">\(\varrho_{\mathrm{tar}}&gt;0\)</span></p>
-<p><span class="math display">\[\begin{align*}
-\widehat F_{n,w}
-&amp;=\frac{\sum_{i=0}^{n-1}w(\vZ_i)\,\delta_{\vZ_i}}
-        {\sum_{i=0}^{n-1}w(\vZ_i)},
-&amp; w(\vz)&amp;=\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{prop}}(\vz)},\\
-\int f(\vx)\,\dif\widehat F_{n,w}(\vx)
-&amp;=\frac{\sum_{i=0}^{n-1}w(\vZ_i)f(\vZ_i)}
-        {\sum_{i=0}^{n-1}w(\vZ_i)}
-&amp; &amp;\xrightarrow[n\to\infty]{\mathrm{a.s.}}\mu
-\end{align*}\]</span></p>
-<ul>
-<li><span class="alert">Normalized</span> weights sum to one; require a positive denominator</li>
-<li><span class="math inline">\(\widehat F_{n,w} \approx F_{\mathrm{tar}}\)</span>; generally <span class="alert">different</span> at finite <span class="math inline">\(n\)</span></li>
-<li>Self-normalized estimates: consistent, generally biased at finite <span class="math inline">\(n\)</span></li>
-</ul>
-<aside class="notes">
-<p>Use the same <span class="math inline">\(\widehat F_n\)</span> and point-mass <span class="math inline">\(\delta_{\vx_i}\)</span> notation as the empirical-distribution development in Markov Chain Monte Carlo, with the subscript <span class="math inline">\(w\)</span> recording the weights. The points still have the proposal law; weighting changes their empirical masses, not their locations or sampling law. The almost-sure limit assumes IID proposal draws, normalized target and proposal densities, target-support coverage, and <span class="math inline">\(\Ex_{\mathrm{tar}}|f(\vX)|&lt;\infty\)</span>. The denominator can be zero at finite <span class="math inline">\(n\)</span> if every sampled weight is zero.</p>
-<p>Without self-normalization, the weighted empirical measure is <span class="math display">\[\begin{align*}
-\widehat M_{n,w}&amp;=\frac1n\sum_{i=0}^{n-1}w(\vZ_i)\delta_{\vZ_i},\\
-\int f(\vx)\,\dif\widehat M_{n,w}(\vx)&amp;=\hmu_{\mathrm{IS},n},&amp;
-\Ex[\widehat M_{n,w}(A)]&amp;=F_{\mathrm{tar}}(A)
-\end{align*}\]</span> for measurable sets <span class="math inline">\(A\)</span>. Its total mass <span class="math inline">\(n^{-1}\sum_i w(\vZ_i)\)</span> has expectation one, but generally is not exactly one, so it need not be a probability measure. Ordinary importance sampling is unbiased for integrable <span class="math inline">\(f\)</span>; self-normalization produces a probability measure but generally loses finite-sample unbiasedness. Full support coverage is needed to approximate the whole target distribution, which is stronger than covering only the support of <span class="math inline">\(f\varrho_{\mathrm{tar}}\)</span> for one particular integral. A weighted empirical approximation to the target also does not imply that the scalar importance contribution <span class="math inline">\(f(\vZ)w(\vZ)\)</span> has the same distribution as <span class="math inline">\(f(\vX)\)</span>.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level2">
-
 <h3 id="one-proposal-two-unbiased-estimators">One proposal, three unbiased estimators</h3>
 <p><span class="math display">\[\begin{gather*}
 \varrho_{\mathrm{prop}}(z)=1,\qquad
@@ -1306,6 +1268,309 @@ Y_{\mathrm{IS}}&amp;=g_{\mathrm{IS}}(\vZ)=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}
 </ul>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb">Asian option variance-reduction notebook</a></p>
 </section>
+<section id="self-normalized-importance-sampling" class="slide level2 tree-marker-slide" data-tree-marker="importance-sampling">
+<h2>Self-normalized importance sampling</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.1; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="importance-sampling" style="--tree-left: 31%; --tree-top: 35%; --tree-align: center;">Importance<br>Sampling</div>
+</div>
+
+<p>Suppose the <span class="alert">target normalizer</span> is unknown</p>
+<p><span class="math display">\[\begin{align*}
+C_{\mathrm{tar}}&amp;=\int\widetilde\varrho_{\mathrm{tar}}(\vx)\,\dif\vx,&amp;
+\varrho_{\mathrm{tar}}(\vx)&amp;=\frac{\widetilde\varrho_{\mathrm{tar}}(\vx)}{C_{\mathrm{tar}}}
+\end{align*}\]</span></p>
+<p>For <span class="math inline">\(\vZ_0,\ldots,\vZ_{n-1}\ \IIDsim\ \varrho_{\mathrm{prop}}\)</span>, use</p>
+<p><span class="math display">\[
+\widetilde w(\vz)=\frac{\widetilde\varrho_{\mathrm{tar}}(\vz)}
+{\varrho_{\mathrm{prop}}(\vz)}=C_{\mathrm{tar}}w(\vz)
+\]</span></p>
+<p><span class="math display">\[
+\hmu_{\mathrm{SN},n}
+=\frac{\sum_{i=0}^{n-1}f(\vZ_i)\widetilde w(\vZ_i)}
+       {\sum_{i=0}^{n-1}\widetilde w(\vZ_i)}
+\]</span></p>
+<ul>
+<li>Any common positive weight multiplier <span class="alert">cancels</span></li>
+<li>Require proposal coverage of the target support and a <span class="alert">positive denominator</span></li>
+</ul>
+<div class="key-point">
+<p>A <span class="alert">ratio of sample averages</span> handles the unknown normalization</p>
+</div>
+<aside class="notes">
+<p>Owen, Section 9.2, calls this self-normalized importance sampling; the same ratio appears in equation (11.27). Assume 0&lt;C_tar&lt;infinity, IID proposal draws, full target-support coverage up to null sets, and integrability of f under the target. Unlike ordinary IS for a single integrand, the denominator requires coverage even where f is zero but the target density is positive. The denominator can be zero at finite n when every proposed weight is zero; the estimator is defined only when it is positive.</p>
+<p>The proposal is normalized in the visible formula. If only an unnormalized proposal is evaluable but sampling from its normalized law is available, use tilde_varrho_tar/tilde_varrho_prop instead. The resulting weights differ by a common positive constant, which also cancels. Self-normalization estimates a normalized expectation, not the unnormalized integral of f times the target.</p>
+<p>When the normalized density ratio is computable, ordinary IS remains available and is unbiased for integrable f.&nbsp;Both individual normalizers need not be known: a known ratio suffices. Self-normalization is still an option, with different finite-sample properties; neither estimator universally dominates. This ratio method belongs to IS, independently of MCMC, and does not turn proposal draws into target draws.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="posterior-means-by-likelihood-weighting">Posterior means by likelihood weighting</h3>
+<p>Recall <a href="03-markov-chain-monte-carlo.html#bayesian-inference">Bayes’ theorem</a> with likelihood <span class="math inline">\(L(\theta;y_{\mathrm{obs}})\)</span> and prior density <span class="math inline">\(\varrho_{\mathrm{prior}}\)</span></p>
+<p><span class="math display">\[
+\mu_{\mathrm{post}}=\Ex(\Theta\mid y_{\mathrm{obs}})
+=\frac{\int\theta L(\theta;y_{\mathrm{obs}})\varrho_{\mathrm{prior}}(\theta)\,\dif\theta}
+       {\int L(\theta;y_{\mathrm{obs}})\varrho_{\mathrm{prior}}(\theta)\,\dif\theta}
+\]</span></p>
+<p>Draw <span class="math inline">\(Z_i\ \IIDsim\ \varrho_{\mathrm{prior}}\)</span> and use <span class="alert">likelihood weights</span></p>
+<p><span class="math display">\[
+\hmu_{\mathrm{post},n}
+=\frac{\sum_{i=0}^{n-1}Z_iL(Z_i;y_{\mathrm{obs}})}
+       {\sum_{i=0}^{n-1}L(Z_i;y_{\mathrm{obs}})}
+\]</span></p>
+<ul>
+<li>The unknown evidence <span class="math inline">\(\varrho_D(y_{\mathrm{obs}})\)</span> <span class="alert">cancels</span></li>
+<li>A posterior concentrated in a small part of the prior can make weights very uneven</li>
+</ul>
+<div class="key-point">
+<p>Prior proposals with likelihood weighting give <span class="alert">self-normalized IS</span></p>
+</div>
+<aside class="notes">
+<p>This uses the same likelihood, prior, posterior, and evidence notation as the Bayesian-inference slide in Markov Chain Monte Carlo. Here the proposal is the prior, so the unnormalized target is tilde_varrho_tar(theta)=L(theta;y_obs)varrho_prior(theta), the target normalizer C_tar is the evidence varrho_D(y_obs), and the unnormalized importance weight is just L(theta;y_obs). The proposal draws are named Z_i to preserve their role; their distribution is the prior, not the posterior. Require finite positive evidence, an integrable posterior first moment, and a positive sample denominator. The same construction estimates any integrable posterior expectation by replacing Z_i in the numerator by f(Z_i).</p>
+<p>The exact posterior mean is a ratio of integrals. The displayed numerical estimator is self-normalized IS because it estimates those integrals using prior proposals. It is generally biased at finite n and consistent under the preceding assumptions. If IID posterior draws are available instead, their ordinary sample mean is unbiased for the posterior mean. An ordinary average of MCMC posterior states is a different estimator too; it does not become self-normalized IS merely because its target is a posterior.</p>
+<p>For a two-point illustration, take prior probabilities 1/2,1/2 on theta=0,1 and likelihood values 1,3. The posterior probabilities are 1/4,3/4, giving posterior mean 3/4. With one prior proposal the likelihood cancels, so the displayed estimate has expectation 1/2. This makes the finite-sample bias concrete without requiring any MCMC construction. A better proposal can help when prior proposals rarely reach the concentrated posterior.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="self-normalization-bias-and-consistency">Bias and consistency</h3>
+<p>Two sample averages estimate two integrals</p>
+<p><span class="math display">\[\begin{align*}
+\frac1n\sum_{i=0}^{n-1}f(\vZ_i)\widetilde w(\vZ_i)
+&amp;\xrightarrow[n\to\infty]{\mathrm{a.s.}}C_{\mathrm{tar}}\mu\\
+\frac1n\sum_{i=0}^{n-1}\widetilde w(\vZ_i)
+&amp;\xrightarrow[n\to\infty]{\mathrm{a.s.}}C_{\mathrm{tar}}&gt;0
+\end{align*}\]</span></p>
+<p>Hence <span class="math inline">\(\hmu_{\mathrm{SN},n}\to\mu\)</span> almost surely under the stated conditions</p>
+<ul>
+<li><span class="alert">Generally biased</span> at finite <span class="math inline">\(n\)</span>: unbiased components do not imply an unbiased ratio</li>
+<li><span class="alert">Exact for constants</span>: <span class="math inline">\(f\equiv c\)</span> gives <span class="math inline">\(\hmu_{\mathrm{SN},n}=c\)</span></li>
+<li>A ratio estimator needs its own <span class="alert">bias and variance</span> analysis</li>
+</ul>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Target density <span class="math inline">\(2x\)</span> on <span class="math inline">\((0,1)\)</span>, uniform proposal, and <span class="math inline">\(f(x)=x\)</span> <span class="exsub">For <span class="math inline">\(n=1\)</span>, simplify <span class="math inline">\(\hmu_{\mathrm{SN},1}\)</span> and compare its expectation with <span class="math inline">\(\mu\)</span></span> </span></p>
+</div>
+<aside class="notes">
+<p>The strong law applies separately to the numerator and denominator sample averages; their limits are C_tar times mu and C_tar. The ratio then converges almost surely. Positive C_tar makes the sample denominator eventually positive almost surely, though an initial finite sample can have zero denominator.</p>
+<p>For the exercise, tilde_varrho_tar(x)=x is enough, so tilde_w(z)=z. A uniform proposal lies in (0,1) almost surely and its weight is positive. With n=1, the weight cancels and the estimate is Z_0. Its expectation is 1/2, whereas the target mean is 2/3; the bias is -1/6. More observations give consistency, not a claim of exact finite-sample unbiasedness or a universal variance gain.</p>
+<p>The sample-normalized weights are nonnegative and sum to one, so the estimate is a weighted average of the observed f values and integrates constants exactly. Statements about finite-sample bias assume the estimator’s expectation exists. When the relevant moments exist, MSE = variance + bias squared. The earlier equal-mean IID contribution formulas and their variance-only cost comparison do not apply automatically to this ratio estimator. No confidence interval or stopping rule for the ratio is asserted here.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="acceptance-rejection-with-a-fixed-proposal-budget">Acceptance–rejection with a fixed proposal budget</h3>
+<p>Use independent proposals and a fixed valid envelope<br> Let <span class="math inline">\(I_i\)</span> indicate acceptance and <span class="math inline">\(K_N=\sum_{i=0}^{N-1}I_i\)</span></p>
+<p><span class="math display">\[
+\hmu_{\mathrm{AR},N}
+=\frac{\sum_{i=0}^{N-1}I_i f(\vZ_i)}{K_N},\qquad K_N&gt;0
+\]</span></p>
+<p>This is normalization by a sample total, with <span class="alert">zero–one weights</span></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Stopping rule</th>
+<th style="text-align: left;">Accepted-sample average</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Fix <span class="math inline">\(n\)</span> acceptances</td>
+<td style="text-align: left;">Unbiased average of <span class="math inline">\(n\)</span> IID target draws</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fix <span class="math inline">\(N\)</span> proposals</td>
+<td style="text-align: left;">Unbiased conditional on <span class="math inline">\(K_N&gt;0\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>If <span class="math inline">\(K_N=0\)</span>, the ratio is undefined; a fill-in value can introduce bias</p>
+<div class="key-point">
+<p>A random denominator does <span class="alert">not by itself imply bias</span></p>
+</div>
+<aside class="notes">
+<p>Let tilde_w=tilde_varrho_tar/varrho_prop, and use a known fixed envelope M &gt;= sup tilde_w with independent uniform decisions. Then Prob(I_i=1 | Z_i)=tilde_w(Z_i)/M and the unconditional acceptance probability is a=C_tar/M. Assume 0&lt;a&lt;=1 and integrable f under the target. Conditional on any specified acceptance pattern, the accepted proposals are independent and each has the normalized target law. Therefore, for every k&gt;0, E(hatmu_AR,N | K_N=k)=mu, and E(hatmu_AR,N | K_N&gt;0)=mu. This conditional unbiasedness is a special property of rejection sampling, so random sample count alone does not establish ratio-estimator bias.</p>
+<p>Here K_N is binomial(N,a), so Prob(K_N=0)=(1-a)^N. The ratio itself is undefined on that event. If an implementation returns a fixed value b when no proposal is accepted, its unconditional bias is (b-mu)(1-a)^N. For zero fill this is -mu(1-a)^N. Discarding an empty batch and trying again gives the conditional unbiased average, but then the overall proposal count is random. Fixing the number n of accepted draws also gives an unbiased target average, with a random proposal count.</p>
+<p>The connection to ordinary self-normalized IS is algebraic: replacing each acceptance indicator I_i by its conditional mean tilde_w(Z_i)/M in both sums gives the self-normalized importance ratio. The ratio of conditional expectations is not generally the conditional expectation of the ratio. Do not infer a Rao–Blackwell variance inequality or exact unbiasedness for SNIS from that replacement. In particular, the one-proposal bias example on the preceding slides remains valid.</p>
+<p>Owen, Section 9.5, writes the fixed-proposal rejection-sampling average as a ratio with a random number of acceptances. Keep the zero-acceptance event explicit when comparing it with self-normalized IS. The fixed-envelope and independence assumptions matter; no adaptive rejection scheme is claimed here.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="transport-with-unknown-normalizer">Transport with an unknown normalizer</h3>
+<p>For an invertible differentiable map <span class="math inline">\(\vT\)</span> and normalized source density <span class="math inline">\(\varrho_{\mathrm{prop}}\)</span>, define</p>
+<p><span class="math display">\[
+\widetilde w_T(\vz)=
+\frac{\widetilde\varrho_{\mathrm{tar}}\bigl(\vT(\vz)\bigr)
+\left|\det\nabla\vT(\vz)\right|}{\varrho_{\mathrm{prop}}(\vz)}
+\]</span></p>
+<p>If <span class="math inline">\(\vT\)</span> is an <span class="alert">exact transport</span>, then <span class="math inline">\(\widetilde w_T(\vz)=C_{\mathrm{tar}}\)</span></p>
+<p><span class="math display">\[\begin{align*}
+\hmu_{\mathrm{SN},T,n}
+&amp;=\frac{\sum_{i=0}^{n-1}f\bigl(\vT(\vZ_i)\bigr)\widetilde w_T(\vZ_i)}
+       {\sum_{i=0}^{n-1}\widetilde w_T(\vZ_i)}\\
+&amp;=\frac1n\sum_{i=0}^{n-1}f\bigl(\vT(\vZ_i)\bigr)
+\end{align*}\]</span></p>
+<ul>
+<li>The exact map <span class="alert">encodes</span> normalization; constructing it can be difficult</li>
+<li>An approximate map need not produce exact target draws</li>
+</ul>
+<div class="key-point">
+<p>An unknown target normalizer does <span class="alert">not rule out</span> exact transport</p>
+</div>
+<aside class="notes">
+<p>This follows directly from the earlier change-of-variables formula: the normalized transport correction is w_T=1, so the unnormalized correction is C_tar. Both sums contain the same factor C_tar. Integrable f and IID source draws therefore give an ordinary unbiased target average in this constant-weight case. General nonconstant-weight self-normalization is generally biased at finite n.</p>
+<p>The existing triangular example works without supplying the target normalizer as a separate input. With tilde_varrho_tar(x)=x on (0,1), a uniform source, and T(z)=sqrt(z), the unnormalized correction is sqrt(z)/(2 sqrt(z))=1/2, which equals C_tar. In contrast, the identity map has tilde_w(z)=z and gives the nonconstant-weight ratio from the preceding exercise. An arbitrary positive multiplier on the target shape changes only the common correction constant, not the normalized distribution or exact map.</p>
+<p>For a general one-dimensional target, the quantile map uses the ratio of the cumulative integral of tilde_varrho to its total integral. That ratio is insensitive to an arbitrary density scale, but computing and inverting it can still require difficult global information. In higher dimensions, maps can be fitted against an unnormalized target without separately computing its normalizer. A fitted flow generally approximates the target; exactness must not be inferred merely from calling the map a transport or normalizing flow. Importance weighting or Metropolis correction can address the mismatch, with the appropriate finite-sample qualifications.</p>
+<p>Supporting reference: <a href="https://arxiv.org/abs/1602.05023">Marzouk, Moselhy, Parno, and Spantini, Sections 3.1–3.3</a>. The existence and the practical construction of an exact transport are different questions. Keep this clarification here in Improving Efficiency; it does not require reopening Generating Samples or Markov Chain Monte Carlo.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="weighted-empirical-distributions">Weighted empirical distributions</h3>
+<p>As in <a href="03-markov-chain-monte-carlo.html#empirical-distributions">Markov Chain Monte Carlo: empirical distributions</a>, put mass at each sample point</p>
+<p>Use the same IID proposals and unnormalized weights <span class="math inline">\(\widetilde w\)</span>; require a positive denominator</p>
+<p><span class="math display">\[\begin{align*}
+\widehat F_{n,w}
+&amp;=\frac{\sum_{i=0}^{n-1}\widetilde w(\vZ_i)\,\delta_{\vZ_i}}
+        {\sum_{i=0}^{n-1}\widetilde w(\vZ_i)}\\
+\int f(\vx)\,\dif\widehat F_{n,w}(\vx)
+&amp;=\hmu_{\mathrm{SN},n}\xrightarrow[n\to\infty]{\mathrm{a.s.}}\mu
+\end{align*}\]</span></p>
+<ul>
+<li><span class="alert">Normalized</span> weights sum to one; require a positive denominator</li>
+<li><span class="math inline">\(\widehat F_{n,w} \approx F_{\mathrm{tar}}\)</span>; generally <span class="alert">different</span> at finite <span class="math inline">\(n\)</span></li>
+<li>The weighted measure gives the <span class="alert">self-normalized</span> estimate of every integrable <span class="math inline">\(f\)</span></li>
+</ul>
+<aside class="notes">
+<p>Use the same <span class="math inline">\(\widehat F_n\)</span> and point-mass <span class="math inline">\(\delta_{\vx_i}\)</span> notation as the empirical-distribution development in Markov Chain Monte Carlo, with the subscript <span class="math inline">\(w\)</span> recording the weights. The points still have the proposal law; weighting changes their empirical masses, not their locations or sampling law. The almost-sure limit uses the support and integrability assumptions stated on the self-normalization slides. The weights need only be proportional to the normalized density ratio. The denominator can be zero at finite <span class="math inline">\(n\)</span> if every sampled weight is zero.</p>
+<p>When the normalized ratio w is available, without self-normalization the weighted empirical measure is <span class="math display">\[\begin{align*}
+\widehat M_{n,w}&amp;=\frac1n\sum_{i=0}^{n-1}w(\vZ_i)\delta_{\vZ_i},\\
+\int f(\vx)\,\dif\widehat M_{n,w}(\vx)&amp;=\hmu_{\mathrm{IS},n},&amp;
+\Ex[\widehat M_{n,w}(A)]&amp;=F_{\mathrm{tar}}(A)
+\end{align*}\]</span> for measurable sets <span class="math inline">\(A\)</span>. Its total mass <span class="math inline">\(n^{-1}\sum_i w(\vZ_i)\)</span> has expectation one, but generally is not exactly one, so it need not be a probability measure. Ordinary importance sampling is unbiased for integrable <span class="math inline">\(f\)</span>; self-normalization produces a probability measure but generally loses finite-sample unbiasedness. Full support coverage is needed to approximate the whole target distribution, which is stronger than covering only the support of <span class="math inline">\(f\varrho_{\mathrm{tar}}\)</span> for one particular integral. A weighted empirical approximation to the target also does not imply that the scalar importance contribution <span class="math inline">\(f(\vZ)w(\vZ)\)</span> has the same distribution as <span class="math inline">\(f(\vX)\)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="one-importance-ratio-three-methods">One importance ratio, three methods</h3>
+<p>For <span class="alert">ordinary IS</span>, acceptance–rejection, and the independence sampler, use <span class="math inline">\(w=\varrho_{\mathrm{tar}}/\varrho_{\mathrm{prop}}\)</span> with the same IID proposal law</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;"><a href="#/importance-sampling">Ordinary IS</a></th>
+<th style="text-align: left;"><a href="02-generating-samples.html#acceptancerejection-sampling">Acceptance–rejection</a></th>
+<th style="text-align: left;"><a href="03-markov-chain-monte-carlo.html#the-independence-sampler">Metropolized<br>independence</a></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Rule</td>
+<td style="text-align: left;">Contribution <span class="math inline">\(f(\vZ_i)w(\vZ_i)\)</span></td>
+<td style="text-align: left;">Accept with <span class="math inline">\(w(\vz)/M\)</span></td>
+<td style="text-align: left;">Accept with <span class="math inline">\(\min\{1,w(\vz)/w(\vx)\}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rejection</td>
+<td style="text-align: left;">None; keep every proposal</td>
+<td style="text-align: left;">Discard; try again</td>
+<td style="text-align: left;">Repeat current state</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Output</td>
+<td style="text-align: left;">IID weighted contributions</td>
+<td style="text-align: left;">IID target draws</td>
+<td style="text-align: left;">Chain states;<br>target invariant</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Global envelope</td>
+<td style="text-align: left;">None required</td>
+<td style="text-align: left;">Known <span class="math inline">\(M\ge\sup_{\vx}w(\vx)\)</span></td>
+<td style="text-align: left;">None required</td>
+</tr>
+</tbody>
+</table>
+<div class="key-point">
+<p><span class="alert">Weight contributions</span> · <span class="alert">select observations</span> · <span class="alert">update a chain</span></p>
+</div>
+<aside class="notes">
+<p>The three columns target the same expectation but use the importance ratio differently. Ordinary importance sampling averages all f(Z_i)w(Z_i), with the normalized ratio available and f integrable under the target. The proposals retain their proposal distribution; weighting does not turn them into target draws. The independence-sampler column recalls the construction in Markov Chain Monte Carlo; its states are generally dependent.</p>
+<p>Acceptance–rejection needs a known global envelope. The displayed w uses normalized target and proposal densities. As in Generating Samples, it is enough to know an unnormalized target and a matching envelope: neither the target normalizer nor a normalized importance ratio is required. Use fresh independent proposals and decision uniforms, and continue until the required number of acceptances; only accepted observations enter its target average.</p>
+<p>Self-normalized IS uses all proposals too, but forms a ratio of averages instead of the ordinary IS contribution average shown in this table. Its finite-sample bias and consistency were developed separately above.</p>
+<p>Metropolized independence requires ratios of importance weights, without a global envelope. Record a state at every iteration, including repeats after rejection. Longer residence in a high-weight state supplies representation through repetition, whereas importance sampling uses explicit contribution weights. The chain has the target as an invariant distribution; this does not give exact target marginals from an arbitrary start or finite-sample unbiasedness of its average. Bounded weights can help its mixing even though a known global bound is not needed to implement it.</p>
+<p>All columns here use IID proposal draws and proposal coverage of the entire target support. For one importance-sampling integral, covering only the support of f times the target density suffices. For the ideal proposal equal to the target, w=1 and acceptance–rejection with M=1 and Metropolized independence both accept every proposal. All three then give ordinary target Monte Carlo.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="choosing-a-transformation" class="slide level2 tree-marker-slide" data-tree-marker="analysis-importance">
 <h2>Choosing a transformation</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
@@ -1336,7 +1601,7 @@ Y_{\mathrm{IS}}&amp;=g_{\mathrm{IS}}(\vZ)=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}
   <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
 </div>
 
-<p>For <span class="math inline">\(Y_g=g(\vZ)\)</span> with mean <span class="math inline">\(\mu\)</span>, write <span class="math inline">\(\sigma^2(g)=\var\{g(\vZ)\}\)</span></p>
+<p>For an <span class="alert">unbiased IID sample mean</span> of <span class="math inline">\(Y_g=g(\vZ)\)</span>, write <span class="math inline">\(\Ex(Y_g)=\mu\)</span> and <span class="math inline">\(\sigma^2(g)=\var\{g(\vZ)\}\)</span></p>
 <ul>
 <li><span class="math inline">\(\$(g)\)</span>: generate <span class="math inline">\(\vZ_i\)</span> and evaluate <span class="math inline">\(g(\vZ_i)\)</span> with all required transforms</li>
 <li><span class="math inline">\(S(g)\)</span>: setup and independent-pilot cost</li>
@@ -1984,7 +2249,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="0049831f" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="21d9e96b" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2970,6 +3235,7 @@ i=(\cdots i_2i_1i_0)_b
           display:block!important;
       }</style></aside>
 </section></section>
+<section>
 <section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="variance-low-discrepancy">
 <h1>Big Ideas</h1>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
@@ -2982,13 +3248,18 @@ i=(\cdots i_2i_1i_0)_b
 <li>Equivalent <span class="alert">expectations</span> can have dramatically different computational <span class="alert">variance</span></li>
 <li>Exact transport chooses a map that makes the target-to-proposal correction <span class="alert">constant</span><br>Importance sampling retains the correction as <span class="alert">unequal</span> weights</li>
 <li>Importance proposals may be <span class="alert">tailored</span> to a particular integrand<br>Transported target samples can be <span class="alert">reused</span> for many integrands</li>
+<li>Self-normalized IS cancels unknown density <span class="alert">scale</span><br>Its ratio is consistent under suitable conditions, but generally <span class="alert">biased</span> at finite <span class="math inline">\(n\)</span></li>
+</ul>
+</section>
+<section id="big-ideas-continued" class="slide level2" data-state="goldborder">
+<h2>Big Ideas (continued)</h2>
+<ul>
 <li>Control variates and conditioning remove variability using <span class="alert">known</span> structure</li>
 <li>Antithetic sampling and Latin hypercubes introduce useful <span class="alert">dependence</span> deliberately</li>
 <li>Low discrepancy sequences replace random <span class="alert">clustering</span> with <span class="alert">balanced</span> space filling</li>
 <li>Randomization restores <span class="alert">unbiasedness</span> and supports error estimation while retaining QMC efficiency</li>
 </ul>
-</section>
-
+</section></section>
 <section id="how-far-we-have-come" class="title-slide slide level1 center">
 <h1>How Far We Have Come</h1>
 <p>A complete path from <span class="alert">model</span> to efficient <span class="alert">estimate</span></p>

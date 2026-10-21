@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-10-20">
+  <meta name="dcterms.date" content="2026-10-21">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -709,7 +709,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">October 20, 2026</p>
+  <p class="date">October 21, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-03-overview">
 <h1>Course Map</h1>
@@ -865,6 +865,7 @@ X_0=X_1=0,
 <ul>
 <li><a href="#/the-metropolishastings-algorithm">The Metropolis–Hastings algorithm</a></li>
 <li><a href="#/why-the-acceptance-ratio-works">Why the acceptance ratio works</a></li>
+<li><a href="#/the-independence-sampler">The independence sampler</a></li>
 <li><a href="#/the-metropolis-algorithm">The Metropolis algorithm</a></li>
 <li><a href="#/metropolis-practice">Metropolis practice</a></li>
 <li><a href="#/a-random-walk-metropolis-example">A random-walk Metropolis example</a></li>
@@ -924,6 +925,49 @@ X_0=X_1=0,
 <div class="key-point">
 <p>Detailed balance preserves the target; convergence from the starting state requires suitable conditions</p>
 </div>
+</section>
+<section id="the-independence-sampler" class="slide level2 tree-marker-slide" data-tree-marker="mcmc">
+<h2>The independence sampler</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
+</div>
+
+<p>Choose <span class="alert">IID proposals</span>, independent of the current state</p>
+<p><span class="math display">\[
+\varrho_{\mathrm{prop}}(\vz\mid\vx)=\varrho_{\mathrm{prop}}(\vz)
+\]</span></p>
+<p>The Metropolis–Hastings acceptance probability becomes</p>
+<p><span class="math display">\[
+\alpha(\vx,\vz)=\min\!\left\{1,
+\frac{\widetilde\varrho_{\mathrm{tar}}(\vz)\varrho_{\mathrm{prop}}(\vx)}
+{\widetilde\varrho_{\mathrm{tar}}(\vx)\varrho_{\mathrm{prop}}(\vz)}\right\}
+\]</span></p>
+<ul>
+<li>Unknown target and proposal normalizers <span class="alert">cancel</span> from the ratio</li>
+<li>A rejected proposal gives another <span class="alert">repeat</span> of the current state</li>
+</ul>
+<div class="key-point">
+<p><span class="alert">Independent proposals</span> can produce <span class="alert">dependent chain states</span></p>
+</div>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>What happens when <span class="math inline">\(\varrho_{\mathrm{prop}}=\varrho_{\mathrm{tar}}\)</span>?</span></p>
+</div>
+<aside class="notes">
+<p>Owen, Chapter 11, Section 11.6, calls this the independence sampler or Metropolized independence sampler. Require the proposal to cover the target support and initialize in the positive target support. Separate unknown normalizing constants for the target and the state-independent proposal cancel from this product of density ratios. Keep the importance-ratio interpretation and the three-way method comparison in Improving Efficiency, after importance sampling is introduced.</p>
+<p>The proposals are IID; the chain is generally dependent because each decision uses the current state, and a rejected proposal repeats that state. Count every repeat in averages. Removing the repeats and keeping only accepted moves generally changes the sampled distribution. Target marginals hold at stationarity; convergence from another start needs the usual suitable conditions. Fresh independent proposals do not remove the dependence created by state-dependent acceptance and rejection.</p>
+<p>Exercise: if the normalized proposal equals the target, the acceptance ratio is one on its positive support and every proposal is accepted. States X_1,X_2,… are then IID target draws. A fixed starting value X_0 is not itself an IID target draw. In a discrete state space, consecutive IID draws can coincide without rejection. This is the same ideal-proposal case as Owen Exercise 11.5.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="the-metropolis-algorithm" class="slide level2 tree-marker-slide" data-tree-marker="mcmc">
 <h2>The Metropolis algorithm</h2>
@@ -1041,7 +1085,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="46ef538b" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="aae7f64b" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1060,7 +1104,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="49eaee2f" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="0d69ee55" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
