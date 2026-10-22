@@ -1,0 +1,2 @@
+# Optional dependency for notebooks/performance/GPU_MonteCarlo_Demo.ipynb
+torch>=2.8

@@ -36,7 +36,7 @@ subtitle: <span class="deck-title">{{< meta deck_title >}}</span>
 
 ::: {.column width="60%"}
 ::: {.deck-map-theme}
-[Share the work across processors, samples, and levels]{.alert}
+[Choose how to compute, optimize, search, and allocate]{.alert}
 :::
 
 :::
@@ -45,18 +45,19 @@ subtitle: <span class="deck-title">{{< meta deck_title >}}</span>
 ::: {.deck-section-links}
 <h3>This deck</h3>
 
-- [Parallel and Stochastic Computation](#parallel-and-stochastic-computation)
-- [Two-Level Monte Carlo](#two-level-monte-carlo)
+- [Parallel Computing](#parallel-computing-section)
 - [Multilevel Monte Carlo](#multilevel-monte-carlo)
+- [Stochastic Gradient Descent](#stochastic-gradient-descent-section)
+- [Monte Carlo Tree Search](#monte-carlo-tree-search)
 - [Big Ideas](#big-ideas)
 :::
 
-# Parallel and Stochastic Computation {.tree-marker-slide tree-marker="practice"}
+# Parallel Computing {#parallel-computing-section .tree-marker-slide tree-marker="practice"}
+
+<span id="parallel-and-stochastic-computation"></span>
 
 - [Parallel computing](#parallel-computing)
-- [Gradient descent](#gradient-descent)
-- [Stochastic gradient descent](#stochastic-gradient-descent)
-- [Gradient and stochastic-gradient paths](#gradient-and-stochastic-gradient-paths)
+- [CPU and GPU Monte Carlo](#cpu-and-gpu-monte-carlo)
 
 ## Parallel computing {.tree-marker-slide tree-marker="practice"}
 
@@ -74,6 +75,257 @@ Parallelism changes computational cost
 
 It does not repair biased estimators or poor sampling designs
 :::
+
+## CPU and GPU Monte Carlo {#cpu-and-gpu-monte-carlo .tree-marker-slide tree-marker="practice"}
+
+The prepared laptop demonstration compares
+
+- NumPy CPU float64 and float32
+- PyTorch CPU float32 and available GPU float32
+- One expectation and many expectations evaluated in batches
+
+Check the [actual backend]{.alert}, include generation and evaluation, and synchronize GPU timing
+
+::: {.key-point}
+A faster processor helps when the [workload outweighs its overhead]{.alert}
+:::
+
+::: {.notes}
+Instructor companion: notebooks/performance/GPU_MonteCarlo_Demo.ipynb.
+Prepared and clean-kernel validated on Mini with MPS; Fred's M5 trial and
+content review remain pending. Add the student-facing notebook link after
+review. The optional dependency is documented in requirements-gpu.txt.
+:::
+
+# Multilevel Monte Carlo {.tree-marker-slide tree-marker="estimation"}
+
+- [Two-level Monte Carlo](#two-level-monte-carlo)
+- [Allocating work optimally](#allocating-work-optimally)
+- [What two levels accomplish](#what-two-levels-accomplish)
+- [Many levels](#many-levels)
+- [Optimal multilevel allocation](#optimal-multilevel-allocation)
+- [Infinite-dimensional expectations](#infinite-dimensional-expectations)
+- [Why telescoping helps](#why-telescoping-helps)
+
+## Two-level Monte Carlo {#two-level-monte-carlo .tree-marker-slide tree-marker="estimation"}
+
+<span id="splitting-an-expectation"></span>
+
+Suppose
+
+$$
+Y=Y_1+Y_2,
+\qquad \mu=\mu_1+\mu_2,
+\qquad \mu_\ell=\Ex(Y_\ell)
+$$
+
+Estimate the two means independently:
+
+\begin{align*}
+\hmu&=\hmu_1+\hmu_2,&
+\hmu_\ell&=\frac1{n_\ell}\sum_{i=0}^{n_\ell-1}Y_{i\ell}
+\end{align*}
+
+If one sample of $Y_\ell$ costs $\$_\ell$, then
+
+\begin{align*}
+\operatorname{MSE}(\hmu)
+&=\frac{\var(Y_1)}{n_1}+\frac{\var(Y_2)}{n_2},\\
+\cost(\hmu)&=n_1\$_1+n_2\$_2
+\end{align*}
+
+The sample counts should reflect both [variance]{.alert} and [cost per sample]{.alert}
+
+## Allocating work optimally {.tree-marker-slide tree-marker="estimation"}
+
+For a fixed total cost $C$, minimize
+
+$$
+\frac{V_1}{n_1}+\frac{V_2}{n_2}
+\quad\text{subject to}\quad
+n_1\$_1+n_2\$_2=C,
+\qquad V_\ell=\var(Y_\ell)
+$$
+
+The optimal ratio is
+
+$$
+\frac{n_1}{n_2}
+=\sqrt{\frac{V_1\$_2}{V_2\$_1}}
+$$
+
+and the optimal mean squared error is
+
+$$
+\operatorname{MSE}(\hmu)
+=\frac1C\left(\sqrt{V_1\$_1}+\sqrt{V_2\$_2}\right)^2
+$$
+
+Use [more samples]{.alert} at a level with larger variance and [fewer samples]{.alert} at a level with larger cost
+
+## What two levels accomplish {.tree-marker-slide tree-marker="estimation"}
+
+- Larger $\var(Y_\ell)$ implies a larger optimal $n_\ell$
+- Larger cost $\$_\ell$ implies a smaller optimal $n_\ell$
+- Pilot samples can estimate unknown variances and costs
+- Often $\mu=\mu_1+\mu_2$, where
+  - $Y_1$ is a cheap approximation sampled often
+  - $Y_2$ is an expensive correction sampled less often
+
+::: {.key-point}
+The decomposition is useful when the [expensive correction has small variance]{.alert}
+:::
+
+## Many levels {.tree-marker-slide tree-marker="estimation"}
+
+Let
+
+$$
+Y=Y_1+\cdots+Y_L,
+\qquad \mu=\sum_{\ell=1}^L\mu_\ell,
+\qquad \mu_\ell=\Ex(Y_\ell)
+$$
+
+With independent samples at each level,
+
+\begin{align*}
+\hmu&=\sum_{\ell=1}^L\hmu_\ell,&
+\hmu_\ell&=\frac1{n_\ell}\sum_{i=0}^{n_\ell-1}Y_{i\ell},\\
+\operatorname{MSE}(\hmu)&=\sum_{\ell=1}^L\frac{V_\ell}{n_\ell},&
+\cost(\hmu)&=\sum_{\ell=1}^Ln_\ell\$_\ell
+\end{align*}
+
+The challenge is to choose both the [level decomposition]{.alert} and the [sample allocation]{.alert}
+
+## Optimal multilevel allocation {.tree-marker-slide tree-marker="estimation"}
+
+For total cost $C$, the optimal allocation is proportional to
+
+$$
+n_\ell\propto\sqrt{\frac{V_\ell}{\$_\ell}}
+$$
+
+More explicitly,
+
+$$
+n_\ell
+=\frac{C\sqrt{V_\ell/\$_\ell}}
+{\sum_{k=1}^L\sqrt{V_k\$_k}}
+$$
+
+The resulting mean squared error is
+
+$$
+\operatorname{MSE}(\hmu)
+=\frac1C\left(\sum_{\ell=1}^L\sqrt{V_\ell\$_\ell}\right)^2
+$$
+
+[Efficiency depends on keeping $V_\ell\$_\ell$ small]{.alert} across levels
+
+## Infinite-dimensional expectations {.tree-marker-slide tree-marker="estimation"}
+
+Suppose
+
+$$
+\mu=\lim_{d\to\infty}\Ex\{f_d(\vX_{1:d})\}
+$$
+
+as in an option payoff based on an increasingly fine time discretization
+
+Choose $d_1<\cdots<d_L$ and define coupled differences
+
+\begin{align*}
+Y_1&=f_{d_1}(\vX_{1:d_1}),\\
+Y_\ell&=f_{d_\ell}(\vX_{1:d_\ell})
+-f_{d_{\ell-1}}(\vX_{1:d_{\ell-1}}),
+\qquad \ell\ge2
+\end{align*}
+
+Then
+
+$$
+\Ex\{f_{d_L}(\vX_{1:d_L})\}
+=\sum_{\ell=1}^L\Ex(Y_\ell)
+$$
+
+with a remaining truncation bias $\mu-\Ex\{f_{d_L}(\vX_{1:d_L})\}$
+
+---
+
+### Cost for a multilevel error tolerance {#multilevel-cost-for-accuracy}
+
+Let $\mu_L=\Ex\{f_{d_L}(\vX_{1:d_L})\}$ and $b_L=\mu-\mu_L$
+
+Write $Y_\ell=g_\ell(\vZ_\ell)$, $\$_\ell=\$(g_\ell)$; use independent level means
+
+$$
+\operatorname{MSE}(\hmu)=b_L^2+\sum_{\ell=1}^L\frac{V_\ell}{n_\ell}
+$$
+
+Choose $L$ with $b_L^2<\varepsilon^2$; write
+$\varepsilon_{\mathrm s}^2=\varepsilon^2-b_L^2$
+
+With optimal allocation, ignoring setup and integer rounding,
+
+$$
+C(\varepsilon;g_1,\ldots,g_L)\approx\frac1{\varepsilon_{\mathrm s}^2}
+\left(\sum_{\ell=1}^L\sqrt{V_\ell\$_\ell}\right)^2
+$$
+
+For one unbiased level: $C(\varepsilon;g_1)\approx V_1\$_1/\varepsilon^2$,
+as in [Improving Efficiency]({{< meta decks.d04.file >}}#cost-for-iid-accuracy)
+
+::: {.notes}
+This extends the earlier variance-times-cost model. Conditional on a fixed
+chosen L and sample counts, the variance contributions add because level
+estimators are independent; within each coupled difference the coarse and
+fine simulations deliberately share randomness. V_l is the variance of one
+coupled difference, and $_l charges for generating that entire difference.
+
+For V_l>0 and positive per-sample costs, continuous optimal counts are
+n_l=epsilon_s^{-2} sqrt(V_l/$_l) sum_k sqrt(V_k $_k).
+Round up to positive integer sample counts for implemented nonconstant levels
+and add setup, pilot, and bias-estimation costs. A common sufficient budget is
+to bound squared bias and sampling variance by epsilon^2/2 each; the actual
+bias is usually unknown and needs a justified bound or estimate. The displayed
+identity defines the ideal budget, not a procedure for discovering the bias.
+
+L, V_l, and $_l can depend on epsilon. The epsilon_s^{-2} factor alone
+therefore does not establish the overall complexity rate. This is why the
+next slide examines how correction variance and evaluation cost vary by level.
+For an exact finite decomposition, b_L=0. For L=1 and no bias, the formula
+reduces to the IID cost model. A control variate with a known mean supplies
+its cheap expectation exactly; multilevel methods estimate the cheap-level
+expectation too and allocate work among levels.
+Source: [Giles, Multilevel Monte Carlo methods (2015)](https://people.maths.ox.ac.uk/gilesm/files/acta15.pdf).
+:::
+
+## Why telescoping helps {.tree-marker-slide tree-marker="estimation"}
+
+- Fine approximations are expensive
+- Coupling makes adjacent approximations similar
+- Their difference $Y_\ell$ can have rapidly decreasing variance
+- Sample cheap, coarse levels many times and expensive, fine corrections fewer times
+
+If $d_\ell=m^\ell$, $V_\ell\lesssim\beta^\ell$, and $\$_\ell\lesssim m^\ell$, then
+
+$$
+\sum_{\ell=1}^L\sqrt{V_\ell\$_\ell}
+\lesssim\sum_{\ell=1}^L(\beta m)^{\ell/2}
+$$
+
+- If $\beta m<1$, total stochastic cost is governed mainly by coarse levels
+- If $\beta m>1$, the finest corrections dominate
+
+::: {.key-point}
+Multilevel Monte Carlo is effective when [correction variance decays faster than correction cost grows]{.alert}
+:::
+
+# Stochastic Gradient Descent {#stochastic-gradient-descent-section .tree-marker-slide tree-marker="estimation"}
+
+- [Gradient descent](#gradient-descent)
+- [Stochastic gradient descent](#stochastic-gradient-descent)
+- [Gradient and stochastic-gradient paths](#gradient-and-stochastic-gradient-paths)
 
 ## Gradient descent {.tree-marker-slide tree-marker="estimation"}
 
@@ -113,7 +365,7 @@ Stochastic gradient descent uses an inexpensive random component:
 
 $$
 \vtheta_{k+1}=\vtheta_k-\eta_k\nabla\operatorname{loss}_{I_k}(\vtheta_k),
-\qquad I_k\sim\Unif\{1,\ldots,N\}
+\qquad I_k\sim\Unif\{0,\ldots,N-1\}
 $$
 
 Common variants include
@@ -179,235 +431,109 @@ ax.spines[["top", "right"]].set_visible(False)
 plt.show()
 ```
 
-# Two-Level Monte Carlo {.tree-marker-slide tree-marker="estimation"}
+# Monte Carlo Tree Search {.tree-marker-slide tree-marker="monte-carlo-tree-search"}
 
-- [Splitting an expectation](#splitting-an-expectation)
-- [Allocating work optimally](#allocating-work-optimally)
-- [What two levels accomplish](#what-two-levels-accomplish)
+- [Choose an action by simulating futures](#choose-an-action-by-simulating-futures)
+- [One tree-search iteration](#one-tree-search-iteration)
+- [Exploration versus exploitation](#exploration-versus-exploitation)
 
-## Splitting an expectation {.tree-marker-slide tree-marker="estimation"}
+## Choose an action by simulating futures {.tree-marker-slide tree-marker="monte-carlo-tree-search"}
 
-Suppose
+At the current state, choose an action with a high [expected return]{.alert}
 
-$$
-Y=Y_1+Y_2,
-\qquad \mu=\mu_1+\mu_2,
-\qquad \mu_\ell=\Ex(Y_\ell)
-$$
-
-Estimate the two means independently:
-
-\begin{align*}
-\hmu&=\hmu_1+\hmu_2,&
-\hmu_\ell&=\frac1{n_\ell}\sum_{i=0}^{n_\ell-1}Y_{i\ell}
-\end{align*}
-
-If one sample of $Y_\ell$ costs $\$_\ell$, then
-
-\begin{align*}
-\mse(\hmu)
-&=\frac{\var(Y_1)}{n_1}+\frac{\var(Y_2)}{n_2},\\
-\cost(\hmu)&=n_1\$_1+n_2\$_2
-\end{align*}
-
-The sample counts should reflect both [variance]{.alert} and [cost per sample]{.alert}
-
-## Allocating work optimally {.tree-marker-slide tree-marker="estimation"}
-
-For a fixed total cost $C$, minimize
-
-$$
-\frac{V_1}{n_1}+\frac{V_2}{n_2}
-\quad\text{subject to}\quad
-n_1\$_1+n_2\$_2=C,
-\qquad V_\ell=\var(Y_\ell)
-$$
-
-The optimal ratio is
-
-$$
-\frac{n_1}{n_2}
-=\sqrt{\frac{V_1\$_2}{V_2\$_1}}
-$$
-
-and the optimal mean squared error is
-
-$$
-\mse(\hmu)
-=\frac1C\left(\sqrt{V_1\$_1}+\sqrt{V_2\$_2}\right)^2
-$$
-
-Use [more samples]{.alert} at a level with larger variance and [fewer samples]{.alert} at a level with larger cost
-
-## What two levels accomplish {.tree-marker-slide tree-marker="estimation"}
-
-- Larger $\var(Y_\ell)$ implies a larger optimal $n_\ell$
-- Larger cost $\$_\ell$ implies a smaller optimal $n_\ell$
-- Pilot samples can estimate unknown variances and costs
-- Often $\mu=\mu_1+\mu_2$, where
-  - $Y_1$ is a cheap approximation sampled often
-  - $Y_2$ is an expensive correction sampled less often
+- A node represents a state or decision history; branches represent possible actions
+- A simulator generates possible continuations and their rewards
+- Grow the tree where additional simulations are most useful
+- Applications include game moves and sequential planning
 
 ::: {.key-point}
-The decomposition is useful when the [expensive correction has small variance]{.alert}
+Monte Carlo estimates guide [which action to take]{.alert} and [where to search next]{.alert}
 :::
-
-# Multilevel Monte Carlo {.tree-marker-slide tree-marker="estimation"}
-
-- [Many levels](#many-levels)
-- [Optimal multilevel allocation](#optimal-multilevel-allocation)
-- [Infinite-dimensional expectations](#infinite-dimensional-expectations)
-- [Why telescoping helps](#why-telescoping-helps)
-
-## Many levels {.tree-marker-slide tree-marker="estimation"}
-
-Let
-
-$$
-Y=Y_1+\cdots+Y_L,
-\qquad \mu=\sum_{\ell=1}^L\mu_\ell,
-\qquad \mu_\ell=\Ex(Y_\ell)
-$$
-
-With independent samples at each level,
-
-\begin{align*}
-\hmu&=\sum_{\ell=1}^L\hmu_\ell,&
-\hmu_\ell&=\frac1{n_\ell}\sum_{i=0}^{n_\ell-1}Y_{i\ell},\\
-\mse(\hmu)&=\sum_{\ell=1}^L\frac{V_\ell}{n_\ell},&
-\cost(\hmu)&=\sum_{\ell=1}^Ln_\ell\$_\ell
-\end{align*}
-
-The challenge is to choose both the [level decomposition]{.alert} and the [sample allocation]{.alert}
-
-## Optimal multilevel allocation {.tree-marker-slide tree-marker="estimation"}
-
-For total cost $C$, the optimal allocation is proportional to
-
-$$
-n_\ell\propto\sqrt{\frac{V_\ell}{\$_\ell}}
-$$
-
-More explicitly,
-
-$$
-n_\ell
-=\frac{C\sqrt{V_\ell/\$_\ell}}
-{\sum_{k=1}^L\sqrt{V_k\$_k}}
-$$
-
-The resulting mean squared error is
-
-$$
-\mse(\hmu)
-=\frac1C\left(\sum_{\ell=1}^L\sqrt{V_\ell\$_\ell}\right)^2
-$$
-
-[Efficiency depends on keeping $V_\ell\$_\ell$ small]{.alert} across levels
-
-## Infinite-dimensional expectations {.tree-marker-slide tree-marker="estimation"}
-
-Suppose
-
-$$
-\mu=\lim_{d\to\infty}\Ex\{f_d(\vX_{1:d})\}
-$$
-
-as in an option payoff based on an increasingly fine time discretization
-
-Choose $d_1<\cdots<d_L$ and define coupled differences
-
-\begin{align*}
-Y_1&=f_{d_1}(\vX_{1:d_1}),\\
-Y_\ell&=f_{d_\ell}(\vX_{1:d_\ell})
--f_{d_{\ell-1}}(\vX_{1:d_{\ell-1}}),
-\qquad \ell\ge2
-\end{align*}
-
-Then
-
-$$
-\Ex\{f_{d_L}(\vX_{1:d_L})\}
-=\sum_{\ell=1}^L\Ex(Y_\ell)
-$$
-
-with a remaining truncation bias $\mu-\Ex\{f_{d_L}(\vX_{1:d_L})\}$
-
----
-
-### Cost for a multilevel error tolerance {#multilevel-cost-for-accuracy}
-
-Let $\mu_L=\Ex\{f_{d_L}(\vX_{1:d_L})\}$ and $b_L=\mu-\mu_L$
-
-Write $Y_\ell=g_\ell(\vZ_\ell)$, $\$_\ell=\$(g_\ell)$; use independent level means
-
-$$
-\rmse^2(\hmu)=b_L^2+\sum_{\ell=1}^L\frac{V_\ell}{n_\ell}
-$$
-
-Choose $L$ with $b_L^2<\varepsilon^2$; write
-$\varepsilon_{\mathrm s}^2=\varepsilon^2-b_L^2$
-
-With optimal allocation, ignoring setup and integer rounding,
-
-$$
-C(\varepsilon;g_1,\ldots,g_L)\approx\frac1{\varepsilon_{\mathrm s}^2}
-\left(\sum_{\ell=1}^L\sqrt{V_\ell\$_\ell}\right)^2
-$$
-
-For one unbiased level: $C(\varepsilon;g_1)\approx V_1\$_1/\varepsilon^2$,
-as in [Improving Efficiency]({{< meta decks.d04.file >}}#cost-for-iid-accuracy)
 
 ::: {.notes}
-This extends the earlier variance-times-cost model. Conditional on a fixed
-chosen L and sample counts, the variance contributions add because level
-estimators are independent; within each coupled difference the coarse and
-fine simulations deliberately share randomness. V_l is the variance of one
-coupled difference, and $_l charges for generating that entire difference.
-
-For V_l>0 and positive per-sample costs, continuous optimal counts are
-n_l=epsilon_s^{-2} sqrt(V_l/$_l) sum_k sqrt(V_k $_k).
-Round up to positive integer sample counts for implemented nonconstant levels
-and add setup, pilot, and bias-estimation costs. A common sufficient budget is
-to bound squared bias and sampling variance by epsilon^2/2 each; the actual
-bias is usually unknown and needs a justified bound or estimate. The displayed
-identity defines the ideal budget, not a procedure for discovering the bias.
-
-L, V_l, and $_l can depend on epsilon. The epsilon_s^{-2} factor alone
-therefore does not establish the overall complexity rate. This is why the
-next slide examines how correction variance and evaluation cost vary by level.
-For an exact finite decomposition, b_L=0. For L=1 and no bias, the formula
-reduces to the IID cost model. A control variate with a known mean supplies
-its cheap expectation exactly; multilevel methods estimate the cheap-level
-expectation too and allocate work among levels.
-Source: [Giles, Multilevel Monte Carlo methods (2015)](https://people.maths.ox.ac.uk/gilesm/files/acta15.pdf).
+MCTS means Monte Carlo tree search, not Markov chain tree search. It is a
+sequential-decision and search method, distinct from MCMC target sampling.
+For this introduction use a finite-horizon, single-agent planning problem
+with bounded rewards and a simulator for state transitions. A return is the
+sum of future rewards, with discounting if specified. A fixed rollout policy
+estimates its own continuation value, not automatically the optimal value;
+continued tree expansion and improved decisions matter. Stochastic transitions
+can be represented by chance nodes or sampled within the simulator.
+Source: [Kocsis and Szepesvari (2006)](https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf).
 :::
 
-## Why telescoping helps {.tree-marker-slide tree-marker="estimation"}
+## One tree-search iteration {.tree-marker-slide tree-marker="monte-carlo-tree-search"}
 
-- Fine approximations are expensive
-- Coupling makes adjacent approximations similar
-- Their difference $Y_\ell$ can have rapidly decreasing variance
-- Sample cheap, coarse levels many times and expensive, fine corrections fewer times
+| Step | What happens |
+|:---|:---|
+| [Select]{.alert} | Follow branches using estimated returns and exploration bonuses |
+| [Expand]{.alert} | Add an untried action or a new node when possible |
+| [Simulate]{.alert} | Complete a rollout to a terminal state or chosen horizon |
+| [Backpropagate]{.alert} | Update visit counts and average returns along the traversed path |
 
-If $d_\ell=m^\ell$, $V_\ell\lesssim\beta^\ell$, and $\$_\ell\lesssim m^\ell$, then
-
-$$
-\sum_{\ell=1}^L\sqrt{V_\ell\$_\ell}
-\lesssim\sum_{\ell=1}^L(\beta m)^{\ell/2}
-$$
-
-- If $\beta m<1$, total stochastic cost is governed mainly by coarse levels
-- If $\beta m>1$, the finest corrections dominate
+Repeat until the simulation budget is exhausted, then choose a root action
 
 ::: {.key-point}
-Multilevel Monte Carlo is effective when [correction variance decays faster than correction cost grows]{.alert}
+Allocate simulations [adaptively]{.alert}; avoid exploring every branch equally
+:::
+
+::: {.notes}
+Backpropagation here means updating tree statistics, not differentiating
+through a neural network. Each ancestor uses the return appropriate to its
+position on the path, including rewards and discounting when relevant.
+Terminal states skip expansion and rollout. A truncated rollout may use a
+value approximation, adding modeling error. A common final choice is the
+most visited root action; distinguish that decision rule from the exploratory
+selection rule used during tree growth. Parallel rollouts are possible,
+but MCTS is a search strategy with its own separate teaching purpose.
+:::
+
+## Exploration versus exploitation {.tree-marker-slide tree-marker="monte-carlo-tree-search"}
+
+An illustrative [UCT]{.alert} selection score for visited actions is
+
+$$
+\overline Q(s,a)+c\sqrt{\frac{\log N(s)}{N(s,a)}}
+\qquad c>0
+$$
+
+- $\overline Q(s,a)$: estimated return — [exploit]{.alert} promising actions
+- $N(s)$ and $N(s,a)$: state and action visit counts
+- The bonus favors less visited actions — [explore]{.alert} uncertain alternatives
+
+For $N(s)=60$ and $c=0.2$,
+
+| Action | $N(s,a)$ | $\overline Q(s,a)$ | Selection score |
+|:---|---:|---:|---:|
+| A | 40 | 0.70 | 0.764 |
+| B | 10 | 0.60 | 0.728 |
+| C | 10 | 0.68 | 0.808 |
+
+::: {.exitem}
+<span class="exbullet">$\exstar$</span>
+<span>Which action gets the next simulation, and why is it different from the largest estimated return?</span>
+:::
+
+::: {.notes}
+Choose C, despite A having the largest current mean. Its exploration bonus
+is about 0.128 versus about 0.064 for A. Visit untried actions before applying
+the formula so no division by zero occurs. The natural logarithm is used;
+rewards are scaled to [0,1] for this illustration. UCT means upper confidence
+bounds applied to trees. The exploration parameter c depends on reward scale
+and the chosen UCT convention. This is an illustrative selection score, not
+a confidence interval for an arbitrary adaptively generated tree return.
+Tree return distributions evolve as the search policy changes; ordinary IID
+standard-error reasoning does not automatically apply. Original UCT results
+require assumptions such as bounded rewards and finite-horizon or discounted
+planning. No finite-budget optimal-action guarantee is claimed.
+Source: [Kocsis and Szepesvari, Bandit based Monte-Carlo Planning (2006)](https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf).
 :::
 
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="prob-stat-est"}
 
 - Monte Carlo samples are naturally parallel, but random streams and precision still matter
 - Stochastic gradients trade exact directions for cheaper iterations
+- Monte Carlo tree search balances [exploration]{.alert} and [exploitation]{.alert} when choosing actions
 - Two-level and multilevel estimators split work according to variance and cost
 - Coupling adjacent approximations creates low-variance corrections
 - A good hierarchy spends most computation where it buys the largest reduction in error
@@ -419,6 +545,7 @@ Multilevel Monte Carlo is effective when [correction variance decays faster than
 - [Model]({{< meta decks.d01.file >}}#sampling) — express a question as an expectation and generate suitable samples
 - [Check]({{< meta decks.d03.file >}}#interpreting-sample-discrepancy) — quantify uncertainty and compare sample distributions
 - [Improve]({{< meta decks.d04.file >}}#variance-reduction) — reduce variation with conditioning, weights, or structured points
+- [Search](#monte-carlo-tree-search) — use simulated returns to focus on promising decisions
 - [Allocate]({{< meta decks.d05.file >}}#optimal-multilevel-allocation) — distribute work across processors and approximation levels
 
 ::: {.key-point}

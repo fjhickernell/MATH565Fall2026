@@ -44,7 +44,7 @@ would benefit from understanding why a choice was made.
 
 ### 2026-08-08 — Place MCTS in Selected Topics
 
-- **Decision:** Do not add Markov chain tree search (MCTS) to the Introduction
+- **Decision:** Do not add Monte Carlo tree search (MCTS) to the Introduction
   deck; cover it in Deck 05, Selected Topics, the final deck.
 - **Rationale:** MCTS is a tree-search and sequential-decision method that uses
   exploration and exploitation; it is not an MCMC method for sampling a target

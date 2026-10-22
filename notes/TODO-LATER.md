@@ -55,15 +55,10 @@ multiple decks.
   in Generating Samples with conditional sampling, other copula families, and
   tail dependence; the introductory material is available for next year's course.
 
-- Add an accessible introduction to Monte Carlo tree search (MCTS), including
-  exploration versus exploitation, upper confidence bounds for trees (UCT),
-  and connections to stochastic optimization. It may be a short module or
-  support an optional project.
+- Review the October 21 MCTS introductory slides, including exploration versus exploitation and UCT. An executable tree-search notebook or optional project remains a possible extension.
 - Modernize the inherited gradient/stochastic-gradient notebook and clarify
   its connection to Monte Carlo methods.
-- Modernize the inherited GPU/CPU timing notebook as a separate selected-topic
-  demonstration. Qualify backend, synchronization, precision, and
-  machine-specific timing results.
+- Complete the instructor trial on Mini and content review of the migrated GPU/CPU timing notebook before adding student-facing links. Backend, synchronization, precision, and machine-specific timing qualifications are included.
 - Consider queueing simulation here if developed as a substantial application
   rather than the current Markov-chain application in Deck 03.
 - Consider kernel herding and Bayesian cubature here if they are better framed

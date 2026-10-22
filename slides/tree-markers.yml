@@ -176,6 +176,10 @@ markers:
     font_scale: 2.9
     labels: [data-driven, error-assessment]
 
+  monte-carlo-tree-search:
+    font_scale: 2.9
+    labels: [monte-carlo-tree-search]
+
   # Course Map summaries: existing labels for the content of each whole deck.
   deck-02-overview:
     width: 42%
@@ -200,4 +204,4 @@ markers:
     width: 42%
     font_scale: 1.15
     classes: [deck-summary-tree]
-    labels: [probability, statistics, analysis, cs, estimation, error-assessment, variance-reduction, multilevel, stochastic-optimization, hpc]
+    labels: [probability, statistics, analysis, cs, estimation, error-assessment, variance-reduction, multilevel, stochastic-optimization, monte-carlo-tree-search, hpc]

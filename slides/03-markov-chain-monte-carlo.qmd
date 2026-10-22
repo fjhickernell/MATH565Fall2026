@@ -148,9 +148,8 @@ Only the first is a [martingale]{.alert}: its expected next value, given the his
 
 For states in $\reals^d$, suppose
 
-- the target has normalized density $\varrho_{\mathrm{tar}}$, known up to a factor
-  through $\widetilde\varrho_{\mathrm{tar}}\propto\varrho_{\mathrm{tar}}$
-- $\varrho_{\mathrm{prop}}(\vz\mid \vx)$ proposes a new state $\vz$ from the
+- the target has an [unnormalized]{.alert} density $\widetilde\varrho_{\mathrm{tar}}$ with $\widetilde\varrho_{\mathrm{tar}}\propto\varrho_{\mathrm{tar}}$
+- conditional density $\varrho_{\mathrm{prop}}(\vz\mid \vx)$ proposes a new state $\vz$ from the
   current state $\vx$
 
 Given $\vX_0$, repeat for $i=0,\ldots,n-2$:
@@ -210,6 +209,7 @@ $$
 {\widetilde\varrho_{\mathrm{tar}}(\vx)\varrho_{\mathrm{prop}}(\vz)}\right\}
 $$
 
+- $\varrho_{\mathrm{prop}}$ may be [unnormalized]{.alert}
 - Unknown target and proposal normalizers [cancel]{.alert} from the ratio
 - A rejected proposal gives another [repeat]{.alert} of the current state
 
@@ -1030,24 +1030,24 @@ $$
 
 ## Centered discrepancy and smoothness {.tree-marker-slide tree-marker="low-discrepancy"}
 
-For $\mathcal X=[0,1]^d$, the centered-discrepancy kernel is
+For the [uniform target]{.alert} on $[0,1]^d$, use cube integrand $h(\vu)$ and kernel
 
 $$
-K(\vt,\vx)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
-\left(\abs{t_\ell-\tfrac12}+\abs{x_\ell-\tfrac12}-\abs{t_\ell-x_\ell}\right)\right]
+K(\vt,\vu)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
+\left(\abs{t_\ell-\tfrac12}+\abs{u_\ell-\tfrac12}-\abs{t_\ell-u_\ell}\right)\right]
 $$
 
 Its norm combines the function value at the center with weighted square-integrals of mixed derivatives:
 
 \begin{align*}
-\norm{f}_{\mathcal H_K}^2
-&=\abs{f(1/2,\ldots,1/2)}^2
-+\norm{\frac{\partial f(x_1,1/2,\ldots)}{\gamma_1\partial x_1}}_2^2\\
-&\quad+\norm{\frac{\partial^2 f(x_1,x_2,1/2,\ldots)}
-{\gamma_1\gamma_2\partial x_1\partial x_2}}_2^2
+\norm{h}_{\mathcal H_K}^2
+&=\abs{h(1/2,\ldots,1/2)}^2
++\norm{\frac{\partial h(u_1,1/2,\ldots)}{\gamma_1\partial u_1}}_2^2\\
+&\quad+\norm{\frac{\partial^2 h(u_1,u_2,1/2,\ldots)}
+{\gamma_1\gamma_2\partial u_1\partial u_2}}_2^2
 +\cdots
-+\norm{\frac{\partial^d f(\vx)}
-{\gamma_1\cdots\gamma_d\partial x_1\cdots\partial x_d}}_2^2
++\norm{\frac{\partial^d h(\vu)}
+{\gamma_1\cdots\gamma_d\partial u_1\cdots\partial u_d}}_2^2
 \end{align*}
 
 The weights $\gamma_\ell$ express [coordinate importance]{.alert}
@@ -1059,17 +1059,23 @@ The weights $\gamma_\ell$ express [coordinate importance]{.alert}
 Subtracting $c$ changes only the function value at the center
 
 $$
-c_*=f(1/2,\ldots,1/2)
+c_*=h(1/2,\ldots,1/2)
 $$
 
 Thus
 
 $$
-\operatorname{vtn}_K^2(f)
-=\norm{f}_{\mathcal H_K}^2-\abs{f(1/2,\ldots,1/2)}^2
+\operatorname{vtn}_K^2(h)
+=\norm{h}_{\mathcal H_K}^2-\abs{h(1/2,\ldots,1/2)}^2
 $$
 
-The remaining mixed-derivative terms measure [variation]{.alert}
+For $\mu=\Ex[h(\vU)]$ with $\vU\sim\Unif[0,1]^d$,
+
+$$
+\left|\mu-\frac1n\sum_{i=0}^{n-1}h(\vu_i)\right|
+\le D\bigl(F_{\mathrm{unif}},\{\vu_i\}_{i=0}^{n-1};K\bigr)
+\operatorname{vtn}_K(h)
+$$
 
 ::: {.key-point}
 The integral may be large even when the variation is small
@@ -1077,8 +1083,8 @@ The integral may be large even when the variation is small
 
 ::: {.notes}
 In the centered anchored Sobolev norm just displayed, the derivatives of
-f-c equal those of f. Minimizing the norm therefore sets the anchor value
-to zero. This is a concrete instance of min_c ||f-c||, not a claim that
+h-c equal those of h. Minimizing the norm therefore sets the anchor value
+to zero. This is a concrete instance of min_c ||h-c||, not a claim that
 the minimizer is the target expectation for every norm. A nonzero constant
 has positive full RKHS norm but zero variation and zero quadrature error.
 :::

@@ -483,25 +483,20 @@ into either performance notebook.
 
 ### `GPU_MonteCarlo_Demo.ipynb`
 
-- **Status:** Not migrated.
+- **Status:** Current-year copy prepared October 21, 2026; clean-kernel Mini MPS execution and figure review pass. Instructor trial on Mini and content review remain pending; a later M5 trial is optional; no student-facing link yet.
 - **Source:** `MATH565Fall2025/notebooks/GPU_MonteCarlo_Demo.ipynb`
 - **Proposed target:**
   `MATH565Fall2026/notebooks/performance/GPU_MonteCarlo_Demo.ipynb`
 - **Description:** Compares CPU and GPU Monte Carlo execution, including
   repeated experiments and a batch of many expectations.
-- **Dependencies:** NumPy, pandas, Matplotlib, PyTorch, Apple
-  `system_profiler`, `pmset`, MPS, and optional CUDA support. Results depend
-  materially on available hardware and backend.
+- **Dependencies:** Course `qmcpy` kernel, NumPy, pandas, Matplotlib, and classlib; optional PyTorch from `requirements-gpu.txt`. MPS/CUDA rows appear only when available; NumPy remains usable without PyTorch. No hardware-probing subprocesses or power-setting changes. Results depend on the actual hardware and backend.
 - **Related versions:** `Old_Stuff` contains multiple development variants,
   including `GPU_MonteCarlo_Demo Ver B.ipynb`,
   `GPU_MonteCarlo_Demo_Ver A.ipynb`,
   `GPU_MonteCarlo_Demo_with_sync_and_cuda.ipynb`, and several
   many-expectation variants. The principal notebook incorporates much of this
   work, but synchronization logic should be compared before migration.
-- **Migration concerns:** Add clear CPU fallbacks and expected-result
-  guidance, distinguish algorithmic conclusions from machine-specific
-  timings, and test on CPU, MPS, and CUDA where available. Avoid presenting
-  one machine's timings as portable results.
+- **Current design:** Bounded sample/center batches, NumPy float64/float32 and Torch CPU32/GPU32 baselines, explicit seeds, GPU synchronization, untimed warmup, independent complete runs, and theoretical/empirical RMSE comparison. Native backend sampling is a documented hardware-benchmark exception. Saved timings are Mini measurements; CUDA remains untested; instructor trial on Mini is pending and a later M5 trial is optional.
 - **Classification:** Performance is unambiguous.
 
 ### `GeneratingSamples.ipynb`
@@ -847,8 +842,7 @@ not by the accidental boundaries of the inherited files.
    `performance/AsianOptionVarianceReduction.ipynb` from the retained
    variance-reduction parts of the inherited Asian notebook. All three run
    cleanly in the local `qmcpy` kernel and have reviewed saved figures.
-8. During Deck 05 review, consolidate the gradient/stochastic-gradient
-   variants and decide whether to migrate the separate GPU notebook.
+8. The GPU notebook is prepared for Fred's local trial; complete instructor review before student-facing links. During Deck 05 review, consolidate the gradient/stochastic-gradient variants separately.
 9. Reconsider the broad `QMCPy_Introduction.ipynb` only after the focused
    course notebook family exists; omit it if it would duplicate the survey
    role of `GeneratingSamples.ipynb`.

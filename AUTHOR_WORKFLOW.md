@@ -726,6 +726,22 @@ quadrature reference values, optimization, and other supporting calculations
 without a suitable QMCPy interface. A deliberate direct inverse-CDF example
 may expose its formula for teaching; routine simulation should use QMCPy.
 
+## CPU/GPU demonstration
+
+`notebooks/performance/GPU_MonteCarlo_Demo.ipynb` is the Deck 05 hardware
+comparison. Its optional PyTorch dependency is in `requirements-gpu.txt`;
+install it into the course environment with
+`python -m pip install -r requirements-gpu.txt`. Without PyTorch, the NumPy
+comparisons still run. MPS or CUDA rows appear only when that GPU backend
+is available; CPU execution must never be labeled as GPU execution.
+
+For this hardware benchmark only, use native NumPy/PyTorch generators
+rather than routing sampling through QMCPy. Generation, evaluation, and
+reduction are included in the backend timing. Use bounded sample and center
+batches, GPU synchronization, untimed warmup, explicit seeds, and a PyTorch
+CPU float32 baseline. Timing and empirical-error results describe the machine
+that ran the notebook; rerun on the presentation machine before class.
+
 ## Notebook execution timing
 
 Every course notebook must set

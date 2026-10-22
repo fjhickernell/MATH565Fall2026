@@ -179,6 +179,14 @@ Deck 01 Course Map synchronized.
   examples. Keep proposal and target roles distinct; do not highlight every
   occurrence mechanically.
 
+## MSE and RMSE notation
+
+Use upright uppercase $\operatorname{MSE}$ and $\operatorname{RMSE}$ in
+mathematics, matching the acronyms in prose. Write MSE directly rather than
+RMSE squared when naming mean squared error. This course-specific notation
+uses explicit operators because the pinned shared `\mse` and `\rmse`
+macros display lowercase.
+
 ## Highlighting
 
 Omit unnecessary commas and periods in visible slide text and displayed

@@ -6,25 +6,51 @@ October 20 recording coverage is verified. Recap “RQMC error assessment by ind
 
 ## Immediate actions
 
-### Lecture preparation — new material awaiting review
+### Lecture preparation — October 21 revisions
 
-Deck 04 develops self-normalized IS after the ordinary IS examples: posterior
-means by likelihood weighting, finite-sample bias and consistency, the
-fixed-proposal acceptance–rejection qualification, and exact transport with an
-unknown normalizer. Weighted empirical distributions and the three-method
-comparison follow. Densities use `\varrho`; `\rho` is reserved for correlation.
-The new material stays in Deck 04, with the Deck 01 terms index updated.
+Deck 04's instructor review clarified exact transport with an unknown target
+normalizer, self-normalized IS as weighted empirical integration, and its
+kernel-discrepancy error bound. The estimator identity retains finite-sample
+bias and almost-sure convergence; g_n depends on the sample normalization.
+Deck 03's centered-discrepancy example now uses h on uniform inputs, matching
+Deck 04's f(X), g(Z), h(U) roles. MSE/RMSE are uppercase throughout the decks.
 
-The earlier independence-sampler slide remains in Deck 03 after “Why the
-acceptance ratio works” and before “The Metropolis algorithm.” Decks 02–03
-are unchanged by the normalization additions. Decks 01 and 04 render cleanly;
-All local slide-fragment links pass across the five decks. Exact finite
-examples verify the bias and conditional-unbiasedness distinctions. Review
-the teaching flow. Visual inspection remains pending
-because the browser security policy blocked the local `file://` preview.
-Keep this as newly prepared material without advancing the lecture ledger.
-Source rendering and link checks pass; remote deployment verification remains
-pending.
+RQMC stopping and notebook examples now precede low-discrepancy cost models.
+The lead separates RQMC replication/sample variances from fixed-design
+coefficient bounds and Bayesian credible intervals, including the assumptions
+and sequence/kernel matching needed for fast calculations. The replication
+allocation slide stays with stopping and uses sigma_n rather than later rate
+notation. A worked IID/RQMC cost example follows the same-RMSE comparison,
+with a large-n variance model, 16 replications, explicit power-of-two rounding,
+and a tighter-tolerance exercise with answers in notes. The cumulative recap
+now connects the earlier applications to representation, design, and cost.
+
+Decks 01, 03, 04, and 05 render; focused browser checks cover the stopping
+introduction, centered-kernel variation, expanded recap, and Deck 05 map/UCT.
+The full Checkpoint build and link audit provide final validation. Keep these
+as prepared material without advancing the lecture ledger. Remote deployment
+of the current revisions remains pending.
+
+### Selected Topics and notebook trial
+
+`notebooks/performance/GPU_MonteCarlo_Demo.ipynb` is prepared for Fred to
+Run All locally with the `qmcpy` kernel. He will try it on Mini first; M5
+is downstairs and M3 is at the office. Confirm the device summary says
+MPS — Apple GPU. Optional dependency: `python -m pip install -r requirements-gpu.txt`.
+Mini clean-kernel MPS execution passes; saved figures are inspected. Defaults
+use bounded batches; include NumPy CPU64/CPU32 and Torch CPU32/GPU32,
+one expectation and many expectations, explicit seeds, synchronized timing,
+and empirical versus theoretical error. Saved timings describe Mini, not M5.
+Instructor trial on Mini and content review remain pending; a later M5
+trial is optional. CPU-only and missing-PyTorch fallback checks also pass,
+including partial batches. Student-facing notebook
+links are withheld until review. The historical 2025 notebook stays read-only.
+
+Deck 05 section order is Parallel Computing, Multilevel Monte Carlo
+(starting with a two-level subsection), Stochastic Gradient Descent, then
+Monte Carlo Tree Search. The MCTS introduction covers purpose, one iteration,
+and a numerical UCT exploration/exploitation exercise. Review these additions;
+there is no executable MCTS notebook yet. MCTS means Monte Carlo tree search.
 
 ### Test 2 — private draft reviewed
 
@@ -774,8 +800,7 @@ decks after adding links.
   and multilevel Monte Carlo. It adds an executable gradient-path comparison.
 - Deck 03 and its four companions are instructor-reviewed as of September 10,
   2026. Decks 04–05 remain first drafts awaiting instructor review.
-- MCTS is assigned to Deck 05, Selected Topics. It remains parked until that
-  deck's review.
+- MCTS is developed as a separate introductory section in Deck 05; instructor review remains pending.
 - The root website and all five decks render with the `qmcpy` kernel, and the
   assembled site's local links resolve.
 - Fall 2025 dates, tests, assignments, Mentimeter prompts, feedback responses,
