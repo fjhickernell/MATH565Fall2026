@@ -2,7 +2,29 @@
 
 ## October 22 lecture continuation
 
-October 20 recording coverage is verified. Recap “RQMC error assessment by independent replications” and “A stopping criterion from replications,” then “Why a small pilot does not determine RQMC error.” The single-occurrence October 22 note is saved and reopened in Fantastical; schedule and ledger are reconciled through October 20. This Checkpoint publishes the schedule changes; remote deployment and live-page verification remain pending. See `notes/LECTURE-UPDATES.md` for evidence; retain the older preparation details below as historical context.
+October 22 instructor plan: first revisit the new self-normalized importance
+sampling material, then move to Stopping criteria. That lead is now a short
+route outline highlighting assumptions on both the sampling design and h. An
+IID recap continuation covers Student-t intervals (exact at fixed n for normal
+outputs) and CLT intervals (large enough n and a representative sample SD). A
+Berry–Esseen continuation states the known kurtosis-bound assumption and
+`CubMCG` parameterization. The IID recap names `CubMCCLT`; the replication
+slide names `CubQMCRepStudentT`; the stopping slide explicitly states that
+small R relies on nearly normal run estimates, which may not be established.
+Fixed-design QMC coefficient bounds and Bayesian intervals follow the RQMC
+development on a separate continuation, with all four matching QMCPy classes.
+Continue with RQMC replication-based error assessment and stopping, then pilot
+limitations as time permits. The schedule records this intended plan; it does
+not establish lecture coverage.
+
+Deck 04 and the schedule render successfully. Changed slide layouts and
+equations pass visible review; the schedule fits desktop and 390-pixel widths.
+All seven named QMCPy stopping classes and their integrate methods are verified
+in the pinned implementation; no dependency changes were made.
+
+The ledger remains reconciled through October 20. The existing October 22
+calendar note was verified previously and has not been changed to this revised
+plan. See `notes/LECTURE-UPDATES.md` for recording evidence.
 
 ## Immediate actions
 
@@ -33,13 +55,18 @@ of the current revisions remains pending.
 
 ### Selected Topics and notebook trial
 
-`notebooks/performance/GPU_MonteCarlo_Demo.ipynb` has Fred's complete saved M5
-execution: all fourteen code cells pass in 54.4 seconds, with MPS — Apple GPU,
-18 logical CPU cores, and 40 GPU cores above every summary. The six saved
-figures pass layout review; instructor review of the speedup comparisons and
-interpretation remains. Existing M5 timings and plots are preserved.
-After a kernel restart, include the first setup cell. Fred expects to use M3
-in class; run there before teaching to obtain its own timings.
+`notebooks/performance/GPU_MonteCarlo_Demo.ipynb` now has a complete saved M3
+Max execution: all fourteen code cells have successful saved outputs, with
+16 logical CPU cores, 40 GPU cores, MPS, and total runtime 1 min 28.4 sec.
+The October 22 interpretation pass preserves all code and saved measurements,
+and lightly extends the prose: same-time accuracy improves by the square root
+of speedup, generation can dominate, and the many-output error plot is not an
+accuracy rate. Deck 05 now carries these takeaways on three continuation slides,
+with M3 timing examples in presenter notes. Instructor content review remains;
+student-facing notebook links are still deferred. After a kernel restart,
+include the first setup cell. Deck 05 renders with the qmcpy kernel; all three
+new slides pass visible layout review, including the rendered accuracy formula.
+Notebook code is unchanged; JSON/Python and saved-output checks pass.
 
 The expanded workload reaches 2**24 samples and 512 simultaneous
 expectations, with bounded sample/center batches and eight replications for

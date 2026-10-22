@@ -92,9 +92,86 @@ A faster processor helps when the [workload outweighs its overhead]{.alert}
 
 ::: {.notes}
 Instructor companion: notebooks/performance/GPU_MonteCarlo_Demo.ipynb.
-Prepared and clean-kernel validated on Mini with MPS; Fred's M5 trial and
-content review remain pending. Add the student-facing notebook link after
-review. The optional dependency is documented in requirements-gpu.txt.
+Mini, M5, and classroom M3 executions are saved/verified in the course handoff;
+the current notebook outputs describe M3 Max. Content review remains with Fred.
+Add the student-facing notebook link after review. The optional dependency is
+documented in requirements-gpu.txt.
+:::
+
+---
+
+### Reading the CPU/GPU experiment {#reading-cpu-gpu-experiment}
+
+- Read speedup as [CPU time / GPU time]{.alert}: above one favors the GPU
+- Name the baseline: NumPy CPU64, NumPy CPU32, or Torch CPU32<br>
+  The ratio compares complete implementations, including their random generators
+- Small jobs can favor CPUs; larger jobs spread fixed GPU overhead over more work
+- Generation can dominate: inspect stage timings before attributing a gap to evaluation
+
+::: {.key-point}
+[End-to-end time]{.alert} determines the practical gain
+:::
+
+::: {.notes}
+In the saved M3 Max run, at 262144 points the Torch CPU32 generation diagnostic
+is 25.196 ms versus 0.719 ms for evaluation; MPS is 0.507 ms versus 0.928 ms.
+Evaluation alone does not explain the complete-run GPU advantage. These stage
+medians exclude input conversion/transfer and are not an additive breakdown
+of the complete runs. Timings are illustrative, machine-specific measurements.
+CPU and GPU core counts do not predict their speedup ratio.
+:::
+
+---
+
+### Faster computation and statistical accuracy {#parallel-speed-and-accuracy}
+
+For the same IID contribution variance, in the throughput regime
+
+$$
+\text{speedup }s
+\quad\Longrightarrow\quad
+\text{about }sn\text{ samples in the same time}
+\quad\Longrightarrow\quad
+\frac{\operatorname{RMSE}_{\mathrm{CPU}}}{\operatorname{RMSE}_{\mathrm{GPU}}}
+\approx\sqrt{s}
+$$
+
+- A speedup of 16 permits roughly [four times smaller RMSE]{.alert}
+- Total sample count controls sampling error; batch size controls memory and throughput
+- At fixed batch size, speedup can level off as both runtimes become proportional to $n$
+- Eight replications give a noisy empirical RMSE; a lucky point does not rank precision
+
+::: {.notes}
+Assume negligible floating-point error and comparable variance, and ignore
+setup/overhead in the same-time calculation. Float32 can eventually impose a
+numerical error floor; the saved experiment does not locate that floor.
+In the M3 fixed-n sweep, changing batches from 4096 to 262144 reduces GPU
+runtime from 34.22 to 3.92 ms without changing n=1048576 or its IID error law.
+Larger batches need not always help; choose using measurements and memory limits.
+:::
+
+---
+
+### Computing many expectations together {#parallel-many-expectations}
+
+- Reuse one sample batch across many functions to share generation cost and expose matrix work
+- More expectations add [outputs]{.alert}; each expectation still uses the same $n$ samples
+- Shared inputs give [correlated estimates]{.alert}; their spread is not a standard error
+- Batch samples and functions to bound memory; measure the useful workload and backend
+
+::: {.key-point}
+More outputs can improve throughput without improving accuracy per output
+:::
+
+::: {.notes}
+In the saved M3 Max run, 512 expectations take 56.8 ms on MPS: 16.4 times
+faster than NumPy CPU64, 6.3 times faster than NumPy CPU32, but only 2.0 times
+faster than Torch CPU32. The named baseline materially changes the conclusion.
+Small many-expectation timings are nonmonotone; do not infer a universal
+crossover or cause from three repetitions. Centers are added in order, changing
+the functions in the collection; mean absolute error across them is not a
+convergence curve. Independent whole-run replications are needed to assess
+sampling uncertainty. Keep the existing M3 measurements when editing prose.
 :::
 
 # Multilevel Monte Carlo {.tree-marker-slide tree-marker="estimation"}
