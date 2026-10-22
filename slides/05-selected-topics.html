@@ -747,7 +747,91 @@ This deck
 <p>A faster processor helps when the <span class="alert">workload outweighs its overhead</span></p>
 </div>
 <aside class="notes">
-<p>Instructor companion: notebooks/performance/GPU_MonteCarlo_Demo.ipynb. Prepared and clean-kernel validated on Mini with MPS; Fred’s M5 trial and content review remain pending. Add the student-facing notebook link after review. The optional dependency is documented in requirements-gpu.txt.</p>
+<p>Instructor companion: notebooks/performance/GPU_MonteCarlo_Demo.ipynb. Mini, M5, and classroom M3 executions are saved/verified in the course handoff; the current notebook outputs describe M3 Max. Content review remains with Fred. Add the student-facing notebook link after review. The optional dependency is documented in requirements-gpu.txt.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="reading-cpu-gpu-experiment">Reading the CPU/GPU experiment</h3>
+<ul>
+<li>Read speedup as <span class="alert">CPU time / GPU time</span>: above one favors the GPU</li>
+<li>Name the baseline: NumPy CPU64, NumPy CPU32, or Torch CPU32<br> The ratio compares complete implementations, including their random generators</li>
+<li>Small jobs can favor CPUs; larger jobs spread fixed GPU overhead over more work</li>
+<li>Generation can dominate: inspect stage timings before attributing a gap to evaluation</li>
+</ul>
+<div class="key-point">
+<p><span class="alert">End-to-end time</span> determines the practical gain</p>
+</div>
+<aside class="notes">
+<p>In the saved M3 Max run, at 262144 points the Torch CPU32 generation diagnostic is 25.196 ms versus 0.719 ms for evaluation; MPS is 0.507 ms versus 0.928 ms. Evaluation alone does not explain the complete-run GPU advantage. These stage medians exclude input conversion/transfer and are not an additive breakdown of the complete runs. Timings are illustrative, machine-specific measurements. CPU and GPU core counts do not predict their speedup ratio.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="parallel-speed-and-accuracy">Faster computation and statistical accuracy</h3>
+<p>For the same IID contribution variance, in the throughput regime</p>
+<p><span class="math display">\[
+\text{speedup }s
+\quad\Longrightarrow\quad
+\text{about }sn\text{ samples in the same time}
+\quad\Longrightarrow\quad
+\frac{\operatorname{RMSE}_{\mathrm{CPU}}}{\operatorname{RMSE}_{\mathrm{GPU}}}
+\approx\sqrt{s}
+\]</span></p>
+<ul>
+<li>A speedup of 16 permits roughly <span class="alert">four times smaller RMSE</span></li>
+<li>Total sample count controls sampling error; batch size controls memory and throughput</li>
+<li>At fixed batch size, speedup can level off as both runtimes become proportional to <span class="math inline">\(n\)</span></li>
+<li>Eight replications give a noisy empirical RMSE; a lucky point does not rank precision</li>
+</ul>
+<aside class="notes">
+<p>Assume negligible floating-point error and comparable variance, and ignore setup/overhead in the same-time calculation. Float32 can eventually impose a numerical error floor; the saved experiment does not locate that floor. In the M3 fixed-n sweep, changing batches from 4096 to 262144 reduces GPU runtime from 34.22 to 3.92 ms without changing n=1048576 or its IID error law. Larger batches need not always help; choose using measurements and memory limits.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="parallel-many-expectations">Computing many expectations together</h3>
+<ul>
+<li>Reuse one sample batch across many functions to share generation cost and expose matrix work</li>
+<li>More expectations add <span class="alert">outputs</span>; each expectation still uses the same <span class="math inline">\(n\)</span> samples</li>
+<li>Shared inputs give <span class="alert">correlated estimates</span>; their spread is not a standard error</li>
+<li>Batch samples and functions to bound memory; measure the useful workload and backend</li>
+</ul>
+<div class="key-point">
+<p>More outputs can improve throughput without improving accuracy per output</p>
+</div>
+<aside class="notes">
+<p>In the saved M3 Max run, 512 expectations take 56.8 ms on MPS: 16.4 times faster than NumPy CPU64, 6.3 times faster than NumPy CPU32, but only 2.0 times faster than Torch CPU32. The named baseline materially changes the conclusion. Small many-expectation timings are nonmonotone; do not infer a universal crossover or cause from three repetitions. Centers are added in order, changing the functions in the collection; mean absolute error across them is not a convergence curve. Independent whole-run replications are needed to assess sampling uncertainty. Keep the existing M3 measurements when editing prose.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1052,7 +1136,7 @@ C(\varepsilon;g_1,\ldots,g_L)\approx\frac1{\varepsilon_{\mathrm s}^2}
 </div>
 
 <p>Both methods minimize the same quadratic loss<br>Stochastic gradients use one randomly selected component at each step</p>
-<div id="3b71fd71" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
+<div id="a5b2437e" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>

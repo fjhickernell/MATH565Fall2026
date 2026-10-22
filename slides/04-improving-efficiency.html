@@ -2299,7 +2299,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="df418217" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="0d7578f9" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2822,26 +2822,83 @@ i=(\cdots i_2i_1i_0)_b
   <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
 </div>
 
-<p>For <span class="math inline">\(\mu=\Ex[h(\vU)]\)</span> with <span class="math inline">\(\vU\sim\Unif[0,1]^d\)</span>, assess error from computed values</p>
-<p><span class="alert">RQMC: independent randomizations</span></p>
+<p>For <span class="math inline">\(\mu=\Ex[h(\vU)]\)</span>, assess integration error from computed values</p>
+<div class="key-point">
+<p>Every error assessment rests on <span class="alert">assumptions</span></p>
+</div>
 <ul>
-<li>Unknown <span class="math inline">\(\operatorname{MSE}\{\hmu_n(h)\}=\var_{\mathrm{rand}}\{\hmu_n(h)\}\)</span> for an unbiased run</li>
-<li>Replicate the whole design; use the <span class="alert">sample variance of run averages</span></li>
-<li>Divide by the number of runs to estimate the variance of their reported mean</li>
-<li>Balance <span class="alert">points per design</span>, <span class="math inline">\(n\)</span>, for sample mean accuracy against <span class="alert">number of replications</span>, <span class="math inline">\(R\)</span>, for confidence in error assessment</li>
+<li>Match the <span class="alert">sampling design</span>: how the <span class="math inline">\(\vu_i\)</span> are generated and how they depend on one another</li>
+<li>Specify what is assumed about <span class="alert">the integrand <span class="math inline">\(h\)</span></span>: moments, smoothness, coefficient decay, or a probabilistic model</li>
 </ul>
-<p><span class="alert">One fixed low discrepancy design</span></p>
+<p>The following routes use different combinations of these assumptions</p>
 <ul>
-<li>Unknown <span class="math inline">\(\operatorname{vtn}_K(h)\)</span> prevents direct use of discrepancy <span class="math inline">\(\times\)</span> variation</li>
-<li>Fourier/Walsh coefficient bounds: <span class="alert">fast</span> with function-class assumptions and a matching sequence</li>
-<li>Bayesian credible intervals: generally <span class="alert">slow</span>; fast for certain kernels and matching sequences</li>
+<li><a href="#/iid-error-recap">IID recap</a>: normal-data and CLT intervals</li>
+<li><a href="#/iid-berry-esseen">IID guarantees with a kurtosis bound</a>: Berry–Esseen bounds</li>
+<li><a href="#/rqmc-error-replications">RQMC replications</a>: independent whole-design estimates</li>
+<li><a href="#/fixed-qmc-error-assessment">One fixed QMC design</a>: coefficient bounds or Bayesian intervals</li>
+</ul>
+<aside class="notes">
+<p>The sampling design includes IID generation, dependence within a randomized low discrepancy design, independence across replications, or a fixed point set. Conditions on h are evaluated together with that design: for example, normality and moments concern the induced outputs h(U), while smoothness or coefficient decay concerns h itself. For Bayesian intervals, the probabilistic integrand model supplies the interpretation of uncertainty. A method name or returned error radius alone does not verify these assumptions.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="iid-error-recap">IID recap</h3>
+<p>Let <span class="math inline">\(s_n\)</span> be the sample SD of the <span class="math inline">\(n\)</span> IID outputs <span class="math inline">\(h(\vU_i)\)</span></p>
+<p><span class="math display">\[
+\hmu_n\ \pm\ t_{1-\alpha/2,n-1}\,\frac{s_n}{\sqrt n}
+\]</span></p>
+<ul>
+<li><span class="alert">Normal IID outputs</span>: exact <span class="math inline">\((1-\alpha)\)</span> coverage at fixed <span class="math inline">\(n\)</span></li>
+<li><span class="alert">CLT approximation</span>: <span class="math inline">\(n\)</span> large enough for the <span class="alert">sample mean</span> to be nearly normal<br> Also need <span class="math inline">\(s_n\)</span> to approximate the true SD well</li>
+<li>QMCPy: <code>CubMCCLT</code> uses a two-stage <span class="alert">CLT</span> procedure with an inflated pilot SD</li>
 </ul>
 <div class="key-point">
-<p>Compare the reported error bound or interval radius with <span class="math inline">\(\varepsilon\)</span></p>
-<p>Budget exhausted <span class="math inline">\(\ne\)</span> tolerance met</p>
+<p>Compare the interval radius with <span class="math inline">\(\varepsilon\)</span>; justify <span class="alert">adaptive stopping</span> separately</p>
 </div>
 <aside class="notes">
-<p>For deterministic QMC, the discrepancy bound involves vtn_K(h), which is also generally unknown. Fourier/Walsh coefficient-decay methods can give computable bounds under stated function-class assumptions. A Bayesian credible interval instead uses an integrand model. The two groups distinguish available error-assessment routes, not mutually exclusive algorithm families. A coefficient bound can also be applied to a realized randomized design when its assumptions hold; independent replication is the additional route supplied by randomization. One fixed deterministic sequence has no randomization variance to estimate by replication. The sample variance of its individual function values does not certify integration error. Hickernell and collaborators’ data-driven Fourier/Walsh bounds exploit coefficient-decay assumptions rather than requiring the full variation as an input. Function-class assumptions justify the bounds; matching lattice or digital sequences also allow fast Fourier or Walsh coefficient calculations. Refer to the later stopping notebooks for concrete implementations. Bayesian credible intervals can use a fixed design by putting uncertainty on h; their coverage is under that model, not a randomization guarantee for an arbitrary fixed integrand. This matches the earlier average-case discussion. Generic kernel calculations can be expensive. Certain kernels paired with matching sequences give structured calculations and fast transforms, making Bayesian error assessment fast as well. Computational speed and the model assumptions supporting a credible interval are separate considerations. For IID sampling, the familiar sample variance of individual h(U_i) values divided by n estimates the variance of their mean; that calculation cannot be transferred to dependent points within an RQMC run. An RMSE target controls root mean squared error over randomizations; a confidence interval also specifies a coverage level. The target is the integral of the fixed cube integrand h. Use fixed points u_i for deterministic QMC and randomized points U_i for RQMC. The generic estimate notation is shared, but only the latter has randomization variance. A stopping procedure must supply a computable bound or interval and state the assumptions supporting it. A theoretical variation bound may be unavailable; coefficient-decay methods replace it with data-driven bounds for a specified function class. Confidence and credible intervals have different interpretations. Neither should be identified with an RMSE bound or an unconditional absolute-error guarantee. IID CLT intervals were introduced earlier; the next slides explain what replaces their standard-error calculation for RQMC.</p>
+<p>The normality assumption concerns the scalar outputs h(U_i), not the uniform inputs U_i. The Student-t confidence interval is exact for a fixed n with independent identically distributed normal outputs and positive variance. This is the interval obtained by inverting the two-sided t-test for the mean. For general IID outputs with finite positive variance, a studentized CLT justifies approximate coverage asymptotically. At a practical finite n, the mean must be sufficiently close to normal and the sample SD sufficiently representative of the true SD. A large n alone does not diagnose rare tails. The normal critical value z_(1-alpha/2) is the CLT choice; the t critical value is also asymptotically valid but is not an exact finite-sample correction for nonnormal data. Neither fixed-n result automatically justifies repeatedly checking and stopping when the displayed radius first falls below epsilon. For RQMC, within-design values are dependent; replace the IID observations by independent whole-design estimates. The later replication slides give the formula and qualifications. CubMCCLT uses a normal quantile and an inflated pilot SD, not the exact fixed-n normal-data Student-t procedure. For that fixed-n interval, use scipy.stats.t.ppf(1-alpha/2, n-1) and the ordinary sample SD (ddof=1); QMCPy has no separate IID Student-t stopping class in this pinned version. An RMSE target and confidence coverage are distinct error criteria. Budget exhausted does not mean tolerance met.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="iid-berry-esseen">IID guarantees with a kurtosis bound</h3>
+<p>For <span class="math inline">\(Y=h(\vU)\)</span>, assume a <span class="alert">known bound</span> on ordinary kurtosis</p>
+<p><span class="math display">\[
+\kappa=\frac{\Ex[(Y-\mu)^4]}{\sigma^4}\le\kappa_{\max}
+\qquad \sigma^2=\var(Y)&gt;0
+\]</span></p>
+<ul>
+<li>Berry–Esseen controls the normal-approximation error at finite sample size</li>
+<li>The kurtosis bound also controls the risk of underestimating SD from the pilot</li>
+<li>QMCPy: <code>CubMCG</code> combines a pilot with <span class="alert">Berry–Esseen/Chebyshev</span> sample sizing</li>
+<li>Its admissible <code>kurtmax</code> comes from <code>n_init</code>, <code>inflate</code>, and <code>alpha</code><br> Choose these so the assumed <span class="math inline">\(\kappa_{\max}\)</span> is within that admissible bound</li>
+</ul>
+<div class="key-point">
+<p>A sample kurtosis estimate does not establish a <span class="alert">known kurtosis bound</span></p>
+</div>
+<aside class="notes">
+<p>Kurtosis here is the standardized fourth central moment, not excess kurtosis; a normal output has kappa=3. A bounded fourth moment controls the standardized third absolute moment needed by Berry-Esseen and the variability of the pilot variance estimator. This is a conditional guarantee for a specified class of output distributions, not a universal guarantee from an apparently benign pilot. In the pinned CubMCG, alpha_sigma=alpha/2 and kurtmax=(n_init-3)/(n_init-1) + alpha_sigma<em>n_init/(1-alpha_sigma) </em> (1-1/inflate<strong>2)</strong>2. There is no kurtmax constructor keyword. Increase n_init or adjust inflate appropriately so this admissible cap covers the externally justified bound; inspect sc.kurtmax after construction. The code uses inflate on the pilot SD. An example call is sc=qmcpy.CubMCG(integrand, abs_tol=epsilon, rel_tol=0, n_init=1024, inflate=1.2, alpha=0.01); these illustrative defaults are not a claim that an arbitrary integrand satisfies the resulting kurtosis cap. Call solution,data=sc.integrate(). Check the returned error bounds and budget warnings; exhausting n_limit does not establish success. The same interface applies to the other stopping classes, with class-specific parameters. Source checked in the recorded qmcpy commit: stopping_criterion/cub_mc_g.py.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2857,6 +2914,7 @@ i=(\cdots i_2i_1i_0)_b
 <section class="slide level2">
 
 <h3 id="rqmc-error-replications">RQMC error assessment by independent replications</h3>
+<p>QMCPy: <code>CubQMCRepStudentT</code></p>
 <p>Independently randomize the <span class="alert">whole <span class="math inline">\(n\)</span>-point design</span> <span class="math inline">\(R\ge2\)</span> times</p>
 <p><span class="math display">\[\begin{align*}
 \hmu_n^{(r)}&amp;=\frac1n\sum_{i=0}^{n-1}h(\vU_i^{(r)})
@@ -2913,14 +2971,14 @@ i=(\cdots i_2i_1i_0)_b
 <p><span class="math inline">\(t_{1-\alpha/2,R-1}\)</span> is a Student-<span class="math inline">\(t\)</span> quantile; <span class="math inline">\(\alpha\)</span> is the nominal failure probability</p>
 <p>A candidate rule: increase <span class="math inline">\(n\)</span> and recompute until <span class="math inline">\(t_{1-\alpha/2,R-1}\hat\sigma_{R,n}/\sqrt R\le\varepsilon\)</span></p>
 <ul>
-<li><span class="alert">Interval approximation</span>: normality or a suitable CLT must justify Student-<span class="math inline">\(t\)</span></li>
+<li><span class="alert">Small <span class="math inline">\(R\)</span></span> in <code>CubQMCRepStudentT</code>: assume the <span class="math inline">\(\hmu_n^{(r)}\)</span> are <span class="alert">nearly normal</span><br> This assumption is <span class="alert">not always known</span> to hold</li>
 <li><span class="alert">Adaptive stopping</span>: repeated checks do not automatically preserve <span class="math inline">\(1-\alpha\)</span> coverage</li>
 </ul>
 <div class="key-point">
 <p>Even exact fixed-<span class="math inline">\(n\)</span> intervals need a <span class="alert">separate justification</span> for data-dependent stopping</p>
 </div>
 <aside class="notes">
-<p>At fixed n and R, this Student-t interval is exact for normal replicate means; otherwise it is an approximation whose adequacy depends on their distribution and R. Unbiasedness and finite variance alone do not make a small-R t interval exact. Larger n does not universally make an individual RQMC replicate asymptotically normal. For nested designs, grow each run’s n through admissible sizes, retaining its randomization. Recompute the independent run means and their across-run variance at the new n.&nbsp;A nominal fixed-sample interval does not automatically retain its coverage at a data-dependent stopping time. This is a separate issue from the normal/CLT approximation: even exact coverage at each fixed n does not imply the same coverage at a data-dependent n.&nbsp;Merely changing n on a predetermined schedule is not the problem; choosing when to report an interval using the observed estimates or widths is. Count all Rn function evaluations and the error-assessment work, including any discarded pilot work. Increasing R until an interval is narrow enough also requires a stopping-time coverage argument. A justified sequential procedure can address this, for example by allocating failure probabilities across a predetermined sequence of checks whose sum is at most alpha, provided each check has the claimed valid marginal coverage. Allocating alpha does not repair an unjustified t approximation. Time-uniform intervals are another possibility under suitable assumptions; ordinary fixed-sample t intervals do not automatically have that property. The next two slides explain why the IID pilot strategy does not transfer automatically and how points per design and replication count serve different roles in accuracy and error assessment. Sources: <a href="https://arxiv.org/html/2608.17143v1#S5.SS6">Owen (2026), Section 5.6</a> for replication intervals; <a href="https://arxiv.org/abs/1810.08240">Howard et al.&nbsp;(2021)</a> for the distinction between fixed-sample and time-uniform coverage. The latter is general sequential-inference guidance, not a ready-made confidence sequence for arbitrary RQMC designs.</p>
+<p>This Student-t confidence interval is the interval counterpart of the two-sided t-test for the mean of the independent replicate estimates. Keeping R small relies on those whole-run estimates being close to normal; this assumption may not be established for the chosen integrand and randomization. At fixed n and R, this Student-t interval is exact for normal replicate means; otherwise it is an approximation whose adequacy depends on their distribution and R. Unbiasedness and finite variance alone do not make a small-R t interval exact. Larger n does not universally make an individual RQMC replicate asymptotically normal. For nested designs, grow each run’s n through admissible sizes, retaining its randomization. Recompute the independent run means and their across-run variance at the new n.&nbsp;A nominal fixed-sample interval does not automatically retain its coverage at a data-dependent stopping time. This is a separate issue from the normal/CLT approximation: even exact coverage at each fixed n does not imply the same coverage at a data-dependent n.&nbsp;Merely changing n on a predetermined schedule is not the problem; choosing when to report an interval using the observed estimates or widths is. Count all Rn function evaluations and the error-assessment work, including any discarded pilot work. Increasing R until an interval is narrow enough also requires a stopping-time coverage argument. A justified sequential procedure can address this, for example by allocating failure probabilities across a predetermined sequence of checks whose sum is at most alpha, provided each check has the claimed valid marginal coverage. Allocating alpha does not repair an unjustified t approximation. Time-uniform intervals are another possibility under suitable assumptions; ordinary fixed-sample t intervals do not automatically have that property. The next two slides explain why the IID pilot strategy does not transfer automatically and how points per design and replication count serve different roles in accuracy and error assessment. Sources: <a href="https://arxiv.org/html/2608.17143v1#S5.SS6">Owen (2026), Section 5.6</a> for replication intervals; <a href="https://arxiv.org/abs/1810.08240">Howard et al.&nbsp;(2021)</a> for the distinction between fixed-sample and time-uniform coverage. The latter is general sequential-inference guidance, not a ready-made confidence sequence for arbitrary RQMC designs.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3004,6 +3062,55 @@ i=(\cdots i_2i_1i_0)_b
 <aside class="notes">
 <p>At fixed n, the independent run means have a fixed distribution. With finite positive variance, increasing R supports the standard CLT and asymptotically valid studentized intervals. This is not exact finite-R coverage in general. For independent unbiased run estimates, RMSE equals sigma_n/sqrt(R) exactly when the variance exists. At fixed total point count N, changing R also changes n=N/R and therefore sigma_n.&nbsp;An accuracy comparison requires information about how sigma_n changes with n; the later cost section introduces a rate model for that purpose. No rate model is needed to explain the interval-justification issue here.</p>
 <p>The practical tension is strong replication-based CLT justification with less efficient point allocation, versus efficient large RQMC designs with approximate intervals from modest replication counts. Large n alone does not provide a general normal limit for a fixed number of replications. This describes the usual Student-t replication approach, not an impossibility claim about all confidence procedures. Adaptive stopping needs the additional coverage qualifications already stated. Source: <a href="https://arxiv.org/html/2608.17143v1#S5.SS6">Owen (2026), Section 5.6</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="fixed-qmc-error-assessment">Error assessment for one fixed QMC design</h3>
+<p>For a <span class="alert">deterministic</span> design, assess the integration error of the fixed <span class="math inline">\(h\)</span></p>
+<p>Unknown <span class="math inline">\(\operatorname{vtn}_K(h)\)</span> prevents direct use of discrepancy <span class="math inline">\(\times\)</span> variation</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Error assessment</th>
+<th style="text-align: left;">QMCPy class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Fourier coefficient bound</td>
+<td style="text-align: left;"><code>CubQMCLatticeG</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Walsh coefficient bound</td>
+<td style="text-align: left;"><code>CubQMCNetG</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bayesian interval, lattice</td>
+<td style="text-align: left;"><code>CubQMCBayesLatticeG</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bayesian interval, digital net</td>
+<td style="text-align: left;"><code>CubQMCBayesNetG</code></td>
+</tr>
+</tbody>
+</table>
+<p>Coefficient bounds need decay assumptions; Bayesian intervals need an integrand model<br> These classes exploit <span class="alert">matching sequences</span> for fast calculations</p>
+<div class="key-point">
+<p>A fixed design has no replication variance<br> Its error assessment needs <span class="alert">function-class assumptions</span> or an <span class="alert">integrand model</span></p>
+</div>
+<aside class="notes">
+<p>For deterministic QMC, the discrepancy bound involves vtn_K(h), which is also generally unknown. Fourier/Walsh coefficient-decay methods can give computable bounds under stated function-class assumptions. A Bayesian credible interval instead uses an integrand model. The two groups distinguish available error-assessment routes, not mutually exclusive algorithm families. A coefficient bound can also be applied to a realized randomized design when its assumptions hold; independent replication is the additional route supplied by randomization. One fixed deterministic sequence has no randomization variance to estimate by replication. The sample variance of its individual function values does not certify integration error. Hickernell and collaborators’ data-driven Fourier/Walsh bounds exploit coefficient-decay assumptions rather than requiring the full variation as an input. Function-class assumptions justify the bounds; matching lattice or digital sequences also allow fast Fourier or Walsh coefficient calculations. Refer to the later stopping notebooks for concrete implementations. Bayesian credible intervals can use a fixed design by putting uncertainty on h; their coverage is under that model, not a randomization guarantee for an arbitrary fixed integrand. This matches the earlier average-case discussion. Generic kernel calculations can be expensive. Certain kernels paired with matching sequences give structured calculations and fast transforms, making Bayesian error assessment fast as well. Computational speed and the model assumptions supporting a credible interval are separate considerations. For IID sampling, the familiar sample variance of individual h(U_i) values divided by n estimates the variance of their mean; that calculation cannot be transferred to dependent points within an RQMC run. An RMSE target controls root mean squared error over randomizations; a confidence interval also specifies a coverage level. The target is the integral of the fixed cube integrand h. Use fixed points u_i for deterministic QMC and randomized points U_i for RQMC. The generic estimate notation is shared, but only the latter has randomization variance. A stopping procedure must supply a computable bound or interval and state the assumptions supporting it. A theoretical variation bound may be unavailable; coefficient-decay methods replace it with data-driven bounds for a specified function class. Confidence and credible intervals have different interpretations. Neither should be identified with an RMSE bound or an unconditional absolute-error guarantee. The preceding IID and RQMC slides explain sampling-based standard errors; the next slides compare concrete stopping implementations.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
