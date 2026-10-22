@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-10-21">
+  <meta name="dcterms.date" content="2026-10-22">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -643,7 +643,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">October 21, 2026</p>
+  <p class="date">October 22, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-05-overview">
 <h1>Course Map</h1>
@@ -658,6 +658,7 @@ Fred J. Hickernell
   <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
   <div class="tree-component__label" data-label-id="multilevel" style="--tree-left: 61%; --tree-top: 52%; --tree-align: center;">Multilevel<br>Monte Carlo</div>
   <div class="tree-component__label" data-label-id="stochastic-optimization" style="--tree-left: 77%; --tree-top: 46%; --tree-align: center;">Stochastic<br>Optimization</div>
+  <div class="tree-component__label" data-label-id="monte-carlo-tree-search" style="--tree-left: 56%; --tree-top: 17%; --tree-align: center;">Monte Carlo<br>Tree Search</div>
   <div class="tree-component__label" data-label-id="hpc" style="--tree-left: 69%; --tree-top: 33%; --tree-align: center;">High-Performance<br>Computing</div>
 </div>
 
@@ -677,7 +678,7 @@ Course decks
 
 </div><div class="column" style="width:60%;">
 <div class="deck-map-theme">
-<p><span class="alert">Share the work across processors, samples, and levels</span></p>
+<p><span class="alert">Choose how to compute, optimize, search, and allocate</span></p>
 </div>
 </div></div>
 <div class="deck-section-links">
@@ -685,27 +686,27 @@ Course decks
 This deck
 </h3>
 <ul>
-<li><a href="#/parallel-and-stochastic-computation">Parallel and Stochastic Computation</a></li>
-<li><a href="#/two-level-monte-carlo">Two-Level Monte Carlo</a></li>
+<li><a href="#/parallel-computing-section">Parallel Computing</a></li>
 <li><a href="#/multilevel-monte-carlo">Multilevel Monte Carlo</a></li>
+<li><a href="#/stochastic-gradient-descent-section">Stochastic Gradient Descent</a></li>
+<li><a href="#/monte-carlo-tree-search">Monte Carlo Tree Search</a></li>
 <li><a href="#/big-ideas">Big Ideas</a></li>
 </ul>
 </div>
 </section>
 
 <section>
-<section id="parallel-and-stochastic-computation" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="practice">
-<h1>Parallel and Stochastic Computation</h1>
+<section id="parallel-computing-section" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="practice">
+<h1>Parallel Computing</h1>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
 </div>
 
+<p><span id="parallel-and-stochastic-computation"></span></p>
 <ul>
 <li><a href="#/parallel-computing">Parallel computing</a></li>
-<li><a href="#/gradient-descent">Gradient descent</a></li>
-<li><a href="#/stochastic-gradient-descent">Stochastic gradient descent</a></li>
-<li><a href="#/gradient-and-stochastic-gradient-paths">Gradient and stochastic-gradient paths</a></li>
+<li><a href="#/cpu-and-gpu-monte-carlo">CPU and GPU Monte Carlo</a></li>
 </ul>
 </section>
 <section id="parallel-computing" class="slide level2 tree-marker-slide" data-tree-marker="practice">
@@ -728,94 +729,63 @@ This deck
 <p>It does not repair biased estimators or poor sampling designs</p>
 </div>
 </section>
-<section id="gradient-descent" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
-<h2>Gradient descent</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<section id="cpu-and-gpu-monte-carlo" class="slide level2 tree-marker-slide" data-tree-marker="practice">
+<h2>CPU and GPU Monte Carlo</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.2; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
 </div>
 
-<p>For</p>
-<p><span class="math display">\[
-\vtheta_* = \argmin_{\vtheta\in\reals^m}\operatorname{Loss}(\vtheta),
-\]</span></p>
-<p>gradient descent iterates</p>
-<p><span class="math display">\[
-\vtheta_{k+1}=\vtheta_k-\eta_k\nabla\operatorname{Loss}(\vtheta_k)
-\]</span></p>
+<p>The prepared laptop demonstration compares</p>
 <ul>
-<li><span class="math inline">\(\eta_k\)</span> is the step size or learning rate</li>
-<li>The loss often decreases toward a local minimum</li>
-<li>Curvature-aware methods can use second derivatives<br>Each step becomes more expensive</li>
-<li>Step sizes that are too large may overshoot<br>Step sizes that are too small converge slowly</li>
+<li>NumPy CPU float64 and float32</li>
+<li>PyTorch CPU float32 and available GPU float32</li>
+<li>One expectation and many expectations evaluated in batches</li>
 </ul>
-<p><span class="alert">Move downhill using all available data</span></p>
-</section>
-<section id="stochastic-gradient-descent" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
-<h2>Stochastic gradient descent</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+<p>Check the <span class="alert">actual backend</span>, include generation and evaluation, and synchronize GPU timing</p>
+<div class="key-point">
+<p>A faster processor helps when the <span class="alert">workload outweighs its overhead</span></p>
 </div>
-
-<p>Suppose</p>
-<p><span class="math display">\[
-\operatorname{Loss}(\vtheta)
-=\sum_{i=0}^{N-1}\operatorname{loss}_i(\vtheta)
-\]</span></p>
-<p>Computing the full gradient costs <span class="math inline">\(N\)</span> component gradients</p>
-<p>Stochastic gradient descent uses an inexpensive random component:</p>
-<p><span class="math display">\[
-\vtheta_{k+1}=\vtheta_k-\eta_k\nabla\operatorname{loss}_{I_k}(\vtheta_k),
-\qquad I_k\sim\Unif\{1,\ldots,N\}
-\]</span></p>
-<p>Common variants include</p>
-<ul>
-<li>decaying learning rates</li>
-<li>mini-batch gradients</li>
-<li>mini-batches with decay</li>
-</ul>
-<p>The stochastic gradient is <span class="alert">cheap but noisy</span><br>Averaging a mini-batch reduces its variance</p>
-</section>
-<section id="gradient-and-stochastic-gradient-paths" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
-<h2>Gradient and stochastic-gradient paths</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
-</div>
-
-<p>Both methods minimize the same quadratic loss<br>Stochastic gradients use one randomly selected component at each step</p>
-<div id="07f18053" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
-<div class="cell-output cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="05-selected-topics_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" alt="Contour plot of a quadratic loss with smooth gradient-descent and noisy stochastic-gradient trajectories approaching the minimizer" width="574" height="568"></p>
-</figure>
-</div>
-</div>
-</div>
+<aside class="notes">
+<p>Instructor companion: notebooks/performance/GPU_MonteCarlo_Demo.ipynb. Prepared and clean-kernel validated on Mini with MPS; Fred’s M5 trial and content review remain pending. Add the student-facing notebook link after review. The optional dependency is documented in requirements-gpu.txt.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
-<section id="two-level-monte-carlo" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="estimation">
-<h1>Two-Level Monte Carlo</h1>
+<section id="multilevel-monte-carlo" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="estimation">
+<h1>Multilevel Monte Carlo</h1>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
 <ul>
-<li><a href="#/splitting-an-expectation">Splitting an expectation</a></li>
+<li><a href="#/two-level-monte-carlo">Two-level Monte Carlo</a></li>
 <li><a href="#/allocating-work-optimally">Allocating work optimally</a></li>
 <li><a href="#/what-two-levels-accomplish">What two levels accomplish</a></li>
+<li><a href="#/many-levels">Many levels</a></li>
+<li><a href="#/optimal-multilevel-allocation">Optimal multilevel allocation</a></li>
+<li><a href="#/infinite-dimensional-expectations">Infinite-dimensional expectations</a></li>
+<li><a href="#/why-telescoping-helps">Why telescoping helps</a></li>
 </ul>
 </section>
-<section id="splitting-an-expectation" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
-<h2>Splitting an expectation</h2>
+<section id="two-level-monte-carlo" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Two-level Monte Carlo</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
+<p><span id="splitting-an-expectation"></span></p>
 <p>Suppose</p>
 <p><span class="math display">\[
 Y=Y_1+Y_2,
@@ -829,7 +799,7 @@ Y=Y_1+Y_2,
 \end{align*}\]</span></p>
 <p>If one sample of <span class="math inline">\(Y_\ell\)</span> costs <span class="math inline">\(\$_\ell\)</span>, then</p>
 <p><span class="math display">\[\begin{align*}
-\mse(\hmu)
+\operatorname{MSE}(\hmu)
 &amp;=\frac{\var(Y_1)}{n_1}+\frac{\var(Y_2)}{n_2},\\
 \cost(\hmu)&amp;=n_1\$_1+n_2\$_2
 \end{align*}\]</span></p>
@@ -856,7 +826,7 @@ n_1\$_1+n_2\$_2=C,
 \]</span></p>
 <p>and the optimal mean squared error is</p>
 <p><span class="math display">\[
-\mse(\hmu)
+\operatorname{MSE}(\hmu)
 =\frac1C\left(\sqrt{V_1\$_1}+\sqrt{V_2\$_2}\right)^2
 \]</span></p>
 <p>Use <span class="alert">more samples</span> at a level with larger variance and <span class="alert">fewer samples</span> at a level with larger cost</p>
@@ -881,21 +851,6 @@ n_1\$_1+n_2\$_2=C,
 <div class="key-point">
 <p>The decomposition is useful when the <span class="alert">expensive correction has small variance</span></p>
 </div>
-</section></section>
-<section>
-<section id="multilevel-monte-carlo" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="estimation">
-<h1>Multilevel Monte Carlo</h1>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
-</div>
-
-<ul>
-<li><a href="#/many-levels">Many levels</a></li>
-<li><a href="#/optimal-multilevel-allocation">Optimal multilevel allocation</a></li>
-<li><a href="#/infinite-dimensional-expectations">Infinite-dimensional expectations</a></li>
-<li><a href="#/why-telescoping-helps">Why telescoping helps</a></li>
-</ul>
 </section>
 <section id="many-levels" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
 <h2>Many levels</h2>
@@ -914,7 +869,7 @@ Y=Y_1+\cdots+Y_L,
 <p><span class="math display">\[\begin{align*}
 \hmu&amp;=\sum_{\ell=1}^L\hmu_\ell,&amp;
 \hmu_\ell&amp;=\frac1{n_\ell}\sum_{i=0}^{n_\ell-1}Y_{i\ell},\\
-\mse(\hmu)&amp;=\sum_{\ell=1}^L\frac{V_\ell}{n_\ell},&amp;
+\operatorname{MSE}(\hmu)&amp;=\sum_{\ell=1}^L\frac{V_\ell}{n_\ell},&amp;
 \cost(\hmu)&amp;=\sum_{\ell=1}^Ln_\ell\$_\ell
 \end{align*}\]</span></p>
 <p>The challenge is to choose both the <span class="alert">level decomposition</span> and the <span class="alert">sample allocation</span></p>
@@ -938,7 +893,7 @@ n_\ell
 \]</span></p>
 <p>The resulting mean squared error is</p>
 <p><span class="math display">\[
-\mse(\hmu)
+\operatorname{MSE}(\hmu)
 =\frac1C\left(\sum_{\ell=1}^L\sqrt{V_\ell\$_\ell}\right)^2
 \]</span></p>
 <p><span class="alert">Efficiency depends on keeping <span class="math inline">\(V_\ell\$_\ell\)</span> small</span> across levels</p>
@@ -975,7 +930,7 @@ Y_\ell&amp;=f_{d_\ell}(\vX_{1:d_\ell})
 <p>Let <span class="math inline">\(\mu_L=\Ex\{f_{d_L}(\vX_{1:d_L})\}\)</span> and <span class="math inline">\(b_L=\mu-\mu_L\)</span></p>
 <p>Write <span class="math inline">\(Y_\ell=g_\ell(\vZ_\ell)\)</span>, <span class="math inline">\(\$_\ell=\$(g_\ell)\)</span>; use independent level means</p>
 <p><span class="math display">\[
-\rmse^2(\hmu)=b_L^2+\sum_{\ell=1}^L\frac{V_\ell}{n_\ell}
+\operatorname{MSE}(\hmu)=b_L^2+\sum_{\ell=1}^L\frac{V_\ell}{n_\ell}
 \]</span></p>
 <p>Choose <span class="math inline">\(L\)</span> with <span class="math inline">\(b_L^2&lt;\varepsilon^2\)</span>; write <span class="math inline">\(\varepsilon_{\mathrm s}^2=\varepsilon^2-b_L^2\)</span></p>
 <p>With optimal allocation, ignoring setup and integer rounding,</p>
@@ -1026,6 +981,252 @@ C(\varepsilon;g_1,\ldots,g_L)\approx\frac1{\varepsilon_{\mathrm s}^2}
 <p>Multilevel Monte Carlo is effective when <span class="alert">correction variance decays faster than correction cost grows</span></p>
 </div>
 </section></section>
+<section>
+<section id="stochastic-gradient-descent-section" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="estimation">
+<h1>Stochastic Gradient Descent</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<ul>
+<li><a href="#/gradient-descent">Gradient descent</a></li>
+<li><a href="#/stochastic-gradient-descent">Stochastic gradient descent</a></li>
+<li><a href="#/gradient-and-stochastic-gradient-paths">Gradient and stochastic-gradient paths</a></li>
+</ul>
+</section>
+<section id="gradient-descent" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Gradient descent</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>For</p>
+<p><span class="math display">\[
+\vtheta_* = \argmin_{\vtheta\in\reals^m}\operatorname{Loss}(\vtheta),
+\]</span></p>
+<p>gradient descent iterates</p>
+<p><span class="math display">\[
+\vtheta_{k+1}=\vtheta_k-\eta_k\nabla\operatorname{Loss}(\vtheta_k)
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\eta_k\)</span> is the step size or learning rate</li>
+<li>The loss often decreases toward a local minimum</li>
+<li>Curvature-aware methods can use second derivatives<br>Each step becomes more expensive</li>
+<li>Step sizes that are too large may overshoot<br>Step sizes that are too small converge slowly</li>
+</ul>
+<p><span class="alert">Move downhill using all available data</span></p>
+</section>
+<section id="stochastic-gradient-descent" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Stochastic gradient descent</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>Suppose</p>
+<p><span class="math display">\[
+\operatorname{Loss}(\vtheta)
+=\sum_{i=0}^{N-1}\operatorname{loss}_i(\vtheta)
+\]</span></p>
+<p>Computing the full gradient costs <span class="math inline">\(N\)</span> component gradients</p>
+<p>Stochastic gradient descent uses an inexpensive random component:</p>
+<p><span class="math display">\[
+\vtheta_{k+1}=\vtheta_k-\eta_k\nabla\operatorname{loss}_{I_k}(\vtheta_k),
+\qquad I_k\sim\Unif\{0,\ldots,N-1\}
+\]</span></p>
+<p>Common variants include</p>
+<ul>
+<li>decaying learning rates</li>
+<li>mini-batch gradients</li>
+<li>mini-batches with decay</li>
+</ul>
+<p>The stochastic gradient is <span class="alert">cheap but noisy</span><br>Averaging a mini-batch reduces its variance</p>
+</section>
+<section id="gradient-and-stochastic-gradient-paths" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Gradient and stochastic-gradient paths</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>Both methods minimize the same quadratic loss<br>Stochastic gradients use one randomly selected component at each step</p>
+<div id="03d6883b" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="05-selected-topics_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" alt="Contour plot of a quadratic loss with smooth gradient-descent and noisy stochastic-gradient trajectories approaching the minimizer" width="574" height="568"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="monte-carlo-tree-search" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="monte-carlo-tree-search">
+<h1>Monte Carlo Tree Search</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="monte-carlo-tree-search" style="--tree-left: 56%; --tree-top: 17%; --tree-align: center;">Monte Carlo<br>Tree Search</div>
+</div>
+
+<ul>
+<li><a href="#/choose-an-action-by-simulating-futures">Choose an action by simulating futures</a></li>
+<li><a href="#/one-tree-search-iteration">One tree-search iteration</a></li>
+<li><a href="#/exploration-versus-exploitation">Exploration versus exploitation</a></li>
+</ul>
+</section>
+<section id="choose-an-action-by-simulating-futures" class="slide level2 tree-marker-slide" data-tree-marker="monte-carlo-tree-search">
+<h2>Choose an action by simulating futures</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="monte-carlo-tree-search" style="--tree-left: 56%; --tree-top: 17%; --tree-align: center;">Monte Carlo<br>Tree Search</div>
+</div>
+
+<p>At the current state, choose an action with a high <span class="alert">expected return</span></p>
+<ul>
+<li>A node represents a state or decision history; branches represent possible actions</li>
+<li>A simulator generates possible continuations and their rewards</li>
+<li>Grow the tree where additional simulations are most useful</li>
+<li>Applications include game moves and sequential planning</li>
+</ul>
+<div class="key-point">
+<p>Monte Carlo estimates guide <span class="alert">which action to take</span> and <span class="alert">where to search next</span></p>
+</div>
+<aside class="notes">
+<p>MCTS means Monte Carlo tree search, not Markov chain tree search. It is a sequential-decision and search method, distinct from MCMC target sampling. For this introduction use a finite-horizon, single-agent planning problem with bounded rewards and a simulator for state transitions. A return is the sum of future rewards, with discounting if specified. A fixed rollout policy estimates its own continuation value, not automatically the optimal value; continued tree expansion and improved decisions matter. Stochastic transitions can be represented by chance nodes or sampled within the simulator. Source: <a href="https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf">Kocsis and Szepesvari (2006)</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="one-tree-search-iteration" class="slide level2 tree-marker-slide" data-tree-marker="monte-carlo-tree-search">
+<h2>One tree-search iteration</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="monte-carlo-tree-search" style="--tree-left: 56%; --tree-top: 17%; --tree-align: center;">Monte Carlo<br>Tree Search</div>
+</div>
+
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Step</th>
+<th style="text-align: left;">What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="alert">Select</span></td>
+<td style="text-align: left;">Follow branches using estimated returns and exploration bonuses</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="alert">Expand</span></td>
+<td style="text-align: left;">Add an untried action or a new node when possible</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="alert">Simulate</span></td>
+<td style="text-align: left;">Complete a rollout to a terminal state or chosen horizon</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="alert">Backpropagate</span></td>
+<td style="text-align: left;">Update visit counts and average returns along the traversed path</td>
+</tr>
+</tbody>
+</table>
+<p>Repeat until the simulation budget is exhausted, then choose a root action</p>
+<div class="key-point">
+<p>Allocate simulations <span class="alert">adaptively</span>; avoid exploring every branch equally</p>
+</div>
+<aside class="notes">
+<p>Backpropagation here means updating tree statistics, not differentiating through a neural network. Each ancestor uses the return appropriate to its position on the path, including rewards and discounting when relevant. Terminal states skip expansion and rollout. A truncated rollout may use a value approximation, adding modeling error. A common final choice is the most visited root action; distinguish that decision rule from the exploratory selection rule used during tree growth. Parallel rollouts are possible, but MCTS is a search strategy with its own separate teaching purpose.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="exploration-versus-exploitation" class="slide level2 tree-marker-slide" data-tree-marker="monte-carlo-tree-search">
+<h2>Exploration versus exploitation</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="monte-carlo-tree-search" style="--tree-left: 56%; --tree-top: 17%; --tree-align: center;">Monte Carlo<br>Tree Search</div>
+</div>
+
+<p>An illustrative <span class="alert">UCT</span> selection score for visited actions is</p>
+<p><span class="math display">\[
+\overline Q(s,a)+c\sqrt{\frac{\log N(s)}{N(s,a)}}
+\qquad c&gt;0
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\overline Q(s,a)\)</span>: estimated return — <span class="alert">exploit</span> promising actions</li>
+<li><span class="math inline">\(N(s)\)</span> and <span class="math inline">\(N(s,a)\)</span>: state and action visit counts</li>
+<li>The bonus favors less visited actions — <span class="alert">explore</span> uncertain alternatives</li>
+</ul>
+<p>For <span class="math inline">\(N(s)=60\)</span> and <span class="math inline">\(c=0.2\)</span>,</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Action</th>
+<th style="text-align: right;"><span class="math inline">\(N(s,a)\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\overline Q(s,a)\)</span></th>
+<th style="text-align: right;">Selection score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">0.70</td>
+<td style="text-align: right;">0.764</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">0.728</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.68</td>
+<td style="text-align: right;">0.808</td>
+</tr>
+</tbody>
+</table>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Which action gets the next simulation, and why is it different from the largest estimated return?</span></p>
+</div>
+<aside class="notes">
+<p>Choose C, despite A having the largest current mean. Its exploration bonus is about 0.128 versus about 0.064 for A. Visit untried actions before applying the formula so no division by zero occurs. The natural logarithm is used; rewards are scaled to [0,1] for this illustration. UCT means upper confidence bounds applied to trees. The exploration parameter c depends on reward scale and the chosen UCT convention. This is an illustrative selection score, not a confidence interval for an arbitrary adaptively generated tree return. Tree return distributions evolve as the search policy changes; ordinary IID standard-error reasoning does not automatically apply. Original UCT results require assumptions such as bounded rewards and finite-horizon or discounted planning. No finite-budget optimal-action guarantee is claimed. Source: <a href="https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf">Kocsis and Szepesvari, Bandit based Monte-Carlo Planning (2006)</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
 <section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="prob-stat-est">
 <h1>Big Ideas</h1>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
@@ -1038,6 +1239,7 @@ C(\varepsilon;g_1,\ldots,g_L)\approx\frac1{\varepsilon_{\mathrm s}^2}
 <ul>
 <li>Monte Carlo samples are naturally parallel, but random streams and precision still matter</li>
 <li>Stochastic gradients trade exact directions for cheaper iterations</li>
+<li>Monte Carlo tree search balances <span class="alert">exploration</span> and <span class="alert">exploitation</span> when choosing actions</li>
 <li>Two-level and multilevel estimators split work according to variance and cost</li>
 <li>Coupling adjacent approximations creates low-variance corrections</li>
 <li>A good hierarchy spends most computation where it buys the largest reduction in error</li>
@@ -1051,6 +1253,7 @@ C(\varepsilon;g_1,\ldots,g_L)\approx\frac1{\varepsilon_{\mathrm s}^2}
 <li><a href="01-introduction.html#sampling">Model</a> — express a question as an expectation and generate suitable samples</li>
 <li><a href="03-markov-chain-monte-carlo.html#interpreting-sample-discrepancy">Check</a> — quantify uncertainty and compare sample distributions</li>
 <li><a href="04-improving-efficiency.html#variance-reduction">Improve</a> — reduce variation with conditioning, weights, or structured points</li>
+<li><a href="#/monte-carlo-tree-search">Search</a> — use simulated returns to focus on promising decisions</li>
 <li><a href="05-selected-topics.html#optimal-multilevel-allocation">Allocate</a> — distribute work across processors and approximation levels</li>
 </ul>
 <div class="key-point">

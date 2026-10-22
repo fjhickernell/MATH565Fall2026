@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-10-21">
+  <meta name="dcterms.date" content="2026-10-22">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -643,7 +643,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">October 21, 2026</p>
+  <p class="date">October 22, 2026</p>
 </section>
 <section id="we-begin-this-semester-amid-significant-change" class="slide level2">
 <h2>We begin this semester amid significant change</h2>
@@ -1519,6 +1519,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="03-markov-chain-monte-carlo.html#the-independence-sampler">Metropolized independence sampler</a></li>
 <li><a href="#/central-limit-theorem">Monte Carlo error</a></li>
 <li><a href="#/how-is-uncertainty-expressed-quantitatively">Monte Carlo method</a></li>
+<li><a href="05-selected-topics.html#monte-carlo-tree-search">Monte Carlo tree search (MCTS)</a></li>
 <li><a href="05-selected-topics.html#multilevel-monte-carlo">Multilevel Monte Carlo</a></li>
 <li><a href="#/multivariate-normal-or-gaussian-distribution">Multivariate normal distribution</a></li>
 <li><a href="02-generating-samples.html#transport-maps">Normalizing flow</a></li>
@@ -1531,6 +1532,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
+<li><a href="05-selected-topics.html#parallel-computing">Parallel computing</a></li>
 <li><a href="03-markov-chain-monte-carlo.html#parallel-tempering">Parallel tempering</a></li>
 <li><a href="#/monte-carlo-estimates-of-properties-of-y">Point estimator</a></li>
 <li><a href="04-improving-efficiency.html#posterior-means-by-likelihood-weighting">Posterior mean</a></li>
@@ -1572,6 +1574,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="02-generating-samples.html#transport-maps">Target distribution</a></li>
 <li><a href="02-generating-samples.html#transport-maps">Transport map</a></li>
 <li><a href="#/mean-squared-error-bias-and-variance">Unbiased estimator</a></li>
+<li><a href="05-selected-topics.html#exploration-versus-exploitation">Upper confidence bounds for trees (UCT)</a></li>
 <li><a href="04-improving-efficiency.html#the-van-der-corput-sequence">van der Corput sequence</a></li>
 <li><a href="#/moments-of-random-variables">Variance</a></li>
 <li><a href="#/conditional-monte-carlo">Variance reduction</a></li>
@@ -1765,7 +1768,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points<br>Compare how its <span class="math inline">\(x_1\)</span>–<span class="math inline">\(x_2\)</span> projection fills the unit square</p>
-<div id="7ff2f155" class="cell" data-execution_count="4">
+<div id="6fbab723" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1778,7 +1781,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="grid-n64">Grid, <span class="math inline">\(n=64\)</span></h3>
-<div id="88435087" class="cell" data-execution_count="5">
+<div id="54dd77c9" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1791,7 +1794,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="orthogonal-array-n64">Orthogonal array, <span class="math inline">\(n=64\)</span></h3>
-<div id="ff8e2514" class="cell" data-execution_count="6">
+<div id="a534dd60" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1804,7 +1807,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="iid-n64">IID, <span class="math inline">\(n=64\)</span></h3>
-<div id="a0cd87fa" class="cell" data-execution_count="7">
+<div id="f96a6bb7" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1817,7 +1820,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="scrambled-sobol-n64">Scrambled Sobol’, <span class="math inline">\(n=64\)</span></h3>
-<div id="3fdb9e4b" class="cell" data-execution_count="8">
+<div id="8ddb82bc" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1857,7 +1860,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 
 <p>Let <span class="math inline">\(\Theta\)</span> estimate a scalar population parameter <span class="math inline">\(\theta\)</span> <span class="math display">\[\begin{align*}
 \bias(\Theta) &amp;:= \Ex(\Theta) - \theta \quad \alerttext{unbiased means zero bias} \\
-\mse(\Theta) &amp;:= \Ex\bigl[ \bigl(\Theta - \theta \bigr)^2 \bigr] \quad \text{is the }\alerttext{mean squared error}\\
+\operatorname{MSE}(\Theta) &amp;:= \Ex\bigl[ \bigl(\Theta - \theta \bigr)^2 \bigr] \quad \text{is the }\alerttext{mean squared error}\\
 &amp; \overset{\exstar}{=} [\bias(\Theta)]^2 + \var(\Theta)
 \end{align*}\]</span></p>
 </section>
@@ -1873,11 +1876,11 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 \Ex(\hmu_n)=\mu \quad \text{$\hmu_n$ is an }\alerttext{unbiased}\text{ estimator of }\mu
 \]</span> If <span class="math inline">\(Y_0,Y_1,\ldots\)</span> are also <span class="alert">uncorrelated</span> <span class="math display">\[\begin{align*}
 \Ex(\hsigma_n^2)&amp;=\sigma^2  \quad \text{$\hsigma_n^2$ is an }\alerttext{unbiased}\text{ estimator of }\sigma^2 \\
-\mse(\hmu_n)
+\operatorname{MSE}(\hmu_n)
 &amp;:=\Ex\left[(\mu-\hmu_n)^2\right]
 =\frac{\sigma^2}{n}
 \\
-\rmse(\hmu_n)&amp; =\frac{\sigma}{\sqrt{n}}
+\operatorname{RMSE}(\hmu_n)&amp; =\frac{\sigma}{\sqrt{n}}
 \end{align*}\]</span></p>
 </section>
 <section id="shrinkage-estimators" class="slide level2 tree-marker-slide" data-tree-marker="stat-estim">
@@ -1897,7 +1900,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 \]</span></p>
 <p>The shrunken estimator <span class="math inline">\(\alpha\hmu_n\)</span> has</p>
 <p><span class="math display">\[
-\mse(\alpha\hmu_n)
+\operatorname{MSE}(\alpha\hmu_n)
 =(1-\alpha)^2\mu^2+\alpha^2\frac{\sigma^2}{n}
 \]</span></p>
 <div class="exitem">

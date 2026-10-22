@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-10-21">
+  <meta name="dcterms.date" content="2026-10-22">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -709,7 +709,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">October 21, 2026</p>
+  <p class="date">October 22, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-03-overview">
 <h1>Course Map</h1>
@@ -882,8 +882,8 @@ X_0=X_1=0,
 
 <p>For states in <span class="math inline">\(\reals^d\)</span>, suppose</p>
 <ul>
-<li>the target has normalized density <span class="math inline">\(\varrho_{\mathrm{tar}}\)</span>, known up to a factor through <span class="math inline">\(\widetilde\varrho_{\mathrm{tar}}\propto\varrho_{\mathrm{tar}}\)</span></li>
-<li><span class="math inline">\(\varrho_{\mathrm{prop}}(\vz\mid \vx)\)</span> proposes a new state <span class="math inline">\(\vz\)</span> from the current state <span class="math inline">\(\vx\)</span></li>
+<li>the target has an <span class="alert">unnormalized</span> density <span class="math inline">\(\widetilde\varrho_{\mathrm{tar}}\)</span> with <span class="math inline">\(\widetilde\varrho_{\mathrm{tar}}\propto\varrho_{\mathrm{tar}}\)</span></li>
+<li>conditional density <span class="math inline">\(\varrho_{\mathrm{prop}}(\vz\mid \vx)\)</span> proposes a new state <span class="math inline">\(\vz\)</span> from the current state <span class="math inline">\(\vx\)</span></li>
 </ul>
 <p>Given <span class="math inline">\(\vX_0\)</span>, repeat for <span class="math inline">\(i=0,\ldots,n-2\)</span>:</p>
 <ol type="1">
@@ -944,6 +944,7 @@ X_0=X_1=0,
 {\widetilde\varrho_{\mathrm{tar}}(\vx)\varrho_{\mathrm{prop}}(\vz)}\right\}
 \]</span></p>
 <ul>
+<li><span class="math inline">\(\varrho_{\mathrm{prop}}\)</span> may be <span class="alert">unnormalized</span></li>
 <li>Unknown target and proposal normalizers <span class="alert">cancel</span> from the ratio</li>
 <li>A rejected proposal gives another <span class="alert">repeat</span> of the current state</li>
 </ul>
@@ -1085,7 +1086,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="aae7f64b" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="a108f73b" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1104,7 +1105,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="0d69ee55" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="4f94731d" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1747,21 +1748,21 @@ f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx)-\frac1n\sum
   <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
 </div>
 
-<p>For <span class="math inline">\(\mathcal X=[0,1]^d\)</span>, the centered-discrepancy kernel is</p>
+<p>For the <span class="alert">uniform target</span> on <span class="math inline">\([0,1]^d\)</span>, use cube integrand <span class="math inline">\(h(\vu)\)</span> and kernel</p>
 <p><span class="math display">\[
-K(\vt,\vx)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
-\left(\abs{t_\ell-\tfrac12}+\abs{x_\ell-\tfrac12}-\abs{t_\ell-x_\ell}\right)\right]
+K(\vt,\vu)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
+\left(\abs{t_\ell-\tfrac12}+\abs{u_\ell-\tfrac12}-\abs{t_\ell-u_\ell}\right)\right]
 \]</span></p>
 <p>Its norm combines the function value at the center with weighted square-integrals of mixed derivatives:</p>
 <p><span class="math display">\[\begin{align*}
-\norm{f}_{\mathcal H_K}^2
-&amp;=\abs{f(1/2,\ldots,1/2)}^2
-+\norm{\frac{\partial f(x_1,1/2,\ldots)}{\gamma_1\partial x_1}}_2^2\\
-&amp;\quad+\norm{\frac{\partial^2 f(x_1,x_2,1/2,\ldots)}
-{\gamma_1\gamma_2\partial x_1\partial x_2}}_2^2
+\norm{h}_{\mathcal H_K}^2
+&amp;=\abs{h(1/2,\ldots,1/2)}^2
++\norm{\frac{\partial h(u_1,1/2,\ldots)}{\gamma_1\partial u_1}}_2^2\\
+&amp;\quad+\norm{\frac{\partial^2 h(u_1,u_2,1/2,\ldots)}
+{\gamma_1\gamma_2\partial u_1\partial u_2}}_2^2
 +\cdots
-+\norm{\frac{\partial^d f(\vx)}
-{\gamma_1\cdots\gamma_d\partial x_1\cdots\partial x_d}}_2^2
++\norm{\frac{\partial^d h(\vu)}
+{\gamma_1\cdots\gamma_d\partial u_1\cdots\partial u_d}}_2^2
 \end{align*}\]</span></p>
 <p>The weights <span class="math inline">\(\gamma_\ell\)</span> express <span class="alert">coordinate importance</span></p>
 </section>
@@ -1770,19 +1771,24 @@ K(\vt,\vx)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 <h3 id="variation-for-the-centered-kernel">Variation for the centered kernel</h3>
 <p>Subtracting <span class="math inline">\(c\)</span> changes only the function value at the center</p>
 <p><span class="math display">\[
-c_*=f(1/2,\ldots,1/2)
+c_*=h(1/2,\ldots,1/2)
 \]</span></p>
 <p>Thus</p>
 <p><span class="math display">\[
-\operatorname{vtn}_K^2(f)
-=\norm{f}_{\mathcal H_K}^2-\abs{f(1/2,\ldots,1/2)}^2
+\operatorname{vtn}_K^2(h)
+=\norm{h}_{\mathcal H_K}^2-\abs{h(1/2,\ldots,1/2)}^2
 \]</span></p>
-<p>The remaining mixed-derivative terms measure <span class="alert">variation</span></p>
+<p>For <span class="math inline">\(\mu=\Ex[h(\vU)]\)</span> with <span class="math inline">\(\vU\sim\Unif[0,1]^d\)</span>,</p>
+<p><span class="math display">\[
+\left|\mu-\frac1n\sum_{i=0}^{n-1}h(\vu_i)\right|
+\le D\bigl(F_{\mathrm{unif}},\{\vu_i\}_{i=0}^{n-1};K\bigr)
+\operatorname{vtn}_K(h)
+\]</span></p>
 <div class="key-point">
 <p>The integral may be large even when the variation is small</p>
 </div>
 <aside class="notes">
-<p>In the centered anchored Sobolev norm just displayed, the derivatives of f-c equal those of f.&nbsp;Minimizing the norm therefore sets the anchor value to zero. This is a concrete instance of min_c ||f-c||, not a claim that the minimizer is the target expectation for every norm. A nonzero constant has positive full RKHS norm but zero variation and zero quadrature error.</p>
+<p>In the centered anchored Sobolev norm just displayed, the derivatives of h-c equal those of h. Minimizing the norm therefore sets the anchor value to zero. This is a concrete instance of min_c ||h-c||, not a claim that the minimizer is the target expectation for every norm. A nonzero constant has positive full RKHS norm but zero variation and zero quadrature error.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
