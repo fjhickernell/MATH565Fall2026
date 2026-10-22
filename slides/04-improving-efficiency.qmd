@@ -2174,12 +2174,19 @@ $$
 - [CLT approximation]{.alert}: $n$ large enough for the [sample mean]{.alert} to be nearly normal<br>
   Also need $s_n$ to approximate the true SD well
 - QMCPy: `CubMCCLT` uses a two-stage [CLT]{.alert} procedure with an inflated pilot SD
+- Other IID stopping criteria exploit [known bounds on $h$]{.alert}, using concentration inequalities
 
 ::: {.key-point}
 Compare the interval radius with $\varepsilon$; justify [adaptive stopping]{.alert} separately
 :::
 
 ::: {.notes}
+Known bounds a <= h(U) <= b permit distribution-free concentration bounds
+such as Hoeffding's inequality. Valid sequential stopping still needs an
+appropriate construction, such as a confidence sequence or allocated failure
+probabilities across checks; a fixed-n concentration bound alone does not
+automatically justify repeated checks. This aside does not claim that the
+listed QMCPy classes implement these bounded-output alternatives.
 The normality assumption concerns the scalar outputs h(U_i), not the uniform
 inputs U_i. The Student-t confidence interval is exact for a fixed n with
 independent identically distributed normal outputs and positive variance.
