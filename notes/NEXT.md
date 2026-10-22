@@ -33,18 +33,29 @@ of the current revisions remains pending.
 
 ### Selected Topics and notebook trial
 
-`notebooks/performance/GPU_MonteCarlo_Demo.ipynb` is prepared for Fred to
-Run All locally with the `qmcpy` kernel. He will try it on Mini first; M5
-is downstairs and M3 is at the office. Confirm the device summary says
-MPS — Apple GPU. Optional dependency: `python -m pip install -r requirements-gpu.txt`.
-Mini clean-kernel MPS execution passes; saved figures are inspected. Defaults
-use bounded batches; include NumPy CPU64/CPU32 and Torch CPU32/GPU32,
-one expectation and many expectations, explicit seeds, synchronized timing,
-and empirical versus theoretical error. Saved timings describe Mini, not M5.
-Instructor trial on Mini and content review remain pending; a later M5
-trial is optional. CPU-only and missing-PyTorch fallback checks also pass,
-including partial batches. Student-facing notebook
-links are withheld until review. The historical 2025 notebook stays read-only.
+`notebooks/performance/GPU_MonteCarlo_Demo.ipynb` is ready for Fred's M5
+trial after successful Mini execution. Synchronize the course checkout on M5,
+select the `qmcpy` kernel, reload the notebook from disk, and Run All.
+Confirm MPS — Apple GPU and the printed model/processor above each summary.
+After a kernel restart, include the first setup cell. Fred expects to use M3
+in class; run there before teaching to obtain its own timings.
+
+The expanded workload reaches 2**24 samples and 512 simultaneous
+expectations, with bounded sample/center batches and eight replications for
+the single expectation. Speedup graphs for both sample count and number of
+expectations compare GPU32 with NumPy CPU64/CPU32 and Torch CPU32.
+Run-specific takeaways interpret the ratios, accuracy, and overhead.
+Generation/evaluation diagnostics and the fixed-total batch-size sweep
+separate costs. Evaluation alone shares NumPy-generated inputs; complete
+runs and generation timings use each backend's native generator, the
+documented hardware-benchmark exception.
+
+Full Mini MPS execution and reduced CPU-only/missing-PyTorch checks pass,
+including partial batches; CUDA, Windows, and Linux execution remain untested.
+Apple Silicon uses MPS with float32. Optional PyTorch installation:
+`python -m pip install -r requirements-gpu.txt`. Local plotting expects LaTeX;
+set `use_tex=False` if it is unavailable. Student-facing links await instructor
+review. Keep the historical 2025 notebook read-only.
 
 Deck 05 section order is Parallel Computing, Multilevel Monte Carlo
 (starting with a two-level subsection), Stochastic Gradient Descent, then

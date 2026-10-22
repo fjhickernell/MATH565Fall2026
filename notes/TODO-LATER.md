@@ -58,7 +58,7 @@ multiple decks.
 - Review the October 21 MCTS introductory slides, including exploration versus exploitation and UCT. An executable tree-search notebook or optional project remains a possible extension.
 - Modernize the inherited gradient/stochastic-gradient notebook and clarify
   its connection to Monte Carlo methods.
-- Complete the instructor trial on Mini and content review of the migrated GPU/CPU timing notebook before adding student-facing links. Backend, synchronization, precision, and machine-specific timing qualifications are included.
+- Complete the expanded GPU/CPU timing notebook trial on M5, its content review, and classroom-M3 execution before adding student-facing links. Initial Mini execution is complete. Backend, synchronization, precision, and machine-specific timing qualifications are included.
 - Consider queueing simulation here if developed as a substantial application
   rather than the current Markov-chain application in Deck 03.
 - Consider kernel herding and Bayesian cubature here if they are better framed

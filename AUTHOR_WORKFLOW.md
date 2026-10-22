@@ -742,6 +742,19 @@ batches, GPU synchronization, untimed warmup, explicit seeds, and a PyTorch
 CPU float32 baseline. Timing and empirical-error results describe the machine
 that ran the notebook; rerun on the presentation machine before class.
 
+The extended classroom defaults take roughly one minute on Mini, with small cases for
+overhead and larger cases for throughput. Read separate generation/evaluation
+timings and the fixed-total batch-size sweep before attributing a performance
+gap to hardware or a framework. Report speedup against explicit CPU64 and
+CPU32 baselines for both sample count and number of expectations, label each
+summary with the machine and processor, and provide declarative, run-specific
+interpretations rather than discussion questions. Share inputs only for evaluation-only diagnostics;
+complete-run and generation-only timings use native backend generators.
+MPS is the Apple GPU backend; do not equate
+CUDA unavailability with unavailable GPU execution. Reload an externally
+revised notebook before Run All; after a kernel restart include its first
+setup cell so imports and the runtime timer are initialized.
+
 ## Notebook execution timing
 
 Every course notebook must set

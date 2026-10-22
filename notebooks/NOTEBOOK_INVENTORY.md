@@ -483,20 +483,20 @@ into either performance notebook.
 
 ### `GPU_MonteCarlo_Demo.ipynb`
 
-- **Status:** Current-year copy prepared October 21, 2026; clean-kernel Mini MPS execution and figure review pass. Instructor trial on Mini and content review remain pending; a later M5 trial is optional; no student-facing link yet.
+- **Status:** Current-year copy prepared October 21, 2026; clean-kernel Mini MPS execution and figure review pass. Initial Mini trial completed; M5 trial and classroom-M3 execution remain pending; no student-facing link yet.
 - **Source:** `MATH565Fall2025/notebooks/GPU_MonteCarlo_Demo.ipynb`
 - **Proposed target:**
   `MATH565Fall2026/notebooks/performance/GPU_MonteCarlo_Demo.ipynb`
 - **Description:** Compares CPU and GPU Monte Carlo execution, including
   repeated experiments and a batch of many expectations.
-- **Dependencies:** Course `qmcpy` kernel, NumPy, pandas, Matplotlib, and classlib; optional PyTorch from `requirements-gpu.txt`. MPS/CUDA rows appear only when available; NumPy remains usable without PyTorch. No hardware-probing subprocesses or power-setting changes. Results depend on the actual hardware and backend.
+- **Dependencies:** Course `qmcpy` kernel, NumPy, pandas, Matplotlib, and classlib; optional PyTorch from `requirements-gpu.txt`. MPS/CUDA rows appear only when available; NumPy remains usable without PyTorch. A read-only macOS hardware lookup labels each summary with the model and processor; no power-setting changes. Results depend on the actual hardware and backend.
 - **Related versions:** `Old_Stuff` contains multiple development variants,
   including `GPU_MonteCarlo_Demo Ver B.ipynb`,
   `GPU_MonteCarlo_Demo_Ver A.ipynb`,
   `GPU_MonteCarlo_Demo_with_sync_and_cuda.ipynb`, and several
   many-expectation variants. The principal notebook incorporates much of this
   work, but synchronization logic should be compared before migration.
-- **Current design:** Bounded sample/center batches, NumPy float64/float32 and Torch CPU32/GPU32 baselines, explicit seeds, GPU synchronization, untimed warmup, independent complete runs, and theoretical/empirical RMSE comparison. Native backend sampling is a documented hardware-benchmark exception. Saved timings are Mini measurements; CUDA remains untested; instructor trial on Mini is pending and a later M5 trial is optional.
+- **Current design:** Extended classroom sweep validated at 67.2 seconds on Mini, up to 2**24 samples and 512 expectations, bounded sample/center batches, NumPy float64/float32 and Torch CPU32/GPU32 baselines, explicit seeds, GPU synchronization, untimed warmup, and empirical/theoretical RMSE. Diagnostics separate native normal generation from shared-input evaluation and sweep batch size at fixed total sample count. Direct speedup plots versus sample count and number of expectations, with machine/processor labels and run-specific declarative takeaways, show whether gains persist or plateau. Native backend sampling is a documented hardware-benchmark exception. Mini MPS, CPU-only, and missing-PyTorch checks pass; CUDA remains untested. Fred ran the initial version on Mini; M5 trial and a classroom-M3 run remain pending.
 - **Classification:** Performance is unambiguous.
 
 ### `GeneratingSamples.ipynb`

@@ -553,7 +553,7 @@ appropriate phase rather than appended indiscriminately.
   - [ ] Review Lectures 04–05 individually with the instructor and refine
     their scope, narrative, examples, and visible layout.
   - [x] Add an introductory Monte Carlo tree search (MCTS) section in Deck 05, separate from parallel computing and stochastic optimization; instructor review remains pending.
-  - [x] Prepare the CPU/GPU notebook with bounded batches and clean Mini MPS execution; Instructor trial on Mini and review remain pending; a later M5 trial is optional.
+  - [x] Prepare the CPU/GPU notebook with bounded batches and clean Mini MPS execution; Initial instructor trial on Mini is complete; the expanded notebook adds diagnostics, both speedup graphs, and machine labels. M5 trial, content review, and classroom-M3 execution remain pending.
 - [ ] Adapt course pages and policies to the authoritative repository.
 - [ ] Migrate assignments, notebooks, examples, and required static assets.
 - [ ] Review migrated material for obsolete dates, links, software
