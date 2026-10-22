@@ -9,9 +9,9 @@
   displayed lecture materials; distinguish substantive coverage from previews
   and deferred explanations.
 
-The schedule is reconciled through October 20. The August 18–September 17
+The schedule is reconciled through October 22. The August 18–September 17
 rows record the historical audit without retroactive calendar edits; the
-October 22 continuation note is saved and verified in Fantastical.
+October 29 continuation note is saved and verified in Fantastical.
 
 | Instructional meeting | Status | Panopto recording | Next instructional event annotated | Checked |
 |---|---|---|---|---|
@@ -32,6 +32,7 @@ October 22 continuation note is saved and verified in Fantastical.
 | October 8, 2026 | Reconciled: transformation and control-variate cost comparisons; antithetic pairs, variance derivation, and IID Asian/lookback comparison; van der Corput digit reversal introduced; Asian-option variance/time interpretation deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3e54f9a3-1129-4057-bba0-b4dd011bcf4d) | October 15, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Calendar occurrence only; recap van der Corput, resume Deck 04 at “Four low discrepancy families,” and return to deferred Asian-option variance/time interpretation | October 8, 2026 |
 | October 15, 2026 | Reconciled: copulas/Gaussian-copula sampling; IID accuracy/cost model and equal-accuracy comparison; van der Corput recap; lattice, Kronecker, and digital constructions through point 5 of the board example; final two points deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=37356fdf-5d86-4468-8110-b4e40118d2e1) | October 20, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Fred → Calendar occurrence only; finish digital board points 6 and 7, then “Construct with new generators” and “Randomized low discrepancy sampling” | October 18, 2026 |
 | October 20, 2026 | Reconciled: low discrepancy constructions; copula clarification; component-by-component construction; randomized sampling, RQMC variance, independent replications, and stopping-rule caveats | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=9fc4759d-09e7-447b-989c-b4e9011b62b2) | October 22, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Fred → Calendar occurrence only; Recap “RQMC error assessment by independent replications” and “A stopping criterion from replications,” then “Why a small pilot does not determine RQMC error” | October 20, 2026 |
+| October 22, 2026 | Reconciled: independent Metropolis sampler and self-normalized importance sampling review; IID/RQMC stopping, pilot limitations and fixed-design error assessment; notebook examples and deterministic/RQMC cost comparisons through the tighter-RMSE exercise | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=62e2ad09-589c-491c-8ad1-b4eb011512d0) | October 29, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Fred → Calendar occurrence only; resume Deck 04 at “Big Ideas (continued),” then “Choose the Method for the Task” and Deck 05; October 27 is Test 2 | October 22, 2026 |
 
 Recording evidence: Deck 02 mixture/acceptance–rejection unit-cube review
 preceded Deck 03 (33:06). Unbiased discrepancy began at 37:06; RKHS and
@@ -178,3 +179,14 @@ The readiness notice in Illinois Tech Fred identifies a 10:02 AM start and a 1:1
 Playback was paused and muted; the temporary recording tab was closed. The schedule changes are included in the October 20 Checkpoint; remote deployment and live-page verification remain pending.
 
 Validation: the changed schedule page renders successfully in Quarto; updated October rows and surrounding tables were inspected at desktop and 390-pixel widths. Continuation source files and explicit anchors resolve. `git diff --check` passes.
+
+
+## October 22 recording evidence
+
+Illinois Tech Fred readiness notice: 10:02 AM start, approximately 1:13:38. Inspected the transition index, downloaded transcript and closing slide with playback muted. Independent-proposal Metropolis review precedes self-normalized importance sampling (11:09–20:27). RQMC variance starts at 30:27, IID recap at 37:00, kurtosis-bound guarantees at 40:24, independent replications at 41:39, stopping at 44:39, pilot limitations at 48:12, and fixed-design error assessment at 49:09. Notebook examples appear at 51:42–57:30; cost discussion starts at 58:54, equal-RMSE comparison at 1:04:54 and the worked comparison at 1:05:03. The closing transcript completes the tenfold-tighter RMSE exercise with n=1024 per run and 16 replications, versus one million IID evaluations. The visible closing slide at 1:10:19 is “Worked cost comparison: IID versus RQMC.” Test discussion at the end reiterates the existing exclusion of stopping and cost from Test 2; assessment coverage remains unchanged.
+
+Saved the October 29 continuation using Only This Event, closed and reopened it in Fantastical. Verified title, PH 109, October 29, 10:00–11:15 AM Chicago, and persisted note; calendar selector identifies Illinois Tech Fred → Calendar. October 27 is assessment-only.
+
+Validation: Quarto schedule render and both repositories’ `git diff --check` pass. The new continuation anchor resolves in the rendered Deck 04. Browser layout inspection could not finish because computer-use calls timed out. Fantastical was restored to its original Today week view with the task search cleared; Safari returned to its original ESPN tab after the muted recording tab was closed. Mail search cleanup was attempted but final read-back timed out, so its restored view remains unverified. Changes remain uncommitted and unpublished.
+
+Checkpoint validation: the instructor’s tighter Keister tolerance (`0.0005`) passes clean qmcpy-kernel execution. Refreshed saved outputs together because the prior plot preceded the changed stopping table. Schedule render, continuation-anchor check and whitespace checks pass; browser layout verification remains pending after the earlier app-control timeout.

@@ -1,6 +1,15 @@
 # Next task
 
-## October 22 lecture continuation
+## October 29 lecture continuation
+
+October 22 recording is reconciled through the worked IID/RQMC cost comparison and its tighter-RMSE exercise. Resume Deck 04 at “Big Ideas (continued),” then “Choose the Method for the Task” and transition to Deck 05. October 27 is Test 2; preserve its announced coverage. October 29 single-occurrence note is saved and reopened in Fantastical on Illinois Tech Fred → Calendar, PH 109, 10:00–11:15 AM Chicago. Schedule and ledger updates are included in the teaching Checkpoint; remote deployment and live-page verification remain pending. Earlier preparation notes below are historical where superseded by this recording evidence.
+
+The Keister companion retains the instructor’s `0.0005` stopping tolerance.
+A clean qmcpy-kernel run refreshes its saved tables and plot together; the
+IID rule exhausts its sample budget while the replicated Sobol and Walsh
+rules report tolerance met under their respective assumptions.
+
+## Earlier preparation — October 22 lecture
 
 October 22 instructor plan: first revisit the new self-normalized importance
 sampling material, then move to Stopping criteria. That lead is now a short
