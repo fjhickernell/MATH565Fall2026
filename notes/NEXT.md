@@ -33,10 +33,11 @@ of the current revisions remains pending.
 
 ### Selected Topics and notebook trial
 
-`notebooks/performance/GPU_MonteCarlo_Demo.ipynb` is ready for Fred's M5
-trial after successful Mini execution. Synchronize the course checkout on M5,
-select the `qmcpy` kernel, reload the notebook from disk, and Run All.
-Confirm MPS — Apple GPU and the printed model/processor above each summary.
+`notebooks/performance/GPU_MonteCarlo_Demo.ipynb` has Fred's complete saved M5
+execution: all fourteen code cells pass in 54.4 seconds, with MPS — Apple GPU,
+18 logical CPU cores, and 40 GPU cores above every summary. The six saved
+figures pass layout review; instructor review of the speedup comparisons and
+interpretation remains. Existing M5 timings and plots are preserved.
 After a kernel restart, include the first setup cell. Fred expects to use M3
 in class; run there before teaching to obtain its own timings.
 
@@ -50,7 +51,7 @@ separate costs. Evaluation alone shares NumPy-generated inputs; complete
 runs and generation timings use each backend's native generator, the
 documented hardware-benchmark exception.
 
-Full Mini MPS execution and reduced CPU-only/missing-PyTorch checks pass,
+Full Mini and M5 MPS executions and reduced CPU-only/missing-PyTorch checks pass,
 including partial batches; CUDA, Windows, and Linux execution remain untested.
 Apple Silicon uses MPS with float32. Optional PyTorch installation:
 `python -m pip install -r requirements-gpu.txt`. Local plotting expects LaTeX;

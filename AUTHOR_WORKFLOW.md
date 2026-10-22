@@ -747,8 +747,9 @@ overhead and larger cases for throughput. Read separate generation/evaluation
 timings and the fixed-total batch-size sweep before attributing a performance
 gap to hardware or a framework. Report speedup against explicit CPU64 and
 CPU32 baselines for both sample count and number of expectations, label each
-summary with the machine and processor, and provide declarative, run-specific
-interpretations rather than discussion questions. Share inputs only for evaluation-only diagnostics;
+summary with the machine, processor, and reported GPU core count, and provide
+declarative, run-specific interpretations rather than discussion questions.
+Share inputs only for evaluation-only diagnostics;
 complete-run and generation-only timings use native backend generators.
 MPS is the Apple GPU backend; do not equate
 CUDA unavailability with unavailable GPU execution. Reload an externally
