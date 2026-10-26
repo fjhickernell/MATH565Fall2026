@@ -270,6 +270,7 @@ appropriate phase rather than appended indiscriminately.
     - [x] Connect the shared archive-search instructions and dynamic MATH 565
       archive listing.
     - [x] Adopt the established test and examination instructions.
+    - [x] Complete and review the private Test 2 draft; final printing remains.
     - [x] Schedule Test 2 for October 27 in PH 109; set the published
       On Paper Canvas item for 11:15 AM; add the date to the course
       website sources; and post the all-sections announcement.
