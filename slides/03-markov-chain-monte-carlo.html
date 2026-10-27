@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-10-26">
+  <meta name="dcterms.date" content="2026-10-27">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -709,7 +709,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">October 26, 2026</p>
+  <p class="date">October 27, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-03-overview">
 <h1>Course Map</h1>
@@ -1086,7 +1086,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="7c47ffbe" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="f41d9636" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1105,7 +1105,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="ae8e6cb4" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="6ce3b553" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -3035,6 +3035,7 @@ D_{k}^{\mathrm{arr}}-t\mid D_{k}^{\mathrm{arr}}&gt;t\sim\Exp(\lambda)
         // When h changes, keep forcing v=0 for a short window (ms).
         let lockH = null;
         let lockUntil = 0;
+        let linkedTarget = null;
 
         function nowMs() {
           return (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
@@ -3045,14 +3046,49 @@ D_{k}^{\mathrm{arr}}-t\mid D_{k}^{\mathrm{arr}}&gt;t\sim\Exp(\lambda)
           lockUntil = nowMs() + ms;
         }
 
+        function preserveHashTarget(requestedHash) {
+          // Named headings can be inside a continuation slide rather than on
+          // its section element. Resolve the containing slide before navigation.
+          const isHashChange = requestedHash && typeof requestedHash.newURL === "string";
+          const requested = isHashChange ? new URL(requestedHash.newURL).hash : requestedHash;
+          const hash = (typeof requested === "string" ? requested : window.location.hash).replace(/^#\/?/, "");
+          if (!hash) return;
+          let destination;
+          if (/^\d+(\/\d+)?(\/\d+)?$/.test(hash)) {
+            const parts = hash.split("/").map(Number);
+            destination = { h: parts[0], v: parts[1] || 0, f: parts[2] };
+          } else {
+            let target;
+            try { target = document.getElementById(decodeURIComponent(hash)); }
+            catch (_) { return; }
+            const slide = target && target.closest("section.slide");
+            if (!slide) return;
+            destination = Reveal.getIndices(slide);
+          }
+          linkedTarget = { h: destination.h, v: destination.v || 0, until: nowMs() + 1000 };
+          lockH = null;
+          if (isHashChange) Reveal.slide(destination.h, destination.v || 0, destination.f);
+        }
+
         function snapTopIfNeeded(tag) {
           if (!window.Reveal || !Reveal.getIndices || !Reveal.slide) return;
+          if (Reveal.isReady && !Reveal.isReady()) return;
 
           if (Reveal.isOverview && Reveal.isOverview()) return;
           if (Reveal.isPaused && Reveal.isPaused()) return;
 
           const idx = Reveal.getIndices();
           const t = nowMs();
+
+          // A deliberate hash jump must retain its requested vertical slide.
+          // Arrow navigation still starts a new horizontal section at its top.
+          if (linkedTarget && t <= linkedTarget.until && idx.h === linkedTarget.h) {
+            prevH = idx.h;
+            lockH = null;
+            if (idx.v === linkedTarget.v) linkedTarget = null;
+            return;
+          }
+          if (linkedTarget && t > linkedTarget.until) linkedTarget = null;
 
           // Detect any horizontal move (either direction) and start a lock.
           if (prevH === null) {
@@ -3084,7 +3120,18 @@ D_{k}^{\mathrm{arr}}-t\mid D_{k}^{\mathrm{arr}}&gt;t\sim\Exp(\lambda)
           Reveal.on("ready", function () { snapTopIfNeeded("ready"); });
         }
 
+        // Capture runs before Reveal reads the new hash, including browser
+        // back/forward and same-document links to another section's child slide.
+        window.addEventListener("hashchange", preserveHashTarget, true);
         window.addEventListener("hashchange", function () { snapTopIfNeeded("hashchange"); });
+        document.addEventListener("click", function (event) {
+          const link = event.target.closest && event.target.closest("a[href]");
+          if (!link) return;
+          const url = new URL(link.href, window.location.href);
+          if (url.origin === window.location.origin && url.pathname === window.location.pathname && url.search === window.location.search) {
+            preserveHashTarget(url.hash);
+          }
+        }, true);
 
         // Safari/WebKit occasionally fails to repaint Reveal slides after focus returns.
         const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
