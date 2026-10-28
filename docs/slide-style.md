@@ -73,6 +73,9 @@ Deck 01 Course Map synchronized.
 
 ## MATH 565 terminology and notation
 
+- Write `\dim V` for the dimension of a single space. Use parentheses for
+  compound arguments, such as `\dim(V+W)` and `\dim(V\cap W)`. Apply this
+  convention consistently across course materials.
 - Use bold vector notation for points and random inputs in multidimensional
   spaces: `\vx`, `\vt`, `\vX`, and corresponding shared vector macros.
   Carry it through function and kernel arguments, densities, differentials,
