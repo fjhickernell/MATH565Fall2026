@@ -35,7 +35,7 @@ finalized.
 |---|---------|---------|---------|
 | September 15, 2026 | Test 1 | [Introduction](../slides/01-introduction.html)<br>[Generating Samples](../slides/02-generating-samples.html)<br>PH 109 | [Test 1 solutions and score distribution](../assets/tests/current/MATH565Test1Fall2026_Answers.pdf) |
 | October 27, 2026 | Test 2 | [Markov Chain Monte Carlo](../slides/03-markov-chain-monte-carlo.html)<br>[Improving Efficiency](../slides/04-improving-efficiency.html)<br>PH 109 | TBA |
-| TBA | Final Exam—Take-Home and In-Class | Date, time, and location will be posted when scheduled by the Registrar.<br>Cumulative, with greater emphasis on material not covered by Test 1 or Test 2.<br>**No arrangements to take in-class earlier** | TBA |
+| December 9, 2026 | Final Exam—Take-Home and In-Class | In-class: 8:00–10:00 AM America/Chicago (CST)<br>PH 109<br>Cumulative, with greater emphasis on material not covered by Test 1 or Test 2.<br>**No arrangements to take in-class earlier** | TBA |
 
 ---
 

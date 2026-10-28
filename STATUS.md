@@ -70,6 +70,9 @@ appropriate phase rather than appended indiscriminately.
     - [x] Mark Thanksgiving Day, November 26, as no class.
     - [x] Record the classroom as PH 109 (room change September 10, 2026).
     - [x] Add a TBA final-exam entry for the following week.
+    - [x] Replace the final-examination placeholders in the Schedule and
+      assessment page with Wednesday, December 9, 2026, 8:00–10:00 AM
+      America/Chicago (CST), PH 109, confirmed by the Registrar.
     - [x] Reserve Assignment 4, 5, and 6 due dates on October 7,
       October 21, and November 13 with details pending.
     - [x] Leave unknown topics, materials, and additional dates blank.
@@ -281,8 +284,7 @@ appropriate phase rather than appended indiscriminately.
     - [x] State that final-examination dates will be posted when scheduled by
       the Registrar and that the cumulative examination will emphasize
       material not covered by Test 1 or Test 2.
-    - [ ] Finalize coverage, rooms, final-exam date/time/location, and current
-      PDF links.
+    - [ ] Finalize remaining assessment coverage and current PDF links.
     - [x] Validate recursive submodule initialization and archive enumeration.
     - [x] Validate Quarto rendering and generated page structure.
     - [ ] Inspect the visible page layout in a browser.

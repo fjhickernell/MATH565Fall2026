@@ -1,5 +1,14 @@
 # Next task
 
+## Final-examination schedule — October 28 update
+
+The Schedule and assessment page now list the Registrar-confirmed in-class
+final: Wednesday, December 9, 2026, 8:00–10:00 AM America/Chicago (CST),
+PH 109. The full website and all 5 decks render without warnings; assembled
+local links resolve and schedule tables pass desktop/phone checks. These changes
+are included in this Checkpoint; remote deployment and live verification remain
+pending.
+
 ## October 29 lecture continuation
 
 October 22 recording is reconciled through the worked IID/RQMC cost comparison and its tighter-RMSE exercise. Resume Deck 04 at “Big Ideas (continued),” then “Choose the Method for the Task” and transition to Deck 05. October 27 is Test 2; preserve its announced coverage. October 29 single-occurrence note is saved and reopened in Fantastical on Illinois Tech Fred → Calendar, PH 109, 10:00–11:15 AM Chicago. Schedule and ledger updates are included in the teaching Checkpoint; remote deployment and live-page verification remain pending. Earlier preparation notes below are historical where superseded by this recording evidence.
