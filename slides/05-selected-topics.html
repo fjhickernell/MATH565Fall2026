@@ -898,7 +898,7 @@ s=\frac{\operatorname{time}_{\mathrm{baseline}}(n)}{\operatorname{time}_{\mathrm
 </div>
 
 <p><span id="splitting-an-expectation"></span></p>
-<p>A finer approximation <span class="math inline">\(f_d(\vX_{1:d})\)</span> to <span class="math inline">\(f_\infty(\vX)\)</span> costs more to evaluate<br> Illustrative <span class="alert">work per evaluation</span>: <span class="math inline">\(\$(f_d)\propto d\)</span></p>
+<p>Take the fine approximation <span class="math inline">\(f_{d_2}(\vX_{1:d_2})\)</span> as the <span class="alert">target</span>; larger dimensions cost more<br> Illustrative <span class="alert">work per evaluation</span>: <span class="math inline">\(\$(f_d)\propto d\)</span></p>
 <ul>
 <li><span class="alert">Computational finance</span>: <span class="math inline">\(d=\)</span> time steps <span class="math inline">\(\times\)</span> number of assets</li>
 <li><span class="alert">ODE/PDE models with random fields</span>: <span class="math inline">\(d=\)</span> grid points representing the field</li>
@@ -915,7 +915,7 @@ Y_2&amp;=f_{d_2}(\vX_{1:d_2})-f_{d_1}(\vX_{1:d_1})&amp; &amp;\text{expensive cor
 <p>Estimate the <span class="alert">cheap part often</span> and the <span class="alert">expensive correction less often</span>, if its error is easier to control</p>
 </div>
 <aside class="notes">
-<p>The target is mu=E[f_infinity(X)]. The finite fine approximation has mean mu_d2; mu-mu_d2 remains an approximation bias whatever the sample counts. The displayed linear cost is an illustrative model for evaluation, not a universal dimension law. Cost includes input generation, transforms, and evaluation; dense factorizations or other solvers can cost more than O(d). In finance, d can count the scalar random inputs for a time-by-asset path discretization. In a random-field ODE/PDE model, d can count field values on a grid; the field-generation and solver costs need not be linear in d. A complete coupled correction costs roughly the fine evaluation plus any coarse work that cannot be reused. Its cost is typically of order d2 in this illustrative setting, whereas the cheap level costs order d1. Within Y2, coarse and fine approximations share a path or compatible inputs. For time discretizations, construct the coarse increments from fine ones; do not run an unrelated coarse path. Between the two level estimators, use independent samples or independent RQMC randomizations. A small mean correction does not imply a small variance or a small QMC error constant. Coupling should make the correction easier to integrate; that property, together with the cost ratio, must justify two levels.</p>
+<p>The two-level target is the finite fine mean mu_d2. Approximation bias relative to a limiting target mu is introduced separately in the hierarchy section. The displayed linear cost is an illustrative model for evaluation, not a universal dimension law. Cost includes input generation, transforms, and evaluation; dense factorizations or other solvers can cost more than O(d). In finance, d can count the scalar random inputs for a time-by-asset path discretization. In a random-field ODE/PDE model, d can count field values on a grid; the field-generation and solver costs need not be linear in d. A complete coupled correction costs roughly the fine evaluation plus any coarse work that cannot be reused. Its cost is typically of order d2 in this illustrative setting, whereas the cheap level costs order d1. Within Y2, coarse and fine approximations share a path or compatible inputs. For time discretizations, construct the coarse increments from fine ones; do not run an unrelated coarse path. Between the two level estimators, use independent samples or independent RQMC randomizations. A small mean correction does not imply a small variance or a small QMC error constant. Coupling should make the correction easier to integrate; that property, together with the cost ratio, must justify two levels.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -951,19 +951,27 @@ Y_2&amp;=f_{d_2}(\vX_{1:d_2})-f_{d_1}(\vX_{1:d_1})&amp; &amp;\text{expensive cor
 </tr>
 <tr class="even">
 <td style="text-align: left;"><span class="math inline">\(n_\ell\)</span></td>
-<td style="text-align: left;">Number of level-<span class="math inline">\(\ell\)</span> contribution evaluations</td>
+<td style="text-align: left;">Total contribution evaluations at level <span class="math inline">\(\ell\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><span class="math inline">\(A_\ell\)</span></td>
-<td style="text-align: left;">Level-error amplitude in <span class="math inline">\(A_\ell n_\ell^{-p}\)</span></td>
+<td style="text-align: left;">Method-specific error amplitude in <span class="math inline">\(A_\ell n_\ell^{-p}\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><span class="math inline">\(p&gt;0\)</span></td>
-<td style="text-align: left;">Error-decay power as the point count increases</td>
+<td style="text-align: left;">Common error-decay power as the point count increases</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><span class="math inline">\(\$_\ell\)</span></td>
 <td style="text-align: left;">Work for one complete level-<span class="math inline">\(\ell\)</span> contribution</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(w_\ell\)</span></td>
+<td style="text-align: left;">Relative point-count weight: <span class="math inline">\(n_\ell\propto w_\ell\)</span>; work weights are <span class="math inline">\(\$_\ell w_\ell\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\varepsilon\)</span></td>
+<td style="text-align: left;">RMSE or absolute-error tolerance relative to <span class="math inline">\(\mu_{d_2}\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><span class="math inline">\(C=n_1\$_1+n_2\$_2\)</span></td>
@@ -973,6 +981,7 @@ Y_2&amp;=f_{d_2}(\vX_{1:d_2})-f_{d_1}(\vX_{1:d_1})&amp; &amp;\text{expensive cor
 </table>
 </div>
 <p>Random methods use <span class="alert">RMSE</span>; deterministic QMC uses an <span class="alert">absolute-error bound</span></p>
+<p>IID/RQMC: <span class="math inline">\(w_\ell=(A_\ell^2/\$_\ell)^{1/(2p+1)}\)</span>; deterministic weights follow <a href="#/deterministic-two-level-estimates">their error bound</a></p>
 <aside class="notes">
 <p>All work is measured in consistent units. A contribution evaluation includes its required inputs and transforms; the correction includes both coarse and fine evaluations, allowing any legitimate reuse. A_l and p depend on the integration method and level integrand. Only IID gives A_l^2=Var(Y_l). For RQMC with fixed replication count, n_l counts all evaluated points across runs. Later C(epsilon) denotes this same total work as a function of tolerance, not a second kind of cost. Setup/pilots and integer rounding are separate from this introductory linear-work model.</p>
 <style type="text/css">
@@ -995,9 +1004,9 @@ Y_2&amp;=f_{d_2}(\vX_{1:d_2})-f_{d_1}(\vX_{1:d_1})&amp; &amp;\text{expensive cor
 \hmu&amp;=\hmu_1+\hmu_2&amp;
 \hmu_\ell&amp;=\frac1{n_\ell}\sum_{i=0}^{n_\ell-1}Y_{i,\ell}\\
 \var(\hmu)&amp;=\var(\hmu_1)+\var(\hmu_2)&amp;
-\cost(\hmu)&amp;=n_1\$_1+n_2\$_2
+C&amp;=n_1\$_1+n_2\$_2
 \end{align*}\]</span></p>
-<p>For unbiased level estimates, model <span class="math inline">\(\operatorname{RMSE}(\hmu_\ell)\approx A_\ell n_\ell^{-p}\)</span></p>
+<p>For unbiased level estimates, model <span class="math inline">\(\operatorname{RMSE}(\hmu_\ell;\mu_\ell)\approx A_\ell n_\ell^{-p}\)</span></p>
 <p><span class="math display">\[
 \operatorname{MSE}(\hmu;\mu_{d_2})
 =\var(\hmu)
@@ -1008,7 +1017,7 @@ Y_2&amp;=f_{d_2}(\vX_{1:d_2})-f_{d_1}(\vX_{1:d_1})&amp; &amp;\text{expensive cor
 <li><span class="alert">RQMC</span>: <span class="math inline">\(p\)</span> and <span class="math inline">\(A_\ell\)</span> depend on smoothness, design, and randomization<br> Points within each sample set may be dependent</li>
 </ul>
 <aside class="notes">
-<p>The MSE here is relative to the finite fine target mu_d2, not mu_infinity. Use a positive common exponent p for this allocation model and positive amplitudes A_l. Different levels can have different rates; the common-p formulas are a simplifying model, not a claim that all rates agree. For RQMC, Y_il are values from a randomized design with the correct marginals. Unbiasedness is assumed, and the variance is over design randomizations. Variance addition requires Cov(hmu1,hmu2)=0; independence is sufficient, not necessary. The explicitly indexed sample sets can be generated independently between levels, with independent RQMC randomizations. Within-level points may be dependent. The algebraically defined Y1 and Y2 need not be uncorrelated when evaluated on the same path; the zero-covariance condition is on their separately sampled level means. Within the correction Y2, retain the coarse/fine coupling. With a fixed number R of independent runs per level, n_l can denote total evaluations; absorb fixed replication factors into A_l and keep cost per evaluation consistent. More explicitly, n_l=R N_l and Var(mean of R runs) approximately a_l^2 N_l^{-2p}/R, so the amplitude in total-count notation is A_l=a_l R^{p-1/2}. Keep R fixed when varying n_l. Smooth integrands under suitable scrambling may have p near 3/2, ignoring logarithmic factors; a generic random shift does not guarantee that rate.</p>
+<p>The MSE here is relative to the finite fine target mu_d2. Use a positive common exponent p for this allocation model and positive amplitudes A_l. Different levels can have different rates; the common-p formulas are a simplifying model, not a claim that all rates agree. For RQMC, Y_il are values from a randomized design with the correct marginals. Unbiasedness is assumed, and the variance is over design randomizations. Variance addition requires Cov(hmu1,hmu2)=0; independence is sufficient, not necessary. The explicitly indexed sample sets can be generated independently between levels, with independent RQMC randomizations. Within-level points may be dependent. The algebraically defined Y1 and Y2 need not be uncorrelated when evaluated on the same path; the zero-covariance condition is on their separately sampled level means. Within the correction Y2, retain the coarse/fine coupling. With a fixed number R of independent runs per level, n_l can denote total evaluations; absorb fixed replication factors into A_l and keep cost per evaluation consistent. More explicitly, n_l=R N_l and Var(mean of R runs) approximately a_l^2 N_l^{-2p}/R, so the amplitude in total-count notation is A_l=a_l R^{p-1/2}. Keep R fixed when varying n_l. Smooth integrands under suitable scrambling may have p near 3/2, ignoring logarithmic factors; a generic random shift does not guarantee that rate.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1059,6 +1068,132 @@ Y_2&amp;=f_{d_2}(\vX_{1:d_2})-f_{d_1}(\vX_{1:d_1})&amp; &amp;\text{expensive cor
 </section>
 <section class="slide level2">
 
+<h3 id="two-level-optimization">Deriving the two-level allocation</h3>
+<p>Treat <span class="math inline">\(n_1,n_2&gt;0\)</span> as continuous; fix total work <span class="math inline">\(C\)</span></p>
+<p><span class="math display">\[
+\mathcal L=\frac{A_1^2}{n_1^{2p}}+\frac{A_2^2}{n_2^{2p}}
++\lambda(n_1\$_1+n_2\$_2-C)
+\]</span></p>
+<p><span class="math display">\[\begin{align*}
+\frac{\partial\mathcal L}{\partial n_\ell}=0
+&amp;\implies\frac{2pA_\ell^2}{n_\ell^{2p+1}}=\lambda\$_\ell
+\qquad(\ell=1,2)\\
+\frac{A_1^2}{\$_1n_1^{2p+1}}
+&amp;=\frac{A_2^2}{\$_2n_2^{2p+1}}
+\implies\frac{n_1}{n_2}
+=\left(\frac{A_1^2\$_2}{A_2^2\$_1}\right)^{1/(2p+1)}
+\end{align*}\]</span></p>
+<p>Set <span class="math inline">\(w_\ell=(A_\ell^2/\$_\ell)^{1/(2p+1)}\)</span>; the budget gives</p>
+<p><span class="math display">\[
+n_\ell=\frac{Cw_\ell}{\$_1w_1+\$_2w_2}
+\]</span></p>
+<div class="key-point">
+<p>At the optimum, each level buys the same <span class="alert">marginal MSE reduction per unit work</span></p>
+</div>
+<aside class="notes">
+<p>Differentiate the MSE model, not RMSE, since their minimizers agree. The magnitude of the derivative with respect to work on level ell is 2p A_ell^2/(cost_ell n_ell^(2p+1)). If these marginal gains differ, transfer a little work toward the level with the larger gain. For p&gt;0 and positive amplitudes and costs, the objective is strictly convex and diverges at either boundary of the feasible budget segment; the stationary point is the unique global continuous minimum. RQMC still uses an approximate variance model. Round up to allowed counts when targeting a tolerance; the fixed-budget continuous solution may need adjustment for admissible sizes.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="two-level-cost-for-accuracy">Two-level cost as a function of error</h3>
+<p>Take <span class="math inline">\(d_2\)</span> as the <span class="alert">target dimension</span>: <span class="math inline">\(\mu_{d_2}=\Ex\{f_{d_2}(\vX_{1:d_2})\}\)</span><br> Fix <span class="math inline">\(d_1,d_2\)</span>, amplitudes, and costs; require <span class="math inline">\(\operatorname{RMSE}(\hmu;\mu_{d_2})\le\varepsilon\)</span></p>
+<p><span class="math display">\[
+S=\$_1w_1+\$_2w_2
+=\sum_{\ell=1}^2 A_\ell^{2/(2p+1)}\$_\ell^{2p/(2p+1)}
+\]</span></p>
+<p>Substitute <span class="math inline">\(n_\ell=Cw_\ell/S\)</span> into the MSE model</p>
+<p><span class="math display">\[\begin{align*}
+\operatorname{MSE}_{\mathrm{opt}}(C)&amp;\approx\frac{S^{2p+1}}{C^{2p}}\\
+\operatorname{RMSE}_{\mathrm{opt}}(C)&amp;\approx\frac{S^{p+1/2}}{C^p}
+\implies C(\varepsilon)\approx S^{1+1/(2p)}\varepsilon^{-1/p}
+\end{align*}\]</span></p>
+<p><span class="alert">IID</span>: <span class="math inline">\(p=1/2\)</span>, <span class="math inline">\(A_\ell^2=V_\ell\)</span>, so the continuous model gives exactly</p>
+<p><span class="math display">\[
+C(\varepsilon)=\frac{\left(\sqrt{V_1\$_1}+\sqrt{V_2\$_2}\right)^2}{\varepsilon^2}
+\]</span></p>
+<aside class="notes">
+<p>Use the identity A_ell^2 w_ell^(-2p)=cost_ell w_ell to simplify the substituted MSE sum to S<sup>(2p+1)/C</sup>(2p). All formulas omit setup, pilots, and integer or design-size rounding. Per instructor request, this calculation concerns error relative to the fixed fine approximation mu_d2 only. Deterministic bounds are treated next.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="two-level-cost-interpretation">What does reducing the error cost?</h3>
+<p>For the fixed two-level random-error model, <span class="math inline">\(C(\varepsilon)\propto\varepsilon^{-1/p}\)</span></p>
+<p><span class="math display">\[
+\frac{C(\varepsilon/r)}{C(\varepsilon)}\approx r^{1/p}
+\qquad(r&gt;1)
+\]</span></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Error-decay power</th>
+<th style="text-align: right;">Halve the RMSE</th>
+<th style="text-align: right;">Divide the RMSE by <span class="math inline">\(10\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">IID: <span class="math inline">\(p=1/2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(4\times\)</span> total work</td>
+<td style="text-align: right;"><span class="math inline">\(100\times\)</span> total work</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Illustrative RQMC: <span class="math inline">\(p=1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(2\times\)</span> total work</td>
+<td style="text-align: right;"><span class="math inline">\(10\times\)</span> total work</td>
+</tr>
+</tbody>
+</table>
+<p>IID example: <span class="math inline">\(V_1=16\)</span>, <span class="math inline">\(V_2=1\)</span>, <span class="math inline">\(\$_1=1\)</span>, <span class="math inline">\(\$_2=16\)</span></p>
+<p><span class="math display">\[
+C(\varepsilon)=64\varepsilon^{-2}
+\qquad C(0.1)=6400\quad C(0.05)=25600
+\]</span></p>
+<div class="key-point">
+<p>For IID, two levels can lower the <span class="alert">cost constant</span>; halving sampling error still costs <span class="alert">four times</span> as much</p>
+</div>
+<aside class="notes">
+<p>These ratios compare total work in separate runs, not additional work. Halving IID sampling RMSE requires three times the original work in addition to the original budget, for four times total. Tenfold reduction requires 99 times additional work. With nested reusable IID samples one can extend the original run accordingly. No reuse assumption is needed for the ratios. The numerical allocation is n1/n2=16, so at epsilon=0.1 use n1=3200,n2=200; at epsilon=0.05 use n1=12800,n2=800. Both levels get half the work. At C=3200, the later exercise gives RMSE=sqrt(0.02), consistent with this curve. RQMC p=1 is illustrative, not guaranteed; fixed replication factors are in A. A direct fine IID estimator also has epsilon^-2 sampling cost; compare its variance-times-cost constant with 64 before claiming an MLMC saving.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
 <h3 id="deterministic-two-level-estimates">Deterministic two-level estimates</h3>
 <p>Use QMC separately for the same cheap part and coupled correction</p>
 <p>Assume justified <span class="alert">absolute-error bounds</span> with a common <span class="math inline">\(p&gt;0\)</span></p>
@@ -1070,12 +1205,13 @@ Y_2&amp;=f_{d_2}(\vX_{1:d_2})-f_{d_1}(\vX_{1:d_1})&amp; &amp;\text{expensive cor
 \end{align*}\]</span></p>
 <p>At fixed work <span class="math inline">\(n_1\$_1+n_2\$_2=C\)</span>, minimize the <span class="alert">bound</span></p>
 <p><span class="math display">\[
-\frac{n_1}{n_2}
+w_\ell=\left(\frac{A_\ell}{\$_\ell}\right)^{1/(p+1)}
+\qquad\frac{n_1}{n_2}=\frac{w_1}{w_2}
 =\left(\frac{A_1\$_2}{A_2\$_1}\right)^{1/(p+1)}
 \]</span></p>
 <p>QMC needs sufficient <span class="alert">smoothness</span> and a suitable design<br>Bound total error by the <span class="alert">sum of the level error bounds</span></p>
 <aside class="notes">
-<p>This is a triangle-inequality upper bound, not a sum-of-variances identity or an equality for the realized integration error. No independence or unbiasedness is asserted for deterministic estimates. Minimize the stated upper bound, not the unknown actual error. Differentiation gives <span class="math inline">\(p A_\ell n_\ell^{-(p+1)}=\lambda\$_\ell\)</span> and the displayed ratio. A_l here is a deterministic error-bound amplitude, not the RQMC amplitude or the contribution SD. For a suitable RKHS bound it may be a discrepancy rate constant times the variation of the complete level integrand. An illustrative rate is p near 1 with appropriate smoothness and design; retain logarithmic factors if needed. A small correction variance alone does not guarantee a small deterministic QMC error amplitude. Relative to mu_infinity, add |mu-mu_d2| to this bound. Increasing n1 or n2 cannot remove that approximation bias.</p>
+<p>This is a triangle-inequality upper bound, not a sum-of-variances identity or an equality for the realized integration error. No independence or unbiasedness is asserted for deterministic estimates. Minimize the stated upper bound, not the unknown actual error. Differentiation gives <span class="math inline">\(p A_\ell n_\ell^{-(p+1)}=\lambda\$_\ell\)</span> and the displayed ratio. A_l here is a deterministic error-bound amplitude, not the RQMC amplitude or the contribution SD. For a suitable RKHS bound it may be a discrepancy rate constant times the variation of the complete level integrand. An illustrative rate is p near 1 with appropriate smoothness and design; retain logarithmic factors if needed. A small correction variance alone does not guarantee a small deterministic QMC error amplitude. This bound is relative to the finite fine target mu_d2. Limiting-target approximation bias is treated separately in the hierarchy section.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1101,7 +1237,7 @@ Y_2&amp;=f_{d_2}(\vX_{1:d_2})-f_{d_1}(\vX_{1:d_1})&amp; &amp;\text{expensive cor
 <li>Allocate points using the error amplitudes, rates, and complete evaluation costs</li>
 <li><span class="alert">IID/RQMC</span>: independent unbiased level estimates add variances</li>
 <li><span class="alert">Deterministic QMC</span>: level error bounds add by an inequality</li>
-<li>Refine <span class="math inline">\(d_2\)</span> to control approximation bias; increase <span class="math inline">\(n_1,n_2\)</span> to control integration error</li>
+<li>Fix the target dimension <span class="math inline">\(d_2\)</span>; increase <span class="math inline">\(n_1,n_2\)</span> to control integration error</li>
 </ul>
 <div class="key-point">
 <p>Two levels help when the <span class="alert">cheap approximation</span> and <span class="alert">small correction error</span> earn their combined cost</p>
@@ -1176,17 +1312,18 @@ Y_2&amp;=f_{d_2}(\vX_{1:d_2})-f_{d_1}(\vX_{1:d_1})&amp; &amp;\text{expensive cor
 <p>as in an option payoff based on an increasingly fine time discretization</p>
 <p>Choose <span class="math inline">\(d_1&lt;\cdots&lt;d_L\)</span> and define coupled differences</p>
 <p><span class="math display">\[\begin{align*}
-Y_1&amp;=f_{d_1}(\vX_{1:d_1}),\\
+Y_1&amp;=f_{d_1}(\vX_{1:d_1})\\
 Y_\ell&amp;=f_{d_\ell}(\vX_{1:d_\ell})
 -f_{d_{\ell-1}}(\vX_{1:d_{\ell-1}}),
-\qquad \ell\ge2
+\qquad 2\le\ell\le L
 \end{align*}\]</span></p>
 <p>Then</p>
 <p><span class="math display">\[
-\Ex\{f_{d_L}(\vX_{1:d_L})\}
-=\sum_{\ell=1}^L\Ex(Y_\ell)
+\mu_{d_L}=\Ex\{f_{d_L}(\vX_{1:d_L})\}
+=\sum_{\ell=1}^L\mu_\ell
+\qquad\mu_\ell=\Ex(Y_\ell)
 \]</span></p>
-<p>with a remaining truncation bias <span class="math inline">\(\mu-\Ex\{f_{d_L}(\vX_{1:d_L})\}\)</span></p>
+<p>with a remaining approximation bias <span class="math inline">\(b_L=\mu-\mu_{d_L}\)</span></p>
 </section>
 <section id="many-levels" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
 <h2>Many levels</h2>
@@ -1195,10 +1332,10 @@ Y_\ell&amp;=f_{d_\ell}(\vX_{1:d_\ell})
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Extend the same decomposition: <span class="math inline">\(Y=Y_1+\cdots+Y_L\)</span>, <span class="math inline">\(\mu_{d_L}=\sum_{\ell=1}^L\Ex(Y_\ell)\)</span></p>
+<p>Extend the same mean decomposition: <span class="math inline">\(\mu_{d_L}=\sum_{\ell=1}^L\mu_\ell\)</span>, <span class="math inline">\(\mu_\ell=\Ex(Y_\ell)\)</span></p>
 <p><span class="math display">\[
 \hmu=\sum_{\ell=1}^L\hmu_\ell,
-\qquad \cost(\hmu)=\sum_{\ell=1}^Ln_\ell\$_\ell
+\qquad C=\sum_{\ell=1}^Ln_\ell\$_\ell
 \]</span></p>
 <p><span class="alert">Independent unbiased IID/RQMC level estimates</span></p>
 <p><span class="math display">\[
@@ -1212,7 +1349,7 @@ Y_\ell&amp;=f_{d_\ell}(\vX_{1:d_\ell})
 \]</span></p>
 <p>Choose both the <span class="alert">level decomposition</span> and the <span class="alert">point allocation</span></p>
 <aside class="notes">
-<p>Here mu_dL is the mean of the finest approximation in the preceding hierarchy; the telescoping definitions identify each Y_l with a coupled correction. The same symbol A_l denotes the amplitude appropriate to the displayed case, not a claim that deterministic bounds and random RMSEs have equal constants. The independent randomized variance identity is exact; the common-p power law is a model. The deterministic statement requires actual justified bounds. For IID, p=1/2 and A_l^2=Var(Y_l), recovering sum_l V_l/n_l exactly.</p>
+<p>Here mu_dL is the mean of the finest approximation in the preceding hierarchy; Y1 is the cheap output, and Y_l for l&gt;=2 is a coupled correction. Each level mean is hmu_l=(1/n_l) sum_{i=0}^{n_l-1} Y_{i,l}, as in the two-level estimator. Sample indices start at zero; level indices start at one. The identity needed here is a decomposition of means; independent level sample sets need not form a single shared telescoping path. The same symbol A_l denotes the amplitude appropriate to the displayed case, not a claim that deterministic bounds and random RMSEs have equal constants. The independent randomized variance identity is exact; the common-p power law is a model. The deterministic statement requires actual justified bounds. For IID, p=1/2 and A_l^2=Var(Y_l), recovering sum_l V_l/n_l exactly.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1301,7 +1438,7 @@ n_\ell=\frac{Cw_\ell}{\sum_{k=1}^Lw_k\$_k}
 <p>For fixed <span class="math inline">\(L\)</span>, integration RMSE has rate <span class="math inline">\(C^{-p}\)</span> in both regimes<br>The penalty grows as <span class="alert">bias control requires more levels</span></p>
 </div>
 <aside class="notes">
-<p>Assume 0&lt;beta&lt;1, rho_cost&gt;1, a common p&gt;0, and positive constants of proportionality independent of level. These are illustrative geometric models, rather than only one-sided bounds, so they justify the less/more work interpretation. With only upper amplitude and cost bounds, the displayed geometric expression is a majorant; its growth does not prove actual fine-level dominance. Rho_cost is a real-valued cost-growth factor, not an integer sample index or the exponent in a sample count n=2^m. For IID A_l^2 is contribution variance; for RQMC it is the squared amplitude in the complete randomized-estimate error model, not contribution variance. At fixed C and L, the work normalizer is shared across levels. Thus the ratio of work on consecutive levels is (beta rho_cost<sup>{2p})</sup>{1/(2p+1)}. Writing <span class="math inline">\(S=\sum_\ell A_\ell^{2/(2p+1)}\$_\ell^{2p/(2p+1)}\)</span>, optimal integration RMSE is modeled by <span class="math inline">\(S^{p+1/2}C^{-p}\)</span>. When the geometric factor is below one, S remains bounded as L increases; above one, it grows with L. For fixed L both cases have the same C^{-p} power. A worse overall error power can arise only when tighter accuracy also increases L to control bias. If <span class="math inline">\(\abs{b_L}\lesssim B\rho_{\mathrm{bias}}^{-L}\)</span> with rho_bias&gt;1, and a fixed fraction of the error budget is assigned to bias, then L grows like log(1/epsilon)/log(rho_bias). Above the threshold the continuous model predicts <span class="math inline">\(C(\varepsilon)\approx\varepsilon^{-1/p}(\beta\rho_{\mathrm{cost}}^{2p})^{L/(2p)}\)</span>, with an effective error exponent <span class="math inline">\(p/[1+\log(\beta\rho_{\mathrm{cost}}^{2p})/(2\log\rho_{\mathrm{bias}})]&lt;p\)</span>. A full complexity bound must also include the finest-level cost forced by minimum admissible counts, setup, pilots, and rounding. The one-level-rate claim assumes those costs and the bias can also be controlled within that rate.</p>
+<p>Assume 0&lt;beta&lt;1, rho_cost&gt;1, a common p&gt;0, and positive constants of proportionality independent of level. These are illustrative geometric models, rather than only one-sided bounds, so they justify the less/more work interpretation. With only upper amplitude and cost bounds, the displayed geometric expression is a majorant; its growth does not prove actual fine-level dominance. Rho_cost is a real-valued cost-growth factor, not an integer sample index or the exponent in a sample count n=2^m. For IID A_l^2 is contribution variance; for RQMC it is the squared amplitude in the complete randomized-estimate error model, not contribution variance. At fixed C and L, the work normalizer is shared across levels. Thus the ratio of work on consecutive levels is (beta rho_cost<sup>{2p})</sup>{1/(2p+1)}. Writing <span class="math inline">\(S=\sum_\ell A_\ell^{2/(2p+1)}\$_\ell^{2p/(2p+1)}\)</span>, optimal integration RMSE is modeled by <span class="math inline">\(S^{p+1/2}C^{-p}\)</span>. When the geometric factor is below one, S remains bounded as L increases; above one, it grows with L. For fixed L both cases have the same C^{-p} power. A worse overall error power can arise only when tighter accuracy also increases L to control bias. If <span class="math inline">\(\abs{b_L}\lesssim B_{\mathrm{bias}}\rho_{\mathrm{bias}}^{-L}\)</span> with rho_bias&gt;1, and a fixed fraction of the error budget is assigned to bias, then L grows like log(1/epsilon)/log(rho_bias). Above the threshold the continuous model predicts <span class="math inline">\(C(\varepsilon)\approx\varepsilon^{-1/p}(\beta\rho_{\mathrm{cost}}^{2p})^{L/(2p)}\)</span>, with an effective error exponent <span class="math inline">\(p/[1+\log(\beta\rho_{\mathrm{cost}}^{2p})/(2\log\rho_{\mathrm{bias}})]&lt;p\)</span>. A full complexity bound must also include the finest-level cost forced by minimum admissible counts, setup, pilots, and rounding. The one-level-rate claim assumes those costs and the bias can also be controlled within that rate.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1334,7 +1471,7 @@ n_\ell=\frac{Cw_\ell}{\sum_{k=1}^Lw_k\$_k}
 <p>As bias control requires more levels, coupling must preserve <span class="alert">smoothness</span> and reduce <span class="alert">QMC error-bound amplitudes</span></p>
 </div>
 <aside class="notes">
-<p>Assume 0&lt;theta&lt;1, rho_cost&gt;1, p&gt;0, and level-independent proportionality constants. Theta describes decay of A_l itself; the random slide’s beta describes decay of A_l^2. These are different method-dependent amplitudes. If the same amplitude sequence were used in both models, beta would be theta^2. The consecutive-level work ratio is (theta rho_cost<sup>p)</sup>{1/(p+1)}. Writing <span class="math inline">\(S_{\mathrm Q}=\sum_\ell A_\ell^{1/(p+1)}\$_\ell^{p/(p+1)}\)</span>, the optimized deterministic bound is <span class="math inline">\(S_{\mathrm Q}^{p+1}C^{-p}\)</span>. Below the threshold the sum stays bounded; above it, refinement adds a growing factor. As in the random case, fixed L gives C^{-p} in both regimes. If a justified bias model <span class="math inline">\(\abs{b_L}\lesssim B\rho_{\mathrm{bias}}^{-L}\)</span> sets L from the tolerance, the growing-factor regime predicts continuous work <span class="math inline">\(C(\varepsilon)\propto\varepsilon^{-1/p}(\theta\rho_{\mathrm{cost}}^p)^{L/p}\)</span>, with effective error exponent <span class="math inline">\(p/[1+\log(\theta\rho_{\mathrm{cost}}^p)/\log\rho_{\mathrm{bias}}]&lt;p\)</span>. These predictions concern the chosen deterministic bound, not equality for the realized error. Include minimum allowed counts, setup/pilots, rounding, and logarithmic factors before claiming a complete complexity rate. A_l is a justified deterministic bound amplitude, for example a discrepancy rate constant times the correction integrand’s variation. Small IID variance or a small correction mean does not establish this bound or its decay.</p>
+<p>Assume 0&lt;theta&lt;1, rho_cost&gt;1, p&gt;0, and level-independent proportionality constants. Theta describes decay of A_l itself; the random slide’s beta describes decay of A_l^2. These are different method-dependent amplitudes. If the same amplitude sequence were used in both models, beta would be theta^2. The consecutive-level work ratio is (theta rho_cost<sup>p)</sup>{1/(p+1)}. Writing <span class="math inline">\(S_{\mathrm Q}=\sum_\ell A_\ell^{1/(p+1)}\$_\ell^{p/(p+1)}\)</span>, the optimized deterministic bound is <span class="math inline">\(S_{\mathrm Q}^{p+1}C^{-p}\)</span>. Below the threshold the sum stays bounded; above it, refinement adds a growing factor. As in the random case, fixed L gives C^{-p} in both regimes. If a justified bias model <span class="math inline">\(\abs{b_L}\lesssim B_{\mathrm{bias}}\rho_{\mathrm{bias}}^{-L}\)</span> sets L from the tolerance, the growing-factor regime predicts continuous work <span class="math inline">\(C(\varepsilon)\propto\varepsilon^{-1/p}(\theta\rho_{\mathrm{cost}}^p)^{L/p}\)</span>, with effective error exponent <span class="math inline">\(p/[1+\log(\theta\rho_{\mathrm{cost}}^p)/\log\rho_{\mathrm{bias}}]&lt;p\)</span>. These predictions concern the chosen deterministic bound, not equality for the realized error. Include minimum allowed counts, setup/pilots, rounding, and logarithmic factors before claiming a complete complexity rate. A_l is a justified deterministic bound amplitude, for example a discrepancy rate constant times the correction integrand’s variation. Small IID variance or a small correction mean does not establish this bound or its decay.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1366,7 +1503,7 @@ A_\ell^{2/(2p+1)}\$_\ell^{2p/(2p+1)}
 \]</span></p>
 <p>IID (<span class="math inline">\(p=1/2\)</span>): <span class="math inline">\(C(\varepsilon)\approx\varepsilon_{\mathrm s}^{-2}\left(\sum_\ell\sqrt{V_\ell\$_\ell}\right)^2\)</span></p>
 <aside class="notes">
-<p>The MSE-bias decomposition is exact for unbiased independent level estimates; the power-law variance expression is a model and is approximate for RQMC. <span class="math inline">\(Y_\ell=g_\ell(\vZ_\ell)\)</span>, and <span class="math inline">\(\$_\ell=\$(g_\ell)\)</span> charges for generating and evaluating the complete coupled difference. Coupling within a correction does not violate independence between entire level estimates. Write <span class="math inline">\(S=\sum_\ell A_\ell^{2/(2p+1)}\$_\ell^{2p/(2p+1)}\)</span>. The optimal allocation has <span class="math inline">\(n_\ell=C(A_\ell^2/\$_\ell)^{1/(2p+1)}/S\)</span>, giving modeled MSE <span class="math inline">\(S^{2p+1}/C^{2p}\)</span>. Solving for cost at RMSE epsilon_s gives the displayed expression. For IID p=1/2, A_l^2=V_l, and this is the original variance-times-cost formula. For one unbiased level, cost is approximately <span class="math inline">\(\$_1(A_1/\varepsilon)^{1/p}\)</span>. For RQMC keep replication counts fixed and match the amplitude to the count convention used on the two-level slide. The bias usually needs a justified bound or estimate. The displayed ideal bias budget does not discover it. L, amplitudes, and costs can depend on epsilon, so epsilon_s^{-1/p} alone is not the full complexity rate. Round up to positive admissible design sizes, with bounded rounding ratios, and include setup, pilot, and bias-assessment costs in actual work. Sources: <a href="https://people.maths.ox.ac.uk/gilesm/files/acta15.pdf">Giles (2015)</a> and <a href="https://people.maths.ox.ac.uk/~gilesm/mlqmc/">Giles and Waterhouse: multilevel QMC</a>.</p>
+<p>The MSE-bias decomposition is exact for unbiased independent level estimates; the power-law variance expression is a model and is approximate for RQMC. The per-contribution cost <span class="math inline">\(\$_\ell\)</span> charges for generating inputs and evaluating the complete coupled difference. Coupling within a correction does not violate independence between entire level estimates. Write <span class="math inline">\(S=\sum_\ell A_\ell^{2/(2p+1)}\$_\ell^{2p/(2p+1)}\)</span>. The optimal allocation has <span class="math inline">\(n_\ell=C(A_\ell^2/\$_\ell)^{1/(2p+1)}/S\)</span>, giving modeled MSE <span class="math inline">\(S^{2p+1}/C^{2p}\)</span>. Solving for cost at RMSE epsilon_s gives the displayed expression. For IID p=1/2, A_l^2=V_l, and this is the original variance-times-cost formula. For one unbiased level, cost is approximately <span class="math inline">\(\$_1(A_1/\varepsilon)^{1/p}\)</span>. For RQMC keep replication counts fixed and match the amplitude to the count convention used on the two-level slide. The bias usually needs a justified bound or estimate. The displayed ideal bias budget does not discover it. L, amplitudes, and costs can depend on epsilon, so epsilon_s^{-1/p} alone is not the full complexity rate. Round up to positive admissible design sizes, with bounded rounding ratios, and include setup, pilot, and bias-assessment costs in actual work. Sources: <a href="https://people.maths.ox.ac.uk/gilesm/files/acta15.pdf">Giles (2015)</a> and <a href="https://people.maths.ox.ac.uk/~gilesm/mlqmc/">Giles and Waterhouse: multilevel QMC</a>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1515,11 +1652,11 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 <ul>
 <li><span class="alert">Time</span> complete coupled contributions at each level; estimate <span class="math inline">\(\$_\ell\)</span><br> Include generation, transforms, and both coarse/fine evaluations</li>
 <li><span class="alert">IID pilots</span>: estimate <span class="math inline">\(V_\ell\)</span> from individual outputs; use <span class="math inline">\(p=1/2\)</span>, <span class="math inline">\(A_\ell^2=V_\ell\)</span></li>
-<li><span class="alert">RQMC pilots</span>: fix <span class="math inline">\(R\)</span> independent runs and vary the points <span class="math inline">\(N\)</span> per run<br> Estimate variance <span class="math inline">\(\hat v_\ell(n)\)</span> of the reported level mean; total point count <span class="math inline">\(n=RN\)</span></li>
+<li><span class="alert">RQMC pilots</span>: fix <span class="math inline">\(R\)</span> independent runs and vary the points <span class="math inline">\(N_\ell\)</span> per run<br> Estimate variance <span class="math inline">\(\hat v_\ell(n_\ell)\)</span> of the reported level mean; total point count <span class="math inline">\(n_\ell=RN_\ell\)</span></li>
 </ul>
 <p>For a justified rate <span class="math inline">\(p\)</span>, estimate the amplitude by</p>
 <p><span class="math display">\[
-\widehat{A_\ell^2}\approx n^{2p}\hat v_\ell(n)
+\widehat{A_\ell^2}\approx n_\ell^{2p}\hat v_\ell(n_\ell)
 \]</span></p>
 <ul>
 <li>For RQMC, <span class="alert">fit <span class="math inline">\(p\)</span></span> from variance decay versus point count across several sizes</li>
@@ -1527,7 +1664,7 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 <li>Charge for the pilot; use <span class="alert">fresh independent final runs</span> after choosing the counts</li>
 </ul>
 <aside class="notes">
-<p>For IID, the usual sample variance divided by n estimates the variance of the reported level mean. For RQMC, repeat the entire N-point design with independent randomizations. If R runs with N points per run are averaged, the across-run sample variance divided by R estimates the variance of the reported mean, and the total point count in the displayed convention is n=RN. Keep R fixed when comparing point counts and in the A_l model. Under an approximate power law, comparing n and a larger allowed rn gives <span class="math inline">\(\hat p_\ell=\log[\hat v_\ell(n)/\hat v_\ell(rn)]/(2\log r)\)</span>. Several counts and replications are preferable to treating one noisy ratio as an established rate. If levels have different rates, do not force the common-p closed form: use the level-specific multiplier equations or a measured marginal variance-reduction-per-work allocation. Timing needs the complete coupled contribution and a representative batch; separate fixed setup from per-point cost and include GPU synchronization. Freeze allocation after an independent pilot for a simple final analysis. Adaptive reuse needs its own unbiasedness and uncertainty justification. Source: <a href="https://people.maths.ox.ac.uk/gilesm/files/acta15.pdf">Giles, Multilevel Monte Carlo methods (2015)</a>.</p>
+<p>For IID, the usual sample variance divided by n_l estimates the variance of the reported level mean. For RQMC, repeat the entire N_l-point design with independent randomizations. If R runs with N_l points per run are averaged, the across-run sample variance divided by R estimates the variance of the reported mean, and the total point count in the displayed convention is n_l=R N_l. Keep R fixed when comparing point counts and in the A_l model. Under an approximate power law, at a fixed level use a generic total count n. Comparing n and a larger allowed rn gives <span class="math inline">\(\hat p_\ell=\log[\hat v_\ell(n)/\hat v_\ell(rn)]/(2\log r)\)</span>. Several counts and replications are preferable to treating one noisy ratio as an established rate. If levels have different rates, do not force the common-p closed form: use the level-specific multiplier equations or a measured marginal variance-reduction-per-work allocation. Timing needs the complete coupled contribution and a representative batch; separate fixed setup from per-point cost and include GPU synchronization. Freeze allocation after an independent pilot for a simple final analysis. Adaptive reuse needs its own unbiasedness and uncertainty justification. Source: <a href="https://people.maths.ox.ac.uk/gilesm/files/acta15.pdf">Giles, Multilevel Monte Carlo methods (2015)</a>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1584,7 +1721,7 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><span class="math inline">\(\ell\)</span>, <span class="math inline">\(L\)</span></td>
-<td style="text-align: left;">Level index and finest included level</td>
+<td style="text-align: left;">Level index <span class="math inline">\(1,\ldots,L\)</span> and finest included level; <span class="math inline">\(L=2\)</span> for two levels</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><span class="math inline">\(d_\ell\)</span>, <span class="math inline">\(f_{d_\ell}\)</span></td>
@@ -1612,7 +1749,7 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 </tr>
 <tr class="even">
 <td style="text-align: left;"><span class="math inline">\(\varepsilon\)</span>, <span class="math inline">\(\varepsilon_{\mathrm s}\)</span></td>
-<td style="text-align: left;">Total error tolerance and remaining integration-error budget</td>
+<td style="text-align: left;">Tolerance for the stated target and integration-error budget after bias</td>
 </tr>
 </tbody>
 </table>
@@ -1644,7 +1781,7 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><span class="math inline">\(A_\ell\)</span>, <span class="math inline">\(p\)</span></td>
-<td style="text-align: left;">Method-specific amplitude and decay power in <span class="math inline">\(A_\ell n_\ell^{-p}\)</span></td>
+<td style="text-align: left;">Method-specific amplitude and common decay power in <span class="math inline">\(A_\ell n_\ell^{-p}\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><span class="math inline">\(V_\ell\)</span></td>
@@ -1660,11 +1797,15 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><span class="math inline">\(w_\ell\)</span></td>
-<td style="text-align: left;">Relative point-count weight; work weights are <span class="math inline">\(\$_\ell w_\ell\)</span></td>
+<td style="text-align: left;">Relative point-count weight: <span class="math inline">\(n_\ell\propto w_\ell\)</span>; work weights are <span class="math inline">\(\$_\ell w_\ell\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><span class="math inline">\(C\)</span>, <span class="math inline">\(C(\varepsilon)\)</span></td>
 <td style="text-align: left;">Total work: fixed as an allocation budget, or expressed as required work versus tolerance</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(S\)</span>, <span class="math inline">\(S_{\mathrm Q}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sum_{\ell=1}^L\$_\ell w_\ell\)</span> using random or deterministic weights, respectively</td>
 </tr>
 </tbody>
 </table>
@@ -1687,11 +1828,11 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(\beta\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0&lt;\beta&lt;1\)</span></td>
 <td style="text-align: left;">Decay factor for squared random amplitudes: <span class="math inline">\(A_\ell^2\propto\beta^\ell\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math inline">\(\theta\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0&lt;\theta&lt;1\)</span></td>
 <td style="text-align: left;">Decay factor for deterministic bound amplitudes: <span class="math inline">\(A_\ell\propto\theta^\ell\)</span></td>
 </tr>
 <tr class="odd">
@@ -1790,7 +1931,7 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 </div>
 
 <p>Both methods minimize the same quadratic loss<br>Stochastic gradients use one randomly selected component at each step</p>
-<div id="64b07359" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
+<div id="52f560ae" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
