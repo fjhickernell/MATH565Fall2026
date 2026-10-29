@@ -551,6 +551,14 @@ appropriate phase rather than appended indiscriminately.
   - [x] Draft Lecture 05, Selected Topics, from the Fall 2025 Keynote deck,
     including parallel computation, stochastic gradient descent, and
     multilevel Monte Carlo.
+  - [x] Clarify the independent-pilot IID interval and optional SD inflation;
+    center the IID/RQMC comparison table and align the Selected Topics preview.
+  - [x] Generalize same-time accuracy to $s^{-p}$ and the multilevel sequence
+    to IID/RQMC error-rate models and deterministic QMC bounds. Motivate
+    two levels by dimension-dependent work, show the $f_d$/$Y_\ell$
+    correspondence, and state the uncorrelated-level-means condition.
+    Allocation formulas and changed layouts are validated; instructor review
+    remains open.
   - [x] Complete instructor review of Lecture 03 and its four companions
     (September 10, 2026).
   - [ ] Review Lectures 04–05 individually with the instructor and refine

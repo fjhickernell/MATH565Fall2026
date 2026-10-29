@@ -30,6 +30,12 @@
   width: 76% !important;
 }
 
+/* Center labels and formulas vertically despite their different baselines. */
+.reveal .iid-rqmc-rmse-table th,
+.reveal .iid-rqmc-rmse-table td {
+  vertical-align: middle;
+}
+
 .tree-component.monte-carlo-at-a-glance-tree {
   margin-inline: auto !important;
 }

@@ -1,5 +1,27 @@
 # Next task
 
+## Continue instructor review — October 29
+
+Continue the instructor-led Deck 05 review; the current discussion is the
+deterministic two-level error bound and why it cannot rely on cancellation.
+The multilevel sequence now motivates dimension-dependent evaluation work,
+maps $f_d$ to the cheap part and coupled correction $Y_\ell$, and develops
+IID/RQMC variance addition with a general rate $n^{-p}$ before deterministic
+QMC inequalities. The many-level allocation and bias/cost budgets follow.
+Uncorrelated level means suffice for variance addition; independent level
+sample sets are a sufficient construction, with dependence allowed within RQMC.
+
+The Deck 04 IID recap uses an independent pilot SD, optional inflation, and
+pilot-based Student-t degrees of freedom. The same-RMSE table is vertically
+centered, and its closing preview follows Deck 05's actual topic order.
+Deck 05's same-time accuracy slide uses explicit time/error notation and
+the factor $s^{-p}$, with the common time budget grouped by a right brace.
+
+All five decks execute and render with the qmcpy kernel under the live watcher;
+changed layouts and links pass local review. Allocation/cost formulas pass
+independent minimization checks at $p=1/2,1,3/2$. Instructor review remains
+open; these revisions do not establish lecture coverage or grading completion.
+
 ## Final-examination schedule — October 28 update
 
 The Schedule and assessment page now list the Registrar-confirmed in-class

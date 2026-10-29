@@ -30,8 +30,15 @@ assessment-only. Resume Deck 04 at **Big Ideas (continued)**.
   If discussion runs long, stop after **Faster computation and statistical
   accuracy** instead.
 
-Deck 05's numerical takeaway: 16-fold throughput gives approximately fourfold
-smaller IID RMSE, under comparable variance and negligible numerical error.
+Deck 05's numerical takeaway: with error proportional to n^{-p}, speedup s
+gives approximately s^{-p} times the baseline error at the same time budget.
+Use p=1/2 for IID RMSE, approximately 1 for a QMC absolute-error bound, and
+approximately 3/2 for sufficiently smooth RQMC with suitable scrambling.
+QMC also requires sufficient smoothness and a suitable design; these nominal
+powers suppress logarithmic factors. At speedup 16 the factors are 1/4,
+1/16, and 1/64, respectively, with comparable error constants and negligible
+numerical error; keep the RQMC replication count fixed.
+This applies to single-core versus multicore CPU as well as CPU versus GPU.
 More simultaneous outputs do not increase samples per output; shared inputs
 correlate their estimates. Name the timing baseline and include generation,
 evaluation, GPU synchronization, and overhead. Parallelism does not repair bias
@@ -88,13 +95,17 @@ pilot does not establish it.
 
 ## Unresolved issues
 
+- The revised multilevel sequence begins with dimension-dependent evaluation
+  cost and the $f_d$ / $Y_\ell$ correspondence. IID and RQMC share the random
+  two-level variance derivation with general rate $n^{-p}$; deterministic QMC
+  follows immediately using error-bound inequalities and its own allocation.
+  The many-level formulas extend both cases. These revisions need instructor
+  review and do not establish lecture coverage.
 - Decks 04–05 and the GPU companion still need instructor content review.
   Saved M3 execution exists; student-facing GPU notebook links remain deferred.
 - The Asian/lookback complete-run cost interpretation and interrupted
   four-method lookback comparison remain unfinished. They are optional
   callbacks, not prerequisites for Deck 05.
-- Deck 04's forward preview lists topics in a different order and omits MCTS.
-  Follow Deck 05's actual order: parallel, multilevel, SGD, then MCTS.
 - Older Keister slide numbers use tolerance $0.05$; the current notebook
   retains $0.0005$. Identify them as different saved settings if revisited.
 - Deck 05's overarching reading reference remains undecided; no executable

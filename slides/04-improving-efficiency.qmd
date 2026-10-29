@@ -2164,15 +2164,17 @@ or returned error radius alone does not verify these assumptions.
 
 ### IID recap {#iid-error-recap}
 
-Let $s_n$ be the sample SD of the $n$ IID outputs $h(\vU_i)$
+Estimate the SD by $s_m$ from an [independent pilot sample]{.alert} of $m$ outputs;<br>
+compute $\hmu_n$ from $n$ fresh IID outputs $h(\vU_i)$
 
 $$
-\hmu_n\ \pm\ t_{1-\alpha/2,n-1}\,\frac{s_n}{\sqrt n}
+\hmu_n\ \pm\ t_{1-\alpha/2,m-1}\,\frac{\gamma s_m}{\sqrt n}
 $$
 
-- [Normal IID outputs]{.alert}: exact $(1-\alpha)$ coverage at fixed $n$
+- [Optional inflation]{.alert}: $\gamma\ge1$; $s_m^2$ is unbiased, but $s_m$ can underestimate the true SD
+- [Gaussian]{.alert} IID outputs,  $h(\vU_i)$: exact $(1-\alpha)$ coverage for $\gamma=1$ at fixed $m,n$
 - [CLT approximation]{.alert}: $n$ large enough for the [sample mean]{.alert} to be nearly normal<br>
-  Also need $s_n$ to approximate the true SD well
+  Also need $s_m$ to approximate the true SD well
 - QMCPy: `CubMCCLT` uses a two-stage [CLT]{.alert} procedure with an inflated pilot SD
 - Other IID stopping criteria exploit [known bounds on $h$]{.alert}, using concentration inequalities
 
@@ -2188,11 +2190,19 @@ probabilities across checks; a fixed-n concentration bound alone does not
 automatically justify repeated checks. This aside does not claim that the
 listed QMCPy classes implement these bounded-output alternatives.
 The normality assumption concerns the scalar outputs h(U_i), not the uniform
-inputs U_i. The Student-t confidence interval is exact for a fixed n with
-independent identically distributed normal outputs and positive variance.
-This is the interval obtained by inverting the two-sided t-test for the mean.
+inputs U_i. The pilot and main samples are independent and have the same
+output distribution. For normal outputs with positive variance and fixed m,n,
+sqrt(n)(hmu_n-mu)/s_m has a Student-t distribution with m-1 degrees of freedom:
+the standardized main-sample mean is normal and independent of the pilot
+sample variance. Thus gamma=1 gives exact coverage; a fixed gamma>1 widens
+the interval and gives conservative coverage under these assumptions.
+The usual same-sample t interval instead uses s_n and n-1 degrees of freedom.
+The sample variance s_m^2 (ddof=1) is unbiased for sigma^2. Its square root
+s_m is generally biased downward by concavity and can underestimate sigma
+on a particular pilot sample. Optional inflation provides a cushion, but
+does not by itself guarantee coverage for general nonnormal outputs.
 For general IID outputs with finite positive variance, a studentized CLT
-justifies approximate coverage asymptotically. At a practical finite n, the
+justifies approximate coverage as both sample sizes grow. At practical finite m,n, the
 mean must be sufficiently close to normal and the sample SD sufficiently
 representative of the true SD. A large n alone does not diagnose rare tails.
 The normal critical value z_(1-alpha/2) is the CLT choice; the t critical value
@@ -2203,8 +2213,8 @@ For RQMC, within-design values are dependent; replace the IID observations
 by independent whole-design estimates. The later replication slides give
 the formula and qualifications. CubMCCLT uses a normal quantile and an
 inflated pilot SD, not the exact fixed-n normal-data Student-t procedure.
-For that fixed-n interval, use scipy.stats.t.ppf(1-alpha/2, n-1) and the
-ordinary sample SD (ddof=1); QMCPy has no separate IID Student-t stopping
+For the displayed independent-pilot interval, use scipy.stats.t.ppf(1-alpha/2, m-1)
+and the pilot sample SD (ddof=1); QMCPy has no separate IID Student-t stopping
 class in this pinned version. An RMSE target and confidence coverage are
 distinct error criteria. Budget exhausted does not mean tolerance met.
 :::
@@ -2725,12 +2735,14 @@ A_RQMC(h) or the variance of a complete randomized estimate.
 
 Ignore setup; choose $n$ for each method, with [$R$ fixed for RQMC]{.alert}
 
+::: {.iid-rqmc-rmse-table}
 | Quantity | IID: $\hmu_n$ | RQMC: $\hmu_{R,n}$ |
 |:---|:---|:---|
 | Variance of one $n$-point estimate | $\displaystyle\sigma_{\mathrm{IID},n}^2=\frac{\sigma^2(h)}n$<br>$\sigma^2(h)=\var\{h(\vU)\}$ | $\displaystyle\sigma_{\mathrm{RQMC},n}^2\approx A_{\mathrm{RQMC}}^2(h)n^{-2p_{\mathrm{RQMC}}}$ |
 | Variance of the reported estimate | $\displaystyle\frac{\sigma^2(h)}n\approx\frac{\hat\sigma_n^2(h)}n$ | $\displaystyle\frac{\sigma_{\mathrm{RQMC},n}^2}R\approx\frac{\hat\sigma_{R,n}^2}R$ |
 | Choose $n$ for RMSE $\varepsilon$ | $\displaystyle n\approx\frac{\sigma^2(h)}{\varepsilon^2}$ | $\displaystyle n\approx\left(\frac{A_{\mathrm{RQMC}}(h)}{\varepsilon\sqrt R}\right)^{1/p_{\mathrm{RQMC}}}$ |
 | Work | $\displaystyle\approx\frac{\$_{\mathrm{IID}}(h)\sigma^2(h)}{\varepsilon^2}$ | $\displaystyle\approx\frac{\$_{\mathrm{RQMC}}(h)A_{\mathrm{RQMC}}^{1/p_{\mathrm{RQMC}}}(h)R^{1-1/(2p_{\mathrm{RQMC}})}}{\varepsilon^{1/p_{\mathrm{RQMC}}}}$ |
+:::
 
 Work: $n\$_{\mathrm{IID}}(h)$ for IID; $Rn\$_{\mathrm{RQMC}}(h)$ for RQMC
 
@@ -2973,10 +2985,11 @@ Efficiency also depends on how the computation is organized
 [Selected Topics]({{< meta decks.d05.file >}}) develops:
 
 - [Parallel sample evaluation and sound random streams]({{< meta decks.d05.file >}}#parallel-computing)
-- [Stochastic gradients]({{< meta decks.d05.file >}}#stochastic-gradient-descent) when exact optimization steps cost too much
 - [Coupled coarse and fine approximations]({{< meta decks.d05.file >}}#splitting-an-expectation)
 - [Multilevel allocation by variance and cost]({{< meta decks.d05.file >}}#optimal-multilevel-allocation)
+- [Stochastic gradients]({{< meta decks.d05.file >}}#stochastic-gradient-descent) when exact optimization steps cost too much
+- [Monte Carlo tree search]({{< meta decks.d05.file >}}#monte-carlo-tree-search) to choose actions by simulating futures
 
 ::: {.key-point}
-[Next:]{.alert} [share work across processors, samples, and levels]({{< meta decks.d05.file >}})
+[Next:]{.alert} [parallel computation, multilevel allocation, stochastic optimization, and search]({{< meta decks.d05.file >}})
 :::
