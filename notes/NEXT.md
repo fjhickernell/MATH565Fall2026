@@ -11,6 +11,12 @@ pending.
 
 ## October 29 lecture continuation
 
+The [October 29 instructor brief](INSTRUCTOR-BRIEF-2026-10-29.md) is saved and
+pushed for access from another machine. It includes proposed pacing, existing
+exercises and answers, the Deck 05 transition, stopping points, and unresolved
+review items. Use it for the remaining instructor review; it does not establish
+lecture coverage or close the deferred notebook comparisons.
+
 October 22 recording is reconciled through the worked IID/RQMC cost comparison and its tighter-RMSE exercise. Resume Deck 04 at “Big Ideas (continued),” then “Choose the Method for the Task” and transition to Deck 05. October 27 is Test 2; preserve its announced coverage. October 29 single-occurrence note is saved and reopened in Fantastical on Illinois Tech Fred → Calendar, PH 109, 10:00–11:15 AM Chicago. Schedule and ledger updates are included in the teaching Checkpoint; remote deployment and live-page verification remain pending. Earlier preparation notes below are historical where superseded by this recording evidence.
 
 The Keister companion retains the instructor’s `0.0005` stopping tolerance.
