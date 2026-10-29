@@ -36,7 +36,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="04-improving-efficiency_files/libs/revealjs/dist/theme/quarto-76662ad55f7698349918606375d5bc3e.css">
+  <link rel="stylesheet" href="04-improving-efficiency_files/libs/revealjs/dist/theme/quarto-98da75d93f0851df2025e4ed952bfff4.css">
   <link href="04-improving-efficiency_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="04-improving-efficiency_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="04-improving-efficiency_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -2299,7 +2299,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="de822972" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="c406dfb4" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2854,13 +2854,14 @@ i=(\cdots i_2i_1i_0)_b
 <section class="slide level2">
 
 <h3 id="iid-error-recap">IID recap</h3>
-<p>Let <span class="math inline">\(s_n\)</span> be the sample SD of the <span class="math inline">\(n\)</span> IID outputs <span class="math inline">\(h(\vU_i)\)</span></p>
+<p>Estimate the SD by <span class="math inline">\(s_m\)</span> from an <span class="alert">independent pilot sample</span> of <span class="math inline">\(m\)</span> outputs;<br> compute <span class="math inline">\(\hmu_n\)</span> from <span class="math inline">\(n\)</span> fresh IID outputs <span class="math inline">\(h(\vU_i)\)</span></p>
 <p><span class="math display">\[
-\hmu_n\ \pm\ t_{1-\alpha/2,n-1}\,\frac{s_n}{\sqrt n}
+\hmu_n\ \pm\ t_{1-\alpha/2,m-1}\,\frac{\gamma s_m}{\sqrt n}
 \]</span></p>
 <ul>
-<li><span class="alert">Normal IID outputs</span>: exact <span class="math inline">\((1-\alpha)\)</span> coverage at fixed <span class="math inline">\(n\)</span></li>
-<li><span class="alert">CLT approximation</span>: <span class="math inline">\(n\)</span> large enough for the <span class="alert">sample mean</span> to be nearly normal<br> Also need <span class="math inline">\(s_n\)</span> to approximate the true SD well</li>
+<li><span class="alert">Optional inflation</span>: <span class="math inline">\(\gamma\ge1\)</span>; <span class="math inline">\(s_m^2\)</span> is unbiased, but <span class="math inline">\(s_m\)</span> can underestimate the true SD</li>
+<li><span class="alert">Gaussian</span> IID outputs, <span class="math inline">\(h(\vU_i)\)</span>: exact <span class="math inline">\((1-\alpha)\)</span> coverage for <span class="math inline">\(\gamma=1\)</span> at fixed <span class="math inline">\(m,n\)</span></li>
+<li><span class="alert">CLT approximation</span>: <span class="math inline">\(n\)</span> large enough for the <span class="alert">sample mean</span> to be nearly normal<br> Also need <span class="math inline">\(s_m\)</span> to approximate the true SD well</li>
 <li>QMCPy: <code>CubMCCLT</code> uses a two-stage <span class="alert">CLT</span> procedure with an inflated pilot SD</li>
 <li>Other IID stopping criteria exploit <span class="alert">known bounds on <span class="math inline">\(h\)</span></span>, using concentration inequalities</li>
 </ul>
@@ -2868,7 +2869,7 @@ i=(\cdots i_2i_1i_0)_b
 <p>Compare the interval radius with <span class="math inline">\(\varepsilon\)</span>; justify <span class="alert">adaptive stopping</span> separately</p>
 </div>
 <aside class="notes">
-<p>Known bounds a &lt;= h(U) &lt;= b permit distribution-free concentration bounds such as Hoeffding’s inequality. Valid sequential stopping still needs an appropriate construction, such as a confidence sequence or allocated failure probabilities across checks; a fixed-n concentration bound alone does not automatically justify repeated checks. This aside does not claim that the listed QMCPy classes implement these bounded-output alternatives. The normality assumption concerns the scalar outputs h(U_i), not the uniform inputs U_i. The Student-t confidence interval is exact for a fixed n with independent identically distributed normal outputs and positive variance. This is the interval obtained by inverting the two-sided t-test for the mean. For general IID outputs with finite positive variance, a studentized CLT justifies approximate coverage asymptotically. At a practical finite n, the mean must be sufficiently close to normal and the sample SD sufficiently representative of the true SD. A large n alone does not diagnose rare tails. The normal critical value z_(1-alpha/2) is the CLT choice; the t critical value is also asymptotically valid but is not an exact finite-sample correction for nonnormal data. Neither fixed-n result automatically justifies repeatedly checking and stopping when the displayed radius first falls below epsilon. For RQMC, within-design values are dependent; replace the IID observations by independent whole-design estimates. The later replication slides give the formula and qualifications. CubMCCLT uses a normal quantile and an inflated pilot SD, not the exact fixed-n normal-data Student-t procedure. For that fixed-n interval, use scipy.stats.t.ppf(1-alpha/2, n-1) and the ordinary sample SD (ddof=1); QMCPy has no separate IID Student-t stopping class in this pinned version. An RMSE target and confidence coverage are distinct error criteria. Budget exhausted does not mean tolerance met.</p>
+<p>Known bounds a &lt;= h(U) &lt;= b permit distribution-free concentration bounds such as Hoeffding’s inequality. Valid sequential stopping still needs an appropriate construction, such as a confidence sequence or allocated failure probabilities across checks; a fixed-n concentration bound alone does not automatically justify repeated checks. This aside does not claim that the listed QMCPy classes implement these bounded-output alternatives. The normality assumption concerns the scalar outputs h(U_i), not the uniform inputs U_i. The pilot and main samples are independent and have the same output distribution. For normal outputs with positive variance and fixed m,n, sqrt(n)(hmu_n-mu)/s_m has a Student-t distribution with m-1 degrees of freedom: the standardized main-sample mean is normal and independent of the pilot sample variance. Thus gamma=1 gives exact coverage; a fixed gamma&gt;1 widens the interval and gives conservative coverage under these assumptions. The usual same-sample t interval instead uses s_n and n-1 degrees of freedom. The sample variance s_m^2 (ddof=1) is unbiased for sigma^2. Its square root s_m is generally biased downward by concavity and can underestimate sigma on a particular pilot sample. Optional inflation provides a cushion, but does not by itself guarantee coverage for general nonnormal outputs. For general IID outputs with finite positive variance, a studentized CLT justifies approximate coverage as both sample sizes grow. At practical finite m,n, the mean must be sufficiently close to normal and the sample SD sufficiently representative of the true SD. A large n alone does not diagnose rare tails. The normal critical value z_(1-alpha/2) is the CLT choice; the t critical value is also asymptotically valid but is not an exact finite-sample correction for nonnormal data. Neither fixed-n result automatically justifies repeatedly checking and stopping when the displayed radius first falls below epsilon. For RQMC, within-design values are dependent; replace the IID observations by independent whole-design estimates. The later replication slides give the formula and qualifications. CubMCCLT uses a normal quantile and an inflated pilot SD, not the exact fixed-n normal-data Student-t procedure. For the displayed independent-pilot interval, use scipy.stats.t.ppf(1-alpha/2, m-1) and the pilot sample SD (ddof=1); QMCPy has no separate IID Student-t stopping class in this pinned version. An RMSE target and confidence coverage are distinct error criteria. Budget exhausted does not mean tolerance met.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3340,6 +3341,7 @@ i=(\cdots i_2i_1i_0)_b
 
 <h3 id="sd-squared-times-runtime">Comparing IID and RQMC at the same RMSE target</h3>
 <p>Ignore setup; choose <span class="math inline">\(n\)</span> for each method, with <span class="alert"><span class="math inline">\(R\)</span> fixed for RQMC</span></p>
+<div class="iid-rqmc-rmse-table">
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -3376,6 +3378,7 @@ i=(\cdots i_2i_1i_0)_b
 </tr>
 </tbody>
 </table>
+</div>
 <p>Work: <span class="math inline">\(n\$_{\mathrm{IID}}(h)\)</span> for IID; <span class="math inline">\(Rn\$_{\mathrm{RQMC}}(h)\)</span> for RQMC</p>
 <div class="key-point">
 <p>Work scales as <span class="math inline">\(\varepsilon^{-2}\)</span> for IID; <span class="math inline">\(\varepsilon^{-1/p_{\mathrm{RQMC}}}\)</span> for RQMC with <span class="alert">fixed <span class="math inline">\(R\)</span></span></p>
@@ -3563,12 +3566,13 @@ i=(\cdots i_2i_1i_0)_b
 <p><a href="05-selected-topics.html">Selected Topics</a> develops:</p>
 <ul>
 <li><a href="05-selected-topics.html#parallel-computing">Parallel sample evaluation and sound random streams</a></li>
-<li><a href="05-selected-topics.html#stochastic-gradient-descent">Stochastic gradients</a> when exact optimization steps cost too much</li>
 <li><a href="05-selected-topics.html#splitting-an-expectation">Coupled coarse and fine approximations</a></li>
 <li><a href="05-selected-topics.html#optimal-multilevel-allocation">Multilevel allocation by variance and cost</a></li>
+<li><a href="05-selected-topics.html#stochastic-gradient-descent">Stochastic gradients</a> when exact optimization steps cost too much</li>
+<li><a href="05-selected-topics.html#monte-carlo-tree-search">Monte Carlo tree search</a> to choose actions by simulating futures</li>
 </ul>
 <div class="key-point">
-<p><span class="alert">Next:</span> <a href="05-selected-topics.html">share work across processors, samples, and levels</a></p>
+<p><span class="alert">Next:</span> <a href="05-selected-topics.html">parallel computation, multilevel allocation, stochastic optimization, and search</a></p>
 </div>
 
 </section>
