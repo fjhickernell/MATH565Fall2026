@@ -51,13 +51,13 @@ holidays, and examination details are finalized.
 | | Wed Oct 21 | **Assignment 5 due** | [{{< meta texts.owen.short >}} Exercises 8.4 and 8.20](../assignments/assignment_5.qmd) |
 | | Thu Oct 22 | Independent Metropolis sampler and self-normalized importance sampling review; IID/RQMC stopping rules, pilot limitations and fixed-design QMC error assessment; stopping-rule notebooks and IID/RQMC cost comparison | [Improving Efficiency](../slides/04-improving-efficiency.html#rqmc-error-replications) |
 | 11 | Tue Oct 27 | **Test 2** | Covers<br>&nbsp;&nbsp;&nbsp;&nbsp;[Markov Chain Monte Carlo](../slides/03-markov-chain-monte-carlo.html)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Improving Efficiency](../slides/04-improving-efficiency.html) through randomized QMC<br>&nbsp;&nbsp;&nbsp;&nbsp;Excludes stopping rules and cost for QMC/RQMC |
-| | Thu Oct 29 | Efficiency synthesis and choosing a complete method; transition to Selected Topics | [Improving Efficiency](../slides/04-improving-efficiency.html#big-ideas-continued)<br>[Selected Topics](../slides/05-selected-topics.html) |
+| | Thu Oct 29 | Efficiency synthesis and stopping-rule recap; parallel computing and CPU/GPU notebook; two-level IID/RQMC allocation and deterministic QMC bounds through “What two levels accomplish” | [Improving Efficiency](../slides/04-improving-efficiency.html#big-ideas-continued)<br>[Selected Topics](../slides/05-selected-topics.html#parallel-computing)<br>[CPU/GPU notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/GPU_MonteCarlo_Demo.ipynb) |
 
 ### November
 
 | Week | Date | Topic | Slides / Materials |
 |---:|---|---|---|
-| 12 | Tue Nov 3 | | |
+| 12 | Tue Nov 3 | Two-level allocation derivation and cost versus error; allocation exercise; extension to a hierarchy and many levels | [Selected Topics: two-level optimization](../slides/05-selected-topics.html#two-level-optimization)<br>[Multilevel hierarchy](../slides/05-selected-topics.html#infinite-dimensional-expectations) |
 | | Thu Nov 5 | | |
 | 13 | Tue Nov 10 | | |
 | | Thu Nov 12 | | |

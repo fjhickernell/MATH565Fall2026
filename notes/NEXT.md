@@ -2,9 +2,27 @@
 
 ## Continue instructor review — October 29
 
+October 29 lecture reconciliation is complete through “What two levels
+accomplish” in Selected Topics. The November 3 plan and verified calendar note
+resume at “Deriving the two-level allocation,” followed by cost versus error,
+the allocation exercise, and the many-level hierarchy. The new derivation/cost
+slides and exercise were not taught on October 29. Improving Efficiency is
+finished in class; its outline now records about 9 classroom hours, while
+Selected Topics projects 13 hours including the eight remaining regular
+instructional meetings. Project presentations add about 1 hour of student
+class time per student (present once and observe twice), separately from
+the roughly 40 lecture hours. These schedule, outline, and MLMC revisions are
+included in the teaching Checkpoint; remote deployment remains pending.
+
 Continue instructor review of the audited MLMC sequence in Deck 05. Two-level
 random and deterministic estimation/allocation now lead to a numerical
-points-versus-work exercise. The general $f_{d_\ell}$ hierarchy precedes
+points-versus-work exercise. New two-level continuations show the Lagrangian
+derivation, optimal cost versus RMSE, and the work multipliers for error
+reduction relative to the fixed fine approximation. Review these with the instructor.
+Notation audited across two and many levels: finite fine targets precede the
+separate limiting-target bias discussion; total counts, RQMC per-run counts,
+allocation weights, work normalizers, and glossary definitions now agree.
+The general $f_{d_\ell}$ hierarchy precedes
 the many-level estimators and weights; the two “Why telescoping helps” slides
 give the payoff before the detailed bias/cost budgets. Practical pilot and
 error-assessment continuations close the section. Review the new exercise and
@@ -118,14 +136,15 @@ of the current revisions remains pending.
 ### Selected Topics and notebook trial
 
 `notebooks/performance/GPU_MonteCarlo_Demo.ipynb` now has a complete saved M3
-Max execution: all fourteen code cells have successful saved outputs, with
-16 logical CPU cores, 40 GPU cores, MPS, and total runtime 1 min 28.4 sec.
+Max execution: the October 29 classroom run refreshed all fourteen code cells
+successfully, with 16 logical CPU cores, 40 GPU cores, MPS, and total runtime
+2 min 1.2 sec. Its saved benchmark outputs are preserved in this Checkpoint.
 The October 22 interpretation pass preserves all code and saved measurements,
 and lightly extends the prose: same-time accuracy improves by the square root
 of speedup, generation can dominate, and the many-output error plot is not an
 accuracy rate. Deck 05 now carries these takeaways on three continuation slides,
-with M3 timing examples in presenter notes. Instructor content review remains;
-student-facing notebook links are still deferred. After a kernel restart,
+with M3 timing examples in presenter notes. Instructor content review remains
+open; the notebook is linked from the October 29 schedule. After a kernel restart,
 include the first setup cell. Deck 05 renders with the qmcpy kernel; all three
 new slides pass visible layout review, including the rendered accuracy formula.
 Notebook code is unchanged; JSON/Python and saved-output checks pass.

@@ -29,6 +29,12 @@ to the material taught and exclude assessment-only time. Use the schedule to
 estimate hours when exact transitions are unavailable, and revise the estimate
 if later pacing changes it.
 
+Account for project presentations separately as about one hour of student
+class time per student: presenting once and observing two other presentations.
+Do not count the full presentation-day schedule as each student's class time.
+Keep the presentation and observation requirements on `pages/project.qmd`
+authoritative for individual and team session lengths.
+
 Reconcile the outline's headings, order, and topic bullets with the taught
 decks. Split, combine, or rename outline entries when the actual deck sequence
 requires it; do not preserve an outdated outline structure merely to retain

@@ -53,6 +53,11 @@ appropriate phase rather than appended indiscriminately.
     - [x] Reconcile the outline with coverage through October 6 and projected
       remaining units, totaling about 40 lecture hours; condense subtopics and
       use Improving Efficiency consistently (October 8, 2026).
+    - [x] Reconcile Improving Efficiency completion and October 29 pacing:
+      about 9 classroom hours for the completed unit and 13 projected for
+      Selected Topics; align its outline order with the developed deck.
+    - [x] Count project presentations separately as about 1 hour of student
+      class time per student: present once and observe twice.
     - [x] Verify “Where to Find It” and other internal course links.
     - [x] Review assessment categories, percentages, and links.
     - [x] Correct Markdown and Quarto formatting issues.

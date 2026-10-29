@@ -9,9 +9,9 @@
   displayed lecture materials; distinguish substantive coverage from previews
   and deferred explanations.
 
-The schedule is reconciled through October 22. The August 18–September 17
+The schedule is reconciled through October 29. The August 18–September 17
 rows record the historical audit without retroactive calendar edits; the
-October 29 continuation note is saved and verified in Fantastical.
+November 3 continuation note is saved and verified in Fantastical.
 
 | Instructional meeting | Status | Panopto recording | Next instructional event annotated | Checked |
 |---|---|---|---|---|
@@ -33,6 +33,7 @@ October 29 continuation note is saved and verified in Fantastical.
 | October 15, 2026 | Reconciled: copulas/Gaussian-copula sampling; IID accuracy/cost model and equal-accuracy comparison; van der Corput recap; lattice, Kronecker, and digital constructions through point 5 of the board example; final two points deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=37356fdf-5d86-4468-8110-b4e40118d2e1) | October 20, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Fred → Calendar occurrence only; finish digital board points 6 and 7, then “Construct with new generators” and “Randomized low discrepancy sampling” | October 18, 2026 |
 | October 20, 2026 | Reconciled: low discrepancy constructions; copula clarification; component-by-component construction; randomized sampling, RQMC variance, independent replications, and stopping-rule caveats | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=9fc4759d-09e7-447b-989c-b4e9011b62b2) | October 22, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Fred → Calendar occurrence only; Recap “RQMC error assessment by independent replications” and “A stopping criterion from replications,” then “Why a small pilot does not determine RQMC error” | October 20, 2026 |
 | October 22, 2026 | Reconciled: independent Metropolis sampler and self-normalized importance sampling review; IID/RQMC stopping, pilot limitations and fixed-design error assessment; notebook examples and deterministic/RQMC cost comparisons through the tighter-RMSE exercise | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=62e2ad09-589c-491c-8ad1-b4eb011512d0) | October 29, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Fred → Calendar occurrence only; resume Deck 04 at “Big Ideas (continued),” then “Choose the Method for the Task” and Deck 05; October 27 is Test 2 | October 22, 2026 |
+| October 29, 2026 | Reconciled: Improving Efficiency synthesis and stopping recap; parallel computing and CPU/GPU notebook; two-level random allocation and deterministic bounds through “What two levels accomplish”; Lagrange derivation and many levels deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b56ef351-70c1-44a4-a1c1-b4f20117f026) | November 3, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Fred → Calendar occurrence only; resume Selected Topics at “Deriving the two-level allocation,” then cost versus error, allocation exercise, and hierarchy | October 29, 2026 |
 
 Recording evidence: Deck 02 mixture/acceptance–rejection unit-cube review
 preceded Deck 03 (33:06). Unbiased discrepancy began at 37:06; RKHS and
@@ -190,3 +191,54 @@ Saved the October 29 continuation using Only This Event, closed and reopened it 
 Validation: Quarto schedule render and both repositories’ `git diff --check` pass. The new continuation anchor resolves in the rendered Deck 04. Browser layout inspection could not finish because computer-use calls timed out. Fantastical was restored to its original Today week view with the task search cleared; Safari returned to its original ESPN tab after the muted recording tab was closed. Mail search cleanup was attempted but final read-back timed out, so its restored view remains unverified. Changes remain uncommitted and unpublished.
 
 Checkpoint validation: the instructor’s tighter Keister tolerance (`0.0005`) passes clean qmcpy-kernel execution. Refreshed saved outputs together because the prior plot preceded the changed stopping table. Schedule render, continuation-anchor check and whitespace checks pass; browser layout verification remains pending after the earlier app-control timeout.
+
+## October 29 recording evidence
+
+Illinois Tech Fred readiness notice: October 29, 9:57 AM start, approximately
+76 minutes; Panopto duration 1:16:31. Read the downloaded transcript, inspected
+the transition index, and verified the visible closing slide at 1:13:48 with
+playback paused and muted. Improving Efficiency closing synthesis and stopping
+recap include IID/kurtosis (19:18–21:18), RQMC replications (22:21), pilot
+limitations (22:51), fixed-design QMC error (25:51), and same-RMSE cost (27:12).
+The deck closes at 27:30–27:39; Selected Topics starts at 29:15, parallel
+computing at 29:24, and the CPU/GPU notebook at 33:09. MLMC begins at 46:21,
+two levels at 50:06, notation at 55:00, random estimates at 57:09, allocation
+at 1:00:45, and deterministic bounds at 1:04:33. The final substantive slide
+is “What two levels accomplish” at 1:13:48. Closing captions explicitly defer
+the Lagrange constrained optimization and the extension to more than two levels.
+The subsequently added derivation/cost slides and allocation exercise are not
+recorded as taught.
+
+Saved only the November 3 Illinois Tech Fred → Calendar occurrence and reopened
+it to verify the original title, PH 109, November 3, 10:00–11:15 AM Chicago
+(CST), and persisted continuation note. Resume Selected Topics at “Deriving
+the two-level allocation,” then cost versus error, the allocation exercise,
+and “A hierarchy of coupled approximations” / many levels.
+
+Reconciled the welcome-page outline after Improving Efficiency completion.
+Its estimated 9 fifty-minute classroom hours exclude assessment-only time and
+split mixed-deck meetings, with course logistics excluded. Selected Topics
+projects 13 hours: roughly 46 minutes on October 29 plus eight remaining
+75-minute instructional meetings (including November 19). The outline still
+totals about 40 lecture hours and follows the actual deck order; optional
+Latin hypercube sampling remains marked as not covered in class. The
+instructor clarified that project presentations add about 1 hour of student
+class time per student (present once and observe twice); this is listed
+separately from lecture time, rather than counting both presentation days.
+
+Validation: the schedule and welcome page render successfully. All schedule
+tables and the revised outline were inspected at desktop and 390-pixel widths;
+no horizontal overflow was found. The continuation anchors resolve in the
+rendered Selected Topics deck, and `git diff --check` passes. Fantastical is
+back on its original Today week with details closed and no search; Safari
+returned to the pre-existing lecture-slide tab after closing the paused,
+muted recording; Mail remains in All Inboxes with a blank search. Changes
+are included in the teaching Checkpoint; remote deployment remains pending.
+
+Checkpoint validation: the complete website and all five decks execute and
+render with the qmcpy kernel without warnings. The assembled course-page and
+deck links resolve. Notebook format, Python syntax, all fourteen successful
+saved executions, and the final runtime cell pass validation; the October 29
+measurements are preserved. Independent allocation checks and the staged
+assessment-confidentiality audit pass. The teaching Dashboard matches the
+November 3 continuation; its rollover date and unrelated entries are preserved.

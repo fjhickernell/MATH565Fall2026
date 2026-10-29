@@ -105,8 +105,10 @@ By the end of this course, students will be able to:
 ## Course Outline
 
 Hours are approximate 50-minute classroom hours; each 75-minute class meeting
-counts as 1.5 hours. The outline allocates about 40 hours, including projected
-coverage for the remaining units.
+counts as 1.5 hours. Completed units reflect the time taught; Selected Topics
+includes projected remaining coverage. The lecture outline allocates about
+40 hours. Project presentations add about 1 hour of student class time per
+student: presenting once and observing two other presentations.
 
 <details>
 <summary><strong>Introduction</strong> — 5 hours</summary>
@@ -151,7 +153,7 @@ coverage for the remaining units.
 </details>
 
 <details open>
-<summary><strong>Improving Efficiency</strong> — 16 hours</summary>
+<summary><strong>Improving Efficiency</strong> — 9 hours</summary>
 
 [Improving Efficiency slides](slides/04-improving-efficiency.html)
 
@@ -160,20 +162,31 @@ coverage for the remaining units.
 - Conditional Monte Carlo and density estimation
 - Antithetic sampling
 - Randomized low discrepancy sampling
-- Latin hypercube sampling (optional)
+- Latin hypercube sampling (optional; not covered in class)
 - Asian and lookback option comparisons
 - Error assessment, stopping criteria, and computational cost
 
 </details>
 
 <details>
-<summary><strong>Selected Topics</strong> — 6 hours</summary>
+<summary><strong>Selected Topics</strong> — 13 hours (projected)</summary>
 
 [Selected Topics slides](slides/05-selected-topics.html)
 
 - Parallel computing
-- Gradient and stochastic-gradient descent
 - Two-level and multilevel Monte Carlo
+- Gradient and stochastic-gradient descent
+- Monte Carlo tree search
+
+</details>
+
+<details>
+<summary><strong>Project Presentations</strong> — 1 hour per student</summary>
+
+[Project presentation and observation requirements](pages/project.qmd#presentation-scheduling-and-observations)
+
+- Present your project
+- Observe and assess two other presentations
 
 </details>
 
