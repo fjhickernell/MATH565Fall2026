@@ -2,8 +2,24 @@
 
 ## Continue instructor review — October 29
 
-Continue the instructor-led Deck 05 review; the current discussion is the
-deterministic two-level error bound and why it cannot rely on cancellation.
+Continue instructor review of the audited MLMC sequence in Deck 05. Two-level
+random and deterministic estimation/allocation now lead to a numerical
+points-versus-work exercise. The general $f_{d_\ell}$ hierarchy precedes
+the many-level estimators and weights; the two “Why telescoping helps” slides
+give the payoff before the detailed bias/cost budgets. Practical pilot and
+error-assessment continuations close the section. Review the new exercise and
+this reordered flow, then continue to Stochastic Gradient Descent.
+The telescoping slides show less/more optimal work on finer levels with
+$\rho_{\mathrm{cost}}$ for cost growth; the fixed-$L$ rate is explicitly
+integration error, with approximation bias separate. RQMC pilot replication
+count $R$ stays fixed while sample size varies, and fitting $p$ is explicit.
+Two-level symbols are now introduced in their own early continuation; three
+linked glossary slides collect targets, errors, allocation, and geometric rates.
+$C$ is total work, held fixed as a budget or written $C(\varepsilon)$ to show
+its dependence on tolerance. Separate visible IID/RQMC and deterministic QMC
+continuations derive the tolerance exponent using the bias-driven choice of
+$L$, including the minimum-design-work contribution. Independent level samples
+are displayed as indexed sets rather than an unexplained vector shorthand.
 The multilevel sequence now motivates dimension-dependent evaluation work,
 maps $f_d$ to the cheap part and coupled correction $Y_\ell$, and develops
 IID/RQMC variance addition with a general rate $n^{-p}$ before deterministic

@@ -209,12 +209,14 @@ sampling uncertainty. Keep the existing M3 measurements when editing prose.
 Estimate expensive expectations by [combining cheap approximations with coupled corrections]{.alert}<br>
 Allocate work where it buys the greatest reduction in error
 
+[Two-level notation](#two-level-notation) · [Full MLMC glossary](#mlmc-glossary)
+
 - [Two-level Monte Carlo](#two-level-monte-carlo)
 - [Allocating work optimally](#allocating-work-optimally)
 - [What two levels accomplish](#what-two-levels-accomplish)
+- [A hierarchy of coupled approximations](#infinite-dimensional-expectations)
 - [Many levels](#many-levels)
 - [Optimal multilevel allocation](#optimal-multilevel-allocation)
-- [Infinite-dimensional expectations](#infinite-dimensional-expectations)
 - [Why telescoping helps](#why-telescoping-helps)
 
 ## Two-level Monte Carlo {#two-level-monte-carlo .tree-marker-slide tree-marker="estimation"}
@@ -265,13 +267,44 @@ that property, together with the cost ratio, must justify two levels.
 
 ---
 
+### Two-level notation: error and work {#two-level-notation}
+
+For the cheap part $Y_1$ and coupled correction $Y_2$, use $\ell=1,2$
+
+::: {.mlmc-glossary}
+| Symbol | Meaning |
+|:---|:---|
+| $\mu_\ell=\Ex(Y_\ell)$, $\hmu_\ell$ | True level mean and its estimate |
+| $n_\ell$ | Number of level-$\ell$ contribution evaluations |
+| $A_\ell$ | Level-error amplitude in $A_\ell n_\ell^{-p}$ |
+| $p>0$ | Error-decay power as the point count increases |
+| $\$_\ell$ | Work for one complete level-$\ell$ contribution |
+| $C=n_1\$_1+n_2\$_2$ | Total work; held fixed when choosing the allocation |
+:::
+
+Random methods use [RMSE]{.alert}; deterministic QMC uses an [absolute-error bound]{.alert}
+
+::: {.notes}
+All work is measured in consistent units. A contribution evaluation includes
+its required inputs and transforms; the correction includes both coarse and
+fine evaluations, allowing any legitimate reuse. A_l and p depend on the
+integration method and level integrand. Only IID gives A_l^2=Var(Y_l).
+For RQMC with fixed replication count, n_l counts all evaluated points across
+runs. Later C(epsilon) denotes this same total work as a function of tolerance,
+not a second kind of cost. Setup/pilots and integer rounding are separate
+from this introductory linear-work model.
+:::
+
+---
+
 ### Random two-level estimates: IID or RQMC {#random-two-level-estimates}
 
-Estimate $\mu_\ell=\Ex(Y_\ell)$ with [uncorrelated level means]{.alert}: $\operatorname{cov}(\hmu_1,\hmu_2)=0$
+Estimate $\mu_\ell=\Ex(Y_\ell)$ with [uncorrelated level means]{.alert}: $\operatorname{cov}(\hmu_1,\hmu_2)=0$<br>
+Independent sample sets $\{Y_{i,1}\}_{i=0}^{n_1-1}$ and $\{Y_{i,2}\}_{i=0}^{n_2-1}$ ensure this condition
 
 \begin{align*}
 \hmu&=\hmu_1+\hmu_2&
-\hmu_\ell&=\frac1{n_\ell}\sum_{i=0}^{n_\ell-1}Y_{i\ell}\\
+\hmu_\ell&=\frac1{n_\ell}\sum_{i=0}^{n_\ell-1}Y_{i,\ell}\\
 \var(\hmu)&=\var(\hmu_1)+\var(\hmu_2)&
 \cost(\hmu)&=n_1\$_1+n_2\$_2
 \end{align*}
@@ -286,7 +319,7 @@ $$
 
 - [IID]{.alert}: $p=1/2$, $A_\ell^2=\var(Y_\ell)$; the variance model is exact
 - [RQMC]{.alert}: $p$ and $A_\ell$ depend on smoothness, design, and randomization<br>
-  Within-level points may be dependent; independent sample sets $\vY_{\bullet1},\vY_{\bullet2}$ ensure uncorrelated means
+  Points within each sample set may be dependent
 
 ::: {.notes}
 The MSE here is relative to the finite fine target mu_d2, not mu_infinity.
@@ -296,8 +329,8 @@ formulas are a simplifying model, not a claim that all rates agree.
 For RQMC, Y_il are values from a randomized design with the correct marginals.
 Unbiasedness is assumed, and the variance is over design randomizations.
 Variance addition requires Cov(hmu1,hmu2)=0; independence is sufficient,
-not necessary. The sample vectors Y_bullet,l=(Y_0l,...,Y_(n_l-1),l)
-can be generated independently between levels, with independent RQMC
+not necessary. The explicitly indexed sample sets can be generated
+independently between levels, with independent RQMC
 randomizations. Within-level points may be dependent. The algebraically
 defined Y1 and Y2 need not be uncorrelated when evaluated on the same path;
 the zero-covariance condition is on their separately sampled level means.
@@ -369,7 +402,7 @@ $$
 =\left(\frac{A_1\$_2}{A_2\$_1}\right)^{1/(p+1)}
 $$
 
-QMC needs sufficient [smoothness]{.alert} and a suitable design; errors need not cancel
+QMC needs sufficient [smoothness]{.alert} and a suitable design<br>Bound total error by the [sum of the level error bounds]{.alert}
 
 ::: {.notes}
 This is a triangle-inequality upper bound, not a sum-of-variances identity
@@ -407,74 +440,39 @@ variation/discrepancy bound for deterministic QMC. Neither a small correction
 mean nor pointwise closeness alone establishes all these properties.
 :::
 
-## Many levels {.tree-marker-slide tree-marker="estimation"}
+---
 
-Extend the same decomposition: $Y=Y_1+\cdots+Y_L$, $\mu_{d_L}=\sum_{\ell=1}^L\Ex(Y_\ell)$
+### Allocate two levels: points versus work {#two-level-allocation-practice}
 
-$$
-\hmu=\sum_{\ell=1}^L\hmu_\ell,
-\qquad \cost(\hmu)=\sum_{\ell=1}^Ln_\ell\$_\ell
-$$
+For independent IID level means, take $p=1/2$ and total work $C=3200$
 
-[Independent unbiased IID/RQMC level estimates]{.alert}
+| Quantity | Cheap level 1 | Correction level 2 |
+|:---|---:|---:|
+| Contribution variance $V_\ell$ | $16$ | $1$ |
+| Cost per contribution $\$_\ell$ | $1$ | $16$ |
 
-$$
-\operatorname{MSE}(\hmu;\mu_{d_L})=\sum_{\ell=1}^L\var(\hmu_\ell)
-\approx\sum_{\ell=1}^L\frac{A_\ell^2}{n_\ell^{2p}}
-$$
-
-[Deterministic QMC level estimates]{.alert}
-
-$$
-\abs{\hmu-\mu_{d_L}}\le\sum_{\ell=1}^L\abs{\hmu_\ell-\mu_\ell}
-\le\sum_{\ell=1}^L\frac{A_\ell}{n_\ell^p}
-$$
-
-Choose both the [level decomposition]{.alert} and the [point allocation]{.alert}
-
-::: {.notes}
-Here mu_dL denotes the mean of the finest finite approximation; the next
-slide on infinite-dimensional expectations makes the telescoping Y_l explicit.
-The same symbol A_l denotes the amplitude appropriate to the displayed case,
-not a claim that deterministic bounds and random RMSEs have equal constants.
-The independent randomized variance identity is exact; the common-p power
-law is a model. The deterministic statement requires actual justified bounds.
-For IID, p=1/2 and A_l^2=Var(Y_l), recovering sum_l V_l/n_l exactly.
-:::
-
-## Optimal multilevel allocation {.tree-marker-slide tree-marker="estimation"}
-
-The two-level ratios extend directly to all levels
-
-| Error criterion | Allocation weight $w_\ell$ |
-|:---|:---|
-| Independent IID/RQMC MSE model | $\displaystyle\left(A_\ell^2/\$_\ell\right)^{1/(2p+1)}$ |
-| Deterministic QMC error bound | $\displaystyle\left(A_\ell/\$_\ell\right)^{1/(p+1)}$ |
-
-For total work $C$, normalize the weights
-
-$$
-n_\ell=\frac{Cw_\ell}{\sum_{k=1}^Lw_k\$_k}
-$$
-
-IID recovers $w_\ell=\sqrt{V_\ell/\$_\ell}$ with $V_\ell=\var(Y_\ell)$
-
-::: {.key-point}
-Allocate by [error decay and cost]{.alert}; use the criterion appropriate to the method
+::: {.exitem}
+<span class="exbullet">$\exstar$</span>
+<span>Find the optimal ratio $n_1/n_2$ and the point counts $n_1,n_2$
+<span class="exsub">How much work goes to each level?</span>
+<span class="exsub">Do fewer correction samples imply less correction work?</span>
+</span>
 :::
 
 ::: {.notes}
-These are continuous optimum counts for positive amplitudes, costs, and a
-common exponent p>0. Deterministic weights minimize the chosen upper bound,
-not the unknown realized error. Randomized weights minimize the MSE model.
-For IID the power-law variance model is exact. Different level exponents
-require solving the multiplier equations with those exponents instead.
-Round up to admissible counts and account for setup/pilot costs in practice.
-A zero-amplitude level, if known exactly, should be treated separately.
-For IID the resulting optimal MSE is $(\sum_\ell\sqrt{V_\ell\$_\ell})^2/C$.
+The optimal IID ratio is $\sqrt{V_1\$_2/(V_2\$_1)}=16$.
+The budget gives $n_1+16n_2=3200$, so $n_1=1600$ and $n_2=100$.
+Both levels receive work 1600, although the cheap level uses sixteen times
+as many contributions. The resulting MSE relative to the finite fine target
+is $16/1600+1/100=0.02$.
+This illustrates allocation within the chosen decomposition; it does not
+establish superiority to direct fine sampling without a direct-fine variance
+and cost benchmark. Keep level samples independent and retain coupling
+within each correction evaluation. Ignore setup and pilot work for this
+hand calculation, as in the continuous allocation model.
 :::
 
-## Infinite-dimensional expectations {.tree-marker-slide tree-marker="estimation"}
+## A hierarchy of coupled approximations {#infinite-dimensional-expectations .tree-marker-slide tree-marker="estimation"}
 
 Suppose
 
@@ -502,11 +500,179 @@ $$
 
 with a remaining truncation bias $\mu-\Ex\{f_{d_L}(\vX_{1:d_L})\}$
 
+## Many levels {.tree-marker-slide tree-marker="estimation"}
+
+Extend the same decomposition: $Y=Y_1+\cdots+Y_L$, $\mu_{d_L}=\sum_{\ell=1}^L\Ex(Y_\ell)$
+
+$$
+\hmu=\sum_{\ell=1}^L\hmu_\ell,
+\qquad \cost(\hmu)=\sum_{\ell=1}^Ln_\ell\$_\ell
+$$
+
+[Independent unbiased IID/RQMC level estimates]{.alert}
+
+$$
+\operatorname{MSE}(\hmu;\mu_{d_L})=\sum_{\ell=1}^L\var(\hmu_\ell)
+\approx\sum_{\ell=1}^L\frac{A_\ell^2}{n_\ell^{2p}}
+$$
+
+[Deterministic QMC level estimates]{.alert}
+
+$$
+\abs{\hmu-\mu_{d_L}}\le\sum_{\ell=1}^L\abs{\hmu_\ell-\mu_\ell}
+\le\sum_{\ell=1}^L\frac{A_\ell}{n_\ell^p}
+$$
+
+Choose both the [level decomposition]{.alert} and the [point allocation]{.alert}
+
+::: {.notes}
+Here mu_dL is the mean of the finest approximation in the preceding hierarchy;
+the telescoping definitions identify each Y_l with a coupled correction.
+The same symbol A_l denotes the amplitude appropriate to the displayed case,
+not a claim that deterministic bounds and random RMSEs have equal constants.
+The independent randomized variance identity is exact; the common-p power
+law is a model. The deterministic statement requires actual justified bounds.
+For IID, p=1/2 and A_l^2=Var(Y_l), recovering sum_l V_l/n_l exactly.
+:::
+
+## Optimal multilevel allocation {.tree-marker-slide tree-marker="estimation"}
+
+Use [relative point-count weights]{.alert} $w_\ell$ to extend the two-level ratios
+
+| Error criterion | Allocation weight $w_\ell$ |
+|:---|:---|
+| Independent IID/RQMC MSE model | $\displaystyle\left(A_\ell^2/\$_\ell\right)^{1/(2p+1)}$ |
+| Deterministic QMC error bound | $\displaystyle\left(A_\ell/\$_\ell\right)^{1/(p+1)}$ |
+
+For total work $C$, normalize the weights
+
+$$
+n_\ell=\frac{Cw_\ell}{\sum_{k=1}^Lw_k\$_k}
+$$
+
+Point counts are proportional to $w_\ell$; [work shares]{.alert} are proportional to $\$_\ell w_\ell$
+
+::: {.key-point}
+Allocate by [error decay and cost]{.alert}; use the criterion appropriate to the method
+:::
+
+::: {.notes}
+These are continuous optimum counts for positive amplitudes, costs, and a
+common exponent p>0. Deterministic weights minimize the chosen upper bound,
+not the unknown realized error. Randomized weights minimize the MSE model.
+For IID the power-law variance model is exact. Different level exponents
+require solving the multiplier equations with those exponents instead.
+Round up to admissible counts and account for setup/pilot costs in practice.
+A zero-amplitude level, if known exactly, should be treated separately.
+For IID the resulting optimal MSE is $(\sum_\ell\sqrt{V_\ell\$_\ell})^2/C$.
+:::
+
+## Why telescoping helps {.tree-marker-slide tree-marker="estimation"}
+
+Coupling can reduce correction error while finer evaluations cost more
+
+Use geometric rate models $A_\ell^2\propto\beta^\ell$, $\$_\ell\propto\rho_{\mathrm{cost}}^\ell$, with $\rho_{\mathrm{cost}}>1$
+
+At the optimal allocation, [work per level]{.alert} satisfies
+
+$$
+\operatorname{work}_\ell=n_\ell\$_\ell
+\propto A_\ell^{2/(2p+1)}\$_\ell^{2p/(2p+1)}
+\propto(\beta\rho_{\mathrm{cost}}^{2p})^{\ell/(2p+1)}
+$$
+
+- $\beta\rho_{\mathrm{cost}}^{2p}<1$: finer contributions receive [less work]{.alert}<br>
+  The level sum stays bounded; the one-level integration RMSE rate $C^{-p}$ can be retained
+- $\beta\rho_{\mathrm{cost}}^{2p}>1$: finer contributions require [more work]{.alert}<br>
+  Adding levels introduces a growing work penalty
+- IID ($p=1/2$) recovers the condition $\beta\rho_{\mathrm{cost}}<1$
+
+::: {.key-point}
+For fixed $L$, integration RMSE has rate $C^{-p}$ in both regimes<br>The penalty grows as [bias control requires more levels]{.alert}
+:::
+
+::: {.notes}
+Assume 0<beta<1, rho_cost>1, a common p>0, and positive constants of
+proportionality independent of level. These are illustrative geometric
+models, rather than only one-sided bounds, so they justify the less/more
+work interpretation. With only upper amplitude and cost bounds, the displayed
+geometric expression is a majorant; its growth does not prove actual fine-level
+dominance. Rho_cost is a real-valued cost-growth factor, not an integer sample
+index or the exponent in a sample count n=2^m.
+For IID A_l^2 is contribution variance; for RQMC it is the squared amplitude
+in the complete randomized-estimate error model, not contribution variance.
+At fixed C and L, the work normalizer is shared across levels. Thus the ratio
+of work on consecutive levels is (beta rho_cost^{2p})^{1/(2p+1)}.
+Writing $S=\sum_\ell A_\ell^{2/(2p+1)}\$_\ell^{2p/(2p+1)}$, optimal
+integration RMSE is modeled by $S^{p+1/2}C^{-p}$. When the geometric factor
+is below one, S remains bounded as L increases; above one, it grows with L.
+For fixed L both cases have the same C^{-p} power. A worse overall error
+power can arise only when tighter accuracy also increases L to control bias.
+If $\abs{b_L}\lesssim B\rho_{\mathrm{bias}}^{-L}$ with rho_bias>1, and a
+fixed fraction of the error budget is assigned to bias, then L grows like
+log(1/epsilon)/log(rho_bias). Above the threshold the continuous model predicts
+$C(\varepsilon)\approx\varepsilon^{-1/p}(\beta\rho_{\mathrm{cost}}^{2p})^{L/(2p)}$,
+with an effective error exponent
+$p/[1+\log(\beta\rho_{\mathrm{cost}}^{2p})/(2\log\rho_{\mathrm{bias}})]<p$.
+A full complexity bound must also include the finest-level cost forced by
+minimum admissible counts, setup, pilots, and rounding. The one-level-rate
+claim assumes those costs and the bias can also be controlled within that rate.
+:::
+
+---
+
+### Why telescoping helps: deterministic QMC {#why-telescoping-helps-qmc}
+
+Assume justified level bounds $\abs{\hmu_\ell-\mu_\ell}\le A_\ell n_\ell^{-p}$
+
+Model [error-bound amplitudes]{.alert} by $A_\ell\propto\theta^\ell$ and cost by $\$_\ell\propto\rho_{\mathrm{cost}}^\ell$
+
+At the bound-minimizing allocation, [work per level]{.alert} satisfies
+
+$$
+\operatorname{work}_\ell=n_\ell\$_\ell
+\propto A_\ell^{1/(p+1)}\$_\ell^{p/(p+1)}
+\propto(\theta\rho_{\mathrm{cost}}^p)^{\ell/(p+1)}
+$$
+
+- $\theta\rho_{\mathrm{cost}}^p<1$: finer contributions receive [less work]{.alert}<br>
+  The level sum stays bounded; the one-level integration-error bound rate $C^{-p}$ can be retained
+- $\theta\rho_{\mathrm{cost}}^p>1$: finer contributions require [more work]{.alert}<br>
+  Adding levels introduces a growing work penalty
+- For the illustrative QMC rate $p=1$, the condition is $\theta\rho_{\mathrm{cost}}<1$
+
+::: {.key-point}
+As bias control requires more levels, coupling must preserve [smoothness]{.alert} and reduce [QMC error-bound amplitudes]{.alert}
+:::
+
+::: {.notes}
+Assume 0<theta<1, rho_cost>1, p>0, and level-independent proportionality
+constants. Theta describes decay of A_l itself; the random slide's beta
+describes decay of A_l^2. These are different method-dependent amplitudes.
+If the same amplitude sequence were used in both models, beta would be theta^2.
+The consecutive-level work ratio is (theta rho_cost^p)^{1/(p+1)}.
+Writing $S_{\mathrm Q}=\sum_\ell A_\ell^{1/(p+1)}\$_\ell^{p/(p+1)}$, the
+optimized deterministic bound is $S_{\mathrm Q}^{p+1}C^{-p}$. Below the
+threshold the sum stays bounded; above it, refinement adds a growing factor.
+As in the random case, fixed L gives C^{-p} in both regimes. If a justified
+bias model $\abs{b_L}\lesssim B\rho_{\mathrm{bias}}^{-L}$ sets L from the
+tolerance, the growing-factor regime predicts continuous work
+$C(\varepsilon)\propto\varepsilon^{-1/p}(\theta\rho_{\mathrm{cost}}^p)^{L/p}$,
+with effective error exponent
+$p/[1+\log(\theta\rho_{\mathrm{cost}}^p)/\log\rho_{\mathrm{bias}}]<p$.
+These predictions concern the chosen deterministic bound, not equality for
+the realized error. Include minimum allowed counts, setup/pilots, rounding,
+and logarithmic factors before claiming a complete complexity rate.
+A_l is a justified deterministic bound amplitude, for example a discrepancy
+rate constant times the correction integrand's variation. Small IID variance
+or a small correction mean does not establish this bound or its decay.
+:::
+
 ---
 
 ### Cost for a multilevel error tolerance {#multilevel-cost-for-accuracy}
 
-Let $\mu_{d_L}=\Ex\{f_{d_L}(\vX_{1:d_L})\}$ and $b_L=\mu-\mu_{d_L}$
+Let $\mu_{d_L}=\Ex\{f_{d_L}(\vX_{1:d_L})\}$ and $b_L=\mu-\mu_{d_L}$<br>Write $C(\varepsilon)$ for the [total work required]{.alert} at error tolerance $\varepsilon$
 
 For [independent unbiased IID/RQMC level estimates]{.alert}
 
@@ -588,41 +754,207 @@ positive sample minima, logarithmic terms, and epsilon-dependent L and
 amplitudes as appropriate, just as in the single-level QMC cost discussion.
 :::
 
-## Why telescoping helps {.tree-marker-slide tree-marker="estimation"}
+---
 
-- Fine approximations are expensive
-- Coupling makes adjacent approximations similar
-- Their difference can have a small [error amplitude]{.alert}
-- Sample cheap, coarse levels often; expensive corrections less often when justified
+### Where the cost exponent changes: IID/RQMC {#multilevel-random-cost-exponent}
 
-For IID/RQMC, suppose $A_\ell^2\lesssim\beta^\ell$ and $\$_\ell\lesssim m^\ell$
+Assume $\abs{b_L}\lesssim B_{\mathrm{bias}}\rho_{\mathrm{bias}}^{-L}$, with $\rho_{\mathrm{bias}}>1$<br>
+A fixed bias fraction gives $L\approx\log(1/\varepsilon)/\log\rho_{\mathrm{bias}}$
+
+Write $G=\beta\rho_{\mathrm{cost}}^{2p}$; in the [continuous allocation model]{.alert}
 
 $$
-\sum_{\ell=1}^LA_\ell^{2/(2p+1)}\$_\ell^{2p/(2p+1)}
-\lesssim\sum_{\ell=1}^L(\beta m^{2p})^{\ell/(2p+1)}
+C(\varepsilon)\propto\varepsilon^{-1/p}
+\left[\sum_{\ell=1}^LG^{\ell/(2p+1)}\right]^{(2p+1)/(2p)}
 $$
 
-- If $\beta m^{2p}<1$, this sum stays bounded as $L$ increases
-- If $\beta m^{2p}>1$, the geometric upper bound grows toward fine levels
-- IID ($p=1/2$) recovers the condition $\beta m<1$
+| Level-work regime | Exponent $q$ in $C(\varepsilon)\propto\varepsilon^{-q}$ |
+|:---|:---|
+| $G<1$: less work on finer levels | $\displaystyle\frac1p$ |
+| $G>1$: more work on finer levels | $\displaystyle\frac1p+\frac{\log G}{2p\log\rho_{\mathrm{bias}}}$ |
 
 ::: {.key-point}
-A useful hierarchy balances [correction error decay]{.alert} against [evaluation cost growth]{.alert}
+The exponent grows beyond $1/p$ when [bias-driven refinement adds fine-level work]{.alert}
+:::
+
+Minimum allowed samples also add work of order $\varepsilon^{-\log\rho_{\mathrm{cost}}/\log\rho_{\mathrm{bias}}}$
+
+::: {.notes}
+Ignore the borderline G=1. Use the geometric models on the telescoping slide,
+with fixed p and level-independent constants, and a fixed split between bias
+and sampling error. Constants in B_bias and the bias fraction only shift L
+by a bounded amount. The displayed L is the selected level count from the
+bias bound; it need not be the smallest L the actual unknown bias permits.
+For G<1 the geometric sum is bounded above and below by positive constants.
+For G>1 it is proportional to G^{L/(2p+1)}. Raising to (2p+1)/(2p) gives
+$G^{L/(2p)}\propto\varepsilon^{-\log G/(2p\log\rho_{\mathrm{bias}})}$.
+Thus the continuous model has cost exponent q=1/p in the first regime and
+$q=1/p+\log G/(2p\log\rho_{\mathrm{bias}})$ in the second. Error decays
+like total work to power -1/q once bias is included through the selected L.
+The evaluation work added by a minimum allowed design on every level scales
+as sum_l cost_l, hence exponent q_floor=log(rho_cost)/log(rho_bias).
+With bounded-factor rounding, the modeled rounded evaluation-work exponent
+is max(q,q_floor). Setup and pilot work must also be counted. These are model
+predictions for allocation, not unconditional finite-sample error guarantees.
+:::
+
+---
+
+### Where the cost exponent changes: deterministic QMC {#multilevel-qmc-cost-exponent}
+
+Use the same bias model and $L\approx\log(1/\varepsilon)/\log\rho_{\mathrm{bias}}$
+
+Write $H=\theta\rho_{\mathrm{cost}}^p$; use the [continuous deterministic bound model]{.alert}
+
+$$
+C(\varepsilon)\propto\varepsilon^{-1/p}
+\left[\sum_{\ell=1}^LH^{\ell/(p+1)}\right]^{(p+1)/p}
+$$
+
+| Level-work regime | Exponent $q$ in sufficient work $C(\varepsilon)\propto\varepsilon^{-q}$ |
+|:---|:---|
+| $H<1$: less work on finer levels | $\displaystyle\frac1p$ |
+| $H>1$: more work on finer levels | $\displaystyle\frac1p+\frac{\log H}{p\log\rho_{\mathrm{bias}}}$ |
+
+::: {.key-point}
+A growing level sum adds $\log H/(p\log\rho_{\mathrm{bias}})$ to the [tolerance exponent]{.alert}
+:::
+
+Minimum allowed samples again add work of order $\varepsilon^{-\log\rho_{\mathrm{cost}}/\log\rho_{\mathrm{bias}}}$
+
+::: {.notes}
+Ignore the borderline H=1. The deterministic bound amplitudes follow the
+geometric model A_l proportional to theta^l; they are not random variances.
+Above the threshold the level sum is proportional to H^{L/(p+1)}.
+Raising to (p+1)/p gives H^{L/p}, yielding the displayed extra epsilon power.
+C(epsilon) here is the sufficient work selected by minimizing the specified
+bound, not an equality for the unknown minimal work or the realized error.
+The same minimum-design-work exponent q_floor applies; bounded-factor
+rounding gives max(q,q_floor) for modeled evaluation work. Add setup and
+pilot work before quoting a complete practical complexity rate.
+:::
+
+---
+
+### Allocate randomized work in practice {#multilevel-allocation-in-practice}
+
+- [Time]{.alert} complete coupled contributions at each level; estimate $\$_\ell$<br>
+  Include generation, transforms, and both coarse/fine evaluations
+- [IID pilots]{.alert}: estimate $V_\ell$ from individual outputs; use $p=1/2$, $A_\ell^2=V_\ell$
+- [RQMC pilots]{.alert}: fix $R$ independent runs and vary the points $N$ per run<br>
+  Estimate variance $\hat v_\ell(n)$ of the reported level mean; total point count $n=RN$
+
+For a justified rate $p$, estimate the amplitude by
+
+$$
+\widehat{A_\ell^2}\approx n^{2p}\hat v_\ell(n)
+$$
+
+- For RQMC, [fit $p$]{.alert} from variance decay versus point count across several sizes
+- Use the amplitude and cost estimates in the allocation weights; round to allowed sizes
+- Charge for the pilot; use [fresh independent final runs]{.alert} after choosing the counts
+
+::: {.notes}
+For IID, the usual sample variance divided by n estimates the variance of
+the reported level mean. For RQMC, repeat the entire N-point design with
+independent randomizations. If R runs with N points per run are averaged,
+the across-run sample variance divided by R estimates the variance of the
+reported mean, and the total point count in the displayed convention is n=RN.
+Keep R fixed when comparing point counts and in the A_l model.
+Under an approximate power law, comparing n and a larger allowed rn gives
+$\hat p_\ell=\log[\hat v_\ell(n)/\hat v_\ell(rn)]/(2\log r)$.
+Several counts and replications are preferable to treating one noisy ratio
+as an established rate. If levels have different rates, do not force the
+common-p closed form: use the level-specific multiplier equations or a
+measured marginal variance-reduction-per-work allocation.
+Timing needs the complete coupled contribution and a representative batch;
+separate fixed setup from per-point cost and include GPU synchronization.
+Freeze allocation after an independent pilot for a simple final analysis.
+Adaptive reuse needs its own unbiasedness and uncertainty justification.
+Source: [Giles, Multilevel Monte Carlo methods (2015)](https://people.maths.ox.ac.uk/gilesm/files/acta15.pdf).
+:::
+
+---
+
+### Validate the remaining error budget {#multilevel-practical-error-budget}
+
+- [Deterministic QMC]{.alert}: obtain $A_\ell,p$ from justified smoothness, discrepancy, or coefficient-tail bounds<br>
+  Differences between point counts are diagnostics; they do not by themselves certify an error bound
+- [Approximation bias]{.alert}: choose $L$ using a justified refinement-error bound or model<br>
+  A small final correction alone does not bound the entire omitted tail
+- [Pilot uncertainty]{.alert}: rare contributions and noisy replication variances can mislead allocation
+- [Complete work]{.alert}: include setup, pilots, minimum sample counts, and allowed design sizes
+
+::: {.key-point}
+Pilot estimates guide allocation; [accuracy claims need justified error and bias assessments]{.alert}
 :::
 
 ::: {.notes}
-Assume 0<beta<1, m>1, and level-independent constants in the bounds.
-For IID A_l^2 is contribution variance; for RQMC it is the squared amplitude
-in the complete randomized-estimate error model, not contribution variance.
-If beta m^{2p}=1, the sum grows at most linearly in L. These observations
-concern the cost factor, not a complete complexity theorem: the chosen
-finest level, bias decay, minimum work per level, and rounding still matter.
-For deterministic QMC the analogous sum is
-$\sum_\ell A_\ell^{1/(p+1)}\$_\ell^{p/(p+1)}$. Its favorable condition is that the
-error-bound amplitudes decay fast enough relative to cost, independently
-of whether the IID correction variance decays. Coupling helps only if the
-complete correction retains the smoothness/variation needed by that bound.
+For deterministic QMC, the relevant error amplitude may be difficult to know
+or estimate. Use a theoretical bound or a validated a posteriori procedure
+under its stated assumptions, such as justified coefficient-decay conditions;
+do not reinterpret an IID sample SD as a deterministic QMC bound.
+For approximation bias, a mean correction can help fit a convergence model,
+but a bound on the sum of omitted corrections needs assumptions on the
+remaining hierarchy. Quantify uncertainty in estimated correction means and
+model parameters. Do not choose L merely because one noisy correction is small.
+Independent RQMC replication supports variance estimation; very small R does
+not by itself support a reliable confidence interval or a finite-sample
+coverage guarantee. The pilot/amplitude model is for allocation and planning,
+not an automatic stopping certificate.
 :::
+
+---
+
+### MLMC glossary: hierarchy and target {#mlmc-glossary}
+
+::: {.mlmc-glossary}
+| Symbol | Meaning |
+|:---|:---|
+| $\ell$, $L$ | Level index and finest included level |
+| $d_\ell$, $f_{d_\ell}$ | Dimension/resolution and its approximate output function |
+| $Y_1$ | Cheap output $f_{d_1}(\vX_{1:d_1})$ |
+| $Y_\ell$, $\ell\ge2$ | Coupled correction $f_{d_\ell}-f_{d_{\ell-1}}$ |
+| $\mu_\ell$, $\hmu_\ell$ | Mean $\Ex(Y_\ell)$ and its level estimate |
+| $\mu_{d_L}$, $\hmu$ | Finest-approximation mean and sum of level estimates |
+| $\mu$, $b_L$ | Limiting target mean and bias $\mu-\mu_{d_L}$ |
+| $\varepsilon$, $\varepsilon_{\mathrm s}$ | Total error tolerance and remaining integration-error budget |
+:::
+
+---
+
+### MLMC glossary: error and allocation {#mlmc-error-work-glossary}
+
+::: {.mlmc-glossary}
+| Symbol | Meaning |
+|:---|:---|
+| $n_\ell$ | Total contribution evaluations at level $\ell$ |
+| $N_\ell$, $R$ | RQMC points per run and fixed independent-run count; $n_\ell=RN_\ell$ |
+| $A_\ell$, $p$ | Method-specific amplitude and decay power in $A_\ell n_\ell^{-p}$ |
+| $V_\ell$ | IID contribution variance $\var(Y_\ell)$; only IID gives $A_\ell^2=V_\ell$ |
+| $\hat v_\ell(n)$ | Estimated variance of the reported random level mean at total count $n$ |
+| $\$_\ell$ | Work for one complete level contribution |
+| $w_\ell$ | Relative point-count weight; work weights are $\$_\ell w_\ell$ |
+| $C$, $C(\varepsilon)$ | Total work: fixed as an allocation budget, or expressed as required work versus tolerance |
+:::
+
+---
+
+### MLMC glossary: geometric rates {#mlmc-rate-glossary}
+
+::: {.mlmc-glossary}
+| Symbol | Meaning |
+|:---|:---|
+| $\beta$ | Decay factor for squared random amplitudes: $A_\ell^2\propto\beta^\ell$ |
+| $\theta$ | Decay factor for deterministic bound amplitudes: $A_\ell\propto\theta^\ell$ |
+| $\rho_{\mathrm{cost}}>1$ | Growth factor for per-contribution work: $\$_\ell\propto\rho_{\mathrm{cost}}^\ell$ |
+| $B_{\mathrm{bias}}$, $\rho_{\mathrm{bias}}>1$ | Bias amplitude and refinement factor in $\abs{b_L}\lesssim B_{\mathrm{bias}}\rho_{\mathrm{bias}}^{-L}$ |
+| $G=\beta\rho_{\mathrm{cost}}^{2p}$ | Randomized level-work growth base |
+| $H=\theta\rho_{\mathrm{cost}}^p$ | Deterministic level-work growth base |
+| $q$ | Tolerance exponent in modeled work $C(\varepsilon)\propto\varepsilon^{-q}$ |
+:::
+
+The ratios of consecutive level work are $G^{1/(2p+1)}$ and $H^{1/(p+1)}$, respectively
 
 # Stochastic Gradient Descent {#stochastic-gradient-descent-section .tree-marker-slide tree-marker="estimation"}
 

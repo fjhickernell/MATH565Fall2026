@@ -36,6 +36,19 @@
   vertical-align: middle;
 }
 
+/* MLMC symbol keys need less room than their explanations. */
+.reveal .mlmc-glossary col:first-child,
+.reveal .mlmc-glossary th:first-child,
+.reveal .mlmc-glossary td:first-child {
+  width: 30% !important;
+}
+
+.reveal .mlmc-glossary col:last-child,
+.reveal .mlmc-glossary th:last-child,
+.reveal .mlmc-glossary td:last-child {
+  width: 70% !important;
+}
+
 .tree-component.monte-carlo-at-a-glance-tree {
   margin-inline: auto !important;
 }

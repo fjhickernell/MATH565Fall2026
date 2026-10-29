@@ -559,6 +559,14 @@ appropriate phase rather than appended indiscriminately.
     correspondence, and state the uncorrelated-level-means condition.
     Allocation formulas and changed layouts are validated; instructor review
     remains open.
+  - [x] Audit MLMC flow: introduce the coupled hierarchy before many-level
+    formulas, put the work-per-level explanation before detailed cost budgets,
+    add a two-level points-versus-work exercise, and expose practical pilot,
+    deterministic-bound, and bias-assessment guidance.
+  - [x] Introduce MLMC notation in the two-level case, add a linked symbol
+    glossary, and show both tolerance exponents explicitly for random and
+    deterministic methods. Use indexed independent sample sets and distinguish
+    total work, per-contribution work, and point-count weights.
   - [x] Complete instructor review of Lecture 03 and its four companions
     (September 10, 2026).
   - [ ] Review Lectures 04–05 individually with the instructor and refine
