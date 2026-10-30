@@ -279,8 +279,15 @@ appropriate phase rather than appended indiscriminately.
       archive listing.
     - [x] Adopt the established test and examination instructions.
     - [x] Add the take-home final's AI and nonhuman-resource permissions,
-      individual-work and submission rules, and December 1 Canvas release
-      date to the Tests page and Schedule; submission deadline remains TBA.
+      individual-work and submission rules, and November 25 Canvas release
+      date to the Tests page and Schedule; take-home submission is due
+      December 9 at 8:00 AM, the start of the in-class final.
+    - [x] Require individual Canvas file-upload submission for the take-home
+      final, with no hard-copy hand-in, following the October 30 instruction.
+    - [x] Create and verify both unpublished Canvas final items in the 40%
+      Final Exam group: 35-point take-home with individual file uploads,
+      November 25 availability and December 9 at 8:00 AM deadline; 65-point
+      in-class with on-paper submission and December 9 at 10:00 AM due time.
     - [x] Complete and review the private Test 2 draft; final printing remains.
     - [x] Schedule Test 2 for October 27 in PH 109; set the published
       On Paper Canvas item for 11:15 AM; add the date to the course

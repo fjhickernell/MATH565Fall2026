@@ -66,17 +66,18 @@ holidays, and examination details are finalized.
 | | Thu Nov 19 | | |
 | 15 | Mon Nov 23 | **Project presentations** | [Project information](project.qmd) |
 | | Tue Nov 24 | **Project presentations** | [Project information](project.qmd) |
+| | Wed Nov 25 | **Take-Home Portion of the Final Exam released on Canvas** | |
 | | Thu Nov 26 | **No Class — Thanksgiving holiday** | |
 
 ### December
 
 | Week | Date | Topic | Slides / Materials |
 |---:|---|---|---|
-| 16 | Tue Dec 1 | **Take-Home Portion of the Final Exam released on Canvas** | |
+| 16 | Tue Dec 1 | | |
 | | Thu Dec 3 | | |
 
 ### Final examinations
 
 | Week | Date | Topic | Slides / Materials |
 |---:|---|---|---|
-| 17 | Wed Dec 9 | **Final Exam**<br>8:00–10:00 AM<br>**PH 109** | Whole course; greater emphasis on material not covered by Test 1 or Test 2 |
+| 17 | Wed Dec 9 | **Take-Home Final Exam due**<br>8:00 AM<br>**In-Class Final Exam**<br>8:00–10:00 AM<br>**PH 109** | Whole course; greater emphasis on material not covered by Test 1 or Test 2 |

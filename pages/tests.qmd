@@ -29,11 +29,14 @@ Unless otherwise noted
 ## Take-Home Portion of the Final Exam
 
 The take-home portion of the final exam will be **released on Canvas on
-December 1, 2026**. It contributes **35% of the final-exam grade**. The
-submission deadline is **TBA**.
+November 25, 2026**, the day before Thanksgiving. It contributes **35% of the
+final-exam grade**. Submit it by **December 9, 2026, at 8:00 AM
+America/Chicago (CST)**, the start of the in-class final.
 
 - There is no time limit other than the submission deadline.
-- Turn in your files through **Canvas** and **hard copies to the instructor**.
+- Submit your files **individually** through the
+  [take-home final assignment in Canvas]({{< meta canvas.final_take_home >}}),
+  using file uploads. No hard copies are required.
 - You may use **AI tools** (e.g., ChatGPT) and other **inanimate resources**.
   You may **not get help from any human**, including classmates, tutors,
   friends, family, or online responders.
@@ -60,8 +63,8 @@ finalized.
 |---|---|
 | **Test 1**<br>September 15, 2026 | [Introduction](../slides/01-introduction.html)<br>[Generating Samples](../slides/02-generating-samples.html)<br>PH 109<br>[Test 1 solutions and score distribution](../assets/tests/current/MATH565Test1Fall2026_Answers.pdf) |
 | **Test 2**<br>October 27, 2026 | [Markov Chain Monte Carlo](../slides/03-markov-chain-monte-carlo.html)<br>[Improving Efficiency](../slides/04-improving-efficiency.html)<br>PH 109<br>PDF: TBA |
-| **Take-Home Final Exam**<br>Released December 1, 2026 | Released on Canvas; see [take-home instructions](#take-home-portion-of-the-final-exam).<br>Submission deadline TBA |
-| **In-Class Final Exam**<br>December 9, 2026 | 8:00–10:00 AM America/Chicago (CST)<br>PH 109<br>Cumulative, with greater emphasis on material not covered by Test 1 or Test 2.<br>**No arrangements to take in-class earlier**<br>PDF: TBA |
+| **Take-Home Final Exam**<br>Released November 25, 2026 | Individual [file-upload submission in Canvas]({{< meta canvas.final_take_home >}}); see [take-home instructions](#take-home-portion-of-the-final-exam).<br>**Due December 9, 2026, at 8:00 AM America/Chicago (CST)** |
+| **In-Class Final Exam**<br>December 9, 2026 | 8:00–10:00 AM America/Chicago (CST)<br>PH 109<br>**65% of the final-exam grade**<br>Cumulative, with greater emphasis on material not covered by Test 1 or Test 2.<br>**No arrangements to take in-class earlier**<br>[Canvas grade item]({{< meta canvas.final_in_class >}}); completed on paper.<br>PDF: TBA |
 
 ---
 

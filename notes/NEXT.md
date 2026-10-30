@@ -56,19 +56,35 @@ changed layouts and links pass local review. Allocation/cost formulas pass
 independent minimization checks at $p=1/2,1,3/2$. Instructor review remains
 open; these revisions do not establish lecture coverage or grading completion.
 
-## Take-home final instructions — October 29 update
+## Take-home final — October 30 update
 
 The Tests page now mirrors the prior course's take-home rules: AI and other
 inanimate resources are permitted; human help is prohibited; students must
-verify and justify their own work, submit files through Canvas and hard copies
-to the instructor, and sign the integrity statement. Canvas release is
-December 1, 2026, also listed on the Schedule. The submission deadline remains
-TBA. The full website and all five decks render successfully; the Tests and
-Schedule pages fit desktop and phone widths, and all 117 local content links
-on those pages resolve. The assessment table now uses two columns to fit
-phone screens. These changes are included in the teaching Checkpoint; remote
-deployment and live-page verification remain pending. No Canvas item or
-announcement was changed.
+verify and justify their own work and sign the integrity statement. Fred moved
+Canvas release to November 25, 2026, the day before Thanksgiving, and requested
+assignment-style submission: individual Canvas file uploads, with no hard-copy
+hand-in. The take-home deadline is December 9, 2026, at 8:00 AM
+America/Chicago (CST), the start of the in-class final. The Tests page and
+Schedule reflect these directions.
+
+Both Canvas items are saved and verified, unpublished, in the existing Final
+Exam group (40% of the course):
+
+- Take-Home Final Exam: [108492](https://iit.instructure.com/courses/25777/assignments/108492),
+  35 points, individual file uploads, unlimited attempts, available November 25
+  at midnight, due December 9 at 8:00 AM America/Chicago (CST). No Until date.
+- In-Class Final Exam: [108493](https://iit.instructure.com/courses/25777/assignments/108493),
+  65 points, on-paper submission, December 9 at 10:00 AM due time; the actual
+  examination is 8:00–10:00 AM America/Chicago (CST), PH 109.
+
+Reuse these IDs. The points preserve the published 35%/65% split; no partner
+group is used. The website links are recorded in course metadata. No exam
+document has been attached or announcement published. The full website renders;
+the Schedule and Tests pages fit desktop and 390-pixel phone widths. All 720
+assembled local links/assets resolve, including 117 content links on those two
+pages. These changes are included in this Checkpoint; remote deployment and
+live-page verification remain pending. Canvas publication still requires the
+instructor's confirmation after the public links are verified.
 
 ## Final-examination schedule — October 28 update
 
