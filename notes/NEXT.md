@@ -56,6 +56,20 @@ changed layouts and links pass local review. Allocation/cost formulas pass
 independent minimization checks at $p=1/2,1,3/2$. Instructor review remains
 open; these revisions do not establish lecture coverage or grading completion.
 
+## Take-home final instructions — October 29 update
+
+The Tests page now mirrors the prior course's take-home rules: AI and other
+inanimate resources are permitted; human help is prohibited; students must
+verify and justify their own work, submit files through Canvas and hard copies
+to the instructor, and sign the integrity statement. Canvas release is
+December 1, 2026, also listed on the Schedule. The submission deadline remains
+TBA. The full website and all five decks render successfully; the Tests and
+Schedule pages fit desktop and phone widths, and all 117 local content links
+on those pages resolve. The assessment table now uses two columns to fit
+phone screens. These changes are included in the teaching Checkpoint; remote
+deployment and live-page verification remain pending. No Canvas item or
+announcement was changed.
+
 ## Final-examination schedule — October 28 update
 
 The Schedule and assessment page now list the Registrar-confirmed in-class
