@@ -391,6 +391,9 @@ appropriate phase rather than appended indiscriminately.
 - [x] Expand Introduction's cumulative Terms to Know index to 134 entries on
   seven alphabetic slides; correct substantive destinations, preserve old range
   anchors, and verify rendered links and layouts (October 31, 2026).
+- [x] Derive the antithetic variance formulas in visible continuation slides:
+  distribution preservation, parity, uncorrelated parts, independent-pair
+  averaging, and the covariance of the sum/difference pair (October 31, 2026).
 - [x] Standardize all Course Maps at 36% course decks, 4% gutter, and 60%
   deck contents; add Teaser Trailer to Introduction and the sampling pipeline
   to Generating Samples beneath In this deck.

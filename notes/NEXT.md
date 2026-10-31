@@ -60,7 +60,11 @@ The hierarchy/index audit does not establish instructor approval of pending
 mathematical content; continue the MLMC review above.
 Improving Efficiency now connects the antithetic correlation formula to the
 uncorrelated even/odd variance decomposition, retaining $n=2m$ evaluations
-for $m$ independent pairs.
+for $m$ independent pairs. The continuations display the derivations: pair
+variance and averaging, parity under the pairing, zero odd/product
+expectations, the expanded covariance definition, variance addition, and the
+four-term covariance of the sum/difference pair. The correlation formula then
+reduces explicitly to the even-part variance formula.
 
 All five decks execute and render with the qmcpy kernel under the live watcher;
 changed layouts and links pass local review. Allocation/cost formulas pass
