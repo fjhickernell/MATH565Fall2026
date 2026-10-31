@@ -2101,24 +2101,34 @@ Y_{\mathrm{Anti}}=\{f(\vX)+f(\vA(\vX))\}/2
 </section>
 <section class="slide level2">
 
-<h3 id="even-and-odd-parts">Even and odd parts</h3>
-<p>For the distribution-preserving pairing <span class="math inline">\(\vA(\vX)\stackrel d=\vX\)</span>, assume <span class="math inline">\(\vA(\vA(\vx))=\vx\)</span> and <span class="math inline">\(\Ex[f(\vX)^2]&lt;\infty\)</span></p>
+<h3 id="deriving-the-antithetic-variance">Deriving the antithetic variance</h3>
+<p>Write <span class="math inline">\(Y=f(\vX)\)</span> and <span class="math inline">\(Y'=f(\vA(\vX))\)</span>, with <span class="math inline">\(0&lt;\var(Y)=\sigma^2&lt;\infty\)</span></p>
+<p>The pairing <span class="alert">preserves the distribution</span>, so <span class="math inline">\(\Ex(Y)=\Ex(Y')=\mu\)</span> and <span class="math inline">\(\var(Y)=\var(Y')=\sigma^2\)</span></p>
 <p><span class="math display">\[\begin{align*}
-f_e(\vx)&amp;=\tfrac12\{f(\vx)+f(\vA(\vx))\},\\
-f_o(\vx)&amp;=\tfrac12\{f(\vx)-f(\vA(\vx))\},\qquad f=f_e+f_o
+\Ex(Y_{\mathrm{Anti}})
+&amp;=\tfrac12\{\Ex(Y)+\Ex(Y')\}=\mu\\
+\var(Y_{\mathrm{Anti}})
+&amp;=\tfrac14\{\var(Y)+\var(Y')+2\operatorname{cov}(Y,Y')\}\\
+&amp;=\tfrac14\{\sigma^2+\sigma^2+2\rho\sigma^2\}
+=\tfrac{\sigma^2}{2}(1+\rho)
 \end{align*}\]</span></p>
-<p>Even and odd <span class="alert">relative to the pairing</span>: <span class="math inline">\(f_e(\vA(\vx))=f_e(\vx)\)</span>, <span class="math inline">\(f_o(\vA(\vx))=-f_o(\vx)\)</span></p>
-<p><span class="math display">\[\begin{multline*}
-\Ex[f_o(\vX)]=\Ex[f_e(\vX)f_o(\vX)]=0
-\\
-\implies \operatorname{cov}\bigl(f_e(\vX),f_o(\vX)\bigr)
-=\Ex[f_e(\vX)f_o(\vX)]-\Ex[f_e(\vX)]\Ex[f_o(\vX)]=0
-\end{multline*}\]</span></p>
-<p><span class="math display">\[
-\var\bigl(f(\vX)\bigr)=\var\bigl(f_e(\vX)\bigr)+\var\bigl(f_o(\vX)\bigr)
-\]</span></p>
+<p>Here <span class="math inline">\(\rho=\corr(Y,Y')\)</span>, so <span class="math inline">\(\operatorname{cov}(Y,Y')=\rho\sigma^2\)</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="averaging-independent-antithetic-pairs">Averaging independent antithetic pairs</h3>
+<p>From the preceding calculation, <span class="math inline">\(\var(Y_{\mathrm{Anti}})=\sigma^2(1+\rho)/2\)</span></p>
+<p>Take <span class="math inline">\(\vX_0,\ldots,\vX_{m-1}\)</span> as independent copies of <span class="math inline">\(\vX\)</span><br> <span class="alert">Independent pairs</span> make the cross-pair covariances zero:</p>
+<p><span class="math display">\[\begin{align*}
+\var(\hmu_{\mathrm{Anti},n})
+&amp;=\frac1{m^2}\sum_{i=0}^{m-1}\var(Y_{\mathrm{Anti},i})\\
+&amp;=\frac{\var(Y_{\mathrm{Anti}})}m
+=\frac{\sigma^2}{2m}(1+\rho)
+=\frac{\sigma^2}{n}(1+\rho)
+\end{align*}\]</span></p>
+<p><span class="math inline">\(m\)</span> independent pairs, <span class="math inline">\(n=2m\)</span> function evaluations</p>
 <aside class="notes">
-<p>This principle uses the distribution-preserving involution A introduced on the preceding slide. It applies to scalar and vector inputs without requiring symmetry about zero: reflection about any center c is A(x) = 2c - x. The uniform-cube reflection is A(u) = 1 - u. For vector inputs, preservation of the joint distribution is required, not merely symmetric marginals. Both f_o and f_e f_o change sign under A, so their expectations vanish. At n function evaluations the antithetic estimator variance is 2 Var(f_e(X))/n, versus [Var(f_e(X)) + Var(f_o(X))]/n for IID sampling. Thus a benefit at equal evaluation cost requires the odd-part variance to exceed the even-part variance.</p>
+<p>The first variance expansion applies to the two dependent outputs inside one pair. Only the variance of the average uses independence across pairs. The division by four comes from the pair average’s factor of one half; the division by m comes from averaging m independent pair contributions. If Var(Y)=0, the estimator variance is zero without defining correlation.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2133,47 +2143,145 @@ f_o(\vx)&amp;=\tfrac12\{f(\vx)-f(\vA(\vx))\},\qquad f=f_e+f_o
 </section>
 <section class="slide level2">
 
+<h3 id="even-and-odd-parts">Even and odd parts</h3>
+<p>For the distribution-preserving pairing <span class="math inline">\(\vA(\vX)\stackrel d=\vX\)</span>, assume <span class="math inline">\(\vA(\vA(\vx))=\vx\)</span> and <span class="math inline">\(\Ex[f(\vX)^2]&lt;\infty\)</span></p>
+<p><span class="math display">\[\begin{align*}
+f_e(\vx)&amp;=\tfrac12\{f(\vx)+f(\vA(\vx))\}\\
+f_o(\vx)&amp;=\tfrac12\{f(\vx)-f(\vA(\vx))\},\qquad f=f_e+f_o
+\end{align*}\]</span></p>
+<p>Even and odd <span class="alert">relative to the pairing</span><br> Applying <span class="math inline">\(\vA\)</span> twice returns <span class="math inline">\(\vx\)</span>, so the definitions give</p>
+<p><span class="math display">\[\begin{align*}
+f_e(\vA(\vx))
+&amp;=\tfrac12\{f(\vA(\vx))+f(\vx)\}=f_e(\vx)\\
+f_o(\vA(\vx))
+&amp;=\tfrac12\{f(\vA(\vx))-f(\vx)\}=-f_o(\vx)
+\end{align*}\]</span></p>
+<aside class="notes">
+<p>Even and odd are relative to the distribution-preserving involution A, not necessarily the origin. Reflection about c is A(x)=2c-x; uniform-cube reflection is A(u)=1-u. Scalars and vectors are both allowed. For vectors, preservation of the joint distribution is required, not only symmetric marginals. The finite second moment ensures integrability of the parts and their product, so the next slide’s expectations are well defined.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="why-the-even-and-odd-parts-are-uncorrelated">Why the even and odd parts are uncorrelated</h3>
+<p>Distribution preservation allows replacing <span class="math inline">\(\vX\)</span> by <span class="math inline">\(\vA(\vX)\)</span> inside expectations</p>
+<p>The odd part <span class="alert">changes sign</span>:</p>
+<p><span class="math display">\[
+\Ex[f_o(\vX)]=\Ex[f_o(\vA(\vX))]
+=-\Ex[f_o(\vX)]\implies\Ex[f_o(\vX)]=0
+\]</span></p>
+<p>The even part keeps its sign, so the product also changes sign:</p>
+<p><span class="math display">\[\begin{align*}
+\Ex[f_e(\vX)f_o(\vX)]
+&amp;=\Ex[f_e(\vA(\vX))f_o(\vA(\vX))]\\
+&amp;=-\Ex[f_e(\vX)f_o(\vX)]
+\implies\Ex[f_e(\vX)f_o(\vX)]=0
+\end{align*}\]</span></p>
+<p>Now use the <span class="alert">definition of covariance</span>:</p>
+<p><span class="math display">\[\begin{multline*}
+\Ex[f_o(\vX)]=\Ex[f_e(\vX)f_o(\vX)]=0\\
+\implies\operatorname{cov}\bigl(f_e(\vX),f_o(\vX)\bigr)
+=\Ex[f_e(\vX)f_o(\vX)]-\Ex[f_e(\vX)]\Ex[f_o(\vX)]=0
+\end{multline*}\]</span></p>
+</section>
+<section class="slide level2">
+
 <h3 id="antithetic-averaging-keeps-the-even-part">Antithetic averaging keeps the even part</h3>
 <div class="key-point">
 <p>Antithetic averaging keeps only the even part and removes the odd part, uncorrelated with the even part</p>
-<p><span class="math display">\[\begin{gather*}
-Y_{\mathrm{Anti}}=f_e(\vX),\qquad
-\mu=\Ex[f(\vX)]=\Ex[f_e(\vX)],\\
-\hmu_{\mathrm{Anti},n}=\frac1m\sum_{i=0}^{m-1}f_e(\vX_i),
-\qquad n=2m\text{ evaluations},\\
+<p><span class="math display">\[\begin{align*}
+Y_{\mathrm{Anti}}
+&amp;=\tfrac12\{(f_e(\vX)+f_o(\vX))+(f_e(\vX)-f_o(\vX))\}
+=f_e(\vX)\\
+\mu&amp;=\Ex[f(\vX)]=\Ex[f_e(\vX)]+\underbrace{\Ex[f_o(\vX)]}_{0}
+=\Ex[f_e(\vX)]
+\end{align*}\]</span></p>
+</div>
+<p>Independent pairs across <span class="math inline">\(i\)</span>, as on the antithetic sampling slide:</p>
+<p><span class="math display">\[\begin{align*}
+\hmu_{\mathrm{Anti},n}&amp;=\frac1m\sum_{i=0}^{m-1}f_e(\vX_i),
+\qquad n=2m\text{ evaluations}\\
 \var(\hmu_{\mathrm{Anti},n})
+&amp;=\frac1{m^2}\sum_{i=0}^{m-1}\var(f_e(\vX_i))
 =\frac{\var(f_e(\vX))}{m}
 =\frac{2\var(f_e(\vX))}{n}
-\end{gather*}\]</span></p>
+\end{align*}\]</span></p>
+</section>
+<section class="slide level2">
+
+<h3 id="variances-and-covariance-of-the-paired-outputs">Variances and covariance of the paired outputs</h3>
+<p>Write <span class="math inline">\(V_e=\var(f_e(\vX))\)</span> and <span class="math inline">\(V_o=\var(f_o(\vX))\)</span></p>
+<p>The parts are <span class="alert">uncorrelated</span>, so the variance of their sum is</p>
+<p><span class="math display">\[\begin{align*}
+\var(f(\vX))
+&amp;=\var(f_e(\vX)+f_o(\vX))\\
+&amp;=V_e+2\underbrace{\operatorname{cov}(f_e(\vX),f_o(\vX))}_{0}+V_o
+=V_e+V_o
+\end{align*}\]</span></p>
+<div class="key-point">
+<p>Write the paired outputs as a <span class="alert">sum and a difference</span>, then expand the covariance in both arguments:</p>
+<p><span class="math display">\[\begin{align*}
+\operatorname{cov}\bigl(f(\vX),f(\vA(\vX))\bigr)
+&amp;=\operatorname{cov}\bigl(f_e(\vX)+f_o(\vX),f_e(\vX)-f_o(\vX)\bigr)\\
+&amp;=\operatorname{cov}(f_e(\vX),f_e(\vX))
+-\operatorname{cov}(f_e(\vX),f_o(\vX))\\
+&amp;\quad+\operatorname{cov}(f_o(\vX),f_e(\vX))
+-\operatorname{cov}(f_o(\vX),f_o(\vX))\\
+&amp;=V_e-0+0-V_o=V_e-V_o
+\end{align*}\]</span></p>
 </div>
-<p>Independent pairs across <span class="math inline">\(i\)</span>, as on the antithetic sampling slide</p>
+<aside class="notes">
+<p>Covariance is linear in each argument, which explains all four signs. The two mixed terms also cancel by symmetry of covariance even without uncorrelatedness. Uncorrelatedness is needed for the separate variance sum.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="correlation-of-the-paired-outputs">Correlation of the paired outputs</h3>
+<p>Recall <span class="math inline">\(V_e=\var(f_e(\vX))\)</span>, <span class="math inline">\(V_o=\var(f_o(\vX))\)</span>, with <span class="math inline">\(V_e+V_o&gt;0\)</span></p>
+<p>The pairing preserves the distribution, so both outputs have variance <span class="math inline">\(V_e+V_o\)</span></p>
+<p><span class="math display">\[\begin{align*}
+\rho&amp;=\frac{\operatorname{cov}\bigl(f(\vX),f(\vA(\vX))\bigr)}
+{\sqrt{\var(f(\vX))\var(f(\vA(\vX)))}}\\
+&amp;=\frac{V_e-V_o}{\sqrt{(V_e+V_o)(V_e+V_o)}}
+=\frac{V_e-V_o}{V_e+V_o}
+\end{align*}\]</span></p>
 </section>
 <section class="slide level2">
 
 <h3 id="two-formulas-for-the-antithetic-variance">Two formulas for the antithetic variance</h3>
-<p>Write <span class="math inline">\(V_e=\var(f_e(\vX))\)</span>, <span class="math inline">\(V_o=\var(f_o(\vX))\)</span>, with <span class="math inline">\(V_e+V_o&gt;0\)</span></p>
-<p><span class="math display">\[\begin{align*}
-f(\vX)&amp;=f_e(\vX)+f_o(\vX),&amp;
-f(\vA(\vX))&amp;=f_e(\vX)-f_o(\vX)\\
-\operatorname{cov}\bigl(f(\vX),f(\vA(\vX))\bigr)&amp;=V_e-V_o,&amp;
-\var(f(\vX))&amp;=V_e+V_o
-\end{align*}\]</span></p>
-<p><span class="math display">\[
-\rho=\corr\bigl(f(\vX),f(\vA(\vX))\bigr)
-=\frac{V_e-V_o}{V_e+V_o}
-\]</span></p>
+<p>The preceding calculation gives <span class="math inline">\(\rho=(V_e-V_o)/(V_e+V_o)\)</span> and <span class="math inline">\(\var(f(\vX))=V_e+V_o\)</span></p>
 <div class="key-point">
 <p>The correlation and even/odd formulas <span class="alert">agree</span></p>
 <p><span class="math display">\[\begin{align*}
 \var(\hmu_{\mathrm{Anti},n})
 &amp;=\frac{\var(f(\vX))}{n}(1+\rho)\\
-&amp;=\frac{V_e+V_o}{n}\left(1+\frac{V_e-V_o}{V_e+V_o}\right)
+&amp;=\frac{V_e+V_o}{n}\left(1+\frac{V_e-V_o}{V_e+V_o}\right)\\
+&amp;=\frac{(V_e+V_o)+(V_e-V_o)}n
 =\frac{2V_e}{n}=\frac{V_e}{m}
 \end{align*}\]</span></p>
 </div>
 <p><span class="math inline">\(m\)</span> independent pairs, <span class="math inline">\(n=2m\)</span> function evaluations</p>
 <aside class="notes">
-<p>The even and odd parts are uncorrelated, and reflection reverses only the odd part. Their covariance contributions therefore subtract, whereas their variance contributions add. Distribution preservation makes the two output variances equal, giving the displayed correlation. If Var(f(X)) is zero, correlation is undefined but both estimator-variance formulas without correlation are zero. Negative correlation is equivalent to V_o &gt; V_e, which is exactly the improvement condition at equal function-evaluation cost.</p>
+<p>If Var(f(X)) is zero, correlation is undefined but the estimator variance is zero. Negative correlation is equivalent to V_o &gt; V_e, which is exactly the improvement condition at equal function-evaluation cost. The displayed algebra exposes cancellation of V_o in the numerator.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2363,7 +2471,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 
 <h3 id="comparing-random-designs">Comparing random designs</h3>
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="45ea8745" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="d5caee1d" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
