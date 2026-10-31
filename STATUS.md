@@ -218,10 +218,17 @@ appropriate phase rather than appended indiscriminately.
       attempts, and shared group submission/grade with 20 self-sign-up groups
       limited to two (group set 1784). All Sections announcement 107879 posted
       and verified October 12, 2026. Dashboard/reminder publication task closed;
-      grading remains due October 27.
+      original grading deadline October 27.
     - [x] Complete private Assignment 5 grading preparation and current Canvas
-      reconciliation (October 31, 2026). Instructor grading remains open;
-      the October 27 deadline is unchanged.
+      reconciliation (October 31, 2026).
+    - [x] Load and verify the instructor's completed Assignment 5 grades and
+      feedback under manual posting (October 31, 2026); prepare an unpublished
+      grades-posted announcement from the workbook's general comments.
+    - [x] After instructor review and explicit approval, post Assignment 5
+      grades/feedback to Everyone and verify “All grades posted” and released
+      feedback visibility (October 31, 2026). Publish and verify the approved
+      all-sections [grades-posted announcement](https://iit.instructure.com/courses/25777/discussion_topics/109427);
+      close Dashboard grading/review actions and preserve the private records.
     - [x] Record the 20-point homework and lowest-score-drop policy, protect
       the 10-point Diagnostic Survey from dropping, and save unpublished
       Canvas placeholders for Assignments 5–6 (October 9, 2026).

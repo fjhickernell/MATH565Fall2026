@@ -235,14 +235,17 @@ with `Assignment 5 Groups` (group set 1784): 20 self-sign-up groups, limit two.
 The description links to both live course pages without duplicating details.
 The all-sections [Assignment 5 is available announcement](https://iit.instructure.com/courses/25777/discussion_topics/107879)
 was posted and verified October 12. No further publication steps remain.
-The Dashboard publication task and matching Academic reminder are complete;
-grading remains due **October 27, 2026**. Preserve Owen's analytical-work or
-simulation option for Exercise 8.4.
+The assignment-publication task and matching Academic reminder are complete.
+The original grading deadline was **October 27, 2026**. Preserve Owen's
+analytical-work or simulation option for Exercise 8.4.
 
-Private grading preparation is complete as of October 31, including current
-Canvas reconciliation. Instructor grading and review remain open; the
-October 27 grading deadline is unchanged. Keep the private materials outside
-this public repository.
+Instructor-reviewed grades and feedback were posted to Everyone on October 31;
+Canvas confirms “All grades posted,” and released feedback visibility was
+verified. The approved all-sections
+[grades-posted announcement](https://iit.instructure.com/courses/25777/discussion_topics/109427)
+was published and its saved text and audience verified the same day. Dashboard
+grading/review actions are closed. Keep the private grading materials outside
+this public repository; no grade reload or duplicate announcement is needed.
 
 ### Asian-option cost and stopping follow-up
 
@@ -1062,15 +1065,15 @@ All six numbered homework assignments are 20 points. The Assignments group
 drops one lowest score and excludes the unchanged 10-point Diagnostic Survey
 with Never Drop. No quizzes are listed in the MATH 565 schedule.
 
-The following Canvas placeholders are saved and verified, **unpublished**,
-with no submission requested yet. Due dates reserve the schedule date at
-11:59 PM America/Chicago. Reuse these IDs during the full assignment setup:
+Assignment 5 has completed publication and grading release; its current record
+appears above. Assignment 6 is the remaining saved, verified, **unpublished**
+Canvas placeholder, with no submission requested yet. Its due date reserves
+the schedule date at 11:59 PM America/Chicago. Reuse this ID during setup:
 
-- Assignment 5: [106678](https://iit.instructure.com/courses/25777/assignments/106678), due October 21, 2026.
 - Assignment 6: [106679](https://iit.instructure.com/courses/25777/assignments/106679), due November 13, 2026.
 
 Complete the assignment-specific partner group set, file-upload submission,
-course-page links, and publication workflow before releasing either draft.
+course-page links, and publication workflow before releasing this draft.
 
 The student-facing Assignments page now records the 20-point homework and
 lowest-score-drop policy, including the Diagnostic Survey exception.

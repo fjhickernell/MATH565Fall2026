@@ -323,9 +323,11 @@ scores, and feedback outside the public course repository.
    Canvas. Do not execute uninspected student code.
 5. Prepare or update the Excel tracker with local folder paths, separate
    exercise scores, totals that remain blank until all required scores are
-   entered, feedback, and a separate general-comments tab. Preserve existing
-   instructor edits. Flag apparent missing deliverables for review without
-   assigning automatic deductions. Save a private grading guide and handoff
+   entered, feedback, and a separate general-comments tab. Include the top
+   progress row defined in the
+   [shared grading-tracker guidance](classlib/AGENTS.md#grading-tracker-progress).
+   Preserve existing instructor edits. Flag apparent missing deliverables for
+   review without assigning automatic deductions. Save a private grading guide and handoff
    describing the verified state and any remaining work.
 
 ## Loading grades, instructor review, and release
