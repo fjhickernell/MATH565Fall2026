@@ -695,7 +695,6 @@ This deck
 <li><a href="#/structured-random-sampling">Structured Random Sampling</a></li>
 <li><a href="#/low-discrepancy-sampling">Low Discrepancy Sampling</a></li>
 <li><a href="#/big-ideas">Big Ideas</a></li>
-<li><a href="#/choose-the-method-for-the-task">Choose the Method for the Task</a></li>
 </ul>
 </div>
 </section>
@@ -811,7 +810,6 @@ This deck
 <li><a href="#/transforming-an-integral">Transforming an integral</a></li>
 <li><a href="#/importance-sampling">Importance sampling</a></li>
 <li><a href="#/self-normalized-importance-sampling">Self-normalized importance sampling</a></li>
-<li><a href="#/choosing-a-transformation">Choosing a transformation</a></li>
 <li><a href="#/cost-for-iid-accuracy">Cost of an accurate IID estimate</a></li>
 </ul>
 </section>
@@ -1621,14 +1619,9 @@ D\bigl(F_{\mathrm{tar}},\widehat F_{n,w};K\bigr)
           display:block!important;
       }</style></aside>
 </section>
-<section id="choosing-a-transformation" class="slide level2 tree-marker-slide" data-tree-marker="analysis-importance">
-<h2>Choosing a transformation</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="analysis" style="--tree-left: 26%; --tree-top: 81%; --tree-align: left;">Analysis</div>
-  <div class="tree-component__label" data-label-id="importance-sampling" style="--tree-left: 31%; --tree-top: 35%; --tree-align: center;">Importance<br>Sampling</div>
-</div>
+<section class="slide level2">
 
+<h3 id="choosing-a-transformation">Choosing a transformation</h3>
 <ul>
 <li>Variable transformation and importance sampling are intertwined</li>
 <li>The sampling density changes the variance of the sample mean</li>
@@ -1728,7 +1721,6 @@ S(f)+\frac{\sigma^2(f)\$(f)}{\varepsilon^2}
 <ul>
 <li><a href="#/control-variates">Control variates</a></li>
 <li><a href="#/conditional-monte-carlo">Conditional Monte Carlo</a></li>
-<li><a href="#/conditioning-an-asian-average">Conditioning an Asian average</a></li>
 </ul>
 </section>
 <section id="control-variates" class="slide level2 tree-marker-slide" data-tree-marker="variance-reduction">
@@ -1984,13 +1976,9 @@ g(y;\vu_{2:d})=\frac{y-\sum_{j=2}^d\gamma_ju_j}{\gamma_1}
 </ul>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb">Notebook: curves and repeated-run errors</a></p>
 </section>
-<section id="conditioning-an-asian-average" class="slide level2 tree-marker-slide" data-tree-marker="quant-finance">
-<h2>Conditioning an Asian average</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="qf" style="--tree-left: 5%; --tree-top: 33%; --tree-align: center;">Quantitative<br>Finance</div>
-</div>
+<section class="slide level2">
 
+<h3 id="conditioning-an-asian-average">Conditioning an Asian average</h3>
 <p>Equally spaced dates <span class="math inline">\(t_j=j\Delta t\)</span>, <span class="math inline">\(\Delta t=T/d\)</span>, arithmetic average <span class="math inline">\(A\)</span></p>
 <p><span class="math display">\[\begin{align*}
 S(t_j)&amp;=S_0\exp\{(r-\sigma^2/2)t_j+\sigma B(t_j)\}\\
@@ -2078,10 +2066,8 @@ F_{A\mid C}(a\mid C)&amp;=\Phi\!\left(\frac{\log(a/C)}s\right)\\
 
 <ul>
 <li><a href="#/antithetic-sampling">Antithetic sampling</a></li>
-<li><a href="#/constructing-an-antithetic-variate">Constructing an antithetic variate</a></li>
 <li><a href="#/iid-variance-comparison">IID variance comparison</a></li>
 <li><a href="#/latin-hypercube-sampling-in-one-dimension">Latin hypercube sampling in one dimension</a></li>
-<li><a href="#/comparing-random-designs">Comparing random designs</a></li>
 </ul>
 </section>
 <section id="antithetic-sampling" class="slide level2 tree-marker-slide" data-tree-marker="variance-probability">
@@ -2113,13 +2099,96 @@ Y_{\mathrm{Anti}}=\{f(\vX)+f(\vA(\vX))\}/2
 \]</span></p>
 <p>Antithetic sampling helps with <span class="alert">negatively</span> correlated pairs · <a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb#Antithetic-pairs-at-equal-payoff-cost">Notebook comparison</a></p>
 </section>
-<section id="constructing-an-antithetic-variate" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
-<h2>Constructing an antithetic variate</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
-</div>
+<section class="slide level2">
 
+<h3 id="even-and-odd-parts">Even and odd parts</h3>
+<p>For the distribution-preserving pairing <span class="math inline">\(\vA(\vX)\stackrel d=\vX\)</span>, assume <span class="math inline">\(\vA(\vA(\vx))=\vx\)</span> and <span class="math inline">\(\Ex[f(\vX)^2]&lt;\infty\)</span></p>
+<p><span class="math display">\[\begin{align*}
+f_e(\vx)&amp;=\tfrac12\{f(\vx)+f(\vA(\vx))\},\\
+f_o(\vx)&amp;=\tfrac12\{f(\vx)-f(\vA(\vx))\},\qquad f=f_e+f_o
+\end{align*}\]</span></p>
+<p>Even and odd <span class="alert">relative to the pairing</span>: <span class="math inline">\(f_e(\vA(\vx))=f_e(\vx)\)</span>, <span class="math inline">\(f_o(\vA(\vx))=-f_o(\vx)\)</span></p>
+<p><span class="math display">\[\begin{multline*}
+\Ex[f_o(\vX)]=\Ex[f_e(\vX)f_o(\vX)]=0
+\\
+\implies \operatorname{cov}\bigl(f_e(\vX),f_o(\vX)\bigr)
+=\Ex[f_e(\vX)f_o(\vX)]-\Ex[f_e(\vX)]\Ex[f_o(\vX)]=0
+\end{multline*}\]</span></p>
+<p><span class="math display">\[
+\var\bigl(f(\vX)\bigr)=\var\bigl(f_e(\vX)\bigr)+\var\bigl(f_o(\vX)\bigr)
+\]</span></p>
+<aside class="notes">
+<p>This principle uses the distribution-preserving involution A introduced on the preceding slide. It applies to scalar and vector inputs without requiring symmetry about zero: reflection about any center c is A(x) = 2c - x. The uniform-cube reflection is A(u) = 1 - u. For vector inputs, preservation of the joint distribution is required, not merely symmetric marginals. Both f_o and f_e f_o change sign under A, so their expectations vanish. At n function evaluations the antithetic estimator variance is 2 Var(f_e(X))/n, versus [Var(f_e(X)) + Var(f_o(X))]/n for IID sampling. Thus a benefit at equal evaluation cost requires the odd-part variance to exceed the even-part variance.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="antithetic-averaging-keeps-the-even-part">Antithetic averaging keeps the even part</h3>
+<div class="key-point">
+<p>Antithetic averaging keeps only the even part and removes the odd part, uncorrelated with the even part</p>
+<p><span class="math display">\[\begin{gather*}
+Y_{\mathrm{Anti}}=f_e(\vX),\qquad
+\mu=\Ex[f(\vX)]=\Ex[f_e(\vX)],\\
+\hmu_{\mathrm{Anti},n}=\frac1m\sum_{i=0}^{m-1}f_e(\vX_i),
+\qquad n=2m\text{ evaluations},\\
+\var(\hmu_{\mathrm{Anti},n})
+=\frac{\var(f_e(\vX))}{m}
+=\frac{2\var(f_e(\vX))}{n}
+\end{gather*}\]</span></p>
+</div>
+<p>Independent pairs across <span class="math inline">\(i\)</span>, as on the antithetic sampling slide</p>
+</section>
+<section class="slide level2">
+
+<h3 id="two-formulas-for-the-antithetic-variance">Two formulas for the antithetic variance</h3>
+<p>Write <span class="math inline">\(V_e=\var(f_e(\vX))\)</span>, <span class="math inline">\(V_o=\var(f_o(\vX))\)</span>, with <span class="math inline">\(V_e+V_o&gt;0\)</span></p>
+<p><span class="math display">\[\begin{align*}
+f(\vX)&amp;=f_e(\vX)+f_o(\vX),&amp;
+f(\vA(\vX))&amp;=f_e(\vX)-f_o(\vX)\\
+\operatorname{cov}\bigl(f(\vX),f(\vA(\vX))\bigr)&amp;=V_e-V_o,&amp;
+\var(f(\vX))&amp;=V_e+V_o
+\end{align*}\]</span></p>
+<p><span class="math display">\[
+\rho=\corr\bigl(f(\vX),f(\vA(\vX))\bigr)
+=\frac{V_e-V_o}{V_e+V_o}
+\]</span></p>
+<div class="key-point">
+<p>The correlation and even/odd formulas <span class="alert">agree</span></p>
+<p><span class="math display">\[\begin{align*}
+\var(\hmu_{\mathrm{Anti},n})
+&amp;=\frac{\var(f(\vX))}{n}(1+\rho)\\
+&amp;=\frac{V_e+V_o}{n}\left(1+\frac{V_e-V_o}{V_e+V_o}\right)
+=\frac{2V_e}{n}=\frac{V_e}{m}
+\end{align*}\]</span></p>
+</div>
+<p><span class="math inline">\(m\)</span> independent pairs, <span class="math inline">\(n=2m\)</span> function evaluations</p>
+<aside class="notes">
+<p>The even and odd parts are uncorrelated, and reflection reverses only the odd part. Their covariance contributions therefore subtract, whereas their variance contributions add. Distribution preservation makes the two output variances equal, giving the displayed correlation. If Var(f(X)) is zero, correlation is undefined but both estimator-variance formulas without correlation are zero. Negative correlation is equivalent to V_o &gt; V_e, which is exactly the improvement condition at equal function-evaluation cost.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="constructing-an-antithetic-variate">Constructing an antithetic variate</h3>
 <p>If <span class="math inline">\(X\)</span> has continuous CDF <span class="math inline">\(F\)</span>, then</p>
 <p><span class="math display">\[\begin{gather*}
 U=F(X)\sim\Unif[0,1],\\
@@ -2290,16 +2359,11 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 \left(\hmu_{\mathrm{LHS},n}^{(r)}-\hmu_{\mathrm{LHS},n,R}\right)^2
 \end{align*}\]</span></p>
 </section>
-<section id="comparing-random-designs" class="slide level2 tree-marker-slide" data-tree-marker="variance-low-discrepancy">
-<h2>Comparing random designs</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="variance-reduction" style="--tree-left: 18%; --tree-top: 42%; --tree-align: center;">Variance<br>Reduction</div>
-  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-</div>
+<section class="slide level2">
 
+<h3 id="comparing-random-designs">Comparing random designs</h3>
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="cb81d67a" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="45ea8745" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2312,13 +2376,13 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 <section class="slide level2">
 
 <h3 id="strengths-and-limitations-of-lhs">Strengths and limitations of LHS</h3>
-<h3 id="strengths">Strengths</h3>
+<h4 id="strengths">Strengths</h4>
 <ul>
 <li><span class="alert">No</span> importance density, control variate, or conditional expectation required</li>
 <li>Can converge <span class="alert">faster</span> than IID sampling</li>
 <li>Guarantees one point in every one-dimensional <span class="alert">stratum</span></li>
 </ul>
-<h3 id="limitations">Limitations</h3>
+<h4 id="limitations">Limitations</h4>
 <ul>
 <li>The sample size is <span class="alert">fixed</span> when the design is constructed</li>
 <li>Accuracy assessment requires <span class="alert">independent</span> replications</li>
@@ -2341,7 +2405,6 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 <ul>
 <li><a href="#/the-van-der-corput-sequence">The van der Corput sequence</a></li>
 <li><a href="#/four-low-discrepancy-families">Four low discrepancy families</a></li>
-<li><a href="#/component-by-component-construction">Component-by-component construction</a></li>
 <li><a href="#/randomized-low-discrepancy-sampling">Randomized low discrepancy sampling</a></li>
 <li><a href="#/stopping-criteria">Stopping criteria</a></li>
 <li><a href="#/deterministic-ld-cost">Cost of deterministic low discrepancy sampling</a></li>
@@ -2703,14 +2766,9 @@ i=(\cdots i_2i_1i_0)_b
           display:block!important;
       }</style></aside>
 </section>
-<section id="component-by-component-construction" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy">
-<h2>Component-by-component construction</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
-</div>
+<section class="slide level2">
 
+<h3 id="component-by-component-construction">Component-by-component construction</h3>
 <p>Generators for lattice rules and digital nets may be chosen by number theory or computer search</p>
 <p>The component-by-component strategy:</p>
 <ol type="1">

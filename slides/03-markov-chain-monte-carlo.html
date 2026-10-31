@@ -777,7 +777,6 @@ This deck
 <ul>
 <li><a href="#/when-direct-sampling-is-difficult">When direct sampling is difficult</a></li>
 <li><a href="#/the-markov-property">The Markov property</a></li>
-<li><a href="#/examples-of-markov-chains">Examples of Markov chains</a></li>
 </ul>
 </section>
 <section id="when-direct-sampling-is-difficult" class="slide level2 tree-marker-slide" data-tree-marker="mcmc">
@@ -826,17 +825,13 @@ This deck
 <li>In MCMC, construct the chain so that, under suitable conditions, the <span class="alert">distribution of <span class="math inline">\(X_i\)</span> approaches the target</span> as <span class="math inline">\(i\to\infty\)</span></li>
 </ul>
 </section>
-<section id="examples-of-markov-chains" class="slide level2 tree-marker-slide" data-tree-marker="probability">
-<h2>Examples of Markov chains</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
-</div>
+<section class="slide level2">
 
+<h3 id="examples-of-markov-chains">Examples of Markov chains</h3>
 <p>Assume <span class="math inline">\(\epsilon_0,\epsilon_1,\ldots\ \IIDsim\ \Norm(0,1)\)</span></p>
 <div class="columns">
 <div class="column" style="width:47%;">
-<h3 id="markov">Markov</h3>
+<h4 id="markov">Markov</h4>
 <p><span class="math display">\[\begin{align*}
 X_0&amp;=0,&amp; X_{i+1}&amp;=X_i+\epsilon_i\\
 X_0&amp;=0,&amp; X_{i+1}&amp;=i+\epsilon_i
@@ -845,7 +840,7 @@ X_0&amp;=0,&amp; X_{i+1}&amp;=i+\epsilon_i
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<h3 id="not-markov-as-written">Not Markov as written</h3>
+<h4 id="not-markov-as-written">Not Markov as written</h4>
 <p><span class="math display">\[
 X_0=X_1=0,
 \qquad X_{i+1}=X_{i-1}+\epsilon_i
@@ -864,12 +859,8 @@ X_0=X_1=0,
 
 <ul>
 <li><a href="#/the-metropolishastings-algorithm">The Metropolis–Hastings algorithm</a></li>
-<li><a href="#/why-the-acceptance-ratio-works">Why the acceptance ratio works</a></li>
 <li><a href="#/the-independence-sampler">The independence sampler</a></li>
 <li><a href="#/the-metropolis-algorithm">The Metropolis algorithm</a></li>
-<li><a href="#/metropolis-practice">Metropolis practice</a></li>
-<li><a href="#/a-random-walk-metropolis-example">A random-walk Metropolis example</a></li>
-<li><a href="#/separated-modes-can-trap-a-chain">Separated modes can trap a chain</a></li>
 <li><a href="#/tuning-and-diagnostics">Tuning and diagnostics</a></li>
 </ul>
 </section>
@@ -901,14 +892,9 @@ X_0=X_1=0,
 </ol>
 <p><span class="alert">Every iteration accepts either the proposal or the current state</span><br>Nothing is discarded; use <span class="math inline">\(Y_i=f(\vX_i)\)</span> for output summaries</p>
 </section>
-<section id="why-the-acceptance-ratio-works" class="slide level2 tree-marker-slide" data-tree-marker="mcmc-probability">
-<h2>Why the acceptance ratio works</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
-  <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
-</div>
+<section class="slide level2">
 
+<h3 id="why-the-acceptance-ratio-works">Why the acceptance ratio works</h3>
 <p>The ratio compares the two directions of a proposed transition:</p>
 <p><span class="math display">\[
 \frac{\widetilde\varrho_{\mathrm{tar}}(\vZ_i)\varrho_{\mathrm{prop}}(\vX_i\mid \vZ_i)}
@@ -994,14 +980,9 @@ X_0=X_1=0,
 <li>repeat <span class="math inline">\(\vX_i\)</span> when a proposal is rejected</li>
 </ul>
 </section>
-<section id="metropolis-practice" class="slide level2 tree-marker-slide" data-tree-marker="mcmc-practice">
-<h2>Metropolis practice</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
-  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
-</div>
+<section class="slide level2">
 
+<h3 id="metropolis-practice">Metropolis practice</h3>
 <p>Use the uniform numbers in order and choose a random order of the candidate <span class="math inline">\(z\)</span> values</p>
 <table class="caption-top">
 <thead>
@@ -1074,19 +1055,14 @@ X_0=X_1=0,
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Starting at <span class="math inline">\(x=-1.2\)</span>, follow several Metropolis steps and record each accepted or repeated state</span></p>
 </div>
 </section>
-<section id="a-random-walk-metropolis-example" class="slide level2 tree-marker-slide" data-tree-marker="mcmc-practice">
-<h2>A random-walk Metropolis example</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
-  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
-</div>
+<section class="slide level2">
 
+<h3 id="a-random-walk-metropolis-example">A random-walk Metropolis example</h3>
 <p>Target a bimodal Gaussian mixture using the symmetric proposal</p>
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="b498b6d8" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="a597ffec" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1096,16 +1072,11 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 </div>
 </div>
 </section>
-<section id="separated-modes-can-trap-a-chain" class="slide level2 tree-marker-slide" data-tree-marker="mcmc-practice">
-<h2>Separated modes can trap a chain</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__group-heading" data-group-id="practice" style="--tree-left: 35%; --tree-top: 20%; --tree-align: left;">Practice</div>
-  <div class="tree-component__label" data-label-id="mcmc" style="--tree-left: 47%; --tree-top: 42%; --tree-align: center;">Markov Chain<br>Monte Carlo</div>
-</div>
+<section class="slide level2">
 
+<h3 id="separated-modes-can-trap-a-chain">Separated modes can trap a chain</h3>
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="83f0fdbe" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="adc1328c" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1486,10 +1457,7 @@ D_0^2&amp;=\int_{\mathcal X^2}K(\vx,\vx')\,\dif F_{\mathrm{tar}}(\vx)\,\dif F_{\
 <ul>
 <li><a href="#/a-reproducing-kernel-hilbert-space">A reproducing kernel Hilbert space</a></li>
 <li><a href="#/worst-case-integration-error">Worst-case integration error</a></li>
-<li><a href="#/the-discrepancy-identity">The discrepancy identity</a></li>
-<li><a href="#/variation-ignores-constants">Variation ignores constants</a></li>
 <li><a href="#/average-case-integration-error">Average-case integration error</a></li>
-<li><a href="#/what-the-kernel-controls">What the kernel controls</a></li>
 <li><a href="#/centered-discrepancy-and-smoothness">Centered discrepancy and smoothness</a></li>
 <li><a href="#/alternative-comparisons">Alternative comparisons</a></li>
 </ul>
@@ -1563,13 +1531,9 @@ f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx)-\frac1n\sum
           display:block!important;
       }</style></aside>
 </section>
-<section id="the-discrepancy-identity" class="slide level2 tree-marker-slide" data-tree-marker="error-assessment">
-<h2>The discrepancy identity</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="error-assessment" style="--tree-left: 43%; --tree-top: 67%; --tree-align: center;">Error<br>Assessment</div>
-</div>
+<section class="slide level2">
 
+<h3 id="the-discrepancy-identity">The discrepancy identity</h3>
 <p>Fix <span class="math inline">\(\vx'\in\mathcal X\)</span> and regard <span class="math inline">\(K(\cdot,\vx')\)</span> as an <span class="alert">integrand</span></p>
 <p>Apply the reproducing property to <span class="math inline">\(\zeta\)</span>, then the error representation with <span class="math inline">\(f=K(\cdot,\vx')\)</span>:</p>
 <p><span class="math display">\[\begin{align*}
@@ -1603,14 +1567,9 @@ f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx)-\frac1n\sum
 \end{align*}\]</span></p>
 <p>Thus discrepancy is the <span class="alert">worst-case error over <span class="math inline">\(\norm{f}_{\mathcal H_K}\le1\)</span></span></p>
 </section>
-<section id="variation-ignores-constants" class="slide level2 tree-marker-slide" data-tree-marker="discrepancy-analysis">
-<h2>Variation ignores constants</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
-  <div class="tree-component__label" data-label-id="analysis" style="--tree-left: 26%; --tree-top: 81%; --tree-align: left;">Analysis</div>
-</div>
+<section class="slide level2">
 
+<h3 id="variation-ignores-constants">Variation ignores constants</h3>
 <p>For equal-weight sample averages assume <span class="math inline">\(1\in\mathcal H_K\)</span></p>
 <p>Both the target distribution and sample average integrate constants exactly</p>
 <p><span class="math display">\[
@@ -1713,14 +1672,9 @@ f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx)-\frac1n\sum
           display:block!important;
       }</style></aside>
 </section>
-<section id="what-the-kernel-controls" class="slide level2 tree-marker-slide" data-tree-marker="discrepancy-statistics">
-<h2>What the kernel controls</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
-  <div class="tree-component__label" data-label-id="statistics" style="--tree-left: 18%; --tree-top: 88%; --tree-align: left;">Statistics</div>
-</div>
+<section class="slide level2">
 
+<h3 id="what-the-kernel-controls">What the kernel controls</h3>
 <ul>
 <li>The numerical value of discrepancy depends on <span class="math inline">\(K\)</span> and its hyperparameters</li>
 <li>Multiplying <span class="math inline">\(K\)</span> by <span class="math inline">\(c^2\)</span> multiplies discrepancy by <span class="math inline">\(\abs{c}\)</span></li>

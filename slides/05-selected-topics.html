@@ -883,9 +883,7 @@ s=\frac{\operatorname{time}_{\mathrm{baseline}}(n)}{\operatorname{time}_{\mathrm
 <ul>
 <li><a href="#/two-level-monte-carlo">Two-level Monte Carlo</a></li>
 <li><a href="#/allocating-work-optimally">Allocating work optimally</a></li>
-<li><a href="#/what-two-levels-accomplish">What two levels accomplish</a></li>
 <li><a href="#/infinite-dimensional-expectations">A hierarchy of coupled approximations</a></li>
-<li><a href="#/many-levels">Many levels</a></li>
 <li><a href="#/optimal-multilevel-allocation">Optimal multilevel allocation</a></li>
 <li><a href="#/why-telescoping-helps">Why telescoping helps</a></li>
 </ul>
@@ -1224,13 +1222,9 @@ w_\ell=\left(\frac{A_\ell}{\$_\ell}\right)^{1/(p+1)}
           display:block!important;
       }</style></aside>
 </section>
-<section id="what-two-levels-accomplish" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
-<h2>What two levels accomplish</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
-</div>
+<section class="slide level2">
 
+<h3 id="what-two-levels-accomplish">What two levels accomplish</h3>
 <ul>
 <li><span class="math inline">\(d_1\ll d_2\)</span>: the coarse approximation can be much <span class="alert">cheaper</span></li>
 <li>Coupling can make the expensive correction <span class="alert">easier to integrate</span></li>
@@ -1325,13 +1319,9 @@ Y_\ell&amp;=f_{d_\ell}(\vX_{1:d_\ell})
 \]</span></p>
 <p>with a remaining approximation bias <span class="math inline">\(b_L=\mu-\mu_{d_L}\)</span></p>
 </section>
-<section id="many-levels" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
-<h2>Many levels</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
-</div>
+<section class="slide level2">
 
+<h3 id="many-levels">Many levels</h3>
 <p>Extend the same mean decomposition: <span class="math inline">\(\mu_{d_L}=\sum_{\ell=1}^L\mu_\ell\)</span>, <span class="math inline">\(\mu_\ell=\Ex(Y_\ell)\)</span></p>
 <p><span class="math display">\[
 \hmu=\sum_{\ell=1}^L\hmu_\ell,
@@ -1871,7 +1861,6 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 <ul>
 <li><a href="#/gradient-descent">Gradient descent</a></li>
 <li><a href="#/stochastic-gradient-descent">Stochastic gradient descent</a></li>
-<li><a href="#/gradient-and-stochastic-gradient-paths">Gradient and stochastic-gradient paths</a></li>
 </ul>
 </section>
 <section id="gradient-descent" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
@@ -1923,15 +1912,11 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 </ul>
 <p>The stochastic gradient is <span class="alert">cheap but noisy</span><br>Averaging a mini-batch reduces its variance</p>
 </section>
-<section id="gradient-and-stochastic-gradient-paths" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
-<h2>Gradient and stochastic-gradient paths</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
-</div>
+<section class="slide level2">
 
+<h3 id="gradient-and-stochastic-gradient-paths">Gradient and stochastic-gradient paths</h3>
 <p>Both methods minimize the same quadratic loss<br>Stochastic gradients use one randomly selected component at each step</p>
-<div id="0713f9b6" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
+<div id="b06cfb9b" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>

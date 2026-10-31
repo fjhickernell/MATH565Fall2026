@@ -756,7 +756,8 @@ This deck
 </h3>
 <ul>
 <li><a href="#/from-uniformity-to-a-target-distribution">From Uniformity to a Target Distribution</a></li>
-<li><a href="#/random-vectors-and-stochastic-processes">Random Vectors and Stochastic Processes</a></li>
+<li><a href="#/random-vectors-and-stochastic-processes">Random Vectors</a></li>
+<li><a href="#/stochastic-processes-and-option-pricing">Stochastic Processes and Option Pricing</a></li>
 <li><a href="#/low-discrepancy-sampling">Low Discrepancy Sampling</a></li>
 <li><a href="#/more-advanced-direct-sampling">More Advanced Direct Sampling</a></li>
 <li><a href="#/reframing-sampling-as-unit-cube-integration">Reframing Sampling as Unit-Cube Integration</a></li>
@@ -776,8 +777,6 @@ This deck
 <ul>
 <li><a href="#/where-do-random-variables-come-from">Where do random variables come from?</a></li>
 <li><a href="#/the-quantile-transform">The quantile transform</a></li>
-<li><a href="#/binomial-random-numbers">Binomial random numbers</a></li>
-<li><a href="#/zero-inflated-exponential-random-numbers">Zero-inflated exponential random numbers</a></li>
 <li><a href="#/gaussian-mixture-random-numbers">Gaussian mixture random numbers</a></li>
 </ul>
 </section>
@@ -834,13 +833,9 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 <p><span class="alert">IID inputs yield IID targets <br>Other designs (Latin hypercube, low discrepancy, …) retain their dependence structure</span></p>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb">Try the quantile-transform examples in the companion <code>GeneratingSamples</code> notebook</a></p>
 </section>
-<section id="binomial-random-numbers" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
-<h2>Binomial random numbers</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
-</div>
+<section class="slide level2">
 
+<h3 id="binomial-random-numbers">Binomial random numbers</h3>
 <p>Suppose <span class="math inline">\(X\sim\Bin(3,0.6)\)</span></p>
 <div class="binomial-transform-table">
 <table class="caption-top">
@@ -906,7 +901,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </section>
 <section class="slide level2">
 
-<div id="188fb03f" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="782f5279" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -917,14 +912,10 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 </div>
 <p><span class="math inline">\(F\)</span> is <span class="alert">right-continuous</span>; <span class="math inline">\(Q\)</span> is <span class="alert">left-continuous</span></p>
 </section>
-<section id="zero-inflated-exponential-random-numbers" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
-<h2>Zero-inflated exponential random numbers</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
-</div>
+<section class="slide level2">
 
-<h3 id="cdf">CDF</h3>
+<h3 id="zero-inflated-exponential-random-numbers">Zero-inflated exponential random numbers</h3>
+<h4 id="cdf">CDF</h4>
 <div class="columns">
 <div class="column" style="width:47%;">
 <p>Let <span class="math inline">\(X\)</span> be nonnegative with</p>
@@ -950,7 +941,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="42415aa8" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="7b27121a" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -982,7 +973,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="16ec1ff7" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="2f27cbcd" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1066,7 +1057,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="66f8fe88" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="0e2f0e39" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1079,7 +1070,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </section></section>
 <section>
 <section id="random-vectors-and-stochastic-processes" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="random-generation">
-<h1>Random Vectors and Stochastic Processes</h1>
+<h1>Random Vectors</h1>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
@@ -1088,13 +1079,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 <ul>
 <li><a href="#/independent-marginals">Independent marginals</a></li>
 <li><a href="#/multivariate-normal-sampling">Multivariate normal sampling</a></li>
-<li><a href="#/cholesky-factorization">Cholesky factorization</a></li>
-<li><a href="#/principal-component-factorization">Principal-component (PCA) factorization</a></li>
 <li><a href="#/copula-sampling">Copulas separate marginals from dependence</a></li>
-<li><a href="#/gaussian-processes">Gaussian processes</a></li>
-<li><a href="#/brownian-motion">Brownian motion</a></li>
-<li><a href="#/geometric-brownian-motion">Geometric Brownian motion</a></li>
-<li><a href="#/option-payoffs-and-prices">Option payoffs and prices</a></li>
 </ul>
 </section>
 <section id="independent-marginals" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
@@ -1149,14 +1134,10 @@ X_{n-1,1} &amp; X_{n-1,2} &amp; \cdots &amp; X_{n-1,d}
 \vX=\mA\vZ+\vmu\sim\Norm(\vmu,\mSigma)
 \]</span></p>
 </section>
-<section id="cholesky-factorization" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
-<h2>Cholesky factorization</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
-</div>
+<section class="slide level2">
 
-<h3 id="concrete-example">Concrete example</h3>
+<h3 id="cholesky-factorization">Cholesky factorization</h3>
+<h4 id="concrete-example">Concrete example</h4>
 <p>For symmetric positive-definite <span class="math inline">\(\mSigma\)</span>, Cholesky factorization gives a <span class="alert">lower-triangular</span> <span class="math inline">\(\mA\)</span> such that <span class="math inline">\(\mSigma=\mA\mA^\mathsf{T}\)</span></p>
 <p>For</p>
 <p><span class="math display">\[
@@ -1199,13 +1180,9 @@ a_{11}=\sqrt3,
 \]</span></p>
 <p>Different factorizations generate the <span class="alert">same distribution</span><br>They may behave <span class="alert">differently under low discrepancy sampling</span></p>
 </section>
-<section id="principal-component-factorization" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
-<h2>Principal-component (PCA) factorization</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
-</div>
+<section class="slide level2">
 
+<h3 id="principal-component-factorization">Principal-component (PCA) factorization</h3>
 <p>For the <a href="#/cholesky-factorization">same covariance matrix as in the Cholesky example</a>,</p>
 <p><span class="math display">\[
 \mSigma=\begin{pmatrix}3&amp;-1\\-1&amp;1\end{pmatrix},
@@ -1345,7 +1322,7 @@ X_1&amp;=-\log\bigl(1-\Phi(W_1)\bigr),
 
 <h3 id="the-same-copula-different-marginal-scales">The same copula, different marginal scales</h3>
 <p>Both colors start from the <span class="alert">same independent normal draws</span></p>
-<div id="915569de" class="cell" data-fig-height="4.1" data-fig-width="12" data-execution_count="5">
+<div id="95c2f815" class="cell" data-fig-height="4.1" data-fig-width="12" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1371,6 +1348,21 @@ X_1&amp;=-\log\bigl(1-\Phi(W_1)\bigr),
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</section></section>
+<section>
+<section id="stochastic-processes-and-option-pricing" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="quant-finance">
+<h1>Stochastic Processes and Option Pricing</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="qf" style="--tree-left: 5%; --tree-top: 33%; --tree-align: center;">Quantitative<br>Finance</div>
+</div>
+
+<ul>
+<li><a href="#/gaussian-processes">Gaussian processes</a></li>
+<li><a href="#/brownian-motion">Brownian motion</a></li>
+<li><a href="#/geometric-brownian-motion">Geometric Brownian motion</a></li>
+<li><a href="#/option-payoffs-and-prices">Option payoffs and prices</a></li>
+</ul>
 </section>
 <section id="gaussian-processes" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Gaussian processes</h2>
@@ -1658,7 +1650,6 @@ M_d:=\max_{0\le j\le d}S_j
 <ul>
 <li><a href="#/what-does-low-discrepancy-mean">What does low discrepancy mean?</a></li>
 <li><a href="#/low-discrepancy-sequences">Low discrepancy sequences</a></li>
-<li><a href="#/why-coordinate-order-matters">Why coordinate order matters</a></li>
 </ul>
 </section>
 <section id="what-does-low-discrepancy-mean" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy-sampling">
@@ -1695,13 +1686,9 @@ M_d:=\max_{0\le j\le d}S_j
 <p>They are available in deterministic and randomized forms through SciPy and <a href="https://qmcpy.org/">QMCPy</a></p>
 <p>In software arrays rows correspond to samples and columns to coordinates</p>
 </section>
-<section id="why-coordinate-order-matters" class="slide level2 tree-marker-slide" data-tree-marker="low-discrepancy-sampling">
-<h2>Why coordinate order matters</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.3; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="low-discrepancy" style="--tree-left: 20%; --tree-top: 70%; --tree-align: center;">Low<br>Discrepancy</div>
-</div>
+<section class="slide level2">
 
+<h3 id="why-coordinate-order-matters">Why coordinate order matters</h3>
 <p>Return to the <a href="#/principal-component-factorization">PCA factorization</a>:</p>
 <p><span class="math display">\[
 \vX-\vmu
