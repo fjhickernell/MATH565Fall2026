@@ -12,7 +12,7 @@ Selected Topics projects 13 hours including the eight remaining regular
 instructional meetings. Project presentations add about 1 hour of student
 class time per student (present once and observe twice), separately from
 the roughly 40 lecture hours. These schedule, outline, and MLMC revisions are
-included in the teaching Checkpoint; remote deployment remains pending.
+included in the teaching Checkpoint; its website publishing workflow succeeded.
 
 Continue instructor review of the audited MLMC sequence in Deck 05. Two-level
 random and deterministic estimation/allocation now lead to a numerical
@@ -82,8 +82,9 @@ group is used. The website links are recorded in course metadata. No exam
 document has been attached or announcement published. The full website renders;
 the Schedule and Tests pages fit desktop and 390-pixel phone widths. All 720
 assembled local links/assets resolve, including 117 content links on those two
-pages. These changes are included in this Checkpoint; remote deployment and
-live-page verification remain pending. Canvas publication still requires the
+pages. These changes are included in the earlier Checkpoint; its website
+publishing workflow succeeded, while live-page verification remains pending.
+Canvas publication still requires the
 instructor's confirmation after the public links are verified.
 
 ## Final-examination schedule — October 28 update
@@ -222,6 +223,11 @@ was posted and verified October 12. No further publication steps remain.
 The Dashboard publication task and matching Academic reminder are complete;
 grading remains due **October 27, 2026**. Preserve Owen's analytical-work or
 simulation option for Exercise 8.4.
+
+Private grading preparation is complete as of October 31, including current
+Canvas reconciliation. Instructor grading and review remain open; the
+October 27 grading deadline is unchanged. Keep the private materials outside
+this public repository.
 
 ### Asian-option cost and stopping follow-up
 

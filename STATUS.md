@@ -219,6 +219,9 @@ appropriate phase rather than appended indiscriminately.
       limited to two (group set 1784). All Sections announcement 107879 posted
       and verified October 12, 2026. Dashboard/reminder publication task closed;
       grading remains due October 27.
+    - [x] Complete private Assignment 5 grading preparation and current Canvas
+      reconciliation (October 31, 2026). Instructor grading remains open;
+      the October 27 deadline is unchanged.
     - [x] Record the 20-point homework and lowest-score-drop policy, protect
       the 10-point Diagnostic Survey from dropping, and save unpublished
       Canvas placeholders for Assignments 5–6 (October 9, 2026).
