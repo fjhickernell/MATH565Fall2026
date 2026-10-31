@@ -64,7 +64,6 @@ Y_i=f(\vX_i),\quad \mu=\Ex_{\mathrm{tar}}(Y)
 
 - [When direct sampling is difficult](#when-direct-sampling-is-difficult)
 - [The Markov property](#the-markov-property)
-- [Examples of Markov chains](#examples-of-markov-chains)
 
 ## When direct sampling is difficult {.tree-marker-slide tree-marker="mcmc"}
 
@@ -100,13 +99,15 @@ We are interested in the [asymptotic behavior of $X_i$]{.alert}
 - In MCMC, construct the chain so that, under suitable conditions, the
   [distribution of $X_i$ approaches the target]{.alert} as $i\to\infty$
 
-## Examples of Markov chains {.tree-marker-slide tree-marker="probability"}
+---
+
+### Examples of Markov chains
 
 Assume $\epsilon_0,\epsilon_1,\ldots\ \IIDsim\ \Norm(0,1)$
 
 ::: {.columns}
 ::: {.column width="47%"}
-### Markov
+#### Markov
 
 \begin{align*}
 X_0&=0,& X_{i+1}&=X_i+\epsilon_i\\
@@ -120,7 +121,7 @@ The second chain is [not time homogeneous]{.alert}: its transition law changes w
 :::
 
 ::: {.column width="47%"}
-### Not Markov as written
+#### Not Markov as written
 
 $$
 X_0=X_1=0,
@@ -136,12 +137,8 @@ Only the first is a [martingale]{.alert}: its expected next value, given the his
 # Metropolis–Hastings Sampling {.tree-marker-slide tree-marker="mcmc"}
 
 - [The Metropolis–Hastings algorithm](#the-metropolishastings-algorithm)
-- [Why the acceptance ratio works](#why-the-acceptance-ratio-works)
 - [The independence sampler](#the-independence-sampler)
 - [The Metropolis algorithm](#the-metropolis-algorithm)
-- [Metropolis practice](#metropolis-practice)
-- [A random-walk Metropolis example](#a-random-walk-metropolis-example)
-- [Separated modes can trap a chain](#separated-modes-can-trap-a-chain)
 - [Tuning and diagnostics](#tuning-and-diagnostics)
 
 ## The Metropolis–Hastings algorithm {.tree-marker-slide tree-marker="mcmc"}
@@ -173,7 +170,9 @@ Given $\vX_0$, repeat for $i=0,\ldots,n-2$:
 [Every iteration accepts either the proposal or the current state]{.alert}<br>Nothing is discarded; use $Y_i=f(\vX_i)$ for output summaries
 
 
-## Why the acceptance ratio works {.tree-marker-slide tree-marker="mcmc-probability"}
+---
+
+### Why the acceptance ratio works
 
 The ratio compares the two directions of a proposed transition:
 
@@ -268,7 +267,9 @@ For a random-walk proposal $\vZ_i=\vX_i+\vepsilon_i$ with symmetric $\vepsilon_i
 - accept some downhill moves, which keeps the chain from becoming trapped immediately
 - repeat $\vX_i$ when a proposal is rejected
 
-## Metropolis practice {.tree-marker-slide tree-marker="mcmc-practice"}
+---
+
+### Metropolis practice
 
 Use the uniform numbers in order and choose a random order of the candidate $z$ values
 
@@ -285,7 +286,9 @@ Use the uniform numbers in order and choose a random order of the candidate $z$ 
 <span>Starting at $x=-1.2$, follow several Metropolis steps and record each accepted or repeated state</span>
 :::
 
-## A random-walk Metropolis example {.tree-marker-slide tree-marker="mcmc-practice"}
+---
+
+### A random-walk Metropolis example
 
 Target a bimodal Gaussian mixture using the symmetric proposal
 
@@ -345,7 +348,9 @@ for ax in axes:
 plt.show()
 ```
 
-## Separated modes can trap a chain {.tree-marker-slide tree-marker="mcmc-practice"}
+---
+
+### Separated modes can trap a chain
 
 Same mixture weights and widths; move the means to $-5$ and $5$<br>
 Keep $Z\mid X_i=x\sim\Norm(x,1.4^2)$; start one chain in each mode
@@ -764,10 +769,7 @@ The off-diagonal estimator can be negative and is not itself a squared norm.
 
 - [A reproducing kernel Hilbert space](#a-reproducing-kernel-hilbert-space)
 - [Worst-case integration error](#worst-case-integration-error)
-- [The discrepancy identity](#the-discrepancy-identity)
-- [Variation ignores constants](#variation-ignores-constants)
 - [Average-case integration error](#average-case-integration-error)
-- [What the kernel controls](#what-the-kernel-controls)
 - [Centered discrepancy and smoothness](#centered-discrepancy-and-smoothness)
 - [Alternative comparisons](#alternative-comparisons)
 
@@ -834,7 +836,9 @@ bound. If $\zeta=0$, every integrand in the space has zero integration error,
 so the worst-case error is zero without dividing by its norm.
 :::
 
-## The discrepancy identity {.tree-marker-slide tree-marker="error-assessment"}
+---
+
+### The discrepancy identity
 
 Fix $\vx'\in\mathcal X$ and regard $K(\cdot,\vx')$ as an [integrand]{.alert}
 
@@ -881,7 +885,9 @@ symmetry of $K$ combines the two cross terms:
 
 Thus discrepancy is the [worst-case error over $\norm{f}_{\mathcal H_K}\le1$]{.alert}
 
-## Variation ignores constants {.tree-marker-slide tree-marker="discrepancy-analysis"}
+---
+
+### Variation ignores constants
 
 For equal-weight sample averages assume $1\in\mathcal H_K$
 
@@ -1009,7 +1015,9 @@ For a nonzero mean function, the mean integration error contributes an
 additional squared-bias term unless the quadrature rule integrates that mean exactly.
 :::
 
-## What the kernel controls {.tree-marker-slide tree-marker="discrepancy-statistics"}
+---
+
+### What the kernel controls
 
 - The numerical value of discrepancy depends on $K$ and its hyperparameters
 - Multiplying $K$ by $c^2$ multiplies discrepancy by $\abs{c}$

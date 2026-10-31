@@ -59,7 +59,8 @@ $$
 <h3>This deck</h3>
 
 - [From Uniformity to a Target Distribution](#from-uniformity-to-a-target-distribution)
-- [Random Vectors and Stochastic Processes](#random-vectors-and-stochastic-processes)
+- [Random Vectors](#random-vectors-and-stochastic-processes)
+- [Stochastic Processes and Option Pricing](#stochastic-processes-and-option-pricing)
 - [Low Discrepancy Sampling](#low-discrepancy-sampling)
 - [More Advanced Direct Sampling](#more-advanced-direct-sampling)
 - [Reframing Sampling as Unit-Cube Integration](#reframing-sampling-as-unit-cube-integration)
@@ -70,8 +71,6 @@ $$
 
 - [Where do random variables come from?](#where-do-random-variables-come-from)
 - [The quantile transform](#the-quantile-transform)
-- [Binomial random numbers](#binomial-random-numbers)
-- [Zero-inflated exponential random numbers](#zero-inflated-exponential-random-numbers)
 - [Gaussian mixture random numbers](#gaussian-mixture-random-numbers)
 
 ## Where do random variables come from? {.tree-marker-slide tree-marker="random-generation"}
@@ -139,7 +138,9 @@ structure]{.alert}
 [Try the quantile-transform examples in the companion `GeneratingSamples`
 notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb)
 
-## Binomial random numbers {.tree-marker-slide tree-marker="random-generation"}
+---
+
+### Binomial random numbers
 
 Suppose $X\sim\Bin(3,0.6)$
 
@@ -222,9 +223,11 @@ plt.show()
 
 $F$ is [right-continuous]{.alert}; $Q$ is [left-continuous]{.alert}
 
-## Zero-inflated exponential random numbers {.tree-marker-slide tree-marker="random-generation"}
+---
 
-### CDF
+### Zero-inflated exponential random numbers
+
+#### CDF
 
 ::: {.columns}
 ::: {.column width="47%"}
@@ -502,17 +505,11 @@ plt.show()
 :::
 :::
 
-# Random Vectors and Stochastic Processes {.tree-marker-slide tree-marker="random-generation"}
+# Random Vectors {#random-vectors-and-stochastic-processes .tree-marker-slide tree-marker="random-generation"}
 
 - [Independent marginals](#independent-marginals)
 - [Multivariate normal sampling](#multivariate-normal-sampling)
-- [Cholesky factorization](#cholesky-factorization)
-- [Principal-component (PCA) factorization](#principal-component-factorization)
 - [Copulas separate marginals from dependence](#copula-sampling)
-- [Gaussian processes](#gaussian-processes)
-- [Brownian motion](#brownian-motion)
-- [Geometric Brownian motion](#geometric-brownian-motion)
-- [Option payoffs and prices](#option-payoffs-and-prices)
 
 ## Independent marginals {.tree-marker-slide tree-marker="random-generation"}
 
@@ -570,9 +567,11 @@ $$
 \vX=\mA\vZ+\vmu\sim\Norm(\vmu,\mSigma)
 $$
 
-## Cholesky factorization {.tree-marker-slide tree-marker="random-generation"}
+---
 
-### Concrete example
+### Cholesky factorization
+
+#### Concrete example
 
 For symmetric positive-definite $\mSigma$, Cholesky factorization gives a
 [lower-triangular]{.alert} $\mA$ such that $\mSigma=\mA\mA^\mathsf{T}$
@@ -627,7 +626,9 @@ $$
 Different factorizations generate the [same distribution]{.alert}<br>They may
 behave [differently under low discrepancy sampling]{.alert}
 
-## Principal-component (PCA) factorization {#principal-component-factorization .tree-marker-slide tree-marker="random-generation"}
+---
+
+### Principal-component (PCA) factorization {#principal-component-factorization}
 
 For the [same covariance matrix as in the Cholesky example](#cholesky-factorization),
 
@@ -846,6 +847,13 @@ Both colors use the same exponential marginal rates, 1 and 2; only the
 copula changes. Within either color, the uniform and exponential panels
 use the same paired samples, so their ranks are preserved.
 :::
+
+# Stochastic Processes and Option Pricing {.tree-marker-slide tree-marker="quant-finance"}
+
+- [Gaussian processes](#gaussian-processes)
+- [Brownian motion](#brownian-motion)
+- [Geometric Brownian motion](#geometric-brownian-motion)
+- [Option payoffs and prices](#option-payoffs-and-prices)
 
 ## Gaussian processes {.tree-marker-slide tree-marker="probability"}
 
@@ -1129,7 +1137,6 @@ $$
 
 - [What does low discrepancy mean?](#what-does-low-discrepancy-mean)
 - [Low discrepancy sequences](#low-discrepancy-sequences)
-- [Why coordinate order matters](#why-coordinate-order-matters)
 
 ## What does low discrepancy mean? {.tree-marker-slide tree-marker="low-discrepancy-sampling"}
 
@@ -1162,7 +1169,9 @@ They are available in deterministic and randomized forms through SciPy and
 
 In software arrays rows correspond to samples and columns to coordinates
 
-## Why coordinate order matters {.tree-marker-slide tree-marker="low-discrepancy-sampling"}
+---
+
+### Why coordinate order matters
 
 Return to the [PCA factorization](#principal-component-factorization):
 

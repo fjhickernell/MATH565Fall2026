@@ -384,6 +384,13 @@ appropriate phase rather than appended indiscriminately.
 - [x] Add placeholder Quarto sources for decks awaiting conversion.
 - [x] Connect previous/next deck navigation across all five decks.
 - [x] Establish the Course Map and per-section outline conventions.
+- [x] Audit heading levels and section indexes across all five decks; group
+  supporting material as continuations, split Random Vectors from Stochastic
+  Processes and Option Pricing, and preserve the Big Ideas exceptions
+  (October 31, 2026).
+- [x] Expand Introduction's cumulative Terms to Know index to 134 entries on
+  seven alphabetic slides; correct substantive destinations, preserve old range
+  anchors, and verify rendered links and layouts (October 31, 2026).
 - [x] Standardize all Course Maps at 36% course decks, 4% gutter, and 60%
   deck contents; add Teaser Trailer to Introduction and the sampling pipeline
   to Generating Samples beneath In this deck.

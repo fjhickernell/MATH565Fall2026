@@ -54,7 +54,6 @@ Reducing [variance]{.alert} (or [variation]{.alert}) <br>per unit of [work]{.ale
 - [Structured Random Sampling](#structured-random-sampling)
 - [Low Discrepancy Sampling](#low-discrepancy-sampling)
 - [Big Ideas](#big-ideas)
-- [Choose the Method for the Task](#choose-the-method-for-the-task)
 :::
 
 # From Sampling to Efficient Estimation {.tree-marker-slide tree-marker="variance-reduction"}
@@ -136,7 +135,6 @@ rejection or Markov-chain run.
 - [Transforming an integral](#transforming-an-integral)
 - [Importance sampling](#importance-sampling)
 - [Self-normalized importance sampling](#self-normalized-importance-sampling)
-- [Choosing a transformation](#choosing-a-transformation)
 - [Cost of an accurate IID estimate](#cost-for-iid-accuracy)
 
 ## Variance and variation reduction {.tree-marker-slide tree-marker="variance-reduction"}
@@ -1051,7 +1049,9 @@ target, w=1 and acceptance–rejection with M=1 and Metropolized independence
 both accept every proposal. All three then give ordinary target Monte Carlo.
 :::
 
-## Choosing a transformation {.tree-marker-slide tree-marker="analysis-importance"}
+---
+
+### Choosing a transformation
 
 - Variable transformation and importance sampling are intertwined
 - The sampling density changes the variance of the sample mean
@@ -1151,7 +1151,6 @@ estimating a mean, not for producing a target-distributed sample.
 
 - [Control variates](#control-variates)
 - [Conditional Monte Carlo](#conditional-monte-carlo)
-- [Conditioning an Asian average](#conditioning-an-asian-average)
 
 ## Control variates {.tree-marker-slide tree-marker="variance-reduction"}
 
@@ -1456,7 +1455,9 @@ Output samples $Y_i$, equal-width bins $I_k$ of width $b$, kernel $\kappa$ with 
 
 [Notebook: curves and repeated-run errors](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/ConditionalMonteCarlo.ipynb)
 
-## Conditioning an Asian average {.tree-marker-slide tree-marker="quant-finance"}
+---
+
+### Conditioning an Asian average
 
 Equally spaced dates $t_j=j\Delta t$, $\Delta t=T/d$, arithmetic average $A$
 
@@ -1569,10 +1570,8 @@ dependent inputs.
 # Structured Random Sampling {.tree-marker-slide tree-marker="variance-reduction"}
 
 - [Antithetic sampling](#antithetic-sampling)
-- [Constructing an antithetic variate](#constructing-an-antithetic-variate)
 - [IID variance comparison](#iid-variance-comparison)
 - [Latin hypercube sampling in one dimension](#latin-hypercube-sampling-in-one-dimension)
-- [Comparing random designs](#comparing-random-designs)
 
 ## Antithetic sampling {.tree-marker-slide tree-marker="variance-probability"}
 
@@ -1606,7 +1605,110 @@ $$
 
 Antithetic sampling helps with [negatively]{.alert} correlated pairs · [Notebook comparison](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb#Antithetic-pairs-at-equal-payoff-cost)
 
-## Constructing an antithetic variate {.tree-marker-slide tree-marker="random-generation"}
+---
+
+### Even and odd parts
+
+For the distribution-preserving pairing $\vA(\vX)\stackrel d=\vX$,
+assume $\vA(\vA(\vx))=\vx$ and $\Ex[f(\vX)^2]<\infty$
+
+\begin{align*}
+f_e(\vx)&=\tfrac12\{f(\vx)+f(\vA(\vx))\},\\
+f_o(\vx)&=\tfrac12\{f(\vx)-f(\vA(\vx))\},\qquad f=f_e+f_o
+\end{align*}
+
+Even and odd [relative to the pairing]{.alert}: $f_e(\vA(\vx))=f_e(\vx)$,
+$f_o(\vA(\vx))=-f_o(\vx)$
+
+\begin{multline*}
+\Ex[f_o(\vX)]=\Ex[f_e(\vX)f_o(\vX)]=0
+\\
+\implies \operatorname{cov}\bigl(f_e(\vX),f_o(\vX)\bigr)
+=\Ex[f_e(\vX)f_o(\vX)]-\Ex[f_e(\vX)]\Ex[f_o(\vX)]=0
+\end{multline*}
+
+$$
+\var\bigl(f(\vX)\bigr)=\var\bigl(f_e(\vX)\bigr)+\var\bigl(f_o(\vX)\bigr)
+$$
+
+::: {.notes}
+This principle uses the distribution-preserving involution A introduced on
+the preceding slide. It applies to scalar and vector inputs without requiring
+symmetry about zero: reflection about any center c is A(x) = 2c - x.
+The uniform-cube reflection is A(u) = 1 - u. For vector inputs, preservation
+of the joint distribution is required, not merely symmetric marginals.
+Both f_o and f_e f_o change sign under A, so their expectations vanish.
+At n function evaluations the antithetic estimator variance is
+2 Var(f_e(X))/n, versus [Var(f_e(X)) + Var(f_o(X))]/n for IID sampling.
+Thus a benefit at equal evaluation cost requires the odd-part variance to
+exceed the even-part variance.
+:::
+
+---
+
+### Antithetic averaging keeps the even part
+
+::: {.key-point}
+Antithetic averaging keeps only the even part and removes the odd part,
+uncorrelated with the even part
+
+\begin{gather*}
+Y_{\mathrm{Anti}}=f_e(\vX),\qquad
+\mu=\Ex[f(\vX)]=\Ex[f_e(\vX)],\\
+\hmu_{\mathrm{Anti},n}=\frac1m\sum_{i=0}^{m-1}f_e(\vX_i),
+\qquad n=2m\text{ evaluations},\\
+\var(\hmu_{\mathrm{Anti},n})
+=\frac{\var(f_e(\vX))}{m}
+=\frac{2\var(f_e(\vX))}{n}
+\end{gather*}
+:::
+
+Independent pairs across $i$, as on the antithetic sampling slide
+
+---
+
+### Two formulas for the antithetic variance
+
+Write $V_e=\var(f_e(\vX))$, $V_o=\var(f_o(\vX))$, with $V_e+V_o>0$
+
+\begin{align*}
+f(\vX)&=f_e(\vX)+f_o(\vX),&
+f(\vA(\vX))&=f_e(\vX)-f_o(\vX)\\
+\operatorname{cov}\bigl(f(\vX),f(\vA(\vX))\bigr)&=V_e-V_o,&
+\var(f(\vX))&=V_e+V_o
+\end{align*}
+
+$$
+\rho=\corr\bigl(f(\vX),f(\vA(\vX))\bigr)
+=\frac{V_e-V_o}{V_e+V_o}
+$$
+
+::: {.key-point}
+The correlation and even/odd formulas [agree]{.alert}
+
+\begin{align*}
+\var(\hmu_{\mathrm{Anti},n})
+&=\frac{\var(f(\vX))}{n}(1+\rho)\\
+&=\frac{V_e+V_o}{n}\left(1+\frac{V_e-V_o}{V_e+V_o}\right)
+=\frac{2V_e}{n}=\frac{V_e}{m}
+\end{align*}
+:::
+
+$m$ independent pairs, $n=2m$ function evaluations
+
+::: {.notes}
+The even and odd parts are uncorrelated, and reflection reverses only the
+odd part. Their covariance contributions therefore subtract, whereas their
+variance contributions add. Distribution preservation makes the two output
+variances equal, giving the displayed correlation. If Var(f(X)) is zero,
+correlation is undefined but both estimator-variance formulas without
+correlation are zero. Negative correlation is equivalent to V_o > V_e,
+which is exactly the improvement condition at equal function-evaluation cost.
+:::
+
+---
+
+### Constructing an antithetic variate
 
 If $X$ has continuous CDF $F$, then
 
@@ -1750,7 +1852,9 @@ For $R$ independent Latin hypercubes,
 \left(\hmu_{\mathrm{LHS},n}^{(r)}-\hmu_{\mathrm{LHS},n,R}\right)^2
 \end{align*}
 
-## Comparing random designs {.tree-marker-slide tree-marker="variance-low-discrepancy"}
+---
+
+### Comparing random designs
 
 Each design has $n=64$ points in $[0,1]^2$
 
@@ -1793,13 +1897,13 @@ plt.show()
 
 ### Strengths and limitations of LHS
 
-### Strengths
+#### Strengths
 
 - [No]{.alert} importance density, control variate, or conditional expectation required
 - Can converge [faster]{.alert} than IID sampling
 - Guarantees one point in every one-dimensional [stratum]{.alert}
 
-### Limitations
+#### Limitations
 
 - The sample size is [fixed]{.alert} when the design is constructed
 - Accuracy assessment requires [independent]{.alert} replications
@@ -1817,7 +1921,6 @@ Markov Chain Monte Carlo linked [discrepancy to integration error]({{< meta deck
 
 - [The van der Corput sequence](#the-van-der-corput-sequence)
 - [Four low discrepancy families](#four-low-discrepancy-families)
-- [Component-by-component construction](#component-by-component-construction)
 - [Randomized low discrepancy sampling](#randomized-low-discrepancy-sampling)
 - [Stopping criteria](#stopping-criteria)
 - [Cost of deterministic low discrepancy sampling](#deterministic-ld-cost)
@@ -2023,7 +2126,9 @@ The family table does not privilege a particular discrepancy measure;
 construction quality depends on the function class and the chosen criterion.
 :::
 
-## Component-by-component construction {.tree-marker-slide tree-marker="low-discrepancy"}
+---
+
+### Component-by-component construction
 
 Generators for lattice rules and digital nets may be chosen by number theory or computer search
 

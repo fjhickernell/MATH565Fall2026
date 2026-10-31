@@ -213,9 +213,7 @@ Allocate work where it buys the greatest reduction in error
 
 - [Two-level Monte Carlo](#two-level-monte-carlo)
 - [Allocating work optimally](#allocating-work-optimally)
-- [What two levels accomplish](#what-two-levels-accomplish)
 - [A hierarchy of coupled approximations](#infinite-dimensional-expectations)
-- [Many levels](#many-levels)
 - [Optimal multilevel allocation](#optimal-multilevel-allocation)
 - [Why telescoping helps](#why-telescoping-helps)
 
@@ -543,7 +541,9 @@ This bound is relative to the finite fine target mu_d2. Limiting-target
 approximation bias is treated separately in the hierarchy section.
 :::
 
-## What two levels accomplish {.tree-marker-slide tree-marker="estimation"}
+---
+
+### What two levels accomplish
 
 - $d_1\ll d_2$: the coarse approximation can be much [cheaper]{.alert}
 - Coupling can make the expensive correction [easier to integrate]{.alert}
@@ -624,7 +624,9 @@ $$
 
 with a remaining approximation bias $b_L=\mu-\mu_{d_L}$
 
-## Many levels {.tree-marker-slide tree-marker="estimation"}
+---
+
+### Many levels
 
 Extend the same mean decomposition: $\mu_{d_L}=\sum_{\ell=1}^L\mu_\ell$, $\mu_\ell=\Ex(Y_\ell)$
 
@@ -1090,7 +1092,6 @@ The ratios of consecutive level work are $G^{1/(2p+1)}$ and $H^{1/(p+1)}$, respe
 
 - [Gradient descent](#gradient-descent)
 - [Stochastic gradient descent](#stochastic-gradient-descent)
-- [Gradient and stochastic-gradient paths](#gradient-and-stochastic-gradient-paths)
 
 ## Gradient descent {.tree-marker-slide tree-marker="estimation"}
 
@@ -1142,7 +1143,9 @@ Common variants include
 The stochastic gradient is [cheap but noisy]{.alert}<br>Averaging a mini-batch
 reduces its variance
 
-## Gradient and stochastic-gradient paths {.tree-marker-slide tree-marker="estimation"}
+---
+
+### Gradient and stochastic-gradient paths
 
 Both methods minimize the same quadratic loss<br>Stochastic gradients use one
 randomly selected component at each step

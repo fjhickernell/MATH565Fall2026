@@ -51,6 +51,17 @@ centered, and its closing preview follows Deck 05's actual topic order.
 Deck 05's same-time accuracy slide uses explicit time/error notation and
 the factor $s^{-p}$, with the common time budget grouped by a right brace.
 
+All five decks' Course Maps and section indexes now match their main topics;
+supporting derivations and examples are marker-free continuations. Generating
+Samples separates Random Vectors from Stochastic Processes and Option Pricing.
+Introduction's cumulative index has 134 terms on seven alphabetic slides;
+existing range anchors and every deck's Big Ideas exception are preserved.
+The hierarchy/index audit does not establish instructor approval of pending
+mathematical content; continue the MLMC review above.
+Improving Efficiency now connects the antithetic correlation formula to the
+uncorrelated even/odd variance decomposition, retaining $n=2m$ evaluations
+for $m$ independent pairs.
+
 All five decks execute and render with the qmcpy kernel under the live watcher;
 changed layouts and links pass local review. Allocation/cost formulas pass
 independent minimization checks at $p=1/2,1,3/2$. Instructor review remains
@@ -1075,9 +1086,10 @@ October 15 refinements highlight possible dependence of the uniform marginals,
 credit Abe Sklar with a biographical link, and distinguish Gaussian latent
 normals from freely chosen target marginals. The three supporting slides
 are marker-free continuations; the section outline lists the copula overview.
-Low Discrepancy Sampling in Deck 04 likewise keeps six main outline entries;
-RQMC variance, randomized cost, cost comparison, and the same-RMSE IID/RQMC
-comparison are continuations with their existing anchors preserved. The
+Low Discrepancy Sampling in Deck 04 now keeps five main outline entries;
+component-by-component construction, RQMC variance, randomized cost, cost
+comparison, and the same-RMSE IID/RQMC comparison are continuations with their
+existing anchors preserved. The
 stopping section develops replication intervals, pilot limitations, and
 allocation/coverage tradeoffs before the comparison. The website Related
 menu now links to MATH 332 Fall 2026.
