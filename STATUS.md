@@ -299,8 +299,10 @@ appropriate phase rather than appended indiscriminately.
       November 25 availability and December 9 at 8:00 AM deadline; 65-point
       in-class with on-paper submission and December 9 at 10:00 AM due time.
     - [x] Complete and review the private Test 2 draft.
-    - [x] Prepare Test 2 solutions and anonymous score distribution for the
-      course Tests page and test archive; live verification remains pending.
+    - [x] Publish Test 2 solutions and anonymous score distribution on the
+      Tests page and test archive; verify successful deployment and identical
+      live PDFs. Send the class notice through Canvas Inbox to all current
+      students in both sections and verify “Message sent!”
     - [x] Schedule Test 2 for October 27 in PH 109; set the published
       On Paper Canvas item for 11:15 AM; add the date to the course
       website sources; and post the all-sections announcement.

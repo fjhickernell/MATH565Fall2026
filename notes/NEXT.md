@@ -220,10 +220,13 @@ there is no executable MCTS notebook yet. MCTS means Monte Carlo tree search.
 
 ### Test 2 — solutions release
 
-The Test 2 solutions and anonymous score distribution are prepared for the
-Tests page and test archive. Course deployment, live-link verification, and
-the requested class notice remain pending. Further instructor follow-up is
-tracked privately.
+The Test 2 solutions and anonymous score distribution are published on the
+[Tests page](https://fjhickernell.github.io/MATH565Fall2026/pages/tests.html)
+and in the test archive. Deployment succeeded; the live course and archive
+PDFs match the inspected release byte for byte. The class notice was sent
+through Canvas Inbox to all current students in both sections, individually,
+and Canvas confirmed “Message sent!” Further instructor follow-up is tracked
+privately.
 
 ### Assignment 5 — published and verified
 
