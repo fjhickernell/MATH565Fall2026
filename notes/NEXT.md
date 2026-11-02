@@ -223,8 +223,9 @@ there is no executable MCTS notebook yet. MCTS means Monte Carlo tree search.
 November 2 layout revision: the anonymous score distribution now shares the
 last solution page in the verified five-page answer PDF. The archive revision
 is published as `bd9fabf`; the identical current-assessment copy and archive
-pointer are included in this course update. Deployment/live verification of
-this layout revision remains pending.
+pointer are published in course commit `db9211c`. The publishing and Pages
+deployment workflows succeeded; both live course-site PDFs match the checked
+five-page PDF byte for byte.
 
 The Test 2 solutions and anonymous score distribution are published on the
 [Tests page](https://fjhickernell.github.io/MATH565Fall2026/pages/tests.html)
