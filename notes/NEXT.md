@@ -218,11 +218,12 @@ Monte Carlo Tree Search. The MCTS introduction covers purpose, one iteration,
 and a numerical UCT exploration/exploitation exercise. Review these additions;
 there is no executable MCTS notebook yet. MCTS means Monte Carlo tree search.
 
-### Test 2 — private preparation complete
+### Test 2 — solutions release
 
-The private draft is complete and reviewed; final printing remains for the
-October 27 test in PH 109. Grading is due November 2. Keep unreleased
-assessment material private.
+The Test 2 solutions and anonymous score distribution are prepared for the
+Tests page and test archive. Course deployment, live-link verification, and
+the requested class notice remain pending. Further instructor follow-up is
+tracked privately.
 
 ### Assignment 5 — published and verified
 
