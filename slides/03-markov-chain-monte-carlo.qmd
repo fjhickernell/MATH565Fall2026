@@ -87,10 +87,10 @@ Let $\mathcal X$ be the state space for $X_0,X_1,\ldots$
 
 The sequence is a [Markov chain]{.alert} when, for every measurable $A\subseteq\mathcal X$,
 
-\begin{equation*}
+\begin{gather*}
 \Prob(X_{i+1}\in A\mid X_i=x_i,\ldots,X_0=x_0)\\
 =\Prob(X_{i+1}\in A\mid X_i=x_i)
-\end{equation*}
+\end{gather*}
 
 [Where the chain goes next depends only on where it is now]{.alert}, not on how it arrived
 
@@ -149,7 +149,7 @@ For states in $\reals^d$, suppose
 - conditional density $\varrho_{\mathrm{prop}}(\vz\mid \vx)$ proposes a new state $\vz$ from the
   current state $\vx$
 
-Given $\vX_0$, repeat for $i=0,\ldots,n-2$:
+Start with $\widetilde\varrho_{\mathrm{tar}}(\vX_0)>0$; repeat for $i=0,\ldots,n-2$:
 
 1. Generate $\vZ_i\mid\vX_i\sim\varrho_{\mathrm{prop}}(\cdot\mid \vX_i)$ and
    $V_i\sim\Unif[0,1]$, independently of the proposal
@@ -190,6 +190,26 @@ $$
 
 ::: {.key-point}
 Detailed balance preserves the target; convergence from the starting state requires suitable conditions
+:::
+
+::: {.notes}
+Assume the target has a finite positive normalizing integral and initialize
+where its density is positive. A generated proposal has positive forward
+proposal density almost surely; a zero target or reverse-proposal density
+then gives acceptance probability zero. This avoids undefined zero-over-zero
+ratios. For all pairs with positive weights, both directional accepted flows
+equal min{pi(x) q(z|x), pi(z) q(x|z)}; rejected mass stays on the diagonal.
+Thus detailed balance implies invariance.
+
+Invariance alone does not guarantee convergence from an arbitrary start.
+A standard general-state-space sufficient setting is positive Harris
+recurrence with invariant target and aperiodicity. The proposal must allow
+exploration of the target support; a chain confined to one component can
+preserve a target without converging to it from every start. Under the ergodic
+law of large numbers, averages of integrable outputs converge to their target
+expectation. A central limit theorem and reliable standard errors require
+additional conditions. Burn-in and finite-run diagnostics do not prove these
+properties or make retained states independent.
 :::
 
 ## The independence sampler {#the-independence-sampler .tree-marker-slide tree-marker="mcmc"}
@@ -271,7 +291,7 @@ For a random-walk proposal $\vZ_i=\vX_i+\vepsilon_i$ with symmetric $\vepsilon_i
 
 ### Metropolis practice
 
-Use the uniform numbers in order and choose a random order of the candidate $z$ values
+Use the decision uniforms in order; independently pick each proposal uniformly from the candidate $z$ values, [with replacement]{.alert}
 
 | $i$ | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
 |:---|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -284,6 +304,20 @@ Use the uniform numbers in order and choose a random order of the candidate $z$ 
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>
 <span>Starting at $x=-1.2$, follow several Metropolis steps and record each accepted or repeated state</span>
+:::
+
+::: {.notes}
+This is a finite-state exercise with target probabilities proportional to
+the eight listed positive weights. The independent uniform proposal assigns
+1/8 to every candidate from every current state, so it is symmetric and the
+Metropolis target-weight ratio applies. Randomly permuting the candidates
+without replacement would not define this proposal law.
+
+For example, proposal values -0.8, -0.5, 0.6, 1.1, 1.4, 2.0, 2.2, -1.2
+with the displayed uniforms produce states
+-1.2, -0.8, -0.5, 0.6, 0.6, 1.4, 2.0, 2.2, 2.2.
+The alpha values are 1, 1, 0.8, 0.3125, 1, 12/13, 5/12, 0.1.
+A different random proposal sequence gives a different valid answer.
 :::
 
 ---
@@ -584,7 +618,7 @@ $$
 \mK=(K(\vx_i,\vx_j))_{i,j=0}^{n-1}
 $$
 
-is symmetric positive definite for distinct $\vx_0,\ldots,\vx_{n-1}$
+is symmetric positive semidefinite: $\vc^{\mathsf T}\mK\vc\ge0$ for every $\vc\in\reals^n$
 
 Examples include
 
@@ -596,13 +630,23 @@ K(\vt,\vx)&=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 &&\mathcal X=[0,1]^d
 \end{align*}
 
-- First is a squared exponential kernel; second yields centered discrepancy
+- First is a squared exponential kernel ($h>0$); second yields centered discrepancy ($\gamma_\ell>0$)
 
 - Kernels usually have [parameters]{.alert} to be chosen or estimated
 
+::: {.notes}
+Positive definite kernel uses the usual nonnegative quadratic-form convention;
+its Gram matrices may be singular, including when sample points repeat.
+Strictly positive definite means positive quadratic forms for nonzero
+coefficient columns at distinct points. Strictness is not required for the
+RKHS construction or nonnegativity of squared discrepancy. It also differs
+from the characteristic-kernel property needed for zero discrepancy to
+identify equal probability distributions.
+:::
+
 ## Discrepancy between distributions {.tree-marker-slide tree-marker="discrepancy"}
 
-Compare any two distributions $F,G$ on $\mathcal X$<br>
+Compare distributions $F,G$ on $\mathcal X$ with finite kernel moments<br>
 Let $\vR,\vR'\sim F$ and $\vH,\vH'\sim G$ be mutually independent
 
 \begin{align*}
@@ -620,6 +664,15 @@ D^2(F,G;K)=\int_{\mathcal X^2}K(\vx,\vx')
 $$
 
 For sample assessment, compare the [target]{.alert} $F_{\mathrm{tar}}$ with an empirical distribution
+
+::: {.notes}
+A sufficient moment condition is integrability of sqrt(K(x,x)) under both
+F and G. The kernel Cauchy–Schwarz inequality then makes every displayed
+pair expectation absolutely finite, and the difference of their kernel mean
+embeddings has squared RKHS norm equal to this formula. Both displayed
+example kernels are bounded on their stated domains, so the condition holds
+for probability distributions there.
+:::
 
 ---
 
@@ -686,7 +739,7 @@ between the samples. Successive MCMC states do not satisfy the IID condition.
 
 ### Unbiased estimates of squared discrepancy {#unbiased-estimates-of-squared-discrepancy}
 
-For two independent IID samples, estimate $D^2(F,G;K)$
+For two independent IID samples with $m,n\ge2$, estimate $D^2(F,G;K)$
 
 Replace within-sample sums by [off-diagonal averages]{.alert}:
 
@@ -714,6 +767,22 @@ Let $\{\vR_i\}_{i=0}^{m-1}$ and $\{\vH_j\}_{j=0}^{n-1}$ be independent IID sampl
 <span class="exsub">Why may a realization be negative, and does more negative mean a better match?</span>
 <span class="exsub">Which step fails when the $\vR_i$ are successive Metropolis states?</span>
 </span>
+:::
+
+::: {.notes}
+Each off-diagonal F pair has expectation E[K(R,R')] for independent R,R'~F;
+each G pair similarly has expectation E[K(H,H')]. Each cross pair has
+expectation E[K(R,H)] by independence of the samples. The denominators count
+exactly those ordered pairs, giving the population squared discrepancy.
+If F=G, the two positive terms and twice the cross term cancel to zero.
+The estimator need not be nonnegative, so a zero-mean estimator can fluctuate
+below zero. With the Gaussian kernel exp(-(x-y)^2), m=n=2 and both observed
+samples equal {-1,1}, its value is exp(-4)-1<0 despite identical empirical
+measures. Such a realization has positive probability for independent samples
+from the uniform law on {-1,1}. Its negative sign reflects sampling noise,
+not a negative squared norm. Successive Metropolis states are dependent;
+their off-diagonal pair expectations generally depend on the lag and do not
+equal the independent-pair expectation used in the proof.
 :::
 
 ---
@@ -1045,7 +1114,7 @@ K(\vt,\vu)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 \left(\abs{t_\ell-\tfrac12}+\abs{u_\ell-\tfrac12}-\abs{t_\ell-u_\ell}\right)\right]
 $$
 
-Its norm combines the function value at the center with weighted square-integrals of mixed derivatives:
+Its norm includes the function value at the center and derivatives over [every coordinate subset]{.alert}; representative terms are:
 
 \begin{align*}
 \norm{h}_{\mathcal H_K}^2
@@ -1457,7 +1526,7 @@ Bayesian inference is a primary reason to sample from complicated unnormalized d
 
 ## Queueing systems {.tree-marker-slide tree-marker="probability-practice"}
 
-First distinguish [full input durations]{.alert} from [event-state clocks]{.alert}
+Use a single-server queue, [first come, first served]{.alert} (FCFS)
 
 Full durations are quantile transforms of uniform inputs; assume they are mutually independent:
 

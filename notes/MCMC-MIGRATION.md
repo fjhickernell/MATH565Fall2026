@@ -71,9 +71,10 @@ A comparison table distinguishes direct-integration MMD from reference-sample
 MMD and KL's absolute value from fixed-target variational optimization. KSD's
 relationship to MMD is explained in speaker notes. The index also links Stein
 discrepancy; these additions do not introduce a KSD notebook implementation.
-The KL, Stein, and comparison slides close the Kernel Discrepancy section,
-after empirical MMD and its unbiased-estimator exercise and before Discrepancy
-as Integration Error, so ordinary kernel discrepancy is developed first.
+The KL, Stein, and comparison slides are grouped under Alternative comparisons
+in Discrepancy as Integration Error, after the centered-discrepancy and
+smoothness development. Ordinary kernel discrepancy and its integration-error
+interpretation are therefore developed first.
 
 Current instructor-selected settings are 1,000 candidate states, 10,000
 independent AR reference points, and 1,000 burn-in states. Exact blocked kernel

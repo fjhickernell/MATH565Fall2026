@@ -342,7 +342,7 @@ What [modeling assumptions]{.alert} are needed?
 [Complete by Aug 21]{.alert}: [Assignment 0 — Diagnostic Survey]({{< meta canvas.assignment_0 >}})
 :::
 
-Complete and submit this assignment individually, not as a group.
+Complete and submit this assignment individually, not as a group
 
 ## Complete Assignment 1
 
@@ -640,11 +640,11 @@ print(render_tree_marker("probability"))
 
 Let $Y:\Omega\to\mathcal{Y}\subseteq\reals$ be a [random variable]{.alert}
 
-For $A\subseteq\mathcal{Y}$, $\Prob(Y\in A)$ is the probability of the
+For measurable $A\subseteq\mathcal{Y}$, $\Prob(Y\in A)$ is the probability of the
 [event]{.alert} $\{\omega\in\Omega:Y(\omega)\in A\}$
 
 \begin{align*}
-F \text{ is the }\alerttext{cumulative distribution function}\text{, } F(y)&:=\Prob(Y\le y), \;  y\in\mathcal{Y}, \quad\text{right-continuous}\\
+F \text{ is the }\alerttext{cumulative distribution function}\text{, } F(y)&:=\Prob(Y\le y), \;  y\in\reals, \quad\text{right-continuous}\\
 Q \text{ is the }\alerttext{quantile function}\text{, } Q(u)&:=\inf\{y\in\mathcal{Y}:F(y)\ge u\}, \; 0<u<1, \quad\text{left-continuous}\\
 & = F^{-1}(u) \text{ if $F$ is continuous and strictly increasing} \\
 \Ex[g(Y)]&:=\int_{\mathcal{Y}}g(y)\,\dif F(y)
@@ -678,6 +678,8 @@ Q \text{ is the }\alerttext{quantile function}\text{, } Q(u)&:=\inf\{y\in\mathca
 
 ## Moments of random variables {.tree-marker-slide tree-marker="probability"}
 
+Assume finite second moments below
+
 \begin{align*}
 \mu & :=\Ex(Y) \text{is the }\alerttext{mean}\text{ of }Y \\
 \med(Y) & := Q(0.5) \\
@@ -701,25 +703,36 @@ Medians may be nonunique
 
 $\exstar$ Show that $\cov(\vY)$ is symmetric and has nonnegative eigenvalues
 
+::: {.notes}
+Expanding E[(Y-m)^2]=Var(Y)+(m-mu)^2 proves both the variance
+identity and the unique squared-loss minimizer m=mu. Under the stated
+finite-moment assumption, absolute loss is minimized at every median:
+its left and right slopes straddle zero exactly when
+P(Y<m)<=1/2<=P(Y<=m). Thus Q(1/2) is one minimizer.
+For every a, a^T Cov(Y) a=E[(a^T(Y-EY))^2]>=0. Symmetry follows
+entrywise; a real symmetric positive-semidefinite matrix has nonnegative
+eigenvalues.
+:::
+
 ## Binomial distribution {.tree-marker-slide tree-marker="probability"}
 
-For $Y\sim\Bin(n,p)$ (see `scipy.stats.binom(n, p)`)
+For $m\in\{1,2,\ldots\}$ and $0\le p\le1$, let $Y\sim\Bin(m,p)$ (see `scipy.stats.binom(m, p)`)
 
 \begin{gather*}
 \varrho(y)=\Prob(Y=y)
-=\binom{n}{y}p^y(1-p)^{n-y}
-\qquad y=0,1,\ldots,n
+=\binom{m}{y}p^y(1-p)^{m-y}
+\qquad y=0,1,\ldots,m
 \\
-F(y)=\sum_{j=0}^{ y}\binom{n}{j}p^j(1-p)^{n-j}, \qquad y=0,1,\ldots,n \\
-Q(u)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge u\} \quad 0<u<1
+F(y)=\sum_{j=0}^{ y}\binom{m}{j}p^j(1-p)^{m-j}, \qquad y=0,1,\ldots,m \\
+Q(u)=\inf\{y\in\{0,\ldots,m\}:F(y)\ge u\} \quad 0<u<1
 \quad \text{no simple formula}
 \\
-\Ex(Y)=np
+\Ex(Y)=mp
 \qquad
-\var(Y)=np(1-p)
+\var(Y)=mp(1-p)
 \end{gather*}
 
-The [Bernoulli]{.alert} distribution, $\Bern(p)$, is the case $n=1$
+The [Bernoulli]{.alert} distribution, $\Bern(p)$, is the case $m=1$
 \begin{gather*}
 \varrho(y)=\Prob(Y=y)
 =p^y(1-p)^{1-y}
@@ -735,7 +748,7 @@ The [Bernoulli]{.alert} distribution, $\Bern(p)$, is the case $n=1$
 Models a [memoryless waiting time]{.alert}
 
 For
-$Y\sim\Exp(\lambda)$ (see `scipy.stats.expon(loc=0, scale=1/lambda)`)
+$Y\sim\Exp(\lambda)$ with $\lambda>0$ (see `scipy.stats.expon(loc=0, scale=1/lambda)`)
 
 \begin{gather*}
 \varrho(y)=
@@ -751,6 +764,11 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 < u < 1
 \var(Y)=\frac{1}{\lambda^2}
 \end{gather*}
 
+
+::: {.notes}
+For 0<u<1, solve u=1-exp(-lambda y): y=-log(1-u)/lambda.
+The restriction lambda>0 makes this a valid exponential distribution.
+:::
 
 ## Multivariate normal or Gaussian distribution {.tree-marker-slide tree-marker="probability"}
 
@@ -771,6 +789,14 @@ $$
 \mSigma^{-1}(\vy-\vmu)
 \right), \qquad \vy \in \reals^d
 $$
+
+::: {.notes}
+The displayed Gaussian density requires positive-definite covariance.
+A positive-semidefinite covariance also defines a Gaussian vector, but a
+singular one is supported on a lower-dimensional affine space and has no
+ordinary density on the whole R^d. Gaussian-process finite-dimensional
+laws can include such degenerate vectors, for example at repeated inputs.
+:::
 
 # Samples, Estimators, and Estimates {.tree-marker-slide tree-marker="stat-estim"}
 
@@ -853,7 +879,7 @@ plt.show()
 ## Sampling {.tree-marker-slide tree-marker="stat-estim"}
 
 Normally, we want something more than
-$\vX_0, \vX_1, \ldots \sim \Unif[0,1]^d$
+$\vU_0, \vU_1, \ldots \sim \Unif[0,1]^d$
 
 Let
 
@@ -863,6 +889,8 @@ Let
 
 An [IID]{.alert} sample has independent $Y_i$, each with the distribution of $Y$
 
+For $n\ge2$:
+
 \begin{align*}
 \hmu_n & :=\frac{1}{n}\sum_{i=0}^{n-1}Y_i \quad \text{is the }\alerttext{sample mean}\\
 \hsigma_n^2 &
@@ -871,7 +899,7 @@ An [IID]{.alert} sample has independent $Y_i$, each with the distribution of $Y$
 
 ## Mean squared error, bias, and variance {.tree-marker-slide tree-marker="stat-estim"}
 
-Let $\Theta$ estimate a scalar population parameter $\theta$
+Let $\Theta$ have finite second moment and estimate a scalar population parameter $\theta$
 \begin{align*}
 \bias(\Theta) &:= \Ex(\Theta) - \theta \quad \alerttext{unbiased means zero bias} \\
 \operatorname{MSE}(\Theta) &:= \Ex\bigl[ \bigl(\Theta - \theta \bigr)^2 \bigr] \quad \text{is the }\alerttext{mean squared error}\\
@@ -884,7 +912,7 @@ Let $\Theta$ estimate a scalar population parameter $\theta$
 ### Under random sampling
 
 Suppose $Y_0,Y_1,\ldots$ have the same distribution as $Y$, where
-$\Ex(Y)=\mu$ and $\var(Y)=\sigma^2$. Then
+$\Ex(Y)=\mu$ and $\var(Y)=\sigma^2<\infty$. Then
 $$
 \Ex(\hmu_n)=\mu \quad \text{$\hmu_n$ is an }\alerttext{unbiased}\text{ estimator of }\mu
 $$
@@ -925,6 +953,20 @@ estimator unbiased?</span>
 :::
 
 
+::: {.notes}
+The bias–variance identity follows by writing Theta-theta as
+(Theta-ETheta)+(ETheta-theta); the cross term has expectation zero.
+For identically distributed uncorrelated observations,
+Var(hmu_n)=sigma^2/n and
+E[sum_i(Y_i-hmu_n)^2]=n sigma^2-n Var(hmu_n)=(n-1)sigma^2.
+For shrinkage, if mu^2+sigma^2/n>0, differentiation gives
+alpha_star=mu^2/(mu^2+sigma^2/n). The bias is (alpha_star-1)mu;
+it is generally nonzero, except for mu=0 or a zero-variance mean.
+If mu=sigma=0, every alpha has zero MSE. The optimum depends on
+unknown population quantities, so this oracle calculation illustrates the
+tradeoff rather than supplying a directly implementable estimator.
+:::
+
 ## Central Limit Theorem {.tree-marker-slide tree-marker="probstat"}
 
 If $Y_0,Y_1,\ldots\IIDsim Y$ and $0<\sigma^2<\infty$
@@ -949,13 +991,16 @@ Monte Carlo error for a sample mean typically decreases like $n^{-1/2}$
 
 ## Monte Carlo estimates of properties of $Y$ {data-state="goldborder"}
 
+For a fixed-size IID sample; the mean interval uses large $n$ and finite variance
+
 | Population quantity | Sample approximation |
 |---|------|
 | Mean, $\mu$ | [point estimator]{.alert} $\hmu_n$ <br>approximate 99% [confidence interval]{.alert} $\hmu_n\pm2.58\hsigma_n/\sqrt n$ |
 | Variance, $\sigma^2$ | $\hsigma_n^2$ |
 | CDF, $F$ | Empirical distribution function, $\displaystyle  \hF_n(y) := \frac 1n \sum_{i=0}^{n-1} \indic(Y_i \le y)$ |
 | Quantile function, $Q$ | Empirical quantile function, $\widehat Q_n$ |
-| Density or mass function, $\varrho$ | Histogram or kernel density estimator |
+| Mass function | Empirical frequencies |
+| Density function | Histogram or kernel density estimator |
 
 - Mean has a natural interval estimator
 - Other properties commonly begin with
@@ -976,8 +1021,9 @@ point estimators
 | Mean | `np.mean(data)` |
 | Variance | `np.var(data, ddof=1)` |
 | Empirical CDF | `statsmodels.distributions.empirical_distribution.ECDF(data)` |
-| Empirical quantile | `np.quantile(data, probabilities)` |
-| Histogram | `np.histogram(data, bins="auto")` |
+| Empirical quantile | `np.quantile(data, probabilities, method="inverted_cdf")` |
+| Empirical masses | `np.unique(data, return_counts=True)`; divide counts by `len(data)` |
+| Histogram | `np.histogram(data, bins="auto", density=True)` |
 | Kernel density estimate | `scipy.stats.gaussian_kde(data)` |
 
 ---
@@ -1026,6 +1072,8 @@ $$
 
 ## Laws of total expectation and variance {.tree-marker-slide tree-marker="probability"}
 
+Assume $\Ex|Y|<\infty$; for the variance identity, $\Ex(Y^2)<\infty$
+
 \begin{align*}
 \Ex(Y)&=\Ex_Z\bigl[\Ex(Y\mid Z)\bigr]
 \\
@@ -1041,7 +1089,7 @@ conditional mean across values of $Z$
 
 ## Conditional Monte Carlo {.tree-marker-slide tree-marker="prob-est"}
 
-Let $Y=f(X_1,\ldots,X_d)$ and $\vZ=(X_2,\ldots,X_d)$
+Let $Y=f(X_1,\ldots,X_d)$ have finite variance and $\vZ=\vX_{2:d}$
 
 If
 
@@ -1068,6 +1116,15 @@ $$
 $$
 
 so a probability density can itself be expressed as an expectation
+
+::: {.notes}
+For square-integrable Y, the law of total variance gives
+Var(Y)-Var(E[Y|Z])=E[Var(Y|Z)]>=0. Equality holds exactly when the
+conditional variance is zero almost surely. Conditional density averaging
+follows by integrating the joint density over Z; the equality is understood
+for almost every y. Conditional expectation itself needs integrable Y;
+the variance comparison needs its finite second moment.
+:::
 
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="prob-stat-est"}
 
@@ -1099,7 +1156,7 @@ $$
 and construct
 
 $$
-\vX=T(\vU)
+\vX=\vT(\vU)
 $$
 
 with the distribution required by the model

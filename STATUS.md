@@ -370,6 +370,11 @@ appropriate phase rather than appended indiscriminately.
 
 ## 4. Validation and deployment
 
+- [x] Complete the November 2 source accuracy/clarity audit of all five decks,
+  including examples, exercise answers, conditions, notation and embedded code.
+  Full website/five-deck renders, all 18 Python cells and 634 local deck
+  links/assets pass; findings are in `notes/DECK-AUDIT.md`. Instructor/visual
+  review remains separate and open.
 - [x] Render the complete website successfully from a clean local setup.
 - [x] Render the complete slide project successfully.
 - [x] Stage slide output beneath the website output and verify the combined

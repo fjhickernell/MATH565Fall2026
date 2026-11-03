@@ -2,8 +2,9 @@
 
 ## Continue instructor review — October 29
 
-This Checkpoint includes the November 2 clarity revisions; remote deployment
-and live verification remain pending.
+This Checkpoint includes the all-deck accuracy/clarity corrections and the
+bundled MathJax setting. Source review is complete; remote CI/deployment,
+live verification and instructor/visual review remain pending.
 Continue instructor review of Selected Topics, then move to SGD. Keep the
 concrete two-level development and derivative intuition; teach the many-level
 case through quoted results and general ideas rather than further derivations.
@@ -92,6 +93,22 @@ All five decks execute and render with the qmcpy kernel under the live watcher;
 changed layouts and links pass local review. Allocation/cost formulas pass
 independent minimization checks at $p=1/2,1,3/2$. Instructor review remains
 open; these revisions do not establish lecture coverage or grading completion.
+
+## All-deck accuracy and clarity audit — November 2
+
+Source review of all five decks is complete, including worked examples,
+exercise answers, theorem conditions and embedded code. Corrections and
+verification are recorded in [the deck audit](DECK-AUDIT.md). The root website
+and all five decks render with all 18 Python cells executed; 634 local deck
+links/assets, the bundled MathJax paths, computational and source-style checks
+pass. These corrections and the audit record are included in this Checkpoint;
+remote CI/deployment and live verification remain pending.
+
+Instructor/visual review remains open; the November 3 continuation and the
+simplified many-level/SGD plan above are unchanged. Check the revised slides
+before teaching. Separate companion-notebook prose follow-up:
+[align the Keister stopping narrative with the saved run](https://github.com/fjhickernell/MATH565Fall2026/issues/3).
+Notebook code/outputs and assessment materials were not changed.
 
 ## Take-home final — October 30 update
 

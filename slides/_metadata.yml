@@ -51,7 +51,7 @@ format:
       - math565-slides.scss
     html-math-method:
       method: mathjax
-      url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js
+      url: ../classlib/classlib/quarto/assets/mathjax/tex-svg-full.js
 
 execute:
   warning: false

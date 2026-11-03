@@ -105,18 +105,18 @@ A transformation produces the [target]{.alert} distribution
 
 ## The quantile transform {.tree-marker-slide tree-marker="random-generation"}
 
-A sampling design supplies
+For a random design with individually uniform inputs:
 
 $$
 U_i\sim\Unif[0,1],\qquad i=0,1,\ldots
 $$
 
-The design may be IID, Latin hypercube, low discrepancy, or something else
+For example: IID, randomized Latin hypercube, or randomized low discrepancy
 
 For a [target]{.alert} cumulative distribution function $F$, define
 
 $$
-Q(u):=\inf\{x\in\reals:F(x)\ge u\}
+Q(u):=\inf\{x\in\reals:F(x)\ge u\},\qquad 0<u<1
 $$
 
 Then $Q(u)\le x \iff u\le F(x)$
@@ -132,8 +132,10 @@ $$
 
 Thus each $X_i:=Q(U_i)$ has the [target]{.alert} CDF $F$
 
-[IID inputs yield IID targets <br>Other designs (Latin hypercube, low discrepancy, ...) retain their dependence
-structure]{.alert}
+[IID]{.alert} inputs yield IID targets; other designs need not give independent targets
+
+Fixed low discrepancy nodes use the same transform for [quadrature]{.alert};
+a fixed node has no target marginal law
 
 [Try the quantile-transform examples in the companion `GeneratingSamples`
 notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb)
@@ -160,6 +162,11 @@ E.g., $U_0=0.63$, $U_1=0.02$, and $U_2=0.47$ produce $X_0=2$, $X_1=0$, and $X_2=
 <span class="exbullet">$\exstar$</span>
 <span>If $u=0.70$, what value does the inverse transform produce? What about $u=0.90$?</span>
 :::
+
+::: {.notes}
+Q(0.70)=2 and Q(0.90)=3, using the cumulative probabilities in the table.
+:::
+
 
 ---
 
@@ -231,7 +238,7 @@ $F$ is [right-continuous]{.alert}; $Q$ is [left-continuous]{.alert}
 
 ::: {.columns}
 ::: {.column width="47%"}
-Let $X$ be nonnegative with
+For $0\le p_0<1$ and $\lambda>0$, let $X$ be nonnegative with
 
 - Probability $p_0$ of being zero and
 - Otherwise an
@@ -324,6 +331,9 @@ $$
 :::
 :::
 
+
+
+
 ::: {.column width="6%"}
 :::
 
@@ -368,6 +378,13 @@ plt.show()
 :::
 :::
 
+::: {.notes}
+For 0<u<=p_0, Q(u)=0 and F(Q(u))=p_0; the inequality is strict
+for 0<u<p_0 and equality holds at u=p_0. For p_0<u<1, substituting
+the logarithmic formula gives F(Q(u))=u. With p_0=0, equality holds
+throughout 0<u<1.
+:::
+
 ---
 
 ### An alternative transform
@@ -383,13 +400,23 @@ function.<br>Why might $T$ be preferred to $Q$?</span>
 The generalized inverse handles [atoms and continuous pieces]{.alert} with one definition
 :::
 
+::: {.notes}
+T(u)=0 for 1-p_0<=u<1 and
+T(u)=-log(u/(1-p_0))/lambda for 0<u<1-p_0. Since 1-U is uniform,
+T(U) has the same target law as Q(U). Computing log(u) avoids forming
+1-u when u is very small, although both transforms require appropriate
+handling of endpoints in finite-precision generators. It is nonincreasing
+rather than a quantile function.
+:::
+
+
 ## Gaussian mixture random numbers {.tree-marker-slide tree-marker="random-generation"}
 
 Let the one-dimensional [target]{.alert} be a [Gaussian mixture]{.alert}:
 
 $$
 X\sim p\Norm(\mu_1,\sigma_1^2)+(1-p)\Norm(\mu_2,\sigma_2^2),
-\qquad 0<p<1
+\qquad 0<p<1,\quad \sigma_1,\sigma_2>0
 $$
 
 Writing $\phi$ and $\Phi$ for the standard normal PDF and CDF,
@@ -460,6 +487,9 @@ value of $X$ is generated?</span>
 :::
 :::
 
+
+
+
 ::: {.column width="6%"}
 :::
 
@@ -503,6 +533,11 @@ ax.legend(frameon=False, fontsize=15)
 plt.show()
 ```
 :::
+:::
+
+::: {.notes}
+U_2=0.70>0.3 selects component 2. Thus X=1+Phi^{-1}(0.25),
+approximately 0.32551025.
 :::
 
 # Random Vectors {#random-vectors-and-stochastic-processes .tree-marker-slide tree-marker="random-generation"}
@@ -607,7 +642,9 @@ $$
 
 ### General $2\times2$ covariance
 
-For
+For $\sigma_1,\sigma_2>0$ and $|\rho|\le1$:
+
+
 
 $$
 \mSigma=
@@ -884,7 +921,7 @@ $$
 
 ### Definition
 
-Brownian motion $B$ is the Gaussian process with
+Brownian motion $B$ is the continuous-path version of the Gaussian process with
 
 $$
 m(t)=0,
@@ -977,11 +1014,18 @@ Then $S(t)>0$ and its multiplicative increments are lognormal
 <span class="exbullet">$\exstar$</span>
 <span>Using $B(t)\sim\Norm(0,t)$ and the normal moment-generating function,
 show that $\Ex[S(t)]=S_0\me^{\gamma t}$.<br>Hence determine $\gamma$ so that
-$\Ex[S(t)]=S_0\me^{rt}$.</span>
+$\Ex[S(t)]=S_0\me^{rt}$</span>
 :::
 
 The correction [$-\sigma^2/2$]{.alert} makes $\gamma$ the mean growth rate<br>The
 median growth rate is $\gamma-\sigma^2/2$
+
+::: {.notes}
+E[exp(sigma B(t))]=exp(sigma^2 t/2), so the correction cancels in
+the expectation and E[S(t)]=S_0 exp(gamma t). Set gamma=r for the stated
+risk-neutral mean growth.
+:::
+
 
 ---
 
@@ -1000,10 +1044,19 @@ the median of $S(t)$
 <span>The normal density weights the shocks $b$ and $-b$ equally. Show that
 $$
 \frac{m(t)\me^{\sigma b}+m(t)\me^{-\sigma b}}{2}
-=m(t)\cosh(\sigma b)>m(t),\qquad b\ne0.
+=m(t)\cosh(\sigma b)>m(t),\qquad b\ne0
 $$
 Why do equal and opposite log shocks not cancel in price?</span>
 :::
+
+::: {.notes}
+For a=exp(sigma b)>0, (a+1/a)/2>=1, with equality only at a=1.
+Here sigma>0 and b!=0, so the inequality is strict. Exponentiation is
+convex: the upward price change is larger than the equally sized downward
+log shock's price loss. At t>0, averaging over the nondegenerate normal
+shock gives mean greater than median.
+:::
+
 
 ---
 
@@ -1115,18 +1168,20 @@ Using $m_d$, $M_d$, and $\mathcal A_B$ from the preceding slide:
 
 ### American put: optimal stopping
 
-At the exercise times $t_0,\ldots,t_d$, the holder chooses a stopping index
-$J$ using only prices observed through $t_J$
+On a finite exercise grid, the holder chooses a stopping index
+$J\in\{0,\ldots,d\}$ using only prices observed through $t_J$
 
-Let $\mathcal T_d$ be the set of these stopping indices. The fair price is
+Let $\mathcal T_d$ be the set of these stopping indices. The grid-restricted price is
 
 $$
-\mu_{\mathrm{AmPut}}
+\mu_{\mathrm{AmPut},d}
 =\sup_{J\in\mathcal T_d}
 \Ex\!\left[
 \me^{-rt_J}\max\{K-S_J,0\}
 \right]
 $$
+
+This finite-grid problem approximates continuous-time American exercise
 
 - A [European put]{.alert} restricts exercise to $J=d$
 - An [American put]{.alert} may exercise earlier when doing so is more valuable

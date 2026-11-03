@@ -1495,6 +1495,17 @@ $$
 
 Mini-batches average component gradients; learning rates can decay
 
+::: {.notes}
+At a fixed theta, averaging the N component gradients gives the displayed
+expectation exactly. At iteration k, condition on the previous sampled
+indices and hence on theta_k. A fresh uniform I_k is independent of that
+history, so its conditional expected gradient is the full gradient at
+theta_k. This is conditional unbiasedness of the gradient, not unbiasedness
+of theta_k as an estimator of a minimizer or a claim that each noisy step
+lowers the loss. Convergence requires additional assumptions on the loss,
+noise, and step sizes.
+:::
+
 ::: {.key-point}
 The stochastic gradient is an [unbiased Monte Carlo estimate]{.alert} of the full gradient
 :::
@@ -1509,9 +1520,9 @@ For $i=0,\ldots,3$,
 \operatorname{loss}_i(\vtheta)
 =\tfrac12(\vtheta-\va_i)^\top\mA(\vtheta-\va_i)
 \qquad
-\mA=\begin{pmatrix}3&0.9\\0.9&1.2\end{pmatrix}\\
+\mA=\begin{bmatrix}3&0.9\\0.9&1.2\end{bmatrix}\\
 \{\va_0,\ldots,\va_3\}
-=\{(\pm\tfrac14,\pm\tfrac14)^\top\}
+=\{[\pm1/4,\pm1/4]^\top\}
 \quad\text{all four sign choices}
 \end{gather*}
 
@@ -1701,7 +1712,7 @@ Source: [Kocsis and Szepesvari, Bandit based Monte-Carlo Planning (2006)](https:
 
 - [Model]({{< meta decks.d01.file >}}#sampling) — express a question as an expectation and generate suitable samples
 - [Check]({{< meta decks.d03.file >}}#interpreting-sample-discrepancy) — quantify uncertainty and compare sample distributions
-- [Improve]({{< meta decks.d04.file >}}#variance-reduction) — reduce variation with conditioning, weights, or structured points
+- [Improve]({{< meta decks.d04.file >}}#variance-reduction) — reduce variance with conditioning or weights; use structured points for suitable integrands
 - [Search](#monte-carlo-tree-search) — use simulated returns to focus on promising decisions
 - [Allocate]({{< meta decks.d05.file >}}#optimal-multilevel-allocation) — distribute work across processors and approximation levels
 
