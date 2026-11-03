@@ -1246,15 +1246,15 @@ n_\ell=\frac{Cw_\ell}{\$_1w_1+\$_2w_2}
 &amp;\implies\quad
 \frac{\mathrm d\operatorname{MSE}_\ell}{\mathrm dn_\ell}
 &amp;=-\frac{A_\ell^2}{n_\ell^2}\\
-\mathrm{cost}_\ell&amp;=n_\ell\$_\ell
+\operatorname{cost}_\ell&amp;=n_\ell\$_\ell
 &amp;\implies\quad
-\frac{\mathrm d\mathrm{cost}_\ell}{\mathrm dn_\ell}&amp;=\$_\ell
+\frac{\mathrm d\operatorname{cost}_\ell}{\mathrm dn_\ell}&amp;=\$_\ell
 \end{align*}\]</span></p>
 <p>The <span class="alert">MSE decrease per unit work</span> is the ratio of these derivatives</p>
 <p><span class="math display">\[
--\frac{\mathrm d\operatorname{MSE}_\ell}{\mathrm d\mathrm{cost}_\ell}
+-\frac{\mathrm d\operatorname{MSE}_\ell}{\mathrm d\operatorname{cost}_\ell}
 =-\frac{\mathrm d\operatorname{MSE}_\ell/\mathrm dn_\ell}
-{\mathrm d\mathrm{cost}_\ell/\mathrm dn_\ell}
+{\mathrm d\operatorname{cost}_\ell/\mathrm dn_\ell}
 =\frac{A_\ell^2}{\$_\ell n_\ell^2}
 \]</span></p>
 <aside class="notes">
@@ -1274,11 +1274,11 @@ n_\ell=\frac{Cw_\ell}{\$_1w_1+\$_2w_2}
 <section class="slide level2">
 
 <h3 id="two-level-marginal-allocation">IID: interpreting the optimal allocation</h3>
-<p>Write <span class="math inline">\(\mathrm{err}_\ell^2=\operatorname{MSE}_\ell\)</span> and <span class="math inline">\(w_\ell=A_\ell/\sqrt{\$_\ell}\)</span></p>
+<p>Write <span class="math inline">\(\operatorname{err}_\ell^2=\operatorname{MSE}_\ell\)</span> and <span class="math inline">\(w_\ell=A_\ell/\sqrt{\$_\ell}\)</span></p>
 <p><span class="math display">\[
--\frac{\mathrm d\operatorname{MSE}_\ell}{\mathrm d\mathrm{cost}_\ell}
+-\frac{\mathrm d\operatorname{MSE}_\ell}{\mathrm d\operatorname{cost}_\ell}
 =\frac{A_\ell^2}{\$_\ell n_\ell^2}
-=\frac{\mathrm{err}_\ell^2}{\mathrm{cost}_\ell}
+=\frac{\operatorname{err}_\ell^2}{\operatorname{cost}_\ell}
 =\left(\frac{w_\ell}{n_\ell}\right)^2
 \]</span></p>
 <p>If one level has a larger value, moving a little work to it lowers total MSE</p>
@@ -1307,8 +1307,8 @@ n_\ell=\frac{Cw_\ell}{\$_1w_1+\$_2w_2}
 </section>
 <section class="slide level2">
 
-<h3 id="two-level-cost-for-accuracy">Two-level cost as a function of error</h3>
-<p>Take <span class="math inline">\(d_2\)</span> as the <span class="alert">target dimension</span>: <span class="math inline">\(\mu_{d_2}=\Ex\{f_{d_2}(\vX_{1:d_2})\}\)</span><br> Fix <span class="math inline">\(d_1,d_2\)</span>, amplitudes, and costs; require <span class="math inline">\(\operatorname{RMSE}(\hmu;\mu_{d_2})\le\varepsilon\)</span></p>
+<h3 id="two-level-cost-for-accuracy">Two-level random cost as a function of error</h3>
+<p>Use the <a href="#/random-two-level-estimates">IID or RQMC model</a>, common <span class="math inline">\(p&gt;0\)</span>; <span class="alert">fine target</span> <span class="math inline">\(\mu_{d_2}=\Ex\{f_{d_2}(\vX_{1:d_2})\}\)</span><br> Fix <span class="math inline">\(d_1,d_2\)</span>, amplitudes, and costs; require <span class="math inline">\(\operatorname{RMSE}(\hmu;\mu_{d_2})\le\varepsilon\)</span></p>
 <p><span class="math display">\[
 S=\$_1w_1+\$_2w_2
 =\sum_{\ell=1}^2 A_\ell^{2/(2p+1)}\$_\ell^{2p/(2p+1)}
@@ -1324,7 +1324,7 @@ S=\$_1w_1+\$_2w_2
 C(\varepsilon)=\frac{\left(\sqrt{V_1\$_1}+\sqrt{V_2\$_2}\right)^2}{\varepsilon^2}
 \]</span></p>
 <aside class="notes">
-<p>Use the identity A_ell^2 w_ell^(-2p)=cost_ell w_ell to simplify the substituted MSE sum to S<sup>(2p+1)/C</sup>(2p). All formulas omit setup, pilots, and integer or design-size rounding. Per instructor request, this calculation concerns error relative to the fixed fine approximation mu_d2 only. The following direct-cost comparison is IID.</p>
+<p>Return from the preceding IID-only slides to the common-p random model: unbiased, uncorrelated level estimates with RMSE approximately A_l n_l^(-p), using the same positive p for both levels. The general cost formula applies under this model; the final formula specializes to IID with p=1/2. Use the identity A_ell^2 w_ell^(-2p)=cost_ell w_ell to simplify the substituted MSE sum to S<sup>(2p+1)/C</sup>(2p). All formulas omit setup, pilots, and integer or design-size rounding. Per instructor request, this calculation concerns error relative to the fixed fine approximation mu_d2 only. The following direct-cost comparison is IID.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1694,36 +1694,36 @@ C(\varepsilon)=\frac{\left(\sum_{\ell=1}^L\sqrt{V_\ell\$_\ell}\right)^2}{\vareps
 <p>The displayed formula is exact in the continuous IID allocation model with independent unbiased level means and RMSE relative to the fixed finest mean mu_dL. It excludes setup, pilots, rounding, and minimum allowed counts. A small correction mean alone does not imply a small variance. The sampling cost result does not by itself control bias relative to a limiting target. Finer grids reduce bias under a justified convergent approximation model. Detailed random and deterministic rate models and bias budgets follow for reference, not classroom derivation:</p>
 <p>Why telescoping helps</p>
 <p>Coupling can reduce correction error while finer evaluations cost more</p>
-<p>Use geometric rate models <span class="math inline">\(A_\ell^2\propto\beta^\ell\)</span>, <span class="math inline">\(\$_\ell\propto\rho_{\mathrm{cost}}^\ell\)</span>, with <span class="math inline">\(\rho_{\mathrm{cost}}&gt;1\)</span></p>
+<p>Use geometric rate models <span class="math inline">\(A_\ell^2\propto\beta^\ell\)</span>, <span class="math inline">\(\$_\ell\propto\rho_{\operatorname{cost}}^\ell\)</span>, with <span class="math inline">\(\rho_{\operatorname{cost}}&gt;1\)</span></p>
 <p>At the optimal allocation, <span class="alert">work per level</span> satisfies</p>
 <p><span class="math display">\[
 \operatorname{work}_\ell=n_\ell\$_\ell
 \propto A_\ell^{2/(2p+1)}\$_\ell^{2p/(2p+1)}
-\propto(\beta\rho_{\mathrm{cost}}^{2p})^{\ell/(2p+1)}
+\propto(\beta\rho_{\operatorname{cost}}^{2p})^{\ell/(2p+1)}
 \]</span></p>
 <ul>
-<li><span class="math inline">\(\beta\rho_{\mathrm{cost}}^{2p}&lt;1\)</span>: finer contributions receive <span class="alert">less work</span><br> The level sum stays bounded; the one-level integration RMSE rate <span class="math inline">\(C^{-p}\)</span> can be retained</li>
-<li><span class="math inline">\(\beta\rho_{\mathrm{cost}}^{2p}&gt;1\)</span>: finer contributions require <span class="alert">more work</span><br> Adding levels introduces a growing work penalty</li>
-<li>IID (<span class="math inline">\(p=1/2\)</span>) recovers the condition <span class="math inline">\(\beta\rho_{\mathrm{cost}}&lt;1\)</span></li>
+<li><span class="math inline">\(\beta\rho_{\operatorname{cost}}^{2p}&lt;1\)</span>: finer contributions receive <span class="alert">less work</span><br> The level sum stays bounded; the one-level integration RMSE rate <span class="math inline">\(C^{-p}\)</span> can be retained</li>
+<li><span class="math inline">\(\beta\rho_{\operatorname{cost}}^{2p}&gt;1\)</span>: finer contributions require <span class="alert">more work</span><br> Adding levels introduces a growing work penalty</li>
+<li>IID (<span class="math inline">\(p=1/2\)</span>) recovers the condition <span class="math inline">\(\beta\rho_{\operatorname{cost}}&lt;1\)</span></li>
 </ul>
 <p>For fixed <span class="math inline">\(L\)</span>, integration RMSE has rate <span class="math inline">\(C^{-p}\)</span> in both regimes<br>The penalty grows as <span class="alert">bias control requires more levels</span></p>
-<p>Assume 0&lt;beta&lt;1, rho_cost&gt;1, a common p&gt;0, and positive constants of proportionality independent of level. These are illustrative geometric models, rather than only one-sided bounds, so they justify the less/more work interpretation. With only upper amplitude and cost bounds, the displayed geometric expression is a majorant; its growth does not prove actual fine-level dominance. Rho_cost is a real-valued cost-growth factor, not an integer sample index or the exponent in a level sample count n_ell=2^m. For IID A_l^2 is contribution variance; for RQMC it is the squared amplitude in the complete randomized-estimate error model, not contribution variance. At fixed C and L, the work normalizer is shared across levels. Thus the ratio of work on consecutive levels is (beta rho_cost<sup>{2p})</sup>{1/(2p+1)}. Writing <span class="math inline">\(S=\sum_\ell A_\ell^{2/(2p+1)}\$_\ell^{2p/(2p+1)}\)</span>, optimal integration RMSE is modeled by <span class="math inline">\(S^{p+1/2}C^{-p}\)</span>. When the geometric factor is below one, S remains bounded as L increases; above one, it grows with L. For fixed L both cases have the same C^{-p} power. A worse overall error power can arise only when tighter accuracy also increases L to control bias. If <span class="math inline">\(\abs{b_L}\lesssim B_{\mathrm{bias}}\rho_{\mathrm{bias}}^{-L}\)</span> with rho_bias&gt;1, and a fixed fraction of the error budget is assigned to bias, then L grows like log(1/epsilon)/log(rho_bias). Above the threshold the continuous model predicts <span class="math inline">\(C(\varepsilon)\approx\varepsilon^{-1/p}(\beta\rho_{\mathrm{cost}}^{2p})^{L/(2p)}\)</span>, with an effective error exponent <span class="math inline">\(p/[1+\log(\beta\rho_{\mathrm{cost}}^{2p})/(2\log\rho_{\mathrm{bias}})]&lt;p\)</span>. A full complexity bound must also include the finest-level cost forced by minimum admissible counts, setup, pilots, and rounding. The one-level-rate claim assumes those costs and the bias can also be controlled within that rate.</p>
+<p>Assume 0&lt;beta&lt;1, rho_cost&gt;1, a common p&gt;0, and positive constants of proportionality independent of level. These are illustrative geometric models, rather than only one-sided bounds, so they justify the less/more work interpretation. With only upper amplitude and cost bounds, the displayed geometric expression is a majorant; its growth does not prove actual fine-level dominance. Rho_cost is a real-valued cost-growth factor, not an integer sample index or the exponent in a level sample count n_ell=2^m. For IID A_l^2 is contribution variance; for RQMC it is the squared amplitude in the complete randomized-estimate error model, not contribution variance. At fixed C and L, the work normalizer is shared across levels. Thus the ratio of work on consecutive levels is (beta rho_cost<sup>{2p})</sup>{1/(2p+1)}. Writing <span class="math inline">\(S=\sum_\ell A_\ell^{2/(2p+1)}\$_\ell^{2p/(2p+1)}\)</span>, optimal integration RMSE is modeled by <span class="math inline">\(S^{p+1/2}C^{-p}\)</span>. When the geometric factor is below one, S remains bounded as L increases; above one, it grows with L. For fixed L both cases have the same C^{-p} power. A worse overall error power can arise only when tighter accuracy also increases L to control bias. If <span class="math inline">\(\abs{b_L}\lesssim B_{\mathrm{bias}}\rho_{\mathrm{bias}}^{-L}\)</span> with rho_bias&gt;1, and a fixed fraction of the error budget is assigned to bias, then L grows like log(1/epsilon)/log(rho_bias). Above the threshold the continuous model predicts <span class="math inline">\(C(\varepsilon)\approx\varepsilon^{-1/p}(\beta\rho_{\operatorname{cost}}^{2p})^{L/(2p)}\)</span>, with an effective error exponent <span class="math inline">\(p/[1+\log(\beta\rho_{\operatorname{cost}}^{2p})/(2\log\rho_{\mathrm{bias}})]&lt;p\)</span>. A full complexity bound must also include the finest-level cost forced by minimum admissible counts, setup, pilots, and rounding. The one-level-rate claim assumes those costs and the bias can also be controlled within that rate.</p>
 <p>Why telescoping helps: deterministic QMC</p>
 <p>Assume justified level bounds <span class="math inline">\(\abs{\hmu_\ell-\mu_\ell}\le A_\ell n_\ell^{-p}\)</span></p>
-<p>Model <span class="alert">error-bound amplitudes</span> by <span class="math inline">\(A_\ell\propto\theta^\ell\)</span> and cost by <span class="math inline">\(\$_\ell\propto\rho_{\mathrm{cost}}^\ell\)</span></p>
+<p>Model <span class="alert">error-bound amplitudes</span> by <span class="math inline">\(A_\ell\propto\theta^\ell\)</span> and cost by <span class="math inline">\(\$_\ell\propto\rho_{\operatorname{cost}}^\ell\)</span></p>
 <p>At the bound-minimizing allocation, <span class="alert">work per level</span> satisfies</p>
 <p><span class="math display">\[
 \operatorname{work}_\ell=n_\ell\$_\ell
 \propto A_\ell^{1/(p+1)}\$_\ell^{p/(p+1)}
-\propto(\theta\rho_{\mathrm{cost}}^p)^{\ell/(p+1)}
+\propto(\theta\rho_{\operatorname{cost}}^p)^{\ell/(p+1)}
 \]</span></p>
 <ul>
-<li><span class="math inline">\(\theta\rho_{\mathrm{cost}}^p&lt;1\)</span>: finer contributions receive <span class="alert">less work</span><br> The level sum stays bounded; the one-level integration-error bound rate <span class="math inline">\(C^{-p}\)</span> can be retained</li>
-<li><span class="math inline">\(\theta\rho_{\mathrm{cost}}^p&gt;1\)</span>: finer contributions require <span class="alert">more work</span><br> Adding levels introduces a growing work penalty</li>
-<li>For the illustrative QMC rate <span class="math inline">\(p=1\)</span>, the condition is <span class="math inline">\(\theta\rho_{\mathrm{cost}}&lt;1\)</span></li>
+<li><span class="math inline">\(\theta\rho_{\operatorname{cost}}^p&lt;1\)</span>: finer contributions receive <span class="alert">less work</span><br> The level sum stays bounded; the one-level integration-error bound rate <span class="math inline">\(C^{-p}\)</span> can be retained</li>
+<li><span class="math inline">\(\theta\rho_{\operatorname{cost}}^p&gt;1\)</span>: finer contributions require <span class="alert">more work</span><br> Adding levels introduces a growing work penalty</li>
+<li>For the illustrative QMC rate <span class="math inline">\(p=1\)</span>, the condition is <span class="math inline">\(\theta\rho_{\operatorname{cost}}&lt;1\)</span></li>
 </ul>
 <p>As bias control requires more levels, coupling must preserve <span class="alert">smoothness</span> and reduce <span class="alert">QMC error-bound amplitudes</span></p>
-<p>Assume 0&lt;theta&lt;1, rho_cost&gt;1, p&gt;0, and level-independent proportionality constants. Theta describes decay of A_l itself; the random slide’s beta describes decay of A_l^2. These are different method-dependent amplitudes. If the same amplitude sequence were used in both models, beta would be theta^2. The consecutive-level work ratio is (theta rho_cost<sup>p)</sup>{1/(p+1)}. Writing <span class="math inline">\(S_{\mathrm Q}=\sum_\ell A_\ell^{1/(p+1)}\$_\ell^{p/(p+1)}\)</span>, the optimized deterministic bound is <span class="math inline">\(S_{\mathrm Q}^{p+1}C^{-p}\)</span>. Below the threshold the sum stays bounded; above it, refinement adds a growing factor. As in the random case, fixed L gives C^{-p} in both regimes. If a justified bias model <span class="math inline">\(\abs{b_L}\lesssim B_{\mathrm{bias}}\rho_{\mathrm{bias}}^{-L}\)</span> sets L from the tolerance, the growing-factor regime predicts continuous work <span class="math inline">\(C(\varepsilon)\propto\varepsilon^{-1/p}(\theta\rho_{\mathrm{cost}}^p)^{L/p}\)</span>, with effective error exponent <span class="math inline">\(p/[1+\log(\theta\rho_{\mathrm{cost}}^p)/\log\rho_{\mathrm{bias}}]&lt;p\)</span>. These predictions concern the chosen deterministic bound, not equality for the realized error. Include minimum allowed counts, setup/pilots, rounding, and logarithmic factors before claiming a complete complexity rate. A_l is a justified deterministic bound amplitude, for example a discrepancy rate constant times the correction integrand’s variation. Small IID variance or a small correction mean does not establish this bound or its decay.</p>
+<p>Assume 0&lt;theta&lt;1, rho_cost&gt;1, p&gt;0, and level-independent proportionality constants. Theta describes decay of A_l itself; the random slide’s beta describes decay of A_l^2. These are different method-dependent amplitudes. If the same amplitude sequence were used in both models, beta would be theta^2. The consecutive-level work ratio is (theta rho_cost<sup>p)</sup>{1/(p+1)}. Writing <span class="math inline">\(S_{\mathrm Q}=\sum_\ell A_\ell^{1/(p+1)}\$_\ell^{p/(p+1)}\)</span>, the optimized deterministic bound is <span class="math inline">\(S_{\mathrm Q}^{p+1}C^{-p}\)</span>. Below the threshold the sum stays bounded; above it, refinement adds a growing factor. As in the random case, fixed L gives C^{-p} in both regimes. If a justified bias model <span class="math inline">\(\abs{b_L}\lesssim B_{\mathrm{bias}}\rho_{\mathrm{bias}}^{-L}\)</span> sets L from the tolerance, the growing-factor regime predicts continuous work <span class="math inline">\(C(\varepsilon)\propto\varepsilon^{-1/p}(\theta\rho_{\operatorname{cost}}^p)^{L/p}\)</span>, with effective error exponent <span class="math inline">\(p/[1+\log(\theta\rho_{\operatorname{cost}}^p)/\log\rho_{\mathrm{bias}}]&lt;p\)</span>. These predictions concern the chosen deterministic bound, not equality for the realized error. Include minimum allowed counts, setup/pilots, rounding, and logarithmic factors before claiming a complete complexity rate. A_l is a justified deterministic bound amplitude, for example a discrepancy rate constant times the correction integrand’s variation. Small IID variance or a small correction mean does not establish this bound or its decay.</p>
 <p>Cost for a multilevel error tolerance</p>
 <p>Let <span class="math inline">\(\mu_{d_L}=\Ex\{f_{d_L}(\vX_{1:d_L})\}\)</span> and <span class="math inline">\(b_L=\mu-\mu_{d_L}\)</span><br>Write <span class="math inline">\(C(\varepsilon)\)</span> for the <span class="alert">total work required</span> at error tolerance <span class="math inline">\(\varepsilon\)</span></p>
 <p>For <span class="alert">independent unbiased IID/RQMC level estimates</span></p>
@@ -1822,19 +1822,19 @@ A_\ell^{1/(p+1)}\$_\ell^{p/(p+1)}
 <td style="text-align: left;">Decay factor for deterministic bound amplitudes: <span class="math inline">\(A_\ell\propto\theta^\ell\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(\rho_{\mathrm{cost}}&gt;1\)</span></td>
-<td style="text-align: left;">Growth factor for per-contribution work: <span class="math inline">\(\$_\ell\propto\rho_{\mathrm{cost}}^\ell\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\rho_{\operatorname{cost}}&gt;1\)</span></td>
+<td style="text-align: left;">Growth factor for per-contribution work: <span class="math inline">\(\$_\ell\propto\rho_{\operatorname{cost}}^\ell\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><span class="math inline">\(B_{\mathrm{bias}}\)</span>, <span class="math inline">\(\rho_{\mathrm{bias}}&gt;1\)</span></td>
 <td style="text-align: left;">Bias amplitude and refinement factor in <span class="math inline">\(\abs{b_L}\lesssim B_{\mathrm{bias}}\rho_{\mathrm{bias}}^{-L}\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(G=\beta\rho_{\mathrm{cost}}^{2p}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(G=\beta\rho_{\operatorname{cost}}^{2p}\)</span></td>
 <td style="text-align: left;">Randomized level-work growth base</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math inline">\(H=\theta\rho_{\mathrm{cost}}^p\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(H=\theta\rho_{\operatorname{cost}}^p\)</span></td>
 <td style="text-align: left;">Deterministic level-work growth base</td>
 </tr>
 <tr class="odd">
@@ -1848,8 +1848,8 @@ A_\ell^{1/(p+1)}\$_\ell^{p/(p+1)}
 <p>Two <span class="alert">IID examples</span>: <span class="math inline">\(p=1/2\)</span>; each refinement halves bias and quadruples cost</p>
 <p><span class="math display">\[
 \rho_{\mathrm{bias}}=2
-\qquad \rho_{\mathrm{cost}}=4
-\qquad G=\beta\rho_{\mathrm{cost}}=4\beta
+\qquad \rho_{\operatorname{cost}}=4
+\qquad G=\beta\rho_{\operatorname{cost}}=4\beta
 \]</span></p>
 <table class="caption-top">
 <thead>
@@ -1884,7 +1884,7 @@ q=2+\frac{\log G}{\log\rho_{\mathrm{bias}}}
 <p>These examples use the course’s geometric factors, not Giles’s positive decay exponents. In Giles’s notation, bias exponent alpha_G=1 and cost exponent gamma_G=2. The coarse-dominated example has variance exponent beta_G=3, while the fine-dominated example has beta_G=1. The theorem gives cost <span class="math inline">\(\varepsilon^{-2}\)</span> in the former and <span class="math inline">\(\varepsilon^{-2-(2-1)/1}=\varepsilon^{-3}\)</span> in the latter. Both satisfy alpha_G&gt;=min(beta_G,gamma_G)/2, and the minimum-design work exponent is 2, so it does not worsen either displayed exponent. The boundary beta_G=gamma_G (G=1) adds a squared logarithmic factor for IID; the two rows intentionally illustrate the strict coarse/fine regimes. Do not interpret -3 as universal whenever fine levels dominate. The familiar standard Monte Carlo epsilon^-3 versus MLMC epsilon^-2 comparison is also a distinct possible example; Euler MLMC has an additional log-squared factor. Source: <a href="https://people.maths.ox.ac.uk/gilesm/files/acta15.pdf#page=7">Giles, Multilevel Monte Carlo methods, Theorem 1</a>.</p>
 <p>General IID/RQMC cost exponent</p>
 <p>Assume <span class="math inline">\(\abs{b_L}\lesssim B_{\mathrm{bias}}\rho_{\mathrm{bias}}^{-L}\)</span>, with <span class="math inline">\(\rho_{\mathrm{bias}}&gt;1\)</span><br> A fixed bias fraction gives <span class="math inline">\(L\approx\log(1/\varepsilon)/\log\rho_{\mathrm{bias}}\)</span></p>
-<p>Write <span class="math inline">\(G=\beta\rho_{\mathrm{cost}}^{2p}\)</span>; in the <span class="alert">continuous allocation model</span></p>
+<p>Write <span class="math inline">\(G=\beta\rho_{\operatorname{cost}}^{2p}\)</span>; in the <span class="alert">continuous allocation model</span></p>
 <p><span class="math display">\[
 C(\varepsilon)\propto\varepsilon^{-1/p}
 \left[\sum_{\ell=1}^LG^{\ell/(2p+1)}\right]^{(2p+1)/(2p)}
@@ -1912,11 +1912,11 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 </tbody>
 </table>
 <p>The exponent grows beyond <span class="math inline">\(1/p\)</span> when <span class="alert">bias-driven refinement adds fine-level work</span></p>
-<p>Minimum allowed samples also add work of order <span class="math inline">\(\varepsilon^{-\log\rho_{\mathrm{cost}}/\log\rho_{\mathrm{bias}}}\)</span></p>
+<p>Minimum allowed samples also add work of order <span class="math inline">\(\varepsilon^{-\log\rho_{\operatorname{cost}}/\log\rho_{\mathrm{bias}}}\)</span></p>
 <p>Ignore the borderline G=1. Use the geometric models on the telescoping slide, with fixed p and level-independent constants, and a fixed split between bias and sampling error. Constants in B_bias and the bias fraction only shift L by a bounded amount. The displayed L is the selected level count from the bias bound; it need not be the smallest L the actual unknown bias permits. For G&lt;1 the geometric sum is bounded above and below by positive constants. For G&gt;1 it is proportional to G^{L/(2p+1)}. Raising to (2p+1)/(2p) gives <span class="math inline">\(G^{L/(2p)}\propto\varepsilon^{-\log G/(2p\log\rho_{\mathrm{bias}})}\)</span>. Thus the continuous model has cost exponent q=1/p in the first regime and <span class="math inline">\(q=1/p+\log G/(2p\log\rho_{\mathrm{bias}})\)</span> in the second. Error decays like total work to power -1/q once bias is included through the selected L. The evaluation work added by a minimum allowed design on every level scales as sum_l cost_l, hence exponent q_floor=log(rho_cost)/log(rho_bias). With bounded-factor rounding, the modeled rounded evaluation-work exponent is max(q,q_floor). Setup and pilot work must also be counted. These are model predictions for allocation, not unconditional finite-sample error guarantees.</p>
 <p>Where the cost exponent changes: deterministic QMC</p>
 <p>Use the same bias model and <span class="math inline">\(L\approx\log(1/\varepsilon)/\log\rho_{\mathrm{bias}}\)</span></p>
-<p>Write <span class="math inline">\(H=\theta\rho_{\mathrm{cost}}^p\)</span>; use the <span class="alert">continuous deterministic bound model</span></p>
+<p>Write <span class="math inline">\(H=\theta\rho_{\operatorname{cost}}^p\)</span>; use the <span class="alert">continuous deterministic bound model</span></p>
 <p><span class="math display">\[
 C(\varepsilon)\propto\varepsilon^{-1/p}
 \left[\sum_{\ell=1}^LH^{\ell/(p+1)}\right]^{(p+1)/p}
@@ -1944,7 +1944,7 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 </tbody>
 </table>
 <p>A growing level sum adds <span class="math inline">\(\log H/(p\log\rho_{\mathrm{bias}})\)</span> to the <span class="alert">tolerance exponent</span></p>
-<p>Minimum allowed samples again add work of order <span class="math inline">\(\varepsilon^{-\log\rho_{\mathrm{cost}}/\log\rho_{\mathrm{bias}}}\)</span></p>
+<p>Minimum allowed samples again add work of order <span class="math inline">\(\varepsilon^{-\log\rho_{\operatorname{cost}}/\log\rho_{\mathrm{bias}}}\)</span></p>
 <p>Ignore the borderline H=1. The deterministic bound amplitudes follow the geometric model A_l proportional to theta^l; they are not random variances. Above the threshold the level sum is proportional to H^{L/(p+1)}. Raising to (p+1)/p gives H^{L/p}, yielding the displayed extra epsilon power. C(epsilon) here is the sufficient work selected by minimizing the specified bound, not an equality for the unknown minimal work or the realized error. The same minimum-design-work exponent q_floor applies; bounded-factor rounding gives max(q,q_floor) for modeled evaluation work. Add setup and pilot work before quoting a complete practical complexity rate.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -2115,7 +2115,7 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 
 <h3 id="gradient-and-stochastic-gradient-paths">Gradient and stochastic-gradient paths</h3>
 <p>Contours show excess average loss above its minimum<br> SGD samples one of the four component gradients at each step</p>
-<div id="ea0ca04f" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
+<div id="e5573d1f" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
