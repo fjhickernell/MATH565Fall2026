@@ -22,10 +22,10 @@ deterministic QMC allocations, bias budgets, and exponent derivations remain
 in presenter notes. Existing slide anchors are preserved. The fixed-grid
 sampling-cost result is distinguished from refining the grid to control bias.
 Review the shorter sequence and local layout with the instructor; lecture
-coverage is unchanged. Full browser layout review of local revisions remains
-pending because local file URLs are blocked in the available browser.
+coverage is unchanged. Broader browser layout review remains pending; the
+two-level random cost slide has been checked through a local HTTP preview.
 The root website and all five decks render successfully; the assembled site
-passes 1,247 relative link/asset checks, including slide anchors. The stray
+passes its relative link, asset, and slide-anchor checks. The stray
 presenter-note footnote is removed from the rendered deck.
 
 The two-level material keeps the $f_{d_1}$/$f_{d_2}$ Brownian-bridge example,
@@ -47,8 +47,8 @@ review remains open; this addition does not change lecture coverage.
 All seven figures are inspected, notebook mathematics passes the TeX/MathML
 conversion check, and all four optional native solvers execute without
 warnings. The default run takes about 21 seconds on M5. The updated notebook
-page and deck render successfully; browser layout review remains pending
-under the local-file restriction above.
+page and deck render successfully; broader browser layout review remains
+pending.
 
 October 29 lecture reconciliation is complete through “What two levels
 accomplish” in Selected Topics. The November 3 plan and verified calendar note
