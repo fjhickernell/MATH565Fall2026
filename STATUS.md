@@ -590,6 +590,16 @@ appropriate phase rather than appended indiscriminately.
   - [x] Draft Lecture 05, Selected Topics, from the Fall 2025 Keynote deck,
     including parallel computation, stochastic gradient descent, and
     multilevel Monte Carlo.
+  - [x] Add a concrete Brownian coarse/fine coupling example, make the
+    November 3 allocation continuation consecutive, and align SGD's average
+    loss and unbiased-gradient identity with an actual finite-component
+    sampling example and path plot. Instructor review remains open.
+  - [x] Build the separate Multilevel Option Pricing companion from QMCPy's
+    Asian-option example: coupled paths, level variance and cost, equal and
+    optimal allocations, direct fine versus IID MLMC and Sobol' MLQMC,
+    charged pilots, finite-target sampling error, and separate refinement-bias
+    diagnostics. All thirteen code cells execute cleanly with pinned
+    dependencies; instructor review remains open.
   - [x] Clarify the independent-pilot IID interval and optional SD inflation;
     center the IID/RQMC comparison table and align the Selected Topics preview.
   - [x] Generalize same-time accuracy to $s^{-p}$ and the multilevel sequence
@@ -606,6 +616,11 @@ appropriate phase rather than appended indiscriminately.
     glossary, and show both tolerance exponents explicitly for random and
     deterministic methods. Use indexed independent sample sets and distinguish
     total work, per-contribution work, and point-count weights.
+  - [x] Simplify the many-level teaching flow to five slides of main ideas
+    and quoted IID results, retaining the concrete two-level details. Reduce
+    the common glossary to two slides; move general method-dependent rate
+    derivations to presenter notes and show the two IID cost exponents through
+    numerical refinement examples without geometric-rate notation.
   - [x] Complete instructor review of Lecture 03 and its four companions
     (September 10, 2026).
   - [ ] Review Lectures 04–05 individually with the instructor and refine

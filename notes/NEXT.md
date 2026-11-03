@@ -2,6 +2,53 @@
 
 ## Continue instructor review — October 29
 
+This Checkpoint includes the November 2 clarity revisions; remote deployment
+and live verification remain pending.
+Continue instructor review of Selected Topics, then move to SGD. Keep the
+concrete two-level development and derivative intuition; teach the many-level
+case through quoted results and general ideas rather than further derivations.
+The common glossary now has two short slides before Two-Level, with core
+contributions, sample counts, work, and allocation weights. Method-specific
+amplitudes are introduced locally; geometric-rate symbols stay in notes.
+
+The many-level flow is reduced from twelve visible slides to five: coupled
+hierarchy, the quoted IID allocation, why coupling can control sampling cost,
+concrete cost-versus-accuracy examples, and practical guidance. “Cost versus
+accuracy: IID” retains `#multilevel-random-cost-exponent` and states the
+$\varepsilon^{-2}$ and $\varepsilon^{-3}$ examples with numerical refinement
+factors, without logarithms or new rate symbols. General IID/RQMC and
+deterministic QMC allocations, bias budgets, and exponent derivations remain
+in presenter notes. Existing slide anchors are preserved. The fixed-grid
+sampling-cost result is distinguished from refining the grid to control bias.
+Review the shorter sequence and local layout with the instructor; lecture
+coverage is unchanged. Full browser layout review of local revisions remains
+pending because local file URLs are blocked in the available browser.
+The root website and all five decks render successfully; the assembled site
+passes 1,247 relative link/asset checks, including slide anchors. The stray
+presenter-note footnote is removed from the rendered deck.
+
+The two-level material keeps the $f_{d_1}$/$f_{d_2}$ Brownian-bridge example,
+uncorrelated level sample means, $n=\sum_\ell n_\ell$, IID allocation weights,
+and derivative interpretation of MSE decrease per unit work. The direct-fine
+comparison and original single-slide correlation/cost explanation remain.
+SGD uses an average loss, an unbiased-gradient identity, and actual gradients
+from four quadratic component losses in its path figure.
+
+`notebooks/performance/MultilevelOptionPricing.ipynb` now accompanies the
+allocation/hierarchy sequence, with course-page and Selected Topics links
+included in this Checkpoint. All thirteen code cells run
+cleanly with the pinned `qmcpy` dependencies. Review its coupled paths,
+equal/optimal allocation, fixed-grid direct/MLMC/MLQMC comparisons, and
+separate bias diagnostics with the instructor. Pilots are charged to designs
+that use them; the numerical reference is an approximation, not an exact
+price. Adaptive/continuation methods are optional later material. Instructor
+review remains open; this addition does not change lecture coverage.
+All seven figures are inspected, notebook mathematics passes the TeX/MathML
+conversion check, and all four optional native solvers execute without
+warnings. The default run takes about 21 seconds on M5. The updated notebook
+page and deck render successfully; browser layout review remains pending
+under the local-file restriction above.
+
 October 29 lecture reconciliation is complete through “What two levels
 accomplish” in Selected Topics. The November 3 plan and verified calendar note
 resume at “Deriving the two-level allocation,” followed by cost versus error,
@@ -14,36 +61,11 @@ class time per student (present once and observe twice), separately from
 the roughly 40 lecture hours. These schedule, outline, and MLMC revisions are
 included in the teaching Checkpoint; its website publishing workflow succeeded.
 
-Continue instructor review of the audited MLMC sequence in Deck 05. Two-level
-random and deterministic estimation/allocation now lead to a numerical
-points-versus-work exercise. New two-level continuations show the Lagrangian
-derivation, optimal cost versus RMSE, and the work multipliers for error
-reduction relative to the fixed fine approximation. Review these with the instructor.
-Notation audited across two and many levels: finite fine targets precede the
-separate limiting-target bias discussion; total counts, RQMC per-run counts,
-allocation weights, work normalizers, and glossary definitions now agree.
-The general $f_{d_\ell}$ hierarchy precedes
-the many-level estimators and weights; the two “Why telescoping helps” slides
-give the payoff before the detailed bias/cost budgets. Practical pilot and
-error-assessment continuations close the section. Review the new exercise and
-this reordered flow, then continue to Stochastic Gradient Descent.
-The telescoping slides show less/more optimal work on finer levels with
-$\rho_{\mathrm{cost}}$ for cost growth; the fixed-$L$ rate is explicitly
-integration error, with approximation bias separate. RQMC pilot replication
-count $R$ stays fixed while sample size varies, and fitting $p$ is explicit.
-Two-level symbols are now introduced in their own early continuation; three
-linked glossary slides collect targets, errors, allocation, and geometric rates.
-$C$ is total work, held fixed as a budget or written $C(\varepsilon)$ to show
-its dependence on tolerance. Separate visible IID/RQMC and deterministic QMC
-continuations derive the tolerance exponent using the bias-driven choice of
-$L$, including the minimum-design-work contribution. Independent level samples
-are displayed as indexed sets rather than an unexplained vector shorthand.
-The multilevel sequence now motivates dimension-dependent evaluation work,
-maps $f_d$ to the cheap part and coupled correction $Y_\ell$, and develops
-IID/RQMC variance addition with a general rate $n^{-p}$ before deterministic
-QMC inequalities. The many-level allocation and bias/cost budgets follow.
-Uncorrelated level means suffice for variance addition; independent level
-sample sets are a sufficient construction, with dependence allowed within RQMC.
+The remaining instructor review follows the simplified many-level sequence
+above, then Stochastic Gradient Descent. Two-level random and deterministic
+estimation/allocation still lead to the numerical points-versus-work exercise
+and notebook. Use the detailed many-level presenter notes only as a reference;
+the general rate derivations are no longer part of the visible teaching flow.
 
 The Deck 04 IID recap uses an independent pilot SD, optional inflation, and
 pilot-based Student-t degrees of freedom. The same-RMSE table is vertically

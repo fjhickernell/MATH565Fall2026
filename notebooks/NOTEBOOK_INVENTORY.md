@@ -104,7 +104,7 @@ pattern, not a permanent ownership contract.
 | Deck 02, Generating Samples | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb` | Main direct-sampling development; early low discrepancy and financial-option examples intentionally prepare later decks |
 | Deck 03, Markov Chain Monte Carlo | `sampling/TransportMapsAndAcceptanceRejection.ipynb`; `sampling/MetropolisHastings.ipynb`; `applications/BayesianMCMC.ipynb`; `performance/Discrepancy.ipynb`; `applications/QueueSimulation.ipynb` | Return to acceptance--rejection as motivation; main MCMC, distribution-comparison, Bayesian, and queueing development |
 | Deck 04, Improving Efficiency | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb`; `sampling/LowDiscrepancyConstructions.ipynb`; `applications/KeisterExample.ipynb`; `sampling/ConditionalMonteCarlo.ipynb`; `performance/AsianOptionVarianceReduction.ipynb`; `performance/Discrepancy.ipynb` | Return to earlier low discrepancy, transport, and option examples; main importance-sampling, variance-reduction, discrepancy, and QMC development |
-| Deck 05, Selected Topics | A consolidated gradient/stochastic-gradient notebook and the GPU Monte Carlo notebook, if retained after review; earlier application notebooks when a selected topic extends them | Flexible continuation into selected methods; queueing may recur if it becomes a substantial application, and future MCTS or multilevel notebooks should remain coherent rather than omnibus |
+| Deck 05, Selected Topics | `performance/MultilevelOptionPricing.ipynb`; `performance/GPU_MonteCarlo_Demo.ipynb`; a consolidated gradient/stochastic-gradient notebook if retained after review; earlier application notebooks when a selected topic extends them | Main multilevel coupling, allocation, and error/work comparisons; parallel-computing performance; flexible continuation into selected methods |
 
 The broad inherited `QMCPy_Introduction.ipynb` has no required deck call. It
 should be retained only if it becomes a concise software orientation rather
@@ -322,14 +322,39 @@ discretely monitored lookback call reuses the simulated paths. Clean local
 `qmcpy` execution and saved-figure review are complete. The established
 recorded-commit Colab setup remains available if a problem is reported.
 
-### Deck 05 performance notebooks
+### `performance/MultilevelOptionPricing.ipynb` — Deck 05 companion
+
+Created November 2, 2026 as a focused adaptation of QMCPy's
+`asian-option-mlqmc.ipynb`. All comparisons use one explicitly specified
+arithmetic Asian-call model. Trapezoidal time averages approximate a
+continuous-monitoring target; this is distinct from the earlier notebook's
+fixed weekly-monitoring contract.
+
+The notebook shows shared coarse/fine Brownian paths, coupled versus
+independent corrections, IID and RQMC allocation pilots, and sample counts
+versus work per level. Equal-count, equal-work, and pilot-derived optimal
+IID allocations lead to a fixed-finest-grid comparison of direct IID,
+direct randomized Sobol', IID MLMC, and pilot-allocated Sobol' MLQMC.
+Comparisons charge allocation pilots to designs that need them and report
+actual proxy work, elapsed time, independent-trial RMSE, and numerical
+reference uncertainty separately. Finer-grid correction diagnostics distinguish
+sampling error from continuous-limit bias without claiming an omitted-tail
+bound. QMCPy's adaptive and continuation methods form an optional extension.
+
+All thirteen code cells complete from a clean local `qmcpy` kernel with the
+recorded dependencies; all seven figures are inspected. The four optional
+native multilevel/adaptive solvers also execute without warnings in a separate
+validation run. Instructor content review remains open. Keep this
+notebook independent of the CPU/GPU and prospective SGD companions.
+
+### Other Deck 05 performance notebooks
 
 Consolidate the inherited gradient and stochastic-gradient variants into one
 focused notebook if that material survives Deck 05 review. Keep the GPU Monte
 Carlo demonstration separate because hardware, backend, synchronization, and
-precision caveats are its principal teaching job. Any future MCTS or
-multilevel Monte Carlo notebook should also be independent rather than folded
-into either performance notebook.
+precision caveats are its principal teaching job. A future MCTS notebook
+should also remain independent rather than folded into the performance
+notebooks.
 
 ## Principal Fall 2025 notebooks
 
