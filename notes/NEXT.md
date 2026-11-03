@@ -1,6 +1,30 @@
 # Next task
 
-## Continue instructor review — October 29
+## November 5 lecture continuation
+
+Resume Selected Topics with [Single-level and two-level work versus error](../slides/05-selected-topics.qmd#two-level-cost-interpretation),
+then [Allocate two levels: points versus work](../slides/05-selected-topics.qmd#two-level-allocation-practice)
+and the [Multilevel Option Pricing notebook](../notebooks/performance/MultilevelOptionPricing.ipynb).
+Briefly recap the many-level/bias idea, then continue
+[Stochastic Gradient Descent](../slides/05-selected-topics.qmd#stochastic-gradient-descent-section).
+
+November 3 covered the two-level allocation and cost–error derivations,
+IID savings and covariance/cost explanation, and a brief multilevel overview.
+Worked numerical examples and the notebook were deferred; SGD and Monte
+Carlo Tree Search were only announced. The recording-based reconciliation
+and verified November 5 calendar note are recorded in `notes/LECTURE-UPDATES.md`.
+Schedule and handoff changes are included in this Checkpoint; remote deployment
+and live-page verification remain pending.
+
+## November 3 teaching follow-up
+
+[Clean up November 3 teaching](https://github.com/fjhickernell/MATH565Fall2026/issues/4)
+remains open awaiting Fred’s additional material-cleanup directions and any
+agreed corrections. Pacing is reconciled; broader instructor/visual review
+remains open. Earlier November 3 preparation plans below are historical where
+superseded by the continuation above.
+
+## Earlier preparation and continuing instructor review
 
 This Checkpoint includes the all-deck accuracy/clarity corrections and the
 bundled MathJax setting. Source review is complete; remote CI/deployment,

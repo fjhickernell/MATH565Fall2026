@@ -58,9 +58,9 @@ holidays, and examination details are finalized.
 | Week | Date | Topic | Slides / Materials |
 |---:|---|---|---|
 | 12 | Mon Nov 2 | **Last day to withdraw from full-semester courses** | [Illinois Tech academic calendar](https://www.iit.edu/registrar/academic-calendar) |
-| | Tue Nov 3 | Two-level allocation derivation and cost versus error; allocation exercise; extension to a hierarchy and many levels | [Selected Topics: two-level optimization](../slides/05-selected-topics.html#two-level-optimization)<br>[Multilevel hierarchy](../slides/05-selected-topics.html#infinite-dimensional-expectations) |
+| | Tue Nov 3 | Two-level allocation and cost–error derivations; IID savings and covariance/cost comparison; brief multilevel telescoping, allocation, bias and cost-rate overview | [Selected Topics: two-level allocation](../slides/05-selected-topics.html#two-level-optimization)<br>[Cost and savings](../slides/05-selected-topics.html#two-level-cost-for-accuracy)<br>[Multilevel overview](../slides/05-selected-topics.html#infinite-dimensional-expectations) |
 | | Wed Nov 4 | **Project presentation sign-up deadline** | [Choose your presentation time slot](project.qmd#presentation-scheduling-and-observations) |
-| | Thu Nov 5 | | |
+| | Thu Nov 5 | Worked two-level allocation and multilevel option-pricing examples; brief multilevel recap; then stochastic gradient descent | [Selected Topics: two-level examples](../slides/05-selected-topics.html#two-level-cost-interpretation)<br>[Multilevel Option Pricing notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/MultilevelOptionPricing.ipynb)<br>[Stochastic Gradient Descent](../slides/05-selected-topics.html#stochastic-gradient-descent-section) |
 | 13 | Tue Nov 10 | | |
 | | Wed Nov 11 | **Project observer sign-up deadline** | [Choose two presentations to observe](project.qmd#presentation-scheduling-and-observations) |
 | | Thu Nov 12 | | |

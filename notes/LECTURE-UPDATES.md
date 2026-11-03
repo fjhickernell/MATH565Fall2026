@@ -9,9 +9,9 @@
   displayed lecture materials; distinguish substantive coverage from previews
   and deferred explanations.
 
-The schedule is reconciled through October 29. The August 18–September 17
+The schedule is reconciled through November 3. The August 18–September 17
 rows record the historical audit without retroactive calendar edits; the
-November 3 continuation note is saved and verified in Fantastical.
+November 5 continuation note is saved and verified locally in Fantastical.
 
 | Instructional meeting | Status | Panopto recording | Next instructional event annotated | Checked |
 |---|---|---|---|---|
@@ -34,6 +34,7 @@ November 3 continuation note is saved and verified in Fantastical.
 | October 20, 2026 | Reconciled: low discrepancy constructions; copula clarification; component-by-component construction; randomized sampling, RQMC variance, independent replications, and stopping-rule caveats | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=9fc4759d-09e7-447b-989c-b4e9011b62b2) | October 22, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Fred → Calendar occurrence only; Recap “RQMC error assessment by independent replications” and “A stopping criterion from replications,” then “Why a small pilot does not determine RQMC error” | October 20, 2026 |
 | October 22, 2026 | Reconciled: independent Metropolis sampler and self-normalized importance sampling review; IID/RQMC stopping, pilot limitations and fixed-design error assessment; notebook examples and deterministic/RQMC cost comparisons through the tighter-RMSE exercise | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=62e2ad09-589c-491c-8ad1-b4eb011512d0) | October 29, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Fred → Calendar occurrence only; resume Deck 04 at “Big Ideas (continued),” then “Choose the Method for the Task” and Deck 05; October 27 is Test 2 | October 22, 2026 |
 | October 29, 2026 | Reconciled: Improving Efficiency synthesis and stopping recap; parallel computing and CPU/GPU notebook; two-level random allocation and deterministic bounds through “What two levels accomplish”; Lagrange derivation and many levels deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b56ef351-70c1-44a4-a1c1-b4f20117f026) | November 3, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Fred → Calendar occurrence only; resume Selected Topics at “Deriving the two-level allocation,” then cost versus error, allocation exercise, and hierarchy | October 29, 2026 |
+| November 3, 2026 | Reconciled: two-level allocation and cost–error derivations; IID savings and covariance/cost comparison; brief multilevel telescoping/allocation/bias/cost overview; worked examples and notebook deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=0a596b6f-2284-4473-b1b4-b4f7012577c7) | November 5, 2026, 10:00–11:15 AM America/Chicago (CST), PH 109; Illinois Tech Fred → Calendar occurrence only; resume two-level examples and Multilevel Option Pricing, then Stochastic Gradient Descent | November 3, 2026 |
 
 Recording evidence: Deck 02 mixture/acceptance–rejection unit-cube review
 preceded Deck 03 (33:06). Unbiased discrepancy began at 37:06; RKHS and
@@ -242,3 +243,35 @@ saved executions, and the final runtime cell pass validation; the October 29
 measurements are preserved. Independent allocation checks and the staged
 assessment-confidentiality audit pass. The teaching Dashboard matches the
 November 3 continuation; its rollover date and unrelated entries are preserved.
+
+
+## November 3 recording evidence
+
+The Illinois Tech Fred readiness notice identifies the November 3, 10:00 AM
+lecture; Panopto duration is 1:15:47. The downloaded captions and transition
+index confirm the general-rate two-level allocation derivation (29:39),
+cost versus error (43:48), IID savings criterion (1:03:09), and covariance/
+cost-constant explanation (1:04:51). The board algebra for the optimized
+cost was eventually completed with student help; it was not left unresolved.
+The IID marginal slides were passed briefly rather than developed as a
+separate chain-rule lesson.
+
+At 1:10:21 the numerical example was left for students to inspect, and the
+notebook link was shown briefly at 1:10:30; neither a worked allocation
+exercise nor a notebook walkthrough is counted as completed. The closing
+minutes give a brief multilevel overview: coupled hierarchy (1:10:45), quoted
+allocation (1:11:30), telescoping and finite-grid bias (1:11:51), and IID
+cost-rate examples (1:13:30). The final visible slide, “Multilevel in
+practice” (1:14:27), does not establish that its detailed pilot/error-budget
+content was taught. Closing captions explicitly defer practical examples
+until next time; Stochastic Gradient Descent and Monte Carlo Tree Search
+were announced only.
+
+The November 5 single occurrence was saved with Only This Event and reopened
+in Fantastical to verify the original title, PH 109, November 5,
+10:00–11:15 AM, Illinois Tech Fred → Calendar, Central Time (GMT-6), and the
+persisted continuation note. Resume Selected Topics at “Single-level and
+two-level work versus error,” then the allocation exercise and Multilevel
+Option Pricing notebook; briefly recap the many-level/bias idea before
+Stochastic Gradient Descent. The broader teaching-cleanup issue remains open
+for Fred’s additional directions. No full-deck completion is inferred.
