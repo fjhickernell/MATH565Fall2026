@@ -815,10 +815,10 @@ This deck
 
 <p>Let <span class="math inline">\(\mathcal X\)</span> be the state space for <span class="math inline">\(X_0,X_1,\ldots\)</span></p>
 <p>The sequence is a <span class="alert">Markov chain</span> when, for every measurable <span class="math inline">\(A\subseteq\mathcal X\)</span>,</p>
-<p><span class="math display">\[\begin{equation*}
+<p><span class="math display">\[\begin{gather*}
 \Prob(X_{i+1}\in A\mid X_i=x_i,\ldots,X_0=x_0)\\
 =\Prob(X_{i+1}\in A\mid X_i=x_i)
-\end{equation*}\]</span></p>
+\end{gather*}\]</span></p>
 <p><span class="alert">Where the chain goes next depends only on where it is now</span>, not on how it arrived</p>
 <p>We are interested in the <span class="alert">asymptotic behavior of <span class="math inline">\(X_i\)</span></span></p>
 <ul>
@@ -876,7 +876,7 @@ X_0=X_1=0,
 <li>the target has an <span class="alert">unnormalized</span> density <span class="math inline">\(\widetilde\varrho_{\mathrm{tar}}\)</span> with <span class="math inline">\(\widetilde\varrho_{\mathrm{tar}}\propto\varrho_{\mathrm{tar}}\)</span></li>
 <li>conditional density <span class="math inline">\(\varrho_{\mathrm{prop}}(\vz\mid \vx)\)</span> proposes a new state <span class="math inline">\(\vz\)</span> from the current state <span class="math inline">\(\vx\)</span></li>
 </ul>
-<p>Given <span class="math inline">\(\vX_0\)</span>, repeat for <span class="math inline">\(i=0,\ldots,n-2\)</span>:</p>
+<p>Start with <span class="math inline">\(\widetilde\varrho_{\mathrm{tar}}(\vX_0)&gt;0\)</span>; repeat for <span class="math inline">\(i=0,\ldots,n-2\)</span>:</p>
 <ol type="1">
 <li><p>Generate <span class="math inline">\(\vZ_i\mid\vX_i\sim\varrho_{\mathrm{prop}}(\cdot\mid \vX_i)\)</span> and <span class="math inline">\(V_i\sim\Unif[0,1]\)</span>, independently of the proposal</p></li>
 <li><p>Compute</p>
@@ -911,6 +911,20 @@ X_0=X_1=0,
 <div class="key-point">
 <p>Detailed balance preserves the target; convergence from the starting state requires suitable conditions</p>
 </div>
+<aside class="notes">
+<p>Assume the target has a finite positive normalizing integral and initialize where its density is positive. A generated proposal has positive forward proposal density almost surely; a zero target or reverse-proposal density then gives acceptance probability zero. This avoids undefined zero-over-zero ratios. For all pairs with positive weights, both directional accepted flows equal min{pi(x) q(z|x), pi(z) q(x|z)}; rejected mass stays on the diagonal. Thus detailed balance implies invariance.</p>
+<p>Invariance alone does not guarantee convergence from an arbitrary start. A standard general-state-space sufficient setting is positive Harris recurrence with invariant target and aperiodicity. The proposal must allow exploration of the target support; a chain confined to one component can preserve a target without converging to it from every start. Under the ergodic law of large numbers, averages of integrable outputs converge to their target expectation. A central limit theorem and reliable standard errors require additional conditions. Burn-in and finite-run diagnostics do not prove these properties or make retained states independent.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="the-independence-sampler" class="slide level2 tree-marker-slide" data-tree-marker="mcmc">
 <h2>The independence sampler</h2>
@@ -983,7 +997,7 @@ X_0=X_1=0,
 <section class="slide level2">
 
 <h3 id="metropolis-practice">Metropolis practice</h3>
-<p>Use the uniform numbers in order and choose a random order of the candidate <span class="math inline">\(z\)</span> values</p>
+<p>Use the decision uniforms in order; independently pick each proposal uniformly from the candidate <span class="math inline">\(z\)</span> values, <span class="alert">with replacement</span></p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -1054,6 +1068,20 @@ X_0=X_1=0,
 <div class="exitem">
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Starting at <span class="math inline">\(x=-1.2\)</span>, follow several Metropolis steps and record each accepted or repeated state</span></p>
 </div>
+<aside class="notes">
+<p>This is a finite-state exercise with target probabilities proportional to the eight listed positive weights. The independent uniform proposal assigns 1/8 to every candidate from every current state, so it is symmetric and the Metropolis target-weight ratio applies. Randomly permuting the candidates without replacement would not define this proposal law.</p>
+<p>For example, proposal values -0.8, -0.5, 0.6, 1.1, 1.4, 2.0, 2.2, -1.2 with the displayed uniforms produce states -1.2, -0.8, -0.5, 0.6, 0.6, 1.4, 2.0, 2.2, 2.2. The alpha values are 1, 1, 0.8, 0.3125, 1, 12/13, 5/12, 0.1. A different random proposal sequence gives a different valid answer.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
@@ -1062,7 +1090,7 @@ X_0=X_1=0,
 <p><span class="math display">\[
 Z\mid X_i=x\sim\Norm(x,1.4^2)
 \]</span></p>
-<div id="647d146b" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
+<div id="a926de6c" class="cell" data-fig-height="5.6" data-fig-width="11.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1076,7 +1104,7 @@ Z\mid X_i=x\sim\Norm(x,1.4^2)
 
 <h3 id="separated-modes-can-trap-a-chain">Separated modes can trap a chain</h3>
 <p>Same mixture weights and widths; move the means to <span class="math inline">\(-5\)</span> and <span class="math inline">\(5\)</span><br> Keep <span class="math inline">\(Z\mid X_i=x\sim\Norm(x,1.4^2)\)</span>; start one chain in each mode</p>
-<div id="a4b66b81" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
+<div id="ca689c55" class="cell" data-fig-height="4.4" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1274,7 +1302,7 @@ R_{\mathrm{swap}}
 <p><span class="math display">\[
 \mK=(K(\vx_i,\vx_j))_{i,j=0}^{n-1}
 \]</span></p>
-<p>is symmetric positive definite for distinct <span class="math inline">\(\vx_0,\ldots,\vx_{n-1}\)</span></p>
+<p>is symmetric positive semidefinite: <span class="math inline">\(\vc^{\mathsf T}\mK\vc\ge0\)</span> for every <span class="math inline">\(\vc\in\reals^n\)</span></p>
 <p>Examples include</p>
 <p><span class="math display">\[\begin{align*}
 K(\vt,\vx)&amp;=\exp\!\left(-\norm{\vt-\vx}^2/h^2\right),
@@ -1284,9 +1312,22 @@ K(\vt,\vx)&amp;=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 &amp;&amp;\mathcal X=[0,1]^d
 \end{align*}\]</span></p>
 <ul>
-<li><p>First is a squared exponential kernel; second yields centered discrepancy</p></li>
+<li><p>First is a squared exponential kernel (<span class="math inline">\(h&gt;0\)</span>); second yields centered discrepancy (<span class="math inline">\(\gamma_\ell&gt;0\)</span>)</p></li>
 <li><p>Kernels usually have <span class="alert">parameters</span> to be chosen or estimated</p></li>
 </ul>
+<aside class="notes">
+<p>Positive definite kernel uses the usual nonnegative quadratic-form convention; its Gram matrices may be singular, including when sample points repeat. Strictly positive definite means positive quadratic forms for nonzero coefficient columns at distinct points. Strictness is not required for the RKHS construction or nonnegativity of squared discrepancy. It also differs from the characteristic-kernel property needed for zero discrepancy to identify equal probability distributions.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="discrepancy-between-distributions" class="slide level2 tree-marker-slide" data-tree-marker="discrepancy">
 <h2>Discrepancy between distributions</h2>
@@ -1295,7 +1336,7 @@ K(\vt,\vx)&amp;=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
   <div class="tree-component__label" data-label-id="discrepancy" style="--tree-left: 73%; --tree-top: 60%; --tree-align: center;">Discrepancy<br>Measures</div>
 </div>
 
-<p>Compare any two distributions <span class="math inline">\(F,G\)</span> on <span class="math inline">\(\mathcal X\)</span><br> Let <span class="math inline">\(\vR,\vR'\sim F\)</span> and <span class="math inline">\(\vH,\vH'\sim G\)</span> be mutually independent</p>
+<p>Compare distributions <span class="math inline">\(F,G\)</span> on <span class="math inline">\(\mathcal X\)</span> with finite kernel moments<br> Let <span class="math inline">\(\vR,\vR'\sim F\)</span> and <span class="math inline">\(\vH,\vH'\sim G\)</span> be mutually independent</p>
 <p><span class="math display">\[\begin{align*}
 D^2(F,G;K)
 &amp;=\Ex[K(\vR,\vR')]-2\Ex[K(\vR,\vH)]+\Ex[K(\vH,\vH')]\\
@@ -1308,6 +1349,19 @@ D^2(F,G;K)=\int_{\mathcal X^2}K(\vx,\vx')
 \{\varrho_F(\vx')-\varrho_G(\vx')\}\,\dif\vx\,\dif\vx'
 \]</span></p>
 <p>For sample assessment, compare the <span class="alert">target</span> <span class="math inline">\(F_{\mathrm{tar}}\)</span> with an empirical distribution</p>
+<aside class="notes">
+<p>A sufficient moment condition is integrability of sqrt(K(x,x)) under both F and G. The kernel Cauchy–Schwarz inequality then makes every displayed pair expectation absolutely finite, and the difference of their kernel mean embeddings has squared RKHS norm equal to this formula. Both displayed example kernels are bounded on their stated domains, so the condition holds for probability distributions there.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
@@ -1394,7 +1448,7 @@ D^2\!\left(\{\vx_i^{(F)}\}_{i=0}^{m-1},\{\vx_j^{(G)}\}_{j=0}^{n-1};K\right)
 <section class="slide level2">
 
 <h3 id="unbiased-estimates-of-squared-discrepancy">Unbiased estimates of squared discrepancy</h3>
-<p>For two independent IID samples, estimate <span class="math inline">\(D^2(F,G;K)\)</span></p>
+<p>For two independent IID samples with <span class="math inline">\(m,n\ge2\)</span>, estimate <span class="math inline">\(D^2(F,G;K)\)</span></p>
 <p>Replace within-sample sums by <span class="alert">off-diagonal averages</span>:</p>
 <p><span class="math display">\[\begin{align*}
 D_{\mathrm{unb}}^2\!\left(\{\vx_i^{(F)}\}_{i=0}^{m-1},\{\vx_j^{(G)}\}_{j=0}^{n-1};K\right)
@@ -1411,6 +1465,19 @@ D_{\mathrm{unb}}^2\!\left(\{\vx_i^{(F)}\}_{i=0}^{m-1},\{\vx_j^{(G)}\}_{j=0}^{n-1
 <div class="exitem roman">
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span> Let <span class="math inline">\(\{\vR_i\}_{i=0}^{m-1}\)</span> and <span class="math inline">\(\{\vH_j\}_{j=0}^{n-1}\)</span> be independent IID samples from <span class="math inline">\(F\)</span> and <span class="math inline">\(G\)</span> <span class="exsub">Take expectations term by term to show <span class="math inline">\(\Ex[D_{\mathrm{unb}}^2]=D^2(F,G;K)\)</span></span> <span class="exsub">What is the expectation when <span class="math inline">\(F=G\)</span>?</span> <span class="exsub">Why may a realization be negative, and does more negative mean a better match?</span> <span class="exsub">Which step fails when the <span class="math inline">\(\vR_i\)</span> are successive Metropolis states?</span> </span></p>
 </div>
+<aside class="notes">
+<p>Each off-diagonal F pair has expectation E[K(R,R’)] for independent R,R’~F; each G pair similarly has expectation E[K(H,H’)]. Each cross pair has expectation E[K(R,H)] by independence of the samples. The denominators count exactly those ordered pairs, giving the population squared discrepancy. If F=G, the two positive terms and twice the cross term cancel to zero. The estimator need not be nonnegative, so a zero-mean estimator can fluctuate below zero. With the Gaussian kernel exp(-(x-y)^2), m=n=2 and both observed samples equal {-1,1}, its value is exp(-4)-1&lt;0 despite identical empirical measures. Such a realization has positive probability for independent samples from the uniform law on {-1,1}. Its negative sign reflects sampling noise, not a negative squared norm. Successive Metropolis states are dependent; their off-diagonal pair expectations generally depend on the lag and do not equal the independent-pair expectation used in the proof.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
@@ -1707,7 +1774,7 @@ f&amp;\longmapsto\int_{\mathcal X}f(\vx)\,\dif F_{\mathrm{tar}}(\vx)-\frac1n\sum
 K(\vt,\vu)=\prod_{\ell=1}^d\left[1+\frac{\gamma_\ell^2}{2}
 \left(\abs{t_\ell-\tfrac12}+\abs{u_\ell-\tfrac12}-\abs{t_\ell-u_\ell}\right)\right]
 \]</span></p>
-<p>Its norm combines the function value at the center with weighted square-integrals of mixed derivatives:</p>
+<p>Its norm includes the function value at the center and derivatives over <span class="alert">every coordinate subset</span>; representative terms are:</p>
 <p><span class="math display">\[\begin{align*}
 \norm{h}_{\mathcal H_K}^2
 &amp;=\abs{h(1/2,\ldots,1/2)}^2
@@ -2146,7 +2213,7 @@ L(m,\sigma^2;\vy_{\mathrm{obs}})
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
-<p>First distinguish <span class="alert">full input durations</span> from <span class="alert">event-state clocks</span></p>
+<p>Use a single-server queue, <span class="alert">first come, first served</span> (FCFS)</p>
 <p>Full durations are quantile transforms of uniform inputs; assume they are mutually independent:</p>
 <p><span class="math display">\[
 D_{k}^{\mathrm{arr}}\sim F_A \quad\text{($k$th interarrival duration)},

@@ -2069,6 +2069,19 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 \vtheta_{k+1}=\vtheta_k-\eta_k\nabla\operatorname{loss}_{I_k}(\vtheta_k)
 \]</span></p>
 <p>Mini-batches average component gradients; learning rates can decay</p>
+<aside class="notes">
+<p>At a fixed theta, averaging the N component gradients gives the displayed expectation exactly. At iteration k, condition on the previous sampled indices and hence on theta_k. A fresh uniform I_k is independent of that history, so its conditional expected gradient is the full gradient at theta_k. This is conditional unbiasedness of the gradient, not unbiasedness of theta_k as an estimator of a minimizer or a claim that each noisy step lowers the loss. Convergence requires additional assumptions on the loss, noise, and step sizes.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <div class="key-point">
 <p>The stochastic gradient is an <span class="alert">unbiased Monte Carlo estimate</span> of the full gradient</p>
 </div>
@@ -2081,9 +2094,9 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 \operatorname{loss}_i(\vtheta)
 =\tfrac12(\vtheta-\va_i)^\top\mA(\vtheta-\va_i)
 \qquad
-\mA=\begin{pmatrix}3&amp;0.9\\0.9&amp;1.2\end{pmatrix}\\
+\mA=\begin{bmatrix}3&amp;0.9\\0.9&amp;1.2\end{bmatrix}\\
 \{\va_0,\ldots,\va_3\}
-=\{(\pm\tfrac14,\pm\tfrac14)^\top\}
+=\{[\pm1/4,\pm1/4]^\top\}
 \quad\text{all four sign choices}
 \end{gather*}\]</span></p>
 <p>The centers average to <span class="math inline">\(\vzero\)</span>, so</p>
@@ -2102,7 +2115,7 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 
 <h3 id="gradient-and-stochastic-gradient-paths">Gradient and stochastic-gradient paths</h3>
 <p>Contours show excess average loss above its minimum<br> SGD samples one of the four component gradients at each step</p>
-<div id="6067af89" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
+<div id="63795a91" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2302,7 +2315,7 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 <ul>
 <li><a href="01-introduction.html#sampling">Model</a> — express a question as an expectation and generate suitable samples</li>
 <li><a href="03-markov-chain-monte-carlo.html#interpreting-sample-discrepancy">Check</a> — quantify uncertainty and compare sample distributions</li>
-<li><a href="04-improving-efficiency.html#variance-reduction">Improve</a> — reduce variation with conditioning, weights, or structured points</li>
+<li><a href="04-improving-efficiency.html#variance-reduction">Improve</a> — reduce variance with conditioning or weights; use structured points for suitable integrands</li>
 <li><a href="#/monte-carlo-tree-search">Search</a> — use simulated returns to focus on promising decisions</li>
 <li><a href="05-selected-topics.html#optimal-multilevel-allocation">Allocate</a> — distribute work across processors and approximation levels</li>
 </ul>

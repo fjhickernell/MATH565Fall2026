@@ -1253,7 +1253,7 @@ Y_T&amp;=f(\sqrt Z),&amp;Y_{\mathrm{IS}}&amp;=2Zf(Z)
 <section class="slide level2">
 
 <h3 id="brownian-motion-with-drift">Brownian motion with drift</h3>
-<p>Let <span class="math inline">\(\vX\sim\Norm(\vzero,\mSigma)\)</span> be the target Brownian path, with <span class="math inline">\(\Sigma_{jk}=\min(t_j,t_k)\)</span> and discounted payoff <span class="math inline">\(Y=f(\vX)\)</span></p>
+<p>Let <span class="math inline">\(\vX\sim\Norm(\vzero,\mSigma)\)</span> be the target Brownian path at <span class="math inline">\(0&lt;t_1&lt;\cdots&lt;t_d\)</span>, with <span class="math inline">\(\Sigma_{jk}=\min(t_j,t_k)\)</span> and discounted payoff <span class="math inline">\(Y=f(\vX)\)</span></p>
 <p>Choose <span class="math inline">\(\vZ\sim\Norm(\va,\mSigma)\)</span>, where <span class="math inline">\(\va=\theta(t_1,\ldots,t_d)^\mathsf T\)</span></p>
 <p><span class="math display">\[\begin{align*}
 w(\vz)&amp;=\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{prop}}(\vz)}
@@ -1261,7 +1261,7 @@ w(\vz)&amp;=\frac{\varrho_{\mathrm{tar}}(\vz)}{\varrho_{\mathrm{prop}}(\vz)}
 Y_{\mathrm{IS}}&amp;=g_{\mathrm{IS}}(\vZ)=f(\vZ)w(\vZ),\qquad \Ex_{\mathrm{prop}}[Y_{\mathrm{IS}}]=\mu
 \end{align*}\]</span></p>
 <ul>
-<li>Drift makes positive payoffs <span class="alert">more common</span></li>
+<li>A suitable drift can make positive payoffs <span class="alert">more common</span></li>
 <li>Weights <span class="alert">preserve</span> the target expectation; a good drift can reduce variance</li>
 </ul>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/AsianOptionVarianceReduction.ipynb">Asian option variance-reduction notebook</a></p>
@@ -1898,7 +1898,7 @@ Y_{\mathrm{CMC}}=g_{\mathrm{CMC}}(\vX_{2:d})=\Ex(Y\mid \vX_{2:d})
 
 <h3 id="conditional-density-estimation">Conditional density estimation</h3>
 <p>Write the simulator on uniform inputs as <span class="math inline">\(Y=h(\vU)\)</span> with <span class="math inline">\(\vU\sim\Unif[0,1]^d\)</span></p>
-<p>Suppose <span class="math inline">\(h\)</span> is <span class="alert">increasing</span> in <span class="math inline">\(u_1\)</span> and</p>
+<p>Suppose <span class="math inline">\(h\)</span> is <span class="alert">strictly increasing</span> in <span class="math inline">\(u_1\)</span> and</p>
 <p><span class="math display">\[
 y=h(u_1,\vu_{2:d})\iff u_1=g(y;\vu_{2:d})
 \]</span></p>
@@ -1911,6 +1911,19 @@ F_{Y\mid \vU_{2:d}}(y\mid \vu_{2:d})
 &amp;=\int_{[0,1]^{d-1}}\frac{\partial g}{\partial y}(y;\vu_{2:d})\,\dif\vu_{2:d}
 \end{align*}\]</span></p>
 <p>Thus a density value becomes an <span class="alert">expectation</span> of a conditional density</p>
+<aside class="notes">
+<p>Assume the clipped conditional inverse is absolutely continuous in y for almost every conditioning input. Its derivative is a conditional-density version, and averaging these nonnegative densities gives a marginal-density version by Tonelli. The identity holds almost everywhere in y; pointwise claims require a consistently chosen version and any additional regularity. Strict monotonicity alone does not guarantee absolute continuity of the inverse. A continuously differentiable h with strictly positive derivative in u_1 is a useful sufficient condition on the interior of the conditional support. An output with a conditional atom needs a separate mass term, as in the later Asian-call payoff example.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
@@ -2014,7 +2027,7 @@ F_{A\mid C}(a\mid C)&amp;=\Phi\!\left(\frac{\log(a/C)}s\right)\\
 <section class="slide level2">
 
 <h3 id="asian-call-payoff-distribution">Asian-call payoff distribution</h3>
-<p>Discounted call payoff <span class="math inline">\(P=e^{-rT}(A-K)_+\)</span></p>
+<p>Discounted call payoff <span class="math inline">\(P=e^{-rT}(A-K)_+\)</span> with <span class="math inline">\(K&gt;0\)</span></p>
 <p><span class="math display">\[\begin{align*}
 \Prob(P=0)&amp;=F_A(K)
 =\Ex\!\left[\Phi\!\left(\frac{\log(K/C)}s\right)\right]\\
@@ -2307,6 +2320,19 @@ A(X)=F^{-1}\bigl(1-F(X)\bigr)\sim F
 <div class="exitem">
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>For which monotone functions <span class="math inline">\(f\)</span> does <span class="math inline">\(f(X)\)</span> become negatively correlated with <span class="math inline">\(f\bigl(A(X)\bigr)\)</span>?</span></p>
 </div>
+<aside class="notes">
+<p>For either nondecreasing or nonincreasing f with finite second moment, the covariance is nonpositive. Write X=F^{-1}(U): f(F^{-1}(U)) and f(F^{-1}(1-U)) are oppositely monotone functions of the same uniform U. If U’ is an independent copy, twice their covariance is the expectation of the product of their respective differences at U and U’. Every such product is nonpositive. If f(X) is nondegenerate, both tails have positive probability and some products are strictly negative, giving negative correlation. If f(X) is constant, the covariance and variance are zero and correlation is undefined. Use the generalized inverse; a continuous CDF need not be strictly increasing everywhere.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="iid-variance-comparison" class="slide level2">
 <h2>IID variance comparison</h2>
@@ -2471,7 +2497,7 @@ U_{i\ell}=\frac{\pi_\ell(i)+V_{i\ell}}n,
 
 <h3 id="comparing-random-designs">Comparing random designs</h3>
 <p>Each design has <span class="math inline">\(n=64\)</span> points in <span class="math inline">\([0,1]^2\)</span></p>
-<div id="49db2b8f" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
+<div id="f0bcdfc5" class="cell" data-fig-height="4.2" data-fig-width="11.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2613,6 +2639,7 @@ i=(\cdots i_2i_1i_0)_b
 </tbody>
 </table>
 <p>Here <span class="math inline">\(\oplus\)</span> denotes digitwise addition modulo <span class="math inline">\(b\)</span></p>
+<p>Suitable generators are essential; arbitrary choices need <span class="alert">not</span> give low discrepancy</p>
 <p>For basic Halton, choosing the coordinate bases fixes the sequence</p>
 <p>Different families balance <span class="alert">extensibility</span>, projection <span class="alert">quality</span>, and <span class="alert">fast</span> construction</p>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/LowDiscrepancyConstructions.ipynb">Low Discrepancy Constructions notebook</a>: recover generators from the first points</p>
@@ -2743,6 +2770,19 @@ i=(\cdots i_2i_1i_0)_b
 </tbody>
 </table>
 <p>The decimal generator keeps this finite example easy to calculate by hand</p>
+<aside class="notes">
+<p>These rational generators illustrate only finite hand calculations. They eventually repeat and do not define a uniformly distributed infinite Kronecker sequence. For uniform distribution, 1 and the generator coordinates must be linearly independent over the rationals; stronger number-theoretic conditions control discrepancy rates. Likewise, the fixed integer lattice vectors in the small examples illustrate rank-one point sets at the displayed sizes, not an assertion of good asymptotic discrepancy for every extension. Practical extensible lattice constructions choose compatible generators for the admissible sizes.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
@@ -3322,6 +3362,13 @@ i=(\cdots i_2i_1i_0)_b
 <h3 id="read-a-stopping-decision">Read a stopping decision</h3>
 <p>Six-dimensional results from the <a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/KeisterExample.ipynb#Practical-stopping-criteria">Keister stopping comparison</a></p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Rule</th>
@@ -3334,24 +3381,31 @@ i=(\cdots i_2i_1i_0)_b
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">IID CLT</td>
-<td style="text-align: right;"><span class="math inline">\(0.05\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(0.049\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(0.0121\)</span></td>
-<td style="text-align: right;">0.0882</td>
+<td style="text-align: right;"><span class="math inline">\(0.0005\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.0405\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.0118\)</span></td>
+<td style="text-align: right;">0.1266</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Walsh bound</td>
-<td style="text-align: right;"><span class="math inline">\(0.05\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(0.0258\)</span></td>
-<td style="text-align: right;"><span class="math inline">\(0.00125\)</span></td>
-<td style="text-align: right;">0.0018</td>
+<td style="text-align: left;">Replicated Sobol’</td>
+<td style="text-align: right;"><span class="math inline">\(0.0005\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.000392\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(4.81\times10^{-5}\)</span></td>
+<td style="text-align: right;">0.1288</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">Walsh bound</td>
+<td style="text-align: right;"><span class="math inline">\(0.0005\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.000423\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(3.39\times10^{-5}\)</span></td>
+<td style="text-align: right;">0.1275</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">Sobol’, tight budget</td>
 <td style="text-align: right;"><span class="math inline">\(10^{-7}\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(0.054\)</span></td>
 <td style="text-align: right;"><span class="math inline">\(0.00131\)</span></td>
-<td style="text-align: right;">0.0009</td>
+<td style="text-align: right;">0.0011</td>
 </tr>
 </tbody>
 </table>
@@ -3359,7 +3413,7 @@ i=(\cdots i_2i_1i_0)_b
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Interpret the reported uncertainty <span class="exsub">Which runs meet the reported tolerance?</span> <span class="exsub">Why must the reference stay out of the stopping decision?</span> <span class="exsub">What assumptions qualify the IID interval and Walsh bound?</span> </span></p>
 </div>
 <aside class="notes">
-<p>The first two reported radii meet their requested tolerances; the tight-budget run does not. Reaching the budget is not success. The reference is an independent diagnostic available for this benchmark, not information normally available to choose the sample count for an unknown integral. One observed actual error also cannot establish coverage or a general guarantee. The IID interval is approximate, based on a CLT, estimated variance, and the independent-pilot design. The Walsh bound assumes membership in its specified function cone; passing necessary-condition checks does not prove membership. Adaptive replication intervals need the additional coverage qualification already stated in the notebook. Numbers are rounded from the saved run; random seeds, tolerances, or code changes can produce different results. Times are elapsed seconds for integration and adaptive error assessment from that same saved notebook run; they exclude the independent reference and plot, and vary by machine and timing conditions. The saved stopping settings are d=6, tolerance=0.05, replications=32, and alpha=0.01; all are editable parameters in the notebook.</p>
+<p>The replicated Sobol’ and Walsh-bound radii meet their requested tolerances. The IID CLT and tight-budget Sobol’ runs do not. Reaching the budget is not success. The reference is an independent diagnostic available for this benchmark, not information normally available to choose the sample count for an unknown integral. One observed actual error also cannot establish coverage or a general guarantee. The IID interval is approximate, based on a CLT, estimated variance, and the independent-pilot design. The Walsh bound assumes membership in its specified function cone; passing necessary-condition checks does not prove membership. Adaptive replication intervals need the additional coverage qualification already stated in the notebook. Numbers are rounded from the saved run; random seeds, tolerances, or code changes can produce different results. Times are elapsed seconds for integration and adaptive error assessment from that same saved notebook run; they exclude the independent reference and plot, and vary by machine and timing conditions. The saved stopping settings are d=6, tolerance=0.0005, replications=32, and alpha=0.01; all are editable parameters in the notebook.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3710,7 +3764,7 @@ i=(\cdots i_2i_1i_0)_b
 <p>Additional machinery must <span class="alert">earn its cost</span><br> Choose the complete method by <span class="alert">accuracy per unit of work</span>, for the intended output</p>
 </div>
 <aside class="notes">
-<p>The gamma convention here is shape k and rate lambda; the sum-of-exponentials construction requires a positive integer shape. The quantile construction uses one uniform input and a generally numerical inverse CDF, whereas the sum uses k independent uniforms and k logarithms. Benchmark the actual implementations rather than assuming either is faster. For IID draws the two constructions produce the same target law and hence the same distribution of f(X), assuming exact transforms; their costs differ. With low discrepancy inputs, dimension and smoothness also affect integration error.</p>
+<p>For a gamma sampling-cost example, use shape k and rate lambda; the sum-of-exponentials construction requires a positive integer shape. The quantile construction uses one uniform input and a generally numerical inverse CDF, whereas the sum uses k independent uniforms and k logarithms. Benchmark the actual implementations rather than assuming either is faster. For IID draws the two constructions produce the same target law and hence the same distribution of f(X), assuming exact transforms; their costs differ. With low discrepancy inputs, dimension and smoothness also affect integration error.</p>
 <p>Define the desired output before choosing a method. For an unbiased IID mean estimator with finite variance and per-contribution cost c, ignoring setup, work to reach RMSE epsilon is approximately c var(Y)/epsilon^2. Include setup, pilot fitting, sampling, transformations, and evaluation in the actual budget. A variance reduction alone does not establish an overall efficiency gain; compare complete estimators at the required accuracy. Dependent designs, adaptive stopping, density estimation, and quantiles require their appropriate error assessment, not an automatic substitution into this IID formula.</p>
 <p>Probability is itself an expectation of an indicator, so one does not always need unweighted target draws to estimate it. Importance weights can estimate probabilities and CDFs; an appropriately normalized weighted empirical CDF can be inverted for quantiles. Conditional methods can estimate probabilities and densities directly, as the Asian example shows. These methods need valid weights or conditional formulas for the requested distributional quantity. A control-adjusted or weighted scalar contribution with the correct mean does not generally have the original output distribution; do not use its raw histogram or quantiles as those of the original output. If reusable unweighted target samples are required, choose a method that actually produces them.</p>
 <style type="text/css">

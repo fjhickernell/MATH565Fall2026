@@ -813,14 +813,14 @@ This deck
   <div class="tree-component__label" data-label-id="random-generation" style="--tree-left: 3%; --tree-top: 57%; --tree-align: center;">(Quasi-)Random<br>Number Generation</div>
 </div>
 
-<p>A sampling design supplies</p>
+<p>For a random design with individually uniform inputs:</p>
 <p><span class="math display">\[
 U_i\sim\Unif[0,1],\qquad i=0,1,\ldots
 \]</span></p>
-<p>The design may be IID, Latin hypercube, low discrepancy, or something else</p>
+<p>For example: IID, randomized Latin hypercube, or randomized low discrepancy</p>
 <p>For a <span class="alert">target</span> cumulative distribution function <span class="math inline">\(F\)</span>, define</p>
 <p><span class="math display">\[
-Q(u):=\inf\{x\in\reals:F(x)\ge u\}
+Q(u):=\inf\{x\in\reals:F(x)\ge u\},\qquad 0&lt;u&lt;1
 \]</span></p>
 <p>Then <span class="math inline">\(Q(u)\le x \iff u\le F(x)\)</span></p>
 <p>&nbsp;</p>
@@ -830,7 +830,8 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 =\Prob\{U\le F(x)\}=F(x)
 \]</span></p>
 <p>Thus each <span class="math inline">\(X_i:=Q(U_i)\)</span> has the <span class="alert">target</span> CDF <span class="math inline">\(F\)</span></p>
-<p><span class="alert">IID inputs yield IID targets <br>Other designs (Latin hypercube, low discrepancy, …) retain their dependence structure</span></p>
+<p><span class="alert">IID</span> inputs yield IID targets; other designs need not give independent targets</p>
+<p>Fixed low discrepancy nodes use the same transform for <span class="alert">quadrature</span>; a fixed node has no target marginal law</p>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/sampling/GeneratingSamples.ipynb">Try the quantile-transform examples in the companion <code>GeneratingSamples</code> notebook</a></p>
 </section>
 <section class="slide level2">
@@ -898,10 +899,23 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 <div class="exitem">
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>If <span class="math inline">\(u=0.70\)</span>, what value does the inverse transform produce? What about <span class="math inline">\(u=0.90\)</span>?</span></p>
 </div>
+<aside class="notes">
+<p>Q(0.70)=2 and Q(0.90)=3, using the cumulative probabilities in the table.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
-<div id="40e9e5f6" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="49d65298" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -918,7 +932,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\}
 <h4 id="cdf">CDF</h4>
 <div class="columns">
 <div class="column" style="width:47%;">
-<p>Let <span class="math inline">\(X\)</span> be nonnegative with</p>
+<p>For <span class="math inline">\(0\le p_0&lt;1\)</span> and <span class="math inline">\(\lambda&gt;0\)</span>, let <span class="math inline">\(X\)</span> be nonnegative with</p>
 <ul>
 <li>Probability <span class="math inline">\(p_0\)</span> of being zero and</li>
 <li>Otherwise an exponential distribution with rate (mean<span class="math inline">\({}^{-1}\)</span>) <span class="math inline">\(\lambda\)</span></li>
@@ -941,7 +955,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="98f69918" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="13bea948" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -973,7 +987,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="c853647a" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="982875a4" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -983,6 +997,19 @@ Q(u)=
 </div>
 </div>
 </div></div>
+<aside class="notes">
+<p>For 0&lt;u&lt;=p_0, Q(u)=0 and F(Q(u))=p_0; the inequality is strict for 0&lt;u&lt;p_0 and equality holds at u=p_0. For p_0&lt;u&lt;1, substituting the logarithmic formula gives F(Q(u))=u. With p_0=0, equality holds throughout 0&lt;u&lt;1.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
@@ -993,6 +1020,19 @@ Q(u)=
 <div class="key-point">
 <p>The generalized inverse handles <span class="alert">atoms and continuous pieces</span> with one definition</p>
 </div>
+<aside class="notes">
+<p>T(u)=0 for 1-p_0&lt;=u&lt;1 and T(u)=-log(u/(1-p_0))/lambda for 0&lt;u&lt;1-p_0. Since 1-U is uniform, T(U) has the same target law as Q(U). Computing log(u) avoids forming 1-u when u is very small, although both transforms require appropriate handling of endpoints in finite-precision generators. It is nonincreasing rather than a quantile function.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="gaussian-mixture-random-numbers" class="slide level2 tree-marker-slide" data-tree-marker="random-generation">
 <h2>Gaussian mixture random numbers</h2>
@@ -1004,7 +1044,7 @@ Q(u)=
 <p>Let the one-dimensional <span class="alert">target</span> be a <span class="alert">Gaussian mixture</span>:</p>
 <p><span class="math display">\[
 X\sim p\Norm(\mu_1,\sigma_1^2)+(1-p)\Norm(\mu_2,\sigma_2^2),
-\qquad 0&lt;p&lt;1
+\qquad 0&lt;p&lt;1,\quad \sigma_1,\sigma_2&gt;0
 \]</span></p>
 <p>Writing <span class="math inline">\(\phi\)</span> and <span class="math inline">\(\Phi\)</span> for the standard normal PDF and CDF,</p>
 <p><span class="math display">\[\begin{align*}
@@ -1057,7 +1097,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="62c6a262" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="8af49654" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1067,6 +1107,19 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div>
 </div>
 </div></div>
+<aside class="notes">
+<p>U_2=0.70&gt;0.3 selects component 2. Thus X=1+Phi^{-1}(0.25), approximately 0.32551025.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
 <section id="random-vectors-and-stochastic-processes" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="random-generation">
@@ -1164,7 +1217,7 @@ a_{11}=\sqrt3,
 <section class="slide level2">
 
 <h3 id="general-2times2-covariance">General <span class="math inline">\(2\times2\)</span> covariance</h3>
-<p>For</p>
+<p>For <span class="math inline">\(\sigma_1,\sigma_2&gt;0\)</span> and <span class="math inline">\(|\rho|\le1\)</span>:</p>
 <p><span class="math display">\[
 \mSigma=
 \begin{pmatrix}
@@ -1322,7 +1375,7 @@ X_1&amp;=-\log\bigl(1-\Phi(W_1)\bigr),
 
 <h3 id="the-same-copula-different-marginal-scales">The same copula, different marginal scales</h3>
 <p>Both colors start from the <span class="alert">same independent normal draws</span></p>
-<div id="0f64a465" class="cell" data-fig-height="4.1" data-fig-width="12" data-execution_count="5">
+<div id="d5e65ff1" class="cell" data-fig-height="4.1" data-fig-width="12" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1396,7 +1449,7 @@ G\sim\GP(m,K)
 </div>
 
 <h3 id="definition">Definition</h3>
-<p>Brownian motion <span class="math inline">\(B\)</span> is the Gaussian process with</p>
+<p>Brownian motion <span class="math inline">\(B\)</span> is the continuous-path version of the Gaussian process with</p>
 <p><span class="math display">\[
 m(t)=0,
 \qquad
@@ -1472,9 +1525,22 @@ S(t)=S_0\exp\!\left[
 \]</span></p>
 <p>Then <span class="math inline">\(S(t)&gt;0\)</span> and its multiplicative increments are lognormal</p>
 <div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Using <span class="math inline">\(B(t)\sim\Norm(0,t)\)</span> and the normal moment-generating function, show that <span class="math inline">\(\Ex[S(t)]=S_0\me^{\gamma t}\)</span>.<br>Hence determine <span class="math inline">\(\gamma\)</span> so that <span class="math inline">\(\Ex[S(t)]=S_0\me^{rt}\)</span>.</span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Using <span class="math inline">\(B(t)\sim\Norm(0,t)\)</span> and the normal moment-generating function, show that <span class="math inline">\(\Ex[S(t)]=S_0\me^{\gamma t}\)</span>.<br>Hence determine <span class="math inline">\(\gamma\)</span> so that <span class="math inline">\(\Ex[S(t)]=S_0\me^{rt}\)</span></span></p>
 </div>
 <p>The correction <span class="alert"><span class="math inline">\(-\sigma^2/2\)</span></span> makes <span class="math inline">\(\gamma\)</span> the mean growth rate<br>The median growth rate is <span class="math inline">\(\gamma-\sigma^2/2\)</span></p>
+<aside class="notes">
+<p>E[exp(sigma B(t))]=exp(sigma^2 t/2), so the correction cancels in the expectation and E[S(t)]=S_0 exp(gamma t). Set gamma=r for the stated risk-neutral mean growth.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
@@ -1487,9 +1553,22 @@ m(t)=S_0\me^{(\gamma-\sigma^2/2)t},
 <div class="exitem">
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>The normal density weights the shocks <span class="math inline">\(b\)</span> and <span class="math inline">\(-b\)</span> equally. Show that <span class="math display">\[
 \frac{m(t)\me^{\sigma b}+m(t)\me^{-\sigma b}}{2}
-=m(t)\cosh(\sigma b)&gt;m(t),\qquad b\ne0.
+=m(t)\cosh(\sigma b)&gt;m(t),\qquad b\ne0
 \]</span> Why do equal and opposite log shocks not cancel in price?</span></p>
 </div>
+<aside class="notes">
+<p>For a=exp(sigma b)&gt;0, (a+1/a)/2&gt;=1, with equality only at a=1. Here sigma&gt;0 and b!=0, so the inequality is strict. Exponentiation is convex: the upward price change is larger than the equally sized downward log shock’s price loss. At t&gt;0, averaging over the nondegenerate normal shock gives mean greater than median.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section class="slide level2">
 
@@ -1624,15 +1703,16 @@ M_d:=\max_{0\le j\le d}S_j
 <section class="slide level2">
 
 <h3 id="american-put-optimal-stopping">American put: optimal stopping</h3>
-<p>At the exercise times <span class="math inline">\(t_0,\ldots,t_d\)</span>, the holder chooses a stopping index <span class="math inline">\(J\)</span> using only prices observed through <span class="math inline">\(t_J\)</span></p>
-<p>Let <span class="math inline">\(\mathcal T_d\)</span> be the set of these stopping indices. The fair price is</p>
+<p>On a finite exercise grid, the holder chooses a stopping index <span class="math inline">\(J\in\{0,\ldots,d\}\)</span> using only prices observed through <span class="math inline">\(t_J\)</span></p>
+<p>Let <span class="math inline">\(\mathcal T_d\)</span> be the set of these stopping indices. The grid-restricted price is</p>
 <p><span class="math display">\[
-\mu_{\mathrm{AmPut}}
+\mu_{\mathrm{AmPut},d}
 =\sup_{J\in\mathcal T_d}
 \Ex\!\left[
 \me^{-rt_J}\max\{K-S_J,0\}
 \right]
 \]</span></p>
+<p>This finite-grid problem approximates continuous-time American exercise</p>
 <ul>
 <li>A <span class="alert">European put</span> restricts exercise to <span class="math inline">\(J=d\)</span></li>
 <li>An <span class="alert">American put</span> may exercise earlier when doing so is more valuable</li>

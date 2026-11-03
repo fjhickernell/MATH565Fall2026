@@ -1023,7 +1023,7 @@ Y&amp;=
 <div class="key-point">
 <p><span class="alert">Complete by Aug 21</span>: <a href="https://iit.instructure.com/courses/25777/assignments/95825">Assignment 0 — Diagnostic Survey</a></p>
 </div>
-<p>Complete and submit this assignment individually, not as a group.</p>
+<p>Complete and submit this assignment individually, not as a group</p>
 </section>
 <section id="complete-assignment-1" class="slide level2">
 <h2>Complete Assignment 1</h2>
@@ -1683,9 +1683,9 @@ Probability
 </div>
 
 <p>Let <span class="math inline">\(Y:\Omega\to\mathcal{Y}\subseteq\reals\)</span> be a <span class="alert">random variable</span></p>
-<p>For <span class="math inline">\(A\subseteq\mathcal{Y}\)</span>, <span class="math inline">\(\Prob(Y\in A)\)</span> is the probability of the <span class="alert">event</span> <span class="math inline">\(\{\omega\in\Omega:Y(\omega)\in A\}\)</span></p>
+<p>For measurable <span class="math inline">\(A\subseteq\mathcal{Y}\)</span>, <span class="math inline">\(\Prob(Y\in A)\)</span> is the probability of the <span class="alert">event</span> <span class="math inline">\(\{\omega\in\Omega:Y(\omega)\in A\}\)</span></p>
 <p><span class="math display">\[\begin{align*}
-F \text{ is the }\alerttext{cumulative distribution function}\text{, } F(y)&amp;:=\Prob(Y\le y), \;  y\in\mathcal{Y}, \quad\text{right-continuous}\\
+F \text{ is the }\alerttext{cumulative distribution function}\text{, } F(y)&amp;:=\Prob(Y\le y), \;  y\in\reals, \quad\text{right-continuous}\\
 Q \text{ is the }\alerttext{quantile function}\text{, } Q(u)&amp;:=\inf\{y\in\mathcal{Y}:F(y)\ge u\}, \; 0&lt;u&lt;1, \quad\text{left-continuous}\\
 &amp; = F^{-1}(u) \text{ if $F$ is continuous and strictly increasing} \\
 \Ex[g(Y)]&amp;:=\int_{\mathcal{Y}}g(y)\,\dif F(y)
@@ -1716,6 +1716,7 @@ Q \text{ is the }\alerttext{quantile function}\text{, } Q(u)&amp;:=\inf\{y\in\ma
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
+<p>Assume finite second moments below</p>
 <p><span class="math display">\[\begin{align*}
 \mu &amp; :=\Ex(Y) \text{is the }\alerttext{mean}\text{ of }Y \\
 \med(Y) &amp; := Q(0.5) \\
@@ -1733,6 +1734,19 @@ Q \text{ is the }\alerttext{quantile function}\text{, } Q(u)&amp;:=\inf\{y\in\ma
 <p><span class="math inline">\(\exstar\)</span> Show that <span class="math inline">\(\displaystyle \med(Y) \in \argmin_m \Ex \lvert Y-m \rvert\)</span></p>
 <p>Medians may be nonunique</p>
 <p><span class="math inline">\(\exstar\)</span> Show that <span class="math inline">\(\cov(\vY)\)</span> is symmetric and has nonnegative eigenvalues</p>
+<aside class="notes">
+<p>Expanding E[(Y-m)^2]=Var(Y)+(m-mu)^2 proves both the variance identity and the unique squared-loss minimizer m=mu. Under the stated finite-moment assumption, absolute loss is minimized at every median: its left and right slopes straddle zero exactly when P(Y&lt;m)&lt;=1/2&lt;=P(Y&lt;=m). Thus Q(1/2) is one minimizer. For every a, a^T Cov(Y) a=E[(a<sup>T(Y-EY))</sup>2]&gt;=0. Symmetry follows entrywise; a real symmetric positive-semidefinite matrix has nonnegative eigenvalues.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="binomial-distribution" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Binomial distribution</h2>
@@ -1741,21 +1755,21 @@ Q \text{ is the }\alerttext{quantile function}\text{, } Q(u)&amp;:=\inf\{y\in\ma
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
-<p>For <span class="math inline">\(Y\sim\Bin(n,p)\)</span> (see <code>scipy.stats.binom(n, p)</code>)</p>
+<p>For <span class="math inline">\(m\in\{1,2,\ldots\}\)</span> and <span class="math inline">\(0\le p\le1\)</span>, let <span class="math inline">\(Y\sim\Bin(m,p)\)</span> (see <code>scipy.stats.binom(m, p)</code>)</p>
 <p><span class="math display">\[\begin{gather*}
 \varrho(y)=\Prob(Y=y)
-=\binom{n}{y}p^y(1-p)^{n-y}
-\qquad y=0,1,\ldots,n
+=\binom{m}{y}p^y(1-p)^{m-y}
+\qquad y=0,1,\ldots,m
 \\
-F(y)=\sum_{j=0}^{ y}\binom{n}{j}p^j(1-p)^{n-j}, \qquad y=0,1,\ldots,n \\
-Q(u)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge u\} \quad 0&lt;u&lt;1
+F(y)=\sum_{j=0}^{ y}\binom{m}{j}p^j(1-p)^{m-j}, \qquad y=0,1,\ldots,m \\
+Q(u)=\inf\{y\in\{0,\ldots,m\}:F(y)\ge u\} \quad 0&lt;u&lt;1
 \quad \text{no simple formula}
 \\
-\Ex(Y)=np
+\Ex(Y)=mp
 \qquad
-\var(Y)=np(1-p)
+\var(Y)=mp(1-p)
 \end{gather*}\]</span></p>
-<p>The <span class="alert">Bernoulli</span> distribution, <span class="math inline">\(\Bern(p)\)</span>, is the case <span class="math inline">\(n=1\)</span> <span class="math display">\[\begin{gather*}
+<p>The <span class="alert">Bernoulli</span> distribution, <span class="math inline">\(\Bern(p)\)</span>, is the case <span class="math inline">\(m=1\)</span> <span class="math display">\[\begin{gather*}
 \varrho(y)=\Prob(Y=y)
 =p^y(1-p)^{1-y}
 \qquad y=0,1
@@ -1773,7 +1787,7 @@ Q(u)=\inf\{y\in\{0,\ldots,n\}:F(y)\ge u\} \quad 0&lt;u&lt;1
 </div>
 
 <p>Models a <span class="alert">memoryless waiting time</span></p>
-<p>For <span class="math inline">\(Y\sim\Exp(\lambda)\)</span> (see <code>scipy.stats.expon(loc=0, scale=1/lambda)</code>)</p>
+<p>For <span class="math inline">\(Y\sim\Exp(\lambda)\)</span> with <span class="math inline">\(\lambda&gt;0\)</span> (see <code>scipy.stats.expon(loc=0, scale=1/lambda)</code>)</p>
 <p><span class="math display">\[\begin{gather*}
 \varrho(y)=
 \lambda \me^{-\lambda y}, \quad  0 \le y &lt; \infty
@@ -1787,6 +1801,19 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 \\
 \var(Y)=\frac{1}{\lambda^2}
 \end{gather*}\]</span></p>
+<aside class="notes">
+<p>For 0&lt;u&lt;1, solve u=1-exp(-lambda y): y=-log(1-u)/lambda. The restriction lambda&gt;0 makes this a valid exponential distribution.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="multivariate-normal-or-gaussian-distribution" class="slide level2 tree-marker-slide" data-tree-marker="probability">
 <h2>Multivariate normal or Gaussian distribution</h2>
@@ -1808,6 +1835,19 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 \mSigma^{-1}(\vy-\vmu)
 \right), \qquad \vy \in \reals^d
 \]</span></p>
+<aside class="notes">
+<p>The displayed Gaussian density requires positive-definite covariance. A positive-semidefinite covariance also defines a Gaussian vector, but a singular one is supported on a lower-dimensional affine space and has no ordinary density on the whole R^d.&nbsp;Gaussian-process finite-dimensional laws can include such degenerate vectors, for example at repeated inputs.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
 <section id="samples-estimators-and-estimates" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="stat-estim">
@@ -1835,7 +1875,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points<br>Compare how its <span class="math inline">\(x_1\)</span>–<span class="math inline">\(x_2\)</span> projection fills the unit square</p>
-<div id="b5ee1865" class="cell" data-execution_count="4">
+<div id="9b3d454a" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1848,7 +1888,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="grid-n64">Grid, <span class="math inline">\(n=64\)</span></h3>
-<div id="f0b7e926" class="cell" data-execution_count="5">
+<div id="702cb20e" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1861,7 +1901,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="orthogonal-array-n64">Orthogonal array, <span class="math inline">\(n=64\)</span></h3>
-<div id="a92b18c9" class="cell" data-execution_count="6">
+<div id="7bc071e2" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1874,7 +1914,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="iid-n64">IID, <span class="math inline">\(n=64\)</span></h3>
-<div id="bf0a60c5" class="cell" data-execution_count="7">
+<div id="e6ce10f9" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1887,7 +1927,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="scrambled-sobol-n64">Scrambled Sobol’, <span class="math inline">\(n=64\)</span></h3>
-<div id="4f145b66" class="cell" data-execution_count="8">
+<div id="7d65bee8" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1905,13 +1945,14 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Normally, we want something more than <span class="math inline">\(\vX_0, \vX_1, \ldots \sim \Unif[0,1]^d\)</span></p>
+<p>Normally, we want something more than <span class="math inline">\(\vU_0, \vU_1, \ldots \sim \Unif[0,1]^d\)</span></p>
 <p>Let</p>
 <ul>
 <li><p><span class="math inline">\(Y\)</span> be a random variable, often <span class="math inline">\(Y=f(\vX)\)</span></p></li>
 <li><p><span class="math inline">\(Y_0,\ldots,Y_{n-1}\)</span> be a sample—not necessarily random or IID</p></li>
 </ul>
 <p>An <span class="alert">IID</span> sample has independent <span class="math inline">\(Y_i\)</span>, each with the distribution of <span class="math inline">\(Y\)</span></p>
+<p>For <span class="math inline">\(n\ge2\)</span>:</p>
 <p><span class="math display">\[\begin{align*}
 \hmu_n &amp; :=\frac{1}{n}\sum_{i=0}^{n-1}Y_i \quad \text{is the }\alerttext{sample mean}\\
 \hsigma_n^2 &amp;
@@ -1926,7 +1967,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Let <span class="math inline">\(\Theta\)</span> estimate a scalar population parameter <span class="math inline">\(\theta\)</span> <span class="math display">\[\begin{align*}
+<p>Let <span class="math inline">\(\Theta\)</span> have finite second moment and estimate a scalar population parameter <span class="math inline">\(\theta\)</span> <span class="math display">\[\begin{align*}
 \bias(\Theta) &amp;:= \Ex(\Theta) - \theta \quad \alerttext{unbiased means zero bias} \\
 \operatorname{MSE}(\Theta) &amp;:= \Ex\bigl[ \bigl(\Theta - \theta \bigr)^2 \bigr] \quad \text{is the }\alerttext{mean squared error}\\
 &amp; \overset{\exstar}{=} [\bias(\Theta)]^2 + \var(\Theta)
@@ -1935,7 +1976,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="under-random-sampling">Under random sampling</h3>
-<p>Suppose <span class="math inline">\(Y_0,Y_1,\ldots\)</span> have the same distribution as <span class="math inline">\(Y\)</span>, where <span class="math inline">\(\Ex(Y)=\mu\)</span> and <span class="math inline">\(\var(Y)=\sigma^2\)</span>. Then <span class="math display">\[
+<p>Suppose <span class="math inline">\(Y_0,Y_1,\ldots\)</span> have the same distribution as <span class="math inline">\(Y\)</span>, where <span class="math inline">\(\Ex(Y)=\mu\)</span> and <span class="math inline">\(\var(Y)=\sigma^2&lt;\infty\)</span>. Then <span class="math display">\[
 \Ex(\hmu_n)=\mu \quad \text{$\hmu_n$ is an }\alerttext{unbiased}\text{ estimator of }\mu
 \]</span> If <span class="math inline">\(Y_0,Y_1,\ldots\)</span> are also <span class="alert">uncorrelated</span> <span class="math display">\[\begin{align*}
 \Ex(\hsigma_n^2)&amp;=\sigma^2  \quad \text{$\hsigma_n^2$ is an }\alerttext{unbiased}\text{ estimator of }\sigma^2 \\
@@ -1964,6 +2005,19 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <div class="exitem">
 <p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Find the value of <span class="math inline">\(\alpha\)</span> that minimizes this MSE.<br>Is the minimizing estimator unbiased?</span></p>
 </div>
+<aside class="notes">
+<p>The bias–variance identity follows by writing Theta-theta as (Theta-ETheta)+(ETheta-theta); the cross term has expectation zero. For identically distributed uncorrelated observations, Var(hmu_n)=sigma^2/n and E[sum_i(Y_i-hmu_n)^2]=n sigma^2-n Var(hmu_n)=(n-1)sigma^2. For shrinkage, if mu<sup>2+sigma</sup>2/n&gt;0, differentiation gives alpha_star=mu<sup>2/(mu</sup>2+sigma^2/n). The bias is (alpha_star-1)mu; it is generally nonzero, except for mu=0 or a zero-variance mean. If mu=sigma=0, every alpha has zero MSE. The optimum depends on unknown population quantities, so this oracle calculation illustrates the tradeoff rather than supplying a directly implementable estimator.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="central-limit-theorem" class="slide level2 tree-marker-slide" data-tree-marker="probstat">
 <h2>Central Limit Theorem</h2>
@@ -1990,6 +2044,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </section>
 <section id="monte-carlo-estimates-of-properties-of-y" class="slide level2" data-state="goldborder">
 <h2>Monte Carlo estimates of properties of <span class="math inline">\(Y\)</span></h2>
+<p>For a fixed-size IID sample; the mean interval uses large <span class="math inline">\(n\)</span> and finite variance</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -2019,7 +2074,11 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <td>Empirical quantile function, <span class="math inline">\(\widehat Q_n\)</span></td>
 </tr>
 <tr class="odd">
-<td>Density or mass function, <span class="math inline">\(\varrho\)</span></td>
+<td>Mass function</td>
+<td>Empirical frequencies</td>
+</tr>
+<tr class="even">
+<td>Density function</td>
 <td>Histogram or kernel density estimator</td>
 </tr>
 </tbody>
@@ -2062,13 +2121,17 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </tr>
 <tr class="even">
 <td>Empirical quantile</td>
-<td><code>np.quantile(data, probabilities)</code></td>
+<td><code>np.quantile(data, probabilities, method="inverted_cdf")</code></td>
 </tr>
 <tr class="odd">
-<td>Histogram</td>
-<td><code>np.histogram(data, bins="auto")</code></td>
+<td>Empirical masses</td>
+<td><code>np.unique(data, return_counts=True)</code>; divide counts by <code>len(data)</code></td>
 </tr>
 <tr class="even">
+<td>Histogram</td>
+<td><code>np.histogram(data, bins="auto", density=True)</code></td>
+</tr>
+<tr class="odd">
 <td>Kernel density estimate</td>
 <td><code>scipy.stats.gaussian_kde(data)</code></td>
 </tr>
@@ -2132,6 +2195,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
   <div class="tree-component__label" data-label-id="probability" style="--tree-left: 5%; --tree-top: 79%; --tree-align: left;">Probability</div>
 </div>
 
+<p>Assume <span class="math inline">\(\Ex|Y|&lt;\infty\)</span>; for the variance identity, <span class="math inline">\(\Ex(Y^2)&lt;\infty\)</span></p>
 <p><span class="math display">\[\begin{align*}
 \Ex(Y)&amp;=\Ex_Z\bigl[\Ex(Y\mid Z)\bigr]
 \\
@@ -2151,7 +2215,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Let <span class="math inline">\(Y=f(X_1,\ldots,X_d)\)</span> and <span class="math inline">\(\vZ=(X_2,\ldots,X_d)\)</span></p>
+<p>Let <span class="math inline">\(Y=f(X_1,\ldots,X_d)\)</span> have finite variance and <span class="math inline">\(\vZ=\vX_{2:d}\)</span></p>
 <p>If</p>
 <p><span class="math display">\[
 g(\vZ):=\Ex(Y\mid \vZ)
@@ -2169,6 +2233,19 @@ g(\vZ):=\Ex(Y\mid \vZ)
 \varrho_Y(y)=\Ex_{\vZ}[h(y,\vZ)]
 \]</span></p>
 <p>so a probability density can itself be expressed as an expectation</p>
+<aside class="notes">
+<p>For square-integrable Y, the law of total variance gives Var(Y)-Var(E[Y|Z])=E[Var(Y|Z)]&gt;=0. Equality holds exactly when the conditional variance is zero almost surely. Conditional density averaging follows by integrating the joint density over Z; the equality is understood for almost every y. Conditional expectation itself needs integrable Y; the variance comparison needs its finite second moment.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="prob-stat-est">
 <h1>Big Ideas</h1>
@@ -2210,7 +2287,7 @@ g(\vZ):=\Ex(Y\mid \vZ)
 \]</span></p>
 <p>and construct</p>
 <p><span class="math display">\[
-\vX=T(\vU)
+\vX=\vT(\vU)
 \]</span></p>
 <p>with the distribution required by the model</p>
 </div><div class="column" style="width:39%;">
