@@ -102,7 +102,7 @@
     "href": "pages/notebooks.html#performance",
     "title": "Jupyter Notebooks",
     "section": "Performance",
-    "text": "Performance\n\nDiscrepancy — compare empirical distributions using maximum mean discrepancy, kernel scales, and witness functions\nAsian Option Variance Reduction — choose randomized Sobol’ (default), lattice, or Halton sampling and compare drift, a European-call control variate, and their combination; price a discretely monitored lookback call and stop price estimation at a requested uncertainty tolerance and account for pilot work"
+    "text": "Performance\n\nDiscrepancy — compare empirical distributions using maximum mean discrepancy, kernel scales, and witness functions\nAsian Option Variance Reduction — choose randomized Sobol’ (default), lattice, or Halton sampling and compare drift, a European-call control variate, and their combination; price a discretely monitored lookback call and stop price estimation at a requested uncertainty tolerance and account for pilot work\nMultilevel Option Pricing — couple coarse and fine Brownian paths for a continuous-average Asian call; compare level allocations, direct fine estimation, IID MLMC, and randomized Sobol’ MLQMC while distinguishing sample counts, work, pilot cost, sampling error, and discretization bias"
   },
   {
     "objectID": "index.html",
