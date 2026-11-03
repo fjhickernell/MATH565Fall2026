@@ -59,8 +59,10 @@ holidays, and examination details are finalized.
 |---:|---|---|---|
 | 12 | Mon Nov 2 | **Last day to withdraw from full-semester courses** | [Illinois Tech academic calendar](https://www.iit.edu/registrar/academic-calendar) |
 | | Tue Nov 3 | Two-level allocation derivation and cost versus error; allocation exercise; extension to a hierarchy and many levels | [Selected Topics: two-level optimization](../slides/05-selected-topics.html#two-level-optimization)<br>[Multilevel hierarchy](../slides/05-selected-topics.html#infinite-dimensional-expectations) |
+| | Wed Nov 4 | **Project presentation sign-up deadline** | [Choose your presentation time slot](project.qmd#presentation-scheduling-and-observations) |
 | | Thu Nov 5 | | |
 | 13 | Tue Nov 10 | | |
+| | Wed Nov 11 | **Project observer sign-up deadline** | [Choose two presentations to observe](project.qmd#presentation-scheduling-and-observations) |
 | | Thu Nov 12 | | |
 | | Fri Nov 13 | **Assignment 6 due** | Details TBD |
 | 14 | Tue Nov 17 | | |
