@@ -2012,12 +2012,14 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 <li>Assess remaining <span class="alert">approximation bias</span>; one small correction does not bound the omitted tail</li>
 <li>QMC can improve sampling accuracy when coupling preserves suitable <span class="alert">smoothness</span></li>
 <li>Count pilots, setup, and allowed sample sizes in the total work</li>
+<li>With <span class="alert">cheap evaluations</span>, sampling and setup overhead can outweigh the saved evaluation work: MLMC may take longer in clock time</li>
 </ul>
 <div class="key-point">
-<p>Use the <a href="#/multilevel-option-pricing-notebook">option-pricing notebook</a> to compare the methods and inspect the tradeoffs</p>
+<p>Compare the <a href="#/multilevel-option-pricing-notebook">option-pricing notebook</a> and <a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/MultilevelBeam.ipynb">beam notebook</a> to inspect allocation and bias</p>
 </div>
 <aside class="notes">
 <p>Keep the main message practical. QMC and randomized QMC need their own method-appropriate error assessment; individual IID variance is not a substitute. The detailed pilot and error-assessment reference follows:</p>
+<p>The notebooks count evaluation work using panel or time-step proxies and report complete measured seconds separately. For inexpensive vectorized models, generating many inputs, transformations, memory handling, and Python calls may dominate. Reducing evaluation work then need not reduce clock time. Time complete contributions at each level when elapsed time is the resource to optimize; include setup and allocation pilots as well.</p>
 <p>Allocate randomized work in practice</p>
 <ul>
 <li><span class="alert">Time</span> complete coupled contributions at each level; estimate <span class="math inline">\(\$_\ell\)</span><br> Include generation, transforms, and both coarse/fine evaluations</li>
@@ -2160,7 +2162,7 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 
 <h3 id="gradient-and-stochastic-gradient-paths">Gradient and stochastic-gradient paths</h3>
 <p>Contours show excess average loss above its minimum<br> SGD samples one of the four component gradients at each step</p>
-<div id="14c59096" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
+<div id="7cc5fd25" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
