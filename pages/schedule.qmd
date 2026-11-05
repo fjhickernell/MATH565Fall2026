@@ -76,8 +76,8 @@ holidays, and examination details are finalized.
 
 | Week | Date | Topic | Slides / Materials |
 |---:|---|---|---|
-| 16 | Tue Dec 1 | | |
-| | Thu Dec 3 | | |
+| 16 | Tue Dec 1 | Review, bring your questions (tentative) | |
+| | Thu Dec 3 | Review, bring your questions (tentative) | |
 
 ### Final examinations
 

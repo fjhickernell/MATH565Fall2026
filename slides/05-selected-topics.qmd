@@ -1516,23 +1516,82 @@ not an automatic stopping certificate.
 ::: {.columns}
 ::: {.column width="47%"}
 - [Gradient descent](#gradient-descent)
-- [The banana function is still difficult](#the-banana-function-is-still-difficult)
-- [Conditioning versus dimension](#conditioning-versus-dimension)
 - [Why cheap gradients matter](#why-cheap-gradients-matter)
 - [Stochastic gradient descent](#stochastic-gradient-descent)
 - [Mini-batches and gradient noise](#mini-batches-and-gradient-noise)
+- [A large-data example](#a-large-data-example)
+- [Choosing an optimization method](#choosing-an-optimization-method)
 :::
 ::: {.column width="6%"}
 :::
 ::: {.column width="47%"}
-- [Why a noisy direction can help](#why-a-noisy-direction-can-help)
-- [Learning rates and the noise floor](#learning-rates-and-the-noise-floor)
-- [Four quadratic component losses](#quadratic-component-losses)
-- [Gradient and stochastic-gradient paths](#gradient-and-stochastic-gradient-paths)
-- [A large-data example](#a-large-data-example)
-- [Choosing an optimization method](#choosing-an-optimization-method)
-- [Gradient descent companion notebook](#gradient-descent-companion-notebook)
+
+```{python}
+#| label: sgd-outline-paths
+#| echo: false
+#| fig-format: svg
+#| fig-align: center
+#| fig-alt: "Contours of an average quadratic loss with two paths from the same start: full-gradient descent approaches the minimizer smoothly, while stochastic updates using individual component losses fluctuate around it"
+#| fig-width: 8
+#| fig-height: 6.5
+#| out-width: 100%
+
+import matplotlib.pyplot as plt
+import numpy as np
+from io import StringIO
+from IPython.display import SVG, display
+
+outline_rng = np.random.default_rng(56505)
+outline_A = np.array([[3.0, 0.9], [0.9, 1.2]])
+outline_centers = np.array([[0.25, 0.25], [0.25, -0.25],
+                            [-0.25, 0.25], [-0.25, -0.25]])
+outline_gd = [np.array([-1.4, 1.6])]
+outline_sgd = [outline_gd[0].copy()]
+for _ in range(45):
+    outline_gd.append(outline_gd[-1] - 0.18 * outline_A @ outline_gd[-1])
+    outline_center = outline_centers[outline_rng.integers(4)]
+    outline_sgd.append(outline_sgd[-1] - 0.18 * outline_A @ (outline_sgd[-1] - outline_center))
+outline_gd, outline_sgd = np.array(outline_gd), np.array(outline_sgd)
+outline_x, outline_y = np.meshgrid(np.linspace(-1.85, 0.9, 260),
+                                  np.linspace(-0.65, 2.1, 260))
+outline_loss = 0.5 * (3 * outline_x**2 + 1.8 * outline_x * outline_y + 1.2 * outline_y**2)
+
+fig, ax = plt.subplots(figsize=(8, 6.5), constrained_layout=True)
+ax.contourf(outline_x, outline_y, outline_loss, levels=[0, 0.15, 0.5, 1, 2, 4, 8, 16],
+            colors=['#ffffff', '#f8fbfc', '#f0f6f8', '#e6f0f4', '#dceaf0', '#d0e2eb', '#c2d8e3'])
+ax.contour(outline_x, outline_y, outline_loss, levels=np.geomspace(0.04, 12, 11),
+           colors='#9ebac9', linewidths=1.1)
+ax.plot(*outline_gd.T, color='#1f5a91', linewidth=3, label='Full gradient', zorder=4)
+ax.plot(*outline_sgd.T, '.-', color='#b77d17', linewidth=1.8, markersize=3.5,
+         label='Sampled gradient', zorder=5)
+ax.scatter(*outline_gd[0], s=45, color='#263e4a', zorder=6)
+ax.annotate('Start', xy=outline_gd[0], xytext=(12, 10), textcoords='offset points',
+             fontsize=20, color='#263e4a')
+ax.scatter(0, 0, marker='*', s=300, color='#398879', edgecolors='white', linewidths=1,
+            zorder=7)
+ax.annotate('Minimum', xy=(0, 0), xytext=(12, -28), textcoords='offset points',
+             fontsize=20, color='#277465', zorder=8)
+ax.set(xlim=(-1.85, 0.9), ylim=(-0.65, 2.1), aspect='equal')
+ax.set_axis_off()
+ax.legend(loc='lower center', bbox_to_anchor=(0.5, -0.08), ncol=2,
+           frameon=False, fontsize=17, handlelength=2, columnspacing=1.2)
+outline_svg = StringIO()
+fig.savefig(outline_svg, format='svg', bbox_inches='tight')
+plt.close(fig)
+display(SVG(outline_svg.getvalue()))
+```
+
 :::
+:::
+
+::: {.notes}
+Illustrative paths for the same average quadratic and four component losses
+developed later in this section. Both methods start at (-1.4, 1.6) and use the
+same fixed step size 0.18 for 45 updates. SGD samples one component uniformly
+with replacement per update; its gradient is conditionally unbiased. Its
+constant step leaves fluctuations near the minimizer. The picture compares
+directions and noise, not equal work, elapsed time, or guaranteed convergence
+for a general nonconvex loss. The full gradient averages all four components.
 :::
 
 ## Gradient descent {.tree-marker-slide tree-marker="estimation"}
@@ -1553,7 +1612,9 @@ not an automatic stopping certificate.
 A good [local direction]{.alert} need not give a fast route to a minimum
 :::
 
-## The banana function is still difficult {.tree-marker-slide tree-marker="estimation"}
+---
+
+### The banana function is still difficult {#the-banana-function-is-still-difficult}
 
 $$R(\vtheta)=(1-\theta_1)^2+100(\theta_2-\theta_1^2)^2
 \qquad \vtheta_*=[1,1]^\top$$
@@ -1618,37 +1679,58 @@ once. The companion reports those counts. At the minimizer the Hessian is
 condition number about 2508. Noise does not round out this narrow valley.
 :::
 
-## Conditioning versus dimension {.tree-marker-slide tree-marker="estimation"}
+---
 
-For $\operatorname{Loss}(\vtheta)=\tfrac12\vtheta^\top\mA\vtheta$ with $\mA$ symmetric positive definite,
+### Conditioning versus dimension {#conditioning-versus-dimension}
+
+For $\operatorname{Loss}(\vtheta)=\tfrac12\vtheta^\top\mA\vtheta$ with $\mA$ symmetric positive definite and minimizer $\vtheta_*=\vzero$,
 
 \begin{gather*}
-\vtheta_{k+1}=(\mI-\eta\mA)\vtheta_k
+\vtheta_{k+1}=(\mI-\eta_{\mathrm{best}}\mA)\vtheta_k
 \qquad
 \kappa=\frac{\lambda_{\max}(\mA)}{\lambda_{\min}(\mA)}
 \\
 \eta_{\mathrm{best}}=\frac{2}{\lambda_{\max}+\lambda_{\min}}
 \qquad
-\norm{\vtheta_{k+1}}\leq\frac{\kappa-1}{\kappa+1}\norm{\vtheta_k}
+q=\frac{\kappa-1}{\kappa+1}
+\qquad
+\norm{\vtheta_{k+1}}\leq q\norm{\vtheta_k}
 \end{gather*}
 
-- $\mA=\operatorname{diag}(1,100)$: contraction factor $99/101\approx0.9802$
-- $\mA=\mI$ in a million dimensions: one GD step with $\eta=1$
-- Large $m$ raises computational and storage costs; it does not improve conditioning
+- $q$ bounds the [fraction of parameter error remaining]{.alert} per GD update
+- $\mA=\operatorname{diag}(1,100)$: $\kappa=100$, $q=99/101\approx0.9802$ — slow
+- $\mA=\mI$ in a million dimensions: $\kappa=1$, $\eta_{\mathrm{best}}=1$, $q=0$ — exact in one update
+- Large $m$ raises computational and storage costs, independently of $q$
 - Scaling, preconditioning, momentum, and curvature information can help
 
 ::: {.key-point}
-[Conditioning]{.alert} governs this iteration count; [dimension]{.alert} governs other costs
+We want [small $q$]{.alert}: less error remains after each update<br>
+$q$ near $1$: slow worst-case progress
 :::
 
 ::: {.notes}
 The displayed bound is for this positive-definite quadratic in Euclidean norm,
-with its minimizer at zero. Diagonalize A with an orthogonal matrix; each
-component is multiplied by 1-eta*lambda. Minimizing the worst absolute factor
-over constant scalar steps gives the formula. It is not a convergence formula
-for arbitrary nonconvex objectives. At eta=1/100, the steep direction of the
-2D diagonal example vanishes at once but the shallow component retains 99%
-per update. The best worst-case scalar step balances the two extreme modes.
+with its minimizer at zero, so norm(theta_k) is the parameter error. The
+contraction factor q bounds the fraction of this error remaining after one
+update at the displayed best constant scalar step; it is not the fraction
+removed and not an objective-value contraction factor. Smaller q is better:
+q=0 removes all parameter error in one update, while q near one allows only
+slow worst-case progress. In a million dimensions with A=I, every eigenvalue
+is one, kappa=1, eta_best=1, and q=(1-1)/(1+1)=0. The update is
+theta_{k+1}=(I-I)theta_k=0, regardless of the starting vector. Reading and
+updating a million coordinates still costs work.
+
+Diagonalize A with an orthogonal matrix; each error component is multiplied
+by 1-eta*lambda. Minimizing the largest absolute factor over constant scalar
+steps gives q=(kappa-1)/(kappa+1). This is a sharp worst-case bound, not
+necessarily the fraction remaining for every starting error. It is not a
+convergence formula for arbitrary nonconvex objectives. For diag(1,100),
+eta_best=2/101 and q=99/101: about 98.02% of the parameter error may remain
+after an update. At eta=1/100 instead, the steep component vanishes at once
+but the shallow component retains 99% per update. The best worst-case scalar
+step balances the two extreme modes. Scaling and preconditioning change the
+effective curvature; momentum and curvature-aware methods change the update
+beyond this basic GD formula.
 :::
 
 ## Why cheap gradients matter {.tree-marker-slide tree-marker="estimation"}
@@ -1665,7 +1747,8 @@ For dense linear/logistic models, gradient work is approximately
 
 - Large $N$: many cheap updates before one full pass through the data
 - Large $m$: a dense Hessian stores $O(m^2)$ entries
-- Reverse-mode differentiation can compute a whole gradient at a cost comparable to a few loss evaluations
+- [Reverse-mode automatic differentiation]{.alert} ([adjoint method]{.alert}): a whole gradient can cost a few loss evaluations<br>
+  Called [backpropagation]{.alert} in neural networks
 - Streaming data and moderate accuracy can favor stochastic updates
 
 ::: {.key-point}
@@ -1681,7 +1764,15 @@ can avoid that cost. L-BFGS retains a few gradient/step pairs and needs O(rm)
 storage for memory length r, rather than O(m^2). It remains a strong option
 for many deterministic problems. The gradient work table describes dense
 linear/logistic models, not every possible neural network. Automatic reverse
-mode does not require m finite-difference evaluations. Statistical prediction
+mode does not require m finite-difference evaluations. Reverse-mode automatic
+differentiation is also called adjoint-mode differentiation or a discrete
+adjoint method; backpropagation is the usual neural-network name. The reverse
+sweep applies transposed local Jacobians to propagate output sensitivities
+back to the inputs. Continuous adjoint equations for differential equations
+are related, but need not give the same numerical derivative as differentiating
+a particular discrete solver. See [Levitt, The adjoint trick](https://www.imo.universite-paris-saclay.fr/~antoine.levitt/blog/adjoint/)
+and [Bindel, Automatic differentiation](https://www.cs.cornell.edu/~bindel/nmds/01-Fund1d/04-AutoDiff.html).
+Statistical prediction
 error and optimization error are different; optimize accurately enough for
 the application, and use held-out data to judge prediction. SGD is much older
 than deep learning; large datasets, differentiable models, automatic
@@ -1750,7 +1841,9 @@ gives an additional (N-b)/(N-1) factor for N>1. Drawing b=N with replacement
 is not the full gradient; full GD explicitly visits every observation once.
 :::
 
-## Why a noisy direction can help {.tree-marker-slide tree-marker="estimation"}
+---
+
+### Why a noisy direction can help {#why-a-noisy-direction-can-help}
 
 Assume $\nabla\operatorname{Loss}$ is $L$-Lipschitz and $0<\eta_k\leq1/L$
 
@@ -1781,7 +1874,9 @@ the bound is not asserted globally for that example. See Bottou, Curtis,
 and Nocedal, sections 4.1-4.3, for fuller convergence assumptions and results.
 :::
 
-## Learning rates and the noise floor {.tree-marker-slide tree-marker="estimation"}
+---
+
+### Learning rates and the noise floor {#learning-rates-and-the-noise-floor}
 
 A scalar example: $\operatorname{loss}_i(\theta)=\tfrac12(\theta-a_i)^2$ with $a_i\in\{-1,1\}$ equally likely
 
@@ -1812,7 +1907,9 @@ approximation conditions. They alone do not ensure convergence without
 suitable smoothness, boundedness/noise and objective assumptions.
 :::
 
-## Four quadratic component losses {#quadratic-component-losses .tree-marker-slide tree-marker="estimation"}
+---
+
+### Four quadratic component losses {#quadratic-component-losses}
 
 For $i=0,\ldots,3$,
 
@@ -1840,7 +1937,9 @@ The centers average to $\vzero$, so
 One randomly selected center gives a [noisy direction]{.alert}; averaging all four gives the full gradient
 :::
 
-## Gradient and stochastic-gradient paths {.tree-marker-slide tree-marker="estimation"}
+---
+
+### Gradient and stochastic-gradient paths {#gradient-and-stochastic-gradient-paths}
 
 Contours show excess average loss above its minimum<br>
 SGD samples one of the four component gradients at each step
@@ -1946,7 +2045,9 @@ The old lesson about [geometry]{.alert} remains; modern practice also budgets [d
 [Bottou, Curtis, and Nocedal (2018), §§3–7](https://arxiv.org/abs/1606.04838)
 :::
 
-## Gradient descent companion notebook {.tree-marker-slide tree-marker="estimation"}
+---
+
+### Gradient descent companion notebook {#gradient-descent-companion-notebook}
 
 [Open Stochastic Gradient Descent on GitHub](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/StochasticGradientDescent.ipynb)
 · [Run in Colab](https://colab.research.google.com/github/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/StochasticGradientDescent.ipynb)

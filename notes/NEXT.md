@@ -26,8 +26,21 @@ conditional unbiasedness, mini-batch variance, expected descent, and an exact
 scalar noise floor. It includes practical alternatives and self-contained
 logistic loss/gradient formulas. The notebook consolidates the inherited
 gradient variants; no separate Rosenbrock notebook is needed.
+The slide outline keeps six main topics; supporting examples and the companion
+notebook are marker-free continuations with their existing links preserved.
+The six links now occupy one column beside a vector illustration of full and
+sampled gradient paths. Conditioning explicitly defines $q$ as the fraction of
+parameter error remaining, with small $q$ preferred and $q=0$ for the identity
+quadratic at its best step. The notebook labels the Rosenbrock-at-minimizer
+condition number while distinguishing the quadratic bounds from actual banana
+runs. Reverse-mode AD, adjoint methods, and neural-network backpropagation are
+named together.
 
-All ten code cells execute cleanly in the course qmcpy kernel; four figures
+The Rosenbrock comparison now labels the minimizer and the accepted cross-valley
+jump, with a separate close-up of the final 100 GD updates. Its two methods are
+bullets; notebook headings are retained for instructor review.
+
+All ten code cells execute cleanly in the course qmcpy kernel; five figures
 and independent gradient/moment checks are included. Each logistic method
 uses the same component-gradient budget, with sampling and selection charged
 inside optimization time and full-loss diagnostics timed separately. The

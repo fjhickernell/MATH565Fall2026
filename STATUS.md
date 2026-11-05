@@ -601,7 +601,9 @@ appropriate phase rather than appended indiscriminately.
     noise floors. Add the consolidated Stochastic Gradient Descent companion
     with GD/BFGS, finite-sum quadratics, and regularized logistic regression;
     equal gradient budgets and separate optimization/diagnostic timings.
-    Ten code cells and four figures validate in the local qmcpy kernel;
+    The Rosenbrock comparison labels the minimizer and the accepted cross-valley
+    jump, with a separate close-up of GD's later zigzags.
+    Ten code cells and five figures validate in the local qmcpy kernel;
     instructor content review remains open (November 5, 2026).
   - [x] Clarify two-level mean and error notation, keep the random allocation
     derivation consecutive, and distinguish finite-grid sampling error from
