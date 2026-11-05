@@ -1476,6 +1476,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="04-improving-efficiency.html#transforming-an-integral">Change of variables</a></li>
 <li><a href="02-generating-samples.html#cholesky-factorization">Cholesky factorization</a></li>
 <li><a href="04-improving-efficiency.html#component-by-component-construction">Component-by-component construction</a></li>
+<li><a href="05-selected-topics.html#conditioning-versus-dimension">Condition number</a></li>
 <li><a href="#/conditional-probability">Conditional density</a></li>
 <li><a href="#/laws-of-total-expectation-and-variance">Conditional expectation</a></li>
 <li><a href="#/conditional-monte-carlo">Conditional Monte Carlo</a></li>
@@ -1549,6 +1550,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 <li><a href="04-improving-efficiency.html#four-low-discrepancy-families">Lattice sequence</a></li>
 <li><a href="#/laws-of-total-expectation-and-variance">Law of total expectation</a></li>
 <li><a href="#/laws-of-total-expectation-and-variance">Law of total variance</a></li>
+<li><a href="05-selected-topics.html#gradient-descent">Learning rate</a></li>
 <li><a href="03-markov-chain-monte-carlo.html#likelihood-and-maximum-likelihood-estimation">Likelihood</a></li>
 <li><a href="02-generating-samples.html#lookback-and-barrier-payoffs">Lookback option</a></li>
 <li><a href="02-generating-samples.html#what-does-low-discrepancy-mean">Low discrepancy</a></li>
@@ -1574,6 +1576,7 @@ Dates mark representative introductions or inflection points; adoption overlappe
 </ul>
 </div><div class="column" style="width:50%;">
 <ul>
+<li><a href="05-selected-topics.html#mini-batches-and-gradient-noise">Mini-batch</a></li>
 <li><a href="02-generating-samples.html#gaussian-mixture-random-numbers">Mixture distribution</a></li>
 <li><a href="#/central-limit-theorem">Monte Carlo error</a></li>
 <li><a href="#/how-is-uncertainty-expressed-quantitatively">Monte Carlo method</a></li>
@@ -1875,7 +1878,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 </div>
 
 <p>Each design has <span class="math inline">\(n=64\)</span> points<br>Compare how its <span class="math inline">\(x_1\)</span>–<span class="math inline">\(x_2\)</span> projection fills the unit square</p>
-<div id="239a142d" class="cell" data-execution_count="4">
+<div id="6fa0a80a" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1888,7 +1891,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="grid-n64">Grid, <span class="math inline">\(n=64\)</span></h3>
-<div id="826765da" class="cell" data-execution_count="5">
+<div id="b747e718" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1901,7 +1904,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="orthogonal-array-n64">Orthogonal array, <span class="math inline">\(n=64\)</span></h3>
-<div id="b6408572" class="cell" data-execution_count="6">
+<div id="e0c1b9a5" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1914,7 +1917,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="iid-n64">IID, <span class="math inline">\(n=64\)</span></h3>
-<div id="4ef898c3" class="cell" data-execution_count="7">
+<div id="eb268b29" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1927,7 +1930,7 @@ Q(u) \overset{\exstar}{=} -\frac{\log(1-u)}{\lambda}  \quad 0 &lt; u &lt; 1
 <section class="slide level2">
 
 <h3 id="scrambled-sobol-n64">Scrambled Sobol’, <span class="math inline">\(n=64\)</span></h3>
-<div id="86526531" class="cell" data-execution_count="8">
+<div id="38242bca" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>

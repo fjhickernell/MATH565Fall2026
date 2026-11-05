@@ -2058,17 +2058,31 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
       }</style></aside>
 </section></section>
 <section>
-<section id="stochastic-gradient-descent-section" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="estimation">
+<section id="stochastic-gradient-descent-section" class="title-slide slide level1 center">
 <h1>Stochastic Gradient Descent</h1>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
-</div>
-
+<div class="columns">
+<div class="column" style="width:47%;">
 <ul>
 <li><a href="#/gradient-descent">Gradient descent</a></li>
+<li><a href="#/the-banana-function-is-still-difficult">The banana function is still difficult</a></li>
+<li><a href="#/conditioning-versus-dimension">Conditioning versus dimension</a></li>
+<li><a href="#/why-cheap-gradients-matter">Why cheap gradients matter</a></li>
 <li><a href="#/stochastic-gradient-descent">Stochastic gradient descent</a></li>
+<li><a href="#/mini-batches-and-gradient-noise">Mini-batches and gradient noise</a></li>
 </ul>
+</div><div class="column" style="width:6%;">
+
+</div><div class="column" style="width:47%;">
+<ul>
+<li><a href="#/why-a-noisy-direction-can-help">Why a noisy direction can help</a></li>
+<li><a href="#/learning-rates-and-the-noise-floor">Learning rates and the noise floor</a></li>
+<li><a href="#/quadratic-component-losses">Four quadratic component losses</a></li>
+<li><a href="#/gradient-and-stochastic-gradient-paths">Gradient and stochastic-gradient paths</a></li>
+<li><a href="#/a-large-data-example">A large-data example</a></li>
+<li><a href="#/choosing-an-optimization-method">Choosing an optimization method</a></li>
+<li><a href="#/gradient-descent-companion-notebook">Gradient descent companion notebook</a></li>
+</ul>
+</div></div>
 </section>
 <section id="gradient-descent" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
 <h2>Gradient descent</h2>
@@ -2077,47 +2091,43 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>For</p>
-<p><span class="math display">\[
+<p><span class="math display">\[\begin{gather*}
 \vtheta_* = \argmin_{\vtheta\in\reals^m}\operatorname{Loss}(\vtheta)
-\]</span></p>
-<p>gradient descent iterates</p>
-<p><span class="math display">\[
+\\
 \vtheta_{k+1}=\vtheta_k-\eta_k\nabla\operatorname{Loss}(\vtheta_k)
-\]</span></p>
+\end{gather*}\]</span></p>
 <ul>
-<li><span class="math inline">\(\eta_k\)</span> is the step size or learning rate</li>
-<li>The loss often decreases toward a local minimum</li>
-<li>Curvature-aware methods can use second derivatives<br>Each step becomes more expensive</li>
-<li>Step sizes that are too large may overshoot<br>Step sizes that are too small converge slowly</li>
+<li><span class="math inline">\(m\)</span> parameters; <span class="math inline">\(\eta_k&gt;0\)</span> is the <span class="alert">learning rate</span></li>
+<li>Negative gradient: steepest local decrease in the Euclidean norm</li>
+<li>A short enough step decreases a smooth loss when its gradient is nonzero</li>
+<li>A large step can overshoot; small steps can make little progress</li>
+<li>For a nonconvex loss, reaching a global minimizer is not guaranteed</li>
 </ul>
-<p><span class="alert">Move downhill using all available data</span></p>
+<div class="key-point">
+<p>A good <span class="alert">local direction</span> need not give a fast route to a minimum</p>
+</div>
 </section>
-<section id="stochastic-gradient-descent" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
-<h2>Stochastic gradient descent</h2>
+<section id="the-banana-function-is-still-difficult" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>The banana function is still difficult</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Suppose</p>
-<p><span class="math display">\[
-\operatorname{Loss}(\vtheta)
-=\frac1N\sum_{i=0}^{N-1}\operatorname{loss}_i(\vtheta)
-\]</span></p>
-<p>The full gradient uses <span class="math inline">\(N\)</span> components; one random component gives</p>
-<p><span class="math display">\[
-\Ex\bigl[\nabla\operatorname{loss}_{I}(\vtheta)\bigr]
-=\nabla\operatorname{Loss}(\vtheta)
-\qquad I\sim\Unif\{0,\ldots,N-1\}
-\]</span></p>
-<p>With a fresh independent index <span class="math inline">\(I_k\)</span> at each iteration,</p>
-<p><span class="math display">\[
-\vtheta_{k+1}=\vtheta_k-\eta_k\nabla\operatorname{loss}_{I_k}(\vtheta_k)
-\]</span></p>
-<p>Mini-batches average component gradients; learning rates can decay</p>
+<p><span class="math display">\[R(\vtheta)=(1-\theta_1)^2+100(\theta_2-\theta_1^2)^2
+\qquad \vtheta_*=[1,1]^\top\]</span></p>
+<div id="9108498b" class="cell" data-fig-height="4.1" data-fig-width="10" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="05-selected-topics_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" alt="Rosenbrock contours and objective histories: gradient descent with backtracking takes 500 steps along a curved narrow valley, while BFGS reaches the minimum in about 34 steps" width="971" height="405"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Narrow curved valley: <span class="alert">unequal curvature</span> slows GD even in two dimensions</p>
 <aside class="notes">
-<p>At a fixed theta, averaging the N component gradients gives the displayed expectation exactly. At iteration k, condition on the previous sampled indices and hence on theta_k. A fresh uniform I_k is independent of that history, so its conditional expected gradient is the full gradient at theta_k. This is conditional unbiasedness of the gradient, not unbiasedness of theta_k as an estimator of a minimizer or a claim that each noisy step lowers the loss. Convergence requires additional assumptions on the loss, noise, and step sizes.</p>
+<p>Both methods start at (-1.2,1). GD uses Armijo backtracking with initial step 1, halving and sufficient-decrease constant 1e-4; its loss decreases at every accepted update. Thus the difficulty persists with a line search, not merely a poorly chosen fixed step. BFGS learns an inverse-Hessian approximation from changes in gradients. The horizontal axis counts accepted updates, not equal work: backtracking and BFGS may each evaluate functions/gradients more than once. The companion reports those counts. At the minimizer the Hessian is [[802,-400],[-400,200]], with eigenvalues about 0.399 and 1001.601, giving condition number about 2508. Noise does not round out this narrow valley.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2129,13 +2139,257 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<div class="key-point">
-<p>The stochastic gradient is an <span class="alert">unbiased Monte Carlo estimate</span> of the full gradient</p>
-</div>
 </section>
-<section class="slide level2">
+<section id="conditioning-versus-dimension" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Conditioning versus dimension</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
 
-<h3 id="quadratic-component-losses">Four quadratic component losses</h3>
+<p>For <span class="math inline">\(\operatorname{Loss}(\vtheta)=\tfrac12\vtheta^\top\mA\vtheta\)</span> with <span class="math inline">\(\mA\)</span> symmetric positive definite,</p>
+<p><span class="math display">\[\begin{gather*}
+\vtheta_{k+1}=(\mI-\eta\mA)\vtheta_k
+\qquad
+\kappa=\frac{\lambda_{\max}(\mA)}{\lambda_{\min}(\mA)}
+\\
+\eta_{\mathrm{best}}=\frac{2}{\lambda_{\max}+\lambda_{\min}}
+\qquad
+\norm{\vtheta_{k+1}}\leq\frac{\kappa-1}{\kappa+1}\norm{\vtheta_k}
+\end{gather*}\]</span></p>
+<ul>
+<li><span class="math inline">\(\mA=\operatorname{diag}(1,100)\)</span>: contraction factor <span class="math inline">\(99/101\approx0.9802\)</span></li>
+<li><span class="math inline">\(\mA=\mI\)</span> in a million dimensions: one GD step with <span class="math inline">\(\eta=1\)</span></li>
+<li>Large <span class="math inline">\(m\)</span> raises computational and storage costs; it does not improve conditioning</li>
+<li>Scaling, preconditioning, momentum, and curvature information can help</li>
+</ul>
+<div class="key-point">
+<p><span class="alert">Conditioning</span> governs this iteration count; <span class="alert">dimension</span> governs other costs</p>
+</div>
+<aside class="notes">
+<p>The displayed bound is for this positive-definite quadratic in Euclidean norm, with its minimizer at zero. Diagonalize A with an orthogonal matrix; each component is multiplied by 1-eta*lambda. Minimizing the worst absolute factor over constant scalar steps gives the formula. It is not a convergence formula for arbitrary nonconvex objectives. At eta=1/100, the steep direction of the 2D diagonal example vanishes at once but the shallow component retains 99% per update. The best worst-case scalar step balances the two extreme modes.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="why-cheap-gradients-matter" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Why cheap gradients matter</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p><span class="math display">\[\operatorname{Loss}(\vtheta)=\frac1N\sum_{i=0}^{N-1}\operatorname{loss}_i(\vtheta)
+\qquad N=\text{data size},\quad m=\text{parameters}\]</span></p>
+<p>For dense linear/logistic models, gradient work is approximately</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Method</th>
+<th style="text-align: right;">Data used per update</th>
+<th style="text-align: right;">Gradient work</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Full-gradient descent</td>
+<td style="text-align: right;"><span class="math inline">\(N\)</span> observations</td>
+<td style="text-align: right;"><span class="math inline">\(O(Nm)\)</span></td>
+</tr>
+<tr class="even">
+<td>Mini-batch SGD</td>
+<td style="text-align: right;"><span class="math inline">\(b\ll N\)</span> observations</td>
+<td style="text-align: right;"><span class="math inline">\(O(bm)\)</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Large <span class="math inline">\(N\)</span>: many cheap updates before one full pass through the data</li>
+<li>Large <span class="math inline">\(m\)</span>: a dense Hessian stores <span class="math inline">\(O(m^2)\)</span> entries</li>
+<li>Reverse-mode differentiation can compute a whole gradient at a cost comparable to a few loss evaluations</li>
+<li>Streaming data and moderate accuracy can favor stochastic updates</li>
+</ul>
+<div class="key-point">
+<p>Compare <span class="alert">work to reach useful accuracy</span>, including noise and overhead</p>
+</div>
+<aside class="notes">
+<p>N and m are independent axes: a large dataset can make SGD useful with only two parameters. A huge parameter count can make full dense Newton impractical without making GD geometrically faster. A naive dense Newton linear solve costs O(m^3); sparse, structured, Hessian-vector, and limited-memory methods can avoid that cost. L-BFGS retains a few gradient/step pairs and needs O(rm) storage for memory length r, rather than O(m^2). It remains a strong option for many deterministic problems. The gradient work table describes dense linear/logistic models, not every possible neural network. Automatic reverse mode does not require m finite-difference evaluations. Statistical prediction error and optimization error are different; optimize accurately enough for the application, and use held-out data to judge prediction. SGD is much older than deep learning; large datasets, differentiable models, automatic differentiation and parallel hardware expanded its use.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="stochastic-gradient-descent" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Stochastic gradient descent</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>Select <span class="math inline">\(I_k\)</span> uniformly from <span class="math inline">\(\{0,\ldots,N-1\}\)</span>, independently of previous draws</p>
+<p><span class="math display">\[\begin{gather*}
+\vG_k=\nabla\operatorname{loss}_{I_k}(\vtheta_k)
+\qquad
+\vtheta_{k+1}=\vtheta_k-\eta_k\vG_k
+\\
+\Ex[\vG_k\mid\mathcal F_k]=\nabla\operatorname{Loss}(\vtheta_k)
+\end{gather*}\]</span></p>
+<p>Here <span class="math inline">\(\mathcal F_k\)</span> contains the previous draws and the current iterate <span class="math inline">\(\vtheta_k\)</span></p>
+<ul>
+<li>A <span class="alert">fresh random observation</span> gives a cheap gradient estimate</li>
+<li>Conditional unbiasedness concerns the gradient at the current iterate</li>
+<li>It does not make <span class="math inline">\(\vtheta_k\)</span> an unbiased minimizer estimate</li>
+<li>A particular update may increase the full loss</li>
+</ul>
+<div class="key-point">
+<p>Estimate the <span class="alert">gradient</span> by Monte Carlo, then use it to update the parameters</p>
+</div>
+<aside class="notes">
+<p>The expectation is over the fresh sampled index, holding the history and current iterate fixed. A random permutation of the data within an epoch is also common, but its next index is not independent uniform conditional on all previous indices. Our identities and notebook experiments use sampling with replacement. They are not proofs for arbitrary shuffling or QMC substitutions.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="mini-batches-and-gradient-noise" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Mini-batches and gradient noise</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>With <span class="math inline">\(b\)</span> fresh IID indices, sampled <span class="alert">with replacement</span>,</p>
+<p><span class="math display">\[\begin{gather*}
+\vG_k=\frac1b\sum_{j=1}^b\nabla\operatorname{loss}_{I_{kj}}(\vtheta_k)
+\\
+\sigma_k^2=\frac1N\sum_{i=0}^{N-1}
+\norm{\nabla\operatorname{loss}_i(\vtheta_k)-\nabla\operatorname{Loss}(\vtheta_k)}^2
+\\
+\Ex\bigl[\norm{\vG_k-\nabla\operatorname{Loss}(\vtheta_k)}^2\mid\mathcal F_k\bigr]
+=\frac{\sigma_k^2}{b}
+\end{gather*}\]</span></p>
+<ul>
+<li>Larger batch: less gradient noise, more work per update</li>
+<li>Even at a minimizer, individual component gradients may be nonzero</li>
+<li>Vectorized batches can use hardware more efficiently than single observations</li>
+</ul>
+<div class="key-point">
+<p>Choose <span class="math inline">\(b\)</span> for <span class="alert">accuracy per unit cost</span>; fewer updates alone prove little</p>
+</div>
+<aside class="notes">
+<p>Expand the squared norm of the average of b centered independent vectors. Cross terms have zero conditional expectation; the b diagonal terms give sigma_k^2/b. Sigma_k^2 is the trace of the component-gradient covariance, not the loss variance. Sampling b distinct observations uniformly without replacement gives an additional (N-b)/(N-1) factor for N&gt;1. Drawing b=N with replacement is not the full gradient; full GD explicitly visits every observation once.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="why-a-noisy-direction-can-help" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Why a noisy direction can help</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>Assume <span class="math inline">\(\nabla\operatorname{Loss}\)</span> is <span class="math inline">\(L\)</span>-Lipschitz and <span class="math inline">\(0&lt;\eta_k\leq1/L\)</span></p>
+<p><span class="math display">\[\begin{align*}
+\Ex[\operatorname{Loss}(\vtheta_{k+1})\mid\mathcal F_k]
+&amp;\leq\operatorname{Loss}(\vtheta_k)
+\\
+&amp;\quad-\underbrace{\frac{\eta_k}{2}\norm{\nabla\operatorname{Loss}(\vtheta_k)}^2}_{\text{downhill progress}}
++\underbrace{\frac{L\eta_k^2\sigma_k^2}{2b}}_{\text{noise penalty}}
+\end{align*}\]</span></p>
+<ul>
+<li>Far from a stationary point, downhill progress can dominate</li>
+<li>Near it, a fixed learning rate can leave persistent fluctuations</li>
+<li>Decrease <span class="math inline">\(\eta_k\)</span> or increase <span class="math inline">\(b\)</span> when finer accuracy is needed</li>
+</ul>
+<div class="key-point">
+<p>Noisy gradients can be <span class="alert">cheap enough to be useful</span>; noise does not cure poor conditioning</p>
+</div>
+<aside class="notes">
+<p>The descent lemma gives F(theta-eta G) &lt;= F(theta)-eta grad(F)^T G + L eta^2 ||G||^2/2. Conditional unbiasedness and the squared-norm variance decomposition give -eta(1-L eta/2)||grad(F)||^2+L eta^2 sigma_k^2/(2b). Using eta&lt;=1/L yields the displayed simpler bound. This is an expected one-step bound under the stated assumptions, not descent on every draw or a global-minimum guarantee. Rosenbrock is not globally L-smooth on all of R^2; the bound is not asserted globally for that example. See Bottou, Curtis, and Nocedal, sections 4.1-4.3, for fuller convergence assumptions and results.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="learning-rates-and-the-noise-floor" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Learning rates and the noise floor</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>A scalar example: <span class="math inline">\(\operatorname{loss}_i(\theta)=\tfrac12(\theta-a_i)^2\)</span> with <span class="math inline">\(a_i\in\{-1,1\}\)</span> equally likely</p>
+<p><span class="math display">\[\theta_{k+1}=(1-\eta)\theta_k+\eta\overline a_k
+\qquad \var(\overline a_k)=1/b\]</span></p>
+<p>For constant <span class="math inline">\(0&lt;\eta&lt;2\)</span> and independent batches,</p>
+<p><span class="math display">\[\lim_{k\to\infty}\Ex(\theta_k^2)=\frac{\eta}{b(2-\eta)}\]</span></p>
+<ul>
+<li>Smaller <span class="math inline">\(\eta\)</span> or larger <span class="math inline">\(b\)</span>: lower limiting mean squared error</li>
+<li>Decaying <span class="math inline">\(\eta_k\)</span>: progressively smaller updates, slower late progress</li>
+<li>A classical schedule is <span class="math inline">\(\eta_k=\eta_0/(1+k/k_0)\)</span><br>Convergence still needs assumptions on the objective and noise</li>
+</ul>
+<div class="key-point">
+<p>A fixed step can be useful for <span class="alert">early progress</span> while limiting final precision</p>
+</div>
+<aside class="notes">
+<p>The mean of a is zero and its variance is one. Conditional independence gives E theta_{k+1}<sup>2=(1-eta)</sup>2 E theta_k<sup>2+eta</sup>2/b. Solve the scalar geometric recurrence to obtain the limit. Excess loss equals theta^2/2. This exact noise floor is specific to this quadratic and these nonvanishing component gradients; it is not inevitable when every component gradient vanishes at the same minimizer. For the stated decreasing schedule, positive eta_0,k_0 give sum eta_k=infinity and sum eta_k^2&lt;infinity, classical stochastic approximation conditions. They alone do not ensure convergence without suitable smoothness, boundedness/noise and objective assumptions.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="quadratic-component-losses" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Four quadratic component losses</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
 <p>For <span class="math inline">\(i=0,\ldots,3\)</span>,</p>
 <p><span class="math display">\[\begin{gather*}
 \operatorname{loss}_i(\vtheta)
@@ -2158,18 +2412,122 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 <p>One randomly selected center gives a <span class="alert">noisy direction</span>; averaging all four gives the full gradient</p>
 </div>
 </section>
-<section class="slide level2">
+<section id="gradient-and-stochastic-gradient-paths" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Gradient and stochastic-gradient paths</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
 
-<h3 id="gradient-and-stochastic-gradient-paths">Gradient and stochastic-gradient paths</h3>
 <p>Contours show excess average loss above its minimum<br> SGD samples one of the four component gradients at each step</p>
-<div id="7cc5fd25" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="1">
+<div id="b5083323" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="05-selected-topics_files/figure-revealjs/cell-2-output-1.png" class="quarto-figure quarto-figure-center" alt="Contours of excess average quadratic loss with full-gradient descent and stochastic-gradient descent using one of four component losses at each step, both approaching the zero minimizer" width="574" height="568"></p>
+<p><img data-src="05-selected-topics_files/figure-revealjs/cell-3-output-1.png" class="quarto-figure quarto-figure-center" alt="Contours of excess average quadratic loss with full-gradient descent and stochastic-gradient descent using one of four component losses at each step, both approaching the zero minimizer" width="574" height="568"></p>
 </figure>
 </div>
 </div>
+</div>
+</section>
+<section id="a-large-data-example" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>A large-data example</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p>Logistic regression: observations <span class="math inline">\((\vx_i,y_i)\)</span> with <span class="math inline">\(y_i\in\{0,1\}\)</span></p>
+<p><span class="math display">\[\begin{gather*}
+p_i(\vtheta)=\frac{1}{1+e^{-\vx_i^\top\vtheta}}
+\\
+\operatorname{loss}_i(\vtheta)=\log(1+e^{\vx_i^\top\vtheta})
+-y_i\vx_i^\top\vtheta+\frac{\lambda}{2}\norm{\vtheta}^2
+\\
+\nabla\operatorname{loss}_i(\vtheta)=(p_i(\vtheta)-y_i)\vx_i+\lambda\vtheta
+\end{gather*}\]</span></p>
+<ul>
+<li>Each observation gives a gradient; average them for the full gradient</li>
+<li>Hold <span class="math inline">\(m\)</span> fixed and increase <span class="math inline">\(N\)</span> to isolate the <span class="alert">data-size effect</span></li>
+<li>Compare full GD, single-observation SGD, and mini-batch SGD</li>
+<li>Measure gradient work and elapsed time to a specified loss gap</li>
+</ul>
+<aside class="notes">
+<p>The companion includes the intercept as the first coordinate of x and, for simplicity, regularizes every coefficient including that intercept, lambda&gt;0. Thus the average of the displayed per-observation regularizers gives exactly lambda||theta||^2/2, not N times that penalty. The empirical loss has a unique minimizer. The simulation’s generating parameter is not that empirical minimizer; a tightly solved L-BFGS reference supplies the target loss. Use logaddexp to evaluate the log likelihood without exponential overflow.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="choosing-an-optimization-method" class="slide level2">
+<h2>Choosing an optimization method</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situation</th>
+<th>Methods worth considering</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cheap full gradient; high precision needed</td>
+<td>Full-gradient methods, BFGS, L-BFGS, Newton or trust-region methods</td>
+</tr>
+<tr class="even">
+<td>Large dataset or streaming observations</td>
+<td>Mini-batch SGD and related stochastic methods</td>
+</tr>
+<tr class="odd">
+<td>Unequal curvature or badly scaled features</td>
+<td>Scaling, preconditioning, momentum, curvature information</td>
+</tr>
+<tr class="even">
+<td>Gradient noise dominates late progress</td>
+<td>Smaller steps, larger batches, averaging, variance reduction</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>L-BFGS and Hessian-vector methods avoid storing a dense Hessian</li>
+<li>Momentum and Adam modify first-order updates; neither guarantees success on every problem</li>
+<li>Nonconvex optimization still has no general global-minimum guarantee</li>
+</ul>
+<div class="key-point">
+<p>The old lesson about <span class="alert">geometry</span> remains; modern practice also budgets <span class="alert">data access and accuracy</span></p>
+</div>
+<div class="refs">
+<p><a href="https://arxiv.org/abs/1606.04838">Bottou, Curtis, and Nocedal (2018), §§3–7</a></p>
+</div>
+</section>
+<section id="gradient-descent-companion-notebook" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<h2>Gradient descent companion notebook</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+</div>
+
+<p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/StochasticGradientDescent.ipynb">Open Stochastic Gradient Descent on GitHub</a> · <a href="https://colab.research.google.com/github/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/StochasticGradientDescent.ipynb">Run in Colab</a></p>
+<ol type="1">
+<li>Rosenbrock: compare backtracking GD with BFGS and count evaluations</li>
+<li>Quadratic losses: inspect stochastic paths, batch variance, and the noise floor</li>
+<li>Logistic regression: compare equal gradient work and measured time, with loss diagnostics timed separately</li>
+</ol>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span> Increase <span class="math inline">\(N\)</span> while holding <span class="math inline">\(m\)</span> fixed, then change <span class="math inline">\(m\)</span> while holding <span class="math inline">\(N\)</span> fixed <span class="exsub">Which changes affect gradient cost, curvature storage, and conditioning?</span> </span></p>
+</div>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span> Tighten the requested loss gap and change the batch size <span class="exsub">Does the best method for early progress also reach the highest precision fastest?</span> </span></p>
 </div>
 </section></section>
 <section>
