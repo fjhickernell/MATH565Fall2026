@@ -1,20 +1,30 @@
 # Next task
 
-## November 5 lecture continuation
+## November 10 lecture continuation
 
-Resume Selected Topics with [Single-level and two-level work versus error](../slides/05-selected-topics.qmd#two-level-cost-interpretation),
-then [Allocate two levels: points versus work](../slides/05-selected-topics.qmd#two-level-allocation-practice)
-and the [Multilevel Option Pricing notebook](../notebooks/performance/MultilevelOptionPricing.ipynb).
-Briefly recap the many-level/bias idea, then continue
-[Stochastic Gradient Descent](../slides/05-selected-topics.qmd#stochastic-gradient-descent-section).
+Resume Selected Topics at [Why cheap gradients matter](../slides/05-selected-topics.qmd#why-cheap-gradients-matter),
+then develop stochastic gradients, mini-batch noise, and learning rates.
+In the [Stochastic Gradient Descent notebook](../notebooks/performance/StochasticGradientDescent.ipynb),
+resume Part 3, “A gradient really can be a Monte Carlo estimate.”
 
-November 3 covered the two-level allocation and cost–error derivations,
-IID savings and covariance/cost explanation, and a brief multilevel overview.
-Worked numerical examples and the notebook were deferred; SGD and Monte
-Carlo Tree Search were only announced. The recording-based reconciliation
-and verified November 5 calendar note are recorded in `notes/LECTURE-UPDATES.md`.
-Schedule and handoff changes are included in this Checkpoint; remote deployment
-and live-page verification remain pending.
+November 5 recapped two-level allocation and cost, walked through the
+multilevel option-pricing and beam comparisons, and began optimization with
+gradient descent, Rosenbrock geometry, and conditioning versus dimension.
+The closing notebook discussion reached the conditioning table; stochastic
+gradients were deferred. The two-level slide exercise was skipped in favor
+of the notebooks, and optional adaptive methods were not developed.
+The November 10 Illinois Tech Fred → Calendar occurrence note is saved and
+verified in Fantastical; recording evidence is in `notes/LECTURE-UPDATES.md`.
+Schedule and handoff changes are included in this Checkpoint; remote
+deployment and live-page verification remain pending. The schedule renders,
+its continuation links resolve, and all six tables pass desktop and phone-width
+browser inspection.
+
+The November 5 classroom reruns are preserved: Multilevel Beam, Multilevel
+Option Pricing, and Stochastic Gradient Descent have 9, 13, and 10 completed
+code cells, respectively, with no saved errors. Their total runtimes are
+20.7, 37.7, and 6.1 seconds. Notebook sources are unchanged; refreshed results
+and timings remain measurements from this run.
 
 ## Stochastic gradient descent — instructor review
 
@@ -44,9 +54,9 @@ All ten code cells execute cleanly in the course qmcpy kernel; five figures
 and independent gradient/moment checks are included. Each logistic method
 uses the same component-gradient budget, with sampling and selection charged
 inside optimization time and full-loss diagnostics timed separately. The
-default Intel run favors vectorized full GD on elapsed time; this is reported
-without claiming universal SGD speedups. Rerun on the lecture machine before
-using its timings. The notebook page, slide links, and cumulative terms index
+November 5 classroom run favors vectorized full GD on elapsed time; treat
+these timings as machine-specific measurements without claiming universal
+SGD speedups. The notebook page, slide links, and cumulative terms index
 are updated. Instructor content review remains open.
 
 Validation: the website and all five decks render; the revised slides and

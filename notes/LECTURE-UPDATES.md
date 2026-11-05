@@ -9,9 +9,9 @@
   displayed lecture materials; distinguish substantive coverage from previews
   and deferred explanations.
 
-The schedule is reconciled through November 3. The August 18–September 17
+The schedule is reconciled through November 5. The August 18–September 17
 rows record the historical audit without retroactive calendar edits; the
-November 5 continuation note is saved and verified locally in Fantastical.
+November 10 continuation note is saved and verified locally in Fantastical.
 
 | Instructional meeting | Status | Panopto recording | Next instructional event annotated | Checked |
 |---|---|---|---|---|
@@ -35,6 +35,7 @@ November 5 continuation note is saved and verified locally in Fantastical.
 | October 22, 2026 | Reconciled: independent Metropolis sampler and self-normalized importance sampling review; IID/RQMC stopping, pilot limitations and fixed-design error assessment; notebook examples and deterministic/RQMC cost comparisons through the tighter-RMSE exercise | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=62e2ad09-589c-491c-8ad1-b4eb011512d0) | October 29, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Fred → Calendar occurrence only; resume Deck 04 at “Big Ideas (continued),” then “Choose the Method for the Task” and Deck 05; October 27 is Test 2 | October 22, 2026 |
 | October 29, 2026 | Reconciled: Improving Efficiency synthesis and stopping recap; parallel computing and CPU/GPU notebook; two-level random allocation and deterministic bounds through “What two levels accomplish”; Lagrange derivation and many levels deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b56ef351-70c1-44a4-a1c1-b4f20117f026) | November 3, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Fred → Calendar occurrence only; resume Selected Topics at “Deriving the two-level allocation,” then cost versus error, allocation exercise, and hierarchy | October 29, 2026 |
 | November 3, 2026 | Reconciled: two-level allocation and cost–error derivations; IID savings and covariance/cost comparison; brief multilevel telescoping/allocation/bias/cost overview; worked examples and notebook deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=0a596b6f-2284-4473-b1b4-b4f7012577c7) | November 5, 2026, 10:00–11:15 AM America/Chicago (CST), PH 109; Illinois Tech Fred → Calendar occurrence only; resume two-level examples and Multilevel Option Pricing, then Stochastic Gradient Descent | November 3, 2026 |
+| November 5, 2026 | Reconciled: two-level recap; Multilevel Option Pricing and Beam comparisons; gradient descent, Rosenbrock geometry, and conditioning versus dimension through the notebook conditioning table; stochastic gradients deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=0642ecc9-7e10-4a57-94f1-b4f90123f1c7) | November 10, 2026, 10:00–11:15 AM America/Chicago (CST), PH 109; Illinois Tech Fred → Calendar occurrence only; resume “Why cheap gradients matter” and Stochastic Gradient Descent notebook Part 3 | November 5, 2026 |
 
 Recording evidence: Deck 02 mixture/acceptance–rejection unit-cube review
 preceded Deck 03 (33:06). Unbiased discrepancy began at 37:06; RKHS and
@@ -275,3 +276,54 @@ two-level work versus error,” then the allocation exercise and Multilevel
 Option Pricing notebook; briefly recap the many-level/bias idea before
 Stochastic Gradient Descent. The broader teaching-cleanup issue remains open
 for Fred’s additional directions. No full-deck completion is inferred.
+
+
+## November 5 recording evidence
+
+The Illinois Tech Fred readiness notice identifies a November 5, 9:56 AM
+recording start; Panopto duration is 1:20:28. Captions and the transition index
+confirm the two-level recap, deterministic triangle-inequality distinction,
+and cost/savings comparison through 20:48. The two-level slide exercise was
+skipped in favor of the notebooks. Multilevel Option Pricing was discussed
+from about 23:03 through 44:18: coupled coarse/fine paths, pilot variance and
+work, equal/optimal/single-level allocations, IID/Sobol' comparisons, elapsed
+time versus work, and the distinction between sampling error and bias.
+The beam example followed at 47:09–52:33, including its model, allocation
+comparison, and refinement/bias discussion. Optional adaptive methods were
+not developed.
+
+The optimization introduction begins at 56:18. Rosenbrock geometry appears
+at 59:51, gradient descent at 1:05:51, and conditioning versus dimension at
+1:10:18. “Why cheap gradients matter” was displayed at 1:15:51 before the
+instructor returned to the notebook's Rosenbrock and conditioning examples;
+its detailed gradient-cost material and the stochastic-gradient development
+are still to teach. The paused, muted recording visibly shows the notebook's
+GD close-up at 1:17:37 and conditioning table at 1:19:40, with Part 3,
+“A gradient really can be a Monte Carlo estimate,” immediately below.
+Closing captions explicitly pause at 1:19:53. Stochastic gradients,
+mini-batch variance, and learning-rate/noise-floor development were not reached.
+
+Saved the November 10 single occurrence with Only This Event, then reopened
+it in Fantastical and verified the persisted note, original title
+“MATH 565 Monte Carlo,” PH 109, November 10, 10:00–11:15 AM. The calendar
+selector identifies Calendar under Illinois Tech Fred, and Central Time
+(GMT-6) was verified before saving. Resume Selected Topics at “Why cheap
+gradients matter” and the notebook's Part 3, then stochastic gradients,
+mini-batch noise, and learning rates. The broader November 3 teaching-cleanup
+issue and instructor content review remain open; no full-deck completion is
+inferred.
+
+Validation: the changed schedule renders successfully and its continuation
+anchors resolve. All six schedule tables fit at 1280- and 390-pixel browser
+widths, with no clipped cells or horizontal overflow; `git diff --check`
+passes. Fantastical is restored to its Today week with details and search
+results closed; Safari is back on the original Zoom grant tab with both
+paused, muted recording tabs closed; Mail is in All Inboxes with no task
+search. These changes are included in this Checkpoint; remote deployment
+and live-page verification remain pending.
+
+Checkpoint validation: the full website and all five decks render with the
+qmcpy kernel. All 1,238 local references in the assembled course pages and
+decks resolve, and the eight beam-model tests pass. The three classroom
+notebook reruns retain unchanged source, valid figures and complete successful
+executions; the two refreshed timing figures pass visual review.
