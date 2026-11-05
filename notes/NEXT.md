@@ -25,6 +25,39 @@ if it changes. The prepared answer copy remains private until grading is complet
 
 ## November 3 teaching follow-up
 
+The new [Multilevel Beam companion](../notebooks/performance/MultilevelBeam.ipynb)
+is ready for instructor review alongside Multilevel Option Pricing. It uses a
+simple Python beam model, shared material inputs, charged allocation pilots,
+and exact approximation-bias references; no external model service is needed.
+The strengthened default has 16 material regions, log stiffness uniform on
+$[0,2]$, and a $2^{25}$ panel-work budget per design; its 24 estimator
+repetitions take about 20 seconds on Mini. Accuracy is also shown as a
+percentage of the target mean.
+Part 3 now generates a direct single-level/optimal-MLMC comparison: exact and
+empirical RMSE improvement factors at the same total-work budget, including
+the pilot, alongside measured seconds and the clock-time ratio. The Selected
+Topics practical takeaways explain why cheap evaluations and overhead can
+make MLMC slower despite lower evaluation work.
+Its nine code cells, five figures, and eight independent model checks pass
+locally. The notebook page and Selected Topics link it; these source changes
+are included in this Checkpoint. Remote deployment and live verification
+remain pending. The beam now explains every level, table, and plot, includes
+single-level IID in its allocation comparison, and reports final/pilot/total
+work and seconds separately. Option Pricing uses factor-four refinement:
+four levels through 256 steps by default (about 22 seconds on Mini), with
+`L=5` through 1,024 steps validated at about 2.5 minutes. Its fixed-grid
+comparisons reuse native QMCPy fine/coarse payoffs on the same path; the
+optional native adaptive algorithms retain their own factor-two hierarchy.
+Part 3 explains the default levels, table columns, and both plots. Part 4 also compares
+single-level IID at the same budget and reports `total_work = final_work +
+pilot_work` in time-step proxy units. Parts 4 and 7 use `proxy_cost` in the
+work definition; Part 7 now explains each method, table column, and plotted
+point, with a comparison generated from the current results. Notebook single-equation
+displays use `$$`, and plot/table labels use the standard term “Level.” The
+final option audit adds a roadmap and generated level guide, uses log scales
+for both allocation-bar axes in Parts 4 and 7, and distinguishes the modest
+larger-budget MLQMC accuracy benefit from its greater elapsed time.
+
 [Clean up November 3 teaching](https://github.com/fjhickernell/MATH565Fall2026/issues/4)
 remains open awaiting Fred’s additional material-cleanup directions and any
 agreed corrections. Pacing is reconciled; broader instructor/visual review

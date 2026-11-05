@@ -76,3 +76,7 @@ other examples.
   compare level allocations, direct fine estimation, IID MLMC, and randomized
   Sobol' MLQMC while distinguishing sample counts, work, pilot cost, sampling
   error, and discretization bias
+- [Multilevel Beam](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/MultilevelBeam.ipynb)
+  — use a simple Python cantilever-beam model to compare coupled corrections,
+  sample allocations, and approximation bias against an exact reference;
+  includes QMCPy's adaptive MLMC solver and requires no external model service

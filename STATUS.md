@@ -608,6 +608,22 @@ appropriate phase rather than appended indiscriminately.
     charged pilots, finite-target sampling error, and separate refinement-bias
     diagnostics. All thirteen code cells execute cleanly with pinned
     dependencies; instructor review remains open.
+  - [x] Add a simple Multilevel Beam companion with same-material coupling,
+    pilot-based allocation, exact approximation bias, and native QMCPy MLMC.
+    Its Python model needs no external service; nine notebook code cells,
+    five figures, and eight independent model checks pass locally. The default
+    now uses 16 material regions, wider stiffness uncertainty, a larger work
+    budget, and relative RMSE; course links are prepared. Instructor review
+    remains open.
+  - [x] Audit the MLMC companions for explicit level maps, table/plot guidance,
+    single-level comparisons, and total-work accounting. Option Pricing now
+    uses factor-four refinement, with a validated four-level default and
+    optional fifth level. Its roadmap, generated level guide, and plot notes
+    distinguish the MLQMC accuracy and timing comparisons; allocation bar
+    charts use log scales. The beam separates panel work from clock time and
+    verifies reference variances by independent quadrature. The beam quantifies
+    its RMSE improvement and longer clock time at equal total work; Selected
+    Topics explains how overhead can dominate when evaluations are cheap.
   - [x] Clarify the independent-pilot IID interval and optional SD inflation;
     center the IID/RQMC comparison table and align the Selected Topics preview.
   - [x] Generalize same-time accuracy to $s^{-p}$ and the multilevel sequence

@@ -1431,15 +1431,23 @@ pilot work before quoting a complete practical complexity rate.
 - Assess remaining [approximation bias]{.alert}; one small correction does not bound the omitted tail
 - QMC can improve sampling accuracy when coupling preserves suitable [smoothness]{.alert}
 - Count pilots, setup, and allowed sample sizes in the total work
+- With [cheap evaluations]{.alert}, sampling and setup overhead can outweigh the saved evaluation work: MLMC may take longer in clock time
 
 ::: {.key-point}
-Use the [option-pricing notebook](#multilevel-option-pricing-notebook) to compare the methods and inspect the tradeoffs
+Compare the [option-pricing notebook](#multilevel-option-pricing-notebook) and [beam notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/MultilevelBeam.ipynb) to inspect allocation and bias
 :::
 
 ::: {.notes}
 Keep the main message practical. QMC and randomized QMC need their own
 method-appropriate error assessment; individual IID variance is not a
 substitute. The detailed pilot and error-assessment reference follows:
+
+The notebooks count evaluation work using panel or time-step proxies and
+report complete measured seconds separately. For inexpensive vectorized
+models, generating many inputs, transformations, memory handling, and
+Python calls may dominate. Reducing evaluation work then need not reduce
+clock time. Time complete contributions at each level when elapsed time is
+the resource to optimize; include setup and allocation pilots as well.
 
 Allocate randomized work in practice
 

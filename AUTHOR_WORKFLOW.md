@@ -734,6 +734,17 @@ quadrature reference values, optimization, and other supporting calculations
 without a suitable QMCPy interface. A deliberate direct inverse-CDF example
 may expose its formula for teaching; routine simulation should use QMCPy.
 
+## Beam MLMC companion
+
+`notebooks/performance/MultilevelBeam.ipynb` imports the course-owned
+`notebooks/beam_mlmc.py` helper. Publish that helper with the notebook. Validate
+the beam model and QMCPy adapter with the `qmcpy` environment using
+`python -m unittest discover -s tests -p 'test_beam_mlmc.py'`, then execute the
+complete notebook and inspect its figures. The classroom model needs no Docker
+container, model server, or additional dependencies.
+Keep the region count and material bounds consistent between the simulation,
+QMCPy adapter, and analytic reference functions when changing the problem.
+
 ## CPU/GPU demonstration
 
 `notebooks/performance/GPU_MonteCarlo_Demo.ipynb` is the Deck 05 hardware

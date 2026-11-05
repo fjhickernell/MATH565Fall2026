@@ -104,7 +104,7 @@ pattern, not a permanent ownership contract.
 | Deck 02, Generating Samples | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb` | Main direct-sampling development; early low discrepancy and financial-option examples intentionally prepare later decks |
 | Deck 03, Markov Chain Monte Carlo | `sampling/TransportMapsAndAcceptanceRejection.ipynb`; `sampling/MetropolisHastings.ipynb`; `applications/BayesianMCMC.ipynb`; `performance/Discrepancy.ipynb`; `applications/QueueSimulation.ipynb` | Return to acceptance--rejection as motivation; main MCMC, distribution-comparison, Bayesian, and queueing development |
 | Deck 04, Improving Efficiency | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb`; `sampling/LowDiscrepancyConstructions.ipynb`; `applications/KeisterExample.ipynb`; `sampling/ConditionalMonteCarlo.ipynb`; `performance/AsianOptionVarianceReduction.ipynb`; `performance/Discrepancy.ipynb` | Return to earlier low discrepancy, transport, and option examples; main importance-sampling, variance-reduction, discrepancy, and QMC development |
-| Deck 05, Selected Topics | `performance/MultilevelOptionPricing.ipynb`; `performance/GPU_MonteCarlo_Demo.ipynb`; a consolidated gradient/stochastic-gradient notebook if retained after review; earlier application notebooks when a selected topic extends them | Main multilevel coupling, allocation, and error/work comparisons; parallel-computing performance; flexible continuation into selected methods |
+| Deck 05, Selected Topics | `performance/MultilevelOptionPricing.ipynb`; `performance/MultilevelBeam.ipynb`; `performance/GPU_MonteCarlo_Demo.ipynb`; a consolidated gradient/stochastic-gradient notebook if retained after review; earlier application notebooks when a selected topic extends them | Main multilevel coupling, allocation, and error/work comparisons; parallel-computing performance; flexible continuation into selected methods |
 
 The broad inherited `QMCPy_Introduction.ipynb` has no required deck call. It
 should be retained only if it becomes a concise software orientation rather
@@ -344,8 +344,47 @@ bound. QMCPy's adaptive and continuation methods form an optional extension.
 All thirteen code cells complete from a clean local `qmcpy` kernel with the
 recorded dependencies; all seven figures are inspected. The four optional
 native multilevel/adaptive solvers also execute without warnings in a separate
-validation run. Instructor content review remains open. Keep this
-notebook independent of the CPU/GPU and prospective SGD companions.
+validation run. The main fixed-grid hierarchy now refines by four, starting
+at four steps: the default four levels reach 256 steps (about 22 seconds on
+Mini); optional `L=5` reaches 1,024 steps (about 2.5 minutes). The local coupling
+uses native QMCPy payoff evaluations on the full path and every fourth path
+value. Native adaptive algorithms keep their own factor-two hierarchy.
+A roadmap, generated level map, table/plot guides, a single-level baseline,
+and explicit total-work accounting accompany the comparison. Parts 4 and 7
+use log scales for allocation bars. The interpretation distinguishes the
+modest larger-budget MLQMC accuracy benefit from its greater elapsed time.
+Instructor content review remains open. Keep this notebook independent of the
+CPU/GPU and prospective SGD companions.
+
+### `performance/MultilevelBeam.ipynb` — Deck 05 companion
+
+A simple Python generalization of the UM-Bridge log-stiffness beam, using unit
+length, unit uniform load, and tip deflection. The default has 16 independently
+uncertain material regions with log stiffness uniform on $[0,2]$, replacing
+the narrow three-region starting example. Composite midpoint integration
+provides the nested hierarchy; an independent analytic solution provides exact
+finite-grid means, limiting mean, contribution variances, and approximation
+bias. No Docker or model service is required.
+
+The notebook compares same-material coupling with independent differences,
+equal-point/equal-work/pilot-based IID allocation, charged pilot work, and
+sampling versus total RMSE, including percentages of the target mean. A final
+native `CubMLMC` comparison lets QMCPy
+choose counts and resolution. The deterministic forward model and package
+adapter are in `notebooks/beam_mlmc.py`; eight independent physics, bias,
+coupling, and interface checks are in `tests/test_beam_mlmc.py`.
+
+The audit adds a level map and guides for every table/plot, includes single-level
+IID alongside allocation counts, and reports final/pilot/total work and seconds
+separately. An independent tensor-quadrature check verifies reference variances.
+The single-level/optimal-MLMC readout generates exact and empirical RMSE
+improvement factors and a measured clock-time ratio from the current results.
+It explicitly separates accuracy at equal panel work from clock-time efficiency.
+All nine code cells execute cleanly with the pinned dependencies; five figures
+are inspected. The default panel-work budget is $2^{25}$ per design, including
+its allocation pilot when used; 24 whole-estimator repetitions support the
+RMSE comparison. The saved Mini run takes about 20 seconds. Notebook, deck,
+and page links are prepared locally; instructor review remains open.
 
 ### Other Deck 05 performance notebooks
 
