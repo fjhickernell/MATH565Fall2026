@@ -51,8 +51,11 @@ are updated. Instructor content review remains open.
 
 Validation: the website and all five decks render; the revised slides and
 notebook figures pass desktop review, with compact-slide and phone-page checks.
-All 464 assembled page/deck links resolve. These sources are included in this
-Checkpoint; remote deployment and live verification remain pending.
+All 1,312 canonical page/deck references resolve. The published December review
+dates, SGD slides and illustration, and GitHub notebook are verified live.
+The publishing workflow now requests a Pages build explicitly after the
+`gh-pages` push, so the public deployment does not depend on a token-generated
+push triggering another workflow.
 
 ## November 5 makeup
 

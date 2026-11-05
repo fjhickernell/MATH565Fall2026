@@ -810,6 +810,14 @@ rsync -a --delete slides/_site/ _site/slides/
 The GitHub Actions workflow performs these steps and publishes the result on
 every push to `main`. Do not commit `_site/` or other rendered output.
 
+The workflow explicitly requests a GitHub Pages build after pushing the rendered
+files to `gh-pages`: a push made with `GITHUB_TOKEN` does not trigger that build
+automatically. Publishing to the branch and deploying the public website are
+separate stages. When live verification is required, confirm that the latest
+Pages build is successful at the current `gh-pages` commit and check the actual
+public page; a green rendering/publishing run alone does not establish that the
+website has updated.
+
 For Schedule changes, follow the shared
 [webpage style guide](classlib/docs/webpage-style.md)
 guidance. Inspect every monthly table, including sparse future rows; check
