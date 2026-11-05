@@ -80,3 +80,7 @@ other examples.
   — use a simple Python cantilever-beam model to compare coupled corrections,
   sample allocations, and approximation bias against an exact reference;
   includes QMCPy's adaptive MLMC solver and requires no external model service
+- [Stochastic Gradient Descent](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/StochasticGradientDescent.ipynb)
+  — compare GD and BFGS on Rosenbrock; separate conditioning from dimension,
+  measure mini-batch noise and learning-rate effects, and compare logistic
+  regression methods by gradient work and elapsed time

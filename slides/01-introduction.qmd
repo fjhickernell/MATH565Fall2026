@@ -447,6 +447,7 @@ Canvas<br>Only one person per group submits the assignment
 - [Change of variables](04-improving-efficiency.html#transforming-an-integral)
 - [Cholesky factorization](02-generating-samples.html#cholesky-factorization)
 - [Component-by-component construction](04-improving-efficiency.html#component-by-component-construction)
+- [Condition number](05-selected-topics.html#conditioning-versus-dimension)
 - [Conditional density](#conditional-probability)
 - [Conditional expectation](#laws-of-total-expectation-and-variance)
 - [Conditional Monte Carlo](#conditional-monte-carlo)
@@ -519,6 +520,7 @@ Canvas<br>Only one person per group submits the assignment
 - [Lattice sequence](04-improving-efficiency.html#four-low-discrepancy-families)
 - [Law of total expectation](#laws-of-total-expectation-and-variance)
 - [Law of total variance](#laws-of-total-expectation-and-variance)
+- [Learning rate](05-selected-topics.html#gradient-descent)
 - [Likelihood](03-markov-chain-monte-carlo.html#likelihood-and-maximum-likelihood-estimation)
 - [Lookback option](02-generating-samples.html#lookback-and-barrier-payoffs)
 - [Low discrepancy](02-generating-samples.html#what-does-low-discrepancy-mean)
@@ -543,6 +545,7 @@ Canvas<br>Only one person per group submits the assignment
 :::
 
 ::: {.column width="50%"}
+- [Mini-batch](05-selected-topics.html#mini-batches-and-gradient-noise)
 - [Mixture distribution](02-generating-samples.html#gaussian-mixture-random-numbers)
 - [Monte Carlo error](#central-limit-theorem)
 - [Monte Carlo method](#how-is-uncertainty-expressed-quantitatively)

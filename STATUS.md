@@ -595,6 +595,14 @@ appropriate phase rather than appended indiscriminately.
   - [x] Draft Lecture 05, Selected Topics, from the Fall 2025 Keynote deck,
     including parallel computation, stochastic gradient descent, and
     multilevel Monte Carlo.
+  - [x] Expand stochastic gradient descent around Rosenbrock geometry,
+    conditioning versus dimension, data size and gradient cost, conditional
+    unbiasedness, mini-batch variance, expected descent, and learning-rate
+    noise floors. Add the consolidated Stochastic Gradient Descent companion
+    with GD/BFGS, finite-sum quadratics, and regularized logistic regression;
+    equal gradient budgets and separate optimization/diagnostic timings.
+    Ten code cells and four figures validate in the local qmcpy kernel;
+    instructor content review remains open (November 5, 2026).
   - [x] Clarify two-level mean and error notation, keep the random allocation
     derivation consecutive, and distinguish finite-grid sampling error from
     limiting-target approximation bias in the multilevel development.

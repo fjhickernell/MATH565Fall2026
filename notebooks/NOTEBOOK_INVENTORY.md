@@ -104,7 +104,7 @@ pattern, not a permanent ownership contract.
 | Deck 02, Generating Samples | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb` | Main direct-sampling development; early low discrepancy and financial-option examples intentionally prepare later decks |
 | Deck 03, Markov Chain Monte Carlo | `sampling/TransportMapsAndAcceptanceRejection.ipynb`; `sampling/MetropolisHastings.ipynb`; `applications/BayesianMCMC.ipynb`; `performance/Discrepancy.ipynb`; `applications/QueueSimulation.ipynb` | Return to acceptance--rejection as motivation; main MCMC, distribution-comparison, Bayesian, and queueing development |
 | Deck 04, Improving Efficiency | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb`; `sampling/LowDiscrepancyConstructions.ipynb`; `applications/KeisterExample.ipynb`; `sampling/ConditionalMonteCarlo.ipynb`; `performance/AsianOptionVarianceReduction.ipynb`; `performance/Discrepancy.ipynb` | Return to earlier low discrepancy, transport, and option examples; main importance-sampling, variance-reduction, discrepancy, and QMC development |
-| Deck 05, Selected Topics | `performance/MultilevelOptionPricing.ipynb`; `performance/MultilevelBeam.ipynb`; `performance/GPU_MonteCarlo_Demo.ipynb`; a consolidated gradient/stochastic-gradient notebook if retained after review; earlier application notebooks when a selected topic extends them | Main multilevel coupling, allocation, and error/work comparisons; parallel-computing performance; flexible continuation into selected methods |
+| Deck 05, Selected Topics | `performance/MultilevelOptionPricing.ipynb`; `performance/MultilevelBeam.ipynb`; `performance/GPU_MonteCarlo_Demo.ipynb`; `performance/StochasticGradientDescent.ipynb`; earlier application notebooks when a selected topic extends them | Main multilevel coupling, allocation, and error/work comparisons; parallel-computing performance; gradient geometry, sampling noise, and optimization cost |
 
 The broad inherited `QMCPy_Introduction.ipynb` has no required deck call. It
 should be retained only if it becomes a concise software orientation rather
@@ -522,28 +522,35 @@ notebooks.
 
 ### `GD_SGD_Rosenbrock_Logistic_Timing.ipynb`
 
-- **Status:** Not migrated.
+- **Status:** Consolidated into `performance/StochasticGradientDescent.ipynb`
+  (November 5, 2026); instructor content review remains separate from local
+  validation and publication.
 - **Source:**
   `MATH565Fall2025/notebooks/GD_SGD_Rosenbrock_Logistic_Timing.ipynb`
-- **Proposed target:**
-  `MATH565Fall2026/notebooks/performance/GD_SGD_Rosenbrock_Logistic_Timing.ipynb`
+- **Fall 2026 target:**
+  `MATH565Fall2026/notebooks/performance/StochasticGradientDescent.ipynb`
 - **Description:** Compares gradient descent and stochastic gradient descent
   using Rosenbrock geometry, logistic regression, and large-data timing
   examples.
-- **Dependencies:** NumPy and Matplotlib, with optional `classlib.nbviz`
-  styling and figure saving. It does not require a separate input dataset.
+- **Dependencies:** NumPy, SciPy, pandas, Matplotlib, QMCPy, and
+  `classlib.nbviz` from the established course environment. No separate dataset.
 - **Related versions:** `Old_Stuff` contains
   `GD_SGD_Rosenbrock_Logistic_nbviz.ipynb`,
   `GD_SGD_Rosenbrock_Logistic_Timing_nbviz.ipynb`, and
   `GD_SGD_Rosenbrock_Logistic_Timing_v2_nbviz.ipynb`. These appear to be
   experimental predecessors; the principal notebook is the most complete
   starting point.
-- **Migration concerns:** Confirm its role in the final MATH 565 topic
-  sequence, make timing comparisons reproducible, and decide whether figures
-  saved through `classlib.nbviz` are generated-only or durable assets.
-- **Classification:** Performance is recommended. Its optimization content
-  is somewhat peripheral to core Monte Carlo sampling, so inclusion in the
-  final course remains a curriculum decision.
+- **Adaptation:** Backtracking GD versus BFGS on Rosenbrock; conditioning
+  versus dimension; the deck's four-component quadratic; exact mini-batch
+  variance and scalar noise-floor recurrence; regularized logistic regression
+  with independent controls for data size and parameter dimension. Equal
+  gradient-row budgets, sampled indices and selection inside optimization
+  timing, post-run full-loss diagnostics timed separately, three timing runs,
+  and explicit target-attainment counts replace the inherited timing scheme.
+  Uses pinned course setup, QMCPy IID data/index sampling, and saved inline
+  figures without writing figure assets. No extra dependencies.
+- **Classification:** Performance; accompanies Selected Topics' optimization
+  section and its Monte Carlo gradient estimates.
 
 ### `GPU_MonteCarlo_Demo.ipynb`
 
@@ -679,7 +686,7 @@ notebooks.
 
 ### `SGD_Rosenbrock_nbviz.ipynb`
 
-- **Status:** Not migrated; consolidation decision pending.
+- **Status:** Reviewed for consolidation November 5, 2026; no separate migration.
 - **Source:** `MATH565Fall2025/notebooks/SGD_Rosenbrock_nbviz.ipynb`
 - **Proposed target, if retained:**
   `MATH565Fall2026/notebooks/performance/SGD_Rosenbrock_nbviz.ipynb`
@@ -692,10 +699,11 @@ notebooks.
 - **Migration concerns:** Migrating both principal gradient-descent notebooks
   would likely duplicate material and maintenance effort.
 - **Classification:** Performance is appropriate if it remains independent.
-- **Recommendation:** Do not migrate it separately by default. During
-  migration of `GD_SGD_Rosenbrock_Logistic_Timing.ipynb`, identify any
-  uniquely useful explanation or visualization here and merge only that
-  material into the broader notebook.
+- **Consolidation decision:** Retain the geometric motivation in the combined
+  notebook. Omit the artificial noisy-Rosenbrock comparison because it does
+  not reduce gradient cost; omit the overlapping term-wise experiment.
+  Use the deck's explicit finite-sum quadratic to teach true unbiased SGD
+  without conflating gradient noise, random coordinates, and preconditioning.
 
 ### `TemplateNotebook.ipynb`
 
@@ -906,14 +914,14 @@ not by the accidental boundaries of the inherited files.
    `performance/AsianOptionVarianceReduction.ipynb` from the retained
    variance-reduction parts of the inherited Asian notebook. All three run
    cleanly in the local `qmcpy` kernel and have reviewed saved figures.
-8. The GPU notebook is prepared for Fred's local trial; complete instructor review before student-facing links. During Deck 05 review, consolidate the gradient/stochastic-gradient variants separately.
+8. The GPU notebook is prepared for Fred's local trial; complete instructor review before student-facing links. The gradient variants are consolidated into `performance/StochasticGradientDescent.ipynb`; instructor content review remains.
 9. Reconsider the broad `QMCPy_Introduction.ipynb` only after the focused
    course notebook family exists; omit it if it would duplicate the survey
    role of `GeneratingSamples.ipynb`.
 
-Do not migrate `TemplateNotebook.ipynb` as student-facing content. Before the
-Deck 05 gradient notebook is created, review `SGD_Rosenbrock_nbviz.ipynb` for
-unique material to merge rather than publishing overlapping versions.
+Do not migrate `TemplateNotebook.ipynb` as student-facing content. The two
+inherited gradient notebooks have been reviewed and consolidated; do not
+publish an overlapping standalone Rosenbrock notebook.
 
 For each migrated notebook:
 

@@ -16,6 +16,31 @@ and verified November 5 calendar note are recorded in `notes/LECTURE-UPDATES.md`
 Schedule and handoff changes are included in this Checkpoint; remote deployment
 and live-page verification remain pending.
 
+## Stochastic gradient descent — instructor review
+
+Review the expanded [SGD slides](../slides/05-selected-topics.qmd#stochastic-gradient-descent-section)
+and [Stochastic Gradient Descent companion](../notebooks/performance/StochasticGradientDescent.ipynb).
+The sequence explains why Rosenbrock still defeats plain steepest descent,
+separates conditioning and parameter dimension from data size, and develops
+conditional unbiasedness, mini-batch variance, expected descent, and an exact
+scalar noise floor. It includes practical alternatives and self-contained
+logistic loss/gradient formulas. The notebook consolidates the inherited
+gradient variants; no separate Rosenbrock notebook is needed.
+
+All ten code cells execute cleanly in the course qmcpy kernel; four figures
+and independent gradient/moment checks are included. Each logistic method
+uses the same component-gradient budget, with sampling and selection charged
+inside optimization time and full-loss diagnostics timed separately. The
+default Intel run favors vectorized full GD on elapsed time; this is reported
+without claiming universal SGD speedups. Rerun on the lecture machine before
+using its timings. The notebook page, slide links, and cumulative terms index
+are updated. Instructor content review remains open.
+
+Validation: the website and all five decks render; the revised slides and
+notebook figures pass desktop review, with compact-slide and phone-page checks.
+All 464 assembled page/deck links resolve. These sources are included in this
+Checkpoint; remote deployment and live verification remain pending.
+
 ## November 5 makeup
 
 The private makeup is approved and ready for printing. Physical printing and
