@@ -16,6 +16,13 @@ and verified November 5 calendar note are recorded in `notes/LECTURE-UPDATES.md`
 Schedule and handoff changes are included in this Checkpoint; remote deployment
 and live-page verification remain pending.
 
+## November 5 makeup
+
+The private makeup is approved and ready for printing. Physical printing and
+administration remain. Grade the November 5 sitting and update Canvas/Best Test
+by November 11; recalculate from the actual sitting date plus six calendar days
+if it changes. The prepared answer copy remains private until grading is complete.
+
 ## November 3 teaching follow-up
 
 [Clean up November 3 teaching](https://github.com/fjhickernell/MATH565Fall2026/issues/4)
@@ -36,15 +43,16 @@ The common glossary now has two short slides before Two-Level, with core
 contributions, sample counts, work, and allocation weights. Method-specific
 amplitudes are introduced locally; geometric-rate symbols stay in notes.
 
-The many-level flow is reduced from twelve visible slides to five: coupled
-hierarchy, the quoted IID allocation, why coupling can control sampling cost,
+The many-level flow keeps six visible slides: coupled hierarchy, sampling error
+and approximation bias, the quoted IID allocation, why coupling can control sampling cost,
 concrete cost-versus-accuracy examples, and practical guidance. “Cost versus
 accuracy: IID” retains `#multilevel-random-cost-exponent` and states the
 $\varepsilon^{-2}$ and $\varepsilon^{-3}$ examples with numerical refinement
-factors, without logarithms or new rate symbols. General IID/RQMC and
-deterministic QMC allocations, bias budgets, and exponent derivations remain
-in presenter notes. Existing slide anchors are preserved. The fixed-grid
-sampling-cost result is distinguished from refining the grid to control bias.
+factors, without logarithms or new rate symbols. The limiting target, remaining
+bias, and bias-plus-variance MSE are now visible; the fixed-grid sampling-cost
+formula reserves a separate sampling tolerance within the total RMSE budget.
+General IID/RQMC and deterministic QMC allocations, detailed bias budgets, and
+exponent derivations remain in presenter notes. Existing slide anchors are preserved.
 Review the shorter sequence and local layout with the instructor; lecture
 coverage is unchanged. Broader browser layout review remains pending; the
 two-level random cost slide has been checked through a local HTTP preview.

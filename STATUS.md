@@ -595,6 +595,9 @@ appropriate phase rather than appended indiscriminately.
   - [x] Draft Lecture 05, Selected Topics, from the Fall 2025 Keynote deck,
     including parallel computation, stochastic gradient descent, and
     multilevel Monte Carlo.
+  - [x] Clarify two-level mean and error notation, keep the random allocation
+    derivation consecutive, and distinguish finite-grid sampling error from
+    limiting-target approximation bias in the multilevel development.
   - [x] Add a concrete Brownian coarse/fine coupling example, make the
     November 3 allocation continuation consecutive, and align SGD's average
     loss and unbiased-gradient identity with an actual finite-component

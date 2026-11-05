@@ -190,6 +190,9 @@ RMSE squared when naming mean squared error. This course-specific notation
 uses explicit operators because the pinned shared `\mse` and `\rmse`
 macros display lowercase.
 
+Write $\operatorname{MSE}(\hmu)$ and $\operatorname{RMSE}(\hmu)$ without a
+semicolon and target argument; the target mean is understood from context.
+
 ## Highlighting
 
 Omit unnecessary commas and periods in visible slide text and displayed
