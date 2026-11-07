@@ -1,48 +1,5 @@
 # Next task
 
-## Assignment 6 — website prepared, publication pending
-
-Owen Exercises **15.1 and 16.4**, due **Friday, November 13, 2026,
-11:59 PM America/Chicago**, are prepared in the assignment page, Assignments
-table, Schedule, and Improving Efficiency title-slide reminder. The existing
-Canvas item is recorded as `canvas.assignment_6` in `course-metadata.yml`.
-The grading deadline is **November 19**, six calendar days after submission;
-the Dashboard already records it under T1.
-
-The website sources are included in this Checkpoint. Next: verify both
-deployed public links, finish the Canvas configuration, and obtain one
-combined publication approval.
-On November 6, the live course assignment inventory showed exactly one
-Assignment 6, [106679](https://iit.instructure.com/courses/25777/assignments/106679):
-unpublished, 20 points, due November 13 at 11:59 PM for Everyone, empty
-description, currently text-entry submission. Reuse it; file-upload/group
-configuration is still pending. No Assignment 6 announcement exists in the
-complete 20-announcement inventory. No Canvas changes or publication have
-been made in this preparation pass.
-The People navigation lists Assignment 1–5 Groups and Project Groups, with
-no Assignment 6 group set; create it after verifying the deployed website.
-
-Validation: the root website and all five decks render successfully in the
-qmcpy kernel; all 1,333 local link/asset references across the 18 canonical
-pages/decks and `git diff --check` pass. Browser layout inspection remains
-pending because the browser security policy blocked the local file preview;
-do not report visual approval.
-
-Prepared Canvas description: link to the
-[Assignment 6 details](https://fjhickernell.github.io/MATH565Fall2026/assignments/assignment_6.html)
-and [Assignments page](https://fjhickernell.github.io/MATH565Fall2026/pages/homework.html)
-only. After deployment, verify/create `Assignment 6 Groups`: 20 self-sign-up
-groups limited to two students; shared submission and grade; unlimited file uploads.
-
-Prepared all-sections announcement, **Assignment 6 is available**:
-
-> See the [Assignment 6 details](https://fjhickernell.github.io/MATH565Fall2026/assignments/assignment_6.html)
-> and [Assignments page](https://fjhickernell.github.io/MATH565Fall2026/pages/homework.html).
-> You may work individually or with one partner. Join a group in Assignment 6
-> Groups before submitting; one person submits all required files for the group,
-> and the submission and grade are shared. Follow the file-naming and
-> identification requirements on the Assignments page.
-
 ## November 10 lecture continuation
 
 Resume Selected Topics at [Why cheap gradients matter](../slides/05-selected-topics.qmd#why-cheap-gradients-matter),
@@ -58,8 +15,8 @@ gradients were deferred. The two-level slide exercise was skipped in favor
 of the notebooks, and optional adaptive methods were not developed.
 The November 10 Illinois Tech Fred → Calendar occurrence note is saved and
 verified in Fantastical; recording evidence is in `notes/LECTURE-UPDATES.md`.
-Schedule and handoff changes are included in this Checkpoint; remote
-deployment and live-page verification remain pending. The schedule renders,
+Schedule and handoff changes are published; the November 10 continuation
+links on the live Schedule are verified November 6. The schedule renders,
 its continuation links resolve, and all six tables pass desktop and phone-width
 browser inspection.
 
@@ -68,6 +25,34 @@ Option Pricing, and Stochastic Gradient Descent have 9, 13, and 10 completed
 code cells, respectively, with no saved errors. Their total runtimes are
 20.7, 37.7, and 6.1 seconds. Notebook sources are unchanged; refreshed results
 and timings remain measurements from this run.
+
+## Assignment 6 — published November 6
+
+Owen Exercises **15.1 and 16.4** are published on the
+[assignment page](https://fjhickernell.github.io/MATH565Fall2026/assignments/assignment_6.html)
+and [Assignments page](https://fjhickernell.github.io/MATH565Fall2026/pages/homework.html).
+The deadline is **November 13, 2026, 11:59 PM America/Chicago**; grading is
+due **November 19**. Website commit `aedac15` has successful publishing and
+Pages deployment runs; the live links and Improving Efficiency reminder are verified.
+
+Canvas [Assignment 6 (106679)](https://iit.instructure.com/courses/25777/assignments/106679)
+is published for Everyone: 20 points, unlimited file uploads, one shared
+submission and grade through **Assignment 6 Groups (1837)**. The group set
+has 20 self-sign-up groups limited to two students. Reopened settings verify
+the saved group set, shared grade, submission type, attempts and due time.
+Its description links only to the two authoritative course pages.
+
+[Assignment 6 is available](https://iit.instructure.com/courses/25777/discussion_topics/109886)
+was published to **All Sections** on **November 6 at 8:38 PM CST** under
+Fred's explicit publication instruction. Reopened settings verify the audience;
+posted text and both links are verified. Do not repost.
+
+The assignment detail and Assignments pages pass 1280- and 390-pixel visual
+review. All six Schedule tables stay within the viewport at both widths;
+the updated November row and the Deck 04 title notice are verified. The
+website and five decks render, all 1,333 canonical link/asset references and
+`git diff --check` pass. Dashboard publication closeout preserves the grading
+task; native reminder reconciliation remains unverified.
 
 ## Stochastic gradient descent — instructor review
 

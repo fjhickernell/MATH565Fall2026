@@ -212,11 +212,14 @@ appropriate phase rather than appended indiscriminately.
       at 11:59 PM Chicago; update its detail page, Assignments table, Schedule,
       existing Canvas metadata (106679), and Improving Efficiency reminder.
       Website and all five decks render; all 1,333 canonical link/asset
-      references pass. Browser layout review remains pending after the local
-      preview was blocked by browser security policy (November 6, 2026).
-    - [ ] Deploy and verify Assignment 6's public links, configure the existing
-      unpublished Canvas item and assignment-specific pair group set, then
-      publish the assignment and all-sections announcement after approval.
+      references pass. Live assignment pages pass desktop/phone review;
+      Schedule table bounds and Deck 04 title notice are verified November 6.
+    - [x] Deploy and verify Assignment 6's public links; publish Canvas 106679
+      with unlimited file uploads, shared submission/grade and 20 self-sign-up
+      groups limited to two (group set 1837). All Sections announcement 109886
+      posted and verified November 6 at 8:38 PM CST after explicit approval.
+      Reopened assignment settings and announcement audience are verified;
+      Dashboard publication action closed, grading deadline November 19 retained.
     - [x] Prepare Assignment 5 as Owen Exercises 8.4 and 8.20, due October 21
       at 11:59 PM Chicago; add course-page links, metadata for existing Canvas
       item 106678, and the Improving Efficiency title-slide reminder.
