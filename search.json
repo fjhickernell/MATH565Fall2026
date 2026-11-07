@@ -196,86 +196,58 @@
     "text": "This page collects optional articles, essays, videos, and interactive resources that connect probability, statistics, and data science to real applications, historical context, or broader ideas.\n\nStatistical Inference and Data Science\n\nThe Lady Tasting Tea\n\nA famous experiment conducted by Ronald Fisher to test whether a woman could distinguish between tea poured before or after milk\nThis experiment is often cited as an example of a randomized controlled trial and the basis for Fisher’s exact test\n\nStatistical Modeling: The Two Cultures\n\nAn influential paper by Leo Breiman that discusses the differences between traditional statistical modeling and algorithmic modeling in data science\nBreiman argues that the algorithmic modeling culture, which focuses on predictive accuracy, is often more effective than the traditional statistical modeling culture, which focuses on inference and understanding\n\nAs Forecasts Go, You Can Bet on Monte Carlo\n\nAn article from the Wall Street Journal that discusses the use of Monte Carlo simulations in financial forecasting and risk management\nThe article highlights how Monte Carlo methods can help quantify uncertainty and improve decision-making in finance\n\n\n\n\nSoftware and Libraries\n\nqmcpy.org: A Python Library for Quasi-Monte Carlo Methods\n\nA Python library for quasi-Monte Carlo methods, which are used to improve the efficiency of numerical integration and simulation\n\nRankings of Computer Languages\n\nA ranking of programming languages based on their popularity and usage in the industry\nStatistical questions include: What are the errors in the percentages? What is the significance of a change in rank?"
   },
   {
-    "objectID": "assignments/assignment_5.html",
-    "href": "assignments/assignment_5.html",
-    "title": "Assignment 5: Owen Exercises 8.4 and 8.20",
+    "objectID": "assignments/assignment_6.html",
+    "href": "assignments/assignment_6.html",
+    "title": "Assignment 6: Owen Exercises 15.1 and 16.4",
     "section": "",
-    "text": "Due: Wednesday, October 21, 2026, at 11:59 PM Chicago Time"
+    "text": "Due: Friday, November 13, 2026, at 11:59 PM Chicago Time"
   },
   {
-    "objectID": "assignments/assignment_5.html#due-date",
-    "href": "assignments/assignment_5.html#due-date",
-    "title": "Assignment 5: Owen Exercises 8.4 and 8.20",
+    "objectID": "assignments/assignment_6.html#due-date",
+    "href": "assignments/assignment_6.html#due-date",
+    "title": "Assignment 6: Owen Exercises 15.1 and 16.4",
     "section": "",
-    "text": "Due: Wednesday, October 21, 2026, at 11:59 PM Chicago Time"
+    "text": "Due: Friday, November 13, 2026, at 11:59 PM Chicago Time"
   },
   {
-    "objectID": "assignments/assignment_5.html#assignment",
-    "href": "assignments/assignment_5.html#assignment",
-    "title": "Assignment 5: Owen Exercises 8.4 and 8.20",
+    "objectID": "assignments/assignment_6.html#assignment",
+    "href": "assignments/assignment_6.html#assignment",
+    "title": "Assignment 6: Owen Exercises 15.1 and 16.4",
     "section": "Assignment",
-    "text": "Assignment\nComplete Exercises 8.4 and 8.20 in Owen."
+    "text": "Assignment\nComplete Exercises 15.1 and 16.4 in Owen."
   },
   {
-    "objectID": "assignments/assignment_5.html#submission",
-    "href": "assignments/assignment_5.html#submission",
-    "title": "Assignment 5: Owen Exercises 8.4 and 8.20",
+    "objectID": "assignments/assignment_6.html#submission",
+    "href": "assignments/assignment_6.html#submission",
+    "title": "Assignment 6: Owen Exercises 15.1 and 16.4",
     "section": "Submission",
     "text": "Submission\nFollow the submission requirements on the Assignments page. Your work should include enough explanation and supporting code for another reader to reproduce and understand your results."
   },
   {
-    "objectID": "assignments/assignment_3.html",
-    "href": "assignments/assignment_3.html",
-    "title": "Assignment 3: Owen Exercises 5.4 and 5.13",
+    "objectID": "assignments/assignment_4.html",
+    "href": "assignments/assignment_4.html",
+    "title": "Assignment 4: Owen Exercises 11.5 and 11.6",
     "section": "",
-    "text": "Due: Friday, September 25, 2026, at 11:59 PM Chicago Time"
+    "text": "Due: Wednesday, October 7, 2026, at 11:59 PM Chicago Time"
   },
   {
-    "objectID": "assignments/assignment_3.html#due-date",
-    "href": "assignments/assignment_3.html#due-date",
-    "title": "Assignment 3: Owen Exercises 5.4 and 5.13",
+    "objectID": "assignments/assignment_4.html#due-date",
+    "href": "assignments/assignment_4.html#due-date",
+    "title": "Assignment 4: Owen Exercises 11.5 and 11.6",
     "section": "",
-    "text": "Due: Friday, September 25, 2026, at 11:59 PM Chicago Time"
+    "text": "Due: Wednesday, October 7, 2026, at 11:59 PM Chicago Time"
   },
   {
-    "objectID": "assignments/assignment_3.html#assignment",
-    "href": "assignments/assignment_3.html#assignment",
-    "title": "Assignment 3: Owen Exercises 5.4 and 5.13",
+    "objectID": "assignments/assignment_4.html#assignment",
+    "href": "assignments/assignment_4.html#assignment",
+    "title": "Assignment 4: Owen Exercises 11.5 and 11.6",
     "section": "Assignment",
-    "text": "Assignment\nComplete Exercises 5.4 and 5.13 in Owen."
+    "text": "Assignment\nComplete Exercises 11.5 and 11.6 in Owen."
   },
   {
-    "objectID": "assignments/assignment_3.html#submission",
-    "href": "assignments/assignment_3.html#submission",
-    "title": "Assignment 3: Owen Exercises 5.4 and 5.13",
-    "section": "Submission",
-    "text": "Submission\nFollow the submission requirements on the Assignments page. Your work should include enough explanation and supporting code for another reader to reproduce and understand your results."
-  },
-  {
-    "objectID": "assignments/assignment_1.html",
-    "href": "assignments/assignment_1.html",
-    "title": "Assignment 1: Owen Exercises 1.2 and 2.1",
-    "section": "",
-    "text": "Due: Wednesday, September 2, 2026, at 11:59 PM Chicago Time"
-  },
-  {
-    "objectID": "assignments/assignment_1.html#due-date",
-    "href": "assignments/assignment_1.html#due-date",
-    "title": "Assignment 1: Owen Exercises 1.2 and 2.1",
-    "section": "",
-    "text": "Due: Wednesday, September 2, 2026, at 11:59 PM Chicago Time"
-  },
-  {
-    "objectID": "assignments/assignment_1.html#assignment",
-    "href": "assignments/assignment_1.html#assignment",
-    "title": "Assignment 1: Owen Exercises 1.2 and 2.1",
-    "section": "Assignment",
-    "text": "Assignment\nComplete Exercises 1.2 and 2.1 in Owen."
-  },
-  {
-    "objectID": "assignments/assignment_1.html#submission",
-    "href": "assignments/assignment_1.html#submission",
-    "title": "Assignment 1: Owen Exercises 1.2 and 2.1",
+    "objectID": "assignments/assignment_4.html#submission",
+    "href": "assignments/assignment_4.html#submission",
+    "title": "Assignment 4: Owen Exercises 11.5 and 11.6",
     "section": "Submission",
     "text": "Submission\nFollow the submission requirements on the Assignments page. Your work should include enough explanation and supporting code for another reader to reproduce and understand your results."
   },
@@ -308,30 +280,86 @@
     "text": "Submission\nFollow the submission requirements on the Assignments page. Your work should include enough explanation and supporting code for another reader to reproduce and understand your results."
   },
   {
-    "objectID": "assignments/assignment_4.html",
-    "href": "assignments/assignment_4.html",
-    "title": "Assignment 4: Owen Exercises 11.5 and 11.6",
+    "objectID": "assignments/assignment_1.html",
+    "href": "assignments/assignment_1.html",
+    "title": "Assignment 1: Owen Exercises 1.2 and 2.1",
     "section": "",
-    "text": "Due: Wednesday, October 7, 2026, at 11:59 PM Chicago Time"
+    "text": "Due: Wednesday, September 2, 2026, at 11:59 PM Chicago Time"
   },
   {
-    "objectID": "assignments/assignment_4.html#due-date",
-    "href": "assignments/assignment_4.html#due-date",
-    "title": "Assignment 4: Owen Exercises 11.5 and 11.6",
+    "objectID": "assignments/assignment_1.html#due-date",
+    "href": "assignments/assignment_1.html#due-date",
+    "title": "Assignment 1: Owen Exercises 1.2 and 2.1",
     "section": "",
-    "text": "Due: Wednesday, October 7, 2026, at 11:59 PM Chicago Time"
+    "text": "Due: Wednesday, September 2, 2026, at 11:59 PM Chicago Time"
   },
   {
-    "objectID": "assignments/assignment_4.html#assignment",
-    "href": "assignments/assignment_4.html#assignment",
-    "title": "Assignment 4: Owen Exercises 11.5 and 11.6",
+    "objectID": "assignments/assignment_1.html#assignment",
+    "href": "assignments/assignment_1.html#assignment",
+    "title": "Assignment 1: Owen Exercises 1.2 and 2.1",
     "section": "Assignment",
-    "text": "Assignment\nComplete Exercises 11.5 and 11.6 in Owen."
+    "text": "Assignment\nComplete Exercises 1.2 and 2.1 in Owen."
   },
   {
-    "objectID": "assignments/assignment_4.html#submission",
-    "href": "assignments/assignment_4.html#submission",
-    "title": "Assignment 4: Owen Exercises 11.5 and 11.6",
+    "objectID": "assignments/assignment_1.html#submission",
+    "href": "assignments/assignment_1.html#submission",
+    "title": "Assignment 1: Owen Exercises 1.2 and 2.1",
+    "section": "Submission",
+    "text": "Submission\nFollow the submission requirements on the Assignments page. Your work should include enough explanation and supporting code for another reader to reproduce and understand your results."
+  },
+  {
+    "objectID": "assignments/assignment_3.html",
+    "href": "assignments/assignment_3.html",
+    "title": "Assignment 3: Owen Exercises 5.4 and 5.13",
+    "section": "",
+    "text": "Due: Friday, September 25, 2026, at 11:59 PM Chicago Time"
+  },
+  {
+    "objectID": "assignments/assignment_3.html#due-date",
+    "href": "assignments/assignment_3.html#due-date",
+    "title": "Assignment 3: Owen Exercises 5.4 and 5.13",
+    "section": "",
+    "text": "Due: Friday, September 25, 2026, at 11:59 PM Chicago Time"
+  },
+  {
+    "objectID": "assignments/assignment_3.html#assignment",
+    "href": "assignments/assignment_3.html#assignment",
+    "title": "Assignment 3: Owen Exercises 5.4 and 5.13",
+    "section": "Assignment",
+    "text": "Assignment\nComplete Exercises 5.4 and 5.13 in Owen."
+  },
+  {
+    "objectID": "assignments/assignment_3.html#submission",
+    "href": "assignments/assignment_3.html#submission",
+    "title": "Assignment 3: Owen Exercises 5.4 and 5.13",
+    "section": "Submission",
+    "text": "Submission\nFollow the submission requirements on the Assignments page. Your work should include enough explanation and supporting code for another reader to reproduce and understand your results."
+  },
+  {
+    "objectID": "assignments/assignment_5.html",
+    "href": "assignments/assignment_5.html",
+    "title": "Assignment 5: Owen Exercises 8.4 and 8.20",
+    "section": "",
+    "text": "Due: Wednesday, October 21, 2026, at 11:59 PM Chicago Time"
+  },
+  {
+    "objectID": "assignments/assignment_5.html#due-date",
+    "href": "assignments/assignment_5.html#due-date",
+    "title": "Assignment 5: Owen Exercises 8.4 and 8.20",
+    "section": "",
+    "text": "Due: Wednesday, October 21, 2026, at 11:59 PM Chicago Time"
+  },
+  {
+    "objectID": "assignments/assignment_5.html#assignment",
+    "href": "assignments/assignment_5.html#assignment",
+    "title": "Assignment 5: Owen Exercises 8.4 and 8.20",
+    "section": "Assignment",
+    "text": "Assignment\nComplete Exercises 8.4 and 8.20 in Owen."
+  },
+  {
+    "objectID": "assignments/assignment_5.html#submission",
+    "href": "assignments/assignment_5.html#submission",
+    "title": "Assignment 5: Owen Exercises 8.4 and 8.20",
     "section": "Submission",
     "text": "Submission\nFollow the submission requirements on the Assignments page. Your work should include enough explanation and supporting code for another reader to reproduce and understand your results."
   },
@@ -494,7 +522,7 @@
     "href": "pages/homework.html#list-of-assignments",
     "title": "Assignments",
     "section": "List of assignments",
-    "text": "List of assignments\nAssignment details and due dates will be added as they are finalized.\n\n\n\nAssignment\nDue Date\n\n\n\n\nAssignment 0 — Diagnostic SurveyComplete and submit this assignment individually, not as a group.\nAugust 21, 2026\n\n\nAssignment 1 — Owen Exercises 1.2 and 2.1\nSeptember 2, 2026\n\n\nAssignment 2 — Owen Exercises 4.5 and 4.19\nSeptember 11, 2026\n\n\nAssignment 3 — Owen Exercises 5.4 and 5.13\nSeptember 25, 2026\n\n\nAssignment 4 — Owen Exercises 11.5 and 11.6\nOctober 7, 2026\n\n\nAssignment 5 — Owen Exercises 8.4 and 8.20\nOctober 21, 2026"
+    "text": "List of assignments\nAssignment details and due dates will be added as they are finalized.\n\n\n\nAssignment\nDue Date\n\n\n\n\nAssignment 0 — Diagnostic SurveyComplete and submit this assignment individually, not as a group.\nAugust 21, 2026\n\n\nAssignment 1 — Owen Exercises 1.2 and 2.1\nSeptember 2, 2026\n\n\nAssignment 2 — Owen Exercises 4.5 and 4.19\nSeptember 11, 2026\n\n\nAssignment 3 — Owen Exercises 5.4 and 5.13\nSeptember 25, 2026\n\n\nAssignment 4 — Owen Exercises 11.5 and 11.6\nOctober 7, 2026\n\n\nAssignment 5 — Owen Exercises 8.4 and 8.20\nOctober 21, 2026\n\n\nAssignment 6 — Owen Exercises 15.1 and 16.4\nNovember 13, 2026"
   },
   {
     "objectID": "pages/project-assessment.html",
@@ -508,6 +536,6 @@
     "href": "pages/schedule.html",
     "title": "Schedule",
     "section": "",
-    "text": "Classes normally meet Tuesdays and Thursdays at 10:00 AM in PH 109.\nThis schedule is provisional and will be updated as topics, assignments, holidays, and examination details are finalized.\n\nAugust\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n1\nTue Aug 18\nIntroduction; Monte Carlo for uncertainty; Travel-time simulation\nIntroduction\n\n\n\nThu Aug 20\nProbability review; Sampling schemes; Bias, variance, and confidence intervals; Estimators and estimates\nIntroduction\n\n\n\nFri Aug 21\nDiagnostic Survey due\nAssignment 0 — Diagnostic Survey\n\n\n2\nTue Aug 25\nConditional Monte Carlo and low discrepancy examples; Quantile transforms\nIntroductionGenerating Samples\n\n\n\nThu Aug 27\nConditional Monte Carlo review; Mixture sampling; Multivariate normal and Cholesky sampling; Gaussian-process introduction\nIntroductionGenerating Samples\n\n\n\n\n\nSeptember\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n3\nTue Sep 1\nGaussian processes and Brownian motion; Cholesky and PCA factorizations; Geometric Brownian motion and option pricing; Low discrepancy comparison\nIntroductionGenerating Samples\n\n\n\nWed Sep 2\nAssignment 1 due\nOwen Exercises 1.2 and 2.1\n\n\n\nThu Sep 3\nTransport maps; Acceptance–rejection sampling and its justification; Gaussian-mixture low discrepancy comparison\nGenerating Samples\n\n\n4\nTue Sep 8\nUnit-cube integration and transformation smoothness; Metropolis–Hastings sampling; Proposal tuning, burn-in, and separated modes\nGenerating SamplesMarkov Chain Monte Carlo\n\n\n\nThu Sep 10\nMCMC tuning and diagnostics; Parallel-tempering introduction; Kernel discrepancy for distributions and samples; Kernel scale and sample-quality comparisons\nMarkov Chain Monte Carlo\n\n\n\nFri Sep 11\nAssignment 2 due\nOwen Exercises 4.5 and 4.19\n\n\n5\nTue Sep 15\nTest 1\nCovers    Introduction    Generating Samples\n\n\n\nThu Sep 17\nUnit-cube sampling review; Unbiased squared-discrepancy estimates; RKHS worst-case integration error; Gaussian-process RMSE and kernel assumptions\nGenerating SamplesMarkov Chain Monte Carlo\n\n\n\nFri Sep 18\nProject topic submission deadline\nTopic Selection & Presentation Scheduling\n\n\n6\nTue Sep 22\nCentered discrepancy and smoothness; brief KL and Stein comparisons; likelihood and Bayesian inference; mixture-posterior MCMC and parallel tempering; queueing preview\nMarkov Chain Monte CarloBayesian MCMC notebook\n\n\n\nThu Sep 24\nQueue state and residual clocks; next-event updates and Markov interpretation; worked queue example and three group exercises; time in system and stopping rule\nMarkov Chain Monte Carlo\n\n\n\nFri Sep 25\nAssignment 3 due\nOwen Exercises 5.4 and 5.13\n\n\n7\nTue Sep 29\nQueue-simulation recap and notebook; MCMC synthesis; variance and variation reduction, Keister transformations, and importance sampling through “Variance depends on the function”\nMarkov Chain Monte CarloQueue simulation notebookImproving Efficiency\n\n\n\n\n\nOctober\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n7\nThu Oct 1\nBrownian motion with drift and choosing a transformation; control variates, least-squares coefficients, and practical control choices; Asian-option notebook walkthrough\nImproving EfficiencyAsian-option notebook\n\n\n8\nTue Oct 6\nControl-variate recap; conditional Monte Carlo; conditional density estimation for sums of uniforms and Asian averages; Asian-call payoff distribution\nImproving EfficiencyConditional Monte Carlo notebook\n\n\n\nWed Oct 7\nAssignment 4 due\nOwen Exercises 11.5 and 11.6\n\n\n\nThu Oct 8\nTransformation and control-variate cost comparisons; antithetic sampling and variance derivation; IID Asian/lookback comparison; introduction to the van der Corput sequence\nImproving EfficiencyAsian-option notebook\n\n\n\nMon Oct 12\nMidterm courseevaluation due\nComplete in Canvasor use your invitation email\n\n\n9\nTue Oct 13\nNo Class — Fall Break\n\n\n\n\nThu Oct 15\nCopulas and Gaussian-copula sampling; IID cost for accuracy; van der Corput recap; lattice, Kronecker, and digital sequence constructions\nGenerating Samples: copulasImproving Efficiency: cost modelLow discrepancy families\n\n\n10\nTue Oct 20\nLow discrepancy constructions; copula clarification; component-by-component construction; randomized sampling, RQMC variance, independent replications, and stopping-rule caveats\nImproving EfficiencyGenerating Samples: copulas\n\n\n\nWed Oct 21\nAssignment 5 due\nOwen Exercises 8.4 and 8.20\n\n\n\nThu Oct 22\nIndependent Metropolis sampler and self-normalized importance sampling review; IID/RQMC stopping rules, pilot limitations and fixed-design QMC error assessment; stopping-rule notebooks and IID/RQMC cost comparison\nImproving Efficiency\n\n\n11\nTue Oct 27\nTest 2\nCovers    Markov Chain Monte Carlo    Improving Efficiency through randomized QMC    Excludes stopping rules and cost for QMC/RQMC\n\n\n\nThu Oct 29\nEfficiency synthesis and stopping-rule recap; parallel computing and CPU/GPU notebook; two-level IID/RQMC allocation and deterministic QMC bounds through “What two levels accomplish”\nImproving EfficiencySelected TopicsCPU/GPU notebook\n\n\n\n\n\nNovember\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n12\nMon Nov 2\nLast day to withdraw from full-semester courses\nIllinois Tech academic calendar\n\n\n\nTue Nov 3\nTwo-level allocation and cost–error derivations; IID savings and covariance/cost comparison; brief multilevel telescoping, allocation, bias and cost-rate overview\nSelected Topics: two-level allocationCost and savingsMultilevel overview\n\n\n\nWed Nov 4\nProject presentation sign-up deadline\nChoose your presentation time slot\n\n\n\nThu Nov 5\nTwo-level recap; multilevel option-pricing and beam comparisons; gradient descent, Rosenbrock geometry, and conditioning versus dimension\nSelected TopicsMultilevel Option PricingMultilevel BeamGradient descent and conditioning\n\n\n13\nTue Nov 10\nStochastic gradients as Monte Carlo estimates; mini-batches, gradient noise, and learning rates\nSelected Topics: why cheap gradients matterStochastic Gradient Descent notebook\n\n\n\nWed Nov 11\nProject observer sign-up deadline\nChoose two presentations to observe\n\n\n\nThu Nov 12\n\n\n\n\n\nFri Nov 13\nAssignment 6 due\nDetails TBD\n\n\n14\nTue Nov 17\n\n\n\n\n\nThu Nov 19\n\n\n\n\n15\nMon Nov 23\nProject presentations\nProject information\n\n\n\nTue Nov 24\nProject presentations\nProject information\n\n\n\nWed Nov 25\nTake-Home Portion of the Final Exam released on Canvas\n\n\n\n\nThu Nov 26\nNo Class — Thanksgiving holiday\n\n\n\n\n\n\nDecember\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n16\nTue Dec 1\nReview, bring your questions (tentative)\n\n\n\n\nThu Dec 3\nReview, bring your questions (tentative)\n\n\n\n\n\n\nFinal examinations\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n17\nWed Dec 9\nTake-Home Final Exam due8:00 AMIn-Class Final Exam8:00–10:00 AMPH 109\nWhole course; greater emphasis on material not covered by Test 1 or Test 2"
+    "text": "Classes normally meet Tuesdays and Thursdays at 10:00 AM in PH 109.\nThis schedule is provisional and will be updated as topics, assignments, holidays, and examination details are finalized.\n\nAugust\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n1\nTue Aug 18\nIntroduction; Monte Carlo for uncertainty; Travel-time simulation\nIntroduction\n\n\n\nThu Aug 20\nProbability review; Sampling schemes; Bias, variance, and confidence intervals; Estimators and estimates\nIntroduction\n\n\n\nFri Aug 21\nDiagnostic Survey due\nAssignment 0 — Diagnostic Survey\n\n\n2\nTue Aug 25\nConditional Monte Carlo and low discrepancy examples; Quantile transforms\nIntroductionGenerating Samples\n\n\n\nThu Aug 27\nConditional Monte Carlo review; Mixture sampling; Multivariate normal and Cholesky sampling; Gaussian-process introduction\nIntroductionGenerating Samples\n\n\n\n\n\nSeptember\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n3\nTue Sep 1\nGaussian processes and Brownian motion; Cholesky and PCA factorizations; Geometric Brownian motion and option pricing; Low discrepancy comparison\nIntroductionGenerating Samples\n\n\n\nWed Sep 2\nAssignment 1 due\nOwen Exercises 1.2 and 2.1\n\n\n\nThu Sep 3\nTransport maps; Acceptance–rejection sampling and its justification; Gaussian-mixture low discrepancy comparison\nGenerating Samples\n\n\n4\nTue Sep 8\nUnit-cube integration and transformation smoothness; Metropolis–Hastings sampling; Proposal tuning, burn-in, and separated modes\nGenerating SamplesMarkov Chain Monte Carlo\n\n\n\nThu Sep 10\nMCMC tuning and diagnostics; Parallel-tempering introduction; Kernel discrepancy for distributions and samples; Kernel scale and sample-quality comparisons\nMarkov Chain Monte Carlo\n\n\n\nFri Sep 11\nAssignment 2 due\nOwen Exercises 4.5 and 4.19\n\n\n5\nTue Sep 15\nTest 1\nCovers    Introduction    Generating Samples\n\n\n\nThu Sep 17\nUnit-cube sampling review; Unbiased squared-discrepancy estimates; RKHS worst-case integration error; Gaussian-process RMSE and kernel assumptions\nGenerating SamplesMarkov Chain Monte Carlo\n\n\n\nFri Sep 18\nProject topic submission deadline\nTopic Selection & Presentation Scheduling\n\n\n6\nTue Sep 22\nCentered discrepancy and smoothness; brief KL and Stein comparisons; likelihood and Bayesian inference; mixture-posterior MCMC and parallel tempering; queueing preview\nMarkov Chain Monte CarloBayesian MCMC notebook\n\n\n\nThu Sep 24\nQueue state and residual clocks; next-event updates and Markov interpretation; worked queue example and three group exercises; time in system and stopping rule\nMarkov Chain Monte Carlo\n\n\n\nFri Sep 25\nAssignment 3 due\nOwen Exercises 5.4 and 5.13\n\n\n7\nTue Sep 29\nQueue-simulation recap and notebook; MCMC synthesis; variance and variation reduction, Keister transformations, and importance sampling through “Variance depends on the function”\nMarkov Chain Monte CarloQueue simulation notebookImproving Efficiency\n\n\n\n\n\nOctober\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n7\nThu Oct 1\nBrownian motion with drift and choosing a transformation; control variates, least-squares coefficients, and practical control choices; Asian-option notebook walkthrough\nImproving EfficiencyAsian-option notebook\n\n\n8\nTue Oct 6\nControl-variate recap; conditional Monte Carlo; conditional density estimation for sums of uniforms and Asian averages; Asian-call payoff distribution\nImproving EfficiencyConditional Monte Carlo notebook\n\n\n\nWed Oct 7\nAssignment 4 due\nOwen Exercises 11.5 and 11.6\n\n\n\nThu Oct 8\nTransformation and control-variate cost comparisons; antithetic sampling and variance derivation; IID Asian/lookback comparison; introduction to the van der Corput sequence\nImproving EfficiencyAsian-option notebook\n\n\n\nMon Oct 12\nMidterm courseevaluation due\nComplete in Canvasor use your invitation email\n\n\n9\nTue Oct 13\nNo Class — Fall Break\n\n\n\n\nThu Oct 15\nCopulas and Gaussian-copula sampling; IID cost for accuracy; van der Corput recap; lattice, Kronecker, and digital sequence constructions\nGenerating Samples: copulasImproving Efficiency: cost modelLow discrepancy families\n\n\n10\nTue Oct 20\nLow discrepancy constructions; copula clarification; component-by-component construction; randomized sampling, RQMC variance, independent replications, and stopping-rule caveats\nImproving EfficiencyGenerating Samples: copulas\n\n\n\nWed Oct 21\nAssignment 5 due\nOwen Exercises 8.4 and 8.20\n\n\n\nThu Oct 22\nIndependent Metropolis sampler and self-normalized importance sampling review; IID/RQMC stopping rules, pilot limitations and fixed-design QMC error assessment; stopping-rule notebooks and IID/RQMC cost comparison\nImproving Efficiency\n\n\n11\nTue Oct 27\nTest 2\nCovers    Markov Chain Monte Carlo    Improving Efficiency through randomized QMC    Excludes stopping rules and cost for QMC/RQMC\n\n\n\nThu Oct 29\nEfficiency synthesis and stopping-rule recap; parallel computing and CPU/GPU notebook; two-level IID/RQMC allocation and deterministic QMC bounds through “What two levels accomplish”\nImproving EfficiencySelected TopicsCPU/GPU notebook\n\n\n\n\n\nNovember\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n12\nMon Nov 2\nLast day to withdraw from full-semester courses\nIllinois Tech academic calendar\n\n\n\nTue Nov 3\nTwo-level allocation and cost–error derivations; IID savings and covariance/cost comparison; brief multilevel telescoping, allocation, bias and cost-rate overview\nSelected Topics: two-level allocationCost and savingsMultilevel overview\n\n\n\nWed Nov 4\nProject presentation sign-up deadline\nChoose your presentation time slot\n\n\n\nThu Nov 5\nTwo-level recap; multilevel option-pricing and beam comparisons; gradient descent, Rosenbrock geometry, and conditioning versus dimension\nSelected TopicsMultilevel Option PricingMultilevel BeamGradient descent and conditioning\n\n\n13\nTue Nov 10\nStochastic gradients as Monte Carlo estimates; mini-batches, gradient noise, and learning rates\nSelected Topics: why cheap gradients matterStochastic Gradient Descent notebook\n\n\n\nWed Nov 11\nProject observer sign-up deadline\nChoose two presentations to observe\n\n\n\nThu Nov 12\n\n\n\n\n\nFri Nov 13\nAssignment 6 due\nOwen Exercises 15.1 and 16.4\n\n\n14\nTue Nov 17\n\n\n\n\n\nThu Nov 19\n\n\n\n\n15\nMon Nov 23\nProject presentations\nProject information\n\n\n\nTue Nov 24\nProject presentations\nProject information\n\n\n\nWed Nov 25\nTake-Home Portion of the Final Exam released on Canvas\n\n\n\n\nThu Nov 26\nNo Class — Thanksgiving holiday\n\n\n\n\n\n\nDecember\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n16\nTue Dec 1\nReview, bring your questions (tentative)\n\n\n\n\nThu Dec 3\nReview, bring your questions (tentative)\n\n\n\n\n\n\nFinal examinations\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nSlides / Materials\n\n\n\n\n17\nWed Dec 9\nTake-Home Final Exam due8:00 AMIn-Class Final Exam8:00–10:00 AMPH 109\nWhole course; greater emphasis on material not covered by Test 1 or Test 2"
   }
 ]
