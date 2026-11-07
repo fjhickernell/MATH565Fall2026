@@ -64,7 +64,7 @@ holidays, and examination details are finalized.
 | 13 | Tue Nov 10 | Stochastic gradients as Monte Carlo estimates; mini-batches, gradient noise, and learning rates | [Selected Topics: why cheap gradients matter](../slides/05-selected-topics.html#why-cheap-gradients-matter)<br>[Stochastic Gradient Descent notebook](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/StochasticGradientDescent.ipynb) |
 | | Wed Nov 11 | **Project observer sign-up deadline** | [Choose two presentations to observe](project.qmd#presentation-scheduling-and-observations) |
 | | Thu Nov 12 | | |
-| | Fri Nov 13 | **Assignment 6 due** | Details TBD |
+| | Fri Nov 13 | **Assignment 6 due** | [{{< meta texts.owen.short >}} Exercises 15.1 and 16.4](../assignments/assignment_6.qmd) |
 | 14 | Tue Nov 17 | | |
 | | Thu Nov 19 | | |
 | 15 | Mon Nov 23 | **Project presentations** | [Project information](project.qmd) |

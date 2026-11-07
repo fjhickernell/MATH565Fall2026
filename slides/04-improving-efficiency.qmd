@@ -18,7 +18,7 @@ include-after-body:
 subtitle: |
   <span class="deck-title">{{< meta deck_title >}}</span><br>
   <span class="deck-meta">{{< meta texts.owen.short >}}, Chapters 8–10 and 15–17</span><br>
-  <span class="deck-meta">[Assignment 5](../assignments/assignment_5.html) due Oct 21<br>Test 2 · Oct 27</span>
+  <span class="deck-meta">[Assignment 5](../assignments/assignment_5.html) due Oct 21 · Test 2 · Oct 27<br>[Assignment 6](../assignments/assignment_6.html) due Nov 13</span>
 ---
 
 # Course Map {.deck-course-map tree-marker="deck-04-overview"}

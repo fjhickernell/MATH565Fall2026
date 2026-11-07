@@ -1,5 +1,48 @@
 # Next task
 
+## Assignment 6 — website prepared, publication pending
+
+Owen Exercises **15.1 and 16.4**, due **Friday, November 13, 2026,
+11:59 PM America/Chicago**, are prepared in the assignment page, Assignments
+table, Schedule, and Improving Efficiency title-slide reminder. The existing
+Canvas item is recorded as `canvas.assignment_6` in `course-metadata.yml`.
+The grading deadline is **November 19**, six calendar days after submission;
+the Dashboard already records it under T1.
+
+The website sources are included in this Checkpoint. Next: verify both
+deployed public links, finish the Canvas configuration, and obtain one
+combined publication approval.
+On November 6, the live course assignment inventory showed exactly one
+Assignment 6, [106679](https://iit.instructure.com/courses/25777/assignments/106679):
+unpublished, 20 points, due November 13 at 11:59 PM for Everyone, empty
+description, currently text-entry submission. Reuse it; file-upload/group
+configuration is still pending. No Assignment 6 announcement exists in the
+complete 20-announcement inventory. No Canvas changes or publication have
+been made in this preparation pass.
+The People navigation lists Assignment 1–5 Groups and Project Groups, with
+no Assignment 6 group set; create it after verifying the deployed website.
+
+Validation: the root website and all five decks render successfully in the
+qmcpy kernel; all 1,333 local link/asset references across the 18 canonical
+pages/decks and `git diff --check` pass. Browser layout inspection remains
+pending because the browser security policy blocked the local file preview;
+do not report visual approval.
+
+Prepared Canvas description: link to the
+[Assignment 6 details](https://fjhickernell.github.io/MATH565Fall2026/assignments/assignment_6.html)
+and [Assignments page](https://fjhickernell.github.io/MATH565Fall2026/pages/homework.html)
+only. After deployment, verify/create `Assignment 6 Groups`: 20 self-sign-up
+groups limited to two students; shared submission and grade; unlimited file uploads.
+
+Prepared all-sections announcement, **Assignment 6 is available**:
+
+> See the [Assignment 6 details](https://fjhickernell.github.io/MATH565Fall2026/assignments/assignment_6.html)
+> and [Assignments page](https://fjhickernell.github.io/MATH565Fall2026/pages/homework.html).
+> You may work individually or with one partner. Join a group in Assignment 6
+> Groups before submitting; one person submits all required files for the group,
+> and the submission and grade are shared. Follow the file-naming and
+> identification requirements on the Assignments page.
+
 ## November 10 lecture continuation
 
 Resume Selected Topics at [Why cheap gradients matter](../slides/05-selected-topics.qmd#why-cheap-gradients-matter),
