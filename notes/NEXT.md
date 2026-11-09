@@ -54,6 +54,29 @@ website and five decks render, all 1,333 canonical link/asset references and
 `git diff --check` pass. Dashboard publication closeout preserves the grading
 task; native reminder reconciliation remains unverified.
 
+## Project administration — November 8 closeout
+
+The live topic-approval workbook was refreshed from the saved instructor
+decisions. Older resubmissions were already marked `SUPERSEDED`; prior feedback
+and all response history remain intact. The deployed course-page link opens
+the updated November 8 view, and Manage Access retains view permission for
+the verified active roster. This checks permissions, not a student-account login.
+
+The live approval workbook remains at the Illinois Tech OneDrive root as
+`MATH565 Project Topic Approval Fall 2026.xlsx`. At the instructor's request,
+an identical separate copy is now in the private course `Projects/` folder.
+That copy is a snapshot; continue updating the root file linked from the
+course page. The older underscore-named Projects export is historical.
+
+The instructor-directed morning presentation assignments and observation
+accommodation are saved and verified in the shared live signup workbook.
+Current approved proposals have been cross-checked against presentation
+bookings; remaining individual follow-ups and enrollment uncertainty are on
+the private Dashboard. Observer registration is due November 11. Detailed
+cell changes, student identities and grading records remain in private OneDrive.
+No new announcement was sent. Matching Academic reminder state is unverified
+under the existing access restriction.
+
 ## Stochastic gradient descent — instructor review
 
 Review the expanded [SGD slides](../slides/05-selected-topics.qmd#stochastic-gradient-descent-section)
@@ -97,10 +120,10 @@ push triggering another workflow.
 
 ## November 5 makeup
 
-The private makeup is approved and ready for printing. Physical printing and
-administration remain. Grade the November 5 sitting and update Canvas/Best Test
-by November 11; recalculate from the actual sitting date plus six calendar days
-if it changes. The prepared answer copy remains private until grading is complete.
+The November 5 makeup sitting has been administered, confirmed by the
+instructor November 8. Grade it and update Canvas/Best Test by November 9
+for return on November 10; the six-day grading deadline remains November 11.
+The prepared answer copy remains private until grading is complete.
 
 ## November 3 teaching follow-up
 
@@ -1260,14 +1283,10 @@ drops one lowest score and excludes the unchanged 10-point Diagnostic Survey
 with Never Drop. No quizzes are listed in the MATH 565 schedule.
 
 Assignment 5 has completed publication and grading release; its current record
-appears above. Assignment 6 is the remaining saved, verified, **unpublished**
-Canvas placeholder, with no submission requested yet. Its due date reserves
-the schedule date at 11:59 PM America/Chicago. Reuse this ID during setup:
-
-- Assignment 6: [106679](https://iit.instructure.com/courses/25777/assignments/106679), due November 13, 2026.
-
-Complete the assignment-specific partner group set, file-upload submission,
-course-page links, and publication workflow before releasing this draft.
+appears above. Assignment 6 [106679](https://iit.instructure.com/courses/25777/assignments/106679)
+was subsequently configured and published November 6; see **Assignment 6 —
+published November 6** above for the verified settings and announcement.
+Do not recreate its group set, assignment, or announcement.
 
 The student-facing Assignments page now records the 20-point homework and
 lowest-score-drop policy, including the Diagnostic Survey exception.

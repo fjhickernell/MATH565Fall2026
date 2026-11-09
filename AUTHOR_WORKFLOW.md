@@ -345,6 +345,13 @@ scores, and feedback outside the public course repository.
    approved. If Canvas cannot support a private upload, explain the limitation
    before entering data. Do not rely on hiding grades after automatic posting
    has already exposed them.
+   Use the standard Gradebook or SpeedGrader for a private upload, not
+   Individual View: [Canvas documents that Individual View does not support
+   all Gradebook settings](https://community.instructure.com/en/kb/articles/660826-how-do-i-use-the-gradebook).
+   A Manual label alone is insufficient after grades have previously been
+   posted to Everyone. Verify the new score's actual unposted state before
+   continuing; if that cannot be established, stop the upload and retain the
+   remaining scores privately.
 3. Load and verify all intended grades and eligible hidden feedback. Check group
    propagation and exclude Test Student. Verify saved comments in the Gradebook
    submission tray before retrying: for individuals on a group assignment,
