@@ -43,6 +43,9 @@ appropriate phase rather than appended indiscriminately.
     - [x] Verify course title, semester, and course identity.
     - [x] Review and update the course description.
     - [x] Verify instructor information, photograph, and links.
+    - [x] Publish and verify the live Canvas Welcome page's Instructor and
+      Course resources sections, retained contact details and office-hours
+      booking link (November 9, 2026).
     - [x] Add a public-safe Math Tutoring Center notice that routes enrolled
       students through Canvas to the live coordinator-maintained schedule.
     - [x] Review textbook and recommended resources.

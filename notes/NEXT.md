@@ -54,6 +54,15 @@ website and five decks render, all 1,333 canonical link/asset references and
 `git diff --check` pass. Dashboard publication closeout preserves the grading
 task; native reminder reconciliation remains unverified.
 
+## Canvas Welcome — published November 9
+
+The published [Canvas Welcome page](https://iit.instructure.com/courses/25777/pages/welcome)
+now places **Instructor** after the introduction and before **Course resources**,
+with both sections using level-two headings. Existing instructor contact
+details are retained, with an **Office hours: Book an office-hours appointment**
+link to the existing Bookings page. The saved published page is verified;
+classroom, meeting time and other course content are retained.
+
 ## Project administration — November 8 closeout
 
 The live topic-approval workbook was refreshed from the saved instructor
