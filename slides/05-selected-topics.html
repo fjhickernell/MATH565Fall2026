@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.11.9">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-11-09">
+  <meta name="dcterms.date" content="2026-11-10">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -643,7 +643,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">November 9, 2026</p>
+  <p class="date">November 10, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-05-overview">
 <h1>Course Map</h1>
@@ -2065,8 +2065,8 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 <ul>
 <li><a href="#/gradient-descent">Gradient descent</a></li>
 <li><a href="#/why-cheap-gradients-matter">Why cheap gradients matter</a></li>
-<li><a href="#/stochastic-gradient-descent">Stochastic gradient descent</a></li>
-<li><a href="#/mini-batches-and-gradient-noise">Mini-batches and gradient noise</a></li>
+<li><a href="#/stochastic-gradient-descent">Single-observation SGD</a></li>
+<li><a href="#/mini-batches-and-gradient-noise">Mini-batch SGD and gradient noise</a></li>
 <li><a href="#/a-large-data-example">A large-data example</a></li>
 <li><a href="#/choosing-an-optimization-method">Choosing an optimization method</a></li>
 </ul>
@@ -2125,7 +2125,7 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 <h3 id="the-banana-function-is-still-difficult">The banana function is still difficult</h3>
 <p><span class="math display">\[R(\vtheta)=(1-\theta_1)^2+100(\theta_2-\theta_1^2)^2
 \qquad \vtheta_*=[1,1]^\top\]</span></p>
-<div id="bbad63f0" class="cell" data-fig-height="4.1" data-fig-width="10" data-execution_count="2">
+<div id="c197f5c5" class="cell" data-fig-height="4.1" data-fig-width="10" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2151,8 +2151,8 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 </section>
 <section class="slide level2">
 
-<h3 id="conditioning-versus-dimension">Conditioning versus dimension</h3>
-<p>For <span class="math inline">\(\operatorname{Loss}(\vtheta)=\tfrac12\vtheta^\top\mA\vtheta\)</span> with <span class="math inline">\(\mA\)</span> symmetric positive definite and minimizer <span class="math inline">\(\vtheta_*=\vzero\)</span>,</p>
+<h3 id="conditioning-versus-dimension">Conditioning, <span class="math inline">\(\kappa\)</span>, versus dimension, <span class="math inline">\(m\)</span></h3>
+<p>For <span class="math inline">\(\operatorname{Loss}(\vtheta)=\tfrac12\vtheta^\top\mA\vtheta\)</span> with <span class="math inline">\(\mA\)</span> symmetric positive definite and minimizer <span class="math inline">\(\vtheta_*=\vzero\)</span></p>
 <p><span class="math display">\[\begin{gather*}
 \vtheta_{k+1}=(\mI-\eta_{\mathrm{best}}\mA)\vtheta_k
 \qquad
@@ -2164,19 +2164,118 @@ q=\frac{\kappa-1}{\kappa+1}
 \qquad
 \norm{\vtheta_{k+1}}\leq q\norm{\vtheta_k}
 \end{gather*}\]</span></p>
-<ul>
-<li><span class="math inline">\(q\)</span> bounds the <span class="alert">fraction of parameter error remaining</span> per GD update</li>
-<li><span class="math inline">\(\mA=\operatorname{diag}(1,100)\)</span>: <span class="math inline">\(\kappa=100\)</span>, <span class="math inline">\(q=99/101\approx0.9802\)</span> — slow</li>
-<li><span class="math inline">\(\mA=\mI\)</span> in a million dimensions: <span class="math inline">\(\kappa=1\)</span>, <span class="math inline">\(\eta_{\mathrm{best}}=1\)</span>, <span class="math inline">\(q=0\)</span> — exact in one update</li>
-<li>Large <span class="math inline">\(m\)</span> raises computational and storage costs, independently of <span class="math inline">\(q\)</span></li>
-<li>Scaling, preconditioning, momentum, and curvature information can help</li>
-</ul>
+<p><span class="math inline">\(q\)</span> bounds the <span class="alert">fraction of parameter error remaining</span> per GD update</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Matrix <span class="math inline">\(\mA\)</span></th>
+<th>Best contraction</th>
+<th>Full gradient <span class="math inline">\(\mA\vtheta\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\operatorname{diag}(1,100)\)</span>, <span class="math inline">\(m=2\)</span></td>
+<td><span class="math inline">\(\kappa=100\)</span>, <span class="math inline">\(q\approx0.9802\)</span><br><span class="alert">Slow</span> worst-case progress</td>
+<td><span class="math inline">\([\theta_1,100\theta_2]^\top\)</span><br>Only two components</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mI_{10^6}\)</span>, <span class="math inline">\(m=10^6\)</span></td>
+<td><span class="math inline">\(\kappa=1\)</span>, <span class="math inline">\(q=0\)</span><br><span class="alert">Exact</span> in one update</td>
+<td><span class="math inline">\(\vtheta\)</span><br>A million components</td>
+</tr>
+</tbody>
+</table>
+<p>For these diagonal examples: <span class="math inline">\(O(m)\)</span> work per full gradient and parameter update</p>
 <div class="key-point">
-<p>We want <span class="alert">small <span class="math inline">\(q\)</span></span>: less error remains after each update<br> <span class="math inline">\(q\)</span> near <span class="math inline">\(1\)</span>: slow worst-case progress</p>
+<p><span class="alert">Small <span class="math inline">\(q\)</span></span>: fewer updates needed<br> <span class="alert">Small <span class="math inline">\(m\)</span></span>: less coordinate work per full gradient</p>
 </div>
 <aside class="notes">
 <p>The displayed bound is for this positive-definite quadratic in Euclidean norm, with its minimizer at zero, so norm(theta_k) is the parameter error. The contraction factor q bounds the fraction of this error remaining after one update at the displayed best constant scalar step; it is not the fraction removed and not an objective-value contraction factor. Smaller q is better: q=0 removes all parameter error in one update, while q near one allows only slow worst-case progress. In a million dimensions with A=I, every eigenvalue is one, kappa=1, eta_best=1, and q=(1-1)/(1+1)=0. The update is theta_{k+1}=(I-I)theta_k=0, regardless of the starting vector. Reading and updating a million coordinates still costs work.</p>
+<p>The table separates the contraction factor from full-gradient cost. Exploit the diagonal structure in both cases: only two scalar gradient components are needed for diag(1,100), while the identity example has a million. Forming an explicit full gradient and updating the parameter vector takes O(m) work; neither example needs a dense matrix or O(m^2) multiplication. The identity’s gradient formula is trivial, and its minimizer can be set directly if that structure is used analytically. It illustrates vector size and memory traffic, not an intrinsically difficult optimization problem. Small m alone does not make every gradient cheap; data size and model complexity also matter. Scaling and preconditioning can improve conditioning without changing m.</p>
 <p>Diagonalize A with an orthogonal matrix; each error component is multiplied by 1-eta*lambda. Minimizing the largest absolute factor over constant scalar steps gives q=(kappa-1)/(kappa+1). This is a sharp worst-case bound, not necessarily the fraction remaining for every starting error. It is not a convergence formula for arbitrary nonconvex objectives. For diag(1,100), eta_best=2/101 and q=99/101: about 98.02% of the parameter error may remain after an update. At eta=1/100 instead, the steep component vanishes at once but the shallow component retains 99% per update. The best worst-case scalar step balances the two extreme modes. Scaling and preconditioning change the effective curvature; momentum and curvature-aware methods change the update beyond this basic GD formula.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="coordinate-to-norm-contraction">From coordinate contraction to norm contraction</h3>
+<p>Write <span class="math inline">\(\vtheta_k=\sum_{j=1}^m c_{k,j}\vv_j\)</span> in an orthonormal eigenbasis, <span class="math inline">\(\mA\vv_j=\lambda_j\vv_j\)</span></p>
+<p><span class="math inline">\(c_{k,j}=\vv_j^\top\vtheta_k\)</span>: <span class="alert">error coordinate along <span class="math inline">\(\vv_j\)</span></span> at iteration <span class="math inline">\(k\)</span></p>
+<p><span class="math display">\[\begin{gather*}
+c_{k+1,j}=(1-\eta\lambda_j)c_{k,j}
+\qquad
+q(\eta)=\max_j|1-\eta\lambda_j|
+\\
+\norm{\vtheta_{k+1}}_2^2
+=\sum_{j=1}^m c_{k+1,j}^2
+=\sum_{j=1}^m (1-\eta\lambda_j)^2c_{k,j}^2
+\\
+\leq q(\eta)^2\sum_{j=1}^m c_{k,j}^2
+=q(\eta)^2\norm{\vtheta_k}_2^2
+\end{gather*}\]</span></p>
+<p>Take square roots, then repeat with the same step size</p>
+<p><span class="math display">\[\begin{gather*}
+\norm{\vtheta_{k+1}}_2\leq q(\eta)\norm{\vtheta_k}_2
+\qquad
+\norm{\vtheta_k}_2\leq q(\eta)^k\norm{\vtheta_0}_2
+\end{gather*}\]</span></p>
+<div class="key-point">
+<p><span class="alert">Contraction</span> when <span class="math inline">\(0&lt;\eta&lt;2/\lambda_{\max}\)</span>, giving <span class="math inline">\(q(\eta)&lt;1\)</span></p>
+</div>
+<aside class="notes">
+<p>Continue the preceding SPD quadratic, with its minimizer at zero. The error vector is expanded in the orthonormal eigenvectors v_j. The scalar c_{k,j} is its signed coordinate in eigenvector direction j at iteration k; it is not another parameter vector. Multiplying the GD update by v_j^T gives the displayed scalar recurrence because v_j^T A=lambda_j v_j^T. Thus the multidimensional iteration becomes separate scalar updates.</p>
+<p>The orthonormality identity is Pythagoras: expanding the squared norm of sum_j c_{k,j} v_j produces cross terms v_j^T v_l, which are zero for j != l and one for j=l. Thus ||theta_k||<em>2^2=sum_j c</em>{k,j}^2. This identity is used at both ends of the squared-norm calculation.</p>
+<p>Square each scalar coordinate update. Every multiplier squared is at most q(eta)^2; summing preserves the inequality, and taking nonnegative square roots gives the one-step bound. Applying it repeatedly with a fixed eta gives the k-step bound. A strict contraction requires 0 &lt; eta &lt; 2/lambda_max. Equality in the one-step bound is possible for an error in an eigenvector direction attaining the maximum absolute multiplier. No independence or random averaging is used. The next slide minimizes this norm-bound factor over constant scalar steps.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="balancing-extreme-eigenvalue-directions">Balancing the extreme eigenvalue directions</h3>
+<p>Choose <span class="math inline">\(\eta\)</span> to minimize the <span class="alert">norm-bound factor</span> established above</p>
+<p><span class="math display">\[\begin{gather*}
+q(\eta)=\max_j|1-\eta\lambda_j|
+=\max\left\{\underbrace{1-\eta\lambda_{\min}}_{\text{decreases with }\eta},\ \underbrace{\eta\lambda_{\max}-1}_{\text{increases with }\eta}\right\}
+\end{gather*}\]</span></p>
+<p>Best constant step: <span class="alert">balance</span> the two extreme multipliers</p>
+<p><span class="math display">\[\begin{gather*}
+1-\eta\lambda_{\min}=-(1-\eta\lambda_{\max})
+\quad\implies\quad \eta_{\mathrm{best}}=\frac{2}{\lambda_{\max}+\lambda_{\min}}
+\\
+q(\eta_{\mathrm{best}})=\frac{\lambda_{\max}-\lambda_{\min}}{\lambda_{\max}+\lambda_{\min}}
+=\frac{\kappa-1}{\kappa+1}
+\end{gather*}\]</span></p>
+<div class="key-point">
+<p>Balance shallow-direction decay against steep-direction overshoot</p>
+</div>
+<aside class="notes">
+<p>The preceding slide established q(eta) as the sharp worst-case Euclidean norm factor. For fixed eta &gt; 0, |1-eta*lambda| is convex in lambda; its maximum over the spectrum is attained at one of the two extreme eigenvalues.</p>
+<p>For 0 &lt; eta &lt; 2/lambda_max, the worst-case factor is max(1-eta<em>lambda_min, eta</em>lambda_max-1). The first expression decreases with eta and the second increases. Their intersection minimizes the maximum; outside this interval the factor is at least one. At the intersection the two extreme multipliers are q and -q. If lambda_min=lambda_max, both are zero and there is no alternation. Otherwise the steep component crosses zero on each update while the shallow component keeps its sign. This refers to the error components, not to an increase in the loss.</p>
+<p>For diag(1,100), eta_best=2/101 gives multipliers 99/101 and -99/101. For the identity, eta_best=1 gives zero in every direction. The parameter error contracts by at most q; the quadratic loss gap contracts by at most q^2. This is the best fixed scalar step for full-gradient descent on the stated quadratic, not an exact-line-search rule or an SGD noise formula.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2196,9 +2295,10 @@ q=\frac{\kappa-1}{\kappa+1}
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
+<p>Often, a <span class="alert">large-data loss</span> averages many observation losses</p>
 <p><span class="math display">\[\operatorname{Loss}(\vtheta)=\frac1N\sum_{i=0}^{N-1}\operatorname{loss}_i(\vtheta)
 \qquad N=\text{data size},\quad m=\text{parameters}\]</span></p>
-<p>For dense linear/logistic models, gradient work is approximately</p>
+<p>Dense linear/logistic models: <span class="math inline">\(O(m)\)</span> work per <span class="alert">observation gradient</span></p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -2221,15 +2321,15 @@ q=\frac{\kappa-1}{\kappa+1}
 </tbody>
 </table>
 <ul>
-<li>Large <span class="math inline">\(N\)</span>: many cheap updates before one full pass through the data</li>
-<li>Large <span class="math inline">\(m\)</span>: a dense Hessian stores <span class="math inline">\(O(m^2)\)</span> entries</li>
-<li><span class="alert">Reverse-mode automatic differentiation</span> (<span class="alert">adjoint method</span>): a whole gradient can cost a few loss evaluations<br> Called <span class="alert">backpropagation</span> in neural networks</li>
+<li>Large <span class="math inline">\(N\)</span>: many sampled updates for the work of <span class="alert">one full gradient</span>, even with small <span class="math inline">\(m\)</span></li>
+<li><span class="alert">Reverse-mode automatic differentiation</span>: gradient cost comparable to a few loss evaluations<br> <span class="alert">Adjoint method</span>; <span class="alert">backpropagation</span> in neural networks</li>
 <li>Streaming data and moderate accuracy can favor stochastic updates</li>
 </ul>
 <div class="key-point">
 <p>Compare <span class="alert">work to reach useful accuracy</span>, including noise and overhead</p>
 </div>
 <aside class="notes">
+<p>The finite-sum loss is a common setting, not a definition of every possible optimization objective. It is particularly relevant to SGD when N is huge and each observation’s gradient is cheap relative to the full gradient. SGD also applies to expectation objectives and streaming observations. For a dense linear or logistic observation, an inner product and a scaled feature vector cost O(m); summing over all N observations costs O(Nm). A batch of b observations instead costs O(bm), plus the O(m) parameter update. Thus a small parameter dimension does not make a full gradient cheap when the dataset is huge. General models have their own per-observation cost; the O(Nm) expression is specific to the stated dense models. This extends the preceding diagonal examples, which have no N-observation sum. Cheap updates alone do not guarantee less total work or elapsed time to accuracy. Automatic differentiation avoids m finite-difference loss evaluations; it does not remove the N-observation work of differentiating the full loss.</p>
 <p>N and m are independent axes: a large dataset can make SGD useful with only two parameters. A huge parameter count can make full dense Newton impractical without making GD geometrically faster. A naive dense Newton linear solve costs O(m^3); sparse, structured, Hessian-vector, and limited-memory methods can avoid that cost. L-BFGS retains a few gradient/step pairs and needs O(rm) storage for memory length r, rather than O(m^2). It remains a strong option for many deterministic problems. The gradient work table describes dense linear/logistic models, not every possible neural network. Automatic reverse mode does not require m finite-difference evaluations. Reverse-mode automatic differentiation is also called adjoint-mode differentiation or a discrete adjoint method; backpropagation is the usual neural-network name. The reverse sweep applies transposed local Jacobians to propagate output sensitivities back to the inputs. Continuous adjoint equations for differential equations are related, but need not give the same numerical derivative as differentiating a particular discrete solver. See <a href="https://www.imo.universite-paris-saclay.fr/~antoine.levitt/blog/adjoint/">Levitt, The adjoint trick</a> and <a href="https://www.cs.cornell.edu/~bindel/nmds/01-Fund1d/04-AutoDiff.html">Bindel, Automatic differentiation</a>. Statistical prediction error and optimization error are different; optimize accurately enough for the application, and use held-out data to judge prediction. SGD is much older than deep learning; large datasets, differentiable models, automatic differentiation and parallel hardware expanded its use.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -2244,7 +2344,7 @@ q=\frac{\kappa-1}{\kappa+1}
       }</style></aside>
 </section>
 <section id="stochastic-gradient-descent" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
-<h2>Stochastic gradient descent</h2>
+<h2>Single-observation SGD</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
@@ -2257,19 +2357,20 @@ q=\frac{\kappa-1}{\kappa+1}
 \vtheta_{k+1}=\vtheta_k-\eta_k\vG_k
 \\
 \Ex[\vG_k\mid\mathcal F_k]=\nabla\operatorname{Loss}(\vtheta_k)
+=\frac1N\sum_{i=0}^{N-1}\nabla\operatorname{loss}_i(\vtheta_k)
 \end{gather*}\]</span></p>
 <p>Here <span class="math inline">\(\mathcal F_k\)</span> contains the previous draws and the current iterate <span class="math inline">\(\vtheta_k\)</span></p>
 <ul>
-<li>A <span class="alert">fresh random observation</span> gives a cheap gradient estimate</li>
-<li>Conditional unbiasedness concerns the gradient at the current iterate</li>
-<li>It does not make <span class="math inline">\(\vtheta_k\)</span> an unbiased minimizer estimate</li>
+<li><span class="math inline">\(\vG_k\)</span>: an <span class="alert">unbiased but noisy estimate</span> of the full gradient <span class="math inline">\(\nabla\operatorname{Loss}(\vtheta_k)\)</span></li>
+<li><span class="alert">One sampled term</span> estimates the <span class="alert">average of <span class="math inline">\(N\)</span> gradient terms</span></li>
+<li>Unbiasedness concerns the gradient, not the minimizer estimate <span class="math inline">\(\vtheta_k\)</span></li>
 <li>A particular update may increase the full loss</li>
 </ul>
 <div class="key-point">
-<p>Estimate the <span class="alert">gradient</span> by Monte Carlo, then use it to update the parameters</p>
+<p>Estimate the <span class="alert"><span class="math inline">\(N\)</span>-term average gradient</span> with one term, then make one parameter update</p>
 </div>
 <aside class="notes">
-<p>The expectation is over the fresh sampled index, holding the history and current iterate fixed. A random permutation of the data within an epoch is also common, but its next index is not independent uniform conditional on all previous indices. Our identities and notebook experiments use sampling with replacement. They are not proofs for arbitrary shuffling or QMC substitutions.</p>
+<p>The expectation is over the fresh sampled index, holding the history and current iterate fixed. This first algorithm uses exactly one observation gradient per update to estimate the average of all N component gradients. The objective is an average, so the one-term estimator is grad loss_{I_k}, without another factor of 1/N. Its conditional expectation supplies that factor through the uniform draw. An unnormalized sum objective would instead use N times the sampled component gradient. The next slide generalizes the same symbol G_k to an average of b observation gradients; b=1 recovers this single-observation case. Unbiased but noisy means that the conditional mean is the full gradient, while the realized gradient estimate varies with the sampled observation. A random permutation of the data within an epoch is also common, but its next index is not independent uniform conditional on all previous indices. Our identities and notebook experiments use sampling with replacement. They are not proofs for arbitrary shuffling or QMC substitutions.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2283,15 +2384,19 @@ q=\frac{\kappa-1}{\kappa+1}
       }</style></aside>
 </section>
 <section id="mini-batches-and-gradient-noise" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
-<h2>Mini-batches and gradient noise</h2>
+<h2>Mini-batch SGD and gradient noise</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>With <span class="math inline">\(b\)</span> fresh IID indices, sampled <span class="alert">with replacement</span>,</p>
+<p>Generalize to <span class="math inline">\(b\)</span> fresh IID observations, sampled <span class="alert">with replacement</span></p>
 <p><span class="math display">\[\begin{gather*}
 \vG_k=\frac1b\sum_{j=1}^b\nabla\operatorname{loss}_{I_{kj}}(\vtheta_k)
+\qquad
+\vtheta_{k+1}=\vtheta_k-\eta_k\vG_k
+\\
+\Ex[\vG_k\mid\mathcal F_k]=\nabla\operatorname{Loss}(\vtheta_k)
 \\
 \sigma_k^2=\frac1N\sum_{i=0}^{N-1}
 \norm{\nabla\operatorname{loss}_i(\vtheta_k)-\nabla\operatorname{Loss}(\vtheta_k)}^2
@@ -2300,15 +2405,16 @@ q=\frac{\kappa-1}{\kappa+1}
 =\frac{\sigma_k^2}{b}
 \end{gather*}\]</span></p>
 <ul>
+<li><span class="math inline">\(\vG_k\)</span> remains an <span class="alert">unbiased but noisy estimate</span> of the full gradient</li>
 <li>Larger batch: less gradient noise, more work per update</li>
 <li>Even at a minimizer, individual component gradients may be nonzero</li>
-<li>Vectorized batches can use hardware more efficiently than single observations</li>
 </ul>
 <div class="key-point">
-<p>Choose <span class="math inline">\(b\)</span> for <span class="alert">accuracy per unit cost</span>; fewer updates alone prove little</p>
+<p><span class="math inline">\(b=1\)</span> recovers <span class="alert">single-observation SGD</span>; choose <span class="math inline">\(b\)</span> for <span class="alert">accuracy per unit cost</span></p>
 </div>
 <aside class="notes">
-<p>Expand the squared norm of the average of b centered independent vectors. Cross terms have zero conditional expectation; the b diagonal terms give sigma_k^2/b. Sigma_k^2 is the trace of the component-gradient covariance, not the loss variance. Sampling b distinct observations uniformly without replacement gives an additional (N-b)/(N-1) factor for N&gt;1. Drawing b=N with replacement is not the full gradient; full GD explicitly visits every observation once.</p>
+<p>Mini-batch SGD generalizes the preceding single-observation algorithm. Every component gradient is evaluated at the same current theta_k; average them, then make one parameter update. With b=1 and I_{k1}=I_k, both the gradient definition and the parameter update reduce to the preceding slide. Linearity of conditional expectation gives E[G_k | F_k]=grad Loss(theta_k) for every batch size b, because each fresh IID draw is uniform conditional on the history. The estimate is unbiased but generally noisy; averaging reduces its conditional mean squared error without changing its mean.</p>
+<p>Expand the squared norm of the average of b centered independent vectors. Cross terms have zero conditional expectation; the b diagonal terms give sigma_k^2/b. Sigma_k^2 is the trace of the component-gradient covariance, not the loss variance. Sampling b distinct observations uniformly without replacement gives an additional (N-b)/(N-1) factor for N&gt;1. Drawing b=N with replacement is not the full gradient; full GD explicitly visits every observation once. Vectorized batches can use hardware more efficiently than single observations; fewer updates alone do not establish lower total work or elapsed time.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2325,13 +2431,12 @@ q=\frac{\kappa-1}{\kappa+1}
 
 <h3 id="why-a-noisy-direction-can-help">Why a noisy direction can help</h3>
 <p>Assume <span class="math inline">\(\nabla\operatorname{Loss}\)</span> is <span class="math inline">\(L\)</span>-Lipschitz and <span class="math inline">\(0&lt;\eta_k\leq1/L\)</span></p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display">\[\begin{gather*}
 \Ex[\operatorname{Loss}(\vtheta_{k+1})\mid\mathcal F_k]
-&amp;\leq\operatorname{Loss}(\vtheta_k)
-\\
-&amp;\quad-\underbrace{\frac{\eta_k}{2}\norm{\nabla\operatorname{Loss}(\vtheta_k)}^2}_{\text{downhill progress}}
+\leq\operatorname{Loss}(\vtheta_k)
+-\underbrace{\frac{\eta_k}{2}\norm{\nabla\operatorname{Loss}(\vtheta_k)}^2}_{\text{downhill progress}}
 +\underbrace{\frac{L\eta_k^2\sigma_k^2}{2b}}_{\text{noise penalty}}
-\end{align*}\]</span></p>
+\end{gather*}\]</span></p>
 <ul>
 <li>Far from a stationary point, downhill progress can dominate</li>
 <li>Near it, a fixed learning rate can leave persistent fluctuations</li>
@@ -2413,7 +2518,7 @@ q=\frac{\kappa-1}{\kappa+1}
 
 <h3 id="gradient-and-stochastic-gradient-paths">Gradient and stochastic-gradient paths</h3>
 <p>Contours show excess average loss above its minimum<br> SGD samples one of the four component gradients at each step</p>
-<div id="5b012b1c" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="3">
+<div id="e91493b6" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
