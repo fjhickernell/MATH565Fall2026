@@ -2,20 +2,53 @@
 
 ## Immediate preparation — November 10
 
-Resume instructor review at [Why a noisy direction can help](../slides/05-selected-topics.qmd#why-a-noisy-direction-can-help),
-then learning rates and the noise floor, alongside SGD notebook Parts 3–6.
-The expected-descent equation is now on one line. Instructor understanding
-and content review remain open; the classroom pickup below is unchanged.
+Review the revised optimization-to-SGD sequence from
+[Optimize a loss function](../slides/05-selected-topics.qmd#gradient-descent),
+alongside the opening nonquadratic scalar-loss section and Parts 1–6 of the
+[SGD notebook](../notebooks/performance/StochasticGradientDescent.ipynb).
+Fred plans the full November 10 lecture around SGD, with a complete logical
+introduction and permission to backtrack. Review the scalar picture and
+gradient/curvature background, then follow the staged challenges and explicit
+learning-rate choices. The earlier recorded classroom pickup is retained below.
+Instructor content and pacing review remain open; the additions do not
+establish new classroom coverage.
 
-### Questions to resolve
+### Review focus
 
-- How should $\eta_k$ be chosen in practice? Separate curvature-informed or
-  tuned/decaying steps from the theoretical expected-descent bound.
-- Can mini-batch sample variance estimate $\sigma_k^2$, and what additional
-  information is needed to turn that estimate into a learning-rate decision?
-
-The notebook's logistic comparison uses declared fixed/decaying step sizes;
-it does not automatically choose them from the displayed descent bound.
+- General vector loss, then m=1, slope/curvature and imperfect quadratic
+  models from three values or one value plus first and second derivatives.
+- Four cumulative challenge tables: scalar (2 rows), before expensive gradients
+  (4 rows), immediately before SGD (5 rows), and after sampling/noise (6 rows). Practical responses belong
+  in the wider consequence column; no early gradient-noise teaser.
+- Multidimensional gradient/Hessian costs before GD; defer regression until
+  the finite-sum loss motivates SGD. Large N motivates sampling; large m
+  makes dense curvature costly. Newton can remain useful for small m and
+  huge N. Distinguish O(m) updates from objective-dependent gradient work.
+- For nonconvex losses, multiple starts can explore different minima but
+  give no global-minimum guarantee; compare the same objective and charge all runs.
+- Attach $d$ to the random index vector drawn for one gradient estimate:
+  $d=b$ for a mini-batch, $d=1$ for one observation. Keep parameter count $m$
+  and fixed dataset size $N$ separate; omit competing sampling conventions.
+- Define before using: the early cost table compares one observation with
+  the full data pass; the mini-batch algorithm then precedes its dimension
+  recap. Convexity precedes the scalar challenges table. Batch means and
+  regularization strength are named where they first enter the equations.
+- Fixed-iterate variance estimation and expected descent, then an explicit
+  learning-rate procedure: curvature scale or pilot tuning, target accuracy,
+  exact scalar floor-based choice and the actual logistic rate schedule.
+  The notebook does not implement automatic tuning. Its L-bound setup is
+  outside optimizer timers and not separately timed; charge it when using
+  timings to compare complete methods.
+- Beginner orientation distinguishes the stored iterate and sampled numerical
+  gradient from the costly exact full gradient/noise and unknown minimizer.
+  The descent lemma assumes a separately available valid curvature bound;
+  it explains expected progress rather than computing a practical rate.
+  Short trial runs and common loss diagnostics provide the tuning procedure.
+- “SGD in practice” is a separate main `##` slide and outline entry. Finish
+  the bound and noise-estimation caveats first, then give the working recipe,
+  identifying batch/rate/schedule tuning as heuristic before the scalar example.
+  The notebook mirrors this sequence and the four labeled expected-descent
+  terms; its code retains declared fixed/decaying rates rather than automatic tuning.
 
 ## November 10 lecture continuation
 
@@ -37,11 +70,10 @@ links on the live Schedule are verified November 6. The schedule renders,
 its continuation links resolve, and all six tables pass desktop and phone-width
 browser inspection.
 
-The November 5 classroom reruns are preserved: Multilevel Beam, Multilevel
-Option Pricing, and Stochastic Gradient Descent have 9, 13, and 10 completed
-code cells, respectively, with no saved errors. Their total runtimes are
-20.7, 37.7, and 6.1 seconds. Notebook sources are unchanged; refreshed results
-and timings remain measurements from this run.
+The November 5 classroom reruns of Multilevel Beam and Multilevel Option
+Pricing remain saved, with 9 and 13 completed code cells. The SGD companion
+has since been expanded and rerun for the November 10 review; see its current
+validation and publication state below.
 
 ## Assignment 6 — published November 6
 
@@ -105,67 +137,64 @@ under the existing access restriction.
 
 ## Stochastic gradient descent — instructor review
 
-Review the expanded [SGD slides](../slides/05-selected-topics.qmd#stochastic-gradient-descent-section)
-and [Stochastic Gradient Descent companion](../notebooks/performance/StochasticGradientDescent.ipynb).
-The sequence explains why Rosenbrock still defeats plain steepest descent,
-separates conditioning and parameter dimension from data size, and develops
-conditional unbiasedness, mini-batch variance, expected descent, and an exact
-scalar noise floor. It includes practical alternatives and self-contained
-logistic loss/gradient formulas. The notebook consolidates the inherited
-gradient variants; no separate Rosenbrock notebook is needed.
-The slide outline keeps six main topics; supporting examples and the companion
-notebook are marker-free continuations with their existing links preserved.
-The six links now occupy one column beside a vector illustration of full and
-sampled gradient paths. Conditioning explicitly defines $q$ as the fraction of
-parameter error remaining, with small $q$ preferred and $q=0$ for the identity
-quadratic at its best step. The notebook labels the Rosenbrock-at-minimizer
-condition number while distinguishing the quadratic bounds from actual banana
-runs. Reverse-mode AD, adjoint methods, and neural-network backpropagation are
-named together.
+The revised [SGD slides](../slides/05-selected-topics.qmd#gradient-descent)
+begin with a general vector loss, then explicitly take m=1 for a nonquadratic
+quartic example. The true curve, tangent and local quadratic show that exact first and second
+derivatives help choose a step without describing the whole loss. Scalar
+quadratic construction uses three distinct loss values or the value, slope
+and second derivative at one point. The multidimensional gradient/Hessian,
+quadratic coefficient count, Hessian storage and Newton solve costs precede
+GD's first-order update. O(m) refers to gradient size/update arithmetic;
+its evaluation cost still depends on the loss.
 
-The conditioning comparison now separates $\kappa$ from $m$ using the cheap
-two-component diagonal gradient and the million-component identity gradient.
-A following continuation defines the eigenvector coordinates and uses
-orthonormality and their squared sum to derive the one-step Euclidean norm
-bound and its $k$-step iteration for a fixed step size. The next continuation
-then derives the best constant quadratic GD step by balancing the decreasing
-shallow-mode factor and increasing steep-mode overshoot.
-“Why cheap gradients matter” introduces the finite-sum loss as a
-common large-data setting: dense-model full gradients cost $O(Nm)$ versus
-$O(bm)$ for sampled batches. This separates conditioning, parameter dimension,
-and data size without asserting a universal SGD speed advantage.
-The algorithm slides now explicitly introduce single-observation SGD first,
-then mini-batch SGD as its generalization, with $b=1$ recovering the first
-case. Both label $\vG_k$ an unbiased but noisy estimate of the full gradient;
-the single-observation slide explicitly identifies one sampled gradient as
-an estimate of the $N$-term average. The batch gradients use one common
-iterate before a single update.
-The website and all five decks render with the qmcpy kernel; all 1,544 local
-link/asset references across 22 canonical outputs resolve. The affected slides pass
-1600×1000 and 1280×720 browser review, including continuation navigation.
-Instructor review remains incomplete; remote deployment of the latest
-refinements is not yet verified.
+Nonlinear exponential regression first appears at “Why cheap gradients matter,”
+where averaging squared prediction errors motivates SGD. Unlike linear least
+squares, this objective has no fixed normal-equation solve; fitting logarithms
+would change the objective. The dense-model table now separates full
+loss and gradient O(Nm), mini-batch gradient O(bm), and dense Hessian formation
+O(Nm^2). Large N and large m motivate different choices: sampling reduces
+data-pass work, while large m increases dense curvature costs. At m=2,
+Newton uses a tiny solve even when its full derivative pass is expensive.
+Linear least-squares precomputation remains an explicit exception. Four cumulative
+tables carry the same earlier rows forward: scalar nonquadraticity/nonconvexity,
+then Hessian cost/conditioning before expensive gradients, full-gradient cost before SGD, then gradient
+noise only after sampling is developed. Consequences and responses occupy
+56% of each table; the challenge and description columns use 20% and 24%.
+Multiple starts are a practical nonconvex strategy, not a global certificate.
 
-The Rosenbrock comparison now labels the minimizer and the accepted cross-valley
-jump, with a separate close-up of the final 100 GD updates. Its two methods are
-bullets; notebook headings are retained for instructor review.
+Single-observation sampling uses one scalar index ($d=1$). One mini-batch
+draw uses a vector of $b$ independent indices ($d=b$); the code's scalar
+uniform stream is grouped into these vectors. Batch variance, a one-batch variance
+estimator, smoothness and the expected-descent derivation precede practical
+learning rates and the scalar noise floor. The explanatory upper-bound step
+is distinguished from practical tuning and the best constant quadratic step.
+The practical rate-selection procedure is explicit: known-L scale or short
+independent pilot comparisons, followed by accuracy-based decay/batch choices.
+A worked scalar target MSE of .01 gives the exact limiting-rate constraint.
+The logistic continuation records the implemented 1/L full-GD step and .3
+fixed/work-based decaying SGD schedules, including untimed L-bound setup.
+Pre-draw information and fresh IID sampling assumptions remain explicit.
+Existing slide anchors and notebook Parts 1–6 are preserved; the
+Introduction terms index links the new substantive concepts.
 
-All ten code cells execute cleanly in the course qmcpy kernel; five figures
-and independent gradient/moment checks are included. Each logistic method
-uses the same component-gradient budget, with sampling and selection charged
-inside optimization time and full-loss diagnostics timed separately. The
-November 5 classroom run favors vectorized full GD on elapsed time; treat
-these timings as machine-specific measurements without claiming universal
-SGD speedups. The notebook page, slide links, and cumulative terms index
-are updated. Instructor content review remains open.
+The [SGD notebook](../notebooks/performance/StochasticGradientDescent.ipynb)
+adds the nonquadratic scalar introduction, both quadratic-model constructions,
+and an actual fixed-iterate sample-variance diagnostic, separate from exact
+enumeration. Exhaustive with/without-replacement
+checks and repeated-batch checks validate its noise formulas. It retains
+equal component-gradient budgets, with optimization and full-loss diagnostic
+times measured separately. The saved M3 comparison favors vectorized full GD;
+it does not establish a general SGD speedup.
 
-Validation: the website and all five decks render; the revised slides and
-notebook figures pass desktop review, with compact-slide and phone-page checks.
-All 1,312 canonical page/deck references resolve. The published December review
-dates, SGD slides and illustration, and GitHub notebook are verified live.
-The publishing workflow now requests a Pages build explicitly after the
-`gh-pages` push, so the public deployment does not depend on a token-generated
-push triggering another workflow.
+All 12 code cells execute cleanly in the qmcpy kernel (6.8 seconds), all six
+figures are inspected, and notebook mathematical markup and schema checks pass.
+The website and all five decks render locally; all 1,581 local link/asset
+references across 22 canonical outputs pass. Revised slides and affected terms-index pages are checked at
+1600×1000 and 1280×720, including MathJax, continuation navigation and footer
+clearance; no browser console errors or warnings. Instructor review remains
+open. The November 10 sources are validated for Checkpoint publication;
+remote deployment of this revision is not yet verified. The recorded
+November 5 coverage and November 10 pickup are unchanged.
 
 ## November 5 makeup
 
@@ -293,7 +322,7 @@ the factor $s^{-p}$, with the common time budget grouped by a right brace.
 All five decks' Course Maps and section indexes now match their main topics;
 supporting derivations and examples are marker-free continuations. Generating
 Samples separates Random Vectors from Stochastic Processes and Option Pricing.
-Introduction's cumulative index has 134 terms on seven alphabetic slides;
+Introduction's cumulative index has 146 terms on seven alphabetic slides;
 existing range anchors and every deck's Big Ideas exception are preserved.
 The hierarchy/index audit does not establish instructor approval of pending
 mathematical content; continue the MLMC review above.

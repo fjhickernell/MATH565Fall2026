@@ -458,6 +458,7 @@ Canvas<br>Only one person per group submits the assignment
 ::: {.column width="50%"}
 - [Consistency](04-improving-efficiency.html#self-normalization-bias-and-consistency)
 - [Control variate](04-improving-efficiency.html#control-variates)
+- [Convex loss](05-selected-topics.html#convex-and-nonconvex-losses)
 - [Copula](02-generating-samples.html#copula-sampling)
 - [Coupling](05-selected-topics.html#two-level-monte-carlo)
 - [Covariance matrix](#moments-of-random-variables)
@@ -484,13 +485,16 @@ Canvas<br>Only one person per group submits the assignment
 - [Gaussian copula](02-generating-samples.html#gaussian-copula-sampling)
 - [Gaussian mixture](02-generating-samples.html#gaussian-mixture-random-numbers)
 - [Gaussian process](02-generating-samples.html#gaussian-processes)
+- [Generalized inverse](#random-variables-and-distributions)
+- [Geometric Brownian motion](02-generating-samples.html#geometric-brownian-motion)
 :::
 
 ::: {.column width="50%"}
-- [Generalized inverse](#random-variables-and-distributions)
-- [Geometric Brownian motion](02-generating-samples.html#geometric-brownian-motion)
-- [Gradient descent](05-selected-topics.html#gradient-descent)
+- [Gradient](05-selected-topics.html#gradient-in-several-dimensions)
+- [Gradient descent](05-selected-topics.html#gradient-descent-update)
+- [Gradient noise](05-selected-topics.html#gradient-noise-variance)
 - [Halton sequence](04-improving-efficiency.html#four-low-discrepancy-families)
+- [Hessian](05-selected-topics.html#curvature-and-the-hessian)
 - [Histogram](04-improving-efficiency.html#histograms-kde-and-conditional-density)
 - [Importance ratio / weight](04-improving-efficiency.html#importance-sampling)
 - [Importance sampling](04-improving-efficiency.html#importance-sampling)
@@ -520,7 +524,7 @@ Canvas<br>Only one person per group submits the assignment
 - [Lattice sequence](04-improving-efficiency.html#four-low-discrepancy-families)
 - [Law of total expectation](#laws-of-total-expectation-and-variance)
 - [Law of total variance](#laws-of-total-expectation-and-variance)
-- [Learning rate](05-selected-topics.html#gradient-descent)
+- [Learning rate](05-selected-topics.html#gradient-descent-update)
 - [Likelihood](03-markov-chain-monte-carlo.html#likelihood-and-maximum-likelihood-estimation)
 - [Lookback option](02-generating-samples.html#lookback-and-barrier-payoffs)
 - [Low discrepancy](02-generating-samples.html#what-does-low-discrepancy-mean)
@@ -552,6 +556,10 @@ Canvas<br>Only one person per group submits the assignment
 - [Monte Carlo tree search (MCTS)](05-selected-topics.html#choose-an-action-by-simulating-futures)
 - [Multilevel Monte Carlo](05-selected-topics.html#infinite-dimensional-expectations)
 - [Multivariate normal distribution](#multivariate-normal-or-gaussian-distribution)
+- [Newton step](05-selected-topics.html#scalar-loss-and-curvature)
+- [Nonconvexity](05-selected-topics.html#convex-and-nonconvex-losses)
+- [Nonlinear regression](05-selected-topics.html#why-cheap-gradients-matter)
+- [Nonquadraticity](05-selected-topics.html#optimization-challenges)
 - [Normalizing flow](02-generating-samples.html#transport-maps)
 - [Optimal work allocation](05-selected-topics.html#allocating-work-optimally)
 - [Option payoff / pricing](02-generating-samples.html#option-payoffs-and-prices)
@@ -578,6 +586,7 @@ Canvas<br>Only one person per group submits the assignment
 :::
 
 ::: {.column width="50%"}
+- [Quadratic model](05-selected-topics.html#fitting-a-local-quadratic)
 - [Quantile function](#random-variables-and-distributions)
 - [Quantile transform](02-generating-samples.html#the-quantile-transform)
 - [Queueing systems](03-markov-chain-monte-carlo.html#queueing-systems)

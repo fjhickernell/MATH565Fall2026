@@ -49,6 +49,35 @@
   width: 70% !important;
 }
 
+/* Successive SGD tables reserve the most room for consequences and responses. */
+.reveal .sgd-challenges-table table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.reveal .sgd-challenges-table th,
+.reveal .sgd-challenges-table td {
+  padding-block: 0.25em;
+}
+
+.reveal .sgd-challenges-table col:nth-child(1),
+.reveal .sgd-challenges-table th:nth-child(1),
+.reveal .sgd-challenges-table td:nth-child(1) {
+  width: 20% !important;
+}
+
+.reveal .sgd-challenges-table col:nth-child(2),
+.reveal .sgd-challenges-table th:nth-child(2),
+.reveal .sgd-challenges-table td:nth-child(2) {
+  width: 24% !important;
+}
+
+.reveal .sgd-challenges-table col:nth-child(3),
+.reveal .sgd-challenges-table th:nth-child(3),
+.reveal .sgd-challenges-table td:nth-child(3) {
+  width: 56% !important;
+}
+
 .tree-component.monte-carlo-at-a-glance-tree {
   margin-inline: auto !important;
 }

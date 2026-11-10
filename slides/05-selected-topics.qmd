@@ -1515,10 +1515,11 @@ not an automatic stopping certificate.
 
 ::: {.columns}
 ::: {.column width="47%"}
-- [Gradient descent](#gradient-descent)
+- [Optimize a loss function](#gradient-descent)
 - [Why cheap gradients matter](#why-cheap-gradients-matter)
 - [Single-observation SGD](#stochastic-gradient-descent)
 - [Mini-batch SGD and gradient noise](#mini-batches-and-gradient-noise)
+- [SGD in practice](#practical-learning-rates)
 - [A large-data example](#a-large-data-example)
 - [Choosing an optimization method](#choosing-an-optimization-method)
 :::
@@ -1594,92 +1595,389 @@ directions and noise, not equal work, elapsed time, or guaranteed convergence
 for a general nonconvex loss. The full gradient averages all four components.
 :::
 
-## Gradient descent {.tree-marker-slide tree-marker="estimation"}
+## Optimize a loss function {#gradient-descent .tree-marker-slide tree-marker="estimation"}
 
-\begin{gather*}
-\vtheta_* = \argmin_{\vtheta\in\reals^m}\operatorname{Loss}(\vtheta)
-\\
-\vtheta_{k+1}=\vtheta_k-\eta_k\nabla\operatorname{Loss}(\vtheta_k)
-\end{gather*}
+Choose $m$ variables $\vtheta\in\reals^m$ to make a differentiable [loss function]{.alert} small
 
-- $m$ parameters; $\eta_k>0$ is the [learning rate]{.alert}
-- Negative gradient: steepest local decrease in the Euclidean norm
-- A short enough step decreases a smooth loss when its gradient is nonzero
-- A large step can overshoot; small steps can make little progress
-- For a nonconvex loss, reaching a global minimizer is not guaranteed
+$$\vtheta_*\in\argmin_{\vtheta\in\reals^m}\operatorname{Loss}(\vtheta)$$
+
+- The loss assigns a number to each [proposed]{.alert} choice of $\vtheta$
+- A [smaller]{.alert} loss is preferable: cost, energy, or error
+- Start from a guess $\vtheta_0$ and use local information to [improve]{.alert} it
+- Slope and curvature describe the loss [near]{.alert} the current point
 
 ::: {.key-point}
-A good [local direction]{.alert} need not give a fast route to a minimum
+First, one variable
+
+Second, several variables
+
+Third, the cost of derivative information
+:::
+
+::: {.notes}
+Every theta on this general opening slide is an m-vector. The following
+slide explicitly takes m=1 before introducing scalar theta and derivatives.
+Loss is a general objective function here, not necessarily a statistical
+model or an average over observations. We consider differentiable
+unconstrained minimization and assume a minimizer exists when referring to
+theta_*. A minimizer may be nonunique. Regression and observation losses
+are introduced only later, when the finite-sum structure motivates SGD.
 :::
 
 ---
 
-### The banana function is still difficult {#the-banana-function-is-still-difficult}
+### Slope and curvature give a local model {#scalar-loss-and-curvature}
 
-$$R(\vtheta)=(1-\theta_1)^2+100(\theta_2-\theta_1^2)^2
-\qquad \vtheta_*=[1,1]^\top$$
+First take $m=1$: approximate a small displacement $s$ from the current $\theta$
+
+\begin{gather*}
+\operatorname{Loss}(\theta+s)\approx q(s)
+=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
+\\
+g=\operatorname{Loss}'(\theta)
+\qquad h=\operatorname{Loss}''(\theta)
+\end{gather*}
+
+- [Slope $g$]{.alert}: which direction is locally downhill?
+- [Curvature $h$]{.alert}: how quickly does that slope change?
+- If $h>0$, the quadratic model is minimized at $s_{\mathrm{Newton}}=-g/h$
+- A nonquadratic loss can depart from this model away from the current point
+- Update $\theta\gets\theta+s$ and rebuild; successive iterations converge to the [true minimizer]{.alert} under suitable conditions
+- For [nonconvex]{.alert} losses, iterations may miss the global minimum
+
+::: {.key-point}
+First and second derivatives help choose a step; they do not describe the whole loss
+:::
+
+::: {.notes}
+Differentiate q(s): q'(s)=g+hs, giving its minimizing displacement -g/h
+when h>0. This is Newton's step in one dimension. If h=0 the formula is undefined;
+if h<0 the quadratic has a maximum instead of a minimum. Even with h>0,
+a full Newton step need not decrease a nonquadratic loss; damping, line
+searches or trust regions can safeguard it. A zero slope is a stationary
+point, which need not be a global minimizer in general.
+Recompute the local model at every new iterate. General convergence claims
+require conditions on the loss, starting point and step selection; local
+Newton convergence near a nondegenerate minimizer is not a general
+global-minimum guarantee for nonconvex losses.
+:::
+
+---
+
+### A nonquadratic loss: useful but imperfect curvature {#slope-and-learning-rate}
+
+$$\operatorname{Loss}(\theta)=\tfrac12\theta^2+\tfrac14\theta^4
+\qquad \operatorname{Loss}'(1)=2
+\qquad \operatorname{Loss}''(1)=4$$
 
 ```{python}
+#| label: scalar-loss-local-model
 #| echo: false
+#| fig-format: svg
 #| fig-align: center
-#| fig-alt: "Rosenbrock contours and objective histories: gradient descent with backtracking takes 500 steps along a curved narrow valley, while BFGS reaches the minimum in about 34 steps"
+#| fig-alt: "A nonquadratic quartic loss, its tangent and its local quadratic model at theta equal to one. The quadratic model recommends theta equal to one half, which lowers the true loss but does not reach its minimum at zero; the true and model values at one half also differ"
 #| fig-width: 10
-#| fig-height: 4.1
-#| out-width: 92%
+#| fig-height: 4.2
+#| out-width: 88%
 
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.optimize import minimize, rosen, rosen_der
 
 plt.rcParams["mathtext.fontset"] = "stix"
-banana_theta = np.array([-1.2, 1.0])
-banana_gd = [banana_theta.copy()]
-for _ in range(500):
-    gradient = rosen_der(banana_theta)
-    value = rosen(banana_theta)
-    step = 1.0
-    while rosen(banana_theta-step*gradient) > value-1e-4*step*(gradient@gradient):
-        step *= 0.5
-    banana_theta -= step*gradient
-    banana_gd.append(banana_theta.copy())
-banana_bfgs = [banana_gd[0].copy()]
-banana_result = minimize(rosen, banana_gd[0], jac=rosen_der, method="BFGS",
-                         callback=lambda x: banana_bfgs.append(x.copy()),
-                         options={"gtol": 1e-8})
-banana_gd, banana_bfgs = np.array(banana_gd), np.array(banana_bfgs)
-xx, yy = np.meshgrid(np.linspace(-1.6, 1.4, 240), np.linspace(-0.3, 1.9, 240))
-fig, axes = plt.subplots(1, 2, figsize=(10, 4.1), constrained_layout=True)
-axes[0].contour(xx, yy, (1-xx)**2+100*(yy-xx**2)**2,
-                levels=np.geomspace(0.02, 500, 17), colors="#b3c7d2")
-for path, label, color in [(banana_gd, "GD + backtracking", "#1f5a91"),
-                            (banana_bfgs, "BFGS", "#b77d17")]:
-    axes[0].plot(*path.T, color=color, label=label, linewidth=1.7)
-    axes[1].semilogy(np.arange(len(path)), np.maximum([rosen(x) for x in path], 1e-16),
-                     color=color, label=label, linewidth=2)
-axes[0].scatter([1], [1], marker="*", s=100, color="#398879", zorder=5)
-axes[0].set(xlabel=r"Parameter $\theta_1$", ylabel=r"Parameter $\theta_2$")
-axes[1].set(xlabel="Accepted update count", ylabel=r"Objective $R(\boldsymbol{\theta}_k)$ (floored at $10^{-16}$)")
-axes[1].legend(frameon=False, fontsize=11)
-for ax in axes:
-    ax.spines[["top", "right"]].set_visible(False)
+scalar_grid = np.linspace(-1.4, 1.45, 501)
+scalar_loss = lambda theta: 0.5*theta**2 + 0.25*theta**4
+scalar_quadratic = lambda theta: 0.75 + 2*(theta-1) + 2*(theta-1)**2
+fig, ax = plt.subplots(figsize=(10, 4.2), constrained_layout=True)
+ax.plot(scalar_grid, scalar_loss(scalar_grid), color="#1f5a91", linewidth=2.8,
+        label="True loss")
+model_grid = np.linspace(-0.25, 1.45, 301)
+ax.plot(model_grid, scalar_quadratic(model_grid), "--", color="#b77d17",
+        linewidth=2.2, label="Local quadratic")
+tangent_grid = np.linspace(0.5, 1.45, 101)
+ax.plot(tangent_grid, 0.75 + 2*(tangent_grid-1), color="#853f7b",
+        linewidth=1.8, label="Tangent")
+ax.scatter(1, scalar_loss(1), color="#853f7b", s=60, zorder=5)
+ax.annotate("Current point", xy=(1, scalar_loss(1)), xytext=(0.95, 1.4),
+            arrowprops={"arrowstyle": "->", "color": "#853f7b"},
+            color="#853f7b", fontsize=14)
+ax.scatter(0.5, scalar_loss(0.5), color="#277f72", s=65, zorder=6)
+ax.scatter(0.5, scalar_quadratic(0.5), facecolors="white", edgecolors="#b77d17",
+           s=60, linewidths=1.7, zorder=5)
+ax.plot([0.5, 0.5], [scalar_loss(0.5), scalar_quadratic(0.5)], ":",
+        color="#b77d17", linewidth=1.8)
+ax.annotate("Model's step", xy=(0.5, scalar_loss(0.5)), xytext=(-0.03, 0.65),
+            arrowprops={"arrowstyle": "->", "color": "#277f72"},
+            color="#277f72", fontsize=14)
+ax.scatter(0, 0, marker="*", s=160, color="#1f5a91", zorder=5)
+ax.annotate("True minimum", xy=(0, 0), xytext=(-1.1, 0.25),
+            arrowprops={"arrowstyle": "->", "color": "#1f5a91"},
+            color="#1f5a91", fontsize=14)
+ax.set(xlim=(-1.4, 1.45), ylim=(-0.25, 2.35))
+ax.set_xlabel(r"Variable $\theta$", fontsize=14)
+ax.set_ylabel("Loss", fontsize=14)
+ax.tick_params(labelsize=12)
+ax.spines[["top", "right"]].set_visible(False)
+ax.legend(loc="upper center", ncol=3, frameon=False, fontsize=12)
 plt.show()
 ```
 
-Narrow curved valley: [unequal curvature]{.alert} slows GD even in two dimensions
+The quadratic model chooses $\theta=1-2/4=1/2$; the true minimizer is $0$
 
 ::: {.notes}
-Both methods start at (-1.2,1). GD uses Armijo backtracking with initial step
-1, halving and sufficient-decrease constant 1e-4; its loss decreases at every
-accepted update. Thus the difficulty persists with a line search, not merely
-a poorly chosen fixed step. BFGS learns an inverse-Hessian approximation from
-changes in gradients. The horizontal axis counts accepted updates, not equal
-work: backtracking and BFGS may each evaluate functions/gradients more than
-once. The companion reports those counts. At the minimizer the Hessian is
-[[802,-400],[-400,200]], with eigenvalues about 0.399 and 1001.601, giving
-condition number about 2508. Noise does not round out this narrow valley.
+The true loss is smooth and strictly convex, but nonquadratic. At theta=1,
+its value, first derivative and second derivative are 3/4, 2 and 4.
+The Taylor quadratic in the displacement s is 3/4+2s+2s^2; its minimizer
+is s=-1/2. At the recommended new theta=1/2, the model predicts loss 1/4
+but the actual loss is 9/64=0.140625. Both are different from the true
+minimum zero. Thus exact local derivatives still give only local information.
+This example has changing curvature without nonconvexity. Its Hessian is
+unbounded on the whole real line, so later global L-smooth results are not
+asserted globally for it. The quartic is used again in the notebook opening.
+Recompute the local model at every new iterate. For this strictly convex
+quartic, Newton's update is theta_new=2*theta^3/(1+3*theta^2), which converges
+to zero from every finite starting point: its absolute error contracts by
+a factor less than 2/3 away from zero.
 :::
 
 ---
+
+### Two ways to construct a scalar quadratic {#fitting-a-local-quadratic}
+
+A quadratic $q(s)=a+bs+cs^2$ has [three coefficients]{.alert}
+
+| Information | Quadratic model |
+|---|---|
+| Loss at three distinct nearby points | Interpolate the three values |
+| Loss, slope and second derivative at one point | Use the Taylor quadratic |
+
+\begin{gather*}
+a=\operatorname{Loss}(\theta)
+\qquad b=\operatorname{Loss}'(\theta)
+\qquad c=\tfrac12\operatorname{Loss}''(\theta)
+\end{gather*}
+
+- For a nonquadratic loss, either model is approximate
+
+::: {.notes}
+The three interpolation points must be distinct. The Taylor quadratic matches
+the value and first two derivatives at the current point. Quadratic
+interpolation instead matches three function values and need not match the
+current derivative. Nearby function values can be used when derivatives are
+unavailable, but differencing can amplify evaluation noise and rounding error.
+The higher-dimensional model below contains many more coefficients.
+:::
+
+---
+
+
+
+### Convexity is a statement about the whole loss {#convex-and-nonconvex-losses}
+
+In one variable, a [convex loss]{.alert} lies below the line segment between any two points on its graph
+
+$$\operatorname{Loss}((1-t)\theta+t\phi)
+\leq(1-t)\operatorname{Loss}(\theta)+t\operatorname{Loss}(\phi)
+\qquad 0\leq t\leq1$$
+
+- For a differentiable convex loss, zero slope identifies a global minimizer
+- A convex loss can still have several minimizers
+- A nonquadratic loss can be convex: $\operatorname{Loss}(\theta)=\theta^2+\theta^4$ is an example
+- For a nonconvex loss, zero slope need not identify a global minimum
+
+::: {.key-point}
+Changing curvature and nonconvexity are [different questions]{.alert}
+:::
+
+::: {.notes}
+The same line-segment definition applies to vector arguments in several
+variables; replace zero slope by zero gradient. Convexity is a global
+line-segment property. For a twice continuously
+differentiable function on R^m it is equivalent to a positive-semidefinite
+Hessian everywhere. A uniform positive lower bound mu*I on the Hessian
+gives strong convexity and a unique minimizer. For theta^2+theta^4,
+the second derivative 2+12*theta^2 is at least two.
+A convex function need not attain its infimum, but if its gradient is zero
+at a point, that point is a global minimizer. Rosenbrock is nonconvex even
+though its only stationary point is its global minimizer.
+:::
+
+---
+
+### Challenges even in one-dimensional optimization {#optimization-challenges}
+
+::: {.sgd-challenges-table}
+
+| Challenge | What changes? | Consequence for optimization |
+|---|---|---|
+| [Nonquadraticity]{.alert} | Curvature changes with position | Refresh the local model; shorten or safeguard a proposed step |
+| [Nonconvexity]{.alert} | A stationary point need not be globally optimal | Try multiple starts and compare losses; no global guarantee |
+
+:::
+
+::: {.key-point}
+Rebuild local models and compare starting points; local information has limits
+:::
+
+::: {.notes}
+Nonquadraticity and nonconvexity are distinct. The opening quartic is
+nonquadratic and strongly convex. Multiple starts can explore different
+basins, but repeating a result does not certify a global optimum. Charge
+all runs and final loss comparisons.
+Source: [SciPy basin-hopping notes](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.basinhopping.html#notes).
+:::
+
+---
+
+### Several variables: a gradient vector {#gradient-in-several-dimensions}
+
+For $\vtheta=[\theta_1,\ldots,\theta_m]^\top$, the [gradient]{.alert} collects the slopes
+
+\begin{gather*}
+\vg=\nabla\operatorname{Loss}(\vtheta)
+=\left[\frac{\partial\operatorname{Loss}}{\partial\theta_1},\ldots,
+\frac{\partial\operatorname{Loss}}{\partial\theta_m}\right]^\top
+\\
+\operatorname{Loss}(\vtheta+\vs)\approx\operatorname{Loss}(\vtheta)+\vg^\top\vs
+\end{gather*}
+
+- [$m$]{.alert} is the number of variables or parameters
+- Direction $\vs$: the local change is described by $\vg^\top\vs$
+- Negative gradient: [steepest]{.alert} local decrease for a fixed [Euclidean]{.alert} step length
+
+::: {.notes}
+Among displacement vectors of norm epsilon, Cauchy--Schwarz minimizes the
+linear term at s=-epsilon*g/||g|| when g is nonzero. Thus the gradient gives
+a locally steepest direction in the stated Euclidean geometry. Rescaling
+variables changes this geometry and can change the path. We retain m for
+parameter count. When sampling is introduced later, attach d explicitly to
+the random index vector being drawn. The loss need not involve data.
+:::
+
+---
+
+### Several variables: a Hessian matrix {#curvature-and-the-hessian}
+
+The [Hessian]{.alert} describes curvature along and between directions
+
+\begin{gather*}
+\mH=\nabla^2\operatorname{Loss}(\vtheta)
+\qquad H_{j\ell}=\frac{\partial^2\operatorname{Loss}}{\partial\theta_j\partial\theta_\ell}
+\\
+q(\vs)=\operatorname{Loss}(\vtheta)+\vg^\top\vs+\tfrac12\vs^\top\mH\vs
+\\
+\mH\vs_{\mathrm{Newton}}=-\vg
+\quad\text{minimizes }q\text{ when }\mH\text{ is positive definite}
+\end{gather*}
+
+- [Mixed derivatives]{.alert} couple changes in different variables
+- One quadratic now has [$1+m+m(m+1)/2$]{.alert} independent coefficients
+- Recovering the full model from [values alone]{.alert} becomes much harder
+
+::: {.notes}
+The coefficient count uses a symmetric Hessian, as holds for a twice
+continuously differentiable scalar loss. In one dimension the count is three;
+in m dimensions it grows quadratically. Fitting an unrestricted quadratic
+from scalar function values requires at least that many independent
+conditions and well-chosen points. Newton solves a linear system rather than
+forming an explicit inverse. A singular or indefinite Hessian needs safeguards;
+even a positive-definite model may require damping on a nonquadratic loss.
+:::
+
+---
+
+### When is a full Hessian expensive? {#gradient-and-hessian-cost}
+
+| Information or operation | Generic dense size or work |
+|---|---|
+| Gradient | $m$ entries; $O(m)$ storage |
+| Hessian | $m^2$ entries; $O(m^2)$ storage |
+| Newton direction | Solve $\mH\vs=-\vg$; $O(m^3)$ generic dense work |
+| First-order parameter update | $O(m)$ coordinate work |
+
+- [Large $m$]{.alert} makes dense curvature storage and solves costly
+- [Small $m$]{.alert}: Newton can be a useful choice
+- Derivative evaluation costs also depend on the loss
+
+::: {.key-point}
+First-order methods avoid forming and solving with a full Hessian
+:::
+
+::: {.notes}
+O(m) here describes gradient size and update arithmetic, not a universal
+gradient evaluation cost. For a cheap separable loss sum_j phi_j(theta_j),
+loss and gradient evaluation can indeed take O(m) work. A general loss may
+contain expensive simulation, dense matrix operations or, later, a large
+data sum. Reverse-mode AD preserves that evaluation work up to an often
+modest factor; it does not make it independent of the objective. Dense
+Hessian formation also costs work beyond its storage. Structure, sparse
+solvers, Hessian-vector products and limited-memory methods can reduce the
+generic costs. Backpropagation and adjoint methods use the reverse principle.
+Small parameter count makes the dense linear solve cheap; it does not
+necessarily make derivative evaluation cheap. Large-data evaluation costs
+are introduced later, separately from this dimension-dependent storage and
+solve cost. Newton can repay derivative work through fewer iterations.
+:::
+
+---
+
+### Gradient descent uses first derivatives {#gradient-descent-update}
+
+Move along the [negative gradient]{.alert} with a positive learning rate
+
+$$\vtheta_{k+1}=\vtheta_k-\eta_k\nabla\operatorname{Loss}(\vtheta_k)$$
+
+- No full Hessian is required
+- Actual step length: $\eta_k\norm{\nabla\operatorname{Loss}(\vtheta_k)}_2$
+- A [short]{.alert} enough step decreases a smooth loss when its gradient is nonzero
+- Too short a step [slows]{.alert} down convergence
+- A [single]{.alert} learning rate must accommodate different curvatures in different directions
+
+::: {.key-point}
+Use the learning rate to control how far to move
+:::
+
+::: {.notes}
+This is gradient descent, a first-order method. Its O(m) vector update is
+in addition to computing the gradient. A zero gradient establishes
+stationarity, not in general global optimality. Curvature still matters to
+the step even when the algorithm does not explicitly form a Hessian.
+:::
+
+---
+
+### In one dimension, gradient descent follows the slope {#scalar-gradient-descent}
+
+\begin{gather*}
+\theta_{k+1}=\theta_k-\eta_k\operatorname{Loss}'(\theta_k)
+\\
+\operatorname{Loss}(\theta+s)\approx\operatorname{Loss}(\theta)
++\operatorname{Loss}'(\theta)s
+\end{gather*}
+
+- Positive slope: move left; negative slope: move right
+- The learning rate determines how far; a large step can increase the loss
+- Newton uses the second derivative as well; GD can use a chosen learning rate
+
+For $\operatorname{Loss}(\theta)=\tfrac12 a(\theta-\theta_*)^2$ with $a>0$,
+
+$$\theta_{k+1}-\theta_*=(1-\eta a)(\theta_k-\theta_*)$$
+
+::: {.key-point}
+This quadratic contracts for $0<\eta<2/a$; a nonquadratic loss has changing curvature
+:::
+
+::: {.notes}
+For this exact quadratic, eta=1/a reaches the minimizer in one update,
+matching Newton's step in one dimension. The opening quartic is not this exact
+quadratic: a step eta=1/4 at theta=1 reaches theta=1/2, but curvature changes
+there. In that example eta=1 would instead reach -1 and keep the same loss;
+eta>1 moves farther and raises it. Exact scalar ranges depend on the
+objective and location. Later stochastic-gradient formulas add sampling
+noise to a different, explicitly quadratic example.
+:::
+
+---
+
 
 ### Conditioning, $\kappa$, versus dimension, $m$ {#conditioning-versus-dimension}
 
@@ -1715,7 +2013,7 @@ For these diagonal examples: $O(m)$ work per full gradient and parameter update
 The displayed bound is for this positive-definite quadratic in Euclidean norm,
 with its minimizer at zero, so norm(theta_k) is the parameter error. The
 contraction factor q bounds the fraction of this error remaining after one
-update at the displayed best constant scalar step; it is not the fraction
+update at the displayed best constant learning rate; it is not the fraction
 removed and not an objective-value contraction factor. Smaller q is better:
 q=0 removes all parameter error in one update, while q near one allows only
 slow worst-case progress. In a million dimensions with A=I, every eigenvalue
@@ -1800,7 +2098,7 @@ gives the k-step bound. A strict contraction requires 0 < eta < 2/lambda_max.
 Equality in the one-step bound is possible for an error in an eigenvector
 direction attaining the maximum absolute multiplier. No independence or
 random averaging is used. The next slide minimizes this norm-bound factor
-over constant scalar steps.
+over constant learning rates.
 :::
 
 ---
@@ -1845,39 +2143,176 @@ error components, not to an increase in the loss.
 For diag(1,100), eta_best=2/101 gives multipliers 99/101 and -99/101.
 For the identity, eta_best=1 gives zero in every direction. The parameter
 error contracts by at most q; the quadratic loss gap contracts by at most
-q^2. This is the best fixed scalar step for full-gradient descent on the
+q^2. This is the best fixed learning rate for full-gradient descent on the
 stated quadratic, not an exact-line-search rule or an SGD noise formula.
+:::
+
+---
+
+### The banana function is still difficult {#the-banana-function-is-still-difficult}
+
+$$R(\vtheta)=(1-\theta_1)^2+100(\theta_2-\theta_1^2)^2
+\qquad \vtheta_*=[1,1]^\top$$
+
+```{python}
+#| echo: false
+#| fig-align: center
+#| fig-alt: "Rosenbrock contours and objective histories: gradient descent with backtracking takes 500 steps along a curved narrow valley, while BFGS reaches the minimum in about 34 steps"
+#| fig-width: 10
+#| fig-height: 4.1
+#| out-width: 92%
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import minimize, rosen, rosen_der
+
+plt.rcParams["mathtext.fontset"] = "stix"
+banana_theta = np.array([-1.2, 1.0])
+banana_gd = [banana_theta.copy()]
+for _ in range(500):
+    gradient = rosen_der(banana_theta)
+    value = rosen(banana_theta)
+    step = 1.0
+    while rosen(banana_theta-step*gradient) > value-1e-4*step*(gradient@gradient):
+        step *= 0.5
+    banana_theta -= step*gradient
+    banana_gd.append(banana_theta.copy())
+banana_bfgs = [banana_gd[0].copy()]
+banana_result = minimize(rosen, banana_gd[0], jac=rosen_der, method="BFGS",
+                         callback=lambda x: banana_bfgs.append(x.copy()),
+                         options={"gtol": 1e-8})
+banana_gd, banana_bfgs = np.array(banana_gd), np.array(banana_bfgs)
+xx, yy = np.meshgrid(np.linspace(-1.6, 1.4, 240), np.linspace(-0.3, 1.9, 240))
+fig, axes = plt.subplots(1, 2, figsize=(10, 4.1), constrained_layout=True)
+axes[0].contour(xx, yy, (1-xx)**2+100*(yy-xx**2)**2,
+                levels=np.geomspace(0.02, 500, 17), colors="#b3c7d2")
+for path, label, color in [(banana_gd, "GD + backtracking", "#1f5a91"),
+                            (banana_bfgs, "BFGS", "#b77d17")]:
+    axes[0].plot(*path.T, color=color, label=label, linewidth=1.7)
+    axes[1].semilogy(np.arange(len(path)), np.maximum([rosen(x) for x in path], 1e-16),
+                     color=color, label=label, linewidth=2)
+axes[0].scatter([1], [1], marker="*", s=100, color="#398879", zorder=5)
+axes[0].set(xlabel=r"Parameter $\theta_1$", ylabel=r"Parameter $\theta_2$")
+axes[1].set(xlabel="Accepted update count", ylabel=r"Objective $R(\boldsymbol{\theta}_k)$ (floored at $10^{-16}$)")
+axes[1].legend(frameon=False, fontsize=11)
+for ax in axes:
+    ax.spines[["top", "right"]].set_visible(False)
+plt.show()
+```
+
+Narrow curved valley: [unequal and changing curvature]{.alert} slows GD even in two dimensions
+
+Nonconvex here, yet only one stationary point: the global minimizer
+
+::: {.notes}
+Both methods start at (-1.2,1). GD uses Armijo backtracking with initial step
+1, halving and sufficient-decrease constant 1e-4; its loss decreases at every
+accepted update. Thus the difficulty persists with a line search, not merely
+a poorly chosen fixed step. BFGS learns an inverse-Hessian approximation from
+changes in gradients. The horizontal axis counts accepted updates, not equal
+work: backtracking and BFGS may each evaluate functions/gradients more than
+once. The companion reports those counts. At the minimizer the Hessian is
+[[802,-400],[-400,200]], with eigenvalues about 0.399 and 1001.601, giving
+condition number about 2508. The displayed function is nonconvex, but its
+only stationary point is (1,1), its global minimizer. It does not demonstrate
+trapping in a competing local minimum. The curved valley and position-dependent
+Hessian add difficulty beyond the preceding fixed quadratic. Noise does not
+round out this narrow valley.
+:::
+
+---
+
+### Challenges so far: several variables {#optimization-challenges-before-expensive-gradients}
+
+::: {.sgd-challenges-table}
+
+| Challenge | What changes? | Consequence for optimization |
+|---|---|---|
+| [Nonquadraticity]{.alert} | Curvature changes with position | Refresh the local model; shorten or safeguard a proposed step |
+| [Nonconvexity]{.alert} | A stationary point need not be globally optimal | Try multiple starts and compare losses; no global guarantee |
+| [Hessian cost]{.alert} | Dense storage $O(m^2)$; solve $O(m^3)$ | Use first-order or limited-memory methods when full curvature costs too much |
+| [Conditioning]{.alert} | Curvature differs across directions | Scale or precondition variables; consider curvature information |
+
+:::
+
+::: {.key-point}
+First-order methods save Hessian work; the geometry still affects convergence
+:::
+
+::: {.notes}
+This cumulative recap comes before introducing finite-sum losses. It adds
+Hessian cost and conditioning to the one-dimensional challenges. The cost
+of a full gradient and the noise from sampling have not yet been introduced;
+the later versions of this table add those issues in that order.
 :::
 
 ## Why cheap gradients matter {.tree-marker-slide tree-marker="estimation"}
 
-Often, a [large-data loss]{.alert} averages many observation losses
+Now [nonlinear regression]{.alert}: predict $y_i>0$ by $p_i(\vtheta)=e^{\vx_i^\top\vtheta}$
 
-$$\operatorname{Loss}(\vtheta)=\frac1N\sum_{i=0}^{N-1}\operatorname{loss}_i(\vtheta)
-\qquad N=\text{data size},\quad m=\text{parameters}$$
+<span id="scalar-regression-loss"></span>
 
-Dense linear/logistic models: $O(m)$ work per [observation gradient]{.alert}
+- Each observation contributes a [squared prediction error]{.alert}
+- The overall loss averages those errors over the data
+- The prediction is nonlinear in $\vtheta$: [fit iteratively]{.alert}
 
-| Method | Data used per update | Gradient work |
-|---|---:|---:|
-| Full-gradient descent | $N$ observations | $O(Nm)$ |
-| Mini-batch SGD | $b\ll N$ observations | $O(bm)$ |
-
-- Large $N$: many sampled updates for the work of [one full gradient]{.alert}, even with small $m$
-- [Reverse-mode automatic differentiation]{.alert}: gradient cost comparable to a few loss evaluations<br>
-  [Adjoint method]{.alert}; [backpropagation]{.alert} in neural networks
-- Streaming data and moderate accuracy can favor stochastic updates
+\begin{gather*}
+\operatorname{loss}_i(\vtheta)=\tfrac12\bigl(p_i(\vtheta)-y_i\bigr)^2
+\qquad
+\nabla\operatorname{loss}_i(\vtheta)=\bigl(p_i(\vtheta)-y_i\bigr)p_i(\vtheta)\vx_i
+\\
+\operatorname{Loss}(\vtheta)=\frac1N\sum_{i=0}^{N-1}\operatorname{loss}_i(\vtheta)
+\qquad N=\text{observations},\quad m=\text{parameters}
+\end{gather*}
 
 ::: {.key-point}
-Compare [work to reach useful accuracy]{.alert}, including noise and overhead
+Evaluating the full sum visits [all $N$ observations]{.alert}, even with few parameters
 :::
 
 ::: {.notes}
+For example, with x_i=(1,t_i), the prediction exp(theta_1+theta_2 t_i)
+models growth or decay with two parameters. The mean squared error in the
+original responses is nonlinear in theta. Taking logarithms and fitting
+log y_i by linear least squares changes the objective; it does not minimize
+this loss. Matrix operations can still evaluate predictions and gradients
+efficiently, but there is generally no fixed normal-equation solve for this
+nonlinear fit. Unlike linear least squares, its Hessian depends on theta;
+one observation contributes (2 p_i^2-y_i p_i) x_i x_i^T. The loss need not
+be convex. Newton or safeguarded Gauss–Newton can still be useful for small m.
+:::
+
+---
+
+### Spend less work on each direction {#full-versus-sampled-gradient-cost}
+
+For this dense exponential predictor: $O(m)$ per observation's [loss or gradient]{.alert}
+
+| Calculation | Observations processed | Direct evaluation work |
+|---|---:|---:|
+| Full loss | $N$ | $O(Nm)$ |
+| Full gradient | $N$ | $O(Nm)$ |
+| One observation gradient | $1$ | $O(m)$ |
+| Dense Hessian | $N$ | $O(Nm^2)$ |
+
+- [Large $N$]{.alert}: sampling can reduce the work of each update
+- [Large $m$]{.alert}: dense curvature storage and solves become expensive
+- $m=2$: three independent Hessian entries; [Newton can remain useful]{.alert} even for huge $N$
+
+::: {.key-point}
+Compare [work to reach useful accuracy]{.alert}, including derivative setup and overhead
+:::
+
+::: {.notes}
+The cost table describes direct evaluation of the finite sum. For linear
+least squares, X^T X and X^T y can instead be precomputed and reused; that
+setup trades data passes and storage for cheaper later gradients. The
+nonlinear exponential example and logistic regression generally need
+another data pass at each new iterate.
 The finite-sum loss is a common setting, not a definition of every possible
 optimization objective. It is particularly relevant to SGD when N is huge
 and each observation's gradient is cheap relative to the full gradient.
 SGD also applies to expectation objectives and streaming observations.
-For a dense linear or logistic observation, an inner product and a scaled
+For a dense exponential, linear or logistic observation, an inner product and a scaled
 feature vector cost O(m); summing over all N observations costs O(Nm).
 A batch of b observations instead costs O(bm), plus the O(m) parameter update.
 Thus a small parameter dimension does not make a full gradient cheap when
@@ -1889,13 +2324,23 @@ Automatic differentiation avoids m finite-difference loss evaluations; it
 does not remove the N-observation work of differentiating the full loss.
 
 N and m are independent axes: a large dataset can make SGD useful with only
-two parameters. A huge parameter count can make full dense Newton impractical
+two parameters, but it does not force us to avoid Newton. With m=2, both
+full gradient and Hessian aggregation cost O(N); the 2-by-2 solve is tiny.
+For dense exponential, linear and logistic models they can be accumulated in the same data
+pass, reusing observation calculations. The Hessian can cost a modest
+multiple of the gradient rather than a qualitatively larger order in N.
+The data pass itself may still dominate elapsed time. Compare work to useful
+accuracy: fewer Newton iterations may justify the additional curvature work.
+N can be enormous while the chosen model still has only an intercept and
+one slope; large N does not imply large m. Sampling can also be used for
+curvature estimates, so sampling and first-order optimization are separate
+choices. A huge parameter count can make full dense Newton impractical
 without making GD geometrically faster. A naive dense Newton linear solve
 costs O(m^3); sparse, structured, Hessian-vector, and limited-memory methods
 can avoid that cost. L-BFGS retains a few gradient/step pairs and needs O(rm)
 storage for memory length r, rather than O(m^2). It remains a strong option
 for many deterministic problems. The gradient work table describes dense
-linear/logistic models, not every possible neural network. Automatic reverse
+exponential, linear and logistic models, not every possible neural network. Automatic reverse
 mode does not require m finite-difference evaluations. Reverse-mode automatic
 differentiation is also called adjoint-mode differentiation or a discrete
 adjoint method; backpropagation is the usual neural-network name. The reverse
@@ -1909,6 +2354,33 @@ error and optimization error are different; optimize accurately enough for
 the application, and use held-out data to judge prediction. SGD is much older
 than deep learning; large datasets, differentiable models, automatic
 differentiation and parallel hardware expanded its use.
+:::
+
+---
+
+### Challenges before sampling the gradient {#optimization-challenges-before-sgd}
+
+::: {.sgd-challenges-table}
+
+| Challenge | What changes? | Consequence for optimization |
+|---|---|---|
+| [Nonquadraticity]{.alert} | Curvature changes with position | Refresh the local model; shorten or safeguard a proposed step |
+| [Nonconvexity]{.alert} | A stationary point need not be globally optimal | Try multiple starts and compare losses; no global guarantee |
+| [Hessian cost]{.alert} | Dense storage $O(m^2)$; solve $O(m^3)$ | Use first-order or limited-memory methods when full curvature costs too much |
+| [Conditioning]{.alert} | Curvature differs across directions | Scale or precondition variables; consider curvature information |
+| [Full-gradient cost]{.alert} | Direct data pass $O(Nm)$ | Reuse structure or sample fewer terms; small $m$ can still favor Newton |
+
+:::
+
+::: {.key-point}
+First-order methods save Hessian work; sampling can reduce full-gradient work
+:::
+
+::: {.notes}
+This cumulative table adds only issues already developed: multidimensional
+curvature and derivative costs, then the finite-sum data pass. Large N
+and large m are independent. Newton remains useful when m is small;
+we have not yet introduced uncertainty from sampling the gradient.
 :::
 
 ## Single-observation SGD {#stochastic-gradient-descent .tree-marker-slide tree-marker="estimation"}
@@ -1928,7 +2400,7 @@ Here $\mathcal F_k$ contains the previous draws and the current iterate $\vtheta
 
 - $\vG_k$: an [unbiased but noisy estimate]{.alert} of the full gradient $\nabla\operatorname{Loss}(\vtheta_k)$
 - [One sampled term]{.alert} estimates the [average of $N$ gradient terms]{.alert}
-- Unbiasedness concerns the gradient, not the minimizer estimate $\vtheta_k$
+- $\vtheta_k$ is our [known current vector]{.alert}; the minimizer $\vtheta_*$ is generally unknown
 - A particular update may increase the full loss
 
 ::: {.key-point}
@@ -1943,7 +2415,7 @@ The objective is an average, so the one-term estimator is grad loss_{I_k},
 without another factor of 1/N. Its conditional expectation supplies that
 factor through the uniform draw. An unnormalized sum objective would instead
 use N times the sampled component gradient.
-The next slide generalizes the same symbol G_k to an
+The mini-batch algorithm below generalizes the same symbol G_k to an
 average of b observation gradients; b=1 recovers this single-observation case.
 Unbiased but noisy means that the conditional mean is the full gradient,
 while the realized gradient estimate varies with the sampled observation.
@@ -1953,27 +2425,60 @@ previous indices. Our identities and notebook experiments use sampling with
 replacement. They are not proofs for arbitrary shuffling or QMC substitutions.
 :::
 
-## Mini-batch SGD and gradient noise {#mini-batches-and-gradient-noise .tree-marker-slide tree-marker="estimation"}
+---
 
-Generalize to $b$ fresh IID observations, sampled [with replacement]{.alert}
+### The sampled gradient is a Monte Carlo estimate {#sgd-as-monte-carlo}
+
+Generate $U\sim\Unif[0,1)$ and select $I=\lfloor NU\rfloor$
 
 \begin{gather*}
-\vG_k=\frac1b\sum_{j=1}^b\nabla\operatorname{loss}_{I_{kj}}(\vtheta_k)
+\boldsymbol h_{\vtheta}(u)=\nabla\operatorname{loss}_{\lfloor Nu\rfloor}(\vtheta)
+\\
+\int_0^1\boldsymbol h_{\vtheta}(u)\,\dif u
+=\frac1N\sum_{i=0}^{N-1}\nabla\operatorname{loss}_i(\vtheta)
+=\nabla\operatorname{Loss}(\vtheta)
+\end{gather*}
+
+- Sampled index $I$: [$d=1$]{.alert}
+- Output: an $m$-component gradient vector
+- One uniform chooses a whole observation, including all its features
+
+::: {.key-point}
+A [scalar random index]{.alert} selects an [$m$-component gradient]{.alert}
+:::
+
+::: {.notes}
+The vector-valued integral is interpreted componentwise. With a fixed dataset,
+its randomness is the observation index, not a fresh simulation of all feature
+coordinates. The chosen step-function integrand is constant on N intervals.
+Changing the data order changes this cube representation without changing
+the finite average. Low nominal dimension alone does not imply a smooth
+QMC integrand or a useful QMC advantage. All identities in this section use
+fresh IID uniforms; arbitrary QMC or shuffled-epoch substitutions change the
+conditional dependence and need their own analysis. Values at u=1 are
+irrelevant to the integral; our index construction draws from [0,1).
+:::
+
+---
+
+## Mini-batch SGD and gradient noise {#mini-batches-and-gradient-noise .tree-marker-slide tree-marker="estimation"}
+
+A [mini-batch]{.alert} uses $b$ fresh IID observation indices, sampled [with replacement]{.alert}
+
+Average their gradients at the current $\vtheta_k$, then make one update
+
+\begin{gather*}
+\vG_k=\frac1b\sum_{j=0}^{b-1}\nabla\operatorname{loss}_{I_{kj}}(\vtheta_k)
 \qquad
 \vtheta_{k+1}=\vtheta_k-\eta_k\vG_k
 \\
 \Ex[\vG_k\mid\mathcal F_k]=\nabla\operatorname{Loss}(\vtheta_k)
-\\
-\sigma_k^2=\frac1N\sum_{i=0}^{N-1}
-\norm{\nabla\operatorname{loss}_i(\vtheta_k)-\nabla\operatorname{Loss}(\vtheta_k)}^2
-\\
-\Ex\bigl[\norm{\vG_k-\nabla\operatorname{Loss}(\vtheta_k)}^2\mid\mathcal F_k\bigr]
-=\frac{\sigma_k^2}{b}
 \end{gather*}
 
-- $\vG_k$ remains an [unbiased but noisy estimate]{.alert} of the full gradient
-- Larger batch: less gradient noise, more work per update
-- Even at a minimizer, individual component gradients may be nonzero
+- After sampling, $\vG_k$ is a [computed vector]{.alert} estimating the full gradient
+- Evaluate every batch gradient at the [same current iterate]{.alert}
+- Direct gradient work: $O(bm)$ instead of $O(Nm)$ for the full gradient
+- Larger batch: more work per update and less gradient variability
 
 ::: {.key-point}
 $b=1$ recovers [single-observation SGD]{.alert}; choose $b$ for [accuracy per unit cost]{.alert}
@@ -1982,7 +2487,7 @@ $b=1$ recovers [single-observation SGD]{.alert}; choose $b$ for [accuracy per un
 ::: {.notes}
 Mini-batch SGD generalizes the preceding single-observation algorithm. Every
 component gradient is evaluated at the same current theta_k; average them,
-then make one parameter update. With b=1 and I_{k1}=I_k, both the gradient
+then make one parameter update. With b=1 and I_{k0}=I_k, both the gradient
 definition and the parameter update reduce to the preceding slide.
 Linearity of conditional expectation gives E[G_k | F_k]=grad Loss(theta_k)
 for every batch size b, because each fresh IID draw is uniform conditional
@@ -2001,20 +2506,262 @@ fewer updates alone do not establish lower total work or elapsed time.
 
 ---
 
+### What random vector do we draw? {#sampling-dimension-versus-parameters}
+
+For [one mini-batch gradient]{.alert}, draw $b$ independent observation indices
+
+$$\boldsymbol I=(I_0,\ldots,I_{b-1})^\top\in\{0,\ldots,N-1\}^b$$
+
+| Count | Meaning |
+|---|---|
+| [$d=b$]{.alert} | Dimension of the random index vector $\boldsymbol I$ we draw |
+| $b$ | Observation gradients averaged in one update |
+| $m$ | Parameters; entries in each gradient |
+| $N$ | Observations in the fixed dataset |
+
+- Single-observation SGD: $b=1$, so $d=1$
+- Sample indices [with replacement]{.alert}; repeated indices are possible
+
+::: {.key-point}
+$d$ describes the [index vector we draw]{.alert}; $m$ describes the [gradient we compute]{.alert}
+:::
+
+::: {.notes}
+The sampling unit here is the whole random index vector needed for one
+gradient estimate. Each coordinate is independently uniform on the N
+observation indices. One scalar uniform generates each coordinate through
+I_j=floor(N U_j), so a mini-batch needs b independent uniforms. This is
+one draw of a b-dimensional index vector, followed by averaging the b
+m-component observation gradients at the same current iterate. The notebook
+generates a stream of scalar uniforms and groups them into these vectors.
+The gradient's dimension m and the fixed dataset size N are separate counts.
+This sampling task selects existing observations; it does not generate new
+feature vectors. Drawing the same index by chance is allowed; deliberately
+reusing one draw b times would not supply independent contributions.
+:::
+
+---
+
+### What does gradient noise measure? {#gradient-noise-variance}
+
+At a fixed current iterate, define the [component-gradient variability]{.alert}
+
+\begin{gather*}
+\vg_k=\nabla\operatorname{Loss}(\vtheta_k)
+\qquad
+\sigma_k^2=\frac1N\sum_{i=0}^{N-1}
+\norm{\nabla\operatorname{loss}_i(\vtheta_k)-\vg_k}_2^2
+\\
+\Ex\bigl[\norm{\vG_k-\vg_k}_2^2\mid\mathcal F_k\bigr]
+=\frac{\sigma_k^2}{b}
+\end{gather*}
+
+- This is variability of gradient [vectors]{.alert}, not loss values
+- Fresh IID draws: averaging $b$ gradients [divides the variance by $b$]{.alert}
+- Individual gradients may [remain nonzero]{.alert} at the full loss's minimizer
+
+::: {.key-point}
+Less noise per update costs more observation gradients per update
+:::
+
+::: {.notes}
+Sigma_k^2 is the trace of the covariance of one component gradient. Expand
+the squared norm of the mean of b centered independent vectors: cross terms
+have zero conditional expectation and b equal diagonal terms remain.
+For a uniformly selected batch of b distinct observations, multiply the
+displayed sigma_k^2/b by (N-b)/(N-1), for N>1. This assumes a fresh uniform
+subset at the current iterate, not the remaining part of a shuffled epoch.
+With replacement, b=N can repeat or omit observations and is not the full
+gradient. Full GD visits every observation exactly once.
+:::
+
+---
+
+
+
+### Sampling saves work and introduces noise {#optimization-challenges-after-sampling}
+
+::: {.sgd-challenges-table}
+
+| Challenge | What changes? | Consequence for optimization |
+|---|---|---|
+| [Nonquadraticity]{.alert} | Curvature changes with position | Refresh the local model; shorten or safeguard a proposed step |
+| [Nonconvexity]{.alert} | A stationary point need not be globally optimal | Try multiple starts and compare losses; no global guarantee |
+| [Hessian cost]{.alert} | Dense storage $O(m^2)$; solve $O(m^3)$ | Use first-order or limited-memory methods when full curvature costs too much |
+| [Conditioning]{.alert} | Curvature differs across directions | Scale or precondition variables; consider curvature information |
+| [Full-gradient cost]{.alert} | Direct data pass $O(Nm)$ | Reuse structure or sample fewer terms; small $m$ can still favor Newton |
+| [Gradient noise]{.alert} | Random direction estimates | Use mini-batches, smaller steps or averaging for finer accuracy |
+
+:::
+
+::: {.notes}
+Only now add gradient noise: sampled gradients and mini-batch variance
+have been introduced. The earlier rows are unchanged. Batch size, step
+choice and averaging trade work against the precision of the iterates.
+:::
+
+---
+
+### Estimate noise from one mini-batch {#estimating-gradient-noise}
+
+For $b>1$, let $\vg_{kj}=\nabla\operatorname{loss}_{I_{kj}}(\vtheta_k)$ and
+$\vG_k=b^{-1}\sum_{j=0}^{b-1}\vg_{kj}$
+
+\begin{gather*}
+S_k^2=\frac1{b-1}\sum_{j=0}^{b-1}\norm{\vg_{kj}-\vG_k}_2^2
+\\
+\Ex[S_k^2\mid\mathcal F_k]=\sigma_k^2
+\qquad
+S_k^2/b\text{ estimates batch-gradient noise}
+\end{gather*}
+
+- Use gradients at the [same iterate]{.alert}; one observation cannot supply a sample variance
+- A small batch can give an [imprecise]{.alert} variance estimate
+- Variance alone does not reveal curvature or the true full-gradient norm
+
+::: {.notes}
+This is the sum of the coordinate sample variances, so it estimates the trace
+of the component-gradient covariance without constructing an m-by-m matrix.
+The identity requires the fresh with-replacement IID sampling used here.
+The notebook separates exact enumeration of four gradients from estimating
+variance from one batch, then validates the estimator over repeated batches.
+Do not pool gradients evaluated at changing theta values as one fixed-iterate
+sample. For a uniform distinct batch, the usual sample variance estimates
+the finite-population variance with denominator N-1; its batch-mean variance
+estimate uses (1-b/N)*S_k^2/b instead.
+:::
+
+---
+
+### Smoothness controls the quadratic remainder {#smoothness-and-descent}
+
+How far can we trust the loss change predicted by the slope?
+
+An [$L$-Lipschitz gradient]{.alert} satisfies
+
+$$\norm{\nabla\operatorname{Loss}(\vx)-\nabla\operatorname{Loss}(\vy)}_2
+\leq L\norm{\vx-\vy}_2$$
+
+The [descent lemma]{.alert} bounds the error in that local prediction
+
+$$\operatorname{Loss}(\vtheta+\vs)\leq\operatorname{Loss}(\vtheta)
++\nabla\operatorname{Loss}(\vtheta)^\top\vs+\frac L2\norm{\vs}_2^2$$
+
+- A valid $L$ bounds curvature; the lemma [does not find $L$]{.alert}
+- With [known $L>0$]{.alert}, full GD at $\eta=1/L$ decreases the loss when the gradient is nonzero
+- A sampled gradient adds noise: we must account for its effect next
+
+::: {.notes}
+For a twice differentiable function, an operator-norm Hessian bound L on a
+convex region containing the line segment provides this inequality there.
+Global statements require a global bound; Rosenbrock is not globally
+L-smooth on R^2. L is a curvature/smoothness bound, not parameter dimension
+or gradient noise. Integrating the gradient along the segment proves the
+displayed descent lemma. Existence of some L does not mean it is known.
+This lemma is a proved inequality used in the argument that follows. It
+does not require convexity. For an SPD quadratic, L=lambda_max(A) is valid.
+For full GD, s=-g/L gives F(theta+s)<=F(theta)-||g||^2/(2L).
+The analogous SGD calculation has an additional variance term. A measured
+local curvature can guide tuning without being a valid bound everywhere
+needed for the proof.
+The exponential-regression motivation also lacks a finite global L on all
+of R^m in general. A local argument needs a valid bound on the region
+containing the proposed step; the later regularized logistic example has
+an explicitly computable global bound.
+:::
+
+---
+
+### What do we know at this step? {#sgd-known-and-estimated-quantities}
+
+We know the current $\vtheta_k$ even when we do not know how far it is from the solution
+
+| Quantity | What is available? |
+|---|---|
+| Current $\vtheta_k$; choices $b$, $\eta_k$ | [Stored or chosen]{.alert} before drawing the update batch |
+| Batch gradient $\vG_k$; variability estimate $S_k^2\ (b>1)$ | [Computed]{.alert} from the sampled batch |
+| Full gradient $\vg_k$; variability $\sigma_k^2$ | [Exact full-data quantities]{.alert}; computable, but costly |
+| Curvature bound $L$ | Requires [separate information]{.alert}; not supplied by $S_k^2$ |
+| Minimizer $\vtheta_*$ | [Generally unknown]{.alert}; not needed to compute an update |
+
+::: {.key-point}
+The next bound uses quantities that ordinary SGD [avoids computing exactly]{.alert}
+:::
+
+::: {.notes}
+At this point g_k is the full gradient, G_k is the numerical average of the
+sampled component gradients, sigma_k^2 is their exact full-data variability,
+and S_k^2 estimates that variability when b>1. S_k^2/b estimates the batch
+gradient's mean squared error. Once computed, G_k is known; calling it an
+estimate describes its relation to the costly full gradient, not uncertainty
+about its numerical value. We choose eta_k, but do not know an optimal rate.
+The conditional proof holds the known iterate and pre-draw choices fixed
+and averages over possible fresh batches. A valid L may be available by
+model analysis; an empirical tuning scale is not automatically such a bound.
+The data and loss formula are available, but evaluating the complete loss
+or its gradient can require a costly pass over all N observations. Full
+gradient and component-variance computations are feasible in the small toy
+examples for checking formulas; they are not required at every SGD update.
+:::
+
+---
+
+### Derive expected descent {#expected-descent-derivation}
+
+Hold our known $\vtheta_k$ fixed and average over [possible fresh batches]{.alert}
+
+Choose $\eta_k$ from past information, [before drawing the update batch]{.alert}
+
+\begin{gather*}
+\Ex[\vG_k\mid\mathcal F_k]=\vg_k
+\qquad
+\Ex[\norm{\vG_k}_2^2\mid\mathcal F_k]=\norm{\vg_k}_2^2+\sigma_k^2/b
+\\
+\begin{aligned}
+\Ex[\operatorname{Loss}(\vtheta_k-\eta_k\vG_k)\mid\mathcal F_k]
+&\leq\underbrace{\operatorname{Loss}(\vtheta_k)}_{\text{current loss}}
+\\
+&\quad-\underbrace{\eta_k\norm{\vg_k}_2^2}_{\text{slope prediction}}
++\underbrace{\frac{L\eta_k^2}{2}\norm{\vg_k}_2^2}_{\text{curvature allowance}}
++\underbrace{\frac{L\eta_k^2\sigma_k^2}{2b}}_{\text{sampling-noise penalty}}
+\end{aligned}
+\end{gather*}
+
+- The curvature allowance is present even with the [exact gradient]{.alert}
+- Sampling adds the [noise penalty]{.alert}; both positive terms require a valid $L$
+
+::: {.notes}
+Here g_k is the full gradient defined above and eta_k is measurable with
+respect to F_k. In E||G||^2, write G=g+(G-g); the mean-zero cross term
+vanishes. This proof does not apply unchanged when eta_k is computed from
+the same fresh batch and is therefore correlated with G_k. A separate
+independent pilot may be included in the pre-update information, but its
+sampling cost must be charged. The bound is conditional on the current
+iterate; it is not a statement that every realized step lowers the loss.
+Substitute s=-eta_k G_k in the descent lemma. The purpose of this calculation
+is to explain why a cheap noisy direction can still improve the loss on
+average. It does not tell us the current full gradient or calculate eta_k.
+:::
+
+---
+
 ### Why a noisy direction can help {#why-a-noisy-direction-can-help}
 
-Assume $\nabla\operatorname{Loss}$ is $L$-Lipschitz and $0<\eta_k\leq1/L$
+With $0<\eta_k\leq1/L$, write the bound using the [full gradient]{.alert} $\vg_k$
 
 \begin{gather*}
 \Ex[\operatorname{Loss}(\vtheta_{k+1})\mid\mathcal F_k]
 \leq\operatorname{Loss}(\vtheta_k)
--\underbrace{\frac{\eta_k}{2}\norm{\nabla\operatorname{Loss}(\vtheta_k)}^2}_{\text{downhill progress}}
+-\underbrace{\frac{\eta_k}{2}\norm{\vg_k}_2^2}_{\text{downhill progress}}
 +\underbrace{\frac{L\eta_k^2\sigma_k^2}{2b}}_{\text{noise penalty}}
 \end{gather*}
 
-- Far from a stationary point, downhill progress can dominate
-- Near it, a fixed learning rate can leave persistent fluctuations
+- Far from a stationary point, [downhill progress]{.alert} can dominate
+- Near it, a fixed learning rate can leave [persistent fluctuations]{.alert}
 - Decrease $\eta_k$ or increase $b$ when finer accuracy is needed
+
+[Expected decrease]{.alert} is certified by this bound when
+$L\eta_k\sigma_k^2/b<\norm{\vg_k}_2^2$
 
 ::: {.key-point}
 Noisy gradients can be [cheap enough to be useful]{.alert}; noise does not cure poor conditioning
@@ -2033,20 +2780,159 @@ and Nocedal, sections 4.1-4.3, for fuller convergence assumptions and results.
 
 ---
 
+### What would the bound suggest for a learning rate? {#choosing-the-learning-rate}
+
+For insight, suppose the [costly or unavailable inputs]{.alert} were known:
+$a_k=\norm{\vg_k}_2^2>0$, $v_k=\sigma_k^2/b$, and $L$
+
+\begin{gather*}
+\text{Expected change}\ \leq -\eta a_k+\frac L2\eta^2(a_k+v_k)
+\\
+\eta_{\mathrm{bound}}=\frac{a_k}{L(a_k+v_k)}
+=\frac{1/L}{1+v_k/a_k}
+\end{gather*}
+
+- This rate minimizes the [displayed upper bound]{.alert}; its inputs are [not automatically available]{.alert}
+- Little noise relative to signal: approach the conservative step $1/L$
+- Larger noise-to-signal ratio: [smaller step]{.alert}, or a larger batch
+
+::: {.key-point}
+This explains why noise calls for smaller steps; practical rate selection still needs tuning
+:::
+
+::: {.notes}
+Differentiate the right-hand side with respect to eta: -a+L*eta*(a+v)=0.
+The second derivative is L(a+v)>0. The full bound guarantees a strict expected
+decrease for 0<eta<2a/[L(a+v)]. Eta_bound lies at most 1/L, so it is also
+compatible with the simplified preceding bound. The upper-bound minimizer
+need not minimize the true conditional expected loss. It differs from the
+best constant SPD-quadratic norm contraction step 2/(lambda_min+lambda_max):
+these optimize different criteria and use different information. If a=0 and
+v>0, the bound predicts only a noise penalty; if both vanish, the formula is
+undefined but the update gradient is zero almost surely.
+The exact v_k=sigma_k^2/b can be estimated by S_k^2/b for b>1. Replacing
+unknown inputs by estimates introduces uncertainty and does not make the
+formula a guaranteed or implemented learning-rate selector.
+:::
+
+---
+
+### What noise estimates cannot choose on their own {#noise-estimates-and-learning-rates}
+
+\begin{gather*}
+\Ex[\norm{\vG_k}_2^2\mid\mathcal F_k]
+=\norm{\vg_k}_2^2+\sigma_k^2/b
+\\
+\norm{\vG_k}_2^2-S_k^2/b
+\quad\text{is an unbiased, but possibly negative, signal estimate}
+\end{gather*}
+
+- Batch variance [estimates noise]{.alert}, not curvature $L$ or an exact gradient signal
+- A small sample may give an unreliable noise-to-signal ratio
+- Use past information or an independent pilot for noise-informed decisions
+
+::: {.key-point}
+The descent bound explains the tradeoff; it does not supply unknown inputs
+:::
+
+::: {.notes}
+Subtracting two unbiased expectations gives the signal estimate, but a
+realization can be negative. Blindly inserting it into eta_bound is not a
+reliable selection algorithm. Choosing eta from the same update batch also
+breaks the pre-draw measurability used in the simple expected-descent proof.
+Pilots and previous iterations avoid that particular dependence, while
+estimation uncertainty, moving curvature and changing noise still remain.
+For a deterministic full gradient, backtracking can test actual sufficient
+decrease. A noisy batch loss need not certify decrease of the full loss.
+:::
+
+---
+
+## SGD in practice {#practical-learning-rates .tree-marker-slide tree-marker="estimation"}
+
+[Heuristic choices]{.alert}: batch size, initial learning rate and decay schedule
+
+1. [Initialize]{.alert} $\vtheta_0$; choose batch size $b$ and a work budget or accuracy goal
+2. [Try learning rates]{.alert} in short runs at equal work; use a fraction of $1/L$ as a starting scale if a valid $L$ is available
+3. [Repeat]{.alert}: draw a fresh batch, average its gradients at $\vtheta_k$, and update
+
+$$\vtheta_{k+1}=\vtheta_k-\eta_k\vG_k$$
+
+4. [Monitor]{.alert} loss periodically on common diagnostic data; count that cost
+5. [Adjust]{.alert}: reduce the rate for repeated instability; for persistent fluctuations, reduce it or increase $b$
+
+::: {.key-point}
+Choose the rate before the next batch; use measured progress to guide later choices
+:::
+
+::: {.notes}
+When using eta_0=c/L, tune c rather than assuming c=1 is best for SGD. For example, try a geometric
+grid of rate multiples in independent short pilots and compare the same
+full loss or a common diagnostic sample at equal gradient work. Count every
+pilot and diagnostic evaluation. An isolated loss increase is normal for
+SGD; look for reliable trends or repeated deterioration, not monotonic loss
+on every update. The pilots are a practical proposal, not an implemented
+automatic selector in the current notebook. Fix the chosen rate or schedule
+for a final run, or use past information before each update draw. Even when
+eta<=1/L, noise can prevent expected descent: the signal/noise inequality
+on the preceding slide is an additional condition. Prediction accuracy on
+held-out observations is separate from minimizing the training loss.
+:::
+
+---
+
 ### Learning rates and the noise floor {#learning-rates-and-the-noise-floor}
 
 A scalar example: $\operatorname{loss}_i(\theta)=\tfrac12(\theta-a_i)^2$ with $a_i\in\{-1,1\}$ equally likely
 
-$$\theta_{k+1}=(1-\eta)\theta_k+\eta\overline a_k
-\qquad \var(\overline a_k)=1/b$$
+This squared-error average has $\operatorname{Loss}(\theta)=\tfrac12(\theta^2+1)$ and $\theta_*=0$
+
+Let $\overline a_k$ be the mean of the $b$ independently sampled responses in batch $k$
+
+\begin{gather*}
+\operatorname{loss}'_i(\theta)=\theta-a_i
+\qquad
+\theta_{k+1}=(1-\eta)\theta_k+\eta\overline a_k
+\\
+\Ex(\overline a_k)=0
+\qquad \var(\overline a_k)=1/b
+\\
+s_k=\Ex(\theta_k^2)
+\quad\implies\quad
+s_{k+1}=(1-\eta)^2s_k+\eta^2/b
+\end{gather*}
+
+Even at $\theta_*=0$, the two observation gradients are $+1$ and $-1$
+
+::: {.notes}
+The a_i are the observed response values in this finite-sum example.
+Each batch independently selects
+responses with replacement. Conditional on theta_k, its average has mean
+zero and variance 1/b, so the cross term in the squared update averages to
+zero. Full GD uses the exact mean zero, while SGD inserts a noisy batch mean.
+This recurrence is exact; it does not require the conservative eta<=1/L
+restriction used earlier. Here L=1, and the moment recurrence contracts
+for the wider range 0<eta<2.
+:::
+
+---
+
+### Persistent noise gives a floor {#scalar-noise-floor}
 
 For constant $0<\eta<2$ and independent batches,
 
-$$\lim_{k\to\infty}\Ex(\theta_k^2)=\frac{\eta}{b(2-\eta)}$$
+\begin{gather*}
+s_\infty=(1-\eta)^2s_\infty+\eta^2/b
+\quad\implies\quad
+\lim_{k\to\infty}\Ex(\theta_k^2)=\frac{\eta}{b(2-\eta)}
+\\
+\operatorname{Loss}(\theta)-\operatorname{Loss}(0)=\theta^2/2
+\end{gather*}
 
-- Smaller $\eta$ or larger $b$: lower limiting mean squared error
+- Smaller $\eta$ or larger $b$: lower [limiting]{.alert} mean squared error
 - Decaying $\eta_k$: progressively smaller updates, slower late progress
 - A classical schedule is $\eta_k=\eta_0/(1+k/k_0)$<br>Convergence still needs assumptions on the objective and noise
+- This floor is not inevitable if all component gradients vanish at the solution
 
 ::: {.key-point}
 A fixed step can be useful for [early progress]{.alert} while limiting final precision
@@ -2062,6 +2948,37 @@ the same minimizer. For the stated decreasing schedule, positive eta_0,k_0
 give sum eta_k=infinity and sum eta_k^2<infinity, classical stochastic
 approximation conditions. They alone do not ensure convergence without
 suitable smoothness, boundedness/noise and objective assumptions.
+:::
+
+---
+
+### Choose a rate for a target scalar noise floor {#learning-rate-from-noise-floor}
+
+For this solvable example, choose limiting parameter MSE target $\tau=0.01$
+
+$$\frac{\eta}{b(2-\eta)}\leq\tau
+\quad\implies\quad
+\eta\leq\frac{2b\tau}{1+b\tau}$$
+
+| Batch size | Largest rate allowed by the floor | MSE floor at $\eta=0.1$ |
+|---|---:|---|
+| $b=1$ | About $0.0198$ | $0.0526$: too large |
+| $b=16$ | About $0.2759$ | $0.00329$: below target |
+
+- The rate choice is exact for this model's [limiting MSE]{.alert}
+- Also check progress within the [available work budget]{.alert}
+
+::: {.key-point}
+Choose the step for both early progress and the final precision required
+:::
+
+::: {.notes}
+Starting from 0<eta<2, rearrange eta <= b*tau*(2-eta) to get the bound.
+This chooses a limiting parameter-MSE floor; it does not guarantee meeting
+the target after finitely many updates. The initial-error transient must
+also decay. The notebook computes that finite-time moment recurrence.
+The criterion relies on this known scalar curvature and component noise;
+it is not a general automatic SGD rule. Excess loss is half parameter MSE.
 :::
 
 ---
@@ -2155,7 +3072,7 @@ plt.show()
 
 ## A large-data example {.tree-marker-slide tree-marker="estimation"}
 
-Logistic regression: observations $(\vx_i,y_i)$ with $y_i\in\{0,1\}$
+Logistic regression: labels $y_i\in\{0,1\}$; [regularization strength]{.alert} $\lambda>0$
 
 \begin{gather*}
 p_i(\vtheta)=\frac{1}{1+e^{-\vx_i^\top\vtheta}}
@@ -2167,6 +3084,7 @@ p_i(\vtheta)=\frac{1}{1+e^{-\vx_i^\top\vtheta}}
 \end{gather*}
 
 - Each observation gives a gradient; average them for the full gradient
+- The penalty adds positive curvature: a [unique minimizer]{.alert}, yet nonquadratic
 - Hold $m$ fixed and increase $N$ to isolate the [data-size effect]{.alert}
 - Compare full GD, single-observation SGD, and mini-batch SGD
 - Measure gradient work and elapsed time to a specified loss gap
@@ -2181,21 +3099,66 @@ minimizer; a tightly solved L-BFGS reference supplies the target loss.
 Use logaddexp to evaluate the log likelihood without exponential overflow.
 :::
 
+---
+
+### Learning rates in the logistic experiment {#logistic-learning-rates}
+
+Let $X$ have rows $\vx_i^\top$; the notebook uses the global curvature bound
+
+$$L_{\mathrm{bound}}=\lambda_{\max}\!\left(\frac{X^\top X}{4N}\right)+\lambda$$
+
+| Method | Implemented learning rate |
+|---|---|
+| Full GD | $1/L_{\mathrm{bound}}\approx3.504$ in the saved default run |
+| Fixed mini-batch SGD | $\eta=0.3$ |
+| Decaying single-observation or mini-batch SGD | $\eta(w)=0.3/(1+w/(0.25N))$ |
+
+- $w$: observation-gradient work already used before the update
+- The decaying rate is $0.15$ after a quarter equivalent pass and $0.06$ after one pass
+- The SGD rates are illustrative settings to review and tune
+- The reference minimum is for [comparing results]{.alert}; the optimizer does not know it
+
+::: {.notes}
+The bound follows from 0<=p_i(1-p_i)<=1/4 for the regularized logistic
+Hessian. The saved default has N=16384, m=20 and lambda=.02. Full GD uses
+this deterministic curvature scale. The SGD values .3 and its decaying
+schedule are declared choices; they are not inferred automatically from
+sample variance or eta_bound. The work w is measured before each update,
+so the final applied rate differs slightly from a formula evaluated at the
+total completed budget. Equivalent passes with replacement are not epochs.
+Computing L_bound is setup outside the recorded optimization timers and is
+not separately timed in the current notebook; charge such curvature
+estimation and tuning in a complete practical comparison.
+:::
+
 ## Choosing an optimization method
 
 | Situation | Methods worth considering |
 |---|---|
-| Cheap full gradient; high precision needed | Full-gradient methods, BFGS, L-BFGS, Newton or trust-region methods |
+| Small $m$; affordable full derivatives | Newton, trust-region or other full-gradient methods |
 | Large dataset or streaming observations | Mini-batch SGD and related stochastic methods |
 | Unequal curvature or badly scaled features | Scaling, preconditioning, momentum, curvature information |
+| Curvature changes along the path | Reassess steps; line searches, quasi-Newton or trust-region methods |
 | Gradient noise dominates late progress | Smaller steps, larger batches, averaging, variance reduction |
-
-- L-BFGS and Hessian-vector methods avoid storing a dense Hessian
-- Momentum and Adam modify first-order updates; neither guarantees success on every problem
-- Nonconvex optimization still has no general global-minimum guarantee
+| Nonconvex loss | Multiple starting points; compare attained losses |
 
 ::: {.key-point}
 The old lesson about [geometry]{.alert} remains; modern practice also budgets [data access and accuracy]{.alert}
+:::
+
+::: {.notes}
+L-BFGS and Hessian-vector methods avoid storing a dense Hessian. Momentum
+uses accumulated gradient information; Adam also rescales coordinates using
+running gradient moments. They modify basic first-order updates and neither
+guarantees success on every problem. Nonconvex optimization still has no
+general global-minimum guarantee. The notebook compares full GD and declared
+SGD schedules, rather than implementing every method in this table.
+Multiple starts are a practical way to explore a nonconvex landscape, not
+a proof of global optimality. Small m and large N can coexist: choose
+curvature information and sampling separately rather than treating either
+count as an automatic method-selection rule. Cheap full gradients and high
+precision can also favor full-gradient methods when m is large; L-BFGS and
+Hessian-vector methods offer curvature information without a full dense matrix.
 :::
 
 ::: {.refs}
@@ -2209,9 +3172,10 @@ The old lesson about [geometry]{.alert} remains; modern practice also budgets [d
 [Open Stochastic Gradient Descent on GitHub](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/StochasticGradientDescent.ipynb)
 · [Run in Colab](https://colab.research.google.com/github/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/StochasticGradientDescent.ipynb)
 
-1. Rosenbrock: compare backtracking GD with BFGS and count evaluations
-2. Quadratic losses: inspect stochastic paths, batch variance, and the noise floor
-3. Logistic regression: compare equal gradient work and measured time, with loss diagnostics timed separately
+- Opening: a nonquadratic scalar loss, local quadratic models and derivative costs
+- Parts 1–2: Rosenbrock, backtracking, curvature and conditioning
+- Parts 3–4: sampled gradients, estimated batch variance, expected descent and the noise floor
+- Parts 5–6: logistic regression, equal gradient work and measured time
 
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>

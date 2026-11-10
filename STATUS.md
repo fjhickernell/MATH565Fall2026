@@ -630,6 +630,28 @@ appropriate phase rather than appended indiscriminately.
     explicitly label both gradient estimates unbiased but noisy, and state
     that $b=1$ recovers single-observation SGD; preserve the existing anchors
     and update the section outline.
+  - [x] Expand the optimization-to-SGD introduction from a general vector loss
+    through scalar nonquadratic local models, quadratic construction, and
+    multidimensional Hessian costs before motivating first-order GD. Introduce
+    regression only at the finite-sum/SGD transition; distinguish gradient size
+    from evaluation cost, conditioning, changing curvature and nonconvexity.
+    Explain the sampled index-vector dimension ($d=b$ per mini-batch), one-batch gradient-noise estimation, expected
+    descent, practical learning-rate limits and the exact scalar noise floor.
+    Align the companion notebook, preserve Parts 1–6 and existing slide anchors,
+    and extend the Introduction terms index. Twelve notebook code cells and
+    six figures validate locally; instructor review remains open (November 10).
+    Clarify large-N sampling versus large-m curvature costs, small-m Newton
+    usefulness, least-squares reuse, and multiple starts without a global
+    optimality guarantee; notebook code and saved results are retained.
+    Stage four cumulative challenge tables (2, 4, 5 and 6 rows), with wider
+    consequence/response columns and noise introduced only after sampling.
+    Motivate the finite sum with nonlinear exponential regression; retain
+    linear least-squares precomputation as an explicit contrasting case.
+    Add practical learning-rate selection, a scalar target-floor calculation,
+    and the notebook's actual logistic schedules for the full SGD lecture.
+    Distinguish known iterates and computed batch estimates from costly exact
+    quantities and the unknown minimizer; motivate the descent lemma and
+    its limits as a practical learning-rate guide.
   - [x] Clarify two-level mean and error notation, keep the random allocation
     derivation consecutive, and distinguish finite-grid sampling error from
     limiting-target approximation bias in the multilevel development.
