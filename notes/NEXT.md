@@ -24,6 +24,21 @@ from the optimization timers.
 - The coordinate-contraction and best-constant-rate proofs were left for
   self-study. General instructor content review remains open.
 
+## Thanksgiving invitation — published November 10
+
+[Please join me for Thanksgiving lunch and prayer — November 19](https://iit.instructure.com/courses/25777/discussion_topics/110139)
+was published to **All Sections** on **November 10 at 4:31 PM CST**.
+The posted six bullets and November 13 RSVP date were verified. Do not repost.
+The [local HTML reference](drafts/2026-11-19-prayer-service-announcement.html)
+retains the announcement text and flyer links.
+
+Fred approved the [Selected Topics lead slide](../slides/05-selected-topics.qmd):
+full flyer on the left, personal invitation on the right, then the original
+title and Course Map. Edit `prayer_invitation: |` near the top of its source
+when needed. Original flyer files are in `slides/assets/announcements/` and
+are declared as deck resources for standalone previews. These slide changes
+are included in this Checkpoint; remote deployment/live verification remain pending.
+
 ## November 10 coverage and November 12 continuation
 
 The recording confirms the generic optimization and scalar local-model recap,
@@ -81,6 +96,16 @@ with both sections using level-two headings. Existing instructor contact
 details are retained, with an **Office hours: Book an office-hours appointment**
 link to the existing Bookings page. The saved published page is verified;
 classroom, meeting time and other course content are retained.
+
+## Project observer announcement — published November 10
+
+[Choose your project observation slots by November 11](https://iit.instructure.com/courses/25777/discussion_topics/110140)
+was published to **All Sections** on **November 10 at 4:40 PM CST**.
+The final three paragraphs and Project-page link were verified. Do not repost.
+The [local HTML reference](drafts/2026-11-11-project-observer-signup-announcement.html)
+retains the published wording, including the November 11, 11:59 PM Chicago
+Time deadline. Observer registration and the booking-completeness check
+remain open.
 
 ## Project administration — November 8 closeout
 
