@@ -9,9 +9,10 @@
   displayed lecture materials; distinguish substantive coverage from previews
   and deferred explanations.
 
-The schedule is reconciled through November 5. The August 18–September 17
+The schedule is reconciled through November 10. The August 18–September 17
 rows record the historical audit without retroactive calendar edits; the
-November 10 continuation note is saved and verified locally in Fantastical.
+November 12 continuation note is saved and reopened in Apple Calendar, with
+an independent check in Fantastical.
 
 | Instructional meeting | Status | Panopto recording | Next instructional event annotated | Checked |
 |---|---|---|---|---|
@@ -36,6 +37,7 @@ November 10 continuation note is saved and verified locally in Fantastical.
 | October 29, 2026 | Reconciled: Improving Efficiency synthesis and stopping recap; parallel computing and CPU/GPU notebook; two-level random allocation and deterministic bounds through “What two levels accomplish”; Lagrange derivation and many levels deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b56ef351-70c1-44a4-a1c1-b4f20117f026) | November 3, 2026, 10:00–11:15 AM America/Chicago, PH 109; Illinois Tech Fred → Calendar occurrence only; resume Selected Topics at “Deriving the two-level allocation,” then cost versus error, allocation exercise, and hierarchy | October 29, 2026 |
 | November 3, 2026 | Reconciled: two-level allocation and cost–error derivations; IID savings and covariance/cost comparison; brief multilevel telescoping/allocation/bias/cost overview; worked examples and notebook deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=0a596b6f-2284-4473-b1b4-b4f7012577c7) | November 5, 2026, 10:00–11:15 AM America/Chicago (CST), PH 109; Illinois Tech Fred → Calendar occurrence only; resume two-level examples and Multilevel Option Pricing, then Stochastic Gradient Descent | November 3, 2026 |
 | November 5, 2026 | Reconciled: two-level recap; Multilevel Option Pricing and Beam comparisons; gradient descent, Rosenbrock geometry, and conditioning versus dimension through the notebook conditioning table; stochastic gradients deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=0642ecc9-7e10-4a57-94f1-b4f90123f1c7) | November 10, 2026, 10:00–11:15 AM America/Chicago (CST), PH 109; Illinois Tech Fred → Calendar occurrence only; resume “Why cheap gradients matter” and Stochastic Gradient Descent notebook Part 3 | November 5, 2026 |
+| November 10, 2026 | Reconciled: scalar/vector optimization, Hessian costs and conditioning recap; nonlinear finite-sum motivation, single-observation and mini-batch SGD, gradient-noise estimation, expected descent and practical tuning; logistic model introduced, numerical experiments deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f378917f-f589-4d4e-b058-b4fe012739d4) | November 12, 2026, 10:00–11:15 AM America/Chicago (CST), PH 109; Illinois Tech Fred → Calendar occurrence only; resume “A large-data example,” then “Learning rates in the logistic experiment” and Stochastic Gradient Descent notebook Parts 5–6 | November 10, 2026 |
 
 Recording evidence: Deck 02 mixture/acceptance–rejection unit-cube review
 preceded Deck 03 (33:06). Unbiased discrepancy began at 37:06; RKHS and
@@ -327,3 +329,48 @@ qmcpy kernel. All 1,238 local references in the assembled course pages and
 decks resolve, and the eight beam-model tests pass. The three classroom
 notebook reruns retain unchanged source, valid figures and complete successful
 executions; the two refreshed timing figures pass visual review.
+
+
+## November 10 recording evidence
+
+The Illinois Tech Fred readiness notice identifies a November 10, 9:57 AM
+recording start; Panopto duration is 1:19:01. The complete downloaded transcript
+confirms the scalar Taylor/Newton and nonquadratic-loss recap, convexity and
+multiple starts, gradient/Hessian costs, GD, conditioning and Rosenbrock.
+The contraction proofs were left for self-study. After course logistics,
+nonlinear exponential regression motivates the finite sum and sampling cost.
+Single-observation and mini-batch SGD, the random index-vector dimension
+$d=b$, gradient variance and sample-variance estimation, smoothness, known
+versus costly quantities, expected descent and practical rate/batch tuning
+were substantively discussed.
+
+The signal correction $\|\boldsymbol G_k\|^2-S_k^2/b$ prompted an unresolved
+question about the subtraction; retain its explanation as a follow-up.
+The scalar response recurrence, persistent-noise floor and target-floor
+calculation, and the four-quadratic-component walkthrough were not
+substantively developed. Briefly displaying “Gradient and stochastic-gradient
+paths” at 1:14:03 does not establish coverage of those examples.
+
+At 1:14:14–1:14:24 the captions explicitly defer trying the logistic example
+in the notebook until next time. Closing explanation introduces binary
+response probabilities, covariates, regularization and the gradient, but not
+numerical optimization or work/time comparisons. No notebook execution or
+walkthrough is verified. Resume Selected Topics at “A large-data example,”
+then “Learning rates in the logistic experiment” and notebook Parts 5–6;
+keep the omitted examples available as follow-ups rather than marking them
+taught. Monte Carlo Tree Search remains future material.
+
+Saved only the November 12 occurrence using Apple Calendar's Only This Event,
+then closed and reopened it to verify the original title “MATH 565 Monte Carlo,”
+PH 109, November 12, 10:00–11:15 AM Central Time (CST). Fantastical independently
+shows the full saved pickup note, and its calendar selector identifies
+Illinois Tech Fred → Calendar. The note names the logistic slide, implemented
+learning rates and notebook Parts 5–6, followed by the preceding lecture's
+coverage. No recurring-series change was made.
+
+Validation: the changed schedule renders successfully; its November 10 and
+November 12 rows and continuation anchors resolve. All six rendered monthly
+tables retain four cells per row, and whitespace checks pass. Visual checks at
+1280×900 and 390×844 verify the November 10/12 rows and all six tables: document
+width matches the viewport, with no horizontal overflow. These changes are
+included in this Checkpoint; remote CI/deployment remain pending.

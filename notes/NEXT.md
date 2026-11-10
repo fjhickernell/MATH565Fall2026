@@ -1,79 +1,49 @@
 # Next task
 
-## Immediate preparation — November 10
+## Immediate preparation — November 12
 
-Review the revised optimization-to-SGD sequence from
-[Optimize a loss function](../slides/05-selected-topics.qmd#gradient-descent),
-alongside the opening nonquadratic scalar-loss section and Parts 1–6 of the
-[SGD notebook](../notebooks/performance/StochasticGradientDescent.ipynb).
-Fred plans the full November 10 lecture around SGD, with a complete logical
-introduction and permission to backtrack. Review the scalar picture and
-gradient/curvature background, then follow the staged challenges and explicit
-learning-rate choices. The earlier recorded classroom pickup is retained below.
-Instructor content and pacing review remain open; the additions do not
-establish new classroom coverage.
+Resume Selected Topics at [A large-data example](../slides/05-selected-topics.qmd#a-large-data-example),
+then [Learning rates in the logistic experiment](../slides/05-selected-topics.qmd#logistic-learning-rates)
+and the [Stochastic Gradient Descent notebook](../notebooks/performance/StochasticGradientDescent.ipynb),
+Parts 5–6. The instructor explicitly deferred trying the logistic example
+until next time. Explain the declared learning-rate settings, then compare
+full GD and sampled gradients at equal component work and measured time.
+The notebook uses synthetic data and does not automatically tune its rates;
+its full-loss diagnostics and curvature-bound setup costs remain separate
+from the optimization timers.
 
-### Review focus
+### Follow-ups from November 10
 
-- General vector loss, then m=1, slope/curvature and imperfect quadratic
-  models from three values or one value plus first and second derivatives.
-- Four cumulative challenge tables: scalar (2 rows), before expensive gradients
-  (4 rows), immediately before SGD (5 rows), and after sampling/noise (6 rows). Practical responses belong
-  in the wider consequence column; no early gradient-noise teaser.
-- Multidimensional gradient/Hessian costs before GD; defer regression until
-  the finite-sum loss motivates SGD. Large N motivates sampling; large m
-  makes dense curvature costly. Newton can remain useful for small m and
-  huge N. Distinguish O(m) updates from objective-dependent gradient work.
-- For nonconvex losses, multiple starts can explore different minima but
-  give no global-minimum guarantee; compare the same objective and charge all runs.
-- Attach $d$ to the random index vector drawn for one gradient estimate:
-  $d=b$ for a mini-batch, $d=1$ for one observation. Keep parameter count $m$
-  and fixed dataset size $N$ separate; omit competing sampling conventions.
-- Define before using: the early cost table compares one observation with
-  the full data pass; the mini-batch algorithm then precedes its dimension
-  recap. Convexity precedes the scalar challenges table. Batch means and
-  regularization strength are named where they first enter the equations.
-- Fixed-iterate variance estimation and expected descent, then an explicit
-  learning-rate procedure: curvature scale or pilot tuning, target accuracy,
-  exact scalar floor-based choice and the actual logistic rate schedule.
-  The notebook does not implement automatic tuning. Its L-bound setup is
-  outside optimizer timers and not separately timed; charge it when using
-  timings to compare complete methods.
-- Beginner orientation distinguishes the stored iterate and sampled numerical
-  gradient from the costly exact full gradient/noise and unknown minimizer.
-  The descent lemma assumes a separately available valid curvature bound;
-  it explains expected progress rather than computing a practical rate.
-  Short trial runs and common loss diagnostics provide the tuning procedure.
-- “SGD in practice” is a separate main `##` slide and outline entry. Finish
-  the bound and noise-estimation caveats first, then give the working recipe,
-  identifying batch/rate/schedule tuning as heuristic before the scalar example.
-  The notebook mirrors this sequence and the four labeled expected-descent
-  terms; its code retains declared fixed/decaying rates rather than automatic tuning.
+- Clarify why $\|\boldsymbol G_k\|^2-S_k^2/b$ subtracts the noise contribution
+  to estimate squared full-gradient signal, and why a realized estimate can
+  be negative. This question was raised but not resolved in class.
+- The scalar recurrence, noise-floor and target-floor examples, and the
+  four-quadratic-component walkthrough were not substantively developed.
+  Keep them available as follow-ups; no notebook Parts 3–4 walkthrough is
+  verified. Do not let a briefly displayed path slide establish coverage.
+- The coordinate-contraction and best-constant-rate proofs were left for
+  self-study. General instructor content review remains open.
 
-## November 10 lecture continuation
+## November 10 coverage and November 12 continuation
 
-Resume Selected Topics at [Why cheap gradients matter](../slides/05-selected-topics.qmd#why-cheap-gradients-matter),
-then develop stochastic gradients, mini-batch noise, and learning rates.
-In the [Stochastic Gradient Descent notebook](../notebooks/performance/StochasticGradientDescent.ipynb),
-resume Part 3, “A gradient really can be a Monte Carlo estimate.”
+The recording confirms the generic optimization and scalar local-model recap,
+convexity and multiple starts, multidimensional Hessian costs, GD and
+conditioning, then nonlinear finite-sum motivation. Single-observation and
+mini-batch SGD, the index-vector dimension $d=b$, gradient variance and its
+sample estimator, smoothness, expected descent, and practical tuning were
+substantively discussed. Logistic probabilities, covariates and regularization
+were introduced at the end; numerical optimization and cost comparisons were
+explicitly deferred. No notebook execution or walkthrough is verified.
 
-November 5 recapped two-level allocation and cost, walked through the
-multilevel option-pricing and beam comparisons, and began optimization with
-gradient descent, Rosenbrock geometry, and conditioning versus dimension.
-The closing notebook discussion reached the conditioning table; stochastic
-gradients were deferred. The two-level slide exercise was skipped in favor
-of the notebooks, and optional adaptive methods were not developed.
-The November 10 Illinois Tech Fred → Calendar occurrence note is saved and
-verified in Fantastical; recording evidence is in `notes/LECTURE-UPDATES.md`.
-Schedule and handoff changes are published; the November 10 continuation
-links on the live Schedule are verified November 6. The schedule renders,
-its continuation links resolve, and all six tables pass desktop and phone-width
-browser inspection.
-
-The November 5 classroom reruns of Multilevel Beam and Multilevel Option
-Pricing remain saved, with 9 and 13 completed code cells. The SGD companion
-has since been expanded and rerun for the November 10 review; see its current
-validation and publication state below.
+The November 10 schedule row now records this coverage, and November 12
+continues with the logistic example and notebook Parts 5–6. The November 12
+Illinois Tech Fred → Calendar occurrence was saved and reopened in Apple
+Calendar, then independently checked in Fantastical with its full pickup
+note, original title, PH 109 and 10:00–11:15 AM CST preserved. Recording and
+calendar evidence are in `notes/LECTURE-UPDATES.md`. These changes are included
+in this Checkpoint; remote CI/deployment remain pending. The Schedule passes
+visual checks at 1280×900
+and 390×844: all six monthly tables fit the viewport without horizontal overflow.
 
 ## Assignment 6 — published November 6
 
@@ -192,9 +162,10 @@ The website and all five decks render locally; all 1,581 local link/asset
 references across 22 canonical outputs pass. Revised slides and affected terms-index pages are checked at
 1600×1000 and 1280×720, including MathJax, continuation navigation and footer
 clearance; no browser console errors or warnings. Instructor review remains
-open. The November 10 sources are validated for Checkpoint publication;
-remote deployment of this revision is not yet verified. The recorded
-November 5 coverage and November 10 pickup are unchanged.
+open. The expanded sources are preserved in commit `63114aa`. Remote
+deployment is not checked by this lecture update. The November 10 recording
+review changes actual coverage and the November 12 pickup as recorded above;
+it does not constitute a new notebook execution or classroom walkthrough.
 
 ## November 5 makeup
 
