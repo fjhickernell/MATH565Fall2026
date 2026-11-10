@@ -1,5 +1,22 @@
 # Next task
 
+## Immediate preparation — November 10
+
+Resume instructor review at [Why a noisy direction can help](../slides/05-selected-topics.qmd#why-a-noisy-direction-can-help),
+then learning rates and the noise floor, alongside SGD notebook Parts 3–6.
+The expected-descent equation is now on one line. Instructor understanding
+and content review remain open; the classroom pickup below is unchanged.
+
+### Questions to resolve
+
+- How should $\eta_k$ be chosen in practice? Separate curvature-informed or
+  tuned/decaying steps from the theoretical expected-descent bound.
+- Can mini-batch sample variance estimate $\sigma_k^2$, and what additional
+  information is needed to turn that estimate into a learning-rate decision?
+
+The notebook's logistic comparison uses declared fixed/decaying step sizes;
+it does not automatically choose them from the displayed descent bound.
+
 ## November 10 lecture continuation
 
 Resume Selected Topics at [Why cheap gradients matter](../slides/05-selected-topics.qmd#why-cheap-gradients-matter),
@@ -105,6 +122,29 @@ quadratic at its best step. The notebook labels the Rosenbrock-at-minimizer
 condition number while distinguishing the quadratic bounds from actual banana
 runs. Reverse-mode AD, adjoint methods, and neural-network backpropagation are
 named together.
+
+The conditioning comparison now separates $\kappa$ from $m$ using the cheap
+two-component diagonal gradient and the million-component identity gradient.
+A following continuation defines the eigenvector coordinates and uses
+orthonormality and their squared sum to derive the one-step Euclidean norm
+bound and its $k$-step iteration for a fixed step size. The next continuation
+then derives the best constant quadratic GD step by balancing the decreasing
+shallow-mode factor and increasing steep-mode overshoot.
+“Why cheap gradients matter” introduces the finite-sum loss as a
+common large-data setting: dense-model full gradients cost $O(Nm)$ versus
+$O(bm)$ for sampled batches. This separates conditioning, parameter dimension,
+and data size without asserting a universal SGD speed advantage.
+The algorithm slides now explicitly introduce single-observation SGD first,
+then mini-batch SGD as its generalization, with $b=1$ recovering the first
+case. Both label $\vG_k$ an unbiased but noisy estimate of the full gradient;
+the single-observation slide explicitly identifies one sampled gradient as
+an estimate of the $N$-term average. The batch gradients use one common
+iterate before a single update.
+The website and all five decks render with the qmcpy kernel; all 1,544 local
+link/asset references across 22 canonical outputs resolve. The affected slides pass
+1600×1000 and 1280×720 browser review, including continuation navigation.
+Instructor review remains incomplete; remote deployment of the latest
+refinements is not yet verified.
 
 The Rosenbrock comparison now labels the minimizer and the accepted cross-valley
 jump, with a separate close-up of the final 100 GD updates. Its two methods are

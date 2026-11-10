@@ -1517,8 +1517,8 @@ not an automatic stopping certificate.
 ::: {.column width="47%"}
 - [Gradient descent](#gradient-descent)
 - [Why cheap gradients matter](#why-cheap-gradients-matter)
-- [Stochastic gradient descent](#stochastic-gradient-descent)
-- [Mini-batches and gradient noise](#mini-batches-and-gradient-noise)
+- [Single-observation SGD](#stochastic-gradient-descent)
+- [Mini-batch SGD and gradient noise](#mini-batches-and-gradient-noise)
 - [A large-data example](#a-large-data-example)
 - [Choosing an optimization method](#choosing-an-optimization-method)
 :::
@@ -1681,9 +1681,9 @@ condition number about 2508. Noise does not round out this narrow valley.
 
 ---
 
-### Conditioning versus dimension {#conditioning-versus-dimension}
+### Conditioning, $\kappa$, versus dimension, $m$ {#conditioning-versus-dimension}
 
-For $\operatorname{Loss}(\vtheta)=\tfrac12\vtheta^\top\mA\vtheta$ with $\mA$ symmetric positive definite and minimizer $\vtheta_*=\vzero$,
+For $\operatorname{Loss}(\vtheta)=\tfrac12\vtheta^\top\mA\vtheta$ with $\mA$ symmetric positive definite and minimizer $\vtheta_*=\vzero$
 
 \begin{gather*}
 \vtheta_{k+1}=(\mI-\eta_{\mathrm{best}}\mA)\vtheta_k
@@ -1697,15 +1697,18 @@ q=\frac{\kappa-1}{\kappa+1}
 \norm{\vtheta_{k+1}}\leq q\norm{\vtheta_k}
 \end{gather*}
 
-- $q$ bounds the [fraction of parameter error remaining]{.alert} per GD update
-- $\mA=\operatorname{diag}(1,100)$: $\kappa=100$, $q=99/101\approx0.9802$ — slow
-- $\mA=\mI$ in a million dimensions: $\kappa=1$, $\eta_{\mathrm{best}}=1$, $q=0$ — exact in one update
-- Large $m$ raises computational and storage costs, independently of $q$
-- Scaling, preconditioning, momentum, and curvature information can help
+$q$ bounds the [fraction of parameter error remaining]{.alert} per GD update
+
+| Matrix $\mA$ | Best contraction | Full gradient $\mA\vtheta$ |
+|---|---|---|
+| $\operatorname{diag}(1,100)$, $m=2$ | $\kappa=100$, $q\approx0.9802$<br>[Slow]{.alert} worst-case progress | $[\theta_1,100\theta_2]^\top$<br>Only two components |
+| $\mI_{10^6}$, $m=10^6$ | $\kappa=1$, $q=0$<br>[Exact]{.alert} in one update | $\vtheta$<br>A million components |
+
+For these diagonal examples: $O(m)$ work per full gradient and parameter update
 
 ::: {.key-point}
-We want [small $q$]{.alert}: less error remains after each update<br>
-$q$ near $1$: slow worst-case progress
+[Small $q$]{.alert}: fewer updates needed<br>
+[Small $m$]{.alert}: less coordinate work per full gradient
 :::
 
 ::: {.notes}
@@ -1720,6 +1723,17 @@ is one, kappa=1, eta_best=1, and q=(1-1)/(1+1)=0. The update is
 theta_{k+1}=(I-I)theta_k=0, regardless of the starting vector. Reading and
 updating a million coordinates still costs work.
 
+The table separates the contraction factor from full-gradient cost. Exploit
+the diagonal structure in both cases: only two scalar gradient components
+are needed for diag(1,100), while the identity example has a million. Forming
+an explicit full gradient and updating the parameter vector takes O(m) work;
+neither example needs a dense matrix or O(m^2) multiplication. The identity's
+gradient formula is trivial, and its minimizer can be set directly if that
+structure is used analytically. It illustrates vector size and memory traffic,
+not an intrinsically difficult optimization problem. Small m alone does not
+make every gradient cheap; data size and model complexity also matter.
+Scaling and preconditioning can improve conditioning without changing m.
+
 Diagonalize A with an orthogonal matrix; each error component is multiplied
 by 1-eta*lambda. Minimizing the largest absolute factor over constant scalar
 steps gives q=(kappa-1)/(kappa+1). This is a sharp worst-case bound, not
@@ -1733,22 +1747,125 @@ effective curvature; momentum and curvature-aware methods change the update
 beyond this basic GD formula.
 :::
 
+---
+
+### From coordinate contraction to norm contraction {#coordinate-to-norm-contraction}
+
+Write $\vtheta_k=\sum_{j=1}^m c_{k,j}\vv_j$ in an orthonormal eigenbasis, $\mA\vv_j=\lambda_j\vv_j$
+
+$c_{k,j}=\vv_j^\top\vtheta_k$: [error coordinate along $\vv_j$]{.alert} at iteration $k$
+
+\begin{gather*}
+c_{k+1,j}=(1-\eta\lambda_j)c_{k,j}
+\qquad
+q(\eta)=\max_j|1-\eta\lambda_j|
+\\
+\norm{\vtheta_{k+1}}_2^2
+=\sum_{j=1}^m c_{k+1,j}^2
+=\sum_{j=1}^m (1-\eta\lambda_j)^2c_{k,j}^2
+\\
+\leq q(\eta)^2\sum_{j=1}^m c_{k,j}^2
+=q(\eta)^2\norm{\vtheta_k}_2^2
+\end{gather*}
+
+Take square roots, then repeat with the same step size
+
+\begin{gather*}
+\norm{\vtheta_{k+1}}_2\leq q(\eta)\norm{\vtheta_k}_2
+\qquad
+\norm{\vtheta_k}_2\leq q(\eta)^k\norm{\vtheta_0}_2
+\end{gather*}
+
+::: {.key-point}
+[Contraction]{.alert} when $0<\eta<2/\lambda_{\max}$, giving $q(\eta)<1$
+:::
+
+::: {.notes}
+Continue the preceding SPD quadratic, with its minimizer at zero. The
+error vector is expanded in the orthonormal eigenvectors v_j. The scalar
+c_{k,j} is its signed coordinate in eigenvector direction j at iteration k;
+it is not another parameter vector. Multiplying the GD update by v_j^T
+gives the displayed scalar recurrence because v_j^T A=lambda_j v_j^T.
+Thus the multidimensional iteration becomes separate scalar updates.
+
+The orthonormality identity is Pythagoras: expanding the squared norm of
+sum_j c_{k,j} v_j produces cross terms v_j^T v_l, which are zero for j != l
+and one for j=l. Thus ||theta_k||_2^2=sum_j c_{k,j}^2. This identity is used
+at both ends of the squared-norm calculation.
+
+Square each scalar coordinate update. Every multiplier squared is at most
+q(eta)^2; summing preserves the inequality, and taking nonnegative square
+roots gives the one-step bound. Applying it repeatedly with a fixed eta
+gives the k-step bound. A strict contraction requires 0 < eta < 2/lambda_max.
+Equality in the one-step bound is possible for an error in an eigenvector
+direction attaining the maximum absolute multiplier. No independence or
+random averaging is used. The next slide minimizes this norm-bound factor
+over constant scalar steps.
+:::
+
+---
+
+### Balancing the extreme eigenvalue directions {#balancing-extreme-eigenvalue-directions}
+
+Choose $\eta$ to minimize the [norm-bound factor]{.alert} established above
+
+\begin{gather*}
+q(\eta)=\max_j|1-\eta\lambda_j|
+=\max\left\{\underbrace{1-\eta\lambda_{\min}}_{\text{decreases with }\eta},\ \underbrace{\eta\lambda_{\max}-1}_{\text{increases with }\eta}\right\}
+\end{gather*}
+
+Best constant step: [balance]{.alert} the two extreme multipliers
+
+\begin{gather*}
+1-\eta\lambda_{\min}=-(1-\eta\lambda_{\max})
+\quad\implies\quad \eta_{\mathrm{best}}=\frac{2}{\lambda_{\max}+\lambda_{\min}}
+\\
+q(\eta_{\mathrm{best}})=\frac{\lambda_{\max}-\lambda_{\min}}{\lambda_{\max}+\lambda_{\min}}
+=\frac{\kappa-1}{\kappa+1}
+\end{gather*}
+
+::: {.key-point}
+Balance shallow-direction decay against steep-direction overshoot
+:::
+
+::: {.notes}
+The preceding slide established q(eta) as the sharp worst-case Euclidean
+norm factor. For fixed eta > 0, |1-eta*lambda| is convex in lambda; its
+maximum over the spectrum is attained at one of the two extreme eigenvalues.
+
+For 0 < eta < 2/lambda_max, the worst-case factor is
+max(1-eta*lambda_min, eta*lambda_max-1). The first expression decreases with
+eta and the second increases. Their intersection minimizes the maximum;
+outside this interval the factor is at least one. At the intersection the
+two extreme multipliers are q and -q. If lambda_min=lambda_max, both are zero
+and there is no alternation. Otherwise the steep component crosses zero on
+each update while the shallow component keeps its sign. This refers to the
+error components, not to an increase in the loss.
+
+For diag(1,100), eta_best=2/101 gives multipliers 99/101 and -99/101.
+For the identity, eta_best=1 gives zero in every direction. The parameter
+error contracts by at most q; the quadratic loss gap contracts by at most
+q^2. This is the best fixed scalar step for full-gradient descent on the
+stated quadratic, not an exact-line-search rule or an SGD noise formula.
+:::
+
 ## Why cheap gradients matter {.tree-marker-slide tree-marker="estimation"}
+
+Often, a [large-data loss]{.alert} averages many observation losses
 
 $$\operatorname{Loss}(\vtheta)=\frac1N\sum_{i=0}^{N-1}\operatorname{loss}_i(\vtheta)
 \qquad N=\text{data size},\quad m=\text{parameters}$$
 
-For dense linear/logistic models, gradient work is approximately
+Dense linear/logistic models: $O(m)$ work per [observation gradient]{.alert}
 
 | Method | Data used per update | Gradient work |
 |---|---:|---:|
 | Full-gradient descent | $N$ observations | $O(Nm)$ |
 | Mini-batch SGD | $b\ll N$ observations | $O(bm)$ |
 
-- Large $N$: many cheap updates before one full pass through the data
-- Large $m$: a dense Hessian stores $O(m^2)$ entries
-- [Reverse-mode automatic differentiation]{.alert} ([adjoint method]{.alert}): a whole gradient can cost a few loss evaluations<br>
-  Called [backpropagation]{.alert} in neural networks
+- Large $N$: many sampled updates for the work of [one full gradient]{.alert}, even with small $m$
+- [Reverse-mode automatic differentiation]{.alert}: gradient cost comparable to a few loss evaluations<br>
+  [Adjoint method]{.alert}; [backpropagation]{.alert} in neural networks
 - Streaming data and moderate accuracy can favor stochastic updates
 
 ::: {.key-point}
@@ -1756,6 +1873,21 @@ Compare [work to reach useful accuracy]{.alert}, including noise and overhead
 :::
 
 ::: {.notes}
+The finite-sum loss is a common setting, not a definition of every possible
+optimization objective. It is particularly relevant to SGD when N is huge
+and each observation's gradient is cheap relative to the full gradient.
+SGD also applies to expectation objectives and streaming observations.
+For a dense linear or logistic observation, an inner product and a scaled
+feature vector cost O(m); summing over all N observations costs O(Nm).
+A batch of b observations instead costs O(bm), plus the O(m) parameter update.
+Thus a small parameter dimension does not make a full gradient cheap when
+the dataset is huge. General models have their own per-observation cost;
+the O(Nm) expression is specific to the stated dense models. This extends
+the preceding diagonal examples, which have no N-observation sum. Cheap
+updates alone do not guarantee less total work or elapsed time to accuracy.
+Automatic differentiation avoids m finite-difference loss evaluations; it
+does not remove the N-observation work of differentiating the full loss.
+
 N and m are independent axes: a large dataset can make SGD useful with only
 two parameters. A huge parameter count can make full dense Newton impractical
 without making GD geometrically faster. A naive dense Newton linear solve
@@ -1779,7 +1911,7 @@ than deep learning; large datasets, differentiable models, automatic
 differentiation and parallel hardware expanded its use.
 :::
 
-## Stochastic gradient descent {.tree-marker-slide tree-marker="estimation"}
+## Single-observation SGD {#stochastic-gradient-descent .tree-marker-slide tree-marker="estimation"}
 
 Select $I_k$ uniformly from $\{0,\ldots,N-1\}$, independently of previous draws
 
@@ -1789,33 +1921,48 @@ Select $I_k$ uniformly from $\{0,\ldots,N-1\}$, independently of previous draws
 \vtheta_{k+1}=\vtheta_k-\eta_k\vG_k
 \\
 \Ex[\vG_k\mid\mathcal F_k]=\nabla\operatorname{Loss}(\vtheta_k)
+=\frac1N\sum_{i=0}^{N-1}\nabla\operatorname{loss}_i(\vtheta_k)
 \end{gather*}
 
 Here $\mathcal F_k$ contains the previous draws and the current iterate $\vtheta_k$
 
-- A [fresh random observation]{.alert} gives a cheap gradient estimate
-- Conditional unbiasedness concerns the gradient at the current iterate
-- It does not make $\vtheta_k$ an unbiased minimizer estimate
+- $\vG_k$: an [unbiased but noisy estimate]{.alert} of the full gradient $\nabla\operatorname{Loss}(\vtheta_k)$
+- [One sampled term]{.alert} estimates the [average of $N$ gradient terms]{.alert}
+- Unbiasedness concerns the gradient, not the minimizer estimate $\vtheta_k$
 - A particular update may increase the full loss
 
 ::: {.key-point}
-Estimate the [gradient]{.alert} by Monte Carlo, then use it to update the parameters
+Estimate the [$N$-term average gradient]{.alert} with one term, then make one parameter update
 :::
 
 ::: {.notes}
 The expectation is over the fresh sampled index, holding the history and
-current iterate fixed. A random permutation of the data within an epoch is
+current iterate fixed. This first algorithm uses exactly one observation
+gradient per update to estimate the average of all N component gradients.
+The objective is an average, so the one-term estimator is grad loss_{I_k},
+without another factor of 1/N. Its conditional expectation supplies that
+factor through the uniform draw. An unnormalized sum objective would instead
+use N times the sampled component gradient.
+The next slide generalizes the same symbol G_k to an
+average of b observation gradients; b=1 recovers this single-observation case.
+Unbiased but noisy means that the conditional mean is the full gradient,
+while the realized gradient estimate varies with the sampled observation.
+A random permutation of the data within an epoch is
 also common, but its next index is not independent uniform conditional on all
 previous indices. Our identities and notebook experiments use sampling with
 replacement. They are not proofs for arbitrary shuffling or QMC substitutions.
 :::
 
-## Mini-batches and gradient noise {.tree-marker-slide tree-marker="estimation"}
+## Mini-batch SGD and gradient noise {#mini-batches-and-gradient-noise .tree-marker-slide tree-marker="estimation"}
 
-With $b$ fresh IID indices, sampled [with replacement]{.alert},
+Generalize to $b$ fresh IID observations, sampled [with replacement]{.alert}
 
 \begin{gather*}
 \vG_k=\frac1b\sum_{j=1}^b\nabla\operatorname{loss}_{I_{kj}}(\vtheta_k)
+\qquad
+\vtheta_{k+1}=\vtheta_k-\eta_k\vG_k
+\\
+\Ex[\vG_k\mid\mathcal F_k]=\nabla\operatorname{Loss}(\vtheta_k)
 \\
 \sigma_k^2=\frac1N\sum_{i=0}^{N-1}
 \norm{\nabla\operatorname{loss}_i(\vtheta_k)-\nabla\operatorname{Loss}(\vtheta_k)}^2
@@ -1824,21 +1971,32 @@ With $b$ fresh IID indices, sampled [with replacement]{.alert},
 =\frac{\sigma_k^2}{b}
 \end{gather*}
 
+- $\vG_k$ remains an [unbiased but noisy estimate]{.alert} of the full gradient
 - Larger batch: less gradient noise, more work per update
 - Even at a minimizer, individual component gradients may be nonzero
-- Vectorized batches can use hardware more efficiently than single observations
 
 ::: {.key-point}
-Choose $b$ for [accuracy per unit cost]{.alert}; fewer updates alone prove little
+$b=1$ recovers [single-observation SGD]{.alert}; choose $b$ for [accuracy per unit cost]{.alert}
 :::
 
 ::: {.notes}
+Mini-batch SGD generalizes the preceding single-observation algorithm. Every
+component gradient is evaluated at the same current theta_k; average them,
+then make one parameter update. With b=1 and I_{k1}=I_k, both the gradient
+definition and the parameter update reduce to the preceding slide.
+Linearity of conditional expectation gives E[G_k | F_k]=grad Loss(theta_k)
+for every batch size b, because each fresh IID draw is uniform conditional
+on the history. The estimate is unbiased but generally noisy; averaging
+reduces its conditional mean squared error without changing its mean.
+
 Expand the squared norm of the average of b centered independent vectors.
 Cross terms have zero conditional expectation; the b diagonal terms give
 sigma_k^2/b. Sigma_k^2 is the trace of the component-gradient covariance, not
 the loss variance. Sampling b distinct observations uniformly without replacement
 gives an additional (N-b)/(N-1) factor for N>1. Drawing b=N with replacement
 is not the full gradient; full GD explicitly visits every observation once.
+Vectorized batches can use hardware more efficiently than single observations;
+fewer updates alone do not establish lower total work or elapsed time.
 :::
 
 ---
@@ -1847,13 +2005,12 @@ is not the full gradient; full GD explicitly visits every observation once.
 
 Assume $\nabla\operatorname{Loss}$ is $L$-Lipschitz and $0<\eta_k\leq1/L$
 
-\begin{align*}
+\begin{gather*}
 \Ex[\operatorname{Loss}(\vtheta_{k+1})\mid\mathcal F_k]
-&\leq\operatorname{Loss}(\vtheta_k)
-\\
-&\quad-\underbrace{\frac{\eta_k}{2}\norm{\nabla\operatorname{Loss}(\vtheta_k)}^2}_{\text{downhill progress}}
+\leq\operatorname{Loss}(\vtheta_k)
+-\underbrace{\frac{\eta_k}{2}\norm{\nabla\operatorname{Loss}(\vtheta_k)}^2}_{\text{downhill progress}}
 +\underbrace{\frac{L\eta_k^2\sigma_k^2}{2b}}_{\text{noise penalty}}
-\end{align*}
+\end{gather*}
 
 - Far from a stationary point, downhill progress can dominate
 - Near it, a fixed learning rate can leave persistent fluctuations

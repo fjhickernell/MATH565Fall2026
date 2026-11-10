@@ -620,6 +620,16 @@ appropriate phase rather than appended indiscriminately.
     jump, with a separate close-up of GD's later zigzags.
     Ten code cells and five figures validate in the local qmcpy kernel;
     instructor content review remains open (November 5, 2026).
+  - [x] Derive the best constant quadratic GD step by balancing the two extreme
+    eigenvalue directions and derive the Euclidean norm contraction from the
+    orthonormal coordinate updates; distinguish conditioning $\kappa$,
+    dimension $m$, and data size $N$ with diagonal-gradient examples and dense-model
+    full-gradient $O(Nm)$ versus mini-batch $O(bm)$ work. Instructor review
+    remains open.
+  - [x] Distinguish single-observation SGD from its mini-batch generalization,
+    explicitly label both gradient estimates unbiased but noisy, and state
+    that $b=1$ recovers single-observation SGD; preserve the existing anchors
+    and update the section outline.
   - [x] Clarify two-level mean and error notation, keep the random allocation
     derivation consecutive, and distinguish finite-grid sampling error from
     limiting-target approximation bias in the multilevel development.
