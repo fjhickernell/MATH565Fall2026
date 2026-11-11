@@ -359,6 +359,16 @@ appropriate phase rather than appended indiscriminately.
         workbook links on the live site.
       - [x] Refresh the October 3 topic approvals, preserve resubmission
         history with `SUPERSEDED`, and verify student view permissions.
+      - [x] Close student editing under instructor direction and prepare a
+        private roster-audited schedule-completion draft preserving all
+        existing signups (November 11).
+      - [x] Apply the instructor-approved draft to the live workbook, verify
+        complete quotas and read-only student permissions, and standardize
+        body fonts without assignment highlights (November 11).
+      - [x] Update and validate the Project and Schedule wording identifying
+        final presentation and observation assignments (November 11).
+      - [x] Verify the instructor-published All Sections final-schedule
+        announcement and its course-page links (November 11).
     - [ ] Inspect the visible page layout and dropdown behavior in a browser.
   - [ ] Policies (`classlib/classlib/quarto/pages/policies.qmd`)
     - [x] Add a detailed instructor statement describing how ChatGPT and Codex

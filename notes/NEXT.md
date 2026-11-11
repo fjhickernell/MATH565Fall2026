@@ -1,5 +1,35 @@
 # Next task
 
+## Project scheduling — final live assignments saved November 11
+
+Fred approved the private draft and authorized applying its missing presenter
+and observer assignments. The live workbook now contains the approved additions,
+with every pre-existing signup preserved. A fresh saved-workbook export passes
+the private roster audit: all 20 students included under the instructor's
+enrollment instructions have one presentation and two distinct observations.
+
+The student-facing workbook contains no amber assignment highlights or private
+review table. Its body text is uniformly Carlito 14 pt, including the previously
+smaller project titles; row heights fit the text. The title and instructions
+identify final assignments. Rechecked permissions retain 21 student `Can view`
+entries, instructor Owner, and no group access or sharing links. Excel is left
+showing the synchronized live workbook. Detailed additions, source/final
+snapshots, audit, enrollment checks and remaining topic exceptions stay in
+private OneDrive. Canvas membership was checked directly; preserve the
+instructor's enrollment instructions when interpreting that evidence.
+
+The Project and Schedule pages now identify final assignments, a view-only
+workbook and instructor-managed corrections, preserving the existing scheduling
+anchor. The complete website and all five decks render; 1,379 local links/assets
+and 469 anchors pass. Both changed pages pass desktop/phone layout checks.
+
+Fred published [Final project presentation and observation schedule](https://iit.instructure.com/courses/25777/discussion_topics/110202)
+to **All Sections** on **November 11 at 12:33 PM CST**. The posted three
+paragraphs, audience and both course-page links are verified. The
+[HTML reference](drafts/2026-11-11-final-project-schedule-announcement.html)
+preserves the published text. Do not repost. Remaining individual topic,
+accommodation and enrollment follow-ups are on the private Dashboard.
+
 ## Immediate preparation — November 12
 
 Resume Selected Topics at [A large-data example](../slides/05-selected-topics.qmd#a-large-data-example),
@@ -104,8 +134,8 @@ was published to **All Sections** on **November 10 at 4:40 PM CST**.
 The final three paragraphs and Project-page link were verified. Do not repost.
 The [local HTML reference](drafts/2026-11-11-project-observer-signup-announcement.html)
 retains the published wording, including the November 11, 11:59 PM Chicago
-Time deadline. Observer registration and the booking-completeness check
-remain open.
+Time deadline. Student editing was closed November 11 under Fred's direction;
+the approved final assignments are now saved and verified in the live workbook.
 
 ## Project administration — November 8 closeout
 
@@ -1115,8 +1145,10 @@ decks after adding links.
   on November 23–24, with one morning and one afternoon break each day. The
   roster-based checker is `tools/check_project_bookings.py`; see
   `AUTHOR_WORKFLOW.md` for the repeatable export and audit steps. The 21
-  active MATH 565 students have editing access to the live schedule and view
-  access to the separate approval workbook. A combined all-sections Canvas
+  active MATH 565 students initially received editing access to the live
+  schedule and view access to the separate approval workbook. Schedule access
+  became view-only November 11; see the current final-assignment handoff above.
+  A combined all-sections Canvas
   announcement was published September 25. The course-page changes are
   deployed; its live project-page links were verified October 3, 2026.
 
@@ -1141,9 +1173,12 @@ decks after adding links.
 - `tools/check_project_bookings.py` compares a CSV export with a private
   roster CSV (`Name` column). Six synthetic tests pass. It reports quota
   counts and team/observer errors; do not put real student exports or reports
-  in Git. The actual class roster has not yet been audited.
-- Both workbooks are shared only with the 21 active students: `Can edit` for
-  scheduling, `Can view` for topic approvals. No broad sharing link exists.
+  in Git. A November 11 private draft now passes the actual-roster audit under
+  the instructor's enrollment instructions; its approved additions are now
+  applied and verified in the live workbook.
+- Both workbooks were initially shared only with the 21 active students:
+  `Can edit` for scheduling, `Can view` for topic approvals. Scheduling access
+  was changed to `Can view` November 11. No broad sharing link exists.
   The updated course page links both workbooks and lists the confirmed Galvin
   Tower 14th Floor West Side Conference Room, October 2 topic deadline,
   November 4 presenter deadline, and November 11 observer deadline. Live-page

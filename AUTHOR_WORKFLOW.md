@@ -117,9 +117,22 @@ folder under `Projects/`.
 It has one row per 20-minute slot on November 23–24, 2026. The 9:00 AM–noon
 morning and 2:20–5:00 PM afternoon sessions include a 10:20–10:40 AM and a
 3:40–4:00 PM break each day, leaving 30 bookable slots. The workbook is the
-authoritative live schedule. Share it as `Can edit` with the verified active
-course roster, verify the resulting access list, and link its direct URL from
-Canvas and the course page. Recheck access when the roster changes.
+authoritative live schedule. During student sign-up, share it as `Can edit`
+with the verified active course roster, verify the resulting access list,
+and link its direct URL from Canvas and the course page. Recheck access when
+the roster changes. When Fred closes sign-up, change student permissions to
+`Can view` and verify that no group or link still grants editing access.
+For an instructor-review draft, preserve every existing signup, fill only
+missing assignments in a private copy, and keep the live schedule unchanged
+until the draft is approved. Compare the live values with the saved source
+snapshot before applying approved additions.
+Apply approved assignments as values in the existing live workbook, preserving
+student access as `Can view` and all earlier signups. Keep assignment-origin
+highlights and private review notes out of the student-facing schedule. Use a
+uniform body font and size, fit row heights, and verify the saved workbook's
+quotas and permissions after applying the additions. Update the Project and
+Schedule pages to identify final assignments and route corrections to the
+instructor; publication follows the normal Checkpoint workflow.
 
 Students enter one name in `Presenter(s)` for each slot. An individual uses
 one row and a concise `Project title`. A two-person team uses adjacent rows,

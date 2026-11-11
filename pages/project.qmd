@@ -59,7 +59,11 @@ its strengths, limitations, and possible extensions.
 Detailed feedback questions and assessment guidance are on the
 [Project Assessment](project-assessment.qmd) page.
 
-## Presentation scheduling and observations
+## Final presentation and observation assignments {#presentation-scheduling-and-observations}
+
+Presentation and observation assignments are now **final**. Check the schedule
+below for your presentation and both observations. The workbook is view-only;
+contact the instructor if a correction is needed.
 
 Project presentations will take place on **Monday, November 23, and Tuesday,
 November 24**, immediately before Thanksgiving. Each day has sessions from
@@ -74,21 +78,16 @@ West Side Conference Room**.
 | Individual presentation length | **15 minutes**, followed by **5 minutes for questions and answers** |
 | Two-person QMCPy feature presentation length | **30 minutes**, followed by **10 minutes for questions and answers** |
 | Presentation location | **Galvin Tower, 14th Floor, West Side Conference Room** |
-| Sign-up and live presentation schedule | [Choose a presentation or observation slot](https://iit0-my.sharepoint.com/:x:/r/personal/hickernell_illinoistech_edu/_layouts/15/Doc.aspx?sourcedoc=%7BCFBB4828-C538-427A-A07C-5C8786B8302A%7D&file=MATH565_Project_Presentation_Signup_Fall2026.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1) (MATH 565 students only) |
-| Presenter sign-up deadline | **Wednesday, November 4** |
-| Observer sign-up deadline | **Wednesday, November 11** |
+| Final presentation and observation schedule | [View your final presentation and observation assignments](https://iit0-my.sharepoint.com/:x:/r/personal/hickernell_illinoistech_edu/_layouts/15/Doc.aspx?sourcedoc=%7BCFBB4828-C538-427A-A07C-5C8786B8302A%7D&file=MATH565_Project_Presentation_Signup_Fall2026.xlsx&action=default&mobileredirect=true&DefaultItemOpen=1) (MATH 565 students only; view-only) |
+| Assignment status | **Final; student sign-up is closed** |
 
-Each student is expected to observe and assess **two** other presentations.
-Reserve one 20-minute row for an individual presentation and enter a concise
-**project title** so observers can choose topics that interest them. A
-two-person QMCPy feature team must reserve **two adjacent rows**. Each
-teammate enters their own name in **Presenter(s)** on one row and enters the
-same project title on both rows. After the presenter schedule is set, enter
-your name in an available observer column for two **different** projects.
-You may not observe your own project. To observe a two-person team's
-presentation, enter your name in an available observer space on **either**
-team row and attend the full 40 minutes; that counts as **one** observed
-project. Do not enter your name on both team rows. The schedule shows the
+Each student presents one project and observes and assesses **two different**
+other projects. Attend the presentation and observation slots assigned to you
+in the final schedule. An individual presentation occupies one 20-minute row.
+A two-person QMCPy feature presentation occupies two adjacent rows, with one
+teammate listed on each row and the same project title on both. Observers of
+a team presentation attend the full 40 minutes; that counts as **one**
+observed project. You may not observe your own project. The schedule shows the
 10:20–10:40 AM and 3:40–4:00 PM breaks as unavailable rows on each day.
 Arrive on time for both presentations and observations, be prepared, and give
 substantive feedback. Hand in your [Project Assessment](project-assessment.qmd)
