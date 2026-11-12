@@ -2101,14 +2101,14 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="05-selected-topics_files/figure-revealjs/sgd-outline-paths-output-1.svg" id="sgd-outline-paths" class="quarto-figure quarto-figure-center" alt="Contours of an average quadratic loss with two paths from the same start: full-gradient descent approaches the minimizer smoothly, while stochastic updates using individual component losses fluctuate around it"></p>
+<p><img data-src="05-selected-topics_files/figure-revealjs/sgd-outline-paths-output-1.svg" id="sgd-outline-paths" class="quarto-figure quarto-figure-center" alt="Contours of an average quadratic loss with two paths from the same start: full-gradient descent approaches the minimizer smoothly, while mini-batch SGD with ten observations per update approaches a smaller noisy neighborhood"></p>
 </figure>
 </div>
 </div>
 </div>
 </div></div>
 <aside class="notes">
-<p>Illustrative paths for the same average quadratic and 1,000 observations developed later in this section. Both methods start at (-1.4, 1.6) and use the common fixed rate 0.5 for full GD and SGD, with 45 updates each. SGD samples one component uniformly with replacement per update; its gradient is conditionally unbiased. Its constant step leaves fluctuations near the minimizer. The picture compares directions and noise, not equal work, elapsed time, or guaranteed convergence for a general nonconvex loss. There are 250 observations of each center type (+/-1,+/-1), with A=[[2,1],[1,2]]. The full gradient averages all 1,000 contributions; their repeated structure also permits simplification.</p>
+<p>Illustrative paths for the same average quadratic and 1,000 observations developed later in this section. Both methods in this opener start at (-3.2, 1.0) and use the common fixed rate 0.5, with 45 updates each. Mini-batch SGD averages ten observations sampled uniformly with replacement per update, using QMCPy seed56515; its gradient is conditionally unbiased. GD uses 45,000 contributions and mini-batch SGD 450 here. This is a direction/noise picture, not equal work. At this start the full gradient is (-5.4,-1.2), so the first downhill step points right and up although the minimum is right and down. This deliberately exposes unequal curvature rather than starting near an eigenvector direction. The detailed slide and notebook comparisons use the same start (-3.2,1.0). Its constant step leaves fluctuations near the minimizer. The picture compares directions and noise, not equal work, elapsed time, or guaranteed convergence for a general nonconvex loss. There are 250 observations of each center type (+/-1,+/-1), with A=[[2,1],[1,2]]. The full gradient averages all 1,000 contributions; their repeated structure also permits simplification.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2354,7 +2354,7 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
 <section class="slide level2">
 
 <h3 id="convex-and-nonconvex-losses">Geometry still matters</h3>
-<p><span id="conditioning-versus-dimension"></span> <span id="coordinate-to-norm-contraction"></span> <span id="balancing-extreme-eigenvalue-directions"></span> <span id="the-banana-function-is-still-difficult"></span></p>
+<p><span id="conditioning-versus-dimension"></span> <span id="coordinate-to-norm-contraction"></span> <span id="balancing-extreme-eigenvalue-directions"></span></p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -2392,7 +2392,81 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
 <p>Cheap moves help with <span class="alert">cost</span>; they do not remove difficult geometry</p>
 </div>
 <aside class="notes">
-<p>Convexity means F((1-t)x+ty)&lt;= (1-t)F(x)+tF(y), 0&lt;=t&lt;=1. For a differentiable convex loss, a zero gradient identifies a global minimizer. Nonquadraticity is different: theta<sup>2+theta</sup>4 is convex but nonquadratic. Dimension m measures vector size, not conditioning. For an SPD quadratic, diagonalize A orthogonally: each error coordinate is multiplied by 1-eta*lambda_j. Balancing the extreme factors gives eta=2/(L+mu) and norm contraction q=(kappa-1)/(kappa+1). The coordinate and balancing proofs are optional self-study, not part of the main presentation. Rosenbrock’s curved narrow valley remains in notebook Parts 1–2: GD with backtracking can take many more updates than BFGS. Counts are not equal work. The function is nonconvex but has only one stationary point, its global minimizer, so it does not illustrate trapping in competing local minima.</p>
+<p>Convexity means F((1-t)x+ty)&lt;= (1-t)F(x)+tF(y), 0&lt;=t&lt;=1. For a differentiable convex loss, a zero gradient identifies a global minimizer. Nonquadraticity is different: theta<sup>2+theta</sup>4 is convex but nonquadratic. Dimension m measures vector size, not conditioning. For an SPD quadratic, diagonalize A orthogonally: each error coordinate is multiplied by 1-eta*lambda_j. Balancing the extreme factors gives eta=2/(L+mu) and norm contraction q=(kappa-1)/(kappa+1). The coordinate and balancing proofs are optional self-study, not part of the main presentation. The following Rosenbrock slides and notebook Parts 1–2 show the curved narrow valley: GD with backtracking can take many more updates than BFGS. Counts are not equal work. The function is nonconvex but has only one stationary point, its global minimizer, so it does not illustrate trapping in competing local minima.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="the-banana-function-is-still-difficult">The banana function is still difficult</h3>
+<p><span class="math display">\[R(\vtheta)=(1-\theta_1)^2+100(\theta_2-\theta_1^2)^2
+\qquad \vtheta_*=(1,1)^\top\]</span></p>
+<div id="cell-restored-banana-paths" class="cell" data-fig-height="4.1" data-fig-width="10.5" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="05-selected-topics_files/figure-revealjs/restored-banana-paths-output-1.png" id="restored-banana-paths" class="quarto-figure quarto-figure-center" alt="Rosenbrock contours and loss histories from the same start: full gradient descent with backtracking makes 500 accepted updates, while BFGS reaches the minimizer in about 34; the marked long blue segment is one accepted update" width="1019" height="405"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span class="alert">Unequal and changing curvature</span> can slow GD even with only two parameters</p>
+<aside class="notes">
+<p>This restores the main illustrative example retained in notebook Part 1. Both methods start at (-1.2,1). GD uses Armijo backtracking with initial step 1, halving and sufficient-decrease constant 1e-4; the 500 accepted updates all decrease the objective. Thus a line search alone does not remove the geometric difficulty. BFGS learns an inverse-Hessian approximation from gradient changes, without evaluating the full Hessian. The paths and parameters match the companion notebook.</p>
+<p>The green star marks the minimizer. Straight lines connect accepted iterates: the long blue segment is one accepted update, not a continuously downhill trajectory. Backtracking tests its endpoint. The next slide shows the small late zigzags hidden at this scale. Accepted updates are not equal work: backtracking and BFGS use different numbers of objective/gradient evaluations; notebook Part 1 reports both counts. This is deterministic GD, not SGD. Rosenbrock is nonconvex but has only one stationary point, its global minimizer; it does not illustrate competing local minima.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="banana-curvature-and-conditioning">A closer look at curvature and conditioning</h3>
+<div class="columns">
+<div class="column" style="width:47%;">
+<div id="cell-restored-banana-zigzags" class="cell" data-fig-height="4.3" data-fig-width="6" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="05-selected-topics_files/figure-revealjs/restored-banana-zigzags-output-1.png" id="restored-banana-zigzags" class="quarto-figure quarto-figure-center" alt="Close-up of the last 100 accepted gradient-descent updates on Rosenbrock: small moves zigzag across the curved valley centerline while advancing slowly" width="587" height="424"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:6%;">
+
+</div><div class="column" style="width:47%;">
+<ul>
+<li>Steep across the valley; shallow along it</li>
+<li>The valley direction changes as we move</li>
+<li>Short accepted GD moves can zigzag</li>
+<li>BFGS uses curvature to change direction and scale</li>
+</ul>
+<p>At the minimizer: <span class="alert"><span class="math inline">\(m=2\)</span>, <span class="math inline">\(\kappa\approx2508\)</span></span></p>
+<p>Every dot is one accepted GD update</p>
+</div></div>
+<div class="key-point">
+<p>Sampling makes gradients cheaper; it does not remove poor conditioning</p>
+</div>
+<aside class="notes">
+<p>This is exactly the companion’s final 100 accepted GD moves, not a schematic zigzag. At (1,1), H=[[802,-400],[-400,200]], with eigenvalues about 0.3994 and 1001.6006, giving kappa about 2508. These are evaluated at the minimizer, not at this close-up’s current iterates. The Hessian changes with position; the local condition number does not furnish a global convergence bound for Rosenbrock.</p>
+<p>For an SPD quadratic with fixed Hessian, the eigenvector components of the error multiply by 1-eta*lambda_j. Balancing the extreme magnitudes yields eta=2/(lambda_min+lambda_max) and the norm contraction factor q=(kappa-1)/(kappa+1). At kappa=2508 this is about .9992, explaining why unequal curvature is troublesome even in small dimension. This fixed- quadratic calculation is context, not a prediction of the Rosenbrock path; notebook Part 2 makes that distinction explicit. Scaling, preconditioning and curvature-aware directions can help. Sampling alone does not.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2781,19 +2855,19 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
 
 <h3 id="gradient-and-stochastic-gradient-paths">Gradient and stochastic-gradient paths</h3>
 <p><span id="quadratic-component-losses"></span></p>
-<p>Toy objective: <span class="alert"><span class="math inline">\(m=2\)</span> parameters</span>, average of <span class="alert"><span class="math inline">\(N=1{,}000\)</span> loss terms</span><br> <span class="alert">Equal component-gradient work</span>: 45 GD moves versus 45,000 SGD moves<br> 45,000 contributions each: 1,000 per GD move; 1 per SGD move (<span class="math inline">\(b=1\)</span>)<br> Common fixed rate <span class="math inline">\(\eta=0.5\)</span>; picture shows <span class="alert">first 60 SGD moves</span></p>
-<div id="d43a227d" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="3">
+<p>Toy objective: <span class="alert"><span class="math inline">\(m=2\)</span> parameters</span>, average of <span class="alert"><span class="math inline">\(N=1{,}000\)</span> loss terms</span><br> <span class="alert">Equal component-gradient work</span>: 45 GD moves versus 4,500 mini-batch moves<br> 45,000 contributions each: 1,000 per GD move; 10 per SGD move (<span class="math inline">\(b=10\)</span>)<br> Common rate <span class="math inline">\(\eta=0.5\)</span>; picture shows <span class="alert">first 60 mini-batch moves</span> (600 contributions)</p>
+<div id="551918f2" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="05-selected-topics_files/figure-revealjs/cell-4-output-1.png" class="quarto-figure quarto-figure-center" alt="Contours of excess average quadratic loss comparing 45 full-gradient descent moves with 45000 single-component stochastic-gradient moves, using 45000 component-gradient contributions per method, with only the first 60 SGD moves shown to keep individual directions readable" width="574" height="568"></p>
+<p><img data-src="05-selected-topics_files/figure-revealjs/cell-6-output-1.png" class="quarto-figure quarto-figure-center" alt="Contours of excess average quadratic loss comparing 45 full-gradient descent moves with 4500 mini-batch SGD moves of batch size ten at the same 45000-contribution budget, showing the first 60 mini-batch moves or 600 contributions" width="574" height="568"></p>
 </figure>
 </div>
 </div>
 </div>
 <aside class="notes">
 <p>The 1,000 observations have centers (+/-1,+/-1), with 250 of each type, and A=[[2,1],[1,2]]. The average center is zero; the minimizer is zero and the full gradient simplifies to A theta. Eigenvalues are 1 and 3, making the best constant GD step 2/(1+3)=.5. The component-count illustration explicitly averages all observations, although their repeated quadratic structure permits a cheaper exact calculation. This is a noise picture, not evidence of computational savings for this reducible problem.</p>
-<p>Both paths use 45,000 component-gradient contributions: GD makes 45 moves with 1,000 contributions each; SGD makes 45,000 moves with one. The sampled rate is fixed at .5, matching full GD. The picture shows the first 60 SGD moves so directions remain readable. All 45,000 moves are computed and included in the notebook error-versus-work plot; drawing every segment here would obscure the GD path. Equal component work does not assert equal elapsed time. There is no full-loss acceptance test or online accuracy certificate. The notebook uses the same model for b=1,10,100 variance comparisons, with exact batch-gradient MSE 10/b. Its next plot compares the error norms of all four methods against component work. Part 4 uses this same model and common rate .5 for the exact noise-floor recurrence. A separate b=10 comparison then reduces or decays only the SGD rate.</p>
+<p>Both paths use 45,000 component-gradient contributions: GD makes 45 moves with 1,000 contributions each; mini-batch SGD makes 4,500 moves with ten. The rate remains .5, matching full GD. The first 60 mini-batch moves (600 contributions) remain readable; all 4,500 updates are computed. The notebook error-versus-work plot retains the b=1,10,100 comparisons. QMCPy seed56515 matches the notebook path. Equal component work does not assert equal elapsed time. There is no full-loss acceptance test or online accuracy certificate. The notebook uses the same model for b=1,10,100 variance comparisons, with exact batch-gradient MSE 10/b. Its next plot compares the error norms of all four methods against component work. Part 4 uses this same model and common rate .5 for the exact noise-floor recurrence. A separate b=10 comparison then reduces or decays only the SGD rate.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3229,7 +3303,7 @@ p_i(\vtheta)=\Prob_{\vtheta}(Y_i=1\mid\vx_i)
 <h3 id="gradient-descent-companion-notebook">Gradient descent companion notebook</h3>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/StochasticGradientDescent.ipynb">Open Stochastic Gradient Descent on GitHub</a> · <a href="https://colab.research.google.com/github/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/StochasticGradientDescent.ipynb">Run in Colab</a></p>
 <ul>
-<li>Parts 1–2: optional geometry, backtracking and curvature detail</li>
+<li>Part 1: banana-valley paths and backtracking; Part 2: optional curvature calculations</li>
 <li>Parts 3–4: optional variance, expected-descent and noise-floor calculations</li>
 <li><span class="alert">Parts 5–6</span>: logistic regression at equal component work and measured time</li>
 <li>Sampled/full-loss diagnostics and the final gradient check have separate timers</li>
@@ -3261,8 +3335,12 @@ p_i(\vtheta)=\Prob_{\vtheta}(Y_i=1\mid\vx_i)
 
 <ul>
 <li><a href="#/choose-an-action-by-simulating-futures">Choose an action by simulating futures</a></li>
+<li><a href="#/turn-simulated-trips-into-values">Turn simulated trips into values</a></li>
 <li><a href="#/one-tree-search-iteration">One tree-search iteration</a></li>
 <li><a href="#/exploration-versus-exploitation">Exploration versus exploitation</a></li>
+<li><a href="#/follow-one-simulation-through-the-tree">Follow one simulation through the tree</a></li>
+<li><a href="#/from-search-to-a-decision">From search to a decision</a></li>
+<li><a href="#/tree-search-companion-notebook">Tree-search companion notebook</a></li>
 </ul>
 </section>
 <section id="choose-an-action-by-simulating-futures" class="slide level2 tree-marker-slide" data-tree-marker="monte-carlo-tree-search">
@@ -3272,18 +3350,55 @@ p_i(\vtheta)=\Prob_{\vtheta}(Y_i=1\mid\vx_i)
   <div class="tree-component__label" data-label-id="monte-carlo-tree-search" style="--tree-left: 56%; --tree-top: 17%; --tree-align: center;">Monte Carlo<br>Tree Search</div>
 </div>
 
-<p>At the current state, choose an action with a high <span class="alert">expected return</span></p>
+<p>Choose an <span class="alert">airport itinerary</span> before departure; traffic makes arrival uncertain</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="assets/mcts/airport-route-tree.svg" class="quarto-figure quarto-figure-center" style="width:69.0%" alt="A tree of partial airport itineraries: choose North, Central or South, then a connector; four further binary choices lead to a complete route whose traffic is simulated"></p>
+</figure>
+</div>
 <ul>
-<li>A node represents a state or decision history; branches represent possible actions</li>
-<li>A simulator generates possible continuations and their rewards</li>
-<li>Grow the tree where additional simulations are most useful</li>
-<li>Applications include game moves and sequential planning</li>
+<li>Nodes: <span class="alert">partial plans</span>; branches: the next route choice</li>
+<li>Six segments give <span class="math inline">\(3\times2^5=96\)</span> plans; twenty give <span class="math inline">\(3\times2^{19}&gt;1.5\)</span> million</li>
+<li>Spend a limited simulation budget on <span class="alert">promising continuations</span></li>
+</ul>
+<aside class="notes">
+<p>MCTS means Monte Carlo tree search, distinct from MCMC target sampling. This synthetic example selects the whole itinerary before departure. Traffic is drawn only after all route choices are set; no en-route observations or rerouting are modeled. A node is a route prefix, not an observed traffic state. Arrows represent choices, not chance outcomes. The pictured connector 0/1 is the second segment; four binary segment choices remain in the default six-segment notebook model. The toy is deliberately small enough to check all 96 plans; the purpose of the tree is to show how the search could avoid exhaustive evaluation when the number of choices grows.</p>
+<p>A game gives another interpretation: nodes are positions, branches are moves, and a rollout completes a possible game. For two-player games, selection must account for the opponent’s objectives; one cannot maximize our payoff at both players’ turns. We use the single-agent route example to keep the first algorithm and its statistics transparent. Source: <a href="https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf">Kocsis and Szepesvari (2006)</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="turn-simulated-trips-into-values" class="slide level2">
+<h2>Turn simulated trips into values</h2>
+<p>For a complete plan <span class="math inline">\(p\)</span>, simulate a travel time <span class="math inline">\(T(p)\)</span> and record</p>
+<p><span class="math display">\[\begin{equation*}
+R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}\end{cases}
+\qquad
+\mu(p)=\Ex(R)=\Prob\bigl(T(p)\leq t_{\max}\bigr)
+\end{equation*}\]</span></p>
+<p>At a stored branch, keep <span class="alert">successes</span> <span class="math inline">\(W\)</span> and <span class="alert">visits</span> <span class="math inline">\(N\)</span></p>
+<p><span class="math display">\[\begin{equation*}
+\overline Q=\frac{W}{N}
+\qquad
+\frac{28\text{ on-time trips}}{40\text{ simulations}}=0.70
+\end{equation*}\]</span></p>
+<ul>
+<li>A <span class="alert">rollout</span>: complete the remaining choices, then simulate the trip</li>
+<li>Early rollouts use simple random choices; deeper search can improve the continuations</li>
 </ul>
 <div class="key-point">
-<p>Monte Carlo estimates guide <span class="alert">which action to take</span> and <span class="alert">where to search next</span></p>
+<p>A branch’s average summarizes the <span class="alert">continuations tried so far</span></p>
 </div>
 <aside class="notes">
-<p>MCTS means Monte Carlo tree search, not Markov chain tree search. It is a sequential-decision and search method, distinct from MCMC target sampling. For this introduction use a finite-horizon, single-agent planning problem with bounded rewards and a simulator for state transitions. A return is the sum of future rewards, with discounting if specified. A fixed rollout policy estimates its own continuation value, not automatically the optimal value; continued tree expansion and improved decisions matter. Stochastic transitions can be represented by chance nodes or sampled within the simulator. Source: <a href="https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf">Kocsis and Szepesvari (2006)</a>.</p>
+<p>For one fixed complete plan, independent traffic simulations give ordinary Bernoulli observations of its on-time probability. For a fixed randomized continuation policy at an internal node, they estimate that policy’s value. The tree search changes its downstream choices as it learns, so the internal branch averages combine different continuation policies. They are not IID estimates of a single fixed plan’s probability, nor automatically its optimal continuation value. The desired planning decision is a plan with large mu(p). There is no reward before completion and no discount in this example, so one terminal return can be backed up unchanged through the stored path.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3311,34 +3426,34 @@ p_i(\vtheta)=\Prob_{\vtheta}(Y_i=1\mid\vx_i)
 <thead>
 <tr class="header">
 <th style="text-align: left;">Step</th>
-<th style="text-align: left;">What happens</th>
+<th style="text-align: left;">Airport-route interpretation</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><span class="alert">Select</span></td>
-<td style="text-align: left;">Follow branches using estimated returns and exploration bonuses</td>
+<td style="text-align: left;">Follow stored route choices using values and exploration bonuses</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><span class="alert">Expand</span></td>
-<td style="text-align: left;">Add an untried action or a new node when possible</td>
+<td style="text-align: left;">Store one untried next-segment choice</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="alert">Simulate</span></td>
-<td style="text-align: left;">Complete a rollout to a terminal state or chosen horizon</td>
+<td style="text-align: left;"><span class="alert">Roll out</span></td>
+<td style="text-align: left;">Randomly complete the plan and simulate its traffic</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="alert">Backpropagate</span></td>
-<td style="text-align: left;">Update visit counts and average returns along the traversed path</td>
+<td style="text-align: left;"><span class="alert">Back up</span></td>
+<td style="text-align: left;">Add one visit and the return <span class="math inline">\(R\)</span> along the stored path</td>
 </tr>
 </tbody>
 </table>
-<p>Repeat until the simulation budget is exhausted, then choose a root action</p>
+<p>Repeat until the <span class="alert">simulation budget</span> is exhausted</p>
 <div class="key-point">
-<p>Allocate simulations <span class="alert">adaptively</span>; avoid exploring every branch equally</p>
+<p>Simulate complete futures; <span class="alert">store and grow only part of the tree</span></p>
 </div>
 <aside class="notes">
-<p>Backpropagation here means updating tree statistics, not differentiating through a neural network. Each ancestor uses the return appropriate to its position on the path, including rewards and discounting when relevant. Terminal states skip expansion and rollout. A truncated rollout may use a value approximation, adding modeling error. A common final choice is the most visited root action; distinguish that decision rule from the exploratory selection rule used during tree growth. Parallel rollouts are possible, but MCTS is a search strategy with its own separate teaching purpose.</p>
+<p>Backpropagation, or backup, here means updating tree statistics, not neural-network differentiation. An iteration selects existing nodes until an expandable node or a terminal plan, expands one untried action if available, and samples one terminal return. Newly sampled rollout actions need not all become stored nodes. A terminal plan still gets a new traffic simulation. General problems can have intermediate rewards, discounting, stochastic transitions or a truncated rollout with a value approximation; they require the corresponding return calculation and state representation.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3358,52 +3473,53 @@ p_i(\vtheta)=\Prob_{\vtheta}(Y_i=1\mid\vx_i)
   <div class="tree-component__label" data-label-id="monte-carlo-tree-search" style="--tree-left: 56%; --tree-top: 17%; --tree-align: center;">Monte Carlo<br>Tree Search</div>
 </div>
 
-<p>An illustrative <span class="alert">UCT</span> selection score for visited actions is</p>
-<p><span class="math display">\[
-\overline Q(s,a)+c\sqrt{\frac{\log N(s)}{N(s,a)}}
+<p>For a visited action, an illustrative <span class="alert">UCT</span> selection score is</p>
+<p><span class="math display">\[\begin{equation*}
+\underbrace{\overline Q(s,a)}_{\text{exploit a high average}}
++\underbrace{c\sqrt{\frac{\log N(s)}{N(s,a)}}}_{\text{explore a less-visited branch}}
 \qquad c&gt;0
-\]</span></p>
-<ul>
-<li><span class="math inline">\(\overline Q(s,a)\)</span>: estimated return — <span class="alert">exploit</span> promising actions</li>
-<li><span class="math inline">\(N(s)\)</span> and <span class="math inline">\(N(s,a)\)</span>: state and action visit counts</li>
-<li>The bonus favors less visited actions — <span class="alert">explore</span> uncertain alternatives</li>
-</ul>
-<p>For <span class="math inline">\(N(s)=60\)</span> and <span class="math inline">\(c=0.2\)</span>,</p>
+\end{equation*}\]</span></p>
+<p>Illustrative snapshot: <span class="math inline">\(N(s)=60\)</span> simulations, <span class="math inline">\(c=0.2\)</span></p>
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Action</th>
-<th style="text-align: right;"><span class="math inline">\(N(s,a)\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(\overline Q(s,a)\)</span></th>
-<th style="text-align: right;">Selection score</th>
+<th style="text-align: left;">First route</th>
+<th style="text-align: right;">Successes <span class="math inline">\(W(s,a)\)</span></th>
+<th style="text-align: right;">Visits <span class="math inline">\(N(s,a)\)</span></th>
+<th style="text-align: right;">Average</th>
+<th style="text-align: right;">Score</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">A</td>
+<td style="text-align: left;">A · North</td>
+<td style="text-align: right;">28</td>
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">0.70</td>
 <td style="text-align: right;">0.764</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">B</td>
-<td style="text-align: right;">10</td>
+<td style="text-align: left;">B · Central</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">15</td>
 <td style="text-align: right;">0.60</td>
-<td style="text-align: right;">0.728</td>
+<td style="text-align: right;">0.704</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">C</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">0.68</td>
-<td style="text-align: right;">0.808</td>
+<td style="text-align: left;">C · South</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">0.781</td>
 </tr>
 </tbody>
 </table>
 <div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Which action gets the next simulation, and why is it different from the largest estimated return?</span></p>
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Which branch gets the next simulation, and why?</span></p>
 </div>
 <aside class="notes">
-<p>Choose C, despite A having the largest current mean. Its exploration bonus is about 0.128 versus about 0.064 for A. Visit untried actions before applying the formula so no division by zero occurs. The natural logarithm is used; rewards are scaled to [0,1] for this illustration. UCT means upper confidence bounds applied to trees. The exploration parameter c depends on reward scale and the chosen UCT convention. This is an illustrative selection score, not a confidence interval for an arbitrary adaptively generated tree return. Tree return distributions evolve as the search policy changes; ordinary IID standard-error reasoning does not automatically apply. Original UCT results require assumptions such as bounded rewards and finite-horizon or discounted planning. No finite-budget optimal-action guarantee is claimed. Source: <a href="https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf">Kocsis and Szepesvari, Bandit based Monte-Carlo Planning (2006)</a>.</p>
+<p>Choose C. Its exploration bonus is about .181 versus .064 for A and .104 for B. N(s) counts visits to the current tree node; N(s,a) counts visits to a child reached by action a. Visit untried actions before using the formula so no division by zero occurs. The natural logarithm is used and rewards are in [0,1]. These counts are a constructed teaching snapshot, not outputs claimed for the notebook’s default run. Before the backup the total successes at the root are 28+9+3=40 and total visits are 40+15+5=60.</p>
+<p>UCT means upper confidence bounds applied to trees. The exploration parameter depends on reward scale and convention. It directs search; do not call this bonus a calibrated confidence interval for arbitrary adaptive tree returns. Downstream return distributions change during search. We claim neither a finite-budget optimal-action guarantee nor IID error bars for these changing-policy averages. Source: <a href="https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf">Kocsis and Szepesvari (2006)</a>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3415,6 +3531,76 @@ p_i(\vtheta)=\Prob_{\vtheta}(Y_i=1\mid\vx_i)
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</section>
+<section id="follow-one-simulation-through-the-tree" class="slide level2">
+<h2>Follow one simulation through the tree</h2>
+
+<img data-src="assets/mcts/mcts-one-iteration.svg" class="quarto-figure quarto-figure-center r-stretch" style="width:72.0%" alt="Select South C and its stored child C–1, expand C–1–0, randomly complete the remaining three route choices and simulate an on-time arrival, then back up return one along that stored path"><p>For the successful simulation, update <span class="math inline">\(N\leftarrow N+1\)</span> and <span class="math inline">\(W\leftarrow W+R\)</span></p>
+<p><span class="math display">\[\begin{equation*}
+\text{C: }\frac{3}{5}\longrightarrow\frac{4}{6}
+\qquad
+\text{new C–1–0: }\frac{1}{1}
+\qquad
+\text{root visits: }60\longrightarrow61
+\end{equation*}\]</span></p>
+<aside class="notes">
+<p>Read the solid tree downward: select C by the preceding UCT calculation, then its stored connector 1. The displayed child statistics make C–1’s UCT score larger than C–0’s. Expand C–1–0, its untried next choice. Three further binary choices are sampled during the rollout but not yet stored. Sample traffic for the complete plan; the successful trip returns R=1. Increment root, C, C–1 and the new node once, adding one success to each. C–1 goes from 1/1 to 2/2; root successes become 41. Siblings are untouched. The new child’s average 1 comes from one simulation, not a reliable claim that its route always arrives on time. The first C visit rolled out before it had stored children: that initial 1/1 plus C–0’s 1/3 and C–1’s 1/1 account for C’s full 3/5. Thus both binary children already exist before this iteration.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="from-search-to-a-decision" class="slide level2">
+<h2>From search to a decision</h2>
+<p><span class="alert">Searching</span>: which branch deserves the next simulation?</p>
+<ul>
+<li>UCT includes an exploration bonus; the example next explores C</li>
+</ul>
+<p><span class="alert">Acting</span>: which route choice do we recommend after the budget?</p>
+<ul>
+<li>One common rule: choose the <span class="alert">most visited</span> root action — currently A</li>
+<li>In this itinerary example, continue through the most visited children to build a plan</li>
+<li>More simulations can improve the recommendation; a small budget can miss a good route</li>
+</ul>
+<div class="key-point">
+<p><span class="alert">Best-looking so far</span> is useful evidence, not proof of the best possible plan</p>
+</div>
+<aside class="notes">
+<p>The final recommendation rule is separate from the rule that allocates simulations. Most-visited child is a common convention, not the only one. For this notebook, apply it at each stored prefix and specify how an unexpanded remainder is completed. This extracts one complete itinerary; its true on-time probability is evaluated only by the independent benchmark. A root average mixes attempted continuations and should not be substituted for that particular itinerary’s probability. In a game or online planning problem one often executes just the root action, observes the new state and searches again; our before-departure itinerary deliberately keeps a fixed plan and samples traffic afterward.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="tree-search-companion-notebook" class="slide level2">
+<h2>Tree-search companion notebook</h2>
+<p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/MonteCarloTreeSearch.ipynb">Open Monte Carlo Tree Search on GitHub</a> · <a href="https://colab.research.google.com/github/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/MonteCarloTreeSearch.ipynb">Run in Colab</a></p>
+<ul>
+<li>Draw a route tree and track its visits and on-time returns</li>
+<li>Run selection, expansion, rollout and backup</li>
+<li>Compare adaptive search with uniform route sampling at the <span class="alert">same simulation budget</span></li>
+<li>Use the small exact benchmark to check the <span class="alert">recommended itinerary</span></li>
+</ul>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span> Change the simulation budget or exploration weight <span class="math inline">\(c\)</span> <span class="exsub">Does a high early success rate always identify the best complete plan?</span> </span></p>
+</div>
+<div class="refs">
+<p><a href="https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf">Kocsis and Szepesvari: Bandit based Monte-Carlo Planning</a></p>
+</div>
 </section></section>
 <section id="big-ideas" class="title-slide slide level1 tree-marker-slide center" data-state="goldborder" data-tree-marker="prob-stat-est">
 <h1>Big Ideas</h1>
