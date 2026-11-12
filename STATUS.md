@@ -649,6 +649,31 @@ appropriate phase rather than appended indiscriminately.
     comparison at equal component work and add an Applications cross-link.
     All 12 code cells execute with saved outputs; default and m=2/partial-batch
     configurations pass, seven figures reviewed (November 11).
+  - [x] Compare GD and SGD on one fixed larger logistic dataset at five
+    predeclared accuracy targets, with five update/timing repeats per method.
+    Report work and measured time to the same target and separate setup,
+    monitoring and benchmark costs. Distinguish retrospective attainment from
+    budget stops and endpoint certification. Mark the original smaller-data
+    problem as optional Part 7. All 14 code cells and 11 figures validate in
+    default and m=2/partial-batch configurations; instructor review remains
+    open (November 11).
+  - [x] Correct the Keister stopping explanation to use the configured
+    `tolerance`, each rule’s own reported radius and the separate independent
+    reference error. All code and saved outputs are unchanged; issue #3 closed,
+    included in this Checkpoint (November 11).
+  - [x] Simplify the quadratic-gradient illustration to m=2, N=1,000,
+    integer centers and curvature matrix, and batches b=1,10,100. Align
+    notebook and slide pictures, equal component-work accounting and the
+    exact variance 10/b; retain the explicit reducible-toy qualification.
+  - [x] Add parameter-error norm versus component work for full GD and
+    b=1,10,100 at the common fixed rate .5. Separately hold b=10 and compare
+    .5, .1 and decay from .5. Use the same model, rates, start and work budget
+    in the noise-floor section, with exact two-eigenvalue moment recurrences
+    and 256 repeated runs; distinguish realized error from RMSE.
+  - [x] Derive the logistic data loss from Bernoulli label probabilities
+    through likelihood and negative logs, then add regularization separately
+    and derive the gradient. Add matching notebook explanations and two
+    slide continuations; instructor review remains open.
   - [x] Distinguish single-observation SGD from its mini-batch generalization,
     explicitly label both gradient estimates unbiased but noisy, and state
     that $b=1$ recovers single-observation SGD; preserve the existing anchors

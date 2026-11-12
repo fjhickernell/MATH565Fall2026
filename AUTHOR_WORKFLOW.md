@@ -576,24 +576,25 @@ uncommitted until issuing `Checkpoint`.
 
 During the checkpoint, use this sequence:
 
-1. Validate, commit, and push the classlib change to HickernellAcademicLib.
-2. Restore the course repository's recorded classlib checkout with
-   `git submodule update --checkout classlib`.
-3. Run `arrive` to synchronize standalone development repositories and
-   fast-forward active repositories while retaining their recorded submodule
-   pins.
-4. Check out the newly published classlib commit in the course submodule and
-   run the complete course validation, including the root website render, the
-   independent slide render, and the assembled-site check.
-5. Run `depart` to promote the published classlib commit, commit the resulting
-   course submodule pointer, and push the course repository.
+1. Review the validated consumer prototype, transfer it to the canonical
+   HickernellAcademicLib checkout, and inspect that checkout's complete diff.
+2. Validate, commit, and push the shared change from HickernellAcademicLib.
+   Confirm the intended commit is available upstream before changing a
+   consumer pointer.
+3. Fetch and check out that exact published commit in the course's `classlib`
+   submodule. Preserve unrelated local work and all other pinned dependencies;
+   do not use a moving branch tip or `git submodule update --remote`.
+4. Run the complete course validation, including the root website render,
+   independent slide render, and assembled-site check. Review the pointer diff.
+5. Commit the intended course changes and submodule pointer, then push the
+   course repository through the normal Checkpoint workflow.
 6. Confirm that HickernellAcademicLib and the course repository are clean and
-   synchronized with their upstreams and that protected submodules remain
-   clean.
+   synchronized with their upstreams and that protected submodules remain clean.
 
-This ordering ensures that the course never publishes a pointer to a classlib
-commit that is unavailable upstream. Review the complete pointer diff before
-`depart`; do not propagate unrelated or unauthorized dependency updates.
+Keep `arrive` and `depart` separate from Checkpoint. Do not run broad machine
+synchronization to propagate one selected dependency. After successful
+publication, remind Fred to run `depart` in Warp before leaving the machine,
+as required by the global Checkpoint workflow.
 
 ## Prerequisites
 

@@ -276,8 +276,8 @@ in Fantastical to verify the original title, PH 109, November 5,
 persisted continuation note. Resume Selected Topics at “Single-level and
 two-level work versus error,” then the allocation exercise and Multilevel
 Option Pricing notebook; briefly recap the many-level/bias idea before
-Stochastic Gradient Descent. The broader teaching-cleanup issue remains open
-for Fred’s additional directions. No full-deck completion is inferred.
+Stochastic Gradient Descent. The broader teaching-cleanup issue was subsequently
+closed at Fred’s direction on November 11. No full-deck completion is inferred.
 
 
 ## November 5 recording evidence
@@ -312,8 +312,8 @@ selector identifies Calendar under Illinois Tech Fred, and Central Time
 (GMT-6) was verified before saving. Resume Selected Topics at “Why cheap
 gradients matter” and the notebook's Part 3, then stochastic gradients,
 mini-batch noise, and learning rates. The broader November 3 teaching-cleanup
-issue and instructor content review remain open; no full-deck completion is
-inferred.
+issue was subsequently closed at Fred’s direction on November 11; instructor
+content review remains open, and no full-deck completion is inferred.
 
 Validation: the changed schedule renders successfully and its continuation
 anchors resolve. All six schedule tables fit at 1280- and 390-pixel browser

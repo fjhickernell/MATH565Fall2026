@@ -1,29 +1,64 @@
 # Next task
 
-## Immediate next work — demonstrate SGD's work advantage
+## Immediate next work — review the final SGD teaching comparisons
 
-Choose and validate an example in notebook Parts 5–6 where SGD reaches a
-stated useful accuracy with less component-gradient work. See
-[issue #5 — Demonstrate SGD reaching useful accuracy with less component work](https://github.com/fjhickernell/MATH565Fall2026/issues/5),
-assigned to Fred. This is the next task for the receiving machine; it has not
-been implemented or validated yet.
+Continue Fred's walkthrough at the logistic probability-to-loss derivation
+in Part 5, then Part 6's **one fixed dataset and several accuracy targets**.
+The matching slides derive the Bernoulli likelihood, negative logarithm,
+logistic data loss, regularization and gradient. Selected Topics now has 24
+instructional SGD slides plus the opener; the four cumulative challenge
+and response tables and existing anchors remain intact.
 
-Why the current default favors full GD: N=16,384 and m=20 make a full matrix
-pass cheap on this CPU; scaled features and regularization give favorable
-curvature; full GD uses the valid rate 1/L≈3.504, while the untuned SGD rates
-start at 0.3. Twelve full-gradient moves reach a tiny loss gap. Many small
-Python-level SGD updates add overhead. Existing curves can show mini-batch
-progress before a full pass at coarse accuracy, but that differs from a
-stringent final target and from elapsed-time superiority.
+Part 6 generates one N=262,144, m=20, lambda=0.02 dataset once. Every method
+uses those observations and the same zero start. Five SGD streams assess
+update variability; GD repeats assess timing. Predeclared gaps are .01,
+.001, .0001, .00001 and .000001. **Beats means reaching the same useful
+accuracy with less gradient work or measured time**, rather than having the
+smallest final loss. At .001, saved median contributions are 524,288 for GD,
+15,360 for fixed mini-batches and 17,408 for decay; median update times on
+Mini are about 4 ms for GD and 1–2 ms for the sampled methods. At .0001,
+decay uses fewer contributions than GD but is slower; only GD reaches .000001 within eight passes. All
+success counts remain visible. The smaller N=16,384, b=64, twelve-pass
+experiment is explicitly optional Part 7, a different problem. The main
+classroom route needs only Parts 5–6 for the accuracy-dependent comparison.
 
-Start by selecting an application-relevant accuracy target, then explore
-larger/redundant finite-sum data with reasonable baselines and reproducible
-runs. Keep component work, measured time, setup/pilots, monitoring and stopping
-evidence distinct. Preserve the current GD-winning result until the new
-example is validated; do not manufacture an advantage by weakening GD or
-selectively reporting favorable seeds. Details and completion criteria are
-in issue #5. Continue with the reviewed condensed slides and verified notebook
-state below.
+Parts 3–4 use exactly the same m=2, N=1,000 quadratic: 250 repetitions of
+each integer center (+/-1,+/-1), A=[[2,1],[1,2]], common start and 45,000
+component-gradient budget. First compare full GD and b=1,10,100 at the
+**same fixed rate .5**. Then hold b=10 and compare .5, .1 and decay from .5.
+The path picture displays only the first 60 SGD moves for readability; all
+45,000 appear in the realized-error versus component-work comparison. Exact
+two-direction moment recurrences and 256 repeated runs show RMSE separately. The fixed-rate
+MSE floor is 10/(3b) at .5, versus about .229102/b at .1. The quadratic is
+reducible and illustrates noise rather than a practical speed advantage.
+
+The opening is Part 0. Part 2 has one row per condition number and explicitly
+explains dimension-independent contraction/iteration bounds versus
+per-update work. All displayed tables omit automatic row indices and retain
+meaningful run/seed data. Shared guidance is published in
+HickernellAcademicLib as `1fb8d7b` and intentionally adopted only by 565.
+The local shared-library propagation workflow now matches the global
+Checkpoint rule, keeping broad arrive/depart synchronization separate.
+
+Every logistic optimizer still stops at its work budget. Target attainment
+is retrospective and includes the numerical reference's residual-gradient
+bound. Fixed-rate SGD can later leave a target region. Update time, curvature
+setup, subset selection/checks, reference solving, full-loss benchmarking and
+endpoint certification remain separate; a phase-time sum does not implement
+an online accuracy-based stop.
+
+The complete 14-code-cell notebook runs in about 14 seconds on Mini, with 11
+saved figures. The default and m=2/partial-final-batch configurations pass.
+Reload the open JupyterLab notebook from disk before Run All. Instructor
+review remains open; the final changes are included in this Checkpoint.
+The complete website and all five decks render. The revised slide layouts
+pass classroom-size review; 1,563 assembled local links/assets and 327 anchors
+pass. Remote deployment and live-site verification remain unconfirmed.
+
+[Issue #5 — Demonstrate SGD reaching useful accuracy with less component work](https://github.com/fjhickernell/MATH565Fall2026/issues/5)
+remains open for Fred's review; issue #2 remains open. Issues #3 (Keister
+prose) and #4 (November 3 cleanup) are closed at Fred's direction. The Keister
+correction changes explanation only, preserving every code cell and output.
 
 ## Project scheduling — final live assignments saved November 11
 
@@ -69,8 +104,10 @@ from the optimization timers.
 
 ### Condensed SGD teaching sequence — November 11
 
-The SGD section now has 21 instructional slides (plus its section opener),
-down from 50. Keep all four cumulative challenge-and-response tables.
+The SGD section was condensed from 50 to 21 instructional slides; the new
+larger-data comparison adds one continuation and the logistic-loss derivation adds two,
+for 24 plus the section opener.
+Keep all four cumulative challenge-and-response tables.
 The main story is method cost → many cheap sampled moves → noise near the
 solution → periodic monitoring → an explicitly chosen stopping tolerance.
 Detailed contraction proofs, expected-descent algebra, signal/noise correction
@@ -86,8 +123,10 @@ nonzero. Choose a full-gradient norm tolerance; a sampled check needs justified
 uncertainty as well as a small norm. The strong-convexity loss-gap calibration
 and statistical-check details are in notes, rather than additional main slides.
 Existing slide anchors are retained at the corresponding combined slides.
-The detailed path plot compares equal component work: 45 GD moves and 180
-single-observation SGD moves, with 180 component-gradient evaluations each.
+The detailed path plot now uses m=2 and N=1,000, comparing 45 GD moves and
+45,000 single-observation SGD moves at 45,000 component-gradient contributions
+each. Integer centers and A make the exact component variance 10; the variance
+tables use b=1,10,100 on the same dataset.
 
 Both affected decks render with the `qmcpy` kernel. The complete condensed
 sequence passes visual review at 1600×1000, with key slides rechecked at
@@ -105,14 +144,15 @@ full-gradient checking have separate timers, with curvature setup also timed.
 All runs still stop at equal component-work budgets. An endpoint full-gradient
 check reports whether the lambda-strong-convexity loss-gap target is certified;
 it is not an online stopping implementation. Notebook Part 3 now uses 45 GD
-and 180 SGD moves for equal work; Parts 1–4 remain optional supporting detail.
+and 45,000 SGD moves for equal work, with a common fixed rate 0.5 and a separate
+b=10 rate comparison. Parts 1–4 remain optional supporting detail.
 
-The full 12-code-cell notebook executes successfully with `qmcpy`, preserving
-saved default outputs and the final runtime cell. All seven figures were
-reviewed, including the new diagnostic-loss plot. A separate complete run with
+The earlier 12-code-cell comparison executed successfully with `qmcpy`,
+preserving its experiment and the final runtime cell. Its seven figures were
+reviewed, including the diagnostic-loss plot. A separate complete run with
 m=2, N=4096, s=256 and b=30 validates a partial final batch without replacing
-default outputs. In the default run, full GD is fastest and the only method to
-pass the final gradient-norm certificate at epsilon=1e-4; a failed certificate
+default outputs. In that original smaller-problem run, full GD was fastest
+and the only method to pass the final gradient-norm certificate at epsilon=1e-4; a failed certificate
 alone does not establish that the objective gap exceeds that target.
 The notebook remains in Performance, with an Applications cross-link to the
 logistic example. The revised slides and notebook page render, and the page
@@ -124,9 +164,10 @@ Checkpoint; remote CI/deployment must be checked separately. Reload an open note
 - Clarify why $\|\boldsymbol G_k\|^2-S_k^2/b$ subtracts the noise contribution
   to estimate squared full-gradient signal, and why a realized estimate can
   be negative. This question was raised but not resolved in class.
-- The scalar recurrence, noise-floor and target-floor examples, and the
-  four-quadratic-component walkthrough were not substantively developed.
-  They now remain optional in presenter notes and notebook Parts 3–4; no
+- The original scalar recurrence, noise-floor and target-floor examples, and the
+  then-four-component quadratic walkthrough were not substantively developed.
+  The current replacement uses 1,000 observations of those four center types.
+  The current noise-floor replacement uses the same m=2 quadratic as Part 3; no
   notebook Parts 3–4 walkthrough is verified. Do not let a briefly displayed path slide establish coverage.
 - The coordinate-contraction and best-constant-rate proofs were left for
   self-study. General instructor content review remains open.
@@ -342,10 +383,10 @@ for both allocation-bar axes in Parts 4 and 7, and distinguishes the modest
 larger-budget MLQMC accuracy benefit from its greater elapsed time.
 
 [Clean up November 3 teaching](https://github.com/fjhickernell/MATH565Fall2026/issues/4)
-remains open awaiting Fred’s additional material-cleanup directions and any
-agreed corrections. Pacing is reconciled; broader instructor/visual review
-remains open. Earlier November 3 preparation plans below are historical where
-superseded by the continuation above.
+is closed at Fred’s direction on November 11. Pacing is reconciled; broader
+instructor/visual review remains open independently. Earlier November 3
+preparation plans below are historical where superseded by the continuation
+above.
 
 ## Earlier preparation and continuing instructor review
 
@@ -454,9 +495,12 @@ remote CI/deployment and live verification remain pending.
 
 Instructor/visual review remains open; the November 3 continuation and the
 simplified many-level/SGD plan above are unchanged. Check the revised slides
-before teaching. Separate companion-notebook prose follow-up:
-[align the Keister stopping narrative with the saved run](https://github.com/fjhickernell/MATH565Fall2026/issues/3).
-Notebook code/outputs and assessment materials were not changed.
+before teaching. The companion-notebook prose follow-up,
+[align the Keister stopping narrative with the saved run](https://github.com/fjhickernell/MATH565Fall2026/issues/3),
+is corrected locally and issue #3 is closed: the green band refers to
+`tolerance`, and each row's requested tolerance, reported radius and independent
+reference error remain distinct. Code and saved outputs are unchanged.
+The prose correction is included in this Checkpoint.
 
 ## Take-home final — October 30 update
 
