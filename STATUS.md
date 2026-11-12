@@ -636,6 +636,19 @@ appropriate phase rather than appended indiscriminately.
     dimension $m$, and data size $N$ with diagonal-gradient examples and dense-model
     full-gradient $O(Nm)$ versus mini-batch $O(bm)$ work. Instructor review
     remains open.
+  - [x] Condense the expanded SGD lecture from 50 to 21 instructional slides,
+    preserving the four cumulative challenge tables. Move technical proofs and
+    noise-floor algebra to presenter notes/optional notebook follow-up; retain
+    cheap-update cost, periodic monitoring and tolerance-based stopping as the
+    main narrative. Standardize full gradient `g_k`, sampled estimate `G_k` and
+    the tilde-gradient integrand, with repeated notation reminders (November 11).
+  - [x] Align SGD notebook Parts 5–6 with the revised slides: use m for
+    parameters and s for fixed diagnostic subset size; separate update,
+    sampled/full-loss and final-gradient-check timings; report budget stops
+    separately from the strong-convexity accuracy check. Align the toy path
+    comparison at equal component work and add an Applications cross-link.
+    All 12 code cells execute with saved outputs; default and m=2/partial-batch
+    configurations pass, seven figures reviewed (November 11).
   - [x] Distinguish single-observation SGD from its mini-batch generalization,
     explicitly label both gradient estimates unbiased but noisy, and state
     that $b=1$ recovers single-observation SGD; preserve the existing anchors

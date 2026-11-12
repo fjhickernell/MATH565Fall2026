@@ -59,6 +59,11 @@ sampling methods will appear here.
   — choose among transformed integrands with the same integral; compare IID,
   replicated Sobol', and Walsh-decay stopping rules, including budget exhaustion
 
+- [Logistic Regression with SGD](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/StochasticGradientDescent.ipynb)
+  — Parts 5–6 of the Stochastic Gradient Descent notebook in Performance;
+  fit a binary-response model and compare optimization cost, diagnostic loss,
+  and accuracy checks
+
 Additional notebooks will apply Monte Carlo and quasi-Monte Carlo methods to
 other examples.
 

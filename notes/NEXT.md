@@ -1,5 +1,30 @@
 # Next task
 
+## Immediate next work — demonstrate SGD's work advantage
+
+Choose and validate an example in notebook Parts 5–6 where SGD reaches a
+stated useful accuracy with less component-gradient work. See
+[issue #5 — Demonstrate SGD reaching useful accuracy with less component work](https://github.com/fjhickernell/MATH565Fall2026/issues/5),
+assigned to Fred. This is the next task for the receiving machine; it has not
+been implemented or validated yet.
+
+Why the current default favors full GD: N=16,384 and m=20 make a full matrix
+pass cheap on this CPU; scaled features and regularization give favorable
+curvature; full GD uses the valid rate 1/L≈3.504, while the untuned SGD rates
+start at 0.3. Twelve full-gradient moves reach a tiny loss gap. Many small
+Python-level SGD updates add overhead. Existing curves can show mini-batch
+progress before a full pass at coarse accuracy, but that differs from a
+stringent final target and from elapsed-time superiority.
+
+Start by selecting an application-relevant accuracy target, then explore
+larger/redundant finite-sum data with reasonable baselines and reproducible
+runs. Keep component work, measured time, setup/pilots, monitoring and stopping
+evidence distinct. Preserve the current GD-winning result until the new
+example is validated; do not manufacture an advantage by weakening GD or
+selectively reporting favorable seeds. Details and completion criteria are
+in issue #5. Continue with the reviewed condensed slides and verified notebook
+state below.
+
 ## Project scheduling — final live assignments saved November 11
 
 Fred approved the private draft and authorized applying its missing presenter
@@ -42,6 +67,58 @@ The notebook uses synthetic data and does not automatically tune its rates;
 its full-loss diagnostics and curvature-bound setup costs remain separate
 from the optimization timers.
 
+### Condensed SGD teaching sequence — November 11
+
+The SGD section now has 21 instructional slides (plus its section opener),
+down from 50. Keep all four cumulative challenge-and-response tables.
+The main story is method cost → many cheap sampled moves → noise near the
+solution → periodic monitoring → an explicitly chosen stopping tolerance.
+Detailed contraction proofs, expected-descent algebra, signal/noise correction
+and scalar noise-floor calculations are in presenter notes or optional
+notebook Parts 1–4. The fully regularized logistic example, implemented rates,
+Jordan perspective and Parts 5–6 demonstration remain in the main sequence.
+
+Notation is consistent: `g_k` is the full gradient, `G_k` its sampled estimate,
+and `\widetilde{\boldsymbol g}_{\boldsymbol\theta}(u)` the selected-observation
+gradient integrand. Repeat compact reminders, particularly at stopping.
+The full gradient can vanish while individual component gradients remain
+nonzero. Choose a full-gradient norm tolerance; a sampled check needs justified
+uncertainty as well as a small norm. The strong-convexity loss-gap calibration
+and statistical-check details are in notes, rather than additional main slides.
+Existing slide anchors are retained at the corresponding combined slides.
+The detailed path plot compares equal component work: 45 GD moves and 180
+single-observation SGD moves, with 180 component-gradient evaluations each.
+
+Both affected decks render with the `qmcpy` kernel. The complete condensed
+sequence passes visual review at 1600×1000, with key slides rechecked at
+1280×800; all four cumulative tables fit. The glossary Hessian link opens
+its combined slide correctly. All 224 local slide-anchor links checked pass;
+the unchanged shared Policies-page link is outside standalone deck output.
+Source punctuation/emphasis checks, anchor-preservation checks and
+`git diff --check` pass; no console warnings/errors were reported.
+
+Review the shortened sequence with Fred before class. The notebook now matches
+the revised slides: `PARAMETER_DIM` controls m and `DIAGNOSTIC_SIZE` controls s
+(default 1,024); the same random diagnostic subset is reused across checkpoints
+and methods. Update, sampled-loss monitoring, full-loss benchmarking and final
+full-gradient checking have separate timers, with curvature setup also timed.
+All runs still stop at equal component-work budgets. An endpoint full-gradient
+check reports whether the lambda-strong-convexity loss-gap target is certified;
+it is not an online stopping implementation. Notebook Part 3 now uses 45 GD
+and 180 SGD moves for equal work; Parts 1–4 remain optional supporting detail.
+
+The full 12-code-cell notebook executes successfully with `qmcpy`, preserving
+saved default outputs and the final runtime cell. All seven figures were
+reviewed, including the new diagnostic-loss plot. A separate complete run with
+m=2, N=4096, s=256 and b=30 validates a partial final batch without replacing
+default outputs. In the default run, full GD is fastest and the only method to
+pass the final gradient-norm certificate at epsilon=1e-4; a failed certificate
+alone does not establish that the objective gap exceeds that target.
+The notebook remains in Performance, with an Applications cross-link to the
+logistic example. The revised slides and notebook page render, and the page
+passes desktop/390-pixel visual review. These changes are included in this
+Checkpoint; remote CI/deployment must be checked separately. Reload an open notebook before Run All.
+
 ### Follow-ups from November 10
 
 - Clarify why $\|\boldsymbol G_k\|^2-S_k^2/b$ subtracts the noise contribution
@@ -49,8 +126,8 @@ from the optimization timers.
   be negative. This question was raised but not resolved in class.
 - The scalar recurrence, noise-floor and target-floor examples, and the
   four-quadratic-component walkthrough were not substantively developed.
-  Keep them available as follow-ups; no notebook Parts 3–4 walkthrough is
-  verified. Do not let a briefly displayed path slide establish coverage.
+  They now remain optional in presenter notes and notebook Parts 3–4; no
+  notebook Parts 3–4 walkthrough is verified. Do not let a briefly displayed path slide establish coverage.
 - The coordinate-contraction and best-constant-rate proofs were left for
   self-study. General instructor content review remains open.
 

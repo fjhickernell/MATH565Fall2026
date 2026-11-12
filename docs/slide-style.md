@@ -182,6 +182,19 @@ Deck 01 Course Map synchronized.
   examples. Keep proposal and target roles distinct; do not highlight every
   occurrence mechanically.
 
+## Optimization notation and reminders
+
+In the SGD sequence, use $\vg_k=\nabla\operatorname{Loss}(\vtheta_k)$ for
+the full gradient and $\vG_k$ for its sampled approximation. Use
+$\widetilde{\vg}_{\vtheta}(u)$ for the observation-gradient integrand;
+reserve $\mH$ for the Hessian. Use $m$ for parameter count and $s$ for the
+diagnostic subset size; $b$ is the update batch size and $N$ the dataset size.
+Repeat a compact full-gradient / sampled-estimate
+reminder when returning to these symbols after intervening conceptual slides,
+especially at stopping criteria. Keep the four cumulative challenge-and-response
+tables as the section's recurring narrative; trim surrounding proofs and
+repeated explanations before removing those tables.
+
 ## MSE and RMSE notation
 
 Use upright uppercase $\operatorname{MSE}$ and $\operatorname{RMSE}$ in
