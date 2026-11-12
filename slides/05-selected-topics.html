@@ -2108,7 +2108,7 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 </div>
 </div></div>
 <aside class="notes">
-<p>Illustrative paths for the same average quadratic and four component losses developed later in this section. Both methods start at (-1.4, 1.6) and use the same fixed step size 0.18 for 45 updates. SGD samples one component uniformly with replacement per update; its gradient is conditionally unbiased. Its constant step leaves fluctuations near the minimizer. The picture compares directions and noise, not equal work, elapsed time, or guaranteed convergence for a general nonconvex loss. The full gradient averages all four components.</p>
+<p>Illustrative paths for the same average quadratic and 1,000 observations developed later in this section. Both methods start at (-1.4, 1.6) and use the common fixed rate 0.5 for full GD and SGD, with 45 updates each. SGD samples one component uniformly with replacement per update; its gradient is conditionally unbiased. Its constant step leaves fluctuations near the minimizer. The picture compares directions and noise, not equal work, elapsed time, or guaranteed convergence for a general nonconvex loss. There are 250 observations of each center type (+/-1,+/-1), with A=[[2,1],[1,2]]. The full gradient averages all 1,000 contributions; their repeated structure also permits simplification.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2781,18 +2781,19 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
 
 <h3 id="gradient-and-stochastic-gradient-paths">Gradient and stochastic-gradient paths</h3>
 <p><span id="quadratic-component-losses"></span></p>
-<p>Toy objective: <span class="alert"><span class="math inline">\(m=2\)</span> parameters</span>, average of <span class="alert"><span class="math inline">\(N=4\)</span> quadratic loss terms</span><br> <span class="alert">Equal component-gradient work</span>: 45 GD moves versus 180 SGD moves<br> 180 gradient evaluations each: 4 per GD move; 1 per SGD move (<span class="math inline">\(b=1\)</span>)<br> Learning rates: GD <span class="math inline">\(\eta=0.18\)</span>; SGD <span class="math inline">\(\eta_k=0.12/\sqrt{1+k/8}\)</span> <span class="alert">decreases</span></p>
-<div id="6222059b" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="3">
+<p>Toy objective: <span class="alert"><span class="math inline">\(m=2\)</span> parameters</span>, average of <span class="alert"><span class="math inline">\(N=1{,}000\)</span> loss terms</span><br> <span class="alert">Equal component-gradient work</span>: 45 GD moves versus 45,000 SGD moves<br> 45,000 contributions each: 1,000 per GD move; 1 per SGD move (<span class="math inline">\(b=1\)</span>)<br> Common fixed rate <span class="math inline">\(\eta=0.5\)</span>; picture shows <span class="alert">first 60 SGD moves</span></p>
+<div id="d43a227d" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="05-selected-topics_files/figure-revealjs/cell-4-output-1.png" class="quarto-figure quarto-figure-center" alt="Contours of excess average quadratic loss comparing 45 full-gradient descent moves with 180 single-component stochastic-gradient moves, using 180 component-gradient evaluations per method" width="574" height="568"></p>
+<p><img data-src="05-selected-topics_files/figure-revealjs/cell-4-output-1.png" class="quarto-figure quarto-figure-center" alt="Contours of excess average quadratic loss comparing 45 full-gradient descent moves with 45000 single-component stochastic-gradient moves, using 45000 component-gradient contributions per method, with only the first 60 SGD moves shown to keep individual directions readable" width="574" height="568"></p>
 </figure>
 </div>
 </div>
 </div>
 <aside class="notes">
-<p>Four component losses are (theta-a_i)^T A(theta-a_i)/2, with A=[[3,.9],[.9,1.2]] and centers all four sign choices (+/-.25,+/-.25). Their average center is zero, so the full gradient simplifies to A theta and the minimizer is zero. For the component-count illustration the plotting loop explicitly averages the four gradients; exploiting the shared quadratic structure would avoid those four separate evaluations. This is a picture of sampled directions, not evidence of a speedup for this reducible toy problem. Both methods use 180 component-gradient evaluations: GD makes 45 moves with four gradients each; SGD makes 180 moves with one. Rates are unchanged: GD .18 and SGD .12/sqrt(1+k/8), now applied through k=179. Equal component work does not assert equal elapsed time. The SGD loop uses no full-loss acceptance test; contours are computed only to explain the picture. A path approaching the minimizer is illustrative, not a stopping certificate. The exact algebra is available in notebook Parts 3–4.</p>
+<p>The 1,000 observations have centers (+/-1,+/-1), with 250 of each type, and A=[[2,1],[1,2]]. The average center is zero; the minimizer is zero and the full gradient simplifies to A theta. Eigenvalues are 1 and 3, making the best constant GD step 2/(1+3)=.5. The component-count illustration explicitly averages all observations, although their repeated quadratic structure permits a cheaper exact calculation. This is a noise picture, not evidence of computational savings for this reducible problem.</p>
+<p>Both paths use 45,000 component-gradient contributions: GD makes 45 moves with 1,000 contributions each; SGD makes 45,000 moves with one. The sampled rate is fixed at .5, matching full GD. The picture shows the first 60 SGD moves so directions remain readable. All 45,000 moves are computed and included in the notebook error-versus-work plot; drawing every segment here would obscure the GD path. Equal component work does not assert equal elapsed time. There is no full-loss acceptance test or online accuracy certificate. The notebook uses the same model for b=1,10,100 variance comparisons, with exact batch-gradient MSE 10/b. Its next plot compares the error norms of all four methods against component work. Part 4 uses this same model and common rate .5 for the exact noise-floor recurrence. A separate b=10 comparison then reduces or decays only the SGD rate.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2955,24 +2956,99 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Logistic regression: labels <span class="math inline">\(y_i\in\{0,1\}\)</span>; <span class="alert">regularization strength</span> <span class="math inline">\(\lambda&gt;0\)</span></p>
+<p>Binary observation <span class="math inline">\(y_i\in\{0,1\}\)</span>; predictor <span class="math inline">\(z_i=\vx_i^\top\vtheta\)</span></p>
 <p><span class="math display">\[\begin{gather*}
-p_i(\vtheta)=\frac{1}{1+e^{-\vx_i^\top\vtheta}}
-\\
-\operatorname{loss}_i(\vtheta)=\log(1+e^{\vx_i^\top\vtheta})
--y_i\vx_i^\top\vtheta+\frac{\lambda}{2}\norm{\vtheta}^2
-\\
-\nabla\operatorname{loss}_i(\vtheta)=(p_i(\vtheta)-y_i)\vx_i+\lambda\vtheta
+p_i(\vtheta)=\Prob_{\vtheta}(Y_i=1\mid\vx_i)
+=\frac{1}{1+e^{-z_i}}
 \end{gather*}\]</span></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Observed label</th>
+<th>Probability assigned to that label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(y_i=1\)</span></td>
+<td><span class="math inline">\(p_i\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(y_i=0\)</span></td>
+<td><span class="math inline">\(1-p_i\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Combine the two cases: <span class="math inline">\(q_i(\vtheta)=p_i^{y_i}(1-p_i)^{1-y_i}\)</span></p>
+<p>For <span class="alert">independent labels</span>, maximize their likelihood</p>
+<p><span class="math display">\[\max_{\vtheta}\prod_i q_i(\vtheta)
+\quad\Longleftrightarrow\quad
+\min_{\vtheta}\sum_i[-\log q_i(\vtheta)]\]</span></p>
+<aside class="notes">
+<p>The logistic function supplies probabilities, not a unique loss function. Here the conditional label model is Bernoulli, given the covariates and theta, and labels are assumed conditionally independent. Maximum likelihood then motivates the negative log likelihood: log is increasing, and changing sign turns maximization into minimization. Each q_i is the probability of the label actually observed, not always the probability p_i of label 1. Regularization is a separate choice introduced after deriving the data loss.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="logistic-loss-from-likelihood">Derive the logistic loss</h3>
+<p>The <span class="alert">negative log likelihood</span> for one observation is</p>
+<p><span class="math display">\[\ell_i^{\mathrm{data}}=-\log q_i
+=-y_i\log p_i-(1-y_i)\log(1-p_i)\]</span></p>
+<p>Substitute <span class="math inline">\(p_i=e^{z_i}/(1+e^{z_i})\)</span></p>
+<p><span class="math display">\[\begin{align*}
+\log p_i&amp;=z_i-\log(1+e^{z_i})\\
+\log(1-p_i)&amp;=-\log(1+e^{z_i})
+\end{align*}\]</span></p>
+<p>Therefore</p>
+<p><span class="math display">\[\begin{align*}
+\ell_i^{\mathrm{data}}
+&amp;=-y_i z_i+[y_i+(1-y_i)]\log(1+e^{z_i})\\
+&amp;=\log(1+e^{z_i})-y_i z_i
+\end{align*}\]</span></p>
+<p>At <span class="math inline">\(p_i=0.9\)</span>: loss <span class="math inline">\(0.105\)</span> for label 1; loss <span class="math inline">\(2.303\)</span> for label 0</p>
+<aside class="notes">
+<p>All logs are natural. For y=1 the loss is -log p; for y=0 it is -log(1-p). A confident wrong label has a large loss. The cancellation uses y+(1-y)=1. The final expression is evaluated using logaddexp(0,z) in the notebook to avoid overflow; it is the same objective, without clipping probabilities. This data loss is also commonly called binary cross entropy. That name is not needed to follow the Bernoulli likelihood derivation.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="logistic-regularization-and-gradient">Regularization and the gradient</h3>
+<p>Add a <span class="alert">separate quadratic penalty</span> to the mean data loss</p>
+<p><span class="math display">\[F(\vtheta)=\frac1N\sum_{i=0}^{N-1}\ell_i^{\mathrm{data}}(\vtheta)
++\frac\lambda2\norm{\vtheta}^2\]</span></p>
+<p>First differentiate with respect to <span class="math inline">\(z_i=\vx_i^\top\vtheta\)</span></p>
+<p><span class="math display">\[\frac{\dif\ell_i^{\mathrm{data}}}{\dif z_i}
+=\frac{e^{z_i}}{1+e^{z_i}}-y_i=p_i-y_i\]</span></p>
+<p>With <span class="math inline">\(\operatorname{loss}_i=\ell_i^{\mathrm{data}}+(\lambda/2)\norm{\vtheta}^2\)</span>, the chain rule gives</p>
+<p><span class="math display">\[\nabla\operatorname{loss}_i(\vtheta)
+=(p_i-y_i)\vx_i+\lambda\vtheta\]</span></p>
 <ul>
-<li>Each observation gives a gradient; average them for the full gradient</li>
-<li>The penalty adds positive curvature: a <span class="alert">unique minimizer</span>, yet nonquadratic</li>
-<li>Hold <span class="math inline">\(m\)</span> fixed and increase <span class="math inline">\(N\)</span> to isolate the <span class="alert">data-size effect</span></li>
-<li>Compare full GD, single-observation SGD, and mini-batch SGD</li>
-<li>Measure gradient work and elapsed time to a specified loss gap</li>
+<li>Average these component gradients for the full gradient</li>
+<li>Average a sampled batch for SGD</li>
+<li>Penalizing every coefficient with <span class="math inline">\(\lambda&gt;0\)</span> gives a <span class="alert">unique minimizer</span></li>
 </ul>
 <aside class="notes">
-<p>The companion includes the intercept as the first coordinate of x and, for simplicity, regularizes every coefficient including that intercept, lambda&gt;0. Thus the average of the displayed per-observation regularizers gives exactly lambda||theta||^2/2, not N times that penalty. The empirical loss has a unique minimizer. The simulation’s generating parameter is not that empirical minimizer; a tightly solved L-BFGS reference supplies the target loss. Use logaddexp to evaluate the log likelihood without exponential overflow.</p>
+<p>Define loss_i=ell_i<sup>data+lambda||theta||</sup>2/2; its average is exactly F. The penalty appears once after averaging, not N times, and its gradient must not be divided by the batch size again. The notebook deliberately regularizes every coefficient including the intercept, so its strong convexity parameter is at least lambda. The function remains nonquadratic. The generating beta is not the empirical minimizer; L-BFGS supplies a reference only for benchmarking. This is a mean-loss convention for lambda. Hold parameter count m fixed while varying data size N when discussing those separate costs. Monitoring and setup costs remain explicit later.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3004,7 +3080,7 @@ p_i(\vtheta)=\frac{1}{1+e^{-\vx_i^\top\vtheta}}
 <tbody>
 <tr class="odd">
 <td>Full GD</td>
-<td><span class="math inline">\(1/L_{\mathrm{bound}}\approx3.504\)</span> in the saved default run</td>
+<td><span class="math inline">\(1/L_{\mathrm{bound}}\)</span>, computed once for the fixed dataset</td>
 </tr>
 <tr class="even">
 <td>Fixed mini-batch SGD</td>
@@ -3023,7 +3099,66 @@ p_i(\vtheta)=\frac{1}{1+e^{-\vx_i^\top\vtheta}}
 <li>The reference minimum is for <span class="alert">comparing results</span>; the optimizer does not know it</li>
 </ul>
 <aside class="notes">
-<p>The bound follows from 0&lt;=p_i(1-p_i)&lt;=1/4 for the regularized logistic Hessian. The saved default has N=16384, m=20 and lambda=.02. Full GD uses this deterministic curvature scale. The SGD values .3 and its decaying schedule are declared choices; they are not inferred automatically from sample variance or eta_bound. The work w is measured before each update, so the final applied rate differs slightly from a formula evaluated at the total completed budget. Equivalent passes with replacement are not epochs. Computing L_bound is setup outside the recorded optimization timers and is reported separately in the notebook; charge such curvature estimation and tuning in a complete practical comparison.</p>
+<p>The bound follows from 0&lt;=p_i(1-p_i)&lt;=1/4 for the regularized logistic Hessian. The main experiment uses one fixed dataset with N=262144, m=20, lambda=.02, b=256 and s=1024. Its full-GD rate is about 3.648 and is reused across all five timing repeats. Five IID update streams assess SGD variability on those same observations. Full GD uses this deterministic curvature scale. The SGD values .3 and its decaying schedule are declared choices; they are not inferred automatically from sample variance or eta_bound. The work w is measured before each update, so the final applied rate differs slightly from a formula evaluated at the total completed budget. Equivalent passes with replacement are not epochs. Computing L_bound is setup outside the recorded optimization timers and is reported separately in the notebook; charge such curvature estimation and tuning in a complete practical comparison.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="sgd-useful-accuracy">One dataset, several accuracy targets</h3>
+<p><span class="alert">One fixed logistic dataset</span>: <span class="math inline">\(N=262{,}144\)</span>, <span class="math inline">\(m=20\)</span>, <span class="math inline">\(b=256\)</span>, <span class="math inline">\(s=1{,}024\)</span></p>
+<p>Median equivalent passes to the first recorded loss-gap target</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Loss-gap target</th>
+<th style="text-align: right;">Full GD</th>
+<th style="text-align: right;">Fixed SGD</th>
+<th style="text-align: right;">Decaying SGD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(10^{-3}\)</span> — useful answer</td>
+<td style="text-align: right;"><span class="math inline">\(2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.059\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.066\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(10^{-4}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(3\)</span></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"><span class="math inline">\(2.04\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(10^{-6}\)</span> — finer answer</td>
+<td style="text-align: right;"><span class="math inline">\(6\)</span></td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Same data and start; five repeats per method; — means unreached in eight passes</li>
+<li>At <span class="math inline">\(10^{-3}\)</span>: SGD uses <span class="alert">less gradient work and measured update time</span></li>
+<li>At <span class="math inline">\(10^{-4}\)</span>: decay uses fewer contributions, but <span class="alert">GD is faster here</span></li>
+<li>Compare at the <span class="alert">same useful accuracy</span>; include setup and checking costs</li>
+</ul>
+<aside class="notes">
+<p>One fixed dataset is generated with seed 5652105. All methods use those exact observations, lambda=.02, and the same zero initial vector. Five IID update streams assess sampling variability; five deterministic GD repeats assess machine timing. Rates are declared before the comparison: full GD 1/L and SGD .3 fixed or .3/(1+w/(.25N)). No rate-search pilot is hidden.</p>
+<p>The notebook reports all five predeclared targets: .01, .001, .0001, .00001 and .000001. This slide selects three. At each reported attained target all five repeats succeed; dashes mean zero of five. At .001 the median update contributions are 524288 for GD, 15360 for fixed mini-batches and 17408 for decaying mini-batches: about 34 and 30 times fewer for a useful answer. Saved Mini median update times are about 4 ms for GD and 1–2 ms for the sampled methods; exact values are in the notebook. Adding the separately measured curvature/subset setup and sampled checks through that crossing gives about 6 ms for GD and 2–3 ms for sampled methods. Shared data preparation and reference/full-loss benchmarking are separate.</p>
+<p>At .0001, decaying mini-batches use about 2.04 passes versus GD’s 3, but update times are about 45 versus 6 ms. At .000001, only GD reaches the target within the budget. Fixed-rate SGD can cross a useful target and later leave it. These are empirical optimization-loss results, not a general speed guarantee or a prediction-error comparison. Component-gradient contributions are an operation-count proxy, not complete FLOP counts.</p>
+<p>Every run actually stops at the same eight-pass budget. First recorded crossings are assessed retrospectively using full-loss benchmarks and the numerical reference’s residual-gradient bound; checkpoint spacing limits resolution. No online accuracy-based stop is implemented. Endpoint certification costs another full-gradient pass and is separately reported. A phase-time sum is not an implemented early-stopping runtime.</p>
+<p>The smaller N=16384, b=64, twelve-pass experiment is explicitly separated as optional notebook Part 7, a different problem. It is not needed to demonstrate the useful-versus-fine-accuracy distinction, which is already visible on this one dataset. Parts 5–6 are the main classroom route.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
