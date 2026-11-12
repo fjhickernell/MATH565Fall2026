@@ -915,7 +915,7 @@ Q(u):=\inf\{x\in\reals:F(x)\ge u\},\qquad 0&lt;u&lt;1
 </section>
 <section class="slide level2">
 
-<div id="9714a575" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
+<div id="a0bdcf05" class="cell" data-fig-height="4.8" data-fig-width="12" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -955,7 +955,7 @@ p_0+(1-p_0)(1-\me^{-\lambda x}), &amp; x&gt;0
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="bff5f1ef" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
+<div id="0cbe22a9" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -987,7 +987,7 @@ Q(u)=
 
 </div><div class="column" style="width:47%;">
 <p>For the plot, <span class="math inline">\(p_0=0.3\)</span> and <span class="math inline">\(\lambda=1\)</span></p>
-<div id="743c0164" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
+<div id="e184d6f8" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1097,7 +1097,7 @@ X&amp;=-2+0.5\Phi^{-1}(0.90)\\
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<div id="da432f36" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
+<div id="2f84b94a" class="cell" data-fig-height="4.8" data-fig-width="6.4" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -1375,7 +1375,7 @@ X_1&amp;=-\log\bigl(1-\Phi(W_1)\bigr),
 
 <h3 id="the-same-copula-different-marginal-scales">The same copula, different marginal scales</h3>
 <p>Both colors start from the <span class="alert">same independent normal draws</span></p>
-<div id="eacc6ae5" class="cell" data-fig-height="4.1" data-fig-width="12" data-execution_count="5">
+<div id="7d8ff5e2" class="cell" data-fig-height="4.1" data-fig-width="12" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2433,11 +2433,13 @@ f\bigl(\vS(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(\vS(\vu)\bigr)\right\}
           lockUntil = nowMs() + ms;
         }
 
-        function preserveHashTarget(requestedHash) {
+        function preserveHashTarget(requestedHash, matchingIndices) {
           // Named headings can be inside a continuation slide rather than on
           // its section element. Resolve the containing slide before navigation.
           const isHashChange = requestedHash && typeof requestedHash.newURL === "string";
-          const requested = isHashChange ? new URL(requestedHash.newURL).hash : requestedHash;
+          // Queued hash events may describe an obsolete URL. Replaying newURL
+          // makes Reveal write it again and can sustain a slide-navigation loop.
+          const requested = isHashChange ? window.location.hash : requestedHash;
           const hash = (typeof requested === "string" ? requested : window.location.hash).replace(/^#\/?/, "");
           if (!hash) return;
           let destination;
@@ -2452,9 +2454,12 @@ f\bigl(\vS(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(\vS(\vu)\bigr)\right\}
             if (!slide) return;
             destination = Reveal.getIndices(slide);
           }
+          if (matchingIndices && (destination.h !== matchingIndices.h ||
+              (destination.v || 0) !== (matchingIndices.v || 0))) return false;
           linkedTarget = { h: destination.h, v: destination.v || 0, until: nowMs() + 1000 };
           lockH = null;
           if (isHashChange) Reveal.slide(destination.h, destination.v || 0, destination.f);
+          return true;
         }
 
         function snapTopIfNeeded(tag) {
@@ -2482,7 +2487,10 @@ f\bigl(\vS(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(\vS(\vu)\bigr)\right\}
             prevH = idx.h;
           } else if (idx.h !== prevH) {
             prevH = idx.h;
-            startLock(idx.h, 350);
+            // Reveal may read a changed URL before our hash listener runs. Its
+            // slidechanged event already has the requested child; preserve it.
+            // Arrow moves still have the old URL here and must reset to the top.
+            if (!preserveHashTarget(window.location.hash, idx)) startLock(idx.h, 350);
           }
 
           // While locked, force v=0 (and reset fragments) if needed.
@@ -2507,8 +2515,9 @@ f\bigl(\vS(\vu)\bigr)\boldsymbol{1}\!\left\{v\le a\bigl(\vS(\vu)\bigr)\right\}
           Reveal.on("ready", function () { snapTopIfNeeded("ready"); });
         }
 
-        // Capture runs before Reveal reads the new hash, including browser
-        // back/forward and same-document links to another section's child slide.
+        // Preserve explicit URLs for browser back/forward and direct hash changes.
+        // The slidechanged handler also recognizes a requested child when Reveal's
+        // earlier listener reaches that destination before this listener runs.
         window.addEventListener("hashchange", preserveHashTarget, true);
         window.addEventListener("hashchange", function () { snapTopIfNeeded("hashchange"); });
         document.addEventListener("click", function (event) {

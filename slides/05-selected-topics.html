@@ -2915,7 +2915,7 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
 <h3 id="gradient-and-stochastic-gradient-paths">Gradient and stochastic-gradient paths</h3>
 <p><span id="quadratic-component-losses"></span></p>
 <p>Toy objective: <span class="alert"><span class="math inline">\(m=2\)</span> parameters</span>, average of <span class="alert"><span class="math inline">\(N=1{,}000\)</span> loss terms</span><br> <span class="alert">Equal component-gradient work</span>: 45 GD moves versus 4,500 mini-batch moves<br> 45,000 contributions each: 1,000 per GD move; 10 per SGD move (<span class="math inline">\(b=10\)</span>)<br> Common rate <span class="math inline">\(\eta=0.5\)</span>; picture shows <span class="alert">first 60 mini-batch moves</span> (600 contributions)</p>
-<div id="6d2a2804" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="5">
+<div id="c76dcb45" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -4251,11 +4251,13 @@ R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}
           lockUntil = nowMs() + ms;
         }
 
-        function preserveHashTarget(requestedHash) {
+        function preserveHashTarget(requestedHash, matchingIndices) {
           // Named headings can be inside a continuation slide rather than on
           // its section element. Resolve the containing slide before navigation.
           const isHashChange = requestedHash && typeof requestedHash.newURL === "string";
-          const requested = isHashChange ? new URL(requestedHash.newURL).hash : requestedHash;
+          // Queued hash events may describe an obsolete URL. Replaying newURL
+          // makes Reveal write it again and can sustain a slide-navigation loop.
+          const requested = isHashChange ? window.location.hash : requestedHash;
           const hash = (typeof requested === "string" ? requested : window.location.hash).replace(/^#\/?/, "");
           if (!hash) return;
           let destination;
@@ -4270,9 +4272,12 @@ R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}
             if (!slide) return;
             destination = Reveal.getIndices(slide);
           }
+          if (matchingIndices && (destination.h !== matchingIndices.h ||
+              (destination.v || 0) !== (matchingIndices.v || 0))) return false;
           linkedTarget = { h: destination.h, v: destination.v || 0, until: nowMs() + 1000 };
           lockH = null;
           if (isHashChange) Reveal.slide(destination.h, destination.v || 0, destination.f);
+          return true;
         }
 
         function snapTopIfNeeded(tag) {
@@ -4300,7 +4305,10 @@ R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}
             prevH = idx.h;
           } else if (idx.h !== prevH) {
             prevH = idx.h;
-            startLock(idx.h, 350);
+            // Reveal may read a changed URL before our hash listener runs. Its
+            // slidechanged event already has the requested child; preserve it.
+            // Arrow moves still have the old URL here and must reset to the top.
+            if (!preserveHashTarget(window.location.hash, idx)) startLock(idx.h, 350);
           }
 
           // While locked, force v=0 (and reset fragments) if needed.
@@ -4325,8 +4333,9 @@ R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}
           Reveal.on("ready", function () { snapTopIfNeeded("ready"); });
         }
 
-        // Capture runs before Reveal reads the new hash, including browser
-        // back/forward and same-document links to another section's child slide.
+        // Preserve explicit URLs for browser back/forward and direct hash changes.
+        // The slidechanged handler also recognizes a requested child when Reveal's
+        // earlier listener reaches that destination before this listener runs.
         window.addEventListener("hashchange", preserveHashTarget, true);
         window.addEventListener("hashchange", function () { snapTopIfNeeded("hashchange"); });
         document.addEventListener("click", function (event) {
