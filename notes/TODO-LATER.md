@@ -55,7 +55,8 @@ multiple decks.
   in Generating Samples with conditional sampling, other copula families, and
   tail dependence; the introductory material is available for next year's course.
 
-- Review the October 21 MCTS introductory slides, including exploration versus exploitation and UCT. An executable tree-search notebook or optional project remains a possible extension.
+- Review the expanded MCTS route-planning slides and executable companion;
+  an opponent-aware game or a larger planning project remains an optional extension.
 - Complete the expanded GPU/CPU timing notebook trial on M5, its content review, and classroom-M3 execution before adding student-facing links. Initial Mini execution is complete. Backend, synchronization, precision, and machine-specific timing qualifications are included.
 - Consider queueing simulation here if developed as a substantial application
   rather than the current Markov-chain application in Deck 03.

@@ -1,11 +1,40 @@
 # Next task
 
-## Immediate next work — review the final SGD teaching comparisons
+## Resume after the machine restart
+
+- Add the concise GD-versus-SGD summary slide requested for later:
+  [issue #6](https://github.com/fjhickernell/MATH565Fall2026/issues/6), assigned
+  to Fred. Contrast learning rates, full versus sampled gradient work,
+  persistent fixed-batch noise, and monitoring/stopping; qualify the noise claim.
+- Resume review of the restored banana geometry, corrected b=10 toy paths,
+  and the new MCTS airport-route slides/notebook below.
+- Reload `StochasticGradientDescent.ipynb` from disk before running an open
+  JupyterLab copy. The MCTS companion is
+  `notebooks/applications/MonteCarloTreeSearch.ipynb`.
+
+## Immediate next work — review SGD geometry and the MCTS route example
+
+The SGD opener and detailed toy-objective picture now use mini-batches
+of ten and start at (-3.2,1.0), so the initial GD direction does not point
+toward the minimizer. Keep that start throughout the notebook's quadratic
+path, equal-work and noise-floor comparisons. Single-observation SGD remains
+in the batch/noise comparisons. Two restored Rosenbrock slides show the
+banana valley, GD versus BFGS and actual late GD zigzags; keep these concrete
+curvature/conditioning illustrations in the main lecture.
+
+MCTS now has seven instructional slides: an airport itinerary tree,
+on-time returns and successes/visits, the four search steps, numerical UCT,
+one illustrated backup, the final recommendation and a companion-notebook
+call. The new Applications notebook uses 96 complete plans, an 80-minute
+deadline, 4,096 simulations and 20 retained seeds. Exact probabilities are
+benchmarks only. The balanced uniform baseline wins 11 runs, MCTS wins 8
+and one ties; do not claim universal MCTS superiority. Review this material
+with Fred before teaching it; it has not been established as lecture coverage.
 
 Continue Fred's walkthrough at the logistic probability-to-loss derivation
 in Part 5, then Part 6's **one fixed dataset and several accuracy targets**.
 The matching slides derive the Bernoulli likelihood, negative logarithm,
-logistic data loss, regularization and gradient. Selected Topics now has 24
+logistic data loss, regularization and gradient. Selected Topics now has 26
 instructional SGD slides plus the opener; the four cumulative challenge
 and response tables and existing anchors remain intact.
 
@@ -26,8 +55,9 @@ Parts 3–4 use exactly the same m=2, N=1,000 quadratic: 250 repetitions of
 each integer center (+/-1,+/-1), A=[[2,1],[1,2]], common start and 45,000
 component-gradient budget. First compare full GD and b=1,10,100 at the
 **same fixed rate .5**. Then hold b=10 and compare .5, .1 and decay from .5.
-The path picture displays only the first 60 SGD moves for readability; all
-45,000 appear in the realized-error versus component-work comparison. Exact
+The path picture displays the first 60 of 4,500 b=10 moves, or 600
+contributions; all updates appear in the realized-error versus component-work
+comparison, alongside the b=1 and b=100 runs. Exact
 two-direction moment recurrences and 256 repeated runs show RMSE separately. The fixed-rate
 MSE floor is 10/(3b) at .5, versus about .229102/b at .1. The quadratic is
 reducible and illustrates noise rather than a practical speed advantage.
@@ -47,16 +77,22 @@ setup, subset selection/checks, reference solving, full-loss benchmarking and
 endpoint certification remain separate; a phase-time sum does not implement
 an online accuracy-based stop.
 
-The complete 14-code-cell notebook runs in about 14 seconds on Mini, with 11
-saved figures. The default and m=2/partial-final-batch configurations pass.
-Reload the open JupyterLab notebook from disk before Run All. Instructor
-review remains open; the final changes are included in this Checkpoint.
-The complete website and all five decks render. The revised slide layouts
-pass classroom-size review; 1,563 assembled local links/assets and 327 anchors
-pass. Remote deployment and live-site verification remain unconfirmed.
+November 12 validation: the complete SGD notebook passes all 14 code cells
+and 11 figures; the affected path, error and noise-floor figures were inspected.
+The larger-data logistic benchmark outputs are preserved. The new MCTS
+notebook passes all ten code cells and four inspected figures; alternate
+depth/budget and fractional-deadline checks pass. Reload the open SGD
+notebook from disk before Run All. Instructor content review remains open.
+The complete website and all five decks render; changed layouts were checked
+at classroom and ordinary browser sizes, and the notebook listing at desktop
+and phone widths. All 384 local links/assets and 235 anchors on the changed
+pages pass. These changes are included in this Checkpoint; its remote
+CI/deployment and live-site verification remain pending.
 
 [Issue #5 — Demonstrate SGD reaching useful accuracy with less component work](https://github.com/fjhickernell/MATH565Fall2026/issues/5)
-remains open for Fred's review; issue #2 remains open. Issues #3 (Keister
+was closed at Fred's direction on November 12 after verification of the
+larger-data comparison in `d4b71bf`; broader instructor review remains open.
+Issue #2 remains open. Issues #3 (Keister
 prose) and #4 (November 3 cleanup) are closed at Fred's direction. The Keister
 correction changes explanation only, preserving every code cell and output.
 
@@ -645,9 +681,10 @@ review. Keep the historical 2025 notebook read-only.
 
 Deck 05 section order is Parallel Computing, Multilevel Monte Carlo
 (starting with a two-level subsection), Stochastic Gradient Descent, then
-Monte Carlo Tree Search. The MCTS introduction covers purpose, one iteration,
-and a numerical UCT exploration/exploitation exercise. Review these additions;
-there is no executable MCTS notebook yet. MCTS means Monte Carlo tree search.
+Monte Carlo Tree Search. The expanded MCTS introduction and executable
+`applications/MonteCarloTreeSearch.ipynb` use a route-plan tree and simulated
+traffic, with selection, expansion, rollout, backup and an equal-budget
+uniform baseline. Instructor content review remains open.
 
 ### Test 2 — solutions release
 

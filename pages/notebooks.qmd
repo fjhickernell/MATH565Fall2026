@@ -64,6 +64,11 @@ sampling methods will appear here.
   fit a binary-response model and compare optimization cost, diagnostic loss,
   and accuracy checks
 
+- [Monte Carlo Tree Search](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/MonteCarloTreeSearch.ipynb)
+  — choose an airport itinerary using simulated traffic; draw the search tree,
+  follow selection, expansion, rollout and backup, and compare adaptive search
+  with uniform route sampling at the same simulation budget
+
 Additional notebooks will apply Monte Carlo and quasi-Monte Carlo methods to
 other examples.
 

@@ -482,6 +482,7 @@ Canvas<br>Only one person per group submits the assignment
 - [Event](#random-variables-and-distributions)
 - [Event-driven simulation](03-markov-chain-monte-carlo.html#event-driven-queue-simulation)
 - [Expectation](#random-variables-and-distributions)
+- [Exploration / exploitation](05-selected-topics.html#exploration-versus-exploitation)
 - [Exponential distribution](#exponential-distribution)
 - [Gaussian copula](02-generating-samples.html#gaussian-copula-sampling)
 - [Gaussian mixture](02-generating-samples.html#gaussian-mixture-random-numbers)
@@ -597,6 +598,7 @@ Canvas<br>Only one person per group submits the assignment
 - [Replication-based error assessment](04-improving-efficiency.html#rqmc-error-replications)
 - [Reproducing kernel Hilbert space](03-markov-chain-monte-carlo.html#a-reproducing-kernel-hilbert-space)
 - [Risk-neutral asset pricing](02-generating-samples.html#risk-neutral-asset-price-paths)
+- [Rollout](05-selected-topics.html#turn-simulated-trips-into-values)
 - [Root mean squared error (RMSE)](#under-random-sampling)
 :::
 :::

@@ -104,7 +104,7 @@ pattern, not a permanent ownership contract.
 | Deck 02, Generating Samples | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb` | Main direct-sampling development; early low discrepancy and financial-option examples intentionally prepare later decks |
 | Deck 03, Markov Chain Monte Carlo | `sampling/TransportMapsAndAcceptanceRejection.ipynb`; `sampling/MetropolisHastings.ipynb`; `applications/BayesianMCMC.ipynb`; `performance/Discrepancy.ipynb`; `applications/QueueSimulation.ipynb` | Return to acceptance--rejection as motivation; main MCMC, distribution-comparison, Bayesian, and queueing development |
 | Deck 04, Improving Efficiency | `sampling/GeneratingSamples.ipynb`; `sampling/TransportMapsAndAcceptanceRejection.ipynb`; `sampling/LowDiscrepancyConstructions.ipynb`; `applications/KeisterExample.ipynb`; `sampling/ConditionalMonteCarlo.ipynb`; `performance/AsianOptionVarianceReduction.ipynb`; `performance/Discrepancy.ipynb` | Return to earlier low discrepancy, transport, and option examples; main importance-sampling, variance-reduction, discrepancy, and QMC development |
-| Deck 05, Selected Topics | `performance/MultilevelOptionPricing.ipynb`; `performance/MultilevelBeam.ipynb`; `performance/GPU_MonteCarlo_Demo.ipynb`; `performance/StochasticGradientDescent.ipynb`; earlier application notebooks when a selected topic extends them | Main multilevel coupling, allocation, and error/work comparisons; parallel-computing performance; gradient geometry, sampling noise, and optimization cost |
+| Deck 05, Selected Topics | `performance/MultilevelOptionPricing.ipynb`; `performance/MultilevelBeam.ipynb`; `performance/GPU_MonteCarlo_Demo.ipynb`; `performance/StochasticGradientDescent.ipynb`; `applications/MonteCarloTreeSearch.ipynb`; earlier application notebooks when a selected topic extends them | Main multilevel coupling, allocation, and error/work comparisons; parallel-computing performance; gradient geometry, sampling noise, and optimization cost; adaptive route-plan search |
 
 The broad inherited `QMCPy_Introduction.ipynb` has no required deck call. It
 should be retained only if it becomes a concise software orientation rather
@@ -551,6 +551,23 @@ notebooks.
   figures without writing figure assets. No extra dependencies.
 - **Classification:** Performance; accompanies Selected Topics' optimization
   section and its Monte Carlo gradient estimates.
+
+### `MonteCarloTreeSearch.ipynb`
+
+- **Status:** New Fall 2026 companion, locally executed and figures inspected;
+  instructor content review remains open (November 12, 2026).
+- **Target:** `applications/MonteCarloTreeSearch.ipynb`
+- **Purpose:** Choose a complete airport itinerary before departure using
+  stochastic traffic simulations, a growing route-prefix tree, UCT selection,
+  one-node expansion, uniform rollout and terminal-return backup.
+- **Comparisons:** Most-visited-child full-plan recommendation; exact
+  convolution/enumeration used only afterward; balanced uniform route sampling
+  at the same traffic-simulation budget. Keep all 20 seeds and cases where
+  uniform sampling wins. Separate search timings and benchmark costs.
+- **Dependencies:** Standard QMCPy, classlib/nbviz, NumPy, pandas and Matplotlib;
+  no external data or new package requirement. Ten executed code cells and
+  four saved figures; depth/budget and fractional-deadline checks pass.
+- **Classification:** Applications; accompanies Selected Topics' MCTS section.
 
 ### `GPU_MonteCarlo_Demo.ipynb`
 

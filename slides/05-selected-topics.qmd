@@ -1548,7 +1548,7 @@ not an automatic stopping certificate.
 #| echo: false
 #| fig-format: svg
 #| fig-align: center
-#| fig-alt: "Contours of an average quadratic loss with two paths from the same start: full-gradient descent approaches the minimizer smoothly, while stochastic updates using individual component losses fluctuate around it"
+#| fig-alt: "Contours of an average quadratic loss with two paths from the same start: full-gradient descent approaches the minimizer smoothly, while mini-batch SGD with ten observations per update approaches a smaller noisy neighborhood"
 #| fig-width: 8
 #| fig-height: 6.5
 #| out-width: 100%
@@ -1558,16 +1558,19 @@ import numpy as np
 from io import StringIO
 from IPython.display import SVG, display
 
-outline_rng = np.random.default_rng(56505)
+from qmcpy import IIDStdUniform
+
+outline_batch = 10
 outline_A = np.array([[2.0, 1.0], [1.0, 2.0]])
 outline_N = 1000
 outline_types = np.array([[1., 1.], [1., -1.], [-1., 1.], [-1., -1.]])
 outline_centers = np.repeat(outline_types, outline_N//4, axis=0)
-outline_gd = [np.array([-1.4, 1.6])]
+outline_indices = np.floor(outline_N * IIDStdUniform(1, seed=56515).gen_samples(45 * outline_batch)[:, 0]).astype(int).reshape(45, outline_batch)
+outline_gd = [np.array([-3.2, 1.0])]
 outline_sgd = [outline_gd[0].copy()]
-for _ in range(45):
+for outline_k in range(45):
     outline_gd.append(outline_gd[-1] - 0.5 * outline_A @ outline_gd[-1])
-    outline_center = outline_centers[outline_rng.integers(outline_N)]
+    outline_center = outline_centers[outline_indices[outline_k]].mean(axis=0)
     outline_sgd.append(outline_sgd[-1] - 0.5 * outline_A @ (outline_sgd[-1] - outline_center))
 outline_gd, outline_sgd = np.array(outline_gd), np.array(outline_sgd)
 outline_x, outline_y = np.meshgrid(np.linspace(-3.5, 3.5, 260),
@@ -1581,7 +1584,7 @@ ax.contour(outline_x, outline_y, outline_loss, levels=np.geomspace(0.04, 12, 11)
            colors='#9ebac9', linewidths=1.1)
 ax.plot(*outline_gd.T, color='#1f5a91', linewidth=3, label='Full gradient', zorder=4)
 ax.plot(*outline_sgd.T, '.-', color='#b77d17', linewidth=1.8, markersize=3.5,
-         label=r'SGD ($b=1$)', zorder=5)
+         label=r'Mini-batch SGD ($b=10$)', zorder=5)
 ax.scatter(*outline_gd[0], s=45, color='#263e4a', zorder=6)
 ax.annotate('Start', xy=outline_gd[0], xytext=(12, 10), textcoords='offset points',
              fontsize=20, color='#263e4a')
@@ -1604,9 +1607,15 @@ display(SVG(outline_svg.getvalue()))
 
 ::: {.notes}
 Illustrative paths for the same average quadratic and 1,000 observations
-developed later in this section. Both methods start at (-1.4, 1.6) and use the
-common fixed rate 0.5 for full GD and SGD, with 45 updates each. SGD samples one component uniformly
-with replacement per update; its gradient is conditionally unbiased. Its
+developed later in this section. Both methods in this opener start at (-3.2, 1.0) and use the
+common fixed rate 0.5, with 45 updates each. Mini-batch SGD averages ten
+observations sampled uniformly with replacement per update, using QMCPy
+seed56515; its gradient is conditionally unbiased. GD uses 45,000 contributions
+and mini-batch SGD 450 here. This is a direction/noise picture, not equal work. At this start the full gradient is (-5.4,-1.2), so the
+first downhill step points right and up although the minimum is right and down.
+This deliberately exposes unequal curvature rather than starting near an
+eigenvector direction. The detailed slide and notebook comparisons use the same
+start (-3.2,1.0). Its
 constant step leaves fluctuations near the minimizer. The picture compares
 directions and noise, not equal work, elapsed time, or guaranteed convergence
 for a general nonconvex loss. There are 250 observations of each center
@@ -1815,7 +1824,6 @@ These choices can be combined with sampling. No method wins universally.
 <span id="conditioning-versus-dimension"></span>
 <span id="coordinate-to-norm-contraction"></span>
 <span id="balancing-extreme-eigenvalue-directions"></span>
-<span id="the-banana-function-is-still-difficult"></span>
 
 | Feature | Meaning | Practical response |
 |---|---|---|
@@ -1841,10 +1849,174 @@ diagonalize A orthogonally: each error coordinate is multiplied by
 1-eta*lambda_j. Balancing the extreme factors gives eta=2/(L+mu) and
 norm contraction q=(kappa-1)/(kappa+1). The coordinate and balancing proofs
 are optional self-study, not part of the main presentation.
-Rosenbrock's curved narrow valley remains in notebook Parts 1–2: GD with
-backtracking can take many more updates than BFGS. Counts are not equal work.
+The following Rosenbrock slides and notebook Parts 1–2 show the curved
+narrow valley: GD with backtracking can take many more updates than BFGS.
+Counts are not equal work.
 The function is nonconvex but has only one stationary point, its global
 minimizer, so it does not illustrate trapping in competing local minima.
+:::
+---
+
+### The banana function is still difficult {#the-banana-function-is-still-difficult}
+
+$$R(\vtheta)=(1-\theta_1)^2+100(\theta_2-\theta_1^2)^2
+\qquad \vtheta_*=(1,1)^\top$$
+
+```{python}
+#| label: restored-banana-paths
+#| echo: false
+#| fig-align: center
+#| fig-alt: "Rosenbrock contours and loss histories from the same start: full gradient descent with backtracking makes 500 accepted updates, while BFGS reaches the minimizer in about 34; the marked long blue segment is one accepted update"
+#| fig-width: 10.5
+#| fig-height: 4.1
+#| out-width: 94%
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import minimize, rosen, rosen_der
+
+plt.rcParams['mathtext.fontset'] = 'stix'
+banana_start = np.array([-1.2, 1.0])
+banana_theta = banana_start.copy()
+banana_gd = [banana_theta.copy()]
+banana_values = [rosen(banana_theta)]
+for _ in range(500):
+    gradient = rosen_der(banana_theta)
+    step = 1.0
+    candidate_value = rosen(banana_theta-step*gradient)
+    while candidate_value > banana_values[-1]-1e-4*step*(gradient@gradient):
+        step *= 0.5
+        candidate_value = rosen(banana_theta-step*gradient)
+    banana_theta -= step*gradient
+    banana_gd.append(banana_theta.copy())
+    banana_values.append(candidate_value)
+banana_bfgs = [banana_start.copy()]
+banana_result = minimize(rosen, banana_start, jac=rosen_der, method='BFGS',
+                         callback=lambda x: banana_bfgs.append(x.copy()),
+                         options={'gtol': 1e-8})
+banana_gd, banana_bfgs = np.array(banana_gd), np.array(banana_bfgs)
+assert banana_result.success and np.all(np.diff(banana_values) <= 1e-12)
+assert np.linalg.norm(banana_result.x-1) < 1e-6
+banana_x, banana_y = np.meshgrid(np.linspace(-1.6, 1.4, 260),
+                                np.linspace(-0.3, 1.9, 260))
+fig, axes = plt.subplots(1, 2, figsize=(10.5, 4.1), constrained_layout=True)
+axes[0].contour(banana_x, banana_y,
+                (1-banana_x)**2+100*(banana_y-banana_x**2)**2,
+                levels=np.geomspace(0.02, 500, 18), colors='#b3c7d2')
+for path, color, label in [(banana_gd, '#1f5a91', 'GD + backtracking'),
+                            (banana_bfgs, '#b77d17', 'BFGS')]:
+    axes[0].plot(*path.T, color=color, label=label, linewidth=1.7)
+    axes[1].semilogy(np.arange(len(path)),
+                     np.maximum([rosen(x) for x in path], 1e-16),
+                     color=color, label=label, linewidth=2)
+axes[0].scatter([1], [1], marker='*', s=170, color='#398879',
+                edgecolors='white', linewidths=.7, zorder=6)
+axes[0].annotate('Minimum (1, 1)', xy=(1, 1), xytext=(.0, 1.45),
+                 color='#277465', arrowprops=dict(arrowstyle='->', color='#277465'))
+banana_jump = 1+np.argmax(np.linalg.norm(np.diff(banana_gd, axis=0), axis=1))
+banana_mid = (banana_gd[banana_jump-1]+banana_gd[banana_jump])/2
+axes[0].annotate('One accepted\nGD update', xy=banana_mid, xytext=(-.35, .4),
+                 color='#1f5a91', arrowprops=dict(arrowstyle='->', color='#1f5a91'))
+axes[0].set(xlabel=r'Parameter $\theta_1$', ylabel=r'Parameter $\theta_2$',
+            title='Narrow curved valley')
+axes[1].set(xlabel='Accepted update count', ylabel=r'Objective $R$ (floor $10^{-16}$)',
+            title='Same start, different progress')
+axes[1].legend(frameon=False, fontsize=11)
+for ax in axes:
+    ax.spines[['top', 'right']].set_visible(False)
+plt.show()
+```
+
+[Unequal and changing curvature]{.alert} can slow GD even with only two parameters
+
+::: {.notes}
+This restores the main illustrative example retained in notebook Part 1.
+Both methods start at (-1.2,1). GD uses Armijo backtracking with initial
+step 1, halving and sufficient-decrease constant 1e-4; the 500 accepted
+updates all decrease the objective. Thus a line search alone does not remove
+the geometric difficulty. BFGS learns an inverse-Hessian approximation from
+gradient changes, without evaluating the full Hessian. The paths and
+parameters match the companion notebook.
+
+The green star marks the minimizer. Straight lines connect accepted iterates:
+the long blue segment is one accepted update, not a continuously downhill
+trajectory. Backtracking tests its endpoint. The next slide shows the small
+late zigzags hidden at this scale. Accepted updates are not equal work:
+backtracking and BFGS use different numbers of objective/gradient evaluations;
+notebook Part 1 reports both counts. This is deterministic GD, not SGD.
+Rosenbrock is nonconvex but has only one stationary point, its global
+minimizer; it does not illustrate competing local minima.
+:::
+
+---
+
+### A closer look at curvature and conditioning {#banana-curvature-and-conditioning}
+
+::: {.columns}
+::: {.column width="47%"}
+
+```{python}
+#| label: restored-banana-zigzags
+#| echo: false
+#| fig-align: center
+#| fig-alt: "Close-up of the last 100 accepted gradient-descent updates on Rosenbrock: small moves zigzag across the curved valley centerline while advancing slowly"
+#| fig-width: 6
+#| fig-height: 4.3
+#| out-width: 100%
+
+banana_recent = banana_gd[-101:]
+banana_zoom_x = np.linspace(banana_recent[:, 0].min(), banana_recent[:, 0].max(), 200)
+fig, ax = plt.subplots(figsize=(6, 4.3), constrained_layout=True)
+ax.plot(banana_zoom_x, banana_zoom_x**2, '--', color='0.5', linewidth=1.2,
+        label=r'Valley centerline $\theta_2=\theta_1^2$')
+ax.plot(*banana_recent.T, '.-', color='#1f5a91', markersize=4, linewidth=1,
+        label='GD accepted iterates')
+ax.scatter(*banana_recent[-1], s=30, color='#1f5a91', zorder=4)
+ax.set(xlabel=r'Parameter $\theta_1$', ylabel=r'Parameter $\theta_2$',
+       title='GD: final 100 accepted updates')
+ax.ticklabel_format(style='plain', useOffset=False)
+ax.legend(loc='upper left', frameon=False, fontsize=10)
+ax.spines[['top', 'right']].set_visible(False)
+plt.show()
+```
+
+:::
+::: {.column width="6%"}
+:::
+::: {.column width="47%"}
+
+- Steep across the valley; shallow along it
+- The valley direction changes as we move
+- Short accepted GD moves can zigzag
+- BFGS uses curvature to change direction and scale
+
+At the minimizer: [$m=2$, $\kappa\approx2508$]{.alert}
+
+Every dot is one accepted GD update
+
+:::
+:::
+
+::: {.key-point}
+Sampling makes gradients cheaper; it does not remove poor conditioning
+:::
+
+::: {.notes}
+This is exactly the companion's final 100 accepted GD moves, not a schematic
+zigzag. At (1,1), H=[[802,-400],[-400,200]], with eigenvalues about 0.3994 and
+1001.6006, giving kappa about 2508. These are evaluated at the minimizer,
+not at this close-up's current iterates. The Hessian changes with position;
+the local condition number does not furnish a global convergence bound for
+Rosenbrock.
+
+For an SPD quadratic with fixed Hessian, the eigenvector components of the
+error multiply by 1-eta*lambda_j. Balancing the extreme magnitudes yields
+eta=2/(lambda_min+lambda_max) and the norm contraction factor
+q=(kappa-1)/(kappa+1). At kappa=2508 this is about .9992, explaining why
+unequal curvature is troublesome even in small dimension. This fixed-
+quadratic calculation is context, not a prediction of the Rosenbrock path;
+notebook Part 2 makes that distinction explicit. Scaling, preconditioning
+and curvature-aware directions can help. Sampling alone does not.
 :::
 
 ---
@@ -2112,14 +2284,14 @@ choice and averaging trade work against the precision of the iterates.
 <span id="quadratic-component-losses"></span>
 
 Toy objective: [$m=2$ parameters]{.alert}, average of [$N=1{,}000$ loss terms]{.alert}<br>
-[Equal component-gradient work]{.alert}: 45 GD moves versus 45,000 SGD moves<br>
-45,000 contributions each: 1,000 per GD move; 1 per SGD move ($b=1$)<br>
-Common fixed rate $\eta=0.5$; picture shows [first 60 SGD moves]{.alert}
+[Equal component-gradient work]{.alert}: 45 GD moves versus 4,500 mini-batch moves<br>
+45,000 contributions each: 1,000 per GD move; 10 per SGD move ($b=10$)<br>
+Common rate $\eta=0.5$; picture shows [first 60 mini-batch moves]{.alert} (600 contributions)
 
 ```{python}
 #| echo: false
 #| fig-align: center
-#| fig-alt: "Contours of excess average quadratic loss comparing 45 full-gradient descent moves with 45000 single-component stochastic-gradient moves, using 45000 component-gradient contributions per method, with only the first 60 SGD moves shown to keep individual directions readable"
+#| fig-alt: "Contours of excess average quadratic loss comparing 45 full-gradient descent moves with 4500 mini-batch SGD moves of batch size ten at the same 45000-contribution budget, showing the first 60 mini-batch moves or 600 contributions"
 #| fig-width: 9.5
 #| fig-height: 5.8
 #| out-width: 82%
@@ -2128,19 +2300,22 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 plt.rcParams["mathtext.fontset"] = "stix"
-rng = np.random.default_rng(56505)
+from qmcpy import IIDStdUniform
+
 A = np.array([[2.0, 1.0], [1.0, 2.0]])
 N_toy = 1000
 center_types = np.array([[1., 1.], [1., -1.], [-1., 1.], [-1., -1.]])
 centers = np.repeat(center_types, N_toy//4, axis=0)
-theta_gd = np.array([-3.2, 3.1])
+theta_gd = np.array([-3.2, 1.0])
 theta_sgd = theta_gd.copy()
 path_gd = [theta_gd.copy()]
 path_sgd = [theta_sgd.copy()]
 
 gd_moves = 45
 component_budget = gd_moves * len(centers)
-sgd_moves = component_budget  # b=1: one component gradient per move
+path_batch_size = 10
+sgd_moves = component_budget // path_batch_size
+path_indices = np.floor(N_toy * IIDStdUniform(1, seed=56515).gen_samples(component_budget)[:, 0]).astype(int).reshape(sgd_moves, path_batch_size)
 
 for _ in range(gd_moves):
     full_gradient = ((theta_gd - centers) @ A.T).mean(axis=0)
@@ -2148,12 +2323,12 @@ for _ in range(gd_moves):
     path_gd.append(theta_gd.copy())
 
 for k in range(sgd_moves):
-    component_index = rng.integers(len(centers))
-    component_gradient = A @ (theta_sgd - centers[component_index])
-    theta_sgd -= 0.5 * component_gradient
+    batch_center = centers[path_indices[k]].mean(axis=0)
+    batch_gradient = A @ (theta_sgd - batch_center)
+    theta_sgd -= 0.5 * batch_gradient
     path_sgd.append(theta_sgd.copy())
 
-assert gd_moves * len(centers) == sgd_moves == 45000
+assert gd_moves * len(centers) == sgd_moves * path_batch_size == 45000
 
 path_gd = np.array(path_gd)
 path_sgd = np.array(path_sgd)
@@ -2169,7 +2344,7 @@ ax.plot(path_gd[:, 0], path_gd[:, 1], "-o", color="#1f5a91", markersize=3.5,
 shown_sgd_moves = 60
 ax.plot(path_sgd[:shown_sgd_moves+1, 0], path_sgd[:shown_sgd_moves+1, 1], "-o",
         color="#d59b2d", markersize=2, linewidth=1, alpha=.8,
-        label=r"SGD ($b=1$): first 60 of 45,000 moves")
+        label=r"Mini-batch SGD ($b=10$): first 60 of 4,500 moves")
 ax.scatter([0], [0], s=95, marker="*", color="#4f9b8f", zorder=5, label="minimizer")
 ax.set_xlabel(r"$\theta_1$", fontsize=20, math_fontfamily="stix")
 ax.set_ylabel(r"$\theta_2$", fontsize=20, math_fontfamily="stix")
@@ -2190,10 +2365,11 @@ structure permits a cheaper exact calculation. This is a noise picture,
 not evidence of computational savings for this reducible problem.
 
 Both paths use 45,000 component-gradient contributions: GD makes 45 moves
-with 1,000 contributions each; SGD makes 45,000 moves with one. The sampled
-rate is fixed at .5, matching full GD. The picture shows the first 60 SGD moves so directions
-remain readable. All 45,000 moves are computed and included in the notebook
-error-versus-work plot; drawing every segment here would obscure the GD path. Equal component work does not
+with 1,000 contributions each; mini-batch SGD makes 4,500 moves with ten.
+The rate remains .5, matching full GD. The first 60 mini-batch moves
+(600 contributions) remain readable; all 4,500 updates are computed.
+The notebook error-versus-work plot retains the b=1,10,100 comparisons.
+QMCPy seed56515 matches the notebook path. Equal component work does not
 assert equal elapsed time. There is no full-loss acceptance test or online
 accuracy certificate. The notebook uses the same model for b=1,10,100
 variance comparisons, with exact batch-gradient MSE 10/b. Its next plot
@@ -2555,7 +2731,7 @@ implement in the companion notebook.
 [Open Stochastic Gradient Descent on GitHub](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/StochasticGradientDescent.ipynb)
 · [Run in Colab](https://colab.research.google.com/github/fjhickernell/MATH565Fall2026/blob/main/notebooks/performance/StochasticGradientDescent.ipynb)
 
-- Parts 1–2: optional geometry, backtracking and curvature detail
+- Part 1: banana-valley paths and backtracking; Part 2: optional curvature calculations
 - Parts 3–4: optional variance, expected-descent and noise-floor calculations
 - [Parts 5–6]{.alert}: logistic regression at equal component work and measured time
 - Sampled/full-loss diagnostics and the final gradient check have separate timers
@@ -2580,99 +2756,224 @@ available to SGD. Keep the distinction explicit when discussing stopping.
 # Monte Carlo Tree Search {.tree-marker-slide tree-marker="monte-carlo-tree-search"}
 
 - [Choose an action by simulating futures](#choose-an-action-by-simulating-futures)
+- [Turn simulated trips into values](#turn-simulated-trips-into-values)
 - [One tree-search iteration](#one-tree-search-iteration)
 - [Exploration versus exploitation](#exploration-versus-exploitation)
+- [Follow one simulation through the tree](#follow-one-simulation-through-the-tree)
+- [From search to a decision](#from-search-to-a-decision)
+- [Tree-search companion notebook](#tree-search-companion-notebook)
 
 ## Choose an action by simulating futures {.tree-marker-slide tree-marker="monte-carlo-tree-search"}
 
-At the current state, choose an action with a high [expected return]{.alert}
+Choose an [airport itinerary]{.alert} before departure; traffic makes arrival uncertain
 
-- A node represents a state or decision history; branches represent possible actions
-- A simulator generates possible continuations and their rewards
-- Grow the tree where additional simulations are most useful
-- Applications include game moves and sequential planning
+![](assets/mcts/airport-route-tree.svg){fig-alt="A tree of partial airport itineraries: choose North, Central or South, then a connector; four further binary choices lead to a complete route whose traffic is simulated" width="69%" fig-align="center"}
+
+- Nodes: [partial plans]{.alert}; branches: the next route choice
+- Six segments give $3\times2^5=96$ plans; twenty give $3\times2^{19}>1.5$ million
+- Spend a limited simulation budget on [promising continuations]{.alert}
+
+::: {.notes}
+MCTS means Monte Carlo tree search, distinct from MCMC target sampling.
+This synthetic example selects the whole itinerary before departure. Traffic
+is drawn only after all route choices are set; no en-route observations or
+rerouting are modeled. A node is a route prefix, not an observed traffic
+state. Arrows represent choices, not chance outcomes. The pictured connector
+0/1 is the second segment; four binary segment choices remain in the default
+six-segment notebook model. The toy is deliberately small enough to check
+all 96 plans; the purpose of the tree is to show how the search could avoid
+exhaustive evaluation when the number of choices grows.
+
+A game gives another interpretation: nodes are positions, branches are moves,
+and a rollout completes a possible game. For two-player games, selection must
+account for the opponent's objectives; one cannot maximize our payoff at
+both players' turns. We use the single-agent route example to keep the first
+algorithm and its statistics transparent.
+Source: [Kocsis and Szepesvari (2006)](https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf).
+:::
+
+## Turn simulated trips into values
+
+For a complete plan $p$, simulate a travel time $T(p)$ and record
+
+\begin{equation*}
+R=\begin{cases}1 & \text{arrive by the deadline}\\0 & \text{arrive late}\end{cases}
+\qquad
+\mu(p)=\Ex(R)=\Prob\bigl(T(p)\leq t_{\max}\bigr)
+\end{equation*}
+
+At a stored branch, keep [successes]{.alert} $W$ and [visits]{.alert} $N$
+
+\begin{equation*}
+\overline Q=\frac{W}{N}
+\qquad
+\frac{28\text{ on-time trips}}{40\text{ simulations}}=0.70
+\end{equation*}
+
+- A [rollout]{.alert}: complete the remaining choices, then simulate the trip
+- Early rollouts use simple random choices; deeper search can improve the continuations
 
 ::: {.key-point}
-Monte Carlo estimates guide [which action to take]{.alert} and [where to search next]{.alert}
+A branch's average summarizes the [continuations tried so far]{.alert}
 :::
 
 ::: {.notes}
-MCTS means Monte Carlo tree search, not Markov chain tree search. It is a
-sequential-decision and search method, distinct from MCMC target sampling.
-For this introduction use a finite-horizon, single-agent planning problem
-with bounded rewards and a simulator for state transitions. A return is the
-sum of future rewards, with discounting if specified. A fixed rollout policy
-estimates its own continuation value, not automatically the optimal value;
-continued tree expansion and improved decisions matter. Stochastic transitions
-can be represented by chance nodes or sampled within the simulator.
-Source: [Kocsis and Szepesvari (2006)](https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf).
+For one fixed complete plan, independent traffic simulations give ordinary
+Bernoulli observations of its on-time probability. For a fixed randomized
+continuation policy at an internal node, they estimate that policy's value.
+The tree search changes its downstream choices as it learns, so the internal
+branch averages combine different continuation policies. They are not IID
+estimates of a single fixed plan's probability, nor automatically its optimal
+continuation value. The desired planning decision is a plan with large mu(p).
+There is no reward before completion and no discount in this example, so one
+terminal return can be backed up unchanged through the stored path.
 :::
 
 ## One tree-search iteration {.tree-marker-slide tree-marker="monte-carlo-tree-search"}
 
-| Step | What happens |
+| Step | Airport-route interpretation |
 |:---|:---|
-| [Select]{.alert} | Follow branches using estimated returns and exploration bonuses |
-| [Expand]{.alert} | Add an untried action or a new node when possible |
-| [Simulate]{.alert} | Complete a rollout to a terminal state or chosen horizon |
-| [Backpropagate]{.alert} | Update visit counts and average returns along the traversed path |
+| [Select]{.alert} | Follow stored route choices using values and exploration bonuses |
+| [Expand]{.alert} | Store one untried next-segment choice |
+| [Roll out]{.alert} | Randomly complete the plan and simulate its traffic |
+| [Back up]{.alert} | Add one visit and the return $R$ along the stored path |
 
-Repeat until the simulation budget is exhausted, then choose a root action
+Repeat until the [simulation budget]{.alert} is exhausted
 
 ::: {.key-point}
-Allocate simulations [adaptively]{.alert}; avoid exploring every branch equally
+Simulate complete futures; [store and grow only part of the tree]{.alert}
 :::
 
 ::: {.notes}
-Backpropagation here means updating tree statistics, not differentiating
-through a neural network. Each ancestor uses the return appropriate to its
-position on the path, including rewards and discounting when relevant.
-Terminal states skip expansion and rollout. A truncated rollout may use a
-value approximation, adding modeling error. A common final choice is the
-most visited root action; distinguish that decision rule from the exploratory
-selection rule used during tree growth. Parallel rollouts are possible,
-but MCTS is a search strategy with its own separate teaching purpose.
+Backpropagation, or backup, here means updating tree statistics, not
+neural-network differentiation. An iteration selects existing nodes until
+an expandable node or a terminal plan, expands one untried action if
+available, and samples one terminal return. Newly sampled rollout actions
+need not all become stored nodes. A terminal plan still gets a new traffic
+simulation. General problems can have intermediate rewards, discounting,
+stochastic transitions or a truncated rollout with a value approximation;
+they require the corresponding return calculation and state representation.
 :::
 
 ## Exploration versus exploitation {.tree-marker-slide tree-marker="monte-carlo-tree-search"}
 
-An illustrative [UCT]{.alert} selection score for visited actions is
+For a visited action, an illustrative [UCT]{.alert} selection score is
 
-$$
-\overline Q(s,a)+c\sqrt{\frac{\log N(s)}{N(s,a)}}
+\begin{equation*}
+\underbrace{\overline Q(s,a)}_{\text{exploit a high average}}
++\underbrace{c\sqrt{\frac{\log N(s)}{N(s,a)}}}_{\text{explore a less-visited branch}}
 \qquad c>0
-$$
+\end{equation*}
 
-- $\overline Q(s,a)$: estimated return — [exploit]{.alert} promising actions
-- $N(s)$ and $N(s,a)$: state and action visit counts
-- The bonus favors less visited actions — [explore]{.alert} uncertain alternatives
+Illustrative snapshot: $N(s)=60$ simulations, $c=0.2$
 
-For $N(s)=60$ and $c=0.2$,
-
-| Action | $N(s,a)$ | $\overline Q(s,a)$ | Selection score |
-|:---|---:|---:|---:|
-| A | 40 | 0.70 | 0.764 |
-| B | 10 | 0.60 | 0.728 |
-| C | 10 | 0.68 | 0.808 |
+| First route | Successes $W(s,a)$ | Visits $N(s,a)$ | Average | Score |
+|:---|---:|---:|---:|---:|
+| A · North | 28 | 40 | 0.70 | 0.764 |
+| B · Central | 9 | 15 | 0.60 | 0.704 |
+| C · South | 3 | 5 | 0.60 | 0.781 |
 
 ::: {.exitem}
 <span class="exbullet">$\exstar$</span>
-<span>Which action gets the next simulation, and why is it different from the largest estimated return?</span>
+<span>Which branch gets the next simulation, and why?</span>
 :::
 
 ::: {.notes}
-Choose C, despite A having the largest current mean. Its exploration bonus
-is about 0.128 versus about 0.064 for A. Visit untried actions before applying
-the formula so no division by zero occurs. The natural logarithm is used;
-rewards are scaled to [0,1] for this illustration. UCT means upper confidence
-bounds applied to trees. The exploration parameter c depends on reward scale
-and the chosen UCT convention. This is an illustrative selection score, not
-a confidence interval for an arbitrary adaptively generated tree return.
-Tree return distributions evolve as the search policy changes; ordinary IID
-standard-error reasoning does not automatically apply. Original UCT results
-require assumptions such as bounded rewards and finite-horizon or discounted
-planning. No finite-budget optimal-action guarantee is claimed.
-Source: [Kocsis and Szepesvari, Bandit based Monte-Carlo Planning (2006)](https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf).
+Choose C. Its exploration bonus is about .181 versus .064 for A and .104
+for B. N(s) counts visits to the current tree node; N(s,a) counts visits
+to a child reached by action a. Visit untried actions before using the
+formula so no division by zero occurs. The natural logarithm is used and
+rewards are in [0,1]. These counts are a constructed teaching snapshot, not
+outputs claimed for the notebook's default run. Before the backup the total
+successes at the root are 28+9+3=40 and total visits are 40+15+5=60.
+
+UCT means upper confidence bounds applied to trees. The exploration
+parameter depends on reward scale and convention. It directs search; do
+not call this bonus a calibrated confidence interval for arbitrary adaptive
+tree returns. Downstream return distributions change during search. We
+claim neither a finite-budget optimal-action guarantee nor IID error bars
+for these changing-policy averages.
+Source: [Kocsis and Szepesvari (2006)](https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf).
+:::
+
+## Follow one simulation through the tree
+
+![](assets/mcts/mcts-one-iteration.svg){fig-alt="Select South C and its stored child C–1, expand C–1–0, randomly complete the remaining three route choices and simulate an on-time arrival, then back up return one along that stored path" width="72%" fig-align="center"}
+
+For the successful simulation, update $N\leftarrow N+1$ and $W\leftarrow W+R$
+
+\begin{equation*}
+\text{C: }\frac{3}{5}\longrightarrow\frac{4}{6}
+\qquad
+\text{new C–1–0: }\frac{1}{1}
+\qquad
+\text{root visits: }60\longrightarrow61
+\end{equation*}
+
+::: {.notes}
+Read the solid tree downward: select C by the preceding UCT calculation,
+then its stored connector 1. The displayed child statistics make C–1's UCT
+score larger than C–0's. Expand C–1–0, its untried next choice. Three
+further binary choices are sampled during the rollout but not yet stored.
+Sample traffic for the complete plan; the successful trip returns R=1.
+Increment root, C, C–1 and the new node once, adding one success to each.
+C–1 goes from 1/1 to 2/2; root successes become 41. Siblings are untouched.
+The new child's average 1 comes from one simulation, not a reliable claim
+that its route always arrives on time. The first C visit rolled out before
+it had stored children: that initial 1/1 plus C–0's 1/3 and C–1's 1/1 account
+for C's full 3/5. Thus both binary children already exist before this iteration.
+
+:::
+
+## From search to a decision
+
+[Searching]{.alert}: which branch deserves the next simulation?
+
+- UCT includes an exploration bonus; the example next explores C
+
+[Acting]{.alert}: which route choice do we recommend after the budget?
+
+- One common rule: choose the [most visited]{.alert} root action — currently A
+- In this itinerary example, continue through the most visited children to build a plan
+- More simulations can improve the recommendation; a small budget can miss a good route
+
+::: {.key-point}
+[Best-looking so far]{.alert} is useful evidence, not proof of the best possible plan
+:::
+
+::: {.notes}
+The final recommendation rule is separate from the rule that allocates
+simulations. Most-visited child is a common convention, not the only one.
+For this notebook, apply it at each stored prefix and specify how an
+unexpanded remainder is completed. This extracts one complete itinerary;
+its true on-time probability is evaluated only by the independent benchmark.
+A root average mixes attempted continuations and should not be substituted
+for that particular itinerary's probability. In a game or online planning
+problem one often executes just the root action, observes the new state and
+searches again; our before-departure itinerary deliberately keeps a fixed
+plan and samples traffic afterward.
+:::
+
+## Tree-search companion notebook {#tree-search-companion-notebook}
+
+[Open Monte Carlo Tree Search on GitHub](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/MonteCarloTreeSearch.ipynb)
+· [Run in Colab](https://colab.research.google.com/github/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/MonteCarloTreeSearch.ipynb)
+
+- Draw a route tree and track its visits and on-time returns
+- Run selection, expansion, rollout and backup
+- Compare adaptive search with uniform route sampling at the [same simulation budget]{.alert}
+- Use the small exact benchmark to check the [recommended itinerary]{.alert}
+
+::: {.exitem}
+<span class="exbullet">$\exstar$</span>
+<span>
+Change the simulation budget or exploration weight $c$
+<span class="exsub">Does a high early success rate always identify the best complete plan?</span>
+</span>
+:::
+
+::: {.refs}
+[Kocsis and Szepesvari: Bandit based Monte-Carlo Planning](https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf)
 :::
 
 # Big Ideas {data-state="goldborder" .tree-marker-slide tree-marker="prob-stat-est"}

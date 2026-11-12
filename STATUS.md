@@ -655,8 +655,9 @@ appropriate phase rather than appended indiscriminately.
     monitoring and benchmark costs. Distinguish retrospective attainment from
     budget stops and endpoint certification. Mark the original smaller-data
     problem as optional Part 7. All 14 code cells and 11 figures validate in
-    default and m=2/partial-batch configurations; instructor review remains
-    open (November 11).
+    default and m=2/partial-batch configurations (November 11).
+    Issue #5 closed at Fred's direction after verification of the completed
+    comparison (November 12); broader instructor review remains open.
   - [x] Correct the Keister stopping explanation to use the configured
     `tolerance`, each rule’s own reported radius and the separate independent
     reference error. All code and saved outputs are unchanged; issue #3 closed,
@@ -755,6 +756,15 @@ appropriate phase rather than appended indiscriminately.
   - [ ] Review Lectures 04–05 individually with the instructor and refine
     their scope, narrative, examples, and visible layout.
   - [x] Add an introductory Monte Carlo tree search (MCTS) section in Deck 05, separate from parallel computing and stochastic optimization; instructor review remains pending.
+  - [x] Expand MCTS around an airport itinerary tree, binary on-time returns,
+    successes/visits, a consistent UCT-and-backup example and final plan choice.
+    Add the executable Applications companion with actual search-tree plots,
+    exact benchmarks and all 20 equal-budget comparisons; instructor review
+    remains open (November 12).
+  - [x] Restore Rosenbrock's banana valley and actual GD zigzags to the main
+    SGD lecture. Use b=10 in the introductory and detailed quadratic path
+    pictures, with the same nonradial start (-3.2,1.0) throughout the slide and
+    notebook toy comparisons; retain b=1/10/100 noise comparisons (November 12).
   - [x] Prepare the CPU/GPU notebook with bounded batches and clean Mini MPS execution; initial instructor trials on Mini and M5 are complete. The expanded notebook adds diagnostics, both speedup graphs, and machine labels, including macOS GPU core counts. The current saved M3 Max run has all fourteen code cells completed without errors. A light interpretation pass and three Deck 05 continuation slides explain timing baselines, same-time accuracy, and correlated outputs; instructor content review remains pending.
 - [ ] Adapt course pages and policies to the authoritative repository.
 - [ ] Migrate assignments, notebooks, examples, and required static assets.
