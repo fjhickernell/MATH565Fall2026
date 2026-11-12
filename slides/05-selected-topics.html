@@ -36,7 +36,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="05-selected-topics_files/libs/revealjs/dist/theme/quarto-538f1d525de29b9f2780503f91c36ede.css">
+  <link rel="stylesheet" href="05-selected-topics_files/libs/revealjs/dist/theme/quarto-3eb3f52654f87f7fb66b054577f71d8c.css">
   <link rel="stylesheet" href="_partials/prayer-service/prayer-service.css">
   <link href="05-selected-topics_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="05-selected-topics_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -727,6 +727,9 @@ This deck
 </div>
 
 <p><span id="parallel-and-stochastic-computation"></span></p>
+<div class="section-main-idea">
+<p>Evaluate different sample points on several processors to <span class="alert">reduce elapsed time</span></p>
+</div>
 <ul>
 <li><a href="#/parallel-computing">Parallel computing</a></li>
 <li><a href="#/cpu-and-gpu-monte-carlo">CPU and GPU Monte Carlo</a></li>
@@ -901,7 +904,9 @@ s=\frac{\operatorname{time}_{\mathrm{baseline}}(n)}{\operatorname{time}_{\mathrm
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
-<p>Estimate expensive expectations by <span class="alert">combining cheap approximations with coupled corrections</span><br> Allocate work where it buys the greatest reduction in error</p>
+<div class="section-main-idea">
+<p>Combine many cheap coarse samples with fewer correction samples to <span class="alert">reduce the cost</span> of accurately estimating an expectation with high dimensional random input</p>
+</div>
 <p><a href="#/mlmc-glossary">Common MLMC glossary</a></p>
 <ul>
 <li><a href="#/two-level-monte-carlo">Two-level Monte Carlo</a></li>
@@ -940,7 +945,7 @@ s=\frac{\operatorname{time}_{\mathrm{baseline}}(n)}{\operatorname{time}_{\mathrm
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><span class="math inline">\(Y_\ell\)</span></td>
-<td style="text-align: left;">Cheap output at level 1; coupled correction at later levels</td>
+<td style="text-align: left;">Cheap output at level 1; fine output minus coarse output at later levels</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><span class="math inline">\(\mu_\ell\)</span>, <span class="math inline">\(\hmu_\ell\)</span></td>
@@ -1028,7 +1033,7 @@ C=n_1\$_1+n_2\$_2+\cdots+n_L\$_L
 <li><span class="alert">Computational finance</span>: <span class="math inline">\(d=\)</span> time steps <span class="math inline">\(\times\)</span> number of assets</li>
 <li><span class="alert">ODE/PDE models with random fields</span>: <span class="math inline">\(d=\)</span> grid points representing the field</li>
 </ul>
-<p>Choose <span class="math inline">\(d_1\ll d_2 = d\)</span> and <span class="alert">couple</span> the coarse and fine approximations</p>
+<p>Choose <span class="math inline">\(d_1\ll d_2=d\)</span>; couple the outputs to <span class="alert">reduce the variance of their difference</span></p>
 <p><span class="math display">\[\begin{align*}
 Y_1&amp;=f_{d_1}(\vX_{1:d_1})&amp; &amp;\alerttext{cheap}\text{ approximation}\\
 Y_2&amp;=f_{d_2}(\vX_{1:d_2})-f_{d_1}(\vX_{1:d_1})&amp; &amp;\alerttext{expensive}\text{ correction}
@@ -1040,7 +1045,7 @@ Y_2&amp;=f_{d_2}(\vX_{1:d_2})-f_{d_1}(\vX_{1:d_1})&amp; &amp;\alerttext{expensiv
 <p>Estimate the <span class="alert">cheap part often</span> and the <span class="alert">expensive correction less often</span>, if its error is easier to control</p>
 </div>
 <aside class="notes">
-<p>Here mu is the full two-level mean at the fixed fine resolution d=d2, equal to mu1+mu2. The hierarchy section separately distinguishes a finite fine mean from a limiting target when introducing approximation bias. The displayed linear cost is an illustrative model for evaluation, not a universal dimension law. Cost includes input generation, transforms, and evaluation; dense factorizations or other solvers can cost more than O(d). In finance, d can count the scalar random inputs for a time-by-asset path discretization. In a random-field ODE/PDE model, d can count field values on a grid; the field-generation and solver costs need not be linear in d. A complete coupled correction costs roughly the fine evaluation plus any coarse work that cannot be reused. Its cost is typically of order d2 in this illustrative setting, whereas the cheap level costs order d1. Within Y2, coarse and fine approximations share a path or compatible inputs. For time discretizations, preserve Brownian values at shared times; a Brownian bridge can refine the coarse path. Between the two level estimators, use independent samples or independent RQMC randomizations. A small mean correction does not imply a small variance or a small QMC error constant. Coupling should make the correction easier to integrate; that property, together with the cost ratio, must justify two levels.</p>
+<p>Here mu is the full two-level mean at the fixed fine resolution d=d2, equal to mu1+mu2. The hierarchy section separately distinguishes a finite fine mean from a limiting target when introducing approximation bias. The displayed linear cost is an illustrative model for evaluation, not a universal dimension law. Cost includes input generation, transforms, and evaluation; dense factorizations or other solvers can cost more than O(d). In finance, d can count the scalar random inputs for a time-by-asset path discretization. In a random-field ODE/PDE model, d can count field values on a grid; the field-generation and solver costs need not be linear in d. A complete coupled correction costs roughly the fine evaluation plus any coarse work that cannot be reused. Its cost is typically of order d2 in this illustrative setting, whereas the cheap level costs order d1. Within Y2, coarse and fine approximations share a path or compatible inputs. The two outputs being subtracted are coupled; the goal is small variance of their difference, not small variance of either output separately. If F and G denote the fine and coarse outputs within one correction, then Var(F-G)=Var(F)+Var(G)-2 Cov(F,G). A strong positive covariance can therefore reduce correction variance, even when both output variances are substantial. Coupling is a joint construction preserving the required marginal law of each output. Shared randomness alone does not guarantee a good coupling. The expectation identity remains valid because those marginal means are unchanged. The expectation here is scalar; high dimensionality describes the random input vector used to generate the output. For time discretizations, preserve Brownian values at shared times; a Brownian bridge can refine the coarse path. Between the two level estimators, use independent samples or independent RQMC randomizations. A small mean correction does not imply a small variance or a small QMC error constant. Coupling should make the correction easier to integrate; that property, together with the cost ratio, must justify two levels.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1071,7 +1076,7 @@ Y_2&amp;=f_{d_2}(\vX_{1:d_2})-f_{d_1}(\vX_{1:d_1})&amp;&amp;\alerttext{expensive
 <li>Estimate <span class="math inline">\(\Ex(Y_2)\)</span> from a <span class="alert">separate independent</span> set of bridge-refined paths</li>
 </ul>
 <div class="key-point">
-<p>The two payoffs in <span class="math inline">\(Y_2\)</span> use the <span class="alert">same Brownian path</span> at two resolutions</p>
+<p>Same path, two payoffs in <span class="math inline">\(Y_2\)</span>; aim for <span class="alert">small variance of their difference</span></p>
 </div>
 <aside class="notes">
 <p>Here X_1:d1 contains coarse-grid Brownian values. Append the conditionally generated Brownian-bridge values at added times to obtain X_1:d2. This is hierarchical rather than chronological ordering. Each payoff function knows the monitoring times attached to its inputs and restores chronological order when needed. Thus the coarse vector is literally a prefix of the fine vector, matching the f_d notation on the preceding slide. Nested grids may be nonuniform. Counts d1 and d2 are positive integers and kappa=d2/d1&gt;1. Equally spaced nested grids require an integer refinement factor; general nested grids allow other ratios. No bridge-generation details are needed here. The notebook’s dyadic grids illustrate one particular choice. The fine and coarse approximations use the same Brownian values at shared times; their payoffs need not agree. Generate correction paths independently of the coarse-only sample set used for the cheap mean. For RQMC, use independent randomizations between level estimates; points within a run may be dependent. The coarse-only sample has the same marginal law as the coarse part of a refined path, preserving the telescoping expectation identity. Coupling’s benefit still depends on the correction’s method-specific error.</p>
@@ -1568,10 +1573,10 @@ Y_\ell&amp;=f_{d_\ell}(\vX_{1:d_\ell})
 =\sum_{\ell=1}^L\Ex(Y_\ell)
 \]</span></p>
 <div class="key-point">
-<p>One cheap approximation plus a sequence of <span class="alert">coupled corrections</span></p>
+<p>One cheap approximation plus differences of <span class="alert">coupled fine/coarse pairs</span></p>
 </div>
 <aside class="notes">
-<p>The two-level construction extends without a new integration principle. Use compatible inputs within each difference and separate independent sample sets or randomizations for the different level means. Detailed estimator and error-model reference:</p>
+<p>The two-level construction extends without a new integration principle. Use compatible inputs within each difference and separate independent sample sets or randomizations for the different level means. Couple the two neighboring approximation outputs within each correction. For IID sampling, a useful coupling makes their difference have small variance, without requiring either output itself to have small variance. For QMC/RQMC, correction variance alone is insufficient: the relevant smoothness and integration-error amplitudes must also be favorable. Detailed estimator and error-model reference:</p>
 <p>A hierarchy of coupled approximations</p>
 <p>Suppose</p>
 <p><span class="math display">\[
@@ -2031,7 +2036,7 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 <h3 id="multilevel-allocation-in-practice">Multilevel in practice</h3>
 <p><span id="why-telescoping-helps-qmc"></span> <span id="deterministic-multilevel-budget"></span> <span id="multilevel-qmc-cost-exponent"></span> <span id="multilevel-practical-error-budget"></span></p>
 <ul>
-<li>Use pilots to measure <span class="alert">correction variance and complete cost</span>, then allocate samples</li>
+<li>For IID, use pilot runs to measure <span class="alert">correction variance and complete cost</span>, then allocate samples</li>
 <li>Assess remaining <span class="alert">approximation bias</span>; one small correction does not bound the omitted tail</li>
 <li>QMC can improve sampling accuracy when coupling preserves suitable <span class="alert">smoothness</span></li>
 <li>Count pilots, setup, and allowed sample sizes in the total work</li>
@@ -2081,8 +2086,16 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
       }</style></aside>
 </section></section>
 <section>
-<section id="stochastic-gradient-descent-section" class="title-slide slide level1 center">
+<section id="stochastic-gradient-descent-section" class="title-slide slide level1 tree-marker-slide center" data-tree-marker="stochastic-optimization">
 <h1>Stochastic Gradient Descent</h1>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="stochastic-optimization" style="--tree-left: 77%; --tree-top: 46%; --tree-align: center;">Stochastic<br>Optimization</div>
+</div>
+
+<div class="section-main-idea">
+<p>Sample a few observations per update for <span class="alert">cheap optimization moves</span>, while controlling gradient noise</p>
+</div>
 <div class="columns">
 <div class="column" style="width:47%;">
 <ul>
@@ -2092,6 +2105,7 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 <li><a href="#/gradient-noise-variance">Noise near the solution</a></li>
 <li><a href="#/practical-learning-rates">Monitor progress between blocks of moves</a></li>
 <li><a href="#/a-large-data-example">A large-data example</a></li>
+<li><a href="#/gd-and-sgd-compared">GD and SGD compared</a></li>
 <li><a href="#/jordan-optimization">Beyond SGD</a></li>
 </ul>
 </div><div class="column" style="width:6%;">
@@ -2101,7 +2115,7 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="05-selected-topics_files/figure-revealjs/sgd-outline-paths-output-1.svg" id="sgd-outline-paths" class="quarto-figure quarto-figure-center" alt="Contours of an average quadratic loss with two paths from the same start: full-gradient descent approaches the minimizer smoothly, while mini-batch SGD with ten observations per update approaches a smaller noisy neighborhood"></p>
+<p><img data-src="05-selected-topics_files/figure-revealjs/sgd-outline-paths-output-1.svg" id="sgd-outline-paths" class="quarto-figure quarto-figure-center" alt="Contours of an average quadratic loss with two paths from the same start: full-gradient descent zigzags toward the minimizer, while mini-batch SGD with ten observations per update approaches a noisy neighborhood"></p>
 </figure>
 </div>
 </div>
@@ -2121,11 +2135,11 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
           display:block!important;
       }</style></aside>
 </section>
-<section id="gradient-descent" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<section id="gradient-descent" class="slide level2 tree-marker-slide" data-tree-marker="stochastic-optimization">
 <h2>Optimize a loss function</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+  <div class="tree-component__label" data-label-id="stochastic-optimization" style="--tree-left: 77%; --tree-top: 46%; --tree-align: center;">Stochastic<br>Optimization</div>
 </div>
 
 <p>Choose <span class="math inline">\(m\)</span> parameters <span class="math inline">\(\vtheta\)</span> to make <span class="alert">loss</span> small</p>
@@ -2136,13 +2150,15 @@ C(\varepsilon)\propto\varepsilon^{-1/p}
 <li>Start from a guess; use local information to improve it</li>
 <li><span class="alert">Gradient</span>: which direction is downhill?</li>
 <li><span class="alert">Curvature</span>: how far should we move?</li>
+<li><span class="alert">Conditioning</span>: how unequal is curvature across directions?</li>
+<li><span class="alert">Cost</span>: could sampled loss terms give a cheaper gradient estimate?</li>
 <li>An exact local direction usually does not solve the whole problem</li>
 </ul>
 <div class="key-point">
 <p>Optimization usually needs <span class="alert">many moves</span>; compare their total cost</p>
 </div>
 <aside class="notes">
-<p>We consider differentiable unconstrained minimization and assume a minimizer exists when referring to theta_*. It may be nonunique. The objective need not be a data average; that structure is introduced at the SGD transition. Exact quadratic models can have a one-step solution. The message is that an exact gradient is local information, not generally an exact minimizer.</p>
+<p>We consider differentiable unconstrained minimization and assume a minimizer exists when referring to theta_*. It may be nonunique. The objective need not be a data average; that structure is introduced at the SGD transition. Curvature sets the local step scale; conditioning describes the imbalance between directional curvatures. One step size can make slow progress along a narrow valley even when every gradient is exact. The cost question previews sampling contributions when the objective is an average or expectation. We estimate the gradient of the same objective; a cheaper sampled gradient does not itself fix poor conditioning or establish lower total work. Exact quadratic models can have a one-step solution. The message is that an exact gradient is local information, not generally an exact minimizer.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -2537,11 +2553,11 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
           display:block!important;
       }</style></aside>
 </section>
-<section id="why-cheap-gradients-matter" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<section id="why-cheap-gradients-matter" class="slide level2 tree-marker-slide" data-tree-marker="stochastic-optimization">
 <h2>When the full loss is expensive</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+  <div class="tree-component__label" data-label-id="stochastic-optimization" style="--tree-left: 77%; --tree-top: 46%; --tree-align: center;">Stochastic<br>Optimization</div>
 </div>
 
 <p><span id="scalar-regression-loss"></span> <span id="many-optimization-moves"></span> <span id="full-versus-sampled-gradient-cost"></span></p>
@@ -2649,11 +2665,11 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
           display:block!important;
       }</style></aside>
 </section>
-<section id="stochastic-gradient-descent" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<section id="stochastic-gradient-descent" class="slide level2 tree-marker-slide" data-tree-marker="stochastic-optimization">
 <h2>Cheap sampled updates</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+  <div class="tree-component__label" data-label-id="stochastic-optimization" style="--tree-left: 77%; --tree-top: 46%; --tree-align: center;">Stochastic<br>Optimization</div>
 </div>
 
 <p><span id="mini-batches-and-gradient-noise"></span></p>
@@ -2740,8 +2756,13 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
           display:block!important;
       }</style></aside>
 </section>
-<section id="gradient-noise-variance" class="slide level2">
+<section id="gradient-noise-variance" class="slide level2 tree-marker-slide" data-tree-marker="stochastic-optimization">
 <h2>Noise near the solution</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="stochastic-optimization" style="--tree-left: 77%; --tree-top: 46%; --tree-align: center;">Stochastic<br>Optimization</div>
+</div>
+
 <p><span id="learning-rates-and-the-noise-floor"></span> <span id="scalar-noise-floor"></span> <span id="learning-rate-from-noise-floor"></span></p>
 <p>For <span class="math inline">\(\operatorname{loss}_i(\theta)=\tfrac12(\theta-a_i)^2\)</span>, with <span class="math inline">\(a_i=\pm1\)</span> equally often</p>
 <p><span class="math display">\[\begin{equation*}
@@ -2856,7 +2877,7 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
 <h3 id="gradient-and-stochastic-gradient-paths">Gradient and stochastic-gradient paths</h3>
 <p><span id="quadratic-component-losses"></span></p>
 <p>Toy objective: <span class="alert"><span class="math inline">\(m=2\)</span> parameters</span>, average of <span class="alert"><span class="math inline">\(N=1{,}000\)</span> loss terms</span><br> <span class="alert">Equal component-gradient work</span>: 45 GD moves versus 4,500 mini-batch moves<br> 45,000 contributions each: 1,000 per GD move; 10 per SGD move (<span class="math inline">\(b=10\)</span>)<br> Common rate <span class="math inline">\(\eta=0.5\)</span>; picture shows <span class="alert">first 60 mini-batch moves</span> (600 contributions)</p>
-<div id="551918f2" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="5">
+<div id="249c3df0" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -2880,18 +2901,18 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
           display:block!important;
       }</style></aside>
 </section>
-<section id="practical-learning-rates" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<section id="practical-learning-rates" class="slide level2 tree-marker-slide" data-tree-marker="stochastic-optimization">
 <h2>Monitor progress between blocks of moves</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
+  <div class="tree-component__label" data-label-id="stochastic-optimization" style="--tree-left: 77%; --tree-top: 46%; --tree-align: center;">Stochastic<br>Optimization</div>
 </div>
 
 <p><span id="monitoring-sgd"></span> <span id="choosing-the-learning-rate"></span> <span id="noise-estimates-and-learning-rates"></span></p>
 <ol type="1">
 <li>Choose a batch size, learning-rate schedule and <span class="alert">accuracy goal</span> or budget</li>
 <li>Make many cheap updates without evaluating the full loss</li>
-<li>Periodically compare loss on the <span class="alert">same</span> randomly selected diagnostic subset of <span class="math inline">\(s\)</span> observations, typically <span class="math inline">\(b\ll s\ll N\)</span></li>
+<li>Periodically compare loss on the <span class="alert">same</span> randomly selected <span class="alert">diagnostic</span> subset of <span class="math inline">\(s\)</span> observations, typically <span class="math inline">\(b\ll s\ll N\)</span></li>
 <li>If progress is poor, adjust the rate or batch size for the next block</li>
 <li>Stop when the accuracy check passes or the work budget is spent</li>
 </ol>
@@ -2915,9 +2936,9 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
 <section class="slide level2">
 
 <h3 id="sgd-monitoring-cost">Count monitoring in the cost</h3>
-<p>For <span class="math inline">\(K\)</span> mini-batch updates and <span class="math inline">\(J\)</span> full-loss checks</p>
+<p>For <span class="math inline">\(K\)</span> updates, <span class="math inline">\(J_s\)</span> <span class="alert">diagnostic</span> checks and <span class="math inline">\(J_N\)</span> full-loss checks</p>
 <p><span class="math display">\[\begin{equation*}
-\text{direct work}=O(Kbm+JNm)
+\text{direct training work}=O\bigl(m(Kb+J_s s+J_N N)\bigr)
 \end{equation*}\]</span></p>
 <table class="caption-top">
 <colgroup>
@@ -2951,14 +2972,14 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
 </tbody>
 </table>
 <ul>
-<li>Every update: full monitoring restores the <span class="math inline">\(O(KNm)\)</span> cost</li>
-<li>Every <span class="math inline">\(q\approx N/b\)</span> updates: one full check adds about one data pass</li>
+<li>One diagnostic check: work comparable to about <span class="math inline">\(s/b\)</span> updates</li>
+<li>One full check: work comparable to about <span class="math inline">\(N/b\)</span> updates</li>
 </ul>
 <div class="key-point">
 <p>Pay for checks <span class="alert">after many moves</span>, with cheaper diagnostics between</p>
 </div>
 <aside class="notes">
-<p>Loss and gradient evaluation constants differ. One check every q updates amortizes to O(bm+Nm/q) work per update, plus initial/final checks. A full check after about N/b updates has work of the same order as that block. For before/after comparisons use a common diagnostic sample; it can still miss behavior elsewhere. Repeated tuning against it creates selection effects. Post-update loss on the very update batch is optimistic. Validation measures a prediction goal, not training-objective optimality. Full-loss monitoring is used when affordable; large or streaming runs may rely on sampled checks. The companion’s sampled-loss and full-loss diagnostics are retrospective, outside optimizer timers, with their costs reported separately. Its endpoint full-gradient check assesses the tolerance after a budget stop; it does not implement an online stopping rule. Charge setup and tuning as well as these diagnostics in a complete practical comparison.</p>
+<p>Each update evaluates b observation gradients, each diagnostic check s loss terms, and each full-loss check N terms. J_s and J_N count their separate frequencies; either can be zero. Loss and gradient constants differ. With one diagnostic every q_s updates and one full check every q_N updates, the amortized direct work is O(m[b+s/q_s+N/q_N]) per update, plus initial/final checks. A diagnostic after about s/b updates or a full check after about N/b updates has work of the same order as its update block. These ratios use the preceding slide’s regime b&lt;=s&lt;=N and are comparisons of work order, not exact equality of measured times. Checking the full loss every update restores O(KNm) work, while diagnostic checks every update add O(Ksm). The displayed formula covers training-loss monitoring; add held-out validation costs, setup, tuning and final-gradient certification separately when reporting the complete algorithm cost. For before/after comparisons use a common diagnostic sample; it can still miss behavior elsewhere. Repeated tuning against it creates selection effects. Post-update loss on the very update batch is optimistic. Validation measures a prediction goal, not training-objective optimality. Full-loss monitoring is used when affordable; large or streaming runs may rely on sampled checks. The companion’s sampled-loss and full-loss diagnostics are retrospective, outside optimizer timers, with their costs reported separately. Its endpoint full-gradient check assesses the tolerance after a budget stop; it does not implement an online stopping rule. Charge setup and tuning as well as these diagnostics in a complete practical comparison.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3023,10 +3044,11 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
           display:block!important;
       }</style></aside>
 </section>
-<section id="a-large-data-example" class="slide level2 tree-marker-slide" data-tree-marker="estimation">
+<section id="a-large-data-example" class="slide level2 tree-marker-slide" data-tree-marker="stochastic-optimization-estimation">
 <h2>A large-data example</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 3.9; --tree-aspect-ratio: 4 / 3;">
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.7; --tree-aspect-ratio: 4 / 3;">
   <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="stochastic-optimization" style="--tree-left: 77%; --tree-top: 46%; --tree-align: center;">Stochastic<br>Optimization</div>
   <div class="tree-component__label" data-label-id="estimation" style="--tree-left: 43%; --tree-top: 61%; --tree-align: center;">Estimation</div>
 </div>
 
@@ -3229,8 +3251,8 @@ p_i(\vtheta)=\Prob_{\vtheta}(Y_i=1\mid\vx_i)
 </ul>
 <aside class="notes">
 <p>One fixed dataset is generated with seed 5652105. All methods use those exact observations, lambda=.02, and the same zero initial vector. Five IID update streams assess sampling variability; five deterministic GD repeats assess machine timing. Rates are declared before the comparison: full GD 1/L and SGD .3 fixed or .3/(1+w/(.25N)). No rate-search pilot is hidden.</p>
-<p>The notebook reports all five predeclared targets: .01, .001, .0001, .00001 and .000001. This slide selects three. At each reported attained target all five repeats succeed; dashes mean zero of five. At .001 the median update contributions are 524288 for GD, 15360 for fixed mini-batches and 17408 for decaying mini-batches: about 34 and 30 times fewer for a useful answer. Saved Mini median update times are about 4 ms for GD and 1–2 ms for the sampled methods; exact values are in the notebook. Adding the separately measured curvature/subset setup and sampled checks through that crossing gives about 6 ms for GD and 2–3 ms for sampled methods. Shared data preparation and reference/full-loss benchmarking are separate.</p>
-<p>At .0001, decaying mini-batches use about 2.04 passes versus GD’s 3, but update times are about 45 versus 6 ms. At .000001, only GD reaches the target within the budget. Fixed-rate SGD can cross a useful target and later leave it. These are empirical optimization-loss results, not a general speed guarantee or a prediction-error comparison. Component-gradient contributions are an operation-count proxy, not complete FLOP counts.</p>
+<p>The notebook reports all five predeclared targets: .01, .001, .0001, .00001 and .000001. This slide selects three. At each reported attained target all five repeats succeed; dashes mean zero of five. At .001 the median update contributions are 524288 for GD, 15360 for fixed mini-batches and 17408 for decaying mini-batches: about 34 and 30 times fewer for a useful answer. Saved M3 median update times are about 10.2 ms for GD, 1.5 ms for fixed mini-batches and 1.8 ms for decaying mini-batches; exact values are in the notebook. Adding the separately measured curvature/subset setup and sampled checks through that crossing gives about 13.4 ms for GD, 2.3 ms for fixed mini-batches and 2.7 ms for decaying mini-batches. Shared data preparation and reference/full-loss benchmarking are separate.</p>
+<p>At .0001, decaying mini-batches use about 2.04 passes versus GD’s 3, but update times are about 48.2 versus 15.9 ms on M3. At .000001, only GD reaches the target within the budget. Fixed-rate SGD can cross a useful target and later leave it. These are empirical optimization-loss results, not a general speed guarantee or a prediction-error comparison. Component-gradient contributions are an operation-count proxy, not complete FLOP counts.</p>
 <p>Every run actually stops at the same eight-pass budget. First recorded crossings are assessed retrospectively using full-loss benchmarks and the numerical reference’s residual-gradient bound; checkpoint spacing limits resolution. No online accuracy-based stop is implemented. Endpoint certification costs another full-gradient pass and is separately reported. A phase-time sum is not an implemented early-stopping runtime.</p>
 <p>The smaller N=16384, b=64, twelve-pass experiment is explicitly separated as optional notebook Part 7, a different problem. It is not needed to demonstrate the useful-versus-fine-accuracy distinction, which is already visible on this one dataset. Parts 5–6 are the main classroom route.</p>
 <style type="text/css">
@@ -3245,8 +3267,97 @@ p_i(\vtheta)=\Prob_{\vtheta}(Y_i=1\mid\vx_i)
           display:block!important;
       }</style></aside>
 </section>
-<section id="jordan-optimization" class="slide level2">
+<section id="gd-and-sgd-compared" class="slide level2 tree-marker-slide" data-tree-marker="stochastic-optimization">
+<h2>GD and SGD compared</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="stochastic-optimization" style="--tree-left: 77%; --tree-top: 46%; --tree-align: center;">Stochastic<br>Optimization</div>
+</div>
+
+<p>Same average loss; both choose a direction and a learning rate</p>
+<div class="sgd-comparison-table">
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Full GD</th>
+<th style="text-align: left;">Mini-batch SGD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Direction</td>
+<td style="text-align: left;">Full gradient <span class="math inline">\(\vg_k\)</span></td>
+<td style="text-align: left;">Sampled <span class="math inline">\(\vG_k\)</span>: unbiased, noisy</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="alert">Learning rate</span>, <span class="math inline">\(\eta_k\)</span></td>
+<td style="text-align: left;">Expand and backtrack using the full loss</td>
+<td style="text-align: left;">Short pilots; then use a fixed or decaying schedule</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Update work</td>
+<td style="text-align: left;">All <span class="math inline">\(N\)</span> terms: <span class="math inline">\(O(Nm)\)</span></td>
+<td style="text-align: left;">Sample <span class="math inline">\(b\)</span> terms: <span class="math inline">\(O(bm)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Total work</td>
+<td style="text-align: left;"><span class="math inline">\(O(K_{\mathrm{GD}}Nm)+C_{\mathrm{GD}}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(O(K_{\mathrm{SGD}}bm)+C_{\mathrm{SGD}}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Near minimum</td>
+<td style="text-align: left;"><span class="math inline">\(\vg_k\)</span> approaches zero</td>
+<td style="text-align: left;">Noise can persist at fixed <span class="math inline">\(b\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Reduce noise effect</td>
+<td style="text-align: left;">No sampling noise</td>
+<td style="text-align: left;">Smaller steps, larger batches or variance reduction</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Check progress</td>
+<td style="text-align: left;">Full-gradient norm or loss</td>
+<td style="text-align: left;">Periodic checks with noise assessment</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span class="math inline">\(K\)</span>: each method’s updates to the target; <span class="math inline">\(C\)</span>: setup, tuning and all checking work</p>
+<div class="key-point">
+<p>Both face difficult geometry; compare <span class="alert">total work and time at the same accuracy</span></p>
+</div>
+<aside class="notes">
+<p>This is a recap of the examples, not a universal convergence theorem. The learning-rate row describes practical choices, not rules defining GD and SGD. For full GD, use a line search on the deterministic full loss: one possible recipe tries a larger trial rate (for example, double the previous rate), then halves until a sufficient-decrease condition holds. Keep an accepted step only after that check; enlargement is optional and can be capped. A valid curvature bound also gives a rate such as 1/L. The notebook’s Rosenbrock GD starts each search at 1 and halves with Armijo backtracking; its logistic GD instead uses a fixed 1/L_bound. It does not implement an expanding line search in either experiment.</p>
+<p>For practical SGD rate selection, compare candidate starting rates in short equal-work pilot runs using the same diagnostic subset, then choose a fixed or decaying schedule. Assess blocks of progress, not the sign of one noisy mini-batch loss change. Choose each next rate from past information before drawing the next update batch. Repeated deterioration suggests a smaller rate; persistent noise may suggest decay or a larger batch. Charge pilots and diagnostics to C. This is a practical recipe, not a guarantee or the only available stochastic step-selection method. The logistic notebook uses declared .3 or .3/(1+w/(.25N)), with w the previous component work; it implements neither a pilot search nor feedback tuning. Keep those declared experimental settings distinct from this general guidance.</p>
+<p>Full GD uses g_k=grad Loss(theta_k), evaluated up to floating-point error. Mini-batch SGD uses the fresh uniform-with-replacement indices already defined in this section; its conditional mean is g_k. Direct dense-model work is O(Nm) versus O(bm); exploit reusable structure when it is available. K_GD and K_SGD are generally different counts to the same accuracy target. C_GD and C_SGD are additional work, not elapsed time: include setup, pilots, tuning, diagnostic/full-loss monitoring, validation and final certification. For example, training-loss checks contribute O(m[J_s s+J_N N]) as on the monitoring-cost slide; counts and costs can differ by method. If the target is not attained within budget, report that rather than assigning an attained target cost. These expressions are comparison models, not new implemented early stops: the notebook’s first target crossings remain retrospective. The repeated-center toy can be simplified exactly, so it demonstrates geometry and sampling noise rather than a practical work saving.</p>
+<p>For the toy A=[[2,1],[1,2]] and balanced centers (+/-1,+/-1), the trace of the component-gradient covariance is 10, independent of theta. Averaging b independent contributions gives the mean squared gradient error 10/b. Thus approaching the minimizer does not itself improve a fixed-batch gradient estimate. In a general problem this persistence requires nonzero component-gradient variance at the solution; interpolation and some variance-reduced methods can instead have vanishing variance.</p>
+<p>Keep gradient-estimate convergence separate from iterate convergence. A decreasing learning rate can diminish noise in the parameter updates even when each fixed-batch gradient remains noisy. Appropriate schedules and regularity assumptions are still required. Larger batches improve the gradient estimate itself; smaller steps reduce its effect on the update. Fixed-rate SGD can fluctuate around a solution; full GD converges for the SPD quadratic at an admissible rate, but neither method has a general global guarantee for nonconvex losses. Conditioning and scaling affect both.</p>
+<p>A small sampled gradient is not automatically a small full gradient. The notebook’s loss-gap curves are retrospective benchmarks, not an online stopping test. Its endpoint full-gradient certificate is checked separately; the cost of setup, monitoring, tuning and final checking belongs in a complete practical comparison. The earlier fixed-dataset results show SGD winning at a useful coarse accuracy and GD winning at a finer accuracy. Source: <a href="https://arxiv.org/abs/1606.04838">Bottou, Curtis and Nocedal, Optimization Methods for Large-Scale Machine Learning</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="jordan-optimization" class="slide level2 tree-marker-slide" data-tree-marker="stochastic-optimization">
 <h2>Beyond SGD</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="stochastic-optimization" style="--tree-left: 77%; --tree-top: 46%; --tree-align: center;">Stochastic<br>Optimization</div>
+</div>
+
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -3257,7 +3368,7 @@ p_i(\vtheta)=\Prob_{\vtheta}(Y_i=1\mid\vx_i)
 <tr class="header">
 <th>Research direction</th>
 <th>Contribution</th>
-<th>Connection to SGD</th>
+<th>Link to SGD</th>
 </tr>
 </thead>
 <tbody>
@@ -3333,15 +3444,25 @@ p_i(\vtheta)=\Prob_{\vtheta}(Y_i=1\mid\vx_i)
   <div class="tree-component__label" data-label-id="monte-carlo-tree-search" style="--tree-left: 56%; --tree-top: 17%; --tree-align: center;">Monte Carlo<br>Tree Search</div>
 </div>
 
+<div class="section-main-idea">
+<p>Simulate possible futures to <span class="alert">focus a limited search budget</span> on promising actions</p>
+</div>
+<div class="columns">
+<div class="column" style="width:47%;">
 <ul>
 <li><a href="#/choose-an-action-by-simulating-futures">Choose an action by simulating futures</a></li>
-<li><a href="#/turn-simulated-trips-into-values">Turn simulated trips into values</a></li>
 <li><a href="#/one-tree-search-iteration">One tree-search iteration</a></li>
-<li><a href="#/exploration-versus-exploitation">Exploration versus exploitation</a></li>
-<li><a href="#/follow-one-simulation-through-the-tree">Follow one simulation through the tree</a></li>
 <li><a href="#/from-search-to-a-decision">From search to a decision</a></li>
-<li><a href="#/tree-search-companion-notebook">Tree-search companion notebook</a></li>
 </ul>
+</div><div class="column" style="width:6%;">
+
+</div><div class="column" style="width:47%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="assets/mcts/mcts-search-preview.svg" class="quarto-figure quarto-figure-center" style="width:100.0%" alt="An unlabeled, partially expanded search tree with one route highlighted and a sampled continuation beyond the stored nodes"></p>
+</figure>
+</div>
+</div></div>
 </section>
 <section id="choose-an-action-by-simulating-futures" class="slide level2 tree-marker-slide" data-tree-marker="monte-carlo-tree-search">
 <h2>Choose an action by simulating futures</h2>
@@ -3376,13 +3497,73 @@ p_i(\vtheta)=\Prob_{\vtheta}(Y_i=1\mid\vx_i)
           display:block!important;
       }</style></aside>
 </section>
-<section id="turn-simulated-trips-into-values" class="slide level2">
-<h2>Turn simulated trips into values</h2>
-<p>For a complete plan <span class="math inline">\(p\)</span>, simulate a travel time <span class="math inline">\(T(p)\)</span> and record</p>
+<section class="slide level2">
+
+<h3 id="specify-a-travel-time-model">Specify a travel-time model</h3>
+<p>The notebook declares <span class="alert">synthetic</span> segment distributions in minutes</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">First road</th>
+<th style="text-align: right;">Base time</th>
+<th style="text-align: right;">Extra delay</th>
+<th style="text-align: right;">Delay probability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A · North</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">0.35</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B · Central</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C · South</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0.10</td>
+</tr>
+</tbody>
+</table>
+<p>For North’s first segment, <span class="math display">\[\begin{equation*}
+T_A=\begin{cases}10 &amp; \text{with probability }0.65\\36 &amp; \text{with probability }0.35\end{cases}
+\end{equation*}\]</span></p>
+<ul>
+<li>A fixed itinerary has a <span class="alert">random</span> total time; each trial draws fresh traffic</li>
+<li>Search also samples unfinished <span class="alert">route choices</span></li>
+<li>A real application needs a simulator fitted to travel-time observations</li>
+</ul>
+<aside class="notes">
+<p>These numbers are invented teaching parameters, declared in FIRST_SEGMENT in the companion notebook; no measured, downloaded or live traffic data are used. The displayed table matches all three first-segment rows exactly. The later segments have similarly declared base times, extra delays and delay probabilities. Conditional on a chosen road, time is b+dB with B a Bernoulli delay indicator of probability q. Base, delay and probability are fixed model inputs; the occurrence of the delay is sampled independently for each segment and each simulated trip. North’s expectation is 19.1 minutes, but the objective is an on-time probability, not minimum mean time.</p>
+<p>The traffic example has two distinct sources of sampling: the algorithm samples untried/rollout route choices, while the simulator samples traffic for the completed plan. Stored-node UCT selection uses the current scores; its tie-breaking can be deterministic. A node is a route prefix, not a random traffic state. All actual itinerary choices are fixed before leaving home; search visits are simulated trips, not observations gathered by driving. The same completed itinerary can return success on one traffic draw and failure on another. If travel times were deterministic instead, the same complete itinerary would always have the same return, but randomized search could still help explore a very large family of itineraries.</p>
+<p>A realistic model would need travel-time observations and a justified generative model, including departure-time effects and correlations when relevant. Estimating and checking that model is separate from tree search; MCTS does not infer credible traffic distributions from nothing. Our small independent two-point model makes exact benchmarking possible and is not a validated traffic forecast. Online rerouting would require a different state representation and decision timing.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="turn-simulated-trips-into-values">Turn simulated trips into values</h3>
+<p>For a complete plan <span class="math inline">\(p\)</span>, simulate its <span class="alert">total travel time</span> <span class="math inline">\(T(p)\)</span> in minutes</p>
+<p>With deadline <span class="math inline">\(D=80\)</span> minutes, record the <span class="alert">return</span></p>
 <p><span class="math display">\[\begin{equation*}
 R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}\end{cases}
 \qquad
-\mu(p)=\Ex(R)=\Prob\bigl(T(p)\leq t_{\max}\bigr)
+\mu(p)=\Ex(R)=\Prob\bigl(T(p)\leq D\bigr)
 \end{equation*}\]</span></p>
 <p>At a stored branch, keep <span class="alert">successes</span> <span class="math inline">\(W\)</span> and <span class="alert">visits</span> <span class="math inline">\(N\)</span></p>
 <p><span class="math display">\[\begin{equation*}
@@ -3398,7 +3579,7 @@ R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}
 <p>A branch’s average summarizes the <span class="alert">continuations tried so far</span></p>
 </div>
 <aside class="notes">
-<p>For one fixed complete plan, independent traffic simulations give ordinary Bernoulli observations of its on-time probability. For a fixed randomized continuation policy at an internal node, they estimate that policy’s value. The tree search changes its downstream choices as it learns, so the internal branch averages combine different continuation policies. They are not IID estimates of a single fixed plan’s probability, nor automatically its optimal continuation value. The desired planning decision is a plan with large mu(p). There is no reward before completion and no discount in this example, so one terminal return can be backed up unchanged through the stored path.</p>
+<p>For one fixed complete plan, independent traffic simulations give ordinary Bernoulli observations of its on-time probability. For a fixed randomized continuation policy at an internal node, they estimate that policy’s value. The tree search changes its downstream choices as it learns, so the internal branch averages combine different continuation policies. They are not IID estimates of a single fixed plan’s probability, nor automatically its optimal continuation value. The desired planning decision is a plan with large mu(p). There is no reward before completion and no discount in this example, so one terminal return can be backed up unchanged through the stored path. D is the arrival deadline, matching DEADLINE=80 in the companion notebook. T(p) is the sum of all segment times for a fixed complete itinerary p; the earlier T_A describes only North’s first segment. R is a binary simulation result and mu(p) is its expectation, the plan’s true on-time probability under the specified simulator. Here N counts simulated visits, not the number of observations in the earlier SGD section.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3410,6 +3591,94 @@ R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="deterministic-games-and-search">Deterministic games and search</h3>
+<p>Chess has deterministic moves; this <span class="alert">toy game</span> shows why replies matter</p>
+
+<img data-src="assets/mcts/mcts-game-choice-tree.svg" class="quarto-figure quarto-figure-center r-stretch" style="width:60.0%" alt="A toy deterministic game: our move A allows the opponent to choose our win or our loss, while our move B forces a draw; accounting for the opponent's best reply favors B"><ul>
+<li>Our turns seek high values; opposing turns seek low values <span class="alert">from our viewpoint</span></li>
+<li>Random rollouts explore a small part of a huge, <span class="alert">deterministic game tree</span></li>
+</ul>
+<aside class="notes">
+<p>The pictured fragment is a constructed two-player, zero-sum game, not a legal chess position. Leaves are toy terminal outcomes: +1 for our win, 0 for a draw and -1 for our loss. Against an opponent who chooses the worst outcome for us, A has value min(+1,-1)=-1, while B has min(0,0)=0; we choose max(-1,0)=0, hence B. Maximizing our value at both levels would mistakenly count on the opponent allowing the win after A. This explains the objective; it is not a claim that finite-budget MCTS computes exact minimax values.</p>
+<p>Chess transitions are deterministic given the full state (including turn, castling/en-passant rights and relevant repetition/move-count history) and the chosen legal move. The opponent’s reply is an adversarial decision, not a chance outcome with an intrinsic probability. We may model or sample replies using a policy during search, but an average against sampled replies is not automatically the value against perfect opposition. A complete terminal move sequence has a fixed outcome, even when our algorithm sampled that sequence. Uncertainty comes from the unsearched alternatives and our limited evaluation, rather than random physics in the board update.</p>
+<p>MCTS for two-player games must account for whose turn it is, for example by changing the value sign in a player-to-move representation. The UCT paper’s game experiments use negative estimated values at MIN nodes. Neural-network-guided variants can evaluate a leaf instead of completing a rollout; the AlphaGo/AlphaZero distinction is on the next slide. A full game tree grows through both players’ legal replies, motivating selective search. Our route notebook is single-agent and does not implement adversarial turns. Sources: <a href="https://deepmind-media.storage.googleapis.com/alphago/AlphaGoNaturePaper.pdf">Silver et al., AlphaGo, Methods</a> and <a href="https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf">Kocsis and Szepesvari, Section 3.1</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section class="slide level2">
+
+<h3 id="where-mcts-is-used">Where MCTS is used</h3>
+<div class="mcts-use-cases-table">
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Application</th>
+<th style="text-align: left;">Search decisions</th>
+<th style="text-align: left;">Good outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="alert">AlphaGo and AlphaZero</span></td>
+<td style="text-align: left;">Legal moves in Go; also chess and shogi for AlphaZero</td>
+<td style="text-align: left;">Win the game</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Navigation</td>
+<td style="text-align: left;">Sailing directions under uncertain wind</td>
+<td style="text-align: left;">Reach the destination at low travel cost</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="alert">AlphaTensor</span></td>
+<td style="text-align: left;">Steps in a matrix multiplication algorithm</td>
+<td style="text-align: left;">Correct result with fewer scalar multiplications</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>A learned <span class="alert">policy</span> gives a rule for choosing actions</li>
+<li>A learned <span class="alert">value</span> can estimate an outcome without finishing a rollout</li>
+</ul>
+<div class="key-point">
+<p>MCTS allocates search effort among <span class="alert">sequences of decisions</span></p>
+</div>
+<aside class="notes">
+<p>AlphaGo (2016) combined MCTS with neural networks: a policy network supplied move preferences, while leaf evaluation combined a value network with a fast-policy rollout to the end of the game. Those rollouts were sampled from a trained fast policy, not uniformly from legal moves. AlphaZero used a learned leaf value in place of a complete rollout; terminal positions used their actual outcome. AlphaGo played Go; AlphaZero covered Go, chess and shogi. Search in these systems is a neural-network-guided MCTS variant, not the exact UCT rule or uniform rollout policy in our companion notebook. Two-player search must account for whose turn it is when interpreting and backing up values; we cannot maximize one player’s payoff at both turns.</p>
+<p>Navigation refers to the sailing experiment in Kocsis and Szepesvari (2006), Section 3.2: choose sailing directions in a stochastic shortest-path problem with changing wind. It is a research simulator example, not a claim that a particular commercial navigation service uses MCTS. Unlike our fixed airport itinerary, this planner conditions later actions on the current state. State, simulator, return and decision timing must fit the application.</p>
+<p>AlphaTensor (Fawzi et al., 2022) treats matrix multiplication algorithm discovery as a game of successive algebraic choices. A neural network guides MCTS toward correct tensor decompositions requiring fewer scalar multiplications; the paper also considers hardware-aware objectives. The visible row states the simpler operation-count objective. MCTS is the planning component within a larger learning system in both the game-playing and algorithm-discovery examples.</p>
+<p>Primary sources: <a href="https://doi.org/10.1038/nature16961">Silver et al., AlphaGo (2016)</a>, <a href="https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/alphazero-shedding-new-light-on-chess-shogi-and-go/alphazero_preprint.pdf">Silver et al., AlphaZero (2018)</a>, <a href="https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf">Kocsis and Szepesvari, UCT (2006)</a>, <a href="https://doi.org/10.1038/s41586-022-05172-4">Fawzi et al., AlphaTensor (2022)</a>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<div class="refs">
+<p><a href="https://doi.org/10.1038/nature16961">AlphaGo</a> · <a href="https://arxiv.org/abs/1712.01815">AlphaZero</a> · <a href="https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf">UCT sailing</a> · <a href="https://doi.org/10.1038/s41586-022-05172-4">AlphaTensor</a></p>
+</div>
 </section>
 <section id="one-tree-search-iteration" class="slide level2 tree-marker-slide" data-tree-marker="monte-carlo-tree-search">
 <h2>One tree-search iteration</h2>
@@ -3418,6 +3687,8 @@ R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}
   <div class="tree-component__label" data-label-id="monte-carlo-tree-search" style="--tree-left: 56%; --tree-top: 17%; --tree-align: center;">Monte Carlo<br>Tree Search</div>
 </div>
 
+<p>Run these steps <span class="alert">in order</span> for each simulation</p>
+<div class="mcts-iteration-table">
 <table class="caption-top">
 <colgroup>
 <col style="width: 50%">
@@ -3426,34 +3697,36 @@ R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}
 <thead>
 <tr class="header">
 <th style="text-align: left;">Step</th>
-<th style="text-align: left;">Airport-route interpretation</th>
+<th style="text-align: left;">In one iteration</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><span class="alert">Select</span></td>
-<td style="text-align: left;">Follow stored route choices using values and exploration bonuses</td>
+<td style="text-align: left;">Follow stored choices using the search scores</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><span class="alert">Expand</span></td>
-<td style="text-align: left;">Store one untried next-segment choice</td>
+<td style="text-align: left;">Add one untried choice, if available</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><span class="alert">Roll out</span></td>
-<td style="text-align: left;">Randomly complete the plan and simulate its traffic</td>
+<td style="text-align: left;">Complete the plan; simulate traffic to obtain <span class="math inline">\(R\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><span class="alert">Back up</span></td>
-<td style="text-align: left;">Add one visit and the return <span class="math inline">\(R\)</span> along the stored path</td>
+<td style="text-align: left;">Update visits and returns along the stored path</td>
 </tr>
 </tbody>
 </table>
+</div>
+<p>After selecting a <span class="alert">complete plan</span>, only simulate traffic and back up</p>
 <p>Repeat until the <span class="alert">simulation budget</span> is exhausted</p>
 <div class="key-point">
 <p>Simulate complete futures; <span class="alert">store and grow only part of the tree</span></p>
 </div>
 <aside class="notes">
-<p>Backpropagation, or backup, here means updating tree statistics, not neural-network differentiation. An iteration selects existing nodes until an expandable node or a terminal plan, expands one untried action if available, and samples one terminal return. Newly sampled rollout actions need not all become stored nodes. A terminal plan still gets a new traffic simulation. General problems can have intermediate rewards, discounting, stochastic transitions or a truncated rollout with a value approximation; they require the corresponding return calculation and state representation.</p>
+<p>Backpropagation, or backup, here means updating tree statistics, not neural-network differentiation. An iteration selects existing nodes until an expandable node or a terminal plan, expands one untried action if available, and samples one terminal return. Newly sampled rollout actions need not all become stored nodes. A terminal plan still gets a new traffic simulation. Selection can traverse zero edges, for example on the first visit to the root. Expansion adds at most one node, and the rollout can require zero further route choices if the selected/expanded plan is complete. Every iteration still spends one traffic simulation and backs its return up along the stored path. Thus the rows are successive phases of one iteration, not four alternative kinds of iteration. General problems can have intermediate rewards, discounting, stochastic transitions or a truncated rollout with a value approximation; they require the corresponding return calculation and state representation.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3466,20 +3739,21 @@ R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}
           display:block!important;
       }</style></aside>
 </section>
-<section id="exploration-versus-exploitation" class="slide level2 tree-marker-slide" data-tree-marker="monte-carlo-tree-search">
-<h2>Exploration versus exploitation</h2>
-<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
-  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
-  <div class="tree-component__label" data-label-id="monte-carlo-tree-search" style="--tree-left: 56%; --tree-top: 17%; --tree-align: center;">Monte Carlo<br>Tree Search</div>
-</div>
+<section class="slide level2">
 
-<p>For a visited action, an illustrative <span class="alert">UCT</span> selection score is</p>
+<h3 id="exploration-versus-exploitation">Exploration versus exploitation</h3>
+<p>At partial plan <span class="math inline">\(s\)</span>, score a <span class="alert">visited</span> next road choice <span class="math inline">\(a\)</span> using <span class="alert">UCT</span></p>
 <p><span class="math display">\[\begin{equation*}
 \underbrace{\overline Q(s,a)}_{\text{exploit a high average}}
 +\underbrace{c\sqrt{\frac{\log N(s)}{N(s,a)}}}_{\text{explore a less-visited branch}}
 \qquad c&gt;0
 \end{equation*}\]</span></p>
-<p>Illustrative snapshot: <span class="math inline">\(N(s)=60\)</span> simulations, <span class="math inline">\(c=0.2\)</span></p>
+<p><span class="math inline">\(\overline Q(s,a)=W(s,a)/N(s,a)\)</span>: mean return; <span class="math inline">\(W(s,a)\)</span>: successes through <span class="math inline">\(a\)</span></p>
+<p><span class="math inline">\(N(s)\)</span>: node visits; <span class="math inline">\(N(s,a)\)</span>: visits through <span class="math inline">\(a\)</span>; <span class="math inline">\(c&gt;0\)</span>: exploration weight</p>
+<p>Expand an <span class="alert">untried</span> choice first; otherwise follow the <span class="alert">largest score</span></p>
+<div class="exitem">
+<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>At the root, <span class="math inline">\(N(s)=60\)</span>, <span class="math inline">\(c=0.2\)</span>: which choice is next?</span></p>
+</div>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -3514,11 +3788,9 @@ R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}
 </tr>
 </tbody>
 </table>
-<div class="exitem">
-<p><span class="exbullet"><span class="math inline">\(\exstar\)</span></span> <span>Which branch gets the next simulation, and why?</span></p>
-</div>
 <aside class="notes">
 <p>Choose C. Its exploration bonus is about .181 versus .064 for A and .104 for B. N(s) counts visits to the current tree node; N(s,a) counts visits to a child reached by action a. Visit untried actions before using the formula so no division by zero occurs. The natural logarithm is used and rewards are in [0,1]. These counts are a constructed teaching snapshot, not outputs claimed for the notebook’s default run. Before the backup the total successes at the root are 28+9+3=40 and total visits are 40+15+5=60.</p>
+<p>s is a node (the route prefix chosen so far), not the whole tree and not a traffic realization. a is a candidate next road choice leaving s. For this root snapshot, s is the empty plan and a is North, Central or South. Qbar(s,a)=W(s,a)/N(s,a) is the mean return for simulations through that choice. Once every action at s has been tried, take the largest displayed score and repeat selection at the resulting child. At a node with an untried action, selection stops and the expansion phase stores one such action (uniformly chosen in the notebook); if the plan is complete, sample traffic and back up without expanding. Thus untried actions do not require evaluating an undefined score with N(s,a)=0. The exploration bonus trades current performance against collecting information; it is not part of the terminal trip reward or the final most-visited recommendation rule.</p>
 <p>UCT means upper confidence bounds applied to trees. The exploration parameter depends on reward scale and convention. It directs search; do not call this bonus a calibrated confidence interval for arbitrary adaptive tree returns. Downstream return distributions change during search. We claim neither a finite-budget optimal-action guarantee nor IID error bars for these changing-policy averages. Source: <a href="https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf">Kocsis and Szepesvari (2006)</a>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -3532,8 +3804,9 @@ R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}
           display:block!important;
       }</style></aside>
 </section>
-<section id="follow-one-simulation-through-the-tree" class="slide level2">
-<h2>Follow one simulation through the tree</h2>
+<section class="slide level2">
+
+<h3 id="follow-one-simulation-through-the-tree">Follow one simulation through the tree</h3>
 
 <img data-src="assets/mcts/mcts-one-iteration.svg" class="quarto-figure quarto-figure-center r-stretch" style="width:72.0%" alt="Select South C and its stored child C–1, expand C–1–0, randomly complete the remaining three route choices and simulate an on-time arrival, then back up return one along that stored path"><p>For the successful simulation, update <span class="math inline">\(N\leftarrow N+1\)</span> and <span class="math inline">\(W\leftarrow W+R\)</span></p>
 <p><span class="math display">\[\begin{equation*}
@@ -3557,8 +3830,13 @@ R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}
           display:block!important;
       }</style></aside>
 </section>
-<section id="from-search-to-a-decision" class="slide level2">
+<section id="from-search-to-a-decision" class="slide level2 tree-marker-slide" data-tree-marker="monte-carlo-tree-search">
 <h2>From search to a decision</h2>
+<div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
+  <img class="tree-component__image" src="../classlib/classlib/quarto/components/trees/artwork/tree.png" alt="Monte Carlo foundations, methods, and applications">
+  <div class="tree-component__label" data-label-id="monte-carlo-tree-search" style="--tree-left: 56%; --tree-top: 17%; --tree-align: center;">Monte Carlo<br>Tree Search</div>
+</div>
+
 <p><span class="alert">Searching</span>: which branch deserves the next simulation?</p>
 <ul>
 <li>UCT includes an exploration bonus; the example next explores C</li>
@@ -3586,8 +3864,9 @@ R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}
           display:block!important;
       }</style></aside>
 </section>
-<section id="tree-search-companion-notebook" class="slide level2">
-<h2>Tree-search companion notebook</h2>
+<section class="slide level2">
+
+<h3 id="tree-search-companion-notebook">Tree-search companion notebook</h3>
 <p><a href="https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/MonteCarloTreeSearch.ipynb">Open Monte Carlo Tree Search on GitHub</a> · <a href="https://colab.research.google.com/github/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/MonteCarloTreeSearch.ipynb">Run in Colab</a></p>
 <ul>
 <li>Draw a route tree and track its visits and on-time returns</li>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 530" role="img" aria-labelledby="mcts-game-title mcts-game-desc">
+  <title id="mcts-game-title">Our move and an opponent's replies</title>
+  <desc id="mcts-game-desc">An illustrative deterministic game fragment, not a legal chess position. At our turn choose A or B. After A, an opponent can select reply 1 giving us a win valued plus one, or reply 2 giving us a loss valued minus one. After B, either reply gives us a draw valued zero. Against an opponent minimizing our value, A has value minus one and B has value zero, so choose B. Amber edges highlight our choice B and one of its equally good opposing replies; the red edge highlights the damaging opposing reply after A. The branches are decisions, not chance outcomes.</desc>
+  <defs>
+    <marker id="mcts-game-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/>
+    </marker>
+  </defs>
+  <style>
+    .mcts-game-edge { fill:none; stroke:#a8b4bc; stroke-width:3; marker-end:url(#mcts-game-arrow); }
+    .mcts-game-choice { fill:none; stroke:#a76e12; stroke-width:5; marker-end:url(#mcts-game-arrow); }
+    .mcts-game-loss { fill:none; stroke:#a93c42; stroke-width:5; marker-end:url(#mcts-game-arrow); }
+    .mcts-game-node { fill:white; stroke:#1f5a91; stroke-width:3; }
+    .mcts-game-text { font-family:Arial,sans-serif; text-anchor:middle; fill:#1f5a91; }
+  </style>
+  <!-- Connectors are drawn first and end at the node boundaries. -->
+  <path class="mcts-game-edge" d="M500 106 L250 190"/>
+  <path class="mcts-game-choice" d="M500 106 L750 190"/>
+  <path class="mcts-game-edge" d="M250 294 L100 400"/>
+  <path class="mcts-game-loss" d="M250 294 L400 400"/>
+  <path class="mcts-game-choice" d="M750 294 L600 400"/>
+  <path class="mcts-game-edge" d="M750 294 L900 400"/>
+  <g class="mcts-game-text">
+    <text x="342" y="134" font-size="27">Move A</text>
+    <text x="658" y="134" font-size="27" fill="#a76e12">Move B</text>
+    <text x="131" y="337" font-size="24">Reply 1</text>
+    <text x="370" y="337" font-size="24" fill="#a93c42">Reply 2</text>
+    <text x="631" y="337" font-size="24" fill="#a76e12">Reply 1</text>
+    <text x="870" y="337" font-size="24">Reply 2</text>
+  </g>
+  <rect class="mcts-game-node" x="355" y="18" width="290" height="88" rx="15"/>
+  <rect class="mcts-game-node" x="80" y="190" width="340" height="104" rx="15"/>
+  <rect x="580" y="190" width="340" height="104" rx="15" fill="#fff4de" stroke="#a76e12" stroke-width="3"/>
+  <g class="mcts-game-text">
+    <text x="500" y="56" font-size="31">Our turn</text>
+    <text x="500" y="87" font-size="24">Choose the larger value</text>
+    <text x="250" y="228" font-size="30">Opponent’s turn</text>
+    <text x="250" y="266" font-size="25">Our worst outcome: −1</text>
+    <text x="750" y="228" font-size="30" fill="#a76e12">Opponent’s turn</text>
+    <text x="750" y="266" font-size="25" fill="#a76e12">Our worst outcome: 0</text>
+  </g>
+  <rect class="mcts-game-node" x="32" y="400" width="136" height="79" rx="13"/>
+  <rect x="332" y="400" width="136" height="79" rx="13" fill="#faedf0" stroke="#a93c42" stroke-width="3"/>
+  <rect x="532" y="400" width="136" height="79" rx="13" fill="#fff4de" stroke="#a76e12" stroke-width="3"/>
+  <rect class="mcts-game-node" x="832" y="400" width="136" height="79" rx="13"/>
+  <g class="mcts-game-text">
+    <text x="100" y="438" font-size="34">+1</text><text x="100" y="467" font-size="23">We win</text>
+    <text x="400" y="438" font-size="34" fill="#a93c42">−1</text><text x="400" y="467" font-size="23" fill="#a93c42">We lose</text>
+    <text x="600" y="438" font-size="34" fill="#a76e12">0</text><text x="600" y="467" font-size="23" fill="#a76e12">Draw</text>
+    <text x="900" y="438" font-size="34">0</text><text x="900" y="467" font-size="23">Draw</text>
+    <text x="500" y="518" font-size="23">Every value is from our point of view</text>
+  </g>
+</svg>
