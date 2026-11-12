@@ -2756,6 +2756,30 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
           display:block!important;
       }</style></aside>
 </section>
+<section class="slide level2">
+
+<h3 id="sgd-component-similarity">When component gradients agree</h3>
+<div class="columns">
+<div class="column" style="width:48%;">
+<h4 id="identical-loss-functions">Identical loss functions</h4>
+<ul>
+<li>Every component gradient equals the <span class="alert">full gradient</span></li>
+<li>Even one sampled term gives <span class="math inline">\(\vG_k=\vg_k\)</span></li>
+<li>Same start and learning rates: <span class="alert">exactly the GD iterates</span></li>
+</ul>
+</div><div class="column" style="width:48%;">
+<h4 id="similar-component-gradients">Similar component gradients</h4>
+<ul>
+<li>Gradients close to their average at <span class="math inline">\(\vtheta_k\)</span></li>
+<li>A small batch introduces <span class="alert">little sampling noise</span></li>
+<li>For the same learning rate, an update close to GD’s</li>
+</ul>
+</div></div>
+<p>Appropriate <span class="alert">learning rates</span> and GD’s convergence conditions still matter</p>
+<div class="key-point">
+<p>Judge similarity by <span class="alert">gradients</span>; compare sampling noise with the <span class="alert">full-gradient signal</span></p>
+</div>
+</section>
 <section id="gradient-noise-variance" class="slide level2 tree-marker-slide" data-tree-marker="stochastic-optimization">
 <h2>Noise near the solution</h2>
 <div class="tree-component tree-component--mc course-tree-marker" data-tree-id="mc" style="--tree-width: 16%; --tree-font-scale: 2.9; --tree-aspect-ratio: 4 / 3;">
@@ -2770,7 +2794,7 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
 \qquad \theta_*=0
 \qquad \operatorname{Loss}'(0)=0
 \end{equation*}\]</span></p>
-<p>But the individual gradients at <span class="math inline">\(0\)</span> are <span class="alert"><span class="math inline">\(+1\)</span> and <span class="math inline">\(-1\)</span></span></p>
+<p>At <span class="math inline">\(0\)</span>, every component loss is <span class="math inline">\(1/2\)</span>, but the gradients are <span class="alert"><span class="math inline">\(+1\)</span> and <span class="math inline">\(-1\)</span></span></p>
 <ul>
 <li>The full gradient can vanish while sampled gradients keep fluctuating</li>
 <li>Averaging <span class="math inline">\(b\)</span> independent gradients divides their noise variance by <span class="math inline">\(b\)</span></li>
@@ -2780,6 +2804,20 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
 <p>Do not wait for each sampled gradient to become zero</p>
 </div>
 <p><span id="estimating-gradient-noise"></span> <span id="smoothness-and-descent"></span> <span id="sgd-known-and-estimated-quantities"></span> <span id="expected-descent-derivation"></span> <span id="why-a-noisy-direction-can-help"></span></p>
+<aside class="notes">
+<p>SGD saves work when a few component gradients represent the average well. If all component loss functions are identical, every sampled gradient equals the full gradient: with the same starting point and learning rates, SGD reproduces the GD iterates while evaluating fewer components. The same holds if the losses differ only by constants independent of the parameters. Say “no sampling error” rather than “works perfectly”: appropriate learning rates and GD’s usual convergence conditions still matter.</p>
+<p>Here “similar” means that the component gradients are close to their average at the current iterate. This makes the sampling noise small; how well SGD behaves also depends on that noise relative to the full-gradient signal. Near a minimizer, even small noise can matter as the full gradient approaches zero. Similar loss values alone are insufficient: in the displayed quadratic example, every component loss equals <span class="math inline">\(1/2\)</span> at <span class="math inline">\(\theta=0\)</span>, but the component gradients are <span class="math inline">\(+1\)</span> and <span class="math inline">\(-1\)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <aside class="notes">
 <p>At a fixed iterate let g=grad Loss(theta) and sigma^2 be the mean squared norm of one component gradient minus g. Then E||G-g||<sup>2=sigma</sup>2/b. For this scalar model theta_{k+1}=(1-eta)theta_k+eta*a_bar_k and s_{k+1}=(1-eta)^2 s_k+eta^2/b, where s_k=E theta_k^2. For constant 0&lt;eta&lt;2 the limit is eta/[b(2-eta)]. This exact floor is optional notebook follow-up, not a general floor formula. Decaying rates need assumptions for convergence; some problems have vanishing component noise at the minimizer. Larger batches and smaller rates trade early progress against final precision.</p>
 <style type="text/css">
@@ -2877,7 +2915,7 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
 <h3 id="gradient-and-stochastic-gradient-paths">Gradient and stochastic-gradient paths</h3>
 <p><span id="quadratic-component-losses"></span></p>
 <p>Toy objective: <span class="alert"><span class="math inline">\(m=2\)</span> parameters</span>, average of <span class="alert"><span class="math inline">\(N=1{,}000\)</span> loss terms</span><br> <span class="alert">Equal component-gradient work</span>: 45 GD moves versus 4,500 mini-batch moves<br> 45,000 contributions each: 1,000 per GD move; 10 per SGD move (<span class="math inline">\(b=10\)</span>)<br> Common rate <span class="math inline">\(\eta=0.5\)</span>; picture shows <span class="alert">first 60 mini-batch moves</span> (600 contributions)</p>
-<div id="249c3df0" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="5">
+<div id="6d2a2804" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
