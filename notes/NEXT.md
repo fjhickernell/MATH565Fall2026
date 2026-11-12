@@ -18,6 +18,11 @@ preserves the prepared text; do not repost.
 
 ## Ready for instructor walkthrough
 
+The visible SGD continuation "When component gradients agree" now explains
+exact agreement with GD and small sampling noise from similar gradients.
+The following noise example distinguishes equal loss values from gradient
+agreement; the fuller presenter notes remain available.
+
 Each of Deck 05's four topic openers now states its main idea before the
 outline: concurrent sample evaluation, cheap/coupled multilevel contributions,
 sampled optimization updates, and simulation-guided tree search. The idea
@@ -119,7 +124,7 @@ with Fred before teaching it; it has not been established as lecture coverage.
 Continue Fred's walkthrough at the logistic probability-to-loss derivation
 in Part 5, then Part 6's **one fixed dataset and several accuracy targets**.
 The matching slides derive the Bernoulli likelihood, negative logarithm,
-logistic data loss, regularization and gradient. Selected Topics now has 27
+logistic data loss, regularization and gradient. Selected Topics now has 28
 instructional SGD slides plus the opener; the four cumulative challenge
 and response tables and existing anchors remain intact.
 

@@ -2227,6 +2227,34 @@ is a step function whose ordering changes with the data order. The lecture's
 unbiasedness and variance identities assume fresh IID draws.
 :::
 
+---
+
+### When component gradients agree {#sgd-component-similarity}
+
+::: {.columns}
+::: {.column width="48%"}
+#### Identical loss functions
+
+- Every component gradient equals the [full gradient]{.alert}
+- Even one sampled term gives $\vG_k=\vg_k$
+- Same start and learning rates: [exactly the GD iterates]{.alert}
+:::
+
+::: {.column width="48%"}
+#### Similar component gradients
+
+- Gradients close to their average at $\vtheta_k$
+- A small batch introduces [little sampling noise]{.alert}
+- For the same learning rate, an update close to GD's
+:::
+:::
+
+Appropriate [learning rates]{.alert} and GD's convergence conditions still matter
+
+::: {.key-point}
+Judge similarity by [gradients]{.alert}; compare sampling noise with the [full-gradient signal]{.alert}
+:::
+
 ## Noise near the solution {#gradient-noise-variance .tree-marker-slide tree-marker="stochastic-optimization"}
 
 <span id="learning-rates-and-the-noise-floor"></span>
@@ -2241,7 +2269,7 @@ For $\operatorname{loss}_i(\theta)=\tfrac12(\theta-a_i)^2$, with $a_i=\pm1$ equa
 \qquad \operatorname{Loss}'(0)=0
 \end{equation*}
 
-But the individual gradients at $0$ are [$+1$ and $-1$]{.alert}
+At $0$, every component loss is $1/2$, but the gradients are [$+1$ and $-1$]{.alert}
 
 - The full gradient can vanish while sampled gradients keep fluctuating
 - Averaging $b$ independent gradients divides their noise variance by $b$
@@ -2256,6 +2284,24 @@ Do not wait for each sampled gradient to become zero
 <span id="sgd-known-and-estimated-quantities"></span>
 <span id="expected-descent-derivation"></span>
 <span id="why-a-noisy-direction-can-help"></span>
+
+::: {.notes}
+SGD saves work when a few component gradients represent the average well.
+If all component loss functions are identical, every sampled gradient equals
+the full gradient: with the same starting point and learning rates, SGD
+reproduces the GD iterates while evaluating fewer components. The same holds
+if the losses differ only by constants independent of the parameters.
+Say "no sampling error" rather than "works perfectly": appropriate learning
+rates and GD's usual convergence conditions still matter.
+
+Here "similar" means that the component gradients are close to their average
+at the current iterate. This makes the sampling noise small; how well SGD
+behaves also depends on that noise relative to the full-gradient signal.
+Near a minimizer, even small noise can matter as the full gradient approaches
+zero. Similar loss values alone are insufficient: in the displayed quadratic
+example, every component loss equals $1/2$ at $\theta=0$, but the component
+gradients are $+1$ and $-1$.
+:::
 
 ::: {.notes}
 At a fixed iterate let g=grad Loss(theta) and sigma^2 be the mean squared
