@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 650" role="img" aria-labelledby="mcts-preview-title mcts-preview-desc">
+  <title id="mcts-preview-title">A growing Monte Carlo search tree</title>
+  <desc id="mcts-preview-desc">An irregular decision tree with three initial branches. An amber path follows selected branches from the root. A green node extends that path, and a dotted green continuation represents a sampled future beyond the stored tree. The illustration has no visible labels.</desc>
+  <style>
+    .mcts-preview-edge { fill:none; stroke:#b9c6cf; stroke-width:4; stroke-linecap:round; }
+    .mcts-preview-node { fill:#eaf0f5; stroke:#1f5a91; stroke-width:4; }
+    .mcts-preview-selected { fill:#fff4de; stroke:#a76e12; stroke-width:5; }
+    .mcts-preview-path { fill:none; stroke:#a76e12; stroke-width:7; stroke-linecap:round; stroke-linejoin:round; }
+    .mcts-preview-new-edge { fill:none; stroke:#277465; stroke-width:6; stroke-linecap:round; }
+    .mcts-preview-new-node { fill:#e4f2ed; stroke:#277465; stroke-width:5; }
+    .mcts-preview-rollout { fill:none; stroke:#277465; stroke-width:5; stroke-dasharray:8 11; stroke-linecap:round; }
+  </style>
+  <!-- All connectors precede nodes so their endpoints stay behind the circles. -->
+  <g class="mcts-preview-edge">
+    <path d="M350 50 L135 155 M350 50 L350 155 M350 50 L565 155"/>
+    <path d="M135 155 L70 265 M135 155 L200 265"/>
+    <path d="M350 155 L295 265 M350 155 L425 265"/>
+    <path d="M565 155 L535 265 M565 155 L625 265"/>
+    <path d="M70 265 L36 375 M70 265 L105 375"/>
+    <path d="M200 265 L165 375 M200 265 L235 375"/>
+    <path d="M295 265 L295 375"/>
+    <path d="M425 265 L390 375 M425 265 L465 375"/>
+    <path d="M535 265 L545 375"/>
+    <path d="M105 375 L80 485 M165 375 L180 485"/>
+    <path d="M295 375 L265 485 M295 375 L325 485"/>
+    <path d="M545 375 L570 485"/>
+  </g>
+  <path class="mcts-preview-path" d="M350 50 L350 155 L425 265 L390 375"/>
+  <path class="mcts-preview-new-edge" d="M390 375 L425 485"/>
+  <path class="mcts-preview-rollout" d="M425 485 C430 525 458 555 470 600"/>
+  <g class="mcts-preview-node">
+    <circle cx="135" cy="155" r="16"/><circle cx="565" cy="155" r="16"/>
+    <circle cx="70" cy="265" r="14"/><circle cx="200" cy="265" r="14"/>
+    <circle cx="295" cy="265" r="14"/><circle cx="535" cy="265" r="14"/>
+    <circle cx="625" cy="265" r="14"/>
+    <circle cx="36" cy="375" r="12"/><circle cx="105" cy="375" r="12"/>
+    <circle cx="165" cy="375" r="12"/><circle cx="235" cy="375" r="12"/>
+    <circle cx="295" cy="375" r="12"/><circle cx="465" cy="375" r="12"/>
+    <circle cx="545" cy="375" r="12"/>
+    <circle cx="80" cy="485" r="10"/><circle cx="180" cy="485" r="10"/>
+    <circle cx="265" cy="485" r="10"/><circle cx="325" cy="485" r="10"/>
+    <circle cx="570" cy="485" r="10"/>
+  </g>
+  <g class="mcts-preview-selected">
+    <circle cx="350" cy="50" r="20"/>
+    <circle cx="350" cy="155" r="17"/>
+    <circle cx="425" cy="265" r="16"/>
+    <circle cx="390" cy="375" r="14"/>
+  </g>
+  <circle class="mcts-preview-new-node" cx="425" cy="485" r="15"/>
+  <circle cx="470" cy="600" r="10" fill="white" stroke="#277465" stroke-width="3"/>
+</svg>

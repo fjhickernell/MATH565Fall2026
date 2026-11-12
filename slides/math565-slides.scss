@@ -78,6 +78,56 @@
   width: 56% !important;
 }
 
+/* The GD/SGD recap needs short feature labels and wider method descriptions. */
+.reveal .sgd-comparison-table table,
+.reveal .mcts-use-cases-table table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.reveal .sgd-comparison-table col:first-child,
+.reveal .sgd-comparison-table th:first-child,
+.reveal .sgd-comparison-table td:first-child,
+.reveal .mcts-use-cases-table col:first-child,
+.reveal .mcts-use-cases-table th:first-child,
+.reveal .mcts-use-cases-table td:first-child {
+  width: 20% !important;
+}
+
+.reveal .sgd-comparison-table col:nth-child(n+2),
+.reveal .sgd-comparison-table th:nth-child(n+2),
+.reveal .sgd-comparison-table td:nth-child(n+2),
+.reveal .mcts-use-cases-table col:nth-child(n+2),
+.reveal .mcts-use-cases-table th:nth-child(n+2),
+.reveal .mcts-use-cases-table td:nth-child(n+2) {
+  width: 40% !important;
+}
+
+/* Keep the iteration table's right edge clear of the navigation tree. */
+.reveal .mcts-iteration-table table {
+  width: 78%;
+  margin-left: 0;
+  margin-right: auto;
+  table-layout: fixed;
+}
+
+.reveal .mcts-iteration-table col:first-child,
+.reveal .mcts-iteration-table th:first-child,
+.reveal .mcts-iteration-table td:first-child {
+  width: 20% !important;
+}
+
+.reveal .mcts-iteration-table col:last-child,
+.reveal .mcts-iteration-table th:last-child,
+.reveal .mcts-iteration-table td:last-child {
+  width: 80% !important;
+}
+
+/* Each topic opener explains its main idea without covering its tree marker. */
+.reveal .section-main-idea {
+  max-width: 80%;
+}
+
 .tree-component.monte-carlo-at-a-glance-tree {
   margin-inline: auto !important;
 }

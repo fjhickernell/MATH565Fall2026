@@ -72,6 +72,10 @@ subtitle: <span class="deck-title">{{< meta deck_title >}}</span>
 
 <span id="parallel-and-stochastic-computation"></span>
 
+::: {.section-main-idea}
+Evaluate different sample points on several processors to [reduce elapsed time]{.alert}
+:::
+
 - [Parallel computing](#parallel-computing)
 - [CPU and GPU Monte Carlo](#cpu-and-gpu-monte-carlo)
 
@@ -222,8 +226,9 @@ sampling uncertainty. Keep the existing M3 measurements when editing prose.
 
 # Multilevel Monte Carlo {.tree-marker-slide tree-marker="estimation"}
 
-Estimate expensive expectations by [combining cheap approximations with coupled corrections]{.alert}<br>
-Allocate work where it buys the greatest reduction in error
+::: {.section-main-idea}
+Combine many cheap coarse samples with fewer correction samples to [reduce the cost]{.alert} of accurately estimating an expectation with high dimensional random input
+:::
 
 [Common MLMC glossary](#mlmc-glossary)
 
@@ -248,7 +253,7 @@ The same notation works for $L=2$ or many levels
 |:---|:---|
 | $\ell$, $L$ | Level index and finest included level |
 | $d_\ell$, $f_{d_\ell}$ | Resolution and approximate output function |
-| $Y_\ell$ | Cheap output at level 1; coupled correction at later levels |
+| $Y_\ell$ | Cheap output at level 1; fine output minus coarse output at later levels |
 | $\mu_\ell$, $\hmu_\ell$ | Contribution mean $\Ex(Y_\ell)$ and its estimate |
 | $\mu_{d_L}$ | Mean of the finest approximation: $\sum_\ell\mu_\ell$ |
 | $V_\ell$ | IID contribution variance $\var(Y_\ell)$ |
@@ -308,7 +313,7 @@ But large $d$ costs more, e.g., $\$\bigl(f_d(\vX_{1:d})\bigr)\propto d$
 - [Computational finance]{.alert}: $d=$ time steps $\times$ number of assets
 - [ODE/PDE models with random fields]{.alert}: $d=$ grid points representing the field
 
-Choose $d_1\ll d_2 = d$ and [couple]{.alert} the coarse and fine approximations
+Choose $d_1\ll d_2=d$; couple the outputs to [reduce the variance of their difference]{.alert}
 
 \begin{align*}
 Y_1&=f_{d_1}(\vX_{1:d_1})& &\alerttext{cheap}\text{ approximation}\\
@@ -337,6 +342,16 @@ A complete coupled correction costs roughly the fine evaluation plus any
 coarse work that cannot be reused. Its cost is typically of order d2 in
 this illustrative setting, whereas the cheap level costs order d1.
 Within Y2, coarse and fine approximations share a path or compatible inputs.
+The two outputs being subtracted are coupled; the goal is small variance
+of their difference, not small variance of either output separately. If
+F and G denote the fine and coarse outputs within one correction, then
+Var(F-G)=Var(F)+Var(G)-2 Cov(F,G). A strong positive covariance can therefore
+reduce correction variance, even when both output variances are substantial.
+Coupling is a joint construction preserving the required marginal law of
+each output. Shared randomness alone does not guarantee a good coupling.
+The expectation identity remains valid because those marginal means are
+unchanged. The expectation here is scalar; high dimensionality describes
+the random input vector used to generate the output.
 For time discretizations, preserve Brownian values at shared times;
 a Brownian bridge can refine the coarse path. Between the two level estimators, use
 independent samples or independent RQMC randomizations.
@@ -366,7 +381,7 @@ Y_2&=f_{d_2}(\vX_{1:d_2})-f_{d_1}(\vX_{1:d_1})&&\alerttext{expensive}\text{ payo
 - Estimate $\Ex(Y_2)$ from a [separate independent]{.alert} set of bridge-refined paths
 
 ::: {.key-point}
-The two payoffs in $Y_2$ use the [same Brownian path]{.alert} at two resolutions
+Same path, two payoffs in $Y_2$; aim for [small variance of their difference]{.alert}
 :::
 
 ::: {.notes}
@@ -906,13 +921,18 @@ $$
 $$
 
 ::: {.key-point}
-One cheap approximation plus a sequence of [coupled corrections]{.alert}
+One cheap approximation plus differences of [coupled fine/coarse pairs]{.alert}
 :::
 
 ::: {.notes}
 The two-level construction extends without a new integration principle.
 Use compatible inputs within each difference and separate independent sample
 sets or randomizations for the different level means.
+Couple the two neighboring approximation outputs within each correction.
+For IID sampling, a useful coupling makes their difference have small
+variance, without requiring either output itself to have small variance.
+For QMC/RQMC, correction variance alone is insufficient: the relevant
+smoothness and integration-error amplitudes must also be favorable.
 Detailed estimator and error-model reference:
 
 A hierarchy of coupled approximations
@@ -1443,7 +1463,7 @@ pilot work before quoting a complete practical complexity rate.
 <span id="multilevel-qmc-cost-exponent"></span>
 <span id="multilevel-practical-error-budget"></span>
 
-- Use pilots to measure [correction variance and complete cost]{.alert}, then allocate samples
+- For IID, use pilot runs to measure [correction variance and complete cost]{.alert}, then allocate samples
 - Assess remaining [approximation bias]{.alert}; one small correction does not bound the omitted tail
 - QMC can improve sampling accuracy when coupling preserves suitable [smoothness]{.alert}
 - Count pilots, setup, and allowed sample sizes in the total work
@@ -1527,7 +1547,11 @@ coverage guarantee. The pilot/amplitude model is for allocation and planning,
 not an automatic stopping certificate.
 :::
 
-# Stochastic Gradient Descent {#stochastic-gradient-descent-section}
+# Stochastic Gradient Descent {#stochastic-gradient-descent-section .tree-marker-slide tree-marker="stochastic-optimization"}
+
+::: {.section-main-idea}
+Sample a few observations per update for [cheap optimization moves]{.alert}, while controlling gradient noise
+:::
 
 ::: {.columns}
 ::: {.column width="47%"}
@@ -1537,6 +1561,7 @@ not an automatic stopping certificate.
 - [Noise near the solution](#gradient-noise-variance)
 - [Monitor progress between blocks of moves](#practical-learning-rates)
 - [A large-data example](#a-large-data-example)
+- [GD and SGD compared](#gd-and-sgd-compared)
 - [Beyond SGD](#jordan-optimization)
 :::
 ::: {.column width="6%"}
@@ -1548,7 +1573,7 @@ not an automatic stopping certificate.
 #| echo: false
 #| fig-format: svg
 #| fig-align: center
-#| fig-alt: "Contours of an average quadratic loss with two paths from the same start: full-gradient descent approaches the minimizer smoothly, while mini-batch SGD with ten observations per update approaches a smaller noisy neighborhood"
+#| fig-alt: "Contours of an average quadratic loss with two paths from the same start: full-gradient descent zigzags toward the minimizer, while mini-batch SGD with ten observations per update approaches a noisy neighborhood"
 #| fig-width: 8
 #| fig-height: 6.5
 #| out-width: 100%
@@ -1623,7 +1648,7 @@ type (+/-1,+/-1), with A=[[2,1],[1,2]]. The full gradient averages all
 1,000 contributions; their repeated structure also permits simplification.
 :::
 
-## Optimize a loss function {#gradient-descent .tree-marker-slide tree-marker="estimation"}
+## Optimize a loss function {#gradient-descent .tree-marker-slide tree-marker="stochastic-optimization"}
 
 Choose $m$ parameters $\vtheta$ to make [loss]{.alert} small
 
@@ -1634,6 +1659,8 @@ Choose $m$ parameters $\vtheta$ to make [loss]{.alert} small
 - Start from a guess; use local information to improve it
 - [Gradient]{.alert}: which direction is downhill?
 - [Curvature]{.alert}: how far should we move?
+- [Conditioning]{.alert}: how unequal is curvature across directions?
+- [Cost]{.alert}: could sampled loss terms give a cheaper gradient estimate?
 - An exact local direction usually does not solve the whole problem
 
 ::: {.key-point}
@@ -1644,6 +1671,12 @@ Optimization usually needs [many moves]{.alert}; compare their total cost
 We consider differentiable unconstrained minimization and assume a minimizer
 exists when referring to theta_*. It may be nonunique. The objective need not
 be a data average; that structure is introduced at the SGD transition.
+Curvature sets the local step scale; conditioning describes the imbalance
+between directional curvatures. One step size can make slow progress along
+a narrow valley even when every gradient is exact. The cost question previews
+sampling contributions when the objective is an average or expectation.
+We estimate the gradient of the same objective; a cheaper sampled gradient
+does not itself fix poor conditioning or establish lower total work.
 Exact quadratic models can have a one-step solution. The message is that an
 exact gradient is local information, not generally an exact minimizer.
 :::
@@ -2047,7 +2080,7 @@ the later versions of this table add those issues in that order.
 
 ---
 
-## When the full loss is expensive {#why-cheap-gradients-matter .tree-marker-slide tree-marker="estimation"}
+## When the full loss is expensive {#why-cheap-gradients-matter .tree-marker-slide tree-marker="stochastic-optimization"}
 
 <span id="scalar-regression-loss"></span>
 <span id="many-optimization-moves"></span>
@@ -2123,7 +2156,7 @@ we have not yet introduced uncertainty from sampling the gradient.
 
 ---
 
-## Cheap sampled updates {#stochastic-gradient-descent .tree-marker-slide tree-marker="estimation"}
+## Cheap sampled updates {#stochastic-gradient-descent .tree-marker-slide tree-marker="stochastic-optimization"}
 
 <span id="mini-batches-and-gradient-noise"></span>
 
@@ -2194,7 +2227,7 @@ is a step function whose ordering changes with the data order. The lecture's
 unbiasedness and variance identities assume fresh IID draws.
 :::
 
-## Noise near the solution {#gradient-noise-variance}
+## Noise near the solution {#gradient-noise-variance .tree-marker-slide tree-marker="stochastic-optimization"}
 
 <span id="learning-rates-and-the-noise-floor"></span>
 <span id="scalar-noise-floor"></span>
@@ -2378,7 +2411,7 @@ uses this same model and common rate .5 for the exact noise-floor recurrence.
 A separate b=10 comparison then reduces or decays only the SGD rate.
 :::
 
-## Monitor progress between blocks of moves {#practical-learning-rates .tree-marker-slide tree-marker="estimation"}
+## Monitor progress between blocks of moves {#practical-learning-rates .tree-marker-slide tree-marker="stochastic-optimization"}
 
 <span id="monitoring-sgd"></span>
 <span id="choosing-the-learning-rate"></span>
@@ -2386,7 +2419,7 @@ A separate b=10 comparison then reduces or decays only the SGD rate.
 
 1. Choose a batch size, learning-rate schedule and [accuracy goal]{.alert} or budget
 2. Make many cheap updates without evaluating the full loss
-3. Periodically compare loss on the [same]{.alert} randomly selected diagnostic subset of $s$ observations, typically $b\ll s\ll N$
+3. Periodically compare loss on the [same]{.alert} randomly selected [diagnostic]{.alert} subset of $s$ observations, typically $b\ll s\ll N$
 4. If progress is poor, adjust the rate or batch size for the next block
 5. Stop when the accuracy check passes or the work budget is spent
 
@@ -2413,10 +2446,10 @@ is legitimate but does not establish that an accuracy goal was met.
 
 ### Count monitoring in the cost {#sgd-monitoring-cost}
 
-For $K$ mini-batch updates and $J$ full-loss checks
+For $K$ updates, $J_s$ [diagnostic]{.alert} checks and $J_N$ full-loss checks
 
 \begin{equation*}
-\text{direct work}=O(Kbm+JNm)
+\text{direct training work}=O\bigl(m(Kb+J_s s+J_N N)\bigr)
 \end{equation*}
 
 | Check | Cost | Purpose |
@@ -2425,17 +2458,27 @@ For $K$ mini-batch updates and $J$ full-loss checks
 | Full training loss | $O(Nm)$ | Measure the empirical objective |
 | Held-out validation loss | Depends on validation size | Check predictive performance |
 
-- Every update: full monitoring restores the $O(KNm)$ cost
-- Every $q\approx N/b$ updates: one full check adds about one data pass
+- One diagnostic check: work comparable to about $s/b$ updates
+- One full check: work comparable to about $N/b$ updates
 
 ::: {.key-point}
 Pay for checks [after many moves]{.alert}, with cheaper diagnostics between
 :::
 
 ::: {.notes}
-Loss and gradient evaluation constants differ. One check every q updates
-amortizes to O(bm+Nm/q) work per update, plus initial/final checks. A full
-check after about N/b updates has work of the same order as that block.
+Each update evaluates b observation gradients, each diagnostic check s loss
+terms, and each full-loss check N terms. J_s and J_N count their separate
+frequencies; either can be zero. Loss and gradient constants differ.
+With one diagnostic every q_s updates and one full check every q_N updates,
+the amortized direct work is O(m[b+s/q_s+N/q_N]) per update, plus
+initial/final checks. A diagnostic after about s/b updates or a full check
+after about N/b updates has work of the same order as its update block.
+These ratios use the preceding slide's regime b<=s<=N and are comparisons
+of work order, not exact equality of measured times.
+Checking the full loss every update restores O(KNm) work, while diagnostic
+checks every update add O(Ksm). The displayed formula covers training-loss
+monitoring; add held-out validation costs, setup, tuning and final-gradient
+certification separately when reporting the complete algorithm cost.
 For before/after comparisons use a common diagnostic sample; it can still
 miss behavior elsewhere. Repeated tuning against it creates selection effects.
 Post-update loss on the very update batch is optimistic. Validation measures
@@ -2495,7 +2538,7 @@ This is a possible checking procedure; the notebook does not implement it.
 
 :::
 
-## A large-data example {.tree-marker-slide tree-marker="estimation"}
+## A large-data example {.tree-marker-slide tree-marker="stochastic-optimization-estimation"}
 
 Binary observation $y_i\in\{0,1\}$; predictor $z_i=\vx_i^\top\vtheta$
 
@@ -2663,14 +2706,15 @@ and .000001. This slide selects three. At each reported attained target all
 five repeats succeed; dashes mean zero of five. At .001 the median update
 contributions are 524288 for GD, 15360 for fixed mini-batches and 17408 for
 decaying mini-batches: about 34 and 30 times fewer for a useful answer.
-Saved Mini median update times are about 4 ms for GD and 1–2 ms for the
-sampled methods; exact values are in the notebook.
+Saved M3 median update times are about 10.2 ms for GD, 1.5 ms for fixed
+mini-batches and 1.8 ms for decaying mini-batches; exact values are in the notebook.
 Adding the separately measured curvature/subset setup and sampled checks
-through that crossing gives about 6 ms for GD and 2–3 ms for sampled methods. Shared data
+through that crossing gives about 13.4 ms for GD, 2.3 ms for fixed mini-batches
+and 2.7 ms for decaying mini-batches. Shared data
 preparation and reference/full-loss benchmarking are separate.
 
 At .0001, decaying mini-batches use about 2.04 passes versus GD's 3, but
-update times are about 45 versus 6 ms. At .000001, only GD reaches the
+update times are about 48.2 versus 15.9 ms on M3. At .000001, only GD reaches the
 target within the budget. Fixed-rate SGD can cross a useful target and later
 leave it. These are empirical optimization-loss results, not a general speed
 guarantee or a prediction-error comparison. Component-gradient contributions
@@ -2689,9 +2733,98 @@ the useful-versus-fine-accuracy distinction, which is already visible on this
 one dataset. Parts 5–6 are the main classroom route.
 :::
 
-## Beyond SGD {#jordan-optimization}
+## GD and SGD compared {#gd-and-sgd-compared .tree-marker-slide tree-marker="stochastic-optimization"}
 
-| Research direction | Contribution | Connection to SGD |
+Same average loss; both choose a direction and a learning rate
+
+::: {.sgd-comparison-table}
+
+| Feature | Full GD | Mini-batch SGD |
+|:---|:---|:---|
+| Direction | Full gradient $\vg_k$ | Sampled $\vG_k$: unbiased, noisy |
+| [Learning rate]{.alert}, $\eta_k$ | Expand and backtrack using the full loss | Short pilots; then use a fixed or decaying schedule |
+| Update work | All $N$ terms: $O(Nm)$ | Sample $b$ terms: $O(bm)$ |
+| Total work | $O(K_{\mathrm{GD}}Nm)+C_{\mathrm{GD}}$ | $O(K_{\mathrm{SGD}}bm)+C_{\mathrm{SGD}}$ |
+| Near minimum | $\vg_k$ approaches zero | Noise can persist at fixed $b$ |
+| Reduce noise effect | No sampling noise | Smaller steps, larger batches or variance reduction |
+| Check progress | Full-gradient norm or loss | Periodic checks with noise assessment |
+
+:::
+
+$K$: each method's updates to the target; $C$: setup, tuning and all checking work
+
+::: {.key-point}
+Both face difficult geometry; compare [total work and time at the same accuracy]{.alert}
+:::
+
+::: {.notes}
+This is a recap of the examples, not a universal convergence theorem.
+The learning-rate row describes practical choices, not rules defining GD
+and SGD. For full GD, use a line search on the deterministic full loss:
+one possible recipe tries a larger trial rate (for example, double the
+previous rate), then halves until a sufficient-decrease condition holds.
+Keep an accepted step only after that check; enlargement is optional and
+can be capped. A valid curvature bound also gives a rate such as 1/L.
+The notebook's Rosenbrock GD starts each search at 1 and halves with Armijo
+backtracking; its logistic GD instead uses a fixed 1/L_bound. It does not
+implement an expanding line search in either experiment.
+
+For practical SGD rate selection, compare candidate starting rates in short
+equal-work pilot runs using the same diagnostic subset, then choose a fixed
+or decaying schedule. Assess blocks of progress, not the sign of one noisy
+mini-batch loss change. Choose each next rate from past information before
+drawing the next update batch. Repeated deterioration suggests a smaller
+rate; persistent noise may suggest decay or a larger batch. Charge pilots
+and diagnostics to C. This is a practical recipe, not a guarantee or the
+only available stochastic step-selection method. The logistic notebook
+uses declared .3 or .3/(1+w/(.25N)), with w the previous component work;
+it implements neither a pilot search nor feedback tuning. Keep those
+declared experimental settings distinct from this general guidance.
+
+Full GD uses g_k=grad Loss(theta_k), evaluated up to floating-point error.
+Mini-batch SGD uses the fresh uniform-with-replacement indices already
+defined in this section; its conditional mean is g_k. Direct dense-model
+work is O(Nm) versus O(bm); exploit reusable structure when it is available.
+K_GD and K_SGD are generally different counts to the same accuracy target.
+C_GD and C_SGD are additional work, not elapsed time: include setup, pilots,
+tuning, diagnostic/full-loss monitoring, validation and final certification.
+For example, training-loss checks contribute O(m[J_s s+J_N N]) as on the
+monitoring-cost slide; counts and costs can differ by method. If the target
+is not attained within budget, report that rather than assigning an attained
+target cost. These expressions are comparison models, not new implemented
+early stops: the notebook's first target crossings remain retrospective.
+The repeated-center toy can be simplified exactly, so it demonstrates
+geometry and sampling noise rather than a practical work saving.
+
+For the toy A=[[2,1],[1,2]] and balanced centers (+/-1,+/-1), the trace of
+the component-gradient covariance is 10, independent of theta. Averaging b
+independent contributions gives the mean squared gradient error
+10/b. Thus approaching the minimizer does not itself improve a fixed-batch
+gradient estimate. In a general problem this persistence requires nonzero
+component-gradient variance at the solution; interpolation and some
+variance-reduced methods can instead have vanishing variance.
+
+Keep gradient-estimate convergence separate from iterate convergence.
+A decreasing learning rate can diminish noise in the parameter updates even
+when each fixed-batch gradient remains noisy. Appropriate schedules and
+regularity assumptions are still required. Larger batches improve the
+gradient estimate itself; smaller steps reduce its effect on the update.
+Fixed-rate SGD can fluctuate around a solution; full GD converges for the
+SPD quadratic at an admissible rate, but neither method has a general global
+guarantee for nonconvex losses. Conditioning and scaling affect both.
+
+A small sampled gradient is not automatically a small full gradient.
+The notebook's loss-gap curves are retrospective benchmarks, not an online
+stopping test. Its endpoint full-gradient certificate is checked separately;
+the cost of setup, monitoring, tuning and final checking belongs in a
+complete practical comparison. The earlier fixed-dataset results show SGD
+winning at a useful coarse accuracy and GD winning at a finer accuracy.
+Source: [Bottou, Curtis and Nocedal, Optimization Methods for Large-Scale Machine Learning](https://arxiv.org/abs/1606.04838).
+:::
+
+## Beyond SGD {#jordan-optimization .tree-marker-slide tree-marker="stochastic-optimization"}
+
+| Research direction | Contribution | Link to SGD |
 |---|---|---|
 | Derivative-free optimization | Rates and limits for gradient estimates from function values | Randomness can estimate a direction without derivatives |
 | Accelerated methods | A variational, continuous-time framework | Understand and design methods using momentum |
@@ -2755,13 +2888,26 @@ available to SGD. Keep the distinction explicit when discussing stopping.
 
 # Monte Carlo Tree Search {.tree-marker-slide tree-marker="monte-carlo-tree-search"}
 
+::: {.section-main-idea}
+Simulate possible futures to [focus a limited search budget]{.alert} on promising actions
+:::
+
+::: {.columns}
+::: {.column width="47%"}
+
 - [Choose an action by simulating futures](#choose-an-action-by-simulating-futures)
-- [Turn simulated trips into values](#turn-simulated-trips-into-values)
 - [One tree-search iteration](#one-tree-search-iteration)
-- [Exploration versus exploitation](#exploration-versus-exploitation)
-- [Follow one simulation through the tree](#follow-one-simulation-through-the-tree)
 - [From search to a decision](#from-search-to-a-decision)
-- [Tree-search companion notebook](#tree-search-companion-notebook)
+
+:::
+::: {.column width="6%"}
+:::
+::: {.column width="47%"}
+
+![](assets/mcts/mcts-search-preview.svg){fig-alt="An unlabeled, partially expanded search tree with one route highlighted and a sampled continuation beyond the stored nodes" width="100%" fig-align="center"}
+
+:::
+:::
 
 ## Choose an action by simulating futures {.tree-marker-slide tree-marker="monte-carlo-tree-search"}
 
@@ -2792,14 +2938,70 @@ algorithm and its statistics transparent.
 Source: [Kocsis and Szepesvari (2006)](https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf).
 :::
 
-## Turn simulated trips into values
+---
 
-For a complete plan $p$, simulate a travel time $T(p)$ and record
+### Specify a travel-time model {#specify-a-travel-time-model}
+
+The notebook declares [synthetic]{.alert} segment distributions in minutes
+
+| First road | Base time | Extra delay | Delay probability |
+|:---|---:|---:|---:|
+| A · North | 10 | 26 | 0.35 |
+| B · Central | 13 | 13 | 0.22 |
+| C · South | 16 | 7 | 0.10 |
+
+For North's first segment,
+\begin{equation*}
+T_A=\begin{cases}10 & \text{with probability }0.65\\36 & \text{with probability }0.35\end{cases}
+\end{equation*}
+
+- A fixed itinerary has a [random]{.alert} total time; each trial draws fresh traffic
+- Search also samples unfinished [route choices]{.alert}
+- A real application needs a simulator fitted to travel-time observations
+
+::: {.notes}
+These numbers are invented teaching parameters, declared in FIRST_SEGMENT
+in the companion notebook; no measured, downloaded or live traffic data are
+used. The displayed table matches all three first-segment rows exactly.
+The later segments have similarly declared base times, extra delays and
+delay probabilities. Conditional on a chosen road, time is b+dB with B a
+Bernoulli delay indicator of probability q. Base, delay and probability are
+fixed model inputs; the occurrence of the delay is sampled independently
+for each segment and each simulated trip. North's expectation is 19.1
+minutes, but the objective is an on-time probability, not minimum mean time.
+
+The traffic example has two distinct sources of sampling: the algorithm
+samples untried/rollout route choices, while the simulator samples traffic
+for the completed plan. Stored-node UCT selection uses the current scores;
+its tie-breaking can be deterministic. A node is a route prefix, not a
+random traffic state. All actual itinerary choices are fixed before leaving
+home; search visits are simulated trips, not observations gathered by driving.
+The same completed itinerary can return success on one traffic draw and
+failure on another. If travel times were deterministic instead, the same
+complete itinerary would always have the same return, but randomized search
+could still help explore a very large family of itineraries.
+
+A realistic model would need travel-time observations and a justified
+generative model, including departure-time effects and correlations when
+relevant. Estimating and checking that model is separate from tree search;
+MCTS does not infer credible traffic distributions from nothing. Our small
+independent two-point model makes exact benchmarking possible and is not a
+validated traffic forecast. Online rerouting would require a different
+state representation and decision timing.
+:::
+
+---
+
+### Turn simulated trips into values {#turn-simulated-trips-into-values}
+
+For a complete plan $p$, simulate its [total travel time]{.alert} $T(p)$ in minutes
+
+With deadline $D=80$ minutes, record the [return]{.alert}
 
 \begin{equation*}
 R=\begin{cases}1 & \text{arrive by the deadline}\\0 & \text{arrive late}\end{cases}
 \qquad
-\mu(p)=\Ex(R)=\Prob\bigl(T(p)\leq t_{\max}\bigr)
+\mu(p)=\Ex(R)=\Prob\bigl(T(p)\leq D\bigr)
 \end{equation*}
 
 At a stored branch, keep [successes]{.alert} $W$ and [visits]{.alert} $N$
@@ -2827,16 +3029,132 @@ estimates of a single fixed plan's probability, nor automatically its optimal
 continuation value. The desired planning decision is a plan with large mu(p).
 There is no reward before completion and no discount in this example, so one
 terminal return can be backed up unchanged through the stored path.
+D is the arrival deadline, matching DEADLINE=80 in the companion notebook.
+T(p) is the sum of all segment times for a fixed complete itinerary p;
+the earlier T_A describes only North's first segment. R is a binary
+simulation result and mu(p) is its expectation, the plan's true on-time
+probability under the specified simulator. Here N counts simulated visits,
+not the number of observations in the earlier SGD section.
+:::
+
+---
+
+### Deterministic games and search {#deterministic-games-and-search}
+
+Chess has deterministic moves; this [toy game]{.alert} shows why replies matter
+
+![](assets/mcts/mcts-game-choice-tree.svg){fig-alt="A toy deterministic game: our move A allows the opponent to choose our win or our loss, while our move B forces a draw; accounting for the opponent's best reply favors B" width="60%" fig-align="center"}
+
+- Our turns seek high values; opposing turns seek low values [from our viewpoint]{.alert}
+- Random rollouts explore a small part of a huge, [deterministic game tree]{.alert}
+
+::: {.notes}
+The pictured fragment is a constructed two-player, zero-sum game, not a
+legal chess position. Leaves are toy terminal outcomes: +1 for our win,
+0 for a draw and -1 for our loss. Against an opponent who chooses the worst
+outcome for us, A has value min(+1,-1)=-1, while B has min(0,0)=0; we choose
+max(-1,0)=0, hence B. Maximizing our value at both levels would mistakenly
+count on the opponent allowing the win after A. This explains the objective;
+it is not a claim that finite-budget MCTS computes exact minimax values.
+
+Chess transitions are deterministic given the full state (including turn,
+castling/en-passant rights and relevant repetition/move-count history) and
+the chosen legal move. The opponent's reply is an adversarial decision,
+not a chance outcome with an intrinsic probability. We may model or sample
+replies using a policy during search, but an average against sampled replies
+is not automatically the value against perfect opposition. A complete
+terminal move sequence has a fixed outcome, even when our algorithm sampled
+that sequence. Uncertainty comes from the unsearched alternatives and our
+limited evaluation, rather than random physics in the board update.
+
+MCTS for two-player games must account for whose turn it is, for example
+by changing the value sign in a player-to-move representation. The UCT
+paper's game experiments use negative estimated values at MIN nodes.
+Neural-network-guided variants can evaluate a leaf instead of completing a
+rollout; the AlphaGo/AlphaZero distinction is on the next slide. A full game
+tree grows through both players' legal replies, motivating selective search.
+Our route notebook is single-agent and does not implement adversarial turns.
+Sources: [Silver et al., AlphaGo, Methods](https://deepmind-media.storage.googleapis.com/alphago/AlphaGoNaturePaper.pdf)
+and [Kocsis and Szepesvari, Section 3.1](https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf).
+:::
+
+---
+
+### Where MCTS is used {#where-mcts-is-used}
+
+::: {.mcts-use-cases-table}
+
+| Application | Search decisions | Good outcome |
+|:---|:---|:---|
+| [AlphaGo and AlphaZero]{.alert} | Legal moves in Go; also chess and shogi for AlphaZero | Win the game |
+| Navigation | Sailing directions under uncertain wind | Reach the destination at low travel cost |
+| [AlphaTensor]{.alert} | Steps in a matrix multiplication algorithm | Correct result with fewer scalar multiplications |
+
+:::
+
+- A learned [policy]{.alert} gives a rule for choosing actions
+- A learned [value]{.alert} can estimate an outcome without finishing a rollout
+
+::: {.key-point}
+MCTS allocates search effort among [sequences of decisions]{.alert}
+:::
+
+::: {.notes}
+AlphaGo (2016) combined MCTS with neural networks: a policy network supplied
+move preferences, while leaf evaluation combined a value network with a
+fast-policy rollout to the end of the game. Those rollouts were sampled
+from a trained fast policy, not uniformly from legal moves. AlphaZero used
+a learned leaf value in place of a complete rollout; terminal positions
+used their actual outcome. AlphaGo played Go; AlphaZero covered Go, chess
+and shogi. Search in these systems is a neural-network-guided MCTS variant,
+not the exact UCT rule or uniform rollout policy in our companion notebook.
+Two-player search must account for whose turn it is when interpreting and
+backing up values; we cannot maximize one player's payoff at both turns.
+
+Navigation refers to the sailing experiment in Kocsis and Szepesvari
+(2006), Section 3.2: choose sailing directions in a stochastic shortest-path
+problem with changing wind. It is a research simulator example, not a claim
+that a particular commercial navigation service uses MCTS. Unlike our fixed
+airport itinerary, this planner conditions later actions on the current
+state. State, simulator, return and decision timing must fit the application.
+
+AlphaTensor (Fawzi et al., 2022) treats matrix multiplication algorithm
+discovery as a game of successive algebraic choices. A neural network
+guides MCTS toward correct tensor decompositions requiring fewer scalar
+multiplications; the paper also considers hardware-aware objectives. The
+visible row states the simpler operation-count objective. MCTS is the
+planning component within a larger learning system in both the game-playing
+and algorithm-discovery examples.
+
+Primary sources: [Silver et al., AlphaGo (2016)](https://doi.org/10.1038/nature16961),
+[Silver et al., AlphaZero (2018)](https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/alphazero-shedding-new-light-on-chess-shogi-and-go/alphazero_preprint.pdf),
+[Kocsis and Szepesvari, UCT (2006)](https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf),
+[Fawzi et al., AlphaTensor (2022)](https://doi.org/10.1038/s41586-022-05172-4).
+:::
+
+::: {.refs}
+[AlphaGo](https://doi.org/10.1038/nature16961) ·
+[AlphaZero](https://arxiv.org/abs/1712.01815) ·
+[UCT sailing](https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf) ·
+[AlphaTensor](https://doi.org/10.1038/s41586-022-05172-4)
 :::
 
 ## One tree-search iteration {.tree-marker-slide tree-marker="monte-carlo-tree-search"}
 
-| Step | Airport-route interpretation |
+Run these steps [in order]{.alert} for each simulation
+
+::: {.mcts-iteration-table}
+
+| Step | In one iteration |
 |:---|:---|
-| [Select]{.alert} | Follow stored route choices using values and exploration bonuses |
-| [Expand]{.alert} | Store one untried next-segment choice |
-| [Roll out]{.alert} | Randomly complete the plan and simulate its traffic |
-| [Back up]{.alert} | Add one visit and the return $R$ along the stored path |
+| [Select]{.alert} | Follow stored choices using the search scores |
+| [Expand]{.alert} | Add one untried choice, if available |
+| [Roll out]{.alert} | Complete the plan; simulate traffic to obtain $R$ |
+| [Back up]{.alert} | Update visits and returns along the stored path |
+
+:::
+
+After selecting a [complete plan]{.alert}, only simulate traffic and back up
 
 Repeat until the [simulation budget]{.alert} is exhausted
 
@@ -2850,14 +3168,21 @@ neural-network differentiation. An iteration selects existing nodes until
 an expandable node or a terminal plan, expands one untried action if
 available, and samples one terminal return. Newly sampled rollout actions
 need not all become stored nodes. A terminal plan still gets a new traffic
-simulation. General problems can have intermediate rewards, discounting,
+simulation. Selection can traverse zero edges, for example on the first
+visit to the root. Expansion adds at most one node, and the rollout can
+require zero further route choices if the selected/expanded plan is complete.
+Every iteration still spends one traffic simulation and backs its return
+up along the stored path. Thus the rows are successive phases of one
+iteration, not four alternative kinds of iteration. General problems can have intermediate rewards, discounting,
 stochastic transitions or a truncated rollout with a value approximation;
 they require the corresponding return calculation and state representation.
 :::
 
-## Exploration versus exploitation {.tree-marker-slide tree-marker="monte-carlo-tree-search"}
+---
 
-For a visited action, an illustrative [UCT]{.alert} selection score is
+### Exploration versus exploitation {#exploration-versus-exploitation}
+
+At partial plan $s$, score a [visited]{.alert} next road choice $a$ using [UCT]{.alert}
 
 \begin{equation*}
 \underbrace{\overline Q(s,a)}_{\text{exploit a high average}}
@@ -2865,18 +3190,22 @@ For a visited action, an illustrative [UCT]{.alert} selection score is
 \qquad c>0
 \end{equation*}
 
-Illustrative snapshot: $N(s)=60$ simulations, $c=0.2$
+$\overline Q(s,a)=W(s,a)/N(s,a)$: mean return; $W(s,a)$: successes through $a$
+
+$N(s)$: node visits; $N(s,a)$: visits through $a$; $c>0$: exploration weight
+
+Expand an [untried]{.alert} choice first; otherwise follow the [largest score]{.alert}
+
+::: {.exitem}
+<span class="exbullet">$\exstar$</span>
+<span>At the root, $N(s)=60$, $c=0.2$: which choice is next?</span>
+:::
 
 | First route | Successes $W(s,a)$ | Visits $N(s,a)$ | Average | Score |
 |:---|---:|---:|---:|---:|
 | A · North | 28 | 40 | 0.70 | 0.764 |
 | B · Central | 9 | 15 | 0.60 | 0.704 |
 | C · South | 3 | 5 | 0.60 | 0.781 |
-
-::: {.exitem}
-<span class="exbullet">$\exstar$</span>
-<span>Which branch gets the next simulation, and why?</span>
-:::
 
 ::: {.notes}
 Choose C. Its exploration bonus is about .181 versus .064 for A and .104
@@ -2887,6 +3216,19 @@ rewards are in [0,1]. These counts are a constructed teaching snapshot, not
 outputs claimed for the notebook's default run. Before the backup the total
 successes at the root are 28+9+3=40 and total visits are 40+15+5=60.
 
+s is a node (the route prefix chosen so far), not the whole tree and not a
+traffic realization. a is a candidate next road choice leaving s. For this
+root snapshot, s is the empty plan and a is North, Central or South.
+Qbar(s,a)=W(s,a)/N(s,a) is the mean return for simulations through that
+choice. Once every action at s has been tried, take the largest displayed
+score and repeat selection at the resulting child. At a node with an
+untried action, selection stops and the expansion phase stores one such
+action (uniformly chosen in the notebook); if the plan is complete, sample
+traffic and back up without expanding. Thus untried actions do not require
+evaluating an undefined score with N(s,a)=0. The exploration bonus trades
+current performance against collecting information; it is not part of the
+terminal trip reward or the final most-visited recommendation rule.
+
 UCT means upper confidence bounds applied to trees. The exploration
 parameter depends on reward scale and convention. It directs search; do
 not call this bonus a calibrated confidence interval for arbitrary adaptive
@@ -2896,7 +3238,9 @@ for these changing-policy averages.
 Source: [Kocsis and Szepesvari (2006)](https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf).
 :::
 
-## Follow one simulation through the tree
+---
+
+### Follow one simulation through the tree {#follow-one-simulation-through-the-tree}
 
 ![](assets/mcts/mcts-one-iteration.svg){fig-alt="Select South C and its stored child C–1, expand C–1–0, randomly complete the remaining three route choices and simulate an on-time arrival, then back up return one along that stored path" width="72%" fig-align="center"}
 
@@ -2925,7 +3269,7 @@ for C's full 3/5. Thus both binary children already exist before this iteration.
 
 :::
 
-## From search to a decision
+## From search to a decision {.tree-marker-slide tree-marker="monte-carlo-tree-search"}
 
 [Searching]{.alert}: which branch deserves the next simulation?
 
@@ -2954,7 +3298,9 @@ searches again; our before-departure itinerary deliberately keeps a fixed
 plan and samples traffic afterward.
 :::
 
-## Tree-search companion notebook {#tree-search-companion-notebook}
+---
+
+### Tree-search companion notebook {#tree-search-companion-notebook}
 
 [Open Monte Carlo Tree Search on GitHub](https://github.com/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/MonteCarloTreeSearch.ipynb)
 · [Run in Colab](https://colab.research.google.com/github/fjhickernell/MATH565Fall2026/blob/main/notebooks/applications/MonteCarloTreeSearch.ipynb)

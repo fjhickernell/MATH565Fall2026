@@ -180,6 +180,14 @@ markers:
     font_scale: 2.9
     labels: [monte-carlo-tree-search]
 
+  stochastic-optimization:
+    font_scale: 2.9
+    labels: [stochastic-optimization]
+
+  stochastic-optimization-estimation:
+    font_scale: 2.7
+    labels: [stochastic-optimization, estimation]
+
   # Course Map summaries: existing labels for the content of each whole deck.
   deck-02-overview:
     width: 42%

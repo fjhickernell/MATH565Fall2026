@@ -761,10 +761,34 @@ appropriate phase rather than appended indiscriminately.
     Add the executable Applications companion with actual search-tree plots,
     exact benchmarks and all 20 equal-budget comparisons; instructor review
     remains open (November 12).
+  - [x] Add an unlabeled search tree beside the MCTS section outline and
+    a sourced use-cases slide: AlphaGo/AlphaZero, UCT sailing and AlphaTensor.
+    Distinguish learned policy/value guidance from the notebook's uniform
+    rollouts (November 12).
+  - [x] Explain the declared synthetic traffic inputs and the distinction
+    between random search and random travel times. Add an opponent-reply
+    tree for deterministic games; align notebook prose while preserving
+    its code and outputs. Narrow the iteration table's step column and
+    restore navigation markers on regular SGD/MCTS slides (November 12).
+  - [x] Organize MCTS into three main headings and seven continuations,
+    preserving all ten slides and their anchors. Define the traffic deadline,
+    UCT symbols and notebook indices/recommendation at first use; move
+    returns directly after the simulator and retain all code/outputs.
+  - [x] Put an explicit main-idea explanation on the Parallel Computing,
+    Multilevel Monte Carlo, SGD and MCTS section openers before their outlines.
+    Clarify that MLMC couples fine/coarse outputs to reduce the variance of
+    their difference, and that high dimensionality describes the random input.
   - [x] Restore Rosenbrock's banana valley and actual GD zigzags to the main
     SGD lecture. Use b=10 in the introductory and detailed quadratic path
     pictures, with the same nonradial start (-3.2,1.0) throughout the slide and
     notebook toy comparisons; retain b=1/10/100 noise comparisons (November 12).
+  - [x] Add a concise GD/SGD recap after the useful-accuracy comparison:
+    learning-rate selection, direction, per-update and total work, persistent
+    fixed-batch noise and monitoring. Narrow the feature column; distinguish
+    practical rate selection from the notebook's declared settings in notes.
+    Include the toy's gradient MSE 10/b, qualify convergence in
+    notes, and verify the slide and outline link at both lecture sizes.
+    Final SGD/MCTS consistency checks pass; instructor review remains open.
   - [x] Prepare the CPU/GPU notebook with bounded batches and clean Mini MPS execution; initial instructor trials on Mini and M5 are complete. The expanded notebook adds diagnostics, both speedup graphs, and machine labels, including macOS GPU core counts. The current saved M3 Max run has all fourteen code cells completed without errors. A light interpretation pass and three Deck 05 continuation slides explain timing baselines, same-time accuracy, and correlated outputs; instructor content review remains pending.
 - [ ] Adapt course pages and policies to the authoritative repository.
 - [ ] Migrate assignments, notebooks, examples, and required static assets.

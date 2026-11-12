@@ -1,16 +1,100 @@
 # Next task
 
-## Resume after the machine restart
+## Sample exam questions — announced November 12
 
-- Add the concise GD-versus-SGD summary slide requested for later:
-  [issue #6](https://github.com/fjhickernell/MATH565Fall2026/issues/6), assigned
-  to Fred. Contrast learning rates, full versus sampled gradient work,
-  persistent fixed-batch noise, and monitoring/stopping; qualify the noise claim.
-- Resume review of the restored banana geometry, corrected b=10 toy paths,
-  and the new MCTS airport-route slides/notebook below.
-- Reload `StochasticGradientDescent.ipynb` from disk before running an open
-  JupyterLab copy. The MCTS companion is
-  `notebooks/applications/MonteCarloTreeSearch.ipynb`.
+The [Canvas announcement](https://iit.instructure.com/courses/25777/discussion_topics/110260)
+is published to All Sections, November 12 at 7:52 AM CST. Prepare and provide
+sample exam questions to accompany Selected Topics, hopefully by Wednesday,
+November 25. Preparation and release remain open. The
+[HTML reference](drafts/2026-11-25-selected-topics-sample-exam-announcement.html)
+preserves the published text.
+
+## UM-Bridge workshop announcement — published
+
+Canvas lists the [UM-Bridge workshop announcement](https://iit.instructure.com/courses/25777/discussion_topics/110259)
+as posted to All Sections on November 12 at 7:47 AM CST. The
+[local HTML reference](drafts/2026-12-07-um-bridge-workshop-announcement.html)
+preserves the prepared text; do not repost.
+
+## Ready for instructor walkthrough
+
+Each of Deck 05's four topic openers now states its main idea before the
+outline: concurrent sample evaluation, cheap/coupled multilevel contributions,
+sampled optimization updates, and simulation-guided tree search. The idea
+paragraphs reserve the upper-right marker area; the SGD opener retains its
+path picture without an extra top offset.
+Keep these topic sentences unless bullets make a long explanation easier
+to scan. The MLMC wording now places high dimensionality on the random
+input, and coupling on the fine/coarse outputs within a correction. The
+goal is small variance of their difference; the covariance identity and
+correct-marginal requirement are in notes. Small output variance alone
+does not establish QMC/RQMC efficiency.
+
+The requested [GD and SGD compared](../slides/05-selected-topics.qmd#gd-and-sgd-compared)
+summary is complete, after the fixed-dataset accuracy example and
+before Beyond SGD. Its seven rows contrast direction, per-update and total
+work at the same accuracy, persistent fixed-batch noise, learning rates and
+monitoring. The learning-rate row describes expanding/backtracking with
+full loss for GD, and short pilots followed by fixed/decaying schedules for
+SGD; it replaces the fixed-learning-rate behavior row. The notes distinguish
+this practical guidance from the notebook's curvature-based GD and declared
+SGD rates. The feature column is 20%, leaving 40% for each method.
+Separate update counts K_GD/K_SGD and additional work C_GD/C_SGD
+keep the full comparison explicit. The toy's exact gradient MSE 10/b remains
+in the notes, along with convergence and gradient-versus-update-noise details.
+The slide and outline link pass 1600×1000 and 1280×800 review.
+The opening optimization slide now distinguishes gradient direction,
+curvature, conditioning and cost. Its sampling question concerns a cheaper
+gradient estimate for the same objective; it does not imply that sampling
+fixes conditioning. The revised opening renders and passes visible review.
+Monitoring work now counts diagnostic checks on s observations separately
+from full checks on N: O(m[Kb+J_s s+J_N N]), with their frequencies explained.
+The implementation and local review for
+[Issue #6](https://github.com/fjhickernell/MATH565Fall2026/issues/6) are complete;
+this checkpoint includes its closeout. Remote deployment of the new refinements
+remains to be verified after publication.
+
+The restored banana geometry, b=10 toy pictures and MCTS companion are ready
+for Fred's walkthrough. Independent final checks confirm matching SGD paths
+and consistent MCTS selection/expansion/backup counts. These refinements
+preserve notebook code and current outputs. The MCTS opener has an unlabeled search tree in
+its right column, beside the section outline; the labeled route explanation
+follows on the next slide. The prior checkpoint `c3feafc` publishing workflow
+succeeded, and its MCTS slides and notebook listing are verified live.
+The new use-cases slide follows the airport example: AlphaGo/AlphaZero,
+UCT's sailing experiment and AlphaTensor, with primary references and a
+brief distinction between learned policies, learned values and rollouts.
+Two further slides now explain the synthetic travel-time inputs and
+deterministic game search with an opponent's replies. North's first segment
+is 10 minutes with probability .65 or 36 with probability .35; those are
+declared teaching parameters, not measured traffic. The notebook prose
+matches; its ten code cells and current outputs are preserved. Keep random
+search choices distinct from random simulated traffic, and opponent choices
+distinct from chance outcomes. The game fragment is a toy, not a chess position.
+The iteration table occupies 78% of the content width, with 20% for step
+names and 80% for concise descriptions. It explicitly runs all phases in
+order per simulation, skipping expansion/completion for a complete plan
+while still sampling traffic and backing up the return.
+The UCT slide now defines s as the current partial plan and a as a next
+road choice, and states the untried-choice/maximum-score rule explicitly.
+Selection repeats at each child until expansion or a complete plan.
+MCTS now has three primary headings (decision problem, one search iteration,
+final recommendation) and seven continuation slides. The opener lists only
+those three main headings. Returns and visit statistics follow the traffic
+model before the game and application comparisons. All prior slide anchors
+remain intact. The clarity audit adds visible definitions for D=80 minutes,
+W/N and their choice-indexed versions, Qbar, s/a and c; the notebook also
+defines H, j, a_j and the recommended itinerary before using them.
+Regular SGD and MCTS slides and their openers have navigation markers;
+SGD uses the existing Stochastic Optimization tree label. The large-data
+example highlights both Stochastic Optimization and Estimation. Continuations
+remain marker-free under the established course convention. Preview from
+the assembled `_site/slides/` so shared artwork paths resolve.
+The revised comparison, MCTS opener and use-cases slide pass 1600×1000
+and 1280×800 visual review; internal links and local asset paths in the
+rendered deck resolve. These additions are included in this checkpoint.
+Reload an open SGD notebook from disk before running it; the MCTS companion
+is `notebooks/applications/MonteCarloTreeSearch.ipynb`.
 
 ## Immediate next work — review SGD geometry and the MCTS route example
 
@@ -22,8 +106,9 @@ in the batch/noise comparisons. Two restored Rosenbrock slides show the
 banana valley, GD versus BFGS and actual late GD zigzags; keep these concrete
 curvature/conditioning illustrations in the main lecture.
 
-MCTS now has seven instructional slides: an airport itinerary tree,
-on-time returns and successes/visits, the four search steps, numerical UCT,
+MCTS now has ten instructional slides: an airport itinerary tree,
+its synthetic traffic model, on-time returns and successes/visits,
+a deterministic-game reply tree, three sourced use cases, the four search steps, numerical UCT,
 one illustrated backup, the final recommendation and a companion-notebook
 call. The new Applications notebook uses 96 complete plans, an 80-minute
 deadline, 4,096 simulations and 20 retained seeds. Exact probabilities are
@@ -34,7 +119,7 @@ with Fred before teaching it; it has not been established as lecture coverage.
 Continue Fred's walkthrough at the logistic probability-to-loss derivation
 in Part 5, then Part 6's **one fixed dataset and several accuracy targets**.
 The matching slides derive the Bernoulli likelihood, negative logarithm,
-logistic data loss, regularization and gradient. Selected Topics now has 26
+logistic data loss, regularization and gradient. Selected Topics now has 27
 instructional SGD slides plus the opener; the four cumulative challenge
 and response tables and existing anchors remain intact.
 
@@ -44,8 +129,8 @@ update variability; GD repeats assess timing. Predeclared gaps are .01,
 .001, .0001, .00001 and .000001. **Beats means reaching the same useful
 accuracy with less gradient work or measured time**, rather than having the
 smallest final loss. At .001, saved median contributions are 524,288 for GD,
-15,360 for fixed mini-batches and 17,408 for decay; median update times on
-Mini are about 4 ms for GD and 1–2 ms for the sampled methods. At .0001,
+15,360 for fixed mini-batches and 17,408 for decay; saved median update times
+on M3 are about 10.2 ms for GD, 1.5 ms for fixed mini-batches and 1.8 ms for decay. At .0001,
 decay uses fewer contributions than GD but is slower; only GD reaches .000001 within eight passes. All
 success counts remain visible. The smaller N=16,384, b=64, twelve-pass
 experiment is explicitly optional Part 7, a different problem. The main
@@ -79,15 +164,19 @@ an online accuracy-based stop.
 
 November 12 validation: the complete SGD notebook passes all 14 code cells
 and 11 figures; the affected path, error and noise-floor figures were inspected.
-The larger-data logistic benchmark outputs are preserved. The new MCTS
+The larger-data logistic work and accuracy results are preserved; saved
+timings were refreshed on M3 and the matching slide notes updated. The MCTS
 notebook passes all ten code cells and four inspected figures; alternate
 depth/budget and fractional-deadline checks pass. Reload the open SGD
 notebook from disk before Run All. Instructor content review remains open.
 The complete website and all five decks render; changed layouts were checked
 at classroom and ordinary browser sizes, and the notebook listing at desktop
 and phone widths. All 384 local links/assets and 235 anchors on the changed
-pages pass. These changes are included in this Checkpoint; its remote
-CI/deployment and live-site verification remain pending.
+pages pass. These changes are in `c3feafc`; its publishing workflow succeeded
+and the live MCTS slides and notebook listing are verified. The new comparison
+summary, monitoring-cost refinements, MCTS opener and use-cases slide, and
+alt-text correction are included in this checkpoint; their remote deployment
+remains to be verified.
 
 [Issue #5 — Demonstrate SGD reaching useful accuracy with less component work](https://github.com/fjhickernell/MATH565Fall2026/issues/5)
 was closed at Fred's direction on November 12 after verification of the
