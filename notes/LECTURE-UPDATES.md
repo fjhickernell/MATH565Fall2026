@@ -9,10 +9,12 @@
   displayed lecture materials; distinguish substantive coverage from previews
   and deferred explanations.
 
-The schedule is reconciled through November 10. The August 18–September 17
-rows record the historical audit without retroactive calendar edits; the
-November 12 continuation note is saved and reopened in Apple Calendar, with
-an independent check in Fantastical.
+The recording-based schedule is reconciled through November 12. The latest
+fully verified calendar continuation remains the November 12 event from the
+November 10 update. The new November 17 note is saved and reopened locally in
+Apple Calendar, but server/Fantastical synchronization is pending. The
+August 18–September 17 rows retain their historical audit without retroactive
+calendar edits.
 
 | Instructional meeting | Status | Panopto recording | Next instructional event annotated | Checked |
 |---|---|---|---|---|
@@ -38,6 +40,7 @@ an independent check in Fantastical.
 | November 3, 2026 | Reconciled: two-level allocation and cost–error derivations; IID savings and covariance/cost comparison; brief multilevel telescoping/allocation/bias/cost overview; worked examples and notebook deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=0a596b6f-2284-4473-b1b4-b4f7012577c7) | November 5, 2026, 10:00–11:15 AM America/Chicago (CST), PH 109; Illinois Tech Fred → Calendar occurrence only; resume two-level examples and Multilevel Option Pricing, then Stochastic Gradient Descent | November 3, 2026 |
 | November 5, 2026 | Reconciled: two-level recap; Multilevel Option Pricing and Beam comparisons; gradient descent, Rosenbrock geometry, and conditioning versus dimension through the notebook conditioning table; stochastic gradients deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=0642ecc9-7e10-4a57-94f1-b4f90123f1c7) | November 10, 2026, 10:00–11:15 AM America/Chicago (CST), PH 109; Illinois Tech Fred → Calendar occurrence only; resume “Why cheap gradients matter” and Stochastic Gradient Descent notebook Part 3 | November 5, 2026 |
 | November 10, 2026 | Reconciled: scalar/vector optimization, Hessian costs and conditioning recap; nonlinear finite-sum motivation, single-observation and mini-batch SGD, gradient-noise estimation, expected descent and practical tuning; logistic model introduced, numerical experiments deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f378917f-f589-4d4e-b058-b4fe012739d4) | November 12, 2026, 10:00–11:15 AM America/Chicago (CST), PH 109; Illinois Tech Fred → Calendar occurrence only; resume “A large-data example,” then “Learning rates in the logistic experiment” and Stochastic Gradient Descent notebook Parts 5–6 | November 10, 2026 |
+| November 12, 2026 | Coverage reconciled: SGD/logistic-regression notebook Parts 5–6, useful-accuracy work/time comparisons, learning rates and monitoring; MCTS route/game-tree and iteration overview explicitly previewed only. Calendar synchronization pending | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f3b3b921-e222-43e1-9dc6-b500012cc9e6) | November 17, 2026, 10:00–11:15 AM America/Chicago (CST), PH 109; Illinois Tech Fred → Calendar occurrence only; Recap the MCTS decision problem, then “Specify a travel-time model,” returns, “One tree-search iteration” and exploration versus exploitation. Saved with Only This Event and reopened in Apple Calendar; unchanged notes in Fantastical, so server synchronization remains unverified | November 12, 2026 |
 
 Recording evidence: Deck 02 mixture/acceptance–rejection unit-cube review
 preceded Deck 03 (33:06). Unbiased discrepancy began at 37:06; RKHS and
@@ -374,3 +377,45 @@ tables retain four cells per row, and whitespace checks pass. Visual checks at
 1280×900 and 390×844 verify the November 10/12 rows and all six tables: document
 width matches the viewport, with no horizontal overflow. These changes are
 included in this Checkpoint; remote CI/deployment remain pending.
+
+## November 12 recording evidence and calendar synchronization gap
+
+The November 12 recording starts at 9:58 AM and lasts 1:16:51. Its complete
+auto-generated transcript and visible closing slide were inspected. Following
+presentation guidance and an optimization/SGD recap, the lecture substantively
+walks through the logistic model, likelihood-based loss, separate quadratic
+penalty and gradient, and the notebook's Parts 5–6 work/time comparison. The
+run-all, fixed dataset and batch, repeated runs, useful-accuracy targets,
+declared learning rates, monitoring cost and retrospective accuracy comparison
+are discussed. GD/SGD comparison and Beyond SGD close the main sequence.
+
+The MCTS opener appears at 1:08:54. Route/game-tree motivation and the four
+search phases are a high-level preview, explicitly identified as such in the
+closing remarks. “One tree-search iteration” is indexed at 1:14:18 and is
+visibly present at 1:15:11; that display does not establish detailed algorithm
+coverage. Resume the travel-time model and returns before developing the
+iteration, UCT, backup and notebook. Detailed Parts 3–4 and the earlier
+squared-gradient signal/noise subtraction question remain unverified.
+
+The November 17 occurrence was verified in Illinois Tech Fred → Calendar,
+PH 109, 10:00–11:15 AM America/Chicago (CST). The continuation note was
+saved with Only This Event, closed and reopened in Apple Calendar. No
+dates, times, calendar destinations or recurrence rules were changed.
+Fantastical still displayed no note. Both apps showed pre-existing account
+connection/sync errors. The local save is verified; server delivery and the independent
+Fantastical read-back are not. Reuse this recording audit and retry only the
+calendar synchronization/read-back when access recovers. No duplicate event
+or second write through Fantastical was created.
+
+The read-only Outlook recording-notice query returned an internal error;
+Outlook web did not load, and Mail had a pre-existing send-error dialog that
+was left untouched. Recordings were discovered directly in authenticated
+Panopto after beginning at the Illinois Tech portal.
+
+Validation: the Schedule renders without warnings. Browser inspection at
+1280- and 390-pixel widths confirms that all six tables fit without horizontal
+overflow and that the revised November 12/17 rows remain readable. Affected
+slide anchors resolve and git diff --check passes. Temporary recording and
+preview tabs were closed; Safari returned to the original QMCPy page,
+Calendar to today’s week, and Fantastical to today’s normal week with its
+search-results panel gone. No repository changes were committed or published.

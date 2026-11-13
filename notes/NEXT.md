@@ -101,7 +101,17 @@ rendered deck resolve. These additions are included in this checkpoint.
 Reload an open SGD notebook from disk before running it; the MCTS companion
 is `notebooks/applications/MonteCarloTreeSearch.ipynb`.
 
-## Immediate next work — review SGD geometry and the MCTS route example
+## Immediate next work — complete MCTS after the November 12 preview
+
+Prepare the November 17 lecture: recap the MCTS decision problem, then resume
+at [Specify a travel-time model](../slides/05-selected-topics.qmd#specify-a-travel-time-model)
+and [Turn simulated trips into values](../slides/05-selected-topics.qmd#turn-simulated-trips-into-values).
+Develop [One tree-search iteration](../slides/05-selected-topics.qmd#one-tree-search-iteration)
+and [Exploration versus exploitation](../slides/05-selected-topics.qmd#exploration-versus-exploitation)
+in detail before the worked backup, final recommendation and companion notebook.
+The November 12 ending explicitly called its high-level overview a preview;
+displaying the iteration slide does not establish that the detailed algorithm
+or the MCTS notebook was taught. Selected Topics remains unfinished.
 
 The SGD opener and detailed toy-objective picture now use mini-batches
 of ten and start at (-3.2,1.0), so the initial GD direction does not point
@@ -118,11 +128,16 @@ one illustrated backup, the final recommendation and a companion-notebook
 call. The new Applications notebook uses 96 complete plans, an 80-minute
 deadline, 4,096 simulations and 20 retained seeds. Exact probabilities are
 benchmarks only. The balanced uniform baseline wins 11 runs, MCTS wins 8
-and one ties; do not claim universal MCTS superiority. Review this material
-with Fred before teaching it; it has not been established as lecture coverage.
+and one ties; do not claim universal MCTS superiority. The November 12 lecture
+previewed the route/game trees and four search phases. Review the remaining
+model, statistics, UCT, backup and notebook details with Fred before teaching
+them; their coverage has not been established.
 
-Continue Fred's walkthrough at the logistic probability-to-loss derivation
-in Part 5, then Part 6's **one fixed dataset and several accuracy targets**.
+The November 12 classroom notebook walkthrough covered the logistic model,
+penalty and gradient in Part 5, then Part 6's **one fixed dataset and several
+accuracy targets**, including work/time comparisons, declared rates and
+monitoring. The main SGD teaching sequence is complete; the unresolved
+signal/noise correction and optional Parts 3–4 remain follow-ups below.
 The matching slides derive the Bernoulli likelihood, negative logarithm,
 logistic data loss, regularization and gradient. Selected Topics now has 28
 instructional SGD slides plus the opener; the four cumulative challenge
@@ -135,7 +150,7 @@ update variability; GD repeats assess timing. Predeclared gaps are .01,
 accuracy with less gradient work or measured time**, rather than having the
 smallest final loss. At .001, saved median contributions are 524,288 for GD,
 15,360 for fixed mini-batches and 17,408 for decay; saved median update times
-on M3 are about 10.2 ms for GD, 1.5 ms for fixed mini-batches and 1.8 ms for decay. At .0001,
+on M3 are about 10.3 ms for GD, 1.5 ms for fixed mini-batches and 2.0 ms for decay. At .0001,
 decay uses fewer contributions than GD but is slower; only GD reaches .000001 within eight passes. All
 success counts remain visible. The smaller N=16,384, b=64, twelve-pass
 experiment is explicitly optional Part 7, a different problem. The main
@@ -220,17 +235,29 @@ paragraphs, audience and both course-page links are verified. The
 preserves the published text. Do not repost. Remaining individual topic,
 accommodation and enrollment follow-ups are on the private Dashboard.
 
-## Immediate preparation — November 12
+## November 12 teaching and November 17 continuation
 
-Resume Selected Topics at [A large-data example](../slides/05-selected-topics.qmd#a-large-data-example),
-then [Learning rates in the logistic experiment](../slides/05-selected-topics.qmd#logistic-learning-rates)
-and the [Stochastic Gradient Descent notebook](../notebooks/performance/StochasticGradientDescent.ipynb),
-Parts 5–6. The instructor explicitly deferred trying the logistic example
-until next time. Explain the declared learning-rate settings, then compare
-full GD and sampled gradients at equal component work and measured time.
-The notebook uses synthetic data and does not automatically tune its rates;
-its full-loss diagnostics and curvature-bound setup costs remain separate
-from the optimization timers.
+The [November 12 recording](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f3b3b921-e222-43e1-9dc6-b500012cc9e6)
+confirms the optimization/SGD recap, similar component gradients, and a
+substantive [Stochastic Gradient Descent notebook](../notebooks/performance/StochasticGradientDescent.ipynb)
+Parts 5–6 walkthrough. Logistic probabilities, likelihood-based loss, the
+separate penalty and gradient, useful-accuracy work/time comparisons, declared
+learning rates and monitoring costs were discussed. The notebook was run in
+class; its eight-pass budget and retrospective target assessment were stated.
+The GD/SGD comparison and brief Beyond SGD perspective closed the main sequence.
+The toy path was discussed, but detailed Parts 3–4 calculations and the
+signal/noise subtraction question were not resolved.
+
+MCTS route/game-tree motivation and the four search phases were introduced
+only as a high-level preview. Detailed traffic modeling, returns and visit
+statistics, numerical UCT, worked backup and the MCTS notebook remain for
+November 17, following the pickup above. The schedule records this distinction.
+The lecture ledger records the verified November 12 coverage. The November 17
+continuation was saved with Only This Event and reopened in Apple Calendar,
+Illinois Tech Fred → Calendar, PH 109, 10:00–11:15 AM CST. Fantastical still
+shows no note amid existing account errors; server synchronization and the
+independent read-back remain pending. Reuse the recording evidence rather
+than repeat the lecture audit.
 
 ### Condensed SGD teaching sequence — November 11
 
@@ -293,12 +320,14 @@ Checkpoint; remote CI/deployment must be checked separately. Reload an open note
 
 - Clarify why $\|\boldsymbol G_k\|^2-S_k^2/b$ subtracts the noise contribution
   to estimate squared full-gradient signal, and why a realized estimate can
-  be negative. This question was raised but not resolved in class.
+  be negative. This question was raised November 10 and remained unresolved
+  in the November 12 recording.
 - The original scalar recurrence, noise-floor and target-floor examples, and the
   then-four-component quadratic walkthrough were not substantively developed.
   The current replacement uses 1,000 observations of those four center types.
   The current noise-floor replacement uses the same m=2 quadratic as Part 3; no
-  notebook Parts 3–4 walkthrough is verified. Do not let a briefly displayed path slide establish coverage.
+  detailed notebook Parts 3–4 walkthrough is verified through November 12.
+  The toy path discussion does not establish coverage of those calculations.
 - The coordinate-contraction and best-constant-rate proofs were left for
   self-study. General instructor content review remains open.
 
@@ -466,9 +495,11 @@ references across 22 canonical outputs pass. Revised slides and affected terms-i
 1600×1000 and 1280×720, including MathJax, continuation navigation and footer
 clearance; no browser console errors or warnings. Instructor review remains
 open. The expanded sources are preserved in commit `63114aa`. Remote
-deployment is not checked by this lecture update. The November 10 recording
-review changes actual coverage and the November 12 pickup as recorded above;
-it does not constitute a new notebook execution or classroom walkthrough.
+deployment is not checked by that lecture update. The November 10 recording
+review established the then-planned November 12 pickup, without verifying a
+notebook walkthrough. The November 12 recording now confirms the Parts 5–6
+classroom walkthrough and the MCTS preview recorded above; optional detailed
+Parts 3–4 remain unverified.
 
 ## November 5 makeup
 
