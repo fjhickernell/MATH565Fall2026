@@ -9,6 +9,18 @@ November 25. Preparation and release remain open. The
 [HTML reference](drafts/2026-11-25-selected-topics-sample-exam-announcement.html)
 preserves the published text.
 
+## November 16 seminar invitation — published November 14
+
+The [Canvas announcement](https://iit.instructure.com/courses/25777/discussion_topics/110398)
+is published to **All Sections**, November 14 at **2:08 PM CST**. It invites
+students to Fred’s Applied Mathematics and Statistics Seminar, *Sampling More
+Strategically But Just as Flexibly as IID*, November 16, **1:50–2:50 PM CST,
+RE 104**, with a short research summary and the official full-abstract link.
+The posted body, link and saved audience are verified; the
+[HTML reference](drafts/2026-11-16-seminar-announcement.html) preserves the text.
+Do not repost. No seminar-announcement task remained in the Dashboard;
+lecture preparation, grading and talk preparation remain open.
+
 ## UM-Bridge workshop announcement — published
 
 Canvas lists the [UM-Bridge workshop announcement](https://iit.instructure.com/courses/25777/discussion_topics/110259)
