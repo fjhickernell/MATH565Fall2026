@@ -95,11 +95,11 @@ while still sampling traffic and backing up the return.
 The UCT slide now defines s as the current partial plan and a as a next
 road choice, and states the untried-choice/maximum-score rule explicitly.
 Selection repeats at each child until expansion or a complete plan.
-MCTS now has three primary headings (decision problem, one search iteration,
-final recommendation) and seven continuation slides. The opener lists only
-those three main headings. Returns and visit statistics follow the traffic
-model before the game and application comparisons. All prior slide anchors
-remain intact. The clarity audit adds visible definitions for D=80 minutes,
+MCTS retains three primary headings (decision problem, one search iteration,
+final recommendation); the worked-tree sequence adds continuation slides.
+The opener lists only those three main headings. Returns and visit statistics
+follow the traffic model before the game and application comparisons. All
+prior slide anchors remain intact. The clarity audit adds visible definitions for D=80 minutes,
 W/N and their choice-indexed versions, Qbar, s/a and c; the notebook also
 defines H, j, a_j and the recommended itinerary before using them.
 Regular SGD and MCTS slides and their openers have navigation markers;
@@ -133,11 +133,25 @@ in the batch/noise comparisons. Two restored Rosenbrock slides show the
 banana valley, GD versus BFGS and actual late GD zigzags; keep these concrete
 curvature/conditioning illustrations in the main lecture.
 
-MCTS now has ten instructional slides: an airport itinerary tree,
-its synthetic traffic model, on-time returns and successes/visits,
-a deterministic-game reply tree, three sourced use cases, the four search steps, numerical UCT,
-one illustrated backup, the final recommendation and a companion-notebook
-call. The new Applications notebook uses 96 complete plans, an 80-minute
+The MCTS walkthrough now follows one four-decision binary teaching tree
+through the first two simulations and a six-trial snapshot, then selection,
+expansion, rollout and backup in separate views. Simulation 7 succeeds,
+simulation 8 fails, simulation 9 briefly returns to A, and simulation 10
+selects B then its stored B–0 child before expanding deeper. Fixed diagram
+coordinates, explicit successes/visits and dashed rollout-only nodes keep
+every transition visible. All use c=1; the short A trial preserves the
+actual UCT order. Counts and traffic draws are illustrative, separate from
+the notebook's six-segment model. The final recommendation uses the same
+ten-trial snapshot. Review this sequence with Fred before teaching; no
+new lecture coverage is implied. Regenerate its SVGs with
+tools/generate_mcts_walkthrough.py in the qmcpy environment.
+The deck renders with the qmcpy kernel; all 15 views pass visible review
+and fixed-position/overflow checks at 1600×1000 and 1280×800. Local assets
+and internal links resolve, and the browser console is clear. These
+November 15 additions are included in this Checkpoint; remote deployment
+and live-site verification remain pending.
+
+The Applications notebook uses 96 complete plans, an 80-minute
 deadline, 4,096 simulations and 20 retained seeds. Exact probabilities are
 benchmarks only. The balanced uniform baseline wins 11 runs, MCTS wins 8
 and one ties; do not claim universal MCTS superiority. The November 12 lecture

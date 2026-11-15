@@ -774,6 +774,13 @@ appropriate phase rather than appended indiscriminately.
     preserving all ten slides and their anchors. Define the traffic deadline,
     UCT symbols and notebook indices/recommendation at first use; move
     returns directly after the simulator and retain all code/outputs.
+  - [x] Add a fixed-layout, four-decision MCTS teaching tree with initial
+    trials, separate selection/expansion/rollout/backup views, a failed
+    simulation and a later deeper selection. Keep c=1 and every intermediate
+    count consistent, distinguish stored nodes from sampled continuations,
+    and align the final recommendation with the ten-trial snapshot.
+    Preserve the six-segment notebook model and existing anchors;
+    instructor walkthrough remains open (November 15).
   - [x] Put an explicit main-idea explanation on the Parallel Computing,
     Multilevel Monte Carlo, SGD and MCTS section openers before their outlines.
     Clarify that MLMC couples fine/coarse outputs to reduce the variance of
