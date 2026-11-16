@@ -74,19 +74,6 @@ spaces and error bounds.
 </details>
 
 <details>
-<summary><strong>Objectives</strong></summary>
-
-By the end of this course, students will be able to:
-
-- Understand the basics of Monte Carlo and Quasi-Monte Carlo Methods.
-- Understand the basics of Markov chain Monte Carlo (MCMC).
-- Understand how these methods are used for computations.
-- Assess the performance of Monte Carlo methods and improve their effectiveness.
-- Understand basic implementation issues in performing Monte Carlo calculations.
-
-</details>
-
-<details>
 <summary><strong>Where to Find It</strong></summary>
 
 | **This course website** | [**Canvas website**]({{< meta canvas.course >}}) |
@@ -101,6 +88,17 @@ By the end of this course, students will be able to:
 | [Course Repository](https://github.com/fjhickernell/MATH565Fall2026) | |
 
 </details>
+
+## Course Objectives
+
+1. Students will understand the basics of Monte Carlo and Quasi-Monte Carlo
+   Methods.
+2. Students will understand how these methods are used for financial
+   computations such as derivative pricing.
+3. Students will understand how to assess the performance of Monte Carlo
+   methods and improve their effectiveness.
+4. Students will understand basic implementation issues in performing Monte
+   Carlo calculations.
 
 ## Course Outline
 

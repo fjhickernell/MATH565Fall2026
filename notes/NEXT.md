@@ -278,12 +278,15 @@ MCTS route/game-tree motivation and the four search phases were introduced
 only as a high-level preview. Detailed traffic modeling, returns and visit
 statistics, numerical UCT, worked backup and the MCTS notebook remain for
 November 17, following the pickup above. The schedule records this distinction.
-The lecture ledger records the verified November 12 coverage. The November 17
-continuation was saved with Only This Event and reopened in Apple Calendar,
-Illinois Tech Fred → Calendar, PH 109, 10:00–11:15 AM CST. Fantastical still
-shows no note amid existing account errors; server synchronization and the
-independent read-back remain pending. Reuse the recording evidence rather
-than repeat the lecture audit.
+The November 12 lecture reconciliation is complete. On November 16 the
+November 17 continuation was saved with Only This Event, reopened in Apple
+Calendar and independently read back in full in Fantastical, resolving the
+earlier synchronization gap. The verified occurrence remains Illinois Tech
+Fred → Calendar, PH 109, 10:00–11:15 AM CST. Its note names the Deck 05 MCTS
+pickup above and distinguishes November 12's completed SGD/logistic notebook
+work from the MCTS preview. No other planning note was present; only this
+occurrence's notes changed. Reuse the recording evidence rather than repeat
+the lecture audit.
 
 ### Condensed SGD teaching sequence — November 11
 

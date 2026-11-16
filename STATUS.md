@@ -53,6 +53,8 @@ appropriate phase rather than appended indiscriminately.
       using the shared papers registry and public arXiv link.
     - [x] Review prerequisites and requirements.
     - [x] Review course objectives and outline.
+    - [x] Match the Course Objectives to the syllabus and show them before the
+      Course Outline.
     - [x] Reconcile the outline with coverage through October 6 and projected
       remaining units, totaling about 40 lecture hours; condense subtopics and
       use Improving Efficiency consistently (October 8, 2026).
