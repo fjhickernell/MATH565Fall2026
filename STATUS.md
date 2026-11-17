@@ -783,6 +783,20 @@ appropriate phase rather than appended indiscriminately.
     and align the final recommendation with the ten-trial snapshot.
     Preserve the six-segment notebook model and existing anchors;
     instructor walkthrough remains open (November 15).
+  - [x] Show all ten MCTS teaching simulations and the complete stored A
+    subtree, including its four early expansions and simulation-nine path.
+    Distinguish the one kept expansion from its discarded rollout suffix;
+    widen the tree column and show UCT/untried-action decisions explicitly
+    (November 16; instructor walkthrough remains open).
+  - [x] Extract the ten-trial recommendation A–0–0–0 with explicit ties and
+    default completion; note its limited evidence. Repair the deterministic
+    game slide's footer overlap and verify all 31 MCTS slides at 1600×1000
+    and 1280×720 (November 16).
+  - [x] Define balanced uniform allocation and explain both Section 6
+    notebook plot types beside their saved results. Compare 512 and 4,096
+    simulations using matched-scale paired plots and labeled wins, gaps and
+    cumulative search timings; retain all seeds and the full budget curve.
+    Execute with qmcpy and inspect saved figures (November 16).
   - [x] Put an explicit main-idea explanation on the Parallel Computing,
     Multilevel Monte Carlo, SGD and MCTS section openers before their outlines.
     Clarify that MLMC couples fine/coarse outputs to reduce the variance of

@@ -133,28 +133,61 @@ in the batch/noise comparisons. Two restored Rosenbrock slides show the
 banana valley, GD versus BFGS and actual late GD zigzags; keep these concrete
 curvature/conditioning illustrations in the main lecture.
 
-The MCTS walkthrough now follows one four-decision binary teaching tree
-through the first two simulations and a six-trial snapshot, then selection,
-expansion, rollout and backup in separate views. Simulation 7 succeeds,
-simulation 8 fails, simulation 9 briefly returns to A, and simulation 10
-selects B then its stored B–0 child before expanding deeper. Fixed diagram
-coordinates, explicit successes/visits and dashed rollout-only nodes keep
-every transition visible. All use c=1; the short A trial preserves the
-actual UCT order. Counts and traffic draws are illustrative, separate from
-the notebook's six-segment model. The final recommendation uses the same
-ten-trial snapshot. Review this sequence with Fred before teaching; no
-new lecture coverage is implied. Regenerate its SVGs with
-tools/generate_mcts_walkthrough.py in the qmcpy environment.
-The deck renders with the qmcpy kernel; all 15 views pass visible review
-and fixed-position/overflow checks at 1600×1000 and 1280×800. Local assets
-and internal links resolve, and the browser console is clear. These
-November 15 additions are included in this Checkpoint; remote deployment
+The MCTS walkthrough follows all ten simulations of the four-decision
+teaching tree explicitly. Simulations 3–6 now show A–0, A–1, A–0–0 and
+A–1–0 being added one at a time; every later figure keeps the complete
+stored A subtree visible. Simulation 9 shows the choice of A then A–0,
+new A–0–1, its temporary final rollout and backup through all four stored
+nodes. The diagram/text columns are 64%/32% with a 4% gutter.
+
+The One tree-search iteration slide explicitly says to keep the selected
+path and any newly expanded node, discard the rollout suffix, and retain
+its return in the counters. Keep the complete-route special case in presenter
+notes only; Fred requested the essential four-step rule on the visible
+slide. Backup updates only the selected stored nodes and the one new node.
+Every simulation restarts at Start. At a node with untried actions, stop
+selection and store exactly one new child; the remaining rollout suffix is
+sampled and discarded, with its return retained in the stored-path counters.
+New nodes are green, rollout-only edges/nodes dashed, and selected/updated
+stored paths gold. Keep this distinction visible even for failed trips.
+UCT is now defined visibly as Upper Confidence Bounds applied to Trees,
+with a one-line probability-bound motivation; keep the Hoeffding/UCB1
+explanation and UCT theorem assumptions in presenter notes. The illustrative
+c=1 is not a confidence level. UCT score ties favor action 0, and untried action choices are
+declared separately (simulation 10 chooses untried action 1 at B–0).
+Counts and trip times are illustrative, separate from the notebook model.
+The final recommendation uses the same ten-trial counts. The new "Our route
+after 10 simulations" continuation extracts A–0–0–0: most visits, then
+larger mean, then earlier action; use action 0 for an unstored remainder.
+Its only simulated trip was late, so make the limited evidence explicit.
+The final Simulation 10 backup slide also displays the recommended route
+beside the tree, with a direct link to that four-choice explanation.
+Regenerate the 20 SVGs with tools/generate_mcts_walkthrough.py in qmcpy;
+the generator checks UCT choices, all ten single-node expansions, rollout
+nonstorage and complete-tree backup totals. Instructor walkthrough remains
+open; no new lecture coverage is implied. The deck and live watcher render
+successfully. All 31 MCTS slides fit at 1600×1000 and 1280×720, with at least
+28 pixels above the footer at the smaller size. The deterministic-game
+diagram and explanation now share columns to remove their footer overlap.
+Browser geometry checks confirm node labels fit, images load and the footer
+stays clear. The iteration and UCT slides pass the same review, preserved anchors
+resolve, local assets/links exist, and the browser console is clear. These
+November 16 refinements are validated for this Checkpoint; remote deployment
 and live-site verification remain pending.
 
 The Applications notebook uses 96 complete plans, an 80-minute
 deadline, 4,096 simulations and 20 retained seeds. Exact probabilities are
-benchmarks only. The balanced uniform baseline wins 11 runs, MCTS wins 8
-and one ties; do not claim universal MCTS superiority. The November 12 lecture
+benchmarks only. Section 6 now defines uniform allocation as balanced cycles
+through all routes and keeps the full budget curves. Matched-scale paired
+plots and labeled win/gap/time summaries compare 512 and 4,096 simulations,
+declared before running. MCTS wins 17/20 at 512 (uniform 3/20, no ties);
+at 4,096 uniform wins 11/20, MCTS 8/20 and one ties. Cumulative checkpoint
+timings exclude IID generation and exact evaluation and include search
+overhead. The guide below the figures explains exact recommendation quality,
+medians/middle-50% bands, paired-run coordinates and the diagonal. The full
+qmcpy run and invariants pass with saved outputs; both new figures are
+visually checked. The search and recommendation rules are unchanged.
+Do not claim universal MCTS superiority. The November 12 lecture
 previewed the route/game trees and four search phases. Review the remaining
 model, statistics, UCT, backup and notebook details with Fred before teaching
 them; their coverage has not been established.
