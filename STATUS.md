@@ -61,6 +61,10 @@ appropriate phase rather than appended indiscriminately.
     - [x] Reconcile Improving Efficiency completion and October 29 pacing:
       about 9 classroom hours for the completed unit and 13 projected for
       Selected Topics; align its outline order with the developed deck.
+    - [x] Reconcile Selected Topics' November 17 classroom conclusion and
+      optional November 19 Q&A: record about 8 taught classroom hours for
+      Selected Topics and 35 across the five units; leave the MCTS companion
+      for independent exploration and count project presentations separately.
     - [x] Count project presentations separately as about 1 hour of student
       class time per student: present once and observe twice.
     - [x] Verify “Where to Find It” and other internal course links.

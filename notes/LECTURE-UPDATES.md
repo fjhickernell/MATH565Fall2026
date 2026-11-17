@@ -10,10 +10,8 @@
   and deferred explanations.
 
 The recording-based schedule and calendar continuation are reconciled through
-November 12. The November 17 continuation note was saved and reopened in Apple
-Calendar, then independently verified in Fantastical on November 16, resolving
-the earlier synchronization gap. The August 18–September 17 rows retain their
-historical audit without retroactive calendar edits.
+November 17. The August 18–September 17 rows retain their historical audit
+without retroactive calendar edits.
 
 | Instructional meeting | Status | Panopto recording | Next instructional event annotated | Checked |
 |---|---|---|---|---|
@@ -40,6 +38,7 @@ historical audit without retroactive calendar edits.
 | November 5, 2026 | Reconciled: two-level recap; Multilevel Option Pricing and Beam comparisons; gradient descent, Rosenbrock geometry, and conditioning versus dimension through the notebook conditioning table; stochastic gradients deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=0642ecc9-7e10-4a57-94f1-b4f90123f1c7) | November 10, 2026, 10:00–11:15 AM America/Chicago (CST), PH 109; Illinois Tech Fred → Calendar occurrence only; resume “Why cheap gradients matter” and Stochastic Gradient Descent notebook Part 3 | November 5, 2026 |
 | November 10, 2026 | Reconciled: scalar/vector optimization, Hessian costs and conditioning recap; nonlinear finite-sum motivation, single-observation and mini-batch SGD, gradient-noise estimation, expected descent and practical tuning; logistic model introduced, numerical experiments deferred | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f378917f-f589-4d4e-b058-b4fe012739d4) | November 12, 2026, 10:00–11:15 AM America/Chicago (CST), PH 109; Illinois Tech Fred → Calendar occurrence only; resume “A large-data example,” then “Learning rates in the logistic experiment” and Stochastic Gradient Descent notebook Parts 5–6 | November 10, 2026 |
 | November 12, 2026 | Reconciled: SGD/logistic-regression notebook Parts 5–6, useful-accuracy work/time comparisons, learning rates and monitoring; MCTS route/game-tree and iteration overview explicitly previewed only | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f3b3b921-e222-43e1-9dc6-b500012cc9e6) | November 17, 2026, 10:00–11:15 AM America/Chicago (CST), PH 109; Illinois Tech Fred → Calendar occurrence only; resume Deck 05 Selected Topics with the MCTS decision-problem recap, “Specify a travel-time model,” “Turn simulated trips into values,” “One tree-search iteration” and exploration versus exploitation, then backup, final recommendation and notebook. Saved with Only This Event, reopened in Apple Calendar and independently verified in Fantastical | November 16, 2026 |
+| November 17, 2026 | Reconciled: travel-time MCTS through the worked ten-iteration example and final route recommendation. The notebook was left for independent exploration. Selected Topics concluded and project guidance followed. | [Panopto](https://iit.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=fef30a2a-b6b9-4b40-8e24-b50501288cf0) | November 19, 2026, 10:00–11:15 AM CST, PH 109, Illinois Tech Fred → Calendar. Optional project and course Q&A. Saved with Only This Event and verified in Apple Calendar and Fantastical. | November 17, 2026 |
 
 Recording evidence: Deck 02 mixture/acceptance–rejection unit-cube review
 preceded Deck 03 (33:06). Unbiased discrepancy began at 37:06; RKHS and
@@ -428,3 +427,18 @@ slide anchors resolve and git diff --check passes. Temporary recording and
 preview tabs were closed; Safari returned to the original QMCPy page,
 Calendar to today’s week, and Fantastical to today’s normal week with its
 search-results panel gone. No repository changes were committed or published.
+
+## November 17 recording evidence
+
+The 1:08:28 recording shows the travel-time model at 11:21, the search
+iteration at 14:18, exploration versus exploitation at 15:27, and the
+ten-iteration walkthrough from 17:15. Backup and action/node totals lead to
+the recommendation at 54:24. At 58:05 the instructor explicitly skips the
+companion notebook and invites independent exploration. The deck synthesis
+leads into project presentation guidance around 59:57. The closing captions
+confirm optional questions on November 19 and review after Thanksgiving.
+
+The welcome page estimates eight 50-minute classroom hours for Selected
+Topics, based on roughly 46 minutes on October 29, the four intervening
+meetings, and about 50 minutes of deck material on November 17. The project
+briefing and November 19 optional Q&A are outside that estimate.

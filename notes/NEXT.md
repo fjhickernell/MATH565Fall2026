@@ -138,17 +138,16 @@ rendered deck resolve. These additions are included in this checkpoint.
 Reload an open SGD notebook from disk before running it; the MCTS companion
 is `notebooks/applications/MonteCarloTreeSearch.ipynb`.
 
-## Immediate next work — complete MCTS after the November 12 preview
+## Immediate next work — optional Q&A November 19
 
-Prepare the November 17 lecture: recap the MCTS decision problem, then resume
-at [Specify a travel-time model](../slides/05-selected-topics.qmd#specify-a-travel-time-model)
-and [Turn simulated trips into values](../slides/05-selected-topics.qmd#turn-simulated-trips-into-values).
-Develop [One tree-search iteration](../slides/05-selected-topics.qmd#one-tree-search-iteration)
-and [Exploration versus exploitation](../slides/05-selected-topics.qmd#exploration-versus-exploitation)
-in detail before the worked backup, final recommendation and companion notebook.
-The November 12 ending explicitly called its high-level overview a preview;
-displaying the iteration slide does not establish that the detailed algorithm
-or the MCTS notebook was taught. Selected Topics remains unfinished.
+Selected Topics concluded on November 17 with the travel-time MCTS walkthrough,
+backup, and final route recommendation. The companion notebook was left for
+independent exploration. Project presentation and observer guidance followed.
+The schedule records optional project and course questions on November 19 in
+PH 109. The single Illinois Tech Calendar occurrence is verified in Apple
+Calendar and Fantastical. Project presentations follow November 23–24 and
+course review resumes after Thanksgiving. See the
+[lecture ledger](LECTURE-UPDATES.md#november-17-recording-evidence).
 
 The SGD opener and detailed toy-objective picture now use mini-batches
 of ten and start at (-3.2,1.0), so the initial GD direction does not point
@@ -368,14 +367,14 @@ signal/noise subtraction question were not resolved.
 
 MCTS route/game-tree motivation and the four search phases were introduced
 only as a high-level preview. Detailed traffic modeling, returns and visit
-statistics, numerical UCT, worked backup and the MCTS notebook remain for
-November 17, following the pickup above. The schedule records this distinction.
+statistics, numerical UCT and worked backup followed on November 17. The
+MCTS companion notebook was left for independent exploration.
 The November 12 lecture reconciliation is complete. On November 16 the
 November 17 continuation was saved with Only This Event, reopened in Apple
 Calendar and independently read back in full in Fantastical, resolving the
 earlier synchronization gap. The verified occurrence remains Illinois Tech
-Fred → Calendar, PH 109, 10:00–11:15 AM CST. Its note names the Deck 05 MCTS
-pickup above and distinguishes November 12's completed SGD/logistic notebook
+Fred → Calendar, PH 109, 10:00–11:15 AM CST. Its note names the planned Deck 05 MCTS
+pickup and distinguishes November 12's completed SGD/logistic notebook
 work from the MCTS preview. No other planning note was present; only this
 occurrence's notes changed. Reuse the recording evidence rather than repeat
 the lecture audit.
@@ -727,10 +726,12 @@ resume at “Deriving the two-level allocation,” followed by cost versus error
 the allocation exercise, and the many-level hierarchy. The new derivation/cost
 slides and exercise were not taught on October 29. Improving Efficiency is
 finished in class; its outline now records about 9 classroom hours, while
-Selected Topics projects 13 hours including the eight remaining regular
-instructional meetings. Project presentations add about 1 hour of student
+Selected Topics then projected 13 hours including the eight remaining regular
+instructional meetings; the November 17 reconciliation above supersedes that
+projection with eight taught hours and about 35 lecture hours in total.
+Project presentations add about 1 hour of student
 class time per student (present once and observe twice), separately from
-the roughly 40 lecture hours. These schedule, outline, and MLMC revisions are
+the then-projected roughly 40 lecture hours. These schedule, outline, and MLMC revisions are
 included in the teaching Checkpoint; its website publishing workflow succeeded.
 
 The remaining instructor review follows the simplified many-level sequence
