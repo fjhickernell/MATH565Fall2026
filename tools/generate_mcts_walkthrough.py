@@ -86,7 +86,7 @@ def figure(name, title, tree, *, selected=(), new=None, rollout=(),
         "in both A and B is shown. Green marks the one newly stored node."
     )
     svg = [
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 690" '
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 740" '
         'role="img" aria-labelledby="title desc">',
         f'<title id="title">{escape(title)}</title>',
         f'<desc id="desc">{escape(description)}</desc>', '<defs>',
@@ -143,8 +143,8 @@ def figure(name, title, tree, *, selected=(), new=None, rollout=(),
         x = 190 if rollout and rollout[0].startswith("B") else 800
         svg.append(text(x, 55, f"T = {minutes} min", 27, color))
         svg.append(text(x, 90, f"{'On time' if result else 'Late'}: R = {result}", 27, color))
-    svg.append(text(500, 650, "W / N = successes / visits · before → after backup", 24, BLUE))
-    svg.append(text(500, 682, "Solid: keep · Dashed: discard · Green: new node · Gold: select / update", 23))
+    svg.append(text(500, 690, "W(s) / N(s) = successes / visits · before → after backup", 24, BLUE))
+    svg.append(text(500, 722, "Solid: keep · Dashed: discard · Green: new node · Gold: select / update", 23))
     svg.extend(['</g>', '</svg>'])
     (OUTPUT / f"walkthrough-{name}.svg").write_text("\n".join(svg) + "\n")
 
@@ -155,13 +155,13 @@ def main():
     before = deepcopy(tree)
     tree["A"] = [0, 0]
     back_up(tree, ("root", "A"), 1)
-    figure("01-first", "First simulation: expand A, roll out and back up one", tree,
+    figure("01-first", "MCTS iteration 1: expand A, roll out and back up one", tree,
            new="A", updated=("root", "A"), before=before,
            rollout=("A0", "A01", "A010"), result=1, minutes=76)
     before = deepcopy(tree)
     tree["B"] = [0, 0]
     back_up(tree, ("root", "B"), 0)
-    figure("02-second", "Second simulation: expand B, roll out and back up zero", tree,
+    figure("02-second", "Iteration 2: expand B, roll out and back up zero", tree,
            new="B", updated=("root", "B"), before=before,
            rollout=("B1", "B10", "B100"), result=0, minutes=86)
 
@@ -183,61 +183,61 @@ def main():
         tree[node] = [0, 0]
         back_up(tree, (*path, node), result)
         assert len(tree) == len(before) + 1
-        figure(name, f"Simulation {number}: store {'–'.join(node)}, roll out and back up {result}",
+        figure(name, f"Iteration {number}: store {'–'.join(node)}, roll out and back up {result}",
                tree, selected=path[1:], new=node, rollout=rollout,
                result=result, minutes=minutes, updated=(*path, node), before=before)
     assert tree == {"root": [3, 6], "A": [3, 5], "B": [0, 1],
                     "A0": [1, 2], "A1": [1, 2], "A00": [0, 1], "A10": [0, 1]}
-    figure("03-snapshot", "After six simulations: A has three successes in five visits", tree)
+    figure("03-snapshot", "After six iterations: A has three successes in five visits", tree)
     assert choose(tree, "root", ("A", "B")) == "B"
-    figure("04-select", "Simulation seven: select the less-visited branch B", tree,
+    figure("04-select", "Iteration 7: select the less-visited branch B", tree,
            selected=("B",))
     tree["B0"] = [0, 0]
-    figure("05-expand", "Simulation seven: store the new child B zero", tree,
+    figure("05-expand", "Iteration 7: store the new child B zero", tree,
            selected=("B",), new="B0")
-    figure("06-rollout", "Simulation seven: sample two remaining choices and on-time traffic", tree,
+    figure("06-rollout", "Iteration 7: sample two remaining choices and on-time traffic", tree,
            selected=("B",), new="B0", rollout=("B01", "B010"), result=1, minutes=76)
     before = deepcopy(tree)
     back_up(tree, ("root", "B", "B0"), 1)
-    figure("07-backup", "Simulation seven: back up one through B zero, B and Start", tree,
+    figure("07-backup", "Iteration 7: back up one through B zero, B and Start", tree,
            new="B0", updated=("root", "B", "B0"), before=before)
 
     assert choose(tree, "root", ("A", "B")) == "B"
     tree["B1"] = [0, 0]
-    figure("08-failure-expand", "Simulation eight: select B and expand its untried child one", tree,
+    figure("08-failure-expand", "Iteration 8: select B and expand its untried child one", tree,
            selected=("B",), new="B1")
-    figure("09-failure-rollout", "Simulation eight: the sampled trip is late", tree,
+    figure("09-failure-rollout", "Iteration 8: the sampled trip is late", tree,
            selected=("B",), new="B1", rollout=("B10", "B100"), result=0, minutes=86)
     before = deepcopy(tree)
     back_up(tree, ("root", "B", "B1"), 0)
-    figure("10-failure-backup", "Simulation eight: visits increase but successes do not", tree,
+    figure("10-failure-backup", "Iteration 8: visits increase but successes do not", tree,
            new="B1", updated=("root", "B", "B1"), before=before)
 
     assert choose(tree, "root", ("A", "B")) == "A"
     assert choose(tree, "A", ("A0", "A1")) == "A0"
     before = deepcopy(tree)
     tree["A01"] = [0, 0]
-    figure("11a-a-rollout", "Simulation nine: select A then A zero, store A zero one and roll out", tree,
+    figure("11a-a-rollout", "Iteration 9: select A then A zero, store A zero one and roll out", tree,
            selected=("A", "A0"), new="A01", rollout=("A010",), result=0, minutes=84)
     back_up(tree, ("root", "A", "A0", "A01"), 0)
-    figure("11-intervening", "Simulation nine: keep A zero one and back up zero through its stored path", tree,
+    figure("11-intervening", "Iteration 9: keep A zero one and back up zero through its stored path", tree,
            new="A01", updated=("root", "A", "A0", "A01"), before=before)
 
     assert choose(tree, "root", ("A", "B")) == "B"
     assert choose(tree, "B", ("B0", "B1")) == "B0"
-    figure("12-deeper-select", "Simulation ten: select B, then select its stored child B zero", tree,
+    figure("12-deeper-select", "Iteration 10: select B, then select its stored child B zero", tree,
            selected=("B", "B0"))
     tree["B01"] = [0, 0]
-    figure("13-deeper-rollout", "Simulation ten: expand B zero one and roll out one final choice", tree,
+    figure("13-deeper-rollout", "Iteration 10: expand B zero one and roll out one final choice", tree,
            selected=("B", "B0"), new="B01", rollout=("B010",), result=1, minutes=78)
     before = deepcopy(tree)
     back_up(tree, ("root", "B", "B0", "B01"), 1)
-    figure("14-deeper-backup", "Simulation ten: back up one along the longer stored path", tree,
+    figure("14-deeper-backup", "Iteration 10: back up one along the longer stored path", tree,
            new="B01", updated=("root", "B", "B0", "B01"), before=before)
     assert tree == {"root": [5, 10], "A": [3, 6], "B": [2, 4],
                     "A0": [1, 3], "A1": [1, 2], "A00": [0, 1], "A10": [0, 1], "A01": [0, 1],
                     "B0": [2, 2], "B1": [0, 1], "B01": [1, 1]}
-    assert len(tree) == 11, "Ten simulations store ten nodes, in addition to Start"
+    assert len(tree) == 11, "Ten iterations store ten nodes, in addition to Start"
     assert choose(tree, "root", ("A", "B")) == "B"
     print("Generated 20 fixed-layout SVGs; all ten expansions, UCT choices and complete-tree counts verified")
 

@@ -93,3 +93,96 @@ The November 3 Selected Topics continuation and the instructor's simplified
 many-level/SGD review plan are unchanged. The source/documentation corrections
 are included in the November 2 Checkpoint. Remote CI/deployment and live
 verification remain pending.
+
+## November 17, 2026 — Selected Topics clarity and completeness
+
+Reviewed the complete Deck 05 source, with an independent second pass through
+parallel computing, two-level/MLMC allocation and bias, and SGD. No material
+formula error was found. The MCTS walkthrough's choices and all stored-node
+counts were independently replayed against its SVG generator.
+
+### Corrections
+
+- Move “Where MCTS is used” immediately after the first substantive MCTS slide;
+  retain the three main section headings and existing public anchors.
+- Explain why this variant retains at most one new node per iteration:
+  persistent storage and bookkeeping costs, selective growth on revisited
+  branches, and retention of the rollout return in stored-path statistics.
+  Distinguish this choice from the cost of generating/evaluating the rollout
+  and from expansion policies that retain more nodes. The supporting primary
+  reference is [Coulom (2006), Section 2](https://www.remi-coulom.fr/CG2006/CG2006.pdf).
+- Put all UCT notation in a bullet glossary after the formula, then place the
+  concrete Start-node example beside the later six-iteration tree. Distinguish
+  N(s) from N(s,a) and explain why a node's first
+  evaluation before child storage makes parent visits exceed summed child
+  visits: after six iterations, N(A)=5=1+2+2. A new continuation immediately
+  after Iteration 3 contrasts parent W(A)=2,N(A)=2 with action/child
+  W(A,0)=W(A–0)=1,N(A,0)=N(A–0)=1. Iteration 3 shows its pre-selection
+  N(Start)=2 above the table, with A successes/visits 1/1 and B successes/visits
+  0/1 in the W(s,a) and N(s,a) columns. Omit duplicate count bullets and
+  score-calculation algebra. Scored iterations
+  use a 52%/4%/44% layout, combining all relevant child counts/scores and a
+  formula reminder. Both display sizes pass the final layout checks.
+- Use “MCTS iteration 1” and “Iteration 2” onward for four-phase cycles, “search
+  run” for a complete budget, and “rollout” for the temporary continuation.
+  Regenerate SVG accessibility titles, preserve tree geometry/statistics, and
+  lower both captions 40 pixels with a taller viewBox. Label the stored counts
+  W(s)/N(s) and connect child-node counts to the UCT action notation.
+- Define SGD loss gap and equivalent passes visibly. State that the comparison
+  records target crossings retrospectively while every run stops at its fixed
+  eight-pass budget. Include curvature-based rates among the GD comparison's
+  practical choices, matching the logistic experiment.
+
+The CPU/GPU notebook's visible link remains intentionally deferred until
+instructor review. No notebook code, outputs, course meeting coverage, assessment
+content, dependency pins or MATH 332 sources changed. Instructor review of the
+remaining Deck 04–05 material remains open.
+
+
+### Validation of the November 17 changes
+
+- The complete 98-slide deck renders successfully with all five embedded
+  Python cells. No numerical algorithm or notebook output was changed.
+- The SVG generator's assertions and an independent replay verify all ten
+  expansions, UCT choices and stored-node backup totals. All 20 figures retain
+  their node/edge coordinates and use the lower W(s)/N(s) captions.
+- All 33 MCTS slides and the two revised SGD comparison slides pass rendered
+  geometry checks at 1600×1000 and 1280×720. Subsequent checks cover the final
+  Select text, combined W/N/UCT tables and consistent Back up instructions.
+  The affected slides were visually inspected.
+- The final browser checks have no missing images, MathJax errors, JavaScript
+  errors, or unresolved internal fragments. All original heading anchors are
+  preserved, and 122 assembled local links/assets resolve.
+- Visible bold-prose and terminal-period checks and git diff --check pass.
+  The three pinned dependencies remain clean at their recorded commits.
+
+The current prose and captions are reflected in the ignored local preview
+and included in the November 17 checkpoint. Remote deployment/live verification
+and instructor walkthrough remain open.
+
+
+### Score reminders and complete selection inputs — November 17
+
+All 12 pre-selection UCT decisions in iterations 3–10 now expose their parent
+visit totals and per-child W(s,a), N(s,a), and scores. Iterations 5, 6, 9 and
+10 include both root and deeper comparisons in one table, separated by a row
+rule. The tables carry per-child W and N values without duplicate bullets;
+parent visit totals remain above them as the formula's N(s) inputs.
+The formula reminder is above each table, with c=1 substituted. The first
+UCT-table column states “c=1 for this example”; per-table metadata is removed.
+Gold cells identify the actual selected score for each parent; ties choose
+0. This replaces separate visible selection-result statements. Iterations
+1–2 state why their untried actions bypass scoring.
+
+The four-phase overview and all ten worked iterations retain “Back up” as
+the phase label, explicitly grouping the stored-counter update and
+rollout-suffix discard under it. Iteration 8's rollout panel says “One return
+for this iteration” because backup is still to come.
+
+A read-only generator replay independently verifies every input, score and
+chosen action. All ten changed iteration panels pass at 1600×1000 and
+1280×720, including cell backgrounds, inline count pairs, formula bounds,
+images, MathJax and internal fragments. The course SCSS compiles; only
+pre-existing Sass import deprecations were emitted. The source changes and
+ignored local preview are reconciled; these changes are included in the
+November 17 checkpoint. Remote deployment/live verification remain pending.

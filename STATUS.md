@@ -792,6 +792,17 @@ appropriate phase rather than appended indiscriminately.
     default completion; note its limited evidence. Repair the deterministic
     game slide's footer overlap and verify all 31 MCTS slides at 1600×1000
     and 1280×720 (November 16).
+  - [x] Audit Selected Topics for clarity and completeness; move MCTS use cases
+    after its first substantive slide, explain selective rollout storage,
+    define every UCT symbol with concrete node/branch counts, and label the
+    walkthrough by iteration. Lower the tree captions and label their node
+    counts W(s)/N(s). Clarify SGD loss gaps, equivalent passes,
+    retrospective target crossings and curvature-based GD rates (November 17).
+  - [x] Add adjacent UCT formula reminders and all 12 pre-selection W/N
+    comparisons to iterations 3–10; combine deeper choices into the same table,
+    shorten the UCT header, and shade the selected score per parent. Preserve
+    the action-0 tie rule and verify every input and both display sizes
+    (November 17).
   - [x] Define balanced uniform allocation and explain both Section 6
     notebook plot types beside their saved results. Compare 512 and 4,096
     simulations using matched-scale paired plots and labeled wins, gaps and

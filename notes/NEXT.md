@@ -9,6 +9,31 @@ November 25. Preparation and release remain open. The
 [HTML reference](drafts/2026-11-25-selected-topics-sample-exam-announcement.html)
 preserves the published text.
 
+## Syllabus revision — reviewer draft started November 17
+
+Proposed title: **MATH 565: Monte Carlo Methods**. Art Owen is the primary
+text; Glasserman is the reference. Reviewers are **Igor Cialenco, Yuhan Ding,
+and Fred J. Hickernell**; review remains open.
+
+The private Word draft is `MATH565-Syllabus-Revision-2026-11-17.docx`, beside
+`Syllabus Math 565 rev 2016 Sep.doc` in OneDrive's
+`Class Work/MATH 565 MC Methods Finance/MATH 565 Promotion` folder. It follows
+the 2016 format, naming sampling and variance-reduction methods and listing
+selected topics separately. Objective iv names modern software environments.
+The proposed hours are 5/6/8/9/12 (40 total), and the primary text has a
+clickable link to Art Owen's book. Brief review notes are in the separate
+`MATH565-Syllabus-Revision-Handoff-2026-11-17.docx` in that folder.
+
+Fred confirms sending **MATH 565 syllabus revision - comments welcome** to
+Yuhan and Igor with the revised Word syllabus attached on **November 17**.
+Await their comments; Fred will circle back at the end of the semester.
+
+Next: incorporate reviewer feedback, review prerequisites and contact-hour
+accounting, and refresh selected topics against the completed Fall 2026 lecture
+record. Planned return to the revision is **December 15**, with completion due
+**December 31, 2026**. The separate handoff records the provisional hours and
+coverage. Syllabus approval remains open.
+
 ## November 16 seminar invitation — published November 14
 
 The [Canvas announcement](https://iit.instructure.com/courses/25777/discussion_topics/110398)
@@ -133,41 +158,75 @@ in the batch/noise comparisons. Two restored Rosenbrock slides show the
 banana valley, GD versus BFGS and actual late GD zigzags; keep these concrete
 curvature/conditioning illustrations in the main lecture.
 
-The MCTS walkthrough follows all ten simulations of the four-decision
-teaching tree explicitly. Simulations 3–6 now show A–0, A–1, A–0–0 and
+The November 17 clarity audit moves “Where MCTS is used” directly after the
+first substantive MCTS slide. The UCT formula now has a bullet glossary for
+s, a, N(s), N(s,a), W(s,a), Qbar and c. Start's concrete node/action
+counts appear later beside the six-iteration tree. A new continuation explains
+selective storage, bookkeeping costs, retained return statistics and the optional nature of one-node expansion.
+Use **MCTS iteration** for one four-phase cycle, **search run** for the whole
+budget, and **rollout** for the temporary continuation. The numbered slide
+titles, SVG accessibility titles and generator use that vocabulary; existing
+public anchors remain available. Captions use W(s)/N(s) for the named node,
+with more space below rollout nodes; UCT uses the same child counts indexed
+by the parent/action pair. Iterations 3–10 now show all 12 scored decisions
+in combined Child / W(s,a) / N(s,a) / UCT tables. Parent visit totals appear
+above each table; deeper choices A–0/A–1 or B–0/B–1 appear in the same table.
+The UCT formula appears above each table, with c=1 substituted. The first
+score column states “c=1 for this example”; the repeated parameter/color/tie
+legend is removed. Gold identifies the selected score per
+parent; ties use action 0. Separate “Select …” statements were removed.
+The tables carry the per-child W and N values without duplicate bullets;
+parent visit totals remain above them. The next continuation contrasts parent A at 2/2
+with action 0 / child A–0 at 1/1. Iterations 1–2 explicitly bypass UCT while
+an action remains untried. All changed panels pass both lecture-size checks.
+This audit is included in the November 17 checkpoint; instructor walkthrough
+and lecture coverage remain separate. Remote deployment/live verification
+remain pending.
+
+The MCTS walkthrough follows all ten iterations of the four-decision
+teaching tree explicitly. Iterations 3–6 now show A–0, A–1, A–0–0 and
 A–1–0 being added one at a time; every later figure keeps the complete
-stored A subtree visible. Simulation 9 shows the choice of A then A–0,
+stored A subtree visible. Iteration 9 shows the choice of A then A–0,
 new A–0–1, its temporary final rollout and backup through all four stored
-nodes. The diagram/text columns are 64%/32% with a 4% gutter.
+nodes. The diagram/text columns are 52%/44% with a 4% gutter on scored slides;
+unscored walkthrough phases retain 64%/32%. Combined tables and the formula
+reminder use the scoped mcts-score-box styling.
 
 The One tree-search iteration slide explicitly says to keep the selected
 path and any newly expanded node, discard the rollout suffix, and retain
 its return in the counters. Keep the complete-route special case in presenter
 notes only; Fred requested the essential four-step rule on the visible
-slide. Backup updates only the selected stored nodes and the one new node.
-Every simulation restarts at Start. At a node with untried actions, stop
+slide. Select follows highest-scoring stored choices only while every action at
+the current node has been tried; stop at a node with an untried action or a
+complete plan. Backup updates only the selected stored nodes and the one new node.
+Keep “Back up” as the phase label in the example, with updating counters and
+discarding the rollout suffix stated as its two parts.
+Every iteration restarts at Start. At a node with untried actions, stop
 selection and store exactly one new child; the remaining rollout suffix is
 sampled and discarded, with its return retained in the stored-path counters.
 New nodes are green, rollout-only edges/nodes dashed, and selected/updated
 stored paths gold. Keep this distinction visible even for failed trips.
-UCT is now defined visibly as Upper Confidence Bounds applied to Trees,
-with a one-line probability-bound motivation; keep the Hoeffding/UCB1
-explanation and UCT theorem assumptions in presenter notes. The illustrative
+UCT is defined visibly as Upper Confidence Bounds applied to Trees;
+keep the Hoeffding/UCB1 probability-bound explanation and UCT theorem
+assumptions in presenter notes. The illustrative
 c=1 is not a confidence level. UCT score ties favor action 0, and untried action choices are
-declared separately (simulation 10 chooses untried action 1 at B–0).
+declared separately (iteration 10 chooses untried action 1 at B–0).
 Counts and trip times are illustrative, separate from the notebook model.
-The final recommendation uses the same ten-trial counts. The new "Our route
-after 10 simulations" continuation extracts A–0–0–0: most visits, then
+The six-iteration snapshot explains why N(A)=5 exceeds its stored children's
+2+2 visits: A's first evaluation preceded child storage. The final
+recommendation uses the same ten-iteration counts. The "Our route
+after 10 iterations" continuation extracts A–0–0–0: most visits, then
 larger mean, then earlier action; use action 0 for an unstored remainder.
 Its only simulated trip was late, so make the limited evidence explicit.
-The final Simulation 10 backup slide also displays the recommended route
+The final Iteration 10 backup slide also displays the recommended route
 beside the tree, with a direct link to that four-choice explanation.
 Regenerate the 20 SVGs with tools/generate_mcts_walkthrough.py in qmcpy;
 the generator checks UCT choices, all ten single-node expansions, rollout
 nonstorage and complete-tree backup totals. Instructor walkthrough remains
-open; no new lecture coverage is implied. The deck and live watcher render
-successfully. All 31 MCTS slides fit at 1600×1000 and 1280×720, with at least
-28 pixels above the footer at the smaller size. The deterministic-game
+open; no new lecture coverage is implied. The November 16 deck and live
+watcher rendered successfully. In that earlier version, all 31 MCTS slides
+fit at 1600×1000 and 1280×720, with at least 28 pixels above the footer at
+the smaller size. The deterministic-game
 diagram and explanation now share columns to remove their footer overlap.
 Browser geometry checks confirm node labels fit, images load and the footer
 stays clear. The iteration and UCT slides pass the same review, preserved anchors

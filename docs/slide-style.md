@@ -195,6 +195,28 @@ especially at stopping criteria. Keep the four cumulative challenge-and-response
 tables as the section's recurring narrative; trim surrounding proofs and
 repeated explanations before removing those tables.
 
+## MCTS terminology
+
+In the MCTS sequence, use **iteration** for one selection, expansion, rollout,
+and backup cycle; use **search run** for the complete budget of iterations.
+Use **rollout** for the temporary continuation beyond the stored tree. Reserve
+**path** for the sequence of nodes or actions, and **traffic simulation** for
+evaluating a completed itinerary. Keep numbered walkthrough labels consistent
+with their SVG titles and presenter notes.
+
+Preserve the phase labels Select, Expand, Roll out, and Back up in the worked
+example. Group updating the stored counters and discarding the rollout suffix
+under Back up rather than presenting them as separate phases.
+
+In the worked MCTS trace, score tables use Child, W(s,a), N(s,a), and UCT;
+state each relevant parent visit total above them. The parent is the current
+s in the formula above the table; use c=1 for this worked trace, stated once
+in the first score column. Use the scoped `.mcts-score-box` layout and mark
+selected numeric scores with `.uct-selected`; its cell receives the gold
+background. Separate parent groups after the first two rows, and retain the
+trace's action-0 tie rule. Keep selected actions in the tables rather than
+repeating the result in prose.
+
 ## MSE and RMSE notation
 
 Use upright uppercase $\operatorname{MSE}$ and $\operatorname{RMSE}$ in

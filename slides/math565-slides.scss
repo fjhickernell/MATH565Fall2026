@@ -123,6 +123,24 @@
   width: 80% !important;
 }
 
+/* Trace scorecards group root and deeper choices and mark the selected score. */
+.reveal .mcts-score-box table {
+  width: 100%;
+}
+
+.reveal .mcts-score-box th,
+.reveal .mcts-score-box td {
+  padding: 0.17em 0.24em;
+}
+
+.reveal .mcts-score-box tbody tr:nth-child(3) td {
+  border-top: 2px solid var(--header-blue, #005b96);
+}
+
+.reveal .mcts-score-box td:has(.uct-selected) {
+  background-color: #ffe8a3;
+}
+
 /* Each topic opener explains its main idea without covering its tree marker. */
 .reveal .section-main-idea {
   max-width: 80%;
