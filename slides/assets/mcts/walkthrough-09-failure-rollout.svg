@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 690" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 690" role="img" aria-labelledby="title desc">
 <title id="title">Simulation eight: the sampled trip is late</title>
-<desc id="desc">Simulation eight: the sampled trip is late. Stored labels give successes W / visits N. root: 4/7; A: 3/5; B: 1/2; B0: 1/1; B1: 0/0. Solid edges belong to the stored tree; dashed edges are sampled continuations only. A&#x27;s stored descendants are collapsed when shown.</desc>
+<desc id="desc">Simulation eight: the sampled trip is late. Stored labels give successes W / visits N. root: 4/7; A: 3/5; B: 1/2; A0: 1/2; A1: 1/2; A00: 0/1; A10: 0/1; B0: 1/1; B1: 0/0. Solid edges belong to the stored tree; dashed edges are sampled continuations only, discarded after the rollout. Every stored node in both A and B is shown. Green marks the one newly stored node.</desc>
 <defs>
 <marker id="blue" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#1f5a91"/></marker>
 <marker id="gold" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#9a6509"/></marker>
@@ -9,39 +9,52 @@
 <marker id="gray" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#61717a"/></marker>
 </defs>
 <g font-family="Arial, sans-serif" text-anchor="middle">
-<path d="M298.6 108.0 L211.4 162.0" fill="none" stroke="#1f5a91" stroke-width="4" marker-end="url(#blue)"/>
-<path d="M411.2 108.0 L483.8 162.0" fill="none" stroke="#9a6509" stroke-width="4" marker-end="url(#gold)"/>
-<path d="M501.4 238.0 L453.6 292.0" fill="none" stroke="#1f5a91" stroke-width="4" marker-end="url(#blue)"/>
-<path d="M571.5 238.0 L623.5 292.0" fill="none" stroke="#216b56" stroke-width="4" marker-end="url(#green)"/>
-<path d="M660.0 368.0 L660.0 422.0" fill="none" stroke="#61717a" stroke-width="4" stroke-dasharray="9 7" marker-end="url(#gray)"/>
-<path d="M660.0 498.0 L660.0 552.0" fill="none" stroke="#61717a" stroke-width="4" stroke-dasharray="9 7" marker-end="url(#gray)"/>
-<path d="M150 238 L80 355 L220 355 Z" fill="#eef2f6" stroke="#61717a" stroke-width="2"/>
-<text x="150" y="390" font-size="25" fill="#61717a">Stored subtree</text>
-<text x="150" y="422" font-size="24" fill="#61717a">details hidden</text>
-<rect x="265" y="32" width="190" height="76" rx="12" fill="white" stroke="#1f5a91" stroke-width="3"/>
-<text x="360" y="65" font-size="29" fill="#1f5a91">Start</text>
-<text x="360" y="95" font-size="25" fill="#1f5a91">4 / 7</text>
-<rect x="55" y="162" width="190" height="76" rx="12" fill="white" stroke="#1f5a91" stroke-width="3"/>
-<text x="150" y="195" font-size="29" fill="#1f5a91">A</text>
-<text x="150" y="225" font-size="25" fill="#1f5a91">3 / 5</text>
-<rect x="440" y="162" width="190" height="76" rx="12" fill="#fff7e7" stroke="#9a6509" stroke-width="3"/>
-<text x="535" y="195" font-size="29" fill="#9a6509">B</text>
-<text x="535" y="225" font-size="25" fill="#9a6509">1 / 2</text>
-<rect x="325" y="292" width="190" height="76" rx="12" fill="white" stroke="#1f5a91" stroke-width="3"/>
-<text x="420" y="325" font-size="29" fill="#1f5a91">B–0</text>
-<text x="420" y="355" font-size="25" fill="#1f5a91">1 / 1</text>
-<rect x="565" y="292" width="190" height="76" rx="12" fill="#edf8f2" stroke="#216b56" stroke-width="3"/>
-<text x="660" y="325" font-size="29" fill="#216b56">B–1</text>
-<text x="660" y="355" font-size="25" fill="#216b56">0 / 0</text>
-<rect x="565" y="422" width="190" height="76" rx="12" fill="#f8fafb" stroke="#61717a" stroke-width="2" stroke-dasharray="9 7"/>
-<text x="660" y="455" font-size="27" fill="#61717a">B–1–0</text>
-<text x="660" y="485" font-size="23" fill="#61717a">sampled only</text>
-<rect x="565" y="552" width="190" height="76" rx="12" fill="#f8fafb" stroke="#61717a" stroke-width="2" stroke-dasharray="9 7"/>
-<text x="660" y="585" font-size="27" fill="#61717a">B–1–0–0</text>
-<text x="660" y="615" font-size="23" fill="#61717a">sampled only</text>
-<text x="150" y="515" font-size="28" fill="#ac3543">T = 86 min</text>
-<text x="150" y="554" font-size="28" fill="#ac3543">Late: R = 0</text>
-<text x="400" y="660" font-size="25" fill="#1f5a91">W / N = successes / visits</text>
-<text x="400" y="686" font-size="23" fill="#61717a">Solid: stored tree · Dashed: rollout only</text>
+<path d="M434.2 108.0 L340.8 162.0" fill="none" stroke="#1f5a91" stroke-width="4" marker-end="url(#blue)"/>
+<path d="M570.0 106.4 L680.0 163.6" fill="none" stroke="#9a6509" stroke-width="4" marker-end="url(#gold)"/>
+<path d="M239.9 238.0 L190.1 292.0" fill="none" stroke="#1f5a91" stroke-width="4" marker-end="url(#blue)"/>
+<path d="M310.1 238.0 L359.9 292.0" fill="none" stroke="#1f5a91" stroke-width="4" marker-end="url(#blue)"/>
+<path d="M131.6 368.0 L98.4 422.0" fill="none" stroke="#1f5a91" stroke-width="4" marker-end="url(#blue)"/>
+<path d="M395.0 368.0 L395.0 422.0" fill="none" stroke="#1f5a91" stroke-width="4" marker-end="url(#blue)"/>
+<path d="M713.5 238.0 L661.5 292.0" fill="none" stroke="#1f5a91" stroke-width="4" marker-end="url(#blue)"/>
+<path d="M786.5 238.0 L838.5 292.0" fill="none" stroke="#216b56" stroke-width="4" marker-end="url(#green)"/>
+<path d="M875.0 368.0 L875.0 422.0" fill="none" stroke="#61717a" stroke-width="4" stroke-dasharray="9 7" marker-end="url(#gray)"/>
+<path d="M875.0 498.0 L875.0 552.0" fill="none" stroke="#61717a" stroke-width="4" stroke-dasharray="9 7" marker-end="url(#gray)"/>
+<rect x="430" y="32" width="140" height="76" rx="12" fill="white" stroke="#1f5a91" stroke-width="3"/>
+<text x="500" y="65" font-size="27" fill="#1f5a91">Start</text>
+<text x="500" y="95" font-size="24" fill="#1f5a91">4 / 7</text>
+<rect x="205" y="162" width="140" height="76" rx="12" fill="white" stroke="#1f5a91" stroke-width="3"/>
+<text x="275" y="195" font-size="27" fill="#1f5a91">A</text>
+<text x="275" y="225" font-size="24" fill="#1f5a91">3 / 5</text>
+<rect x="680" y="162" width="140" height="76" rx="12" fill="#fff7e7" stroke="#9a6509" stroke-width="3"/>
+<text x="750" y="195" font-size="27" fill="#9a6509">B</text>
+<text x="750" y="225" font-size="24" fill="#9a6509">1 / 2</text>
+<rect x="85" y="292" width="140" height="76" rx="12" fill="white" stroke="#1f5a91" stroke-width="3"/>
+<text x="155" y="325" font-size="27" fill="#1f5a91">A–0</text>
+<text x="155" y="355" font-size="24" fill="#1f5a91">1 / 2</text>
+<rect x="325" y="292" width="140" height="76" rx="12" fill="white" stroke="#1f5a91" stroke-width="3"/>
+<text x="395" y="325" font-size="27" fill="#1f5a91">A–1</text>
+<text x="395" y="355" font-size="24" fill="#1f5a91">1 / 2</text>
+<rect x="5" y="422" width="140" height="76" rx="12" fill="white" stroke="#1f5a91" stroke-width="3"/>
+<text x="75" y="455" font-size="27" fill="#1f5a91">A–0–0</text>
+<text x="75" y="485" font-size="24" fill="#1f5a91">0 / 1</text>
+<rect x="325" y="422" width="140" height="76" rx="12" fill="white" stroke="#1f5a91" stroke-width="3"/>
+<text x="395" y="455" font-size="27" fill="#1f5a91">A–1–0</text>
+<text x="395" y="485" font-size="24" fill="#1f5a91">0 / 1</text>
+<rect x="555" y="292" width="140" height="76" rx="12" fill="white" stroke="#1f5a91" stroke-width="3"/>
+<text x="625" y="325" font-size="27" fill="#1f5a91">B–0</text>
+<text x="625" y="355" font-size="24" fill="#1f5a91">1 / 1</text>
+<rect x="805" y="292" width="140" height="76" rx="12" fill="#edf8f2" stroke="#216b56" stroke-width="3"/>
+<text x="875" y="325" font-size="27" fill="#216b56">B–1</text>
+<text x="875" y="355" font-size="24" fill="#216b56">0 / 0</text>
+<rect x="805" y="422" width="140" height="76" rx="12" fill="#f8fafb" stroke="#61717a" stroke-width="2" stroke-dasharray="9 7"/>
+<text x="875" y="455" font-size="25" fill="#61717a">B–1–0</text>
+<text x="875" y="485" font-size="20" fill="#61717a">sampled only</text>
+<rect x="805" y="552" width="140" height="76" rx="12" fill="#f8fafb" stroke="#61717a" stroke-width="2" stroke-dasharray="9 7"/>
+<text x="875" y="585" font-size="25" fill="#61717a">B–1–0–0</text>
+<text x="875" y="615" font-size="20" fill="#61717a">sampled only</text>
+<text x="190" y="55" font-size="27" fill="#ac3543">T = 86 min</text>
+<text x="190" y="90" font-size="27" fill="#ac3543">Late: R = 0</text>
+<text x="500" y="650" font-size="24" fill="#1f5a91">W / N = successes / visits · before → after backup</text>
+<text x="500" y="682" font-size="23" fill="#61717a">Solid: keep · Dashed: discard · Green: new node · Gold: select / update</text>
 </g>
 </svg>
