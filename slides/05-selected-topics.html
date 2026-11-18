@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.11.9">
 
   <meta name="author" content="Fred J. Hickernell">
-  <meta name="dcterms.date" content="2026-11-17">
+  <meta name="dcterms.date" content="2026-11-18">
   <title>MATH 565 — Fall 2026</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -666,7 +666,7 @@ Fred J. Hickernell
 </div>
 </div>
 
-  <p class="date">November 17, 2026</p>
+  <p class="date">November 18, 2026</p>
 </section>
 <section id="course-map" class="title-slide slide level1 deck-course-map center" data-tree-marker="deck-05-overview">
 <h1>Course Map</h1>
@@ -2915,7 +2915,7 @@ q(s)=\operatorname{Loss}(\theta)+g s+\tfrac12 h s^2
 <h3 id="gradient-and-stochastic-gradient-paths">Gradient and stochastic-gradient paths</h3>
 <p><span id="quadratic-component-losses"></span></p>
 <p>Toy objective: <span class="alert"><span class="math inline">\(m=2\)</span> parameters</span>, average of <span class="alert"><span class="math inline">\(N=1{,}000\)</span> loss terms</span><br> <span class="alert">Equal component-gradient work</span>: 45 GD moves versus 4,500 mini-batch moves<br> 45,000 contributions each: 1,000 per GD move; 10 per SGD move (<span class="math inline">\(b=10\)</span>)<br> Common rate <span class="math inline">\(\eta=0.5\)</span>; picture shows <span class="alert">first 60 mini-batch moves</span> (600 contributions)</p>
-<div id="18c1a32c" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="5">
+<div id="dda08404" class="cell" data-fig-height="5.8" data-fig-width="9.5" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -3567,6 +3567,11 @@ p_i(\vtheta)=\Prob_{\vtheta}(Y_i=1\mid\vx_i)
 <td style="text-align: left;">Reach the destination at low travel cost</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">Traveling salesperson</td>
+<td style="text-align: left;">Choose the next unvisited city</td>
+<td style="text-align: left;">Short tour through every city and back to start</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;"><span class="alert">AlphaTensor</span></td>
 <td style="text-align: left;">Steps in a matrix multiplication algorithm</td>
 <td style="text-align: left;">Correct result with fewer scalar multiplications</td>
@@ -3584,8 +3589,9 @@ p_i(\vtheta)=\Prob_{\vtheta}(Y_i=1\mid\vx_i)
 <aside class="notes">
 <p>AlphaGo (2016) combined MCTS with neural networks: a policy network supplied move preferences, while leaf evaluation combined a value network with a fast-policy rollout to the end of the game. Those rollouts were sampled from a trained fast policy, not uniformly from legal moves. AlphaZero used a learned leaf value in place of a complete rollout; terminal positions used their actual outcome. AlphaGo played Go; AlphaZero covered Go, chess and shogi. Search in these systems is a neural-network-guided MCTS variant, not the exact UCT rule or uniform rollout policy in our companion notebook. Two-player search must account for whose turn it is when interpreting and backing up values; we cannot maximize one player’s payoff at both turns.</p>
 <p>Navigation refers to the sailing experiment in Kocsis and Szepesvari (2006), Section 3.2: choose sailing directions in a stochastic shortest-path problem with changing wind. It is a research simulator example, not a claim that a particular commercial navigation service uses MCTS. Unlike our fixed airport itinerary, this planner conditions later actions on the current state. State, simulator, return and decision timing must fit the application.</p>
+<p>For the traveling salesperson problem, a rollout can finish a partial tour by visiting the remaining cities and returning to the start. Shorter tours give higher returns. With fixed distances, the randomness is in which completion the search samples. Fu, Qiu and Zha use learned guidance to improve complete tours through edge exchanges, a different implementation from the constructive version in the table. Uniformly completing long tours can waste the search budget on poor tours. For the standard TSP, compare heuristic results with Lin–Kernighan and use an exact solver such as Concorde when an optimality certificate is required.</p>
 <p>AlphaTensor (Fawzi et al., 2022) treats matrix multiplication algorithm discovery as a game of successive algebraic choices. A neural network guides MCTS toward correct tensor decompositions requiring fewer scalar multiplications; the paper also considers hardware-aware objectives. The visible row states the simpler operation-count objective. MCTS is the planning component within a larger learning system in both the game-playing and algorithm-discovery examples.</p>
-<p>Primary sources: <a href="https://doi.org/10.1038/nature16961">Silver et al., AlphaGo (2016)</a>, <a href="https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/alphazero-shedding-new-light-on-chess-shogi-and-go/alphazero_preprint.pdf">Silver et al., AlphaZero (2018)</a>, <a href="https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf">Kocsis and Szepesvari, UCT (2006)</a>, <a href="https://doi.org/10.1038/s41586-022-05172-4">Fawzi et al., AlphaTensor (2022)</a>.</p>
+<p>Primary sources: <a href="https://doi.org/10.1038/nature16961">Silver et al., AlphaGo (2016)</a>, <a href="https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/alphazero-shedding-new-light-on-chess-shogi-and-go/alphazero_preprint.pdf">Silver et al., AlphaZero (2018)</a>, <a href="https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf">Kocsis and Szepesvari, UCT (2006)</a>, <a href="https://doi.org/10.1609/aaai.v35i8.16916">Fu, Qiu and Zha, MCTS for TSP (2021)</a>, <a href="https://math.uwaterloo.ca/tsp/concorde/downloads/downloads.htm">Concorde and Linkern</a>, <a href="https://doi.org/10.1038/s41586-022-05172-4">Fawzi et al., AlphaTensor (2022)</a>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -3598,7 +3604,7 @@ p_i(\vtheta)=\Prob_{\vtheta}(Y_i=1\mid\vx_i)
           display:block!important;
       }</style></aside>
 <div class="refs">
-<p><a href="https://doi.org/10.1038/nature16961">AlphaGo</a> · <a href="https://arxiv.org/abs/1712.01815">AlphaZero</a> · <a href="https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf">UCT sailing</a> · <a href="https://doi.org/10.1038/s41586-022-05172-4">AlphaTensor</a></p>
+<p><a href="https://doi.org/10.1038/nature16961">AlphaGo</a> · <a href="https://arxiv.org/abs/1712.01815">AlphaZero</a> · <a href="https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf">UCT sailing</a> · <a href="https://doi.org/10.1609/aaai.v35i8.16916">MCTS for TSP</a> · <a href="https://doi.org/10.1038/s41586-022-05172-4">AlphaTensor</a></p>
 </div>
 </section>
 <section class="slide level2">
@@ -3793,30 +3799,29 @@ R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}
 </section>
 <section class="slide level2">
 
-<h3 id="why-keep-only-one-new-node">Why keep only one new node?</h3>
-<p>The rollout <span class="alert">evaluates the new node</span> by sampling a possible future</p>
+<h3 id="why-keep-only-one-new-node">Why discard the rollout suffix?</h3>
+<p>The full rollout gives <span class="alert">one sampled return</span> for the new route prefix</p>
 <div class="columns">
 <div class="column" style="width:47%;">
-<h4 id="control-storage-and-work">Control storage and work</h4>
+<h4 id="grow-the-tree-gradually">Grow the tree gradually</h4>
 <ul>
-<li>Keep at most <span class="alert">one new node</span> per iteration</li>
-<li>Avoid storing a long suffix with only one observed return</li>
-<li>Revisited branches gradually gain deeper stored choices</li>
+<li>Store at most <span class="alert">one new node</span> per iteration</li>
+<li>Skip allocating a node and counters for each temporary choice</li>
+<li>Add deeper choices when later iterations expand them</li>
 </ul>
 </div><div class="column" style="width:6%;">
 
 </div><div class="column" style="width:47%;">
-<h4 id="keep-the-outcomes-evidence">Keep the outcome’s evidence</h4>
+<h4 id="keep-the-rollouts-return">Keep the rollout’s return</h4>
 <ul>
-<li>Back up <span class="math inline">\(R\)</span> through the selected path and new node</li>
+<li>Back up <span class="math inline">\(R\)</span> through every stored node on the path, including the new one</li>
 <li>Retain successes <span class="math inline">\(W\)</span> and visits <span class="math inline">\(N\)</span></li>
 <li>Sample a fresh continuation on a later visit</li>
 </ul>
 </div></div>
 <div class="key-point">
-<p>Discard the temporary path; <span class="alert">keep its contribution to the stored statistics</span></p>
+<p>The stored nodes <span class="alert">keep the return</span> from the complete simulated trip</p>
 </div>
-<p>One-node expansion is a design choice; other MCTS variants can store more</p>
 <aside class="notes">
 <p>The rollout suffix is generated and evaluated, so discarding it does not save the cost of that traffic simulation. It saves persistent node storage and per-node bookkeeping. Starting from one root, n iterations store at most n+1 nodes in this variant. Storing every fresh suffix could add up to the remaining depth on each iteration, often producing many deep nodes with only one return. Selective expansion spends that storage on branches revisited by the search. This is a resource-allocation choice, not a requirement for correct backup or a theorem that retaining more nodes must be worse. Full-path expansion and other expansion policies are possible, with different resource tradeoffs.</p>
 <p>The result is retained in W and N at the stored nodes; the exact route and individual draw are not recoverable from those summaries. Keeping a debug log is separate from storing nodes used by the tree policy. A discarded prefix can become stored later through explicit expansion, starting fresh statistics then. No earlier rollout-only visit is retroactively assigned to it.</p>
@@ -3864,7 +3869,7 @@ R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}
 <p><span class="alert">Probability bounds for mean rewards</span> motivate the exploration bonus</p>
 </div></div>
 <aside class="notes">
-<p>N(s) counts visits to the current tree node; N(s,a) counts visits to a child reached by action a while that child is stored. A box labeled s displays W(s) successes and N(s) visits. In this prefix tree, each child has one parent, so W(s,a) and N(s,a) equal that child’s successes and visit count. Counts are taken before the current iteration’s backup. These are totals and subsets, not two independent kinds of sample size. A node’s first visit may occur before any child is stored, so its count need not equal the sum of stored child counts; the later six-iteration snapshot makes this explicit at A. Visit untried actions before using the formula so no division by zero occurs. Rewards are in [0,1]. The following walkthrough uses c=1 throughout, two choices at each of four decisions, and constructed counts and traffic draws; it is not an output of the six-segment notebook. The earlier three-road travel-time model remains the notebook’s model.</p>
+<p>N(s) counts visits to the current tree node; N(s,a) counts visits to a child reached by action a while that child is stored. A box labeled s displays W(s) successes and N(s) visits. In this prefix tree, each child has one parent, so W(s,a) and N(s,a) equal that child’s successes and visit count. Counts are taken before the current iteration’s backup. These are totals and subsets, not two independent kinds of sample size. A node’s first visit may occur before any child is stored, so its count need not equal the sum of stored child counts; iteration 3 shows this at A. Visit untried actions before using the formula so no division by zero occurs. Rewards are in [0,1]. The following walkthrough uses c=1 throughout, two choices at each of four decisions, and constructed counts and traffic draws; it is not an output of the six-segment notebook. The earlier three-road travel-time model remains the notebook’s model.</p>
 <p>s is a node (the route prefix chosen so far), not the whole tree and not a traffic realization. a is a candidate next road choice leaving s. Once every action at s has been tried, take the largest score and repeat selection at the resulting child. At a node with an untried action, selection stops and expansion stores one such action; if the plan is complete, sample traffic and back up without expanding. The bonus directs the next simulation; it is not part of the trip reward or the final most-visited recommendation.</p>
 <p>UCT means upper confidence bounds applied to trees. The exploration bonus is motivated by probability bounds for mean rewards. The exploration parameter depends on reward scale and convention. It directs search; do not call this bonus a calibrated confidence interval for arbitrary adaptive tree returns. Downstream return distributions change during search. We claim neither a finite-budget optimal-action guarantee nor IID error bars for these changing-policy averages.</p>
 <p>For independent, bounded [0,1] rewards with a fixed mean mu, Hoeffding gives P(mu &gt; mean_n + epsilon) &lt;= exp(-2 n epsilon^2). Choosing a tail probability that decreases with the total number of trials produces an upper confidence index with a radius proportional to sqrt(log N / n). UCB1 uses sqrt(2 log N / n); our displayed c absorbs the exploration coefficient. This motivates trying a less-sampled action whose mean may be underestimated.</p>
@@ -3883,7 +3888,7 @@ R=\begin{cases}1 &amp; \text{arrive by the deadline}\\0 &amp; \text{arrive late}
 </section>
 <section class="slide level2">
 
-<h3 class="mcts-walkthrough" id="follow-one-simulation-through-the-tree">Follow one iteration through the tree</h3>
+<h3 class="mcts-walkthrough" id="follow-one-simulation-through-the-tree">A ten-iteration tree search</h3>
 <div class="columns">
 <div class="column" style="width:64%;">
 <p><img data-src="assets/mcts/walkthrough-00-start.svg" style="width:100.0%" alt="The small route tree starts with only Start stored, with zero successes and zero visits"></p>
@@ -3924,7 +3929,7 @@ R=\begin{cases}
 </section>
 <section class="slide level2">
 
-<h3 class="mcts-walkthrough" id="simulation-1-expand-a">MCTS iteration 1 — expand A</h3>
+<h3 class="mcts-walkthrough" id="simulation-1-expand-a">Iteration 1 — expand A</h3>
 <p><span id="the-first-simulation"></span></p>
 <div class="columns">
 <div class="column" style="width:64%;">
@@ -3994,6 +3999,7 @@ R=\begin{cases}
 <section class="slide level2">
 
 <h3 class="mcts-walkthrough" id="simulation-3-expand-a0">Iteration 3 — expand A–0</h3>
+<p><span id="node-totals-and-action-totals"></span></p>
 <div class="columns">
 <div class="column" style="width:52%;">
 <p><img data-src="assets/mcts/walkthrough-03a-third.svg" style="width:100.0%" alt="Iteration 3: select A using UCT, store only A–0, sample the dashed suffix and back up return 1; all stored A and B nodes remain visible"></p>
@@ -4001,7 +4007,7 @@ R=\begin{cases}
 
 </div><div class="column" style="width:44%;">
 <p><span class="math inline">\(c=1\)</span> for this example</p>
-<p><span class="alert">Before selection</span>: <span class="math inline">\(N(\text{Start})=2\)</span></p>
+<p><span class="alert">Select</span> (before backup) <span class="math inline">\(N(\text{Start})=2\)</span></p>
 <div class="mcts-score-box">
 <p><span class="math display">\[\begin{equation*}
 \operatorname{UCT}(s,a)=\frac{W(s,a)}{N(s,a)}
@@ -4041,44 +4047,7 @@ R=\begin{cases}
 <p><span class="alert">Expand</span>: A–0, using untried 0<br> <span class="alert">Roll out</span>: 1, 0, <span class="math inline">\(T=78\)</span>, <span class="math inline">\(R=1\)</span><br> <span class="alert">Back up</span>: update Start, A, A–0<br> and discard the dashed suffix</p>
 </div></div>
 <aside class="notes">
-<p>The first rollout sampled A–0 but did not store it. This explicit expansion now stores A–0 at 0/0 before simulation. Its successful return is backed up through Start, A and A–0. A–0–1 and A–0–1–0 are temporary again. Root UCT uses N=2, A=1/1 and B=0/1. The diagram shows counts after backup. Green identifies the one node added by expansion; the dashed suffix records the sampled continuation that is then discarded. Every next iteration restarts at Start. Untried actions are expanded before UCT is applied among stored children; UCT score ties favor 0. An untried action can be chosen in any declared order.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level2">
-
-<h3 class="mcts-walkthrough" id="node-totals-and-action-totals">Node totals and action totals</h3>
-<div class="columns">
-<div class="column" style="width:64%;">
-<p><img data-src="assets/mcts/walkthrough-03a-third.svg" style="width:100.0%" alt="After iteration 3, parent A has two successes and two visits; its newly stored child A–0 has one success and one visit"></p>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:32%;">
-<p>After <span class="alert">Iteration 3’s backup</span></p>
-<p>At parent <span class="math inline">\(s=A\)</span>,</p>
-<ul>
-<li><span class="math inline">\(W(s)=2\)</span>: successes at A</li>
-<li><span class="math inline">\(N(s)=2\)</span>: visits to A</li>
-</ul>
-<p>For action <span class="math inline">\(a=0\)</span> from A,</p>
-<ul>
-<li><span class="math inline">\(W(s,a)=1\)</span>: successes through stored A–0</li>
-<li><span class="math inline">\(N(s,a)=1\)</span>: visits through stored A–0</li>
-</ul>
-<p>These are <span class="math inline">\(W(\text{A–0})\)</span> and <span class="math inline">\(N(\text{A–0})\)</span> in the <span class="alert">child box</span></p>
-<p>A’s first success counted before A–0 was stored</p>
-</div></div>
-<aside class="notes">
-<p>This is the same after-backup snapshot as the preceding iteration-3 slide. W(s) and N(s) count returns backed up to the current node s while it is stored. W(s,a) and N(s,a) count returns backed up through its stored action a. In this prefix tree the child has exactly one parent, so the action’s counters can be stored on that child: W(A,0)=W(A–0)=1 and N(A,0)=N(A–0)=1. The first iteration already credited A with one success and one visit before any child was stored. The third iteration adds another success/visit to A and starts A–0’s counters at 1/1. The first rollout happened to pass through A–0, but it created no stored A–0 counter, so that earlier visit is not reassigned. There is no separate globally defined W(a): action 0 can leave many different parents, which is why action statistics specify both s and a.</p>
+<p>Root UCT uses N=2, A=1/1 and B=0/1. Iteration 1’s rollout passed through A–0, but only A was stored then. Expansion now creates A–0 at 0/0. After backup, A has W(A)=2 successes in N(A)=2 visits, while its stored action 0 has W(A,0)=1 success in N(A,0)=1 visit. The earlier rollout contributes only to the statistics of nodes that were stored when it ran. The diagram shows counts after backup. Green identifies the one node added by expansion; the dashed suffix records the sampled continuation that is then discarded. Every next iteration restarts at Start. Untried actions are expanded before UCT is applied among stored children; UCT score ties favor 0. An untried action can be chosen in any declared order.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -4100,7 +4069,7 @@ R=\begin{cases}
 </div><div class="column" style="width:4%;">
 
 </div><div class="column" style="width:44%;">
-<p><span class="alert">Before selection</span>: <span class="math inline">\(N(\text{Start})=3\)</span></p>
+<p><span class="alert">Select</span> (before backup) <span class="math inline">\(N(\text{Start})=3\)</span></p>
 <div class="mcts-score-box">
 <p><span class="math display">\[\begin{equation*}
 \operatorname{UCT}(s,a)=\frac{W(s,a)}{N(s,a)}
@@ -4162,7 +4131,7 @@ R=\begin{cases}
 </div><div class="column" style="width:4%;">
 
 </div><div class="column" style="width:44%;">
-<p><span class="alert">Before selection</span>: <span class="math inline">\(N(\text{Start})=4\)</span>, <span class="math inline">\(N(A)=3\)</span></p>
+<p><span class="alert">Select</span> (before backup) <span class="math inline">\(N(\text{Start})=4\)</span>, <span class="math inline">\(N(A)=3\)</span></p>
 <div class="mcts-score-box">
 <p><span class="math display">\[\begin{equation*}
 \operatorname{UCT}(s,a)=\frac{W(s,a)}{N(s,a)}
@@ -4230,13 +4199,14 @@ R=\begin{cases}
 <section class="slide level2">
 
 <h3 class="mcts-walkthrough" id="simulation-6-expand-a10">Iteration 6 — expand A–1–0</h3>
+<p><span id="after-six-simulations"></span></p>
 <div class="columns">
 <div class="column" style="width:52%;">
 <p><img data-src="assets/mcts/walkthrough-03d-sixth.svg" style="width:100.0%" alt="Iteration 6: select A using UCT, store only A–1–0, sample the dashed suffix and back up return 0; all stored A and B nodes remain visible"></p>
 </div><div class="column" style="width:4%;">
 
 </div><div class="column" style="width:44%;">
-<p><span class="alert">Before selection</span>: <span class="math inline">\(N(\text{Start})=5\)</span>, <span class="math inline">\(N(A)=4\)</span></p>
+<p><span class="alert">Select</span> (before backup) <span class="math inline">\(N(\text{Start})=5\)</span>, <span class="math inline">\(N(A)=4\)</span></p>
 <div class="mcts-score-box">
 <p><span class="math display">\[\begin{equation*}
 \operatorname{UCT}(s,a)=\frac{W(s,a)}{N(s,a)}
@@ -4303,47 +4273,16 @@ R=\begin{cases}
 </section>
 <section class="slide level2">
 
-<h3 class="mcts-walkthrough" id="after-six-simulations">After six iterations</h3>
-<div class="columns">
-<div class="column" style="width:64%;">
-<p><img data-src="assets/mcts/walkthrough-03-snapshot.svg" style="width:100.0%" alt="After six iterations Start is 3/6, A is 3/5 with every stored descendant visible, and B is 0/1 with no children stored"></p>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:32%;">
-<p>At <span class="math inline">\(s=\text{Start}\)</span>,</p>
-<ul>
-<li><span class="math inline">\(N(s)=6\)</span>: all visits to Start</li>
-<li><span class="math inline">\(N(s,A)=N(A)=5\)</span>: five chose A</li>
-<li><span class="math inline">\(N(s,B)=N(B)=1\)</span>: one chose B</li>
-</ul>
-<p>Likewise, <span class="math inline">\(W(s,A)=W(A)=3\)</span> successes</p>
-<p>A’s first visit preceded child storage: <span class="math inline">\(5=1+2+2\)</span></p>
-<p>Next: compare root scores and select <span class="alert">B</span></p>
-</div></div>
-<aside class="notes">
-<p>All six iterations have now been shown, using c=1 throughout. The stored A subtree remains fully visible on every subsequent figure. A’s first root expansion returned one before it had a stored child, so its 3/5 need not equal the sum of the child counts 1/2 and 1/2. Each grandchild has 0/1. B’s initial failed rollout stored only B; B still has no stored children. The next root scores are A=1.199 and B=1.339, so iteration seven selects B.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level2">
-
-<h3 class="mcts-walkthrough" id="simulation-7-select">Iteration 7 — select</h3>
+<h3 class="mcts-walkthrough" id="iteration-7">Iteration 7 — expand B–0</h3>
+<p><span id="simulation-7-select"></span> <span id="simulation-7-expand"></span> <span id="simulation-7-roll-out"></span> <span id="simulation-7-back-up"></span></p>
 <div class="columns">
 <div class="column" style="width:52%;">
-<p><img data-src="assets/mcts/walkthrough-04-select.svg" style="width:100.0%" alt="Select the stored edge from Start to B, leaving all counts unchanged"></p>
+<p><img data-src="assets/mcts/walkthrough-07-seventh.svg" style="width:100.0%" alt="Iteration 7: expand B–0, sample the dashed suffix to complete B–0–1–0, and back up return 1 through Start, B, B–0. The stored tree shows the updated counts."></p>
+<p>One path down resembles <span class="alert">depth-first search</span><br> <span class="alert">Breadth-first search</span> grows level by level<br> Here A–0–0 (depth 3) came before B–0 (depth 2)</p>
 </div><div class="column" style="width:4%;">
 
 </div><div class="column" style="width:44%;">
-<p><span class="alert">Before selection</span>: <span class="math inline">\(N(\text{Start})=6\)</span></p>
+<p><span class="alert">Select</span> (before backup) <span class="math inline">\(N(\text{Start})=6\)</span></p>
 <div class="mcts-score-box">
 <p><span class="math display">\[\begin{equation*}
 \operatorname{UCT}(s,a)=\frac{W(s,a)}{N(s,a)}
@@ -4380,10 +4319,10 @@ R=\begin{cases}
 </tbody>
 </table>
 </div>
-<p>Stop at B: both next actions are <span class="alert">untried</span></p>
+<p><span class="alert">Expand</span>: B–0, untried 0 at B<br> <span class="alert">Roll out</span>: 1, 0, <span class="math inline">\(T=76\)</span>, <span class="math inline">\(R=1\)</span><br> <span class="alert">Back up</span>: update Start, B, B–0<br> and discard the dashed suffix</p>
 </div></div>
 <aside class="notes">
-<p>The root pairs show W(Start,a) and N(Start,a), with parent N(Start)=6. The UCT reminder uses c=1 and the natural logarithm. Although A has the larger observed average, B has been tried only once. Both root actions have been visited, so the UCT formula is defined. The highlighted solid edge is selection; no new node or visit is added yet. Stop at B because it has untried next actions.</p>
+<p>Start selects B in iteration 7. B’s average is 0, but its exploration bonus more than offsets A’s higher average. B–0 starts at 0/0 and gets its first success on the 76-minute trip. Start reaches 4/7 and B reaches 1/2. At depths measured from Start, A–0–0 is at depth 3 and was stored in iteration 5. Breadth-first expansion would have stored all depth-2 children before any depth-3 child. A depth-first traversal completes a subtree before moving to its sibling. Here each iteration starts at Start, and the updated scores guide its path. The depth reached by a temporary rollout is separate from the depth of the new stored node. The box labels show counts before and after backup. The green node stays in the tree, and the gray dashed suffix is discarded.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -4398,136 +4337,15 @@ R=\begin{cases}
 </section>
 <section class="slide level2">
 
-<h3 class="mcts-walkthrough" id="simulation-7-expand">Iteration 7 — expand</h3>
-<div class="columns">
-<div class="column" style="width:64%;">
-<p><img data-src="assets/mcts/walkthrough-05-expand.svg" style="width:100.0%" alt="Keep Start and B selected and add just B–0 as a new stored node with zero successes and zero visits"></p>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:32%;">
-<p>B has two untried choices: 0 and 1</p>
-<p>Choose 0 and <span class="alert">store B–0</span></p>
-<ul>
-<li>Exactly one new stored node</li>
-<li>Initially <span class="math inline">\(W=0\)</span>, <span class="math inline">\(N=0\)</span></li>
-<li>No average yet</li>
-</ul>
-<p>Stop expanding for this iteration</p>
-<p>The complete route still needs <span class="alert">two choices</span></p>
-</div></div>
-<aside class="notes">
-<p>The untried choice may be sampled uniformly, as in the notebook; take 0 in this trace. A W/N label of 0/0 records counts, not a value estimate. Expansion stores B–0 before its first simulated return. Counts change at backup, not when the edge is selected or the new node is allocated.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level2">
-
-<h3 class="mcts-walkthrough" id="simulation-7-roll-out">Iteration 7 — roll out</h3>
-<div class="columns">
-<div class="column" style="width:64%;">
-<p><img data-src="assets/mcts/walkthrough-06-rollout.svg" style="width:100.0%" alt="From stored B–0, sample dashed continuations B–0–1 and B–0–1–0; simulate 76 minutes and return one, without changing any stored counts yet"></p>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:32%;">
-<p>From B–0, randomly choose <span class="alert">1 then 0</span></p>
-<p>Complete route: B–0–1–0</p>
-<p>Now simulate fresh traffic</p>
-<p><span class="math display">\[\begin{equation*}
-T=76\leq80 \implies R=1
-\end{equation*}\]</span></p>
-<p>Dashed nodes are <span class="alert">sampled only</span></p>
-<p>Stored counts have not changed yet</p>
-</div></div>
-<aside class="notes">
-<p>First sample the two remaining route decisions, then draw traffic for that complete itinerary. These are two distinct sources of randomness. B–0–1 and B–0–1–0 are not added to the stored tree in this iteration. We retain only the return for backup; the new stored B–0 still reads 0/0.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level2">
-
-<h3 class="mcts-walkthrough" id="simulation-7-back-up">Iteration 7 — back up</h3>
-<div class="columns">
-<div class="column" style="width:64%;">
-<p><img data-src="assets/mcts/walkthrough-07-backup.svg" style="width:100.0%" alt="Back up return one along the stored path: B–0 goes 0/0 to 1/1, B goes 0/1 to 1/2 and Start goes 3/6 to 4/7; A stays 3/5 and rollout nodes disappear"></p>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:32%;">
-<p><span class="alert">Back up <span class="math inline">\(R=1\)</span></span>: update the stored path</p>
-<p><span class="math display">\[\begin{align*}
-N&amp;\leftarrow N+1\\
-W&amp;\leftarrow W+1
-\end{align*}\]</span></p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Node</th>
-<th style="text-align: right;">Before</th>
-<th style="text-align: right;">After</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">B–0</td>
-<td style="text-align: right;">0/0</td>
-<td style="text-align: right;">1/1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">B</td>
-<td style="text-align: right;">0/1</td>
-<td style="text-align: right;">1/2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Start</td>
-<td style="text-align: right;">3/6</td>
-<td style="text-align: right;">4/7</td>
-</tr>
-</tbody>
-</table>
-<p><span class="alert">Discard</span> the dashed suffix</p>
-<p>A and its subtree are unchanged</p>
-</div></div>
-<aside class="notes">
-<p>The arrows now point upward along the same stored edges. Each stored node on the path receives exactly one visit and one success. There are no intermediate rewards or discounting in this toy, so R is unchanged. The rollout-only nodes have disappeared. B–0’s single success does not prove that either this partial plan or the completed route always succeeds.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level2">
-
-<h3 class="mcts-walkthrough" id="simulation-8-select-and-expand">Iteration 8 — select and expand</h3>
+<h3 class="mcts-walkthrough" id="iteration-8">Iteration 8 — expand B–1</h3>
+<p><span id="simulation-8-select-and-expand"></span> <span id="simulation-8-an-unsuccessful-rollout"></span> <span id="simulation-8-back-up-zero"></span></p>
 <div class="columns">
 <div class="column" style="width:52%;">
-<p><img data-src="assets/mcts/walkthrough-08-failure-expand.svg" style="width:100.0%" alt="UCT selects B again; B has an untried choice 1, so add B–1 at 0/0 while B–0 stays 1/1"></p>
+<p><img data-src="assets/mcts/walkthrough-08-eighth.svg" style="width:100.0%" alt="Iteration 8: expand B–1, sample the dashed suffix to complete B–1–0–0, and back up return 0 through Start, B, B–1. The stored tree shows the updated counts."></p>
 </div><div class="column" style="width:4%;">
 
 </div><div class="column" style="width:44%;">
-<p><span class="alert">Before selection</span>: <span class="math inline">\(N(\text{Start})=7\)</span></p>
+<p><span class="alert">Select</span> (before backup) <span class="math inline">\(N(\text{Start})=7\)</span></p>
 <div class="mcts-score-box">
 <p><span class="math display">\[\begin{equation*}
 \operatorname{UCT}(s,a)=\frac{W(s,a)}{N(s,a)}
@@ -4564,10 +4382,10 @@ W&amp;\leftarrow W+1
 </tbody>
 </table>
 </div>
-<p>Stop at B: choice 1 is <span class="alert">untried</span><br> <span class="alert">Expand</span>: B–1 before revisiting B–0</p>
+<p><span class="alert">Expand</span>: B–1, untried 1 at B<br> <span class="alert">Roll out</span>: 0, 0, <span class="math inline">\(T=86\)</span>, <span class="math inline">\(R=0\)</span><br> <span class="alert">Back up</span>: update Start, B, B–1<br> and discard the dashed suffix</p>
 </div></div>
 <aside class="notes">
-<p>N(Start)=7. A has 3/5 and B has 1/2, giving the displayed UCT scores. Do not immediately score B–0 just because it has returned one: B still has an untried action. Selection stops at B, then expansion adds B–1.</p>
+<p>UCT returns to B. Its untried action 1 takes precedence over its stored action 0. The 86-minute trip adds one visit to each stored node on the path. Their success counts remain the same, and B–0 stays at 1/1. The box labels show counts before and after backup. The green node stays in the tree, and the gray dashed suffix is discarded.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -4582,104 +4400,15 @@ W&amp;\leftarrow W+1
 </section>
 <section class="slide level2">
 
-<h3 class="mcts-walkthrough" id="simulation-8-an-unsuccessful-rollout">Iteration 8 — an unsuccessful rollout</h3>
-<div class="columns">
-<div class="column" style="width:64%;">
-<p><img data-src="assets/mcts/walkthrough-09-failure-rollout.svg" style="width:100.0%" alt="From new B–1, sample 0 then 0 to form route B–1–0–0; the 86-minute trip returns zero, with stored counts still unchanged"></p>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:32%;">
-<p>From B–1, randomly choose <span class="alert">0 then 0</span></p>
-<p>Complete route: B–1–0–0</p>
-<p>Simulate fresh traffic</p>
-<p><span class="math display">\[\begin{equation*}
-T=86&gt;80 \implies R=0
-\end{equation*}\]</span></p>
-<p>One return for this iteration</p>
-<p>Still only one new stored node</p>
-</div></div>
-<aside class="notes">
-<p>This is a sampled failure, not a proof that this route always fails. The selected/expanded stored path is Start, B, B–1; the remaining two nodes are rollout-only. As with the successful trial, update nothing until backup.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level2">
-
-<h3 class="mcts-walkthrough" id="simulation-8-back-up-zero">Iteration 8 — back up zero</h3>
-<div class="columns">
-<div class="column" style="width:64%;">
-<p><img data-src="assets/mcts/walkthrough-10-failure-backup.svg" style="width:100.0%" alt="Back up zero: B–1 goes 0/0 to 0/1, B goes 1/2 to 1/3 and Start goes 4/7 to 4/8; A and B–0 remain unchanged"></p>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:32%;">
-<p><span class="alert">Back up <span class="math inline">\(R=0\)</span></span>: update the stored path</p>
-<p><span class="math display">\[\begin{align*}
-N&amp;\leftarrow N+1\\
-W&amp;\leftarrow W+0
-\end{align*}\]</span></p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Node</th>
-<th style="text-align: right;">Before</th>
-<th style="text-align: right;">After</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">B–1</td>
-<td style="text-align: right;">0/0</td>
-<td style="text-align: right;">0/1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">B</td>
-<td style="text-align: right;">1/2</td>
-<td style="text-align: right;">1/3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Start</td>
-<td style="text-align: right;">4/7</td>
-<td style="text-align: right;">4/8</td>
-</tr>
-</tbody>
-</table>
-<p><span class="alert">Discard</span> the dashed suffix</p>
-<p>A <span class="alert">failure still counts</span> as a visit</p>
-</div></div>
-<aside class="notes">
-<p>B’s observed mean falls from 1/2 to 1/3 even though its success count does not change. B–0 is a sibling of the expanded node, not an ancestor, so its 1/1 is unchanged. A and its descendants are also untouched.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level2">
-
-<h3 class="mcts-walkthrough" id="simulation-9-select-a-and-expand">Iteration 9 — select A and expand</h3>
-<p><span id="simulation-9-briefly-return-to-a"></span></p>
+<h3 class="mcts-walkthrough" id="iteration-9">Iteration 9 — expand A–0–1</h3>
+<p><span id="simulation-9-select-a-and-expand"></span> <span id="simulation-9-back-up-zero-in-a"></span></p>
 <div class="columns">
 <div class="column" style="width:52%;">
-<p><img data-src="assets/mcts/walkthrough-11a-a-rollout.svg" style="width:100.0%" alt="Iteration nine: root UCT selects A, tied scores at A select A–0, expansion keeps new A–0–1 at 0/0, and the last choice 0 is a temporary rollout; counts have not changed"></p>
+<p><img data-src="assets/mcts/walkthrough-09-ninth.svg" style="width:100.0%" alt="Iteration 9: expand A–0–1, sample the dashed suffix to complete A–0–1–0, and back up return 0 through Start, A, A–0, A–0–1. The stored tree shows the updated counts."></p>
 </div><div class="column" style="width:4%;">
 
 </div><div class="column" style="width:44%;">
-<p><span class="alert">Before selection</span>: <span class="math inline">\(N(\text{Start})=8\)</span>, <span class="math inline">\(N(A)=5\)</span></p>
+<p><span class="alert">Select</span> (before backup) <span class="math inline">\(N(\text{Start})=8\)</span>, <span class="math inline">\(N(A)=5\)</span></p>
 <div class="mcts-score-box">
 <p><span class="math display">\[\begin{equation*}
 \operatorname{UCT}(s,a)=\frac{W(s,a)}{N(s,a)}
@@ -4728,10 +4457,10 @@ W&amp;\leftarrow W+0
 </tbody>
 </table>
 </div>
-<p>At A–0, choice 1 is <span class="alert">untried</span><br> <span class="alert">Expand</span>: store A–0–1 at 0/0<br> <span class="alert">Roll out</span>: 0, <span class="math inline">\(T=84\)</span>, <span class="math inline">\(R=0\)</span></p>
+<p><span class="alert">Expand</span>: A–0–1, untried 1 at A–0<br> <span class="alert">Roll out</span>: 0, <span class="math inline">\(T=84\)</span>, <span class="math inline">\(R=0\)</span><br> <span class="alert">Back up</span>: update Start, A, A–0, A–0–1<br> and discard the dashed suffix</p>
 </div></div>
 <aside class="notes">
-<p>At A, N=5 and both A–0 and A–1 have 1/2. Their UCT scores are both 0.5+sqrt(log(5)/2)=1.397. Break the tie in favor of action 0. A–0 already stores A–0–0, but action 1 is untried, so selection stops and expansion adds A–0–1. It was rollout-only in iterations one and three; those earlier visits do not populate its counters. Sample only the final choice 0 and fresh traffic, obtaining an illustrative 84-minute trip. No counter changes until backup. Every stored A node is visible, just as on the B side.</p>
+<p>UCT selects A at Start. At A the two UCT scores tie, so action 0 wins by the trace’s ordering. Expand the remaining action 1 at A–0. The 84-minute trip takes the same complete route as iterations 1 and 3 with fresh traffic. The box labels show counts before and after backup. The green node stays in the tree, and the gray dashed suffix is discarded.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -4746,74 +4475,16 @@ W&amp;\leftarrow W+0
 </section>
 <section class="slide level2">
 
-<h3 class="mcts-walkthrough" id="simulation-9-back-up-zero-in-a">Iteration 9 — back up zero in A</h3>
-<div class="columns">
-<div class="column" style="width:64%;">
-<p><img data-src="assets/mcts/walkthrough-11-intervening.svg" style="width:100.0%" alt="Back up zero through Start, A, A–0 and new A–0–1: their counts become 4/9, 3/6, 1/3 and 0/1; discard rollout-only A–0–1–0; all other stored nodes remain unchanged"></p>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:32%;">
-<p><span class="alert">Back up</span>: update the stored path</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Node</th>
-<th style="text-align: right;">Before</th>
-<th style="text-align: right;">After</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">A–0–1</td>
-<td style="text-align: right;">0/0</td>
-<td style="text-align: right;">0/1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A–0</td>
-<td style="text-align: right;">1/2</td>
-<td style="text-align: right;">1/3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">A</td>
-<td style="text-align: right;">3/5</td>
-<td style="text-align: right;">3/6</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Start</td>
-<td style="text-align: right;">4/8</td>
-<td style="text-align: right;">4/9</td>
-</tr>
-</tbody>
-</table>
-<p><span class="alert">Keep</span> A–0–1 despite failure</p>
-<p><span class="alert">Discard</span> only A–0–1–0</p>
-<p>B and the other A nodes stay unchanged</p>
-<p>Next: restart at Start</p>
-</div></div>
-<aside class="notes">
-<p>Backup increments visits even when R=0. A–0–1 stays stored; the final rollout-only node disappears. Preserve the entire A subtree in subsequent views. This intervening A visit is required by UCT with c=1; iteration ten then selects B. The generator updates all four stored path nodes explicitly.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level2">
-
-<h3 class="mcts-walkthrough" id="simulation-10-select-farther-down">Iteration 10 — select farther down</h3>
+<h3 class="mcts-walkthrough" id="iteration-10">Iteration 10 — expand B–0–1</h3>
+<p><span id="simulation-10-select-farther-down"></span> <span id="simulation-10-expand-deeper-and-roll-out"></span> <span id="simulation-10-back-up-the-longer-path"></span></p>
 <div class="columns">
 <div class="column" style="width:52%;">
-<p><img data-src="assets/mcts/walkthrough-12-deeper-select.svg" style="width:100.0%" alt="At Start, select B using scores 1.189 versus A's 1.105; at B, select stored B–0 using 2.048 versus B–1's 1.048; counts have not changed"></p>
+<p><img data-src="assets/mcts/walkthrough-10-tenth.svg" style="width:100.0%" alt="Iteration 10: expand B–0–1, sample the dashed suffix to complete B–0–1–0, and back up return 1 through Start, B, B–0, B–0–1. The stored tree shows the updated counts."></p>
+<p><span class="alert">B–0–1</span> was rollout-only in iteration 7 and becomes a stored node here</p>
 </div><div class="column" style="width:4%;">
 
 </div><div class="column" style="width:44%;">
-<p><span class="alert">Before selection</span>: <span class="math inline">\(N(\text{Start})=9\)</span>, <span class="math inline">\(N(B)=3\)</span></p>
+<p><span class="alert">Select</span> (before backup) <span class="math inline">\(N(\text{Start})=9\)</span>, <span class="math inline">\(N(B)=3\)</span></p>
 <div class="mcts-score-box">
 <p><span class="math display">\[\begin{equation*}
 \operatorname{UCT}(s,a)=\frac{W(s,a)}{N(s,a)}
@@ -4862,105 +4533,10 @@ W&amp;\leftarrow W+0
 </tbody>
 </table>
 </div>
-<p>Stop at B–0: untried actions remain</p>
+<p><span class="alert">Expand</span>: B–0–1, untried 1 at B–0<br> <span class="alert">Roll out</span>: 0, <span class="math inline">\(T=78\)</span>, <span class="math inline">\(R=1\)</span><br> <span class="alert">Back up</span>: update Start, B, B–0, B–0–1<br> and discard the dashed suffix</p>
 </div></div>
 <aside class="notes">
-<p>At Start, A has 3/6 and B has 1/3. At B, B–0 has 1/1 and B–1 has 0/1. Use N(B)=3 inside B’s logarithm, not the root count nine. The two child visits sum to two rather than three because B’s initial failed rollout happened before either child was stored. Thus B=1/3 is consistent with child counts 1/1 and 0/1. Both B actions have been tried, so selection now traverses an additional stored edge before expansion. Stop at B–0, whose two next choices remain untried.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level2">
-
-<h3 class="mcts-walkthrough" id="simulation-10-expand-deeper-and-roll-out">Iteration 10 — expand deeper and roll out</h3>
-<div class="columns">
-<div class="column" style="width:64%;">
-<p><img data-src="assets/mcts/walkthrough-13-deeper-rollout.svg" style="width:100.0%" alt="After selecting Start to B to B–0, store new B–0–1 at 0/0; sample only the last choice 0, simulate route B–0–1–0 in 78 minutes and return one"></p>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:32%;">
-<p>At B–0: both next choices are <span class="alert">untried</span></p>
-<p>Choose 1 here; <span class="alert">store B–0–1</span></p>
-<p><span class="alert">Roll out</span>: sample the final choice 0</p>
-<p>Complete route: B–0–1–0</p>
-<p><span class="math display">\[\begin{equation*}
-T=78\leq80 \implies R=1
-\end{equation*}\]</span></p>
-<p>The earlier rollout did <span class="alert">not store</span> B–0–1</p>
-<p>Now selection goes deeper and the rollout is shorter</p>
-</div></div>
-<aside class="notes">
-<p>B–0–1 was only a dashed sampled prefix in iteration seven. It is stored for the first time now, by this explicit expansion. Either action at B–0 is untried; choose 1 here as a declared expansion choice, not a UCT score comparison. Do not silently retain all rollout nodes between iterations. Expansion still adds exactly one node. Iteration seven sampled two remaining decisions; this one samples only one. The completed route happens to be the same B–0–1–0, but fresh traffic gives 78 rather than 76 minutes. The return could also have differed.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section class="slide level2">
-
-<h3 class="mcts-walkthrough" id="simulation-10-back-up-the-longer-path">Iteration 10 — back up the longer path</h3>
-<div class="columns">
-<div class="column" style="width:64%;">
-<p><img data-src="assets/mcts/walkthrough-14-deeper-backup.svg" style="width:100.0%" alt="Back up one along four stored nodes: B–0–1 becomes 1/1, B–0 becomes 2/2, B becomes 2/4 and Start becomes 5/10; A and B–1 remain unchanged"></p>
-</div><div class="column" style="width:4%;">
-
-</div><div class="column" style="width:32%;">
-<p><span class="alert">Back up <span class="math inline">\(R=1\)</span></span>: update four stored nodes</p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Node</th>
-<th style="text-align: right;">Before</th>
-<th style="text-align: right;">After</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">B–0–1</td>
-<td style="text-align: right;">0/0</td>
-<td style="text-align: right;">1/1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">B–0</td>
-<td style="text-align: right;">1/1</td>
-<td style="text-align: right;">2/2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">B</td>
-<td style="text-align: right;">1/3</td>
-<td style="text-align: right;">2/4</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Start</td>
-<td style="text-align: right;">4/9</td>
-<td style="text-align: right;">5/10</td>
-</tr>
-</tbody>
-</table>
-<p><span class="alert">Discard</span> B–0–1–0</p>
-<p>A and B–1 stay unchanged</p>
-<div class="key-point">
-<p>Budget: 10 iterations<br> Recommended route:<br> <span class="alert">A–0–0–0</span></p>
-</div>
-<p><a href="#/our-route-after-10-simulations">Why this route?</a></p>
-</div></div>
-<aside class="notes">
-<p>The same backup rule works on a longer stored path. The final stored tree has Start=5/10, A=3/6, B=2/4, B–0=2/2, B–1=0/1 and B–0–1=1/1. At B–0, the first successful rollout preceded storage of any child, so its 2/2 need not equal the sum of its children’s 1/1. The leaf B–0–1–0 remains rollout-only and is not stored. The generator checks the UCT choices, backup totals and final counts; regenerate all SVGs with tools/generate_mcts_walkthrough.py in the qmcpy environment. After this tenth backup the budget is exhausted. The visible route callout uses the declared final recommendation rule, distinct from this iteration’s B-path update. Its link opens the four-decision explanation below.</p>
+<p>UCT selects B at Start and B–0 at B. The 78-minute trip takes the same complete route as iteration 7 with fresh traffic. Back up through the four stored nodes. The budget ends here with Start at 5/10, A at 3/6 and B at 2/4. In iteration 7, B–0–1 was sampled during rollout and its success counted at B–0 and its ancestors. Explicit expansion in iteration 10 starts B–0–1 at 0/0, so only the new simulation counts at this node (now 1/1). The final choice remains rollout-only.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -4980,21 +4556,23 @@ T=78\leq80 \implies R=1
   <div class="tree-component__label" data-label-id="monte-carlo-tree-search" style="--tree-left: 56%; --tree-top: 17%; --tree-align: center;">Monte Carlo<br>Tree Search</div>
 </div>
 
-<p><span class="alert">Searching</span>: which branch deserves the next iteration?</p>
+<p><span class="alert">During search</span></p>
 <ul>
-<li>UCT includes an exploration bonus; after ten iterations, next explore B</li>
+<li>UCT chooses where to simulate next</li>
+<li>With an eleventh iteration, UCT would pick B at Start (<span class="math inline">\(1.259\)</span> vs.&nbsp;<span class="math inline">\(1.119\)</span> for A)</li>
+<li>Both averages are <span class="math inline">\(1/2\)</span>. B has fewer visits and gets the larger exploration bonus</li>
 </ul>
-<p><span class="alert">Acting</span>: which route choice do we recommend after the budget?</p>
-<ul>
-<li>One common rule: choose the <span class="alert">most visited</span> root action — A has 6 visits, B has 4</li>
-<li>In this itinerary example, continue through the most visited children to build a plan</li>
-<li>More iterations can improve the recommendation; a small budget can miss a good route</li>
-</ul>
+<p><span class="alert">After the budget</span></p>
+<ol type="1">
+<li>Start at the root and follow the stored child with the <span class="alert">most visits</span></li>
+<li>Break visit ties by larger <span class="math inline">\(W/N\)</span>, then by earlier action (0 before 1)</li>
+<li>Repeat at the next prefix. If it has no stored child, fill the remaining choices with 0</li>
+</ol>
 <div class="key-point">
-<p><span class="alert">Best-looking so far</span> is useful evidence, not proof of the best possible plan</p>
+<p>The first road in the recommendation is <span class="alert">A with 6 visits</span>, compared with 4 for B</p>
 </div>
 <aside class="notes">
-<p>The final recommendation rule is separate from the rule that allocates simulations. Most-visited child is a common convention, not the only one. At the small tree’s final snapshot both root averages are 1/2, but B has the larger exploration bonus: its score is 1.259 versus A’s 1.119. The next iteration therefore chooses B; the most-visited recommendation chooses A. Neither rule proves which complete route has the best true value. For the companion notebook, apply it at each stored prefix and specify how an unexpanded remainder is completed. This extracts one complete itinerary; its true on-time probability is evaluated only by the independent benchmark. A root average mixes attempted continuations and should not be substituted for that particular itinerary’s probability. In a game or online planning problem one often executes just the root action, observes the new state and searches again; our before-departure itinerary deliberately keeps a fixed plan and samples traffic afterward.</p>
+<p>UCT scores are for allocating future simulations. At Start after iteration 10, A has W/N=3/6 and B has W/N=2/4. Their equal averages leave the exploration bonus to determine which branch a hypothetical iteration 11 would visit. The recommendation uses the existing visit counts and spends no further traffic simulations. The most-visited rule is a convention used in this example and the companion notebook. For a fixed itinerary, apply the rule repeatedly to produce the entire route before departure. In an online problem one can execute the root action, observe the new state and search again.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -5010,45 +4588,48 @@ T=78\leq80 \implies R=1
 <section class="slide level2">
 
 <h3 id="our-route-after-10-simulations">Our route after 10 iterations</h3>
-<p>Choose the <span class="alert">most visited child</span> at each step</p>
-<p>Break ties by larger average return, then by earlier action</p>
+<p>Build the itinerary using the <span class="alert">counts after the tenth backup</span></p>
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th style="text-align: left;">At</th>
-<th style="text-align: left;">Evidence after 10 iterations</th>
-<th style="text-align: left;">Choose</th>
+<th style="text-align: left;">Current prefix</th>
+<th style="text-align: left;">Stored children</th>
+<th style="text-align: left;">Next choice</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Start</td>
-<td style="text-align: left;">A: 6 visits; B: 4 visits</td>
-<td style="text-align: left;">A</td>
+<td style="text-align: left;">A: 6 visits, B: 4 visits</td>
+<td style="text-align: left;">A has more visits</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">A</td>
-<td style="text-align: left;">0: 3 visits; 1: 2 visits</td>
-<td style="text-align: left;">0</td>
+<td style="text-align: left;">A–0: 3 visits, A–1: 2 visits</td>
+<td style="text-align: left;">0 has more visits</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">A–0</td>
-<td style="text-align: left;">Both children: 1 visit, 0 successes</td>
-<td style="text-align: left;">0 (tie rule)</td>
+<td style="text-align: left;">Each child has <span class="math inline">\(W/N=0/1\)</span></td>
+<td style="text-align: left;">0 comes first in a tie</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">A–0–0</td>
-<td style="text-align: left;">Neither final choice is stored</td>
-<td style="text-align: left;">0 (default completion)</td>
+<td style="text-align: left;">No stored child</td>
+<td style="text-align: left;">0 fills the final choice</td>
 </tr>
 </tbody>
 </table>
 <div class="key-point">
 <p>Recommended itinerary: <span class="alert">A–0–0–0</span></p>
 </div>
-<p>Its only simulated trip was late; <span class="alert">more search may change the recommendation</span></p>
+<ul>
+<li>A–0–0–0 was late in its only trial (86 minutes in iteration 5)</li>
+<li>B–0–1–0 was on time in both of its trials (iterations 7 and 10)</li>
+<li>Counts at each <span class="alert">prefix</span> pool trips with different continuations</li>
+</ul>
 <aside class="notes">
-<p>This is the same declared recommendation rule as robust_route in the companion notebook: most visits, then larger empirical mean, then earlier action; use the first available action when no child is stored. The small teaching tree has four decisions, unlike the notebook’s six-segment model. At A–0, both A–0–0 and A–0–1 have W/N=0/1, so both tie breakers reach the earlier action 0. The final 0 is a default completion, not a stored rollout node and not evidence that its return was good. Iteration five sampled A–0–0–0 and returned zero at T=86. Thus this rule can recommend a route whose only trial failed: visits reflect earlier search decisions, not a guarantee of the best complete itinerary. The successful B–0–1–0 trials do not change this explicitly chosen recommendation convention. No further iteration or UCT bonus is used to extract the route.</p>
+<p>At A–0, both A–0–0 and A–0–1 have W/N=0/1. Both ranking criteria tie, so action order decides. At A–0–0, no final action has been stored. The default chooses 0, even though the rollout in iteration 5 previously sampled that same final action. A–0–0–0 is a complete itinerary, while the 6 visits to A include trips with several different routes. Those counts describe where the search spent its budget and do not estimate the on-time probability of A–0–0–0. The two successful trials of B–0–1–0 are also limited evidence. With a larger budget, the chosen route can change. The companion notebook evaluates its recommended itinerary separately using independent exact enumeration of travel-time probabilities.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

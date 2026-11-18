@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 740" role="img" aria-labelledby="title desc">
-<title id="title">Iteration 5: store A–0–0, roll out and back up 0</title>
-<desc id="desc">Iteration 5: store A–0–0, roll out and back up 0. Stored labels give successes W / visits N. root: 3/5; A: 3/4; B: 0/1; A0: 1/2; A1: 1/1; A00: 0/1. Solid edges belong to the stored tree; dashed edges are sampled continuations only, discarded after the rollout. Every stored node in both A and B is shown. Green marks the one newly stored node.</desc>
+<title id="title">Iteration 5: expand A–0–0, roll out and back up 0</title>
+<desc id="desc">Iteration 5: expand A–0–0, roll out and back up 0. Stored labels give successes W / visits N. root: 3/5; A: 3/4; B: 0/1; A0: 1/2; A1: 1/1; A00: 0/1. Solid edges belong to the stored tree; dashed edges are sampled continuations only, discarded after the rollout. Every stored node in both A and B is shown. Green marks the one newly stored node.</desc>
 <defs>
 <marker id="blue" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#1f5a91"/></marker>
 <marker id="gold" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#9a6509"/></marker>
