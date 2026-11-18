@@ -158,10 +158,10 @@ banana valley, GD versus BFGS and actual late GD zigzags; keep these concrete
 curvature/conditioning illustrations in the main lecture.
 
 The November 17 clarity audit moves “Where MCTS is used” directly after the
-first substantive MCTS slide. The UCT formula now has a bullet glossary for
-s, a, N(s), N(s,a), W(s,a), Qbar and c. Start's concrete node/action
-counts appear later beside the six-iteration tree. A new continuation explains
-selective storage, bookkeeping costs, retained return statistics and the optional nature of one-node expansion.
+first substantive MCTS slide. The UCT formula has a bullet glossary for
+s, a, N(s), N(s,a), W(s,a), Qbar and c. Iteration 3's notes contrast
+parent A at 2/2 with child A–0 at 1/1. The rollout explanation covers
+selective storage, bookkeeping costs and retained return statistics.
 Use **MCTS iteration** for one four-phase cycle, **search run** for the whole
 budget, and **rollout** for the temporary continuation. The numbered slide
 titles, SVG accessibility titles and generator use that vocabulary; existing
@@ -175,21 +175,16 @@ score column states “c=1 for this example”; the repeated parameter/color/tie
 legend is removed. Gold identifies the selected score per
 parent; ties use action 0. Separate “Select …” statements were removed.
 The tables carry the per-child W and N values without duplicate bullets;
-parent visit totals remain above them. The next continuation contrasts parent A at 2/2
-with action 0 / child A–0 at 1/1. Iterations 1–2 explicitly bypass UCT while
+parent visit totals remain above them. Iterations 1–2 explicitly bypass UCT while
 an action remains untried. All changed panels pass both lecture-size checks.
 This audit is included in the November 17 checkpoint; instructor walkthrough
 and lecture coverage remain separate. Remote deployment/live verification
 remain pending.
 
-The MCTS walkthrough follows all ten iterations of the four-decision
-teaching tree explicitly. Iterations 3–6 now show A–0, A–1, A–0–0 and
-A–1–0 being added one at a time; every later figure keeps the complete
-stored A subtree visible. Iteration 9 shows the choice of A then A–0,
-new A–0–1, its temporary final rollout and backup through all four stored
-nodes. The diagram/text columns are 52%/44% with a 4% gutter on scored slides;
-unscored walkthrough phases retain 64%/32%. Combined tables and the formula
-reminder use the scoped mcts-score-box styling.
+The November 18 walkthrough uses one slide per iteration, with one tree
+showing the full stored state, the temporary rollout and the backup updates.
+Scored slides use 52%/44% diagram/text columns with a 4% gutter. Iterations
+1–2 use 64%/32%. Prior anchors for split phases open the combined slides.
 
 The One tree-search iteration slide explicitly says to keep the selected
 path and any newly expanded node, discard the rollout suffix, and retain
@@ -211,27 +206,18 @@ assumptions in presenter notes. The illustrative
 c=1 is not a confidence level. UCT score ties favor action 0, and untried action choices are
 declared separately (iteration 10 chooses untried action 1 at B–0).
 Counts and trip times are illustrative, separate from the notebook model.
-The six-iteration snapshot explains why N(A)=5 exceeds its stored children's
-2+2 visits: A's first evaluation preceded child storage. The final
-recommendation uses the same ten-iteration counts. The "Our route
-after 10 iterations" continuation extracts A–0–0–0: most visits, then
-larger mean, then earlier action; use action 0 for an unstored remainder.
-Its only simulated trip was late, so make the limited evidence explicit.
-The final Iteration 10 backup slide also displays the recommended route
-beside the tree, with a direct link to that four-choice explanation.
-Regenerate the 20 SVGs with tools/generate_mcts_walkthrough.py in qmcpy;
-the generator checks UCT choices, all ten single-node expansions, rollout
-nonstorage and complete-tree backup totals. Instructor walkthrough remains
-open; no new lecture coverage is implied. The November 16 deck and live
-watcher rendered successfully. In that earlier version, all 31 MCTS slides
-fit at 1600×1000 and 1280×720, with at least 28 pixels above the footer at
-the smaller size. The deterministic-game
-diagram and explanation now share columns to remove their footer overlap.
-Browser geometry checks confirm node labels fit, images load and the footer
-stays clear. The iteration and UCT slides pass the same review, preserved anchors
-resolve, local assets/links exist, and the browser console is clear. These
-November 16 refinements are validated for this Checkpoint; remote deployment
-and live-site verification remain pending.
+Iteration 10 explicitly stores B–0–1, which iteration 7 sampled temporarily.
+The earlier return is already in the stored ancestor counts. The new node
+starts its own counters in iteration 10. At budget exhaustion, UCT would
+select B for another trial, while the most-visited-child convention starts
+with A (6 visits versus 4). The four-choice table applies visits, average
+return, then action order, with action 0 filling an unstored remainder.
+It shows why the convention recommends A–0–0–0 after its one late trip.
+Regenerate the initial tree and ten iteration SVGs with
+`tools/generate_mcts_walkthrough.py` in qmcpy. The generator checks UCT
+choices, single-node expansions and final counts. The November 18 revision
+passed arithmetic, layout and legacy-link checks locally. Verify the live
+walkthrough and route table once GitHub Pages deploys this checkpoint.
 
 The Applications notebook uses 96 complete plans, an 80-minute
 deadline, 4,096 simulations and 20 retained seeds. Exact probabilities are

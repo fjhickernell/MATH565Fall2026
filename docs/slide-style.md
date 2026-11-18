@@ -204,9 +204,10 @@ Use **rollout** for the temporary continuation beyond the stored tree. Reserve
 evaluating a completed itinerary. Keep numbered walkthrough labels consistent
 with their SVG titles and presenter notes.
 
-Preserve the phase labels Select, Expand, Roll out, and Back up in the worked
-example. Group updating the stored counters and discarding the rollout suffix
-under Back up rather than presenting them as separate phases.
+Give each iteration one slide in the worked example. Show the tree and all
+four phases together using the labels Select, Expand, Roll out, and Back up.
+Include both updating the stored counters and discarding the rollout suffix
+under Back up.
 
 In the worked MCTS trace, score tables use Child, W(s,a), N(s,a), and UCT;
 state each relevant parent visit total above them. The parent is the current

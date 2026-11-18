@@ -2999,6 +2999,7 @@ Source: [Kocsis and Szepesvari (2006)](https://sites.ualberta.ca/~szepesva/paper
 |:---|:---|:---|
 | [AlphaGo and AlphaZero]{.alert} | Legal moves in Go; also chess and shogi for AlphaZero | Win the game |
 | Navigation | Sailing directions under uncertain wind | Reach the destination at low travel cost |
+| Traveling salesperson | Choose the next unvisited city | Short tour through every city and back to start |
 | [AlphaTensor]{.alert} | Steps in a matrix multiplication algorithm | Correct result with fewer scalar multiplications |
 
 :::
@@ -3029,6 +3030,16 @@ that a particular commercial navigation service uses MCTS. Unlike our fixed
 airport itinerary, this planner conditions later actions on the current
 state. State, simulator, return and decision timing must fit the application.
 
+For the traveling salesperson problem, a rollout can finish a partial tour
+by visiting the remaining cities and returning to the start. Shorter tours
+give higher returns. With fixed distances, the randomness is in which
+completion the search samples. Fu, Qiu and Zha use learned guidance to
+improve complete tours through edge exchanges, a different implementation
+from the constructive version in the table. Uniformly completing long tours
+can waste the search budget on poor tours. For the standard TSP, compare
+heuristic results with Lin–Kernighan and use an exact solver such as Concorde
+when an optimality certificate is required.
+
 AlphaTensor (Fawzi et al., 2022) treats matrix multiplication algorithm
 discovery as a game of successive algebraic choices. A neural network
 guides MCTS toward correct tensor decompositions requiring fewer scalar
@@ -3040,6 +3051,8 @@ and algorithm-discovery examples.
 Primary sources: [Silver et al., AlphaGo (2016)](https://doi.org/10.1038/nature16961),
 [Silver et al., AlphaZero (2018)](https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/alphazero-shedding-new-light-on-chess-shogi-and-go/alphazero_preprint.pdf),
 [Kocsis and Szepesvari, UCT (2006)](https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf),
+[Fu, Qiu and Zha, MCTS for TSP (2021)](https://doi.org/10.1609/aaai.v35i8.16916),
+[Concorde and Linkern](https://math.uwaterloo.ca/tsp/concorde/downloads/downloads.htm),
 [Fawzi et al., AlphaTensor (2022)](https://doi.org/10.1038/s41586-022-05172-4).
 :::
 
@@ -3047,6 +3060,7 @@ Primary sources: [Silver et al., AlphaGo (2016)](https://doi.org/10.1038/nature1
 [AlphaGo](https://doi.org/10.1038/nature16961) ·
 [AlphaZero](https://arxiv.org/abs/1712.01815) ·
 [UCT sailing](https://sites.ualberta.ca/~szepesva/papers/ecml06.pdf) ·
+[MCTS for TSP](https://doi.org/10.1609/aaai.v35i8.16916) ·
 [AlphaTensor](https://doi.org/10.1038/s41586-022-05172-4)
 :::
 
@@ -3248,27 +3262,27 @@ they require the corresponding return calculation and state representation.
 
 ---
 
-### Why keep only one new node? {#why-keep-only-one-new-node}
+### Why discard the rollout suffix? {#why-keep-only-one-new-node}
 
-The rollout [evaluates the new node]{.alert} by sampling a possible future
+The full rollout gives [one sampled return]{.alert} for the new route prefix
 
 ::: {.columns}
 ::: {.column width="47%"}
 
-#### Control storage and work
+#### Grow the tree gradually
 
-- Keep at most [one new node]{.alert} per iteration
-- Avoid storing a long suffix with only one observed return
-- Revisited branches gradually gain deeper stored choices
+- Store at most [one new node]{.alert} per iteration
+- Skip allocating a node and counters for each temporary choice
+- Add deeper choices when later iterations expand them
 
 :::
 ::: {.column width="6%"}
 :::
 ::: {.column width="47%"}
 
-#### Keep the outcome's evidence
+#### Keep the rollout's return
 
-- Back up $R$ through the selected path and new node
+- Back up $R$ through every stored node on the path, including the new one
 - Retain successes $W$ and visits $N$
 - Sample a fresh continuation on a later visit
 
@@ -3276,10 +3290,8 @@ The rollout [evaluates the new node]{.alert} by sampling a possible future
 :::
 
 ::: {.key-point}
-Discard the temporary path; [keep its contribution to the stored statistics]{.alert}
+The stored nodes [keep the return]{.alert} from the complete simulated trip
 :::
-
-One-node expansion is a design choice; other MCTS variants can store more
 
 ::: {.notes}
 The rollout suffix is generated and evaluated, so discarding it does not save
@@ -3354,7 +3366,7 @@ so W(s,a) and N(s,a) equal that child's successes and visit count. Counts are ta
 before the current iteration's backup. These are totals and subsets, not
 two independent kinds of sample size. A node's first visit may occur before
 any child is stored, so its count need not equal the sum of stored child
-counts; the later six-iteration snapshot makes this explicit at A.
+counts; iteration 3 shows this at A.
 Visit untried actions before using the formula so no
 division by zero occurs. Rewards are in [0,1]. The following walkthrough
 uses c=1 throughout, two choices at each of four decisions, and constructed
@@ -3395,7 +3407,7 @@ Source: [Kocsis and Szepesvari (2006)](https://sites.ualberta.ca/~szepesva/paper
 
 ---
 
-### Follow one iteration through the tree {#follow-one-simulation-through-the-tree .mcts-walkthrough}
+### A ten-iteration tree search {#follow-one-simulation-through-the-tree .mcts-walkthrough}
 
 ::: {.columns}
 ::: {.column width="64%"}
@@ -3443,7 +3455,7 @@ an unvisited node. A stored node can be an internal prefix, not a complete plan.
 
 ---
 
-### MCTS iteration 1 — expand A {#simulation-1-expand-a .mcts-walkthrough}
+### Iteration 1 — expand A {#simulation-1-expand-a .mcts-walkthrough}
 
 <span id="the-first-simulation"></span>
 
@@ -3516,6 +3528,8 @@ successes in one visit. A was not on the second path and is unchanged.
 
 ### Iteration 3 — expand A–0 {#simulation-3-expand-a0 .mcts-walkthrough}
 
+<span id="node-totals-and-action-totals"></span>
+
 ::: {.columns}
 ::: {.column width="52%"}
 ![](assets/mcts/walkthrough-03a-third.svg){fig-alt="Iteration 3: select A using UCT, store only A–0, sample the dashed suffix and back up return 1; all stored A and B nodes remain visible" width="100%"}
@@ -3526,7 +3540,7 @@ successes in one visit. A was not on the second path and is unchanged.
 
 $c=1$ for this example
 
-[Before selection]{.alert}: $N(\text{Start})=2$
+[Select]{.alert} (before backup) $N(\text{Start})=2$
 
 ::: {.mcts-score-box}
 \begin{equation*}
@@ -3540,7 +3554,6 @@ $c=1$ for this example
 | B | 0 | 1 | 0.833 |
 :::
 
-
 [Expand]{.alert}: A–0, using untried 0<br>
 [Roll out]{.alert}: 1, 0, $T=78$, $R=1$<br>
 [Back up]{.alert}: update Start, A, A–0<br>
@@ -3550,57 +3563,16 @@ and discard the dashed suffix
 :::
 
 ::: {.notes}
-The first rollout sampled A–0 but did not store it. This explicit expansion now stores A–0 at 0/0 before simulation. Its successful return is backed up through Start, A and A–0. A–0–1 and A–0–1–0 are temporary again. Root UCT uses N=2, A=1/1 and B=0/1.
+Root UCT uses N=2, A=1/1 and B=0/1. Iteration 1's rollout passed through A–0,
+but only A was stored then. Expansion now creates A–0 at 0/0. After backup,
+A has W(A)=2 successes in N(A)=2 visits, while its stored action 0 has
+W(A,0)=1 success in N(A,0)=1 visit. The earlier rollout contributes only
+to the statistics of nodes that were stored when it ran.
 The diagram shows counts after backup. Green identifies the one node added
 by expansion; the dashed suffix records the sampled continuation that is
 then discarded. Every next iteration restarts at Start. Untried actions
 are expanded before UCT is applied among stored children; UCT score ties
 favor 0. An untried action can be chosen in any declared order.
-:::
-
----
-
-### Node totals and action totals {#node-totals-and-action-totals .mcts-walkthrough}
-
-::: {.columns}
-::: {.column width="64%"}
-![](assets/mcts/walkthrough-03a-third.svg){fig-alt="After iteration 3, parent A has two successes and two visits; its newly stored child A–0 has one success and one visit" width="100%"}
-:::
-::: {.column width="4%"}
-:::
-::: {.column width="32%"}
-
-After [Iteration 3's backup]{.alert}
-
-At parent $s=A$,
-
-- $W(s)=2$: successes at A
-- $N(s)=2$: visits to A
-
-For action $a=0$ from A,
-
-- $W(s,a)=1$: successes through stored A–0
-- $N(s,a)=1$: visits through stored A–0
-
-These are $W(\text{A–0})$ and $N(\text{A–0})$ in the [child box]{.alert}
-
-A's first success counted before A–0 was stored
-
-:::
-:::
-
-::: {.notes}
-This is the same after-backup snapshot as the preceding iteration-3 slide.
-W(s) and N(s) count returns backed up to the current node s while it is
-stored. W(s,a) and N(s,a) count returns backed up through its stored action a.
-In this prefix tree the child has exactly one parent, so the action's counters
-can be stored on that child: W(A,0)=W(A–0)=1 and N(A,0)=N(A–0)=1.
-The first iteration already credited A with one success and one visit before
-any child was stored. The third iteration adds another success/visit to A and
-starts A–0's counters at 1/1. The first rollout happened to pass through A–0,
-but it created no stored A–0 counter, so that earlier visit is not reassigned.
-There is no separate globally defined W(a): action 0 can leave many different
-parents, which is why action statistics specify both s and a.
 :::
 
 ---
@@ -3615,7 +3587,7 @@ parents, which is why action statistics specify both s and a.
 :::
 ::: {.column width="44%"}
 
-[Before selection]{.alert}: $N(\text{Start})=3$
+[Select]{.alert} (before backup) $N(\text{Start})=3$
 
 ::: {.mcts-score-box}
 \begin{equation*}
@@ -3628,7 +3600,6 @@ parents, which is why action statistics specify both s and a.
 | A | 2 | 2 | <span class="uct-selected" aria-label="Selected score 1.741">1.741</span> |
 | B | 0 | 1 | 1.048 |
 :::
-
 
 [Expand]{.alert}: A–1, using untried 1<br>
 [Roll out]{.alert}: 0, 0, $T=79$, $R=1$<br>
@@ -3659,7 +3630,7 @@ favor 0. An untried action can be chosen in any declared order.
 :::
 ::: {.column width="44%"}
 
-[Before selection]{.alert}: $N(\text{Start})=4$, $N(A)=3$
+[Select]{.alert} (before backup) $N(\text{Start})=4$, $N(A)=3$
 
 ::: {.mcts-score-box}
 \begin{equation*}
@@ -3674,7 +3645,6 @@ favor 0. An untried action can be chosen in any declared order.
 | A–0 | 1 | 1 | <span class="uct-selected" aria-label="Selected score 2.048">2.048</span> |
 | A–1 | 1 | 1 | 2.048 |
 :::
-
 
 [Expand]{.alert}: A–0–0, using untried 0<br>
 [Roll out]{.alert}: 0, $T=86$, $R=0$<br>
@@ -3697,6 +3667,8 @@ favor 0. An untried action can be chosen in any declared order.
 
 ### Iteration 6 — expand A–1–0 {#simulation-6-expand-a10 .mcts-walkthrough}
 
+<span id="after-six-simulations"></span>
+
 ::: {.columns}
 ::: {.column width="52%"}
 ![](assets/mcts/walkthrough-03d-sixth.svg){fig-alt="Iteration 6: select A using UCT, store only A–1–0, sample the dashed suffix and back up return 0; all stored A and B nodes remain visible" width="100%"}
@@ -3705,7 +3677,7 @@ favor 0. An untried action can be chosen in any declared order.
 :::
 ::: {.column width="44%"}
 
-[Before selection]{.alert}: $N(\text{Start})=5$, $N(A)=4$
+[Select]{.alert} (before backup) $N(\text{Start})=5$, $N(A)=4$
 
 ::: {.mcts-score-box}
 \begin{equation*}
@@ -3720,7 +3692,6 @@ favor 0. An untried action can be chosen in any declared order.
 | A–0 | 1 | 2 | 1.333 |
 | A–1 | 1 | 1 | <span class="uct-selected" aria-label="Selected score 2.177">2.177</span> |
 :::
-
 
 [Expand]{.alert}: A–1–0, using untried 0<br>
 [Roll out]{.alert}: 0, $T=85$, $R=0$<br>
@@ -3741,53 +3712,27 @@ favor 0. An untried action can be chosen in any declared order.
 
 ---
 
-### After six iterations {#after-six-simulations .mcts-walkthrough}
+### Iteration 7 — expand B–0 {#iteration-7 .mcts-walkthrough}
 
-::: {.columns}
-::: {.column width="64%"}
-![](assets/mcts/walkthrough-03-snapshot.svg){fig-alt="After six iterations Start is 3/6, A is 3/5 with every stored descendant visible, and B is 0/1 with no children stored" width="100%"}
-:::
-::: {.column width="4%"}
-:::
-::: {.column width="32%"}
-
-At $s=\text{Start}$,
-
-- $N(s)=6$: all visits to Start
-- $N(s,A)=N(A)=5$: five chose A
-- $N(s,B)=N(B)=1$: one chose B
-
-Likewise, $W(s,A)=W(A)=3$ successes
-
-A’s first visit preceded child storage: $5=1+2+2$
-
-Next: compare root scores and select [B]{.alert}
-
-:::
-:::
-
-::: {.notes}
-All six iterations have now been shown, using c=1 throughout. The stored
-A subtree remains fully visible on every subsequent figure. A's first root
-expansion returned one before it had a stored child, so its 3/5 need not
-equal the sum of the child counts 1/2 and 1/2. Each grandchild has 0/1.
-B's initial failed rollout stored only B; B still has no stored children.
-The next root scores are A=1.199 and B=1.339, so iteration seven selects B.
-:::
-
----
-
-### Iteration 7 — select {#simulation-7-select .mcts-walkthrough}
+<span id="simulation-7-select"></span>
+<span id="simulation-7-expand"></span>
+<span id="simulation-7-roll-out"></span>
+<span id="simulation-7-back-up"></span>
 
 ::: {.columns}
 ::: {.column width="52%"}
-![](assets/mcts/walkthrough-04-select.svg){fig-alt="Select the stored edge from Start to B, leaving all counts unchanged" width="100%"}
+![](assets/mcts/walkthrough-07-seventh.svg){fig-alt="Iteration 7: expand B–0, sample the dashed suffix to complete B–0–1–0, and back up return 1 through Start, B, B–0. The stored tree shows the updated counts." width="100%"}
+
+One path down resembles [depth-first search]{.alert}<br>
+[Breadth-first search]{.alert} grows level by level<br>
+Here A–0–0 (depth 3) came before B–0 (depth 2)
+
 :::
 ::: {.column width="4%"}
 :::
 ::: {.column width="44%"}
 
-[Before selection]{.alert}: $N(\text{Start})=6$
+[Select]{.alert} (before backup) $N(\text{Start})=6$
 
 ::: {.mcts-score-box}
 \begin{equation*}
@@ -3801,143 +3746,45 @@ The next root scores are A=1.199 and B=1.339, so iteration seven selects B.
 | B | 0 | 1 | <span class="uct-selected" aria-label="Selected score 1.339">1.339</span> |
 :::
 
-
-Stop at B: both next actions are [untried]{.alert}
-
-:::
-:::
-
-::: {.notes}
-The root pairs show W(Start,a) and N(Start,a), with parent N(Start)=6.
-The UCT reminder uses c=1 and the natural logarithm. Although A has the larger observed average, B has been tried only once.
-Both root actions have been visited, so the UCT formula is defined.
-The highlighted solid edge is selection; no new node or visit is added yet.
-Stop at B because it has untried next actions.
-:::
-
----
-
-### Iteration 7 — expand {#simulation-7-expand .mcts-walkthrough}
-
-::: {.columns}
-::: {.column width="64%"}
-![](assets/mcts/walkthrough-05-expand.svg){fig-alt="Keep Start and B selected and add just B–0 as a new stored node with zero successes and zero visits" width="100%"}
-:::
-::: {.column width="4%"}
-:::
-::: {.column width="32%"}
-
-B has two untried choices: 0 and 1
-
-Choose 0 and [store B–0]{.alert}
-
-- Exactly one new stored node
-- Initially $W=0$, $N=0$
-- No average yet
-
-Stop expanding for this iteration
-
-The complete route still needs [two choices]{.alert}
+[Expand]{.alert}: B–0, untried 0 at B<br>
+[Roll out]{.alert}: 1, 0, $T=76$, $R=1$<br>
+[Back up]{.alert}: update Start, B, B–0<br>
+and discard the dashed suffix
 
 :::
 :::
 
 ::: {.notes}
-The untried choice may be sampled uniformly, as in the notebook; take 0 in
-this trace. A W/N label of 0/0 records counts, not a value estimate.
-Expansion stores B–0 before its first simulated return. Counts change at
-backup, not when the edge is selected or the new node is allocated.
+Start selects B in iteration 7. B's average is 0, but its exploration bonus
+more than offsets A's higher average. B–0 starts at 0/0 and gets its first
+success on the 76-minute trip. Start reaches 4/7 and B reaches 1/2.
+At depths measured from Start, A–0–0 is at depth 3 and was stored in
+iteration 5. Breadth-first expansion would have stored all depth-2
+children before any depth-3 child. A depth-first traversal completes a
+subtree before moving to its sibling. Here each iteration starts at Start,
+and the updated scores guide its path. The depth reached by a temporary
+rollout is separate from the depth of the new stored node.
+The box labels show counts before and after backup. The green node stays
+in the tree, and the gray dashed suffix is discarded.
 :::
 
 ---
 
-### Iteration 7 — roll out {#simulation-7-roll-out .mcts-walkthrough}
+### Iteration 8 — expand B–1 {#iteration-8 .mcts-walkthrough}
 
-::: {.columns}
-::: {.column width="64%"}
-![](assets/mcts/walkthrough-06-rollout.svg){fig-alt="From stored B–0, sample dashed continuations B–0–1 and B–0–1–0; simulate 76 minutes and return one, without changing any stored counts yet" width="100%"}
-:::
-::: {.column width="4%"}
-:::
-::: {.column width="32%"}
-
-From B–0, randomly choose [1 then 0]{.alert}
-
-Complete route: B–0–1–0
-
-Now simulate fresh traffic
-
-\begin{equation*}
-T=76\leq80 \implies R=1
-\end{equation*}
-
-Dashed nodes are [sampled only]{.alert}
-
-Stored counts have not changed yet
-
-:::
-:::
-
-::: {.notes}
-First sample the two remaining route decisions, then draw traffic for that
-complete itinerary. These are two distinct sources of randomness.
-B–0–1 and B–0–1–0 are not added to the stored tree in this iteration.
-We retain only the return for backup; the new stored B–0 still reads 0/0.
-:::
-
----
-
-### Iteration 7 — back up {#simulation-7-back-up .mcts-walkthrough}
-
-::: {.columns}
-::: {.column width="64%"}
-![](assets/mcts/walkthrough-07-backup.svg){fig-alt="Back up return one along the stored path: B–0 goes 0/0 to 1/1, B goes 0/1 to 1/2 and Start goes 3/6 to 4/7; A stays 3/5 and rollout nodes disappear" width="100%"}
-:::
-::: {.column width="4%"}
-:::
-::: {.column width="32%"}
-
-[Back up $R=1$]{.alert}: update the stored path
-
-\begin{align*}
-N&\leftarrow N+1\\
-W&\leftarrow W+1
-\end{align*}
-
-| Node | Before | After |
-|:---|---:|---:|
-| B–0 | 0/0 | 1/1 |
-| B | 0/1 | 1/2 |
-| Start | 3/6 | 4/7 |
-
-[Discard]{.alert} the dashed suffix
-
-A and its subtree are unchanged
-
-:::
-:::
-
-::: {.notes}
-The arrows now point upward along the same stored edges. Each stored node
-on the path receives exactly one visit and one success. There are no
-intermediate rewards or discounting in this toy, so R is unchanged.
-The rollout-only nodes have disappeared. B–0's single success does not prove
-that either this partial plan or the completed route always succeeds.
-:::
-
----
-
-### Iteration 8 — select and expand {#simulation-8-select-and-expand .mcts-walkthrough}
+<span id="simulation-8-select-and-expand"></span>
+<span id="simulation-8-an-unsuccessful-rollout"></span>
+<span id="simulation-8-back-up-zero"></span>
 
 ::: {.columns}
 ::: {.column width="52%"}
-![](assets/mcts/walkthrough-08-failure-expand.svg){fig-alt="UCT selects B again; B has an untried choice 1, so add B–1 at 0/0 while B–0 stays 1/1" width="100%"}
+![](assets/mcts/walkthrough-08-eighth.svg){fig-alt="Iteration 8: expand B–1, sample the dashed suffix to complete B–1–0–0, and back up return 0 through Start, B, B–1. The stored tree shows the updated counts." width="100%"}
 :::
 ::: {.column width="4%"}
 :::
 ::: {.column width="44%"}
 
-[Before selection]{.alert}: $N(\text{Start})=7$
+[Select]{.alert} (before backup) $N(\text{Start})=7$
 
 ::: {.mcts-score-box}
 \begin{equation*}
@@ -3951,107 +3798,38 @@ that either this partial plan or the completed route always succeeds.
 | B | 1 | 2 | <span class="uct-selected" aria-label="Selected score 1.486">1.486</span> |
 :::
 
-
-Stop at B: choice 1 is [untried]{.alert}<br>
-[Expand]{.alert}: B–1 before revisiting B–0
-
-:::
-:::
-
-::: {.notes}
-N(Start)=7. A has 3/5 and B has 1/2, giving the displayed UCT scores.
-Do not immediately score B–0 just because it has returned one: B still has
-an untried action. Selection stops at B, then expansion adds B–1.
-:::
-
----
-
-### Iteration 8 — an unsuccessful rollout {#simulation-8-an-unsuccessful-rollout .mcts-walkthrough}
-
-::: {.columns}
-::: {.column width="64%"}
-![](assets/mcts/walkthrough-09-failure-rollout.svg){fig-alt="From new B–1, sample 0 then 0 to form route B–1–0–0; the 86-minute trip returns zero, with stored counts still unchanged" width="100%"}
-:::
-::: {.column width="4%"}
-:::
-::: {.column width="32%"}
-
-From B–1, randomly choose [0 then 0]{.alert}
-
-Complete route: B–1–0–0
-
-Simulate fresh traffic
-
-\begin{equation*}
-T=86>80 \implies R=0
-\end{equation*}
-
-One return for this iteration
-
-Still only one new stored node
+[Expand]{.alert}: B–1, untried 1 at B<br>
+[Roll out]{.alert}: 0, 0, $T=86$, $R=0$<br>
+[Back up]{.alert}: update Start, B, B–1<br>
+and discard the dashed suffix
 
 :::
 :::
 
 ::: {.notes}
-This is a sampled failure, not a proof that this route always fails.
-The selected/expanded stored path is Start, B, B–1; the remaining two nodes
-are rollout-only. As with the successful trial, update nothing until backup.
+UCT returns to B. Its untried action 1 takes precedence over its stored
+action 0. The 86-minute trip adds one visit to each stored node on the
+path. Their success counts remain the same, and B–0 stays at 1/1.
+The box labels show counts before and after backup. The green node stays
+in the tree, and the gray dashed suffix is discarded.
 :::
 
 ---
 
-### Iteration 8 — back up zero {#simulation-8-back-up-zero .mcts-walkthrough}
+### Iteration 9 — expand A–0–1 {#iteration-9 .mcts-walkthrough}
 
-::: {.columns}
-::: {.column width="64%"}
-![](assets/mcts/walkthrough-10-failure-backup.svg){fig-alt="Back up zero: B–1 goes 0/0 to 0/1, B goes 1/2 to 1/3 and Start goes 4/7 to 4/8; A and B–0 remain unchanged" width="100%"}
-:::
-::: {.column width="4%"}
-:::
-::: {.column width="32%"}
-
-[Back up $R=0$]{.alert}: update the stored path
-
-\begin{align*}
-N&\leftarrow N+1\\
-W&\leftarrow W+0
-\end{align*}
-
-| Node | Before | After |
-|:---|---:|---:|
-| B–1 | 0/0 | 0/1 |
-| B | 1/2 | 1/3 |
-| Start | 4/7 | 4/8 |
-
-[Discard]{.alert} the dashed suffix
-
-A [failure still counts]{.alert} as a visit
-
-:::
-:::
-
-::: {.notes}
-B's observed mean falls from 1/2 to 1/3 even though its success count does
-not change. B–0 is a sibling of the expanded node, not an ancestor, so its
-1/1 is unchanged. A and its descendants are also untouched.
-:::
-
----
-
-### Iteration 9 — select A and expand {#simulation-9-select-a-and-expand .mcts-walkthrough}
-
-<span id="simulation-9-briefly-return-to-a"></span>
+<span id="simulation-9-select-a-and-expand"></span>
+<span id="simulation-9-back-up-zero-in-a"></span>
 
 ::: {.columns}
 ::: {.column width="52%"}
-![](assets/mcts/walkthrough-11a-a-rollout.svg){fig-alt="Iteration nine: root UCT selects A, tied scores at A select A–0, expansion keeps new A–0–1 at 0/0, and the last choice 0 is a temporary rollout; counts have not changed" width="100%"}
+![](assets/mcts/walkthrough-09-ninth.svg){fig-alt="Iteration 9: expand A–0–1, sample the dashed suffix to complete A–0–1–0, and back up return 0 through Start, A, A–0, A–0–1. The stored tree shows the updated counts." width="100%"}
 :::
 ::: {.column width="4%"}
 :::
 ::: {.column width="44%"}
 
-[Before selection]{.alert}: $N(\text{Start})=8$, $N(A)=5$
+[Select]{.alert} (before backup) $N(\text{Start})=8$, $N(A)=5$
 
 ::: {.mcts-score-box}
 \begin{equation*}
@@ -4067,76 +3845,42 @@ not change. B–0 is a sibling of the expanded node, not an ancestor, so its
 | A–1 | 1 | 2 | 1.397 |
 :::
 
-
-At A–0, choice 1 is [untried]{.alert}<br>
-[Expand]{.alert}: store A–0–1 at 0/0<br>
-[Roll out]{.alert}: 0, $T=84$, $R=0$
-
-:::
-:::
-
-::: {.notes}
-At A, N=5 and both A–0 and A–1 have 1/2. Their UCT scores are both
-0.5+sqrt(log(5)/2)=1.397. Break the tie in favor of action 0. A–0 already
-stores A–0–0, but action 1 is untried, so selection stops and expansion
-adds A–0–1. It was rollout-only in iterations one and three; those earlier
-visits do not populate its counters. Sample only the final choice 0 and
-fresh traffic, obtaining an illustrative 84-minute trip. No counter changes
-until backup. Every stored A node is visible, just as on the B side.
-:::
-
----
-
-### Iteration 9 — back up zero in A {#simulation-9-back-up-zero-in-a .mcts-walkthrough}
-
-::: {.columns}
-::: {.column width="64%"}
-![](assets/mcts/walkthrough-11-intervening.svg){fig-alt="Back up zero through Start, A, A–0 and new A–0–1: their counts become 4/9, 3/6, 1/3 and 0/1; discard rollout-only A–0–1–0; all other stored nodes remain unchanged" width="100%"}
-:::
-::: {.column width="4%"}
-:::
-::: {.column width="32%"}
-
-[Back up]{.alert}: update the stored path
-
-| Node | Before | After |
-|:---|---:|---:|
-| A–0–1 | 0/0 | 0/1 |
-| A–0 | 1/2 | 1/3 |
-| A | 3/5 | 3/6 |
-| Start | 4/8 | 4/9 |
-
-[Keep]{.alert} A–0–1 despite failure
-
-[Discard]{.alert} only A–0–1–0
-
-B and the other A nodes stay unchanged
-
-Next: restart at Start
+[Expand]{.alert}: A–0–1, untried 1 at A–0<br>
+[Roll out]{.alert}: 0, $T=84$, $R=0$<br>
+[Back up]{.alert}: update Start, A, A–0, A–0–1<br>
+and discard the dashed suffix
 
 :::
 :::
 
 ::: {.notes}
-Backup increments visits even when R=0. A–0–1 stays stored; the final
-rollout-only node disappears. Preserve the entire A subtree in subsequent
-views. This intervening A visit is required by UCT with c=1; iteration ten
-then selects B. The generator updates all four stored path nodes explicitly.
+UCT selects A at Start. At A the two UCT scores tie, so action 0 wins
+by the trace's ordering. Expand the remaining action 1 at A–0. The 84-minute
+trip takes the same complete route as iterations 1 and 3 with fresh traffic.
+The box labels show counts before and after backup. The green node stays
+in the tree, and the gray dashed suffix is discarded.
 :::
 
 ---
 
-### Iteration 10 — select farther down {#simulation-10-select-farther-down .mcts-walkthrough}
+### Iteration 10 — expand B–0–1 {#iteration-10 .mcts-walkthrough}
+
+<span id="simulation-10-select-farther-down"></span>
+<span id="simulation-10-expand-deeper-and-roll-out"></span>
+<span id="simulation-10-back-up-the-longer-path"></span>
 
 ::: {.columns}
 ::: {.column width="52%"}
-![](assets/mcts/walkthrough-12-deeper-select.svg){fig-alt="At Start, select B using scores 1.189 versus A's 1.105; at B, select stored B–0 using 2.048 versus B–1's 1.048; counts have not changed" width="100%"}
+![](assets/mcts/walkthrough-10-tenth.svg){fig-alt="Iteration 10: expand B–0–1, sample the dashed suffix to complete B–0–1–0, and back up return 1 through Start, B, B–0, B–0–1. The stored tree shows the updated counts." width="100%"}
+
+[B–0–1]{.alert} was rollout-only in iteration 7 and becomes a stored node here
+
 :::
 ::: {.column width="4%"}
 :::
 ::: {.column width="44%"}
 
-[Before selection]{.alert}: $N(\text{Start})=9$, $N(B)=3$
+[Select]{.alert} (before backup) $N(\text{Start})=9$, $N(B)=3$
 
 ::: {.mcts-score-box}
 \begin{equation*}
@@ -4152,180 +3896,88 @@ then selects B. The generator updates all four stored path nodes explicitly.
 | B–1 | 0 | 1 | 1.048 |
 :::
 
-
-Stop at B–0: untried actions remain
+[Expand]{.alert}: B–0–1, untried 1 at B–0<br>
+[Roll out]{.alert}: 0, $T=78$, $R=1$<br>
+[Back up]{.alert}: update Start, B, B–0, B–0–1<br>
+and discard the dashed suffix
 
 :::
 :::
 
 ::: {.notes}
-At Start, A has 3/6 and B has 1/3. At B, B–0 has 1/1 and B–1 has 0/1.
-Use N(B)=3 inside B's logarithm, not the root count nine.
-The two child visits sum to two rather than three because B's initial
-failed rollout happened before either child was stored. Thus B=1/3 is
-consistent with child counts 1/1 and 0/1. Both B actions have been tried,
-so selection now traverses an additional stored edge before expansion.
-Stop at B–0, whose two next choices remain untried.
+UCT selects B at Start and B–0 at B. The 78-minute trip takes the same
+complete route as iteration 7 with fresh traffic. Back up through the four
+stored nodes. The budget ends here with Start at 5/10, A at 3/6 and B at 2/4.
+In iteration 7, B–0–1 was sampled during rollout and its success counted
+at B–0 and its ancestors. Explicit expansion in iteration 10 starts
+B–0–1 at 0/0, so only the new simulation counts at this node (now 1/1).
+The final choice remains rollout-only.
 :::
 
 ---
-
-### Iteration 10 — expand deeper and roll out {#simulation-10-expand-deeper-and-roll-out .mcts-walkthrough}
-
-::: {.columns}
-::: {.column width="64%"}
-![](assets/mcts/walkthrough-13-deeper-rollout.svg){fig-alt="After selecting Start to B to B–0, store new B–0–1 at 0/0; sample only the last choice 0, simulate route B–0–1–0 in 78 minutes and return one" width="100%"}
-:::
-::: {.column width="4%"}
-:::
-::: {.column width="32%"}
-
-At B–0: both next choices are [untried]{.alert}
-
-Choose 1 here; [store B–0–1]{.alert}
-
-[Roll out]{.alert}: sample the final choice 0
-
-Complete route: B–0–1–0
-
-\begin{equation*}
-T=78\leq80 \implies R=1
-\end{equation*}
-
-The earlier rollout did [not store]{.alert} B–0–1
-
-Now selection goes deeper and the rollout is shorter
-
-:::
-:::
-
-::: {.notes}
-B–0–1 was only a dashed sampled prefix in iteration seven. It is stored
-for the first time now, by this explicit expansion. Either action at B–0
-is untried; choose 1 here as a declared expansion choice, not a UCT score
-comparison. Do not silently retain
-all rollout nodes between iterations. Expansion still adds exactly one node.
-Iteration seven sampled two remaining decisions; this one samples only one.
-The completed route happens to be the same B–0–1–0, but fresh traffic gives
-78 rather than 76 minutes. The return could also have differed.
-:::
-
----
-
-### Iteration 10 — back up the longer path {#simulation-10-back-up-the-longer-path .mcts-walkthrough}
-
-::: {.columns}
-::: {.column width="64%"}
-![](assets/mcts/walkthrough-14-deeper-backup.svg){fig-alt="Back up one along four stored nodes: B–0–1 becomes 1/1, B–0 becomes 2/2, B becomes 2/4 and Start becomes 5/10; A and B–1 remain unchanged" width="100%"}
-:::
-::: {.column width="4%"}
-:::
-::: {.column width="32%"}
-
-[Back up $R=1$]{.alert}: update four stored nodes
-
-| Node | Before | After |
-|:---|---:|---:|
-| B–0–1 | 0/0 | 1/1 |
-| B–0 | 1/1 | 2/2 |
-| B | 1/3 | 2/4 |
-| Start | 4/9 | 5/10 |
-
-[Discard]{.alert} B–0–1–0
-
-A and B–1 stay unchanged
-
-::: {.key-point}
-Budget: 10 iterations<br>
-Recommended route:<br>
-[A–0–0–0]{.alert}
-:::
-
-[Why this route?](#our-route-after-10-simulations)
-
-:::
-:::
-
-::: {.notes}
-The same backup rule works on a longer stored path. The final stored tree
-has Start=5/10, A=3/6, B=2/4, B–0=2/2, B–1=0/1 and B–0–1=1/1.
-At B–0, the first successful rollout preceded storage of any child, so its
-2/2 need not equal the sum of its children's 1/1. The leaf B–0–1–0 remains
-rollout-only and is not stored. The generator checks the UCT choices,
-backup totals and final counts; regenerate all SVGs with
-tools/generate_mcts_walkthrough.py in the qmcpy environment.
-After this tenth backup the budget is exhausted. The visible route callout
-uses the declared final recommendation rule, distinct from this iteration's
-B-path update. Its link opens the four-decision explanation below.
-:::
 
 ## From search to a decision {.tree-marker-slide tree-marker="monte-carlo-tree-search"}
 
-[Searching]{.alert}: which branch deserves the next iteration?
+[During search]{.alert}
 
-- UCT includes an exploration bonus; after ten iterations, next explore B
+- UCT chooses where to simulate next
+- With an eleventh iteration, UCT would pick B at Start ($1.259$ vs. $1.119$ for A)
+- Both averages are $1/2$. B has fewer visits and gets the larger exploration bonus
 
-[Acting]{.alert}: which route choice do we recommend after the budget?
+[After the budget]{.alert}
 
-- One common rule: choose the [most visited]{.alert} root action — A has 6 visits, B has 4
-- In this itinerary example, continue through the most visited children to build a plan
-- More iterations can improve the recommendation; a small budget can miss a good route
+1. Start at the root and follow the stored child with the [most visits]{.alert}
+2. Break visit ties by larger $W/N$, then by earlier action (0 before 1)
+3. Repeat at the next prefix. If it has no stored child, fill the remaining choices with 0
 
 ::: {.key-point}
-[Best-looking so far]{.alert} is useful evidence, not proof of the best possible plan
+The first road in the recommendation is [A with 6 visits]{.alert}, compared with 4 for B
 :::
 
 ::: {.notes}
-The final recommendation rule is separate from the rule that allocates
-simulations. Most-visited child is a common convention, not the only one.
-At the small tree's final snapshot both root averages are 1/2, but B has
-the larger exploration bonus: its score is 1.259 versus A's 1.119.
-The next iteration therefore chooses B; the most-visited recommendation
-chooses A. Neither rule proves which complete route has the best true value.
-For the companion notebook, apply it at each stored prefix and specify how an
-unexpanded remainder is completed. This extracts one complete itinerary;
-its true on-time probability is evaluated only by the independent benchmark.
-A root average mixes attempted continuations and should not be substituted
-for that particular itinerary's probability. In a game or online planning
-problem one often executes just the root action, observes the new state and
-searches again; our before-departure itinerary deliberately keeps a fixed
-plan and samples traffic afterward.
+UCT scores are for allocating future simulations. At Start after iteration
+10, A has W/N=3/6 and B has W/N=2/4. Their equal averages leave the
+exploration bonus to determine which branch a hypothetical iteration 11
+would visit. The recommendation uses the existing visit counts and spends
+no further traffic simulations. The most-visited rule is a convention
+used in this example and the companion notebook. For a fixed itinerary,
+apply the rule repeatedly to produce the entire route before departure.
+In an online problem one can execute the root action, observe the new
+state and search again.
 :::
 
 ---
 
 ### Our route after 10 iterations {#our-route-after-10-simulations}
 
-Choose the [most visited child]{.alert} at each step
+Build the itinerary using the [counts after the tenth backup]{.alert}
 
-Break ties by larger average return, then by earlier action
-
-| At | Evidence after 10 iterations | Choose |
+| Current prefix | Stored children | Next choice |
 |:---|:---|:---|
-| Start | A: 6 visits; B: 4 visits | A |
-| A | 0: 3 visits; 1: 2 visits | 0 |
-| A–0 | Both children: 1 visit, 0 successes | 0 (tie rule) |
-| A–0–0 | Neither final choice is stored | 0 (default completion) |
+| Start | A: 6 visits, B: 4 visits | A has more visits |
+| A | A–0: 3 visits, A–1: 2 visits | 0 has more visits |
+| A–0 | Each child has $W/N=0/1$ | 0 comes first in a tie |
+| A–0–0 | No stored child | 0 fills the final choice |
 
 ::: {.key-point}
 Recommended itinerary: [A–0–0–0]{.alert}
 :::
 
-Its only simulated trip was late; [more search may change the recommendation]{.alert}
+- A–0–0–0 was late in its only trial (86 minutes in iteration 5)
+- B–0–1–0 was on time in both of its trials (iterations 7 and 10)
+- Counts at each [prefix]{.alert} pool trips with different continuations
 
 ::: {.notes}
-This is the same declared recommendation rule as robust_route in the
-companion notebook: most visits, then larger empirical mean, then earlier
-action; use the first available action when no child is stored. The small
-teaching tree has four decisions, unlike the notebook's six-segment model.
-At A–0, both A–0–0 and A–0–1 have W/N=0/1, so both tie breakers reach
-the earlier action 0. The final 0 is a default completion, not a stored
-rollout node and not evidence that its return was good. Iteration five
-sampled A–0–0–0 and returned zero at T=86. Thus this rule can recommend a
-route whose only trial failed: visits reflect earlier search decisions,
-not a guarantee of the best complete itinerary. The successful B–0–1–0
-trials do not change this explicitly chosen recommendation convention.
-No further iteration or UCT bonus is used to extract the route.
+At A–0, both A–0–0 and A–0–1 have W/N=0/1. Both ranking criteria tie,
+so action order decides. At A–0–0, no final action has been stored. The
+default chooses 0, even though the rollout in iteration 5 previously sampled
+that same final action. A–0–0–0 is a complete itinerary, while the 6 visits
+to A include trips with several different routes. Those counts describe
+where the search spent its budget and do not estimate the on-time
+probability of A–0–0–0. The two successful trials of B–0–1–0 are also
+limited evidence. With a larger budget, the chosen route can change.
+The companion notebook evaluates its recommended itinerary separately
+using independent exact enumeration of travel-time probabilities.
 :::
 
 ---

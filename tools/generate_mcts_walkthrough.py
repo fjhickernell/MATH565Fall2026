@@ -71,7 +71,7 @@ def edge(parent, child, color=GRAY, dashed=False, reverse=False):
     )
 
 
-def figure(name, title, tree, *, selected=(), new=None, rollout=(),
+def figure(name, title, tree, *, new=None, rollout=(),
            result=None, minutes=None, updated=(), before=None):
     assert set(tree).isdisjoint(rollout), "Rollout-only nodes must not be stored"
     assert new is None or new in tree
@@ -103,17 +103,13 @@ def figure(name, title, tree, *, selected=(), new=None, rollout=(),
         if node == "root":
             continue
         parent = parent_of(node)
-        color = GOLD if node in selected else BLUE
-        if node == new:
-            color = GREEN
-        if node in updated:
-            color = GOLD
+        color = GOLD if node in updated else BLUE
         svg.append(edge(parent, node, color, reverse=node in updated))
     for node in rollout:
         svg.append(edge(parent_of(node), node, GRAY, dashed=True))
     for node, stats in tree.items():
         x, y = POSITIONS[node]
-        color = GOLD if node in selected or node in updated else BLUE
+        color = GOLD if node in updated else BLUE
         fill = "#fff7e7" if color == GOLD else "white"
         if node == new:
             color, fill = GREEN, "#edf8f2"
@@ -133,11 +129,6 @@ def figure(name, title, tree, *, selected=(), new=None, rollout=(),
                    'stroke-dasharray="9 7"/>')
         svg.append(text(x, y - 5, "–".join(node), 25))
         svg.append(text(x, y + 25, "sampled only", 20))
-    if "B" in tree and "B0" not in tree and not rollout:
-        svg.append(text(750, 300, "Next choices: 0 or 1", 24))
-        svg.append(text(750, 334, "neither stored yet", 24))
-    elif "B0" in tree and "B1" not in tree:
-        svg.append(text(875, 330, "1 untried", 24))
     if result is not None:
         color = GREEN if result else RED
         x = 190 if rollout and rollout[0].startswith("B") else 800
@@ -152,94 +143,43 @@ def figure(name, title, tree, *, selected=(), new=None, rollout=(),
 def main():
     tree = {"root": [0, 0]}
     figure("00-start", "Start with only the root stored", tree)
-    before = deepcopy(tree)
-    tree["A"] = [0, 0]
-    back_up(tree, ("root", "A"), 1)
-    figure("01-first", "MCTS iteration 1: expand A, roll out and back up one", tree,
-           new="A", updated=("root", "A"), before=before,
-           rollout=("A0", "A01", "A010"), result=1, minutes=76)
-    before = deepcopy(tree)
-    tree["B"] = [0, 0]
-    back_up(tree, ("root", "B"), 0)
-    figure("02-second", "Iteration 2: expand B, roll out and back up zero", tree,
-           new="B", updated=("root", "B"), before=before,
-           rollout=("B1", "B10", "B100"), result=0, minutes=86)
-
-    # Show every A trial, retaining its complete stored subtree afterward.
-    warmups = (
-        ("03a-third", "A0", ("A01", "A010"), 1, 78),
-        ("03b-fourth", "A1", ("A10", "A100"), 1, 79),
-        ("03c-fifth", "A00", ("A000",), 0, 86),
-        ("03d-sixth", "A10", ("A100",), 0, 85),
+    # Each row specifies the expansion and one sampled full route and trip time.
+    trace = (
+        ("01-first", "A", "A010", 76),
+        ("02-second", "B", "B100", 86),
+        ("03a-third", "A0", "A010", 78),
+        ("03b-fourth", "A1", "A100", 79),
+        ("03c-fifth", "A00", "A000", 86),
+        ("03d-sixth", "A10", "A100", 85),
+        ("07-seventh", "B0", "B010", 76),
+        ("08-eighth", "B1", "B100", 86),
+        ("09-ninth", "A01", "A010", 84),
+        ("10-tenth", "B01", "B010", 78),
     )
-    for number, (name, node, rollout, result, minutes) in enumerate(warmups, 3):
-        assert choose(tree, "root", ("A", "B")) == "A"
-        path = ["root", "A"]
-        if len(node) == 3:
-            assert choose(tree, "A", ("A0", "A1")) == node[:-1]
-            path.append(node[:-1])
-        assert node not in tree
+    for number, (name, node, route, minutes) in enumerate(trace, 1):
+        path = ("root", *(node[:depth] for depth in range(1, len(node) + 1)))
+        for parent, child in zip(path[:-2], path[1:-1]):
+            children = ("A", "B") if parent == "root" else (parent + "0", parent + "1")
+            assert all(candidate in tree for candidate in children)
+            assert choose(tree, parent, children) == child
+
+        assert node not in tree and path[-2] in tree
+        assert route.startswith(node) and len(route) == 4
+        rollout = tuple(route[:depth] for depth in range(len(node) + 1, len(route) + 1))
+        result = int(minutes <= 80)
         before = deepcopy(tree)
         tree[node] = [0, 0]
-        back_up(tree, (*path, node), result)
-        assert len(tree) == len(before) + 1
-        figure(name, f"Iteration {number}: store {'–'.join(node)}, roll out and back up {result}",
-               tree, selected=path[1:], new=node, rollout=rollout,
-               result=result, minutes=minutes, updated=(*path, node), before=before)
-    assert tree == {"root": [3, 6], "A": [3, 5], "B": [0, 1],
-                    "A0": [1, 2], "A1": [1, 2], "A00": [0, 1], "A10": [0, 1]}
-    figure("03-snapshot", "After six iterations: A has three successes in five visits", tree)
-    assert choose(tree, "root", ("A", "B")) == "B"
-    figure("04-select", "Iteration 7: select the less-visited branch B", tree,
-           selected=("B",))
-    tree["B0"] = [0, 0]
-    figure("05-expand", "Iteration 7: store the new child B zero", tree,
-           selected=("B",), new="B0")
-    figure("06-rollout", "Iteration 7: sample two remaining choices and on-time traffic", tree,
-           selected=("B",), new="B0", rollout=("B01", "B010"), result=1, minutes=76)
-    before = deepcopy(tree)
-    back_up(tree, ("root", "B", "B0"), 1)
-    figure("07-backup", "Iteration 7: back up one through B zero, B and Start", tree,
-           new="B0", updated=("root", "B", "B0"), before=before)
+        back_up(tree, path, result)
+        figure(name, f"Iteration {number}: expand {'–'.join(node)}, roll out and back up {result}",
+               tree, new=node, rollout=rollout, result=result, minutes=minutes,
+               updated=path, before=before)
 
-    assert choose(tree, "root", ("A", "B")) == "B"
-    tree["B1"] = [0, 0]
-    figure("08-failure-expand", "Iteration 8: select B and expand its untried child one", tree,
-           selected=("B",), new="B1")
-    figure("09-failure-rollout", "Iteration 8: the sampled trip is late", tree,
-           selected=("B",), new="B1", rollout=("B10", "B100"), result=0, minutes=86)
-    before = deepcopy(tree)
-    back_up(tree, ("root", "B", "B1"), 0)
-    figure("10-failure-backup", "Iteration 8: visits increase but successes do not", tree,
-           new="B1", updated=("root", "B", "B1"), before=before)
-
-    assert choose(tree, "root", ("A", "B")) == "A"
-    assert choose(tree, "A", ("A0", "A1")) == "A0"
-    before = deepcopy(tree)
-    tree["A01"] = [0, 0]
-    figure("11a-a-rollout", "Iteration 9: select A then A zero, store A zero one and roll out", tree,
-           selected=("A", "A0"), new="A01", rollout=("A010",), result=0, minutes=84)
-    back_up(tree, ("root", "A", "A0", "A01"), 0)
-    figure("11-intervening", "Iteration 9: keep A zero one and back up zero through its stored path", tree,
-           new="A01", updated=("root", "A", "A0", "A01"), before=before)
-
-    assert choose(tree, "root", ("A", "B")) == "B"
-    assert choose(tree, "B", ("B0", "B1")) == "B0"
-    figure("12-deeper-select", "Iteration 10: select B, then select its stored child B zero", tree,
-           selected=("B", "B0"))
-    tree["B01"] = [0, 0]
-    figure("13-deeper-rollout", "Iteration 10: expand B zero one and roll out one final choice", tree,
-           selected=("B", "B0"), new="B01", rollout=("B010",), result=1, minutes=78)
-    before = deepcopy(tree)
-    back_up(tree, ("root", "B", "B0", "B01"), 1)
-    figure("14-deeper-backup", "Iteration 10: back up one along the longer stored path", tree,
-           new="B01", updated=("root", "B", "B0", "B01"), before=before)
     assert tree == {"root": [5, 10], "A": [3, 6], "B": [2, 4],
                     "A0": [1, 3], "A1": [1, 2], "A00": [0, 1], "A10": [0, 1], "A01": [0, 1],
                     "B0": [2, 2], "B1": [0, 1], "B01": [1, 1]}
     assert len(tree) == 11, "Ten iterations store ten nodes, in addition to Start"
     assert choose(tree, "root", ("A", "B")) == "B"
-    print("Generated 20 fixed-layout SVGs; all ten expansions, UCT choices and complete-tree counts verified")
+    print("Generated the initial tree and one SVG per iteration. Verified UCT choices and final counts.")
 
 
 if __name__ == "__main__":

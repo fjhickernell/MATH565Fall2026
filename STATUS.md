@@ -807,6 +807,10 @@ appropriate phase rather than appended indiscriminately.
     shorten the UCT header, and shade the selected score per parent. Preserve
     the action-0 tie rule and verify every input and both display sizes
     (November 17).
+  - [x] Consolidate the worked MCTS trace to one slide per iteration, preserve
+    its deep links, and distinguish UCT's next simulation from the final
+    visit-count recommendation. Explain rollout storage and traversal order
+    using the trace, and add the traveling salesperson example (November 18).
   - [x] Define balanced uniform allocation and explain both Section 6
     notebook plot types beside their saved results. Compare 512 and 4,096
     simulations using matched-scale paired plots and labeled wins, gaps and
