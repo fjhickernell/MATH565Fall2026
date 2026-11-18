@@ -1,5 +1,18 @@
 # Next task
 
+## Class schedule announcement — published November 17
+
+Fred published [Upcoming Class Schedule](https://iit.instructure.com/courses/25777/discussion_topics/110652)
+to **All Sections** on **November 17, 2026, 7:31 PM CST**. The saved body and
+audience are verified: November 19 has no lecture, with classroom availability
+for project/course questions; November 24 has no regular class meeting, with
+project presentations scheduled for that week; December 1 and 3 are review.
+The [HTML reference](drafts/2026-11-17-class-schedule-announcement.html)
+preserves Fred's final text. Do not repost. The completed notification task
+was removed from the Dashboard; Q&A preparation and grading remain open.
+Matching Academic reminder state remains unverified under the retained access
+restrictions; no reminder was changed.
+
 ## Sample exam questions — announced November 12
 
 The [Canvas announcement](https://iit.instructure.com/courses/25777/discussion_topics/110260)
