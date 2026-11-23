@@ -1,5 +1,14 @@
 # Next task
 
+## Immediate next work — Assignment 6 grading and project presentations
+
+Assignment 6 grading materials are ready in the private course workspace.
+Grade there, then follow the instructor-review and release workflow. The
+grading deadline was November 19. Run the November 23–24 project presentations
+using the [final Canvas schedule](https://iit.instructure.com/courses/25777/discussion_topics/110202).
+The announced target for providing Selected Topics sample exam questions is
+November 25.
+
 ## Class schedule announcement — published November 17
 
 Fred published [Upcoming Class Schedule](https://iit.instructure.com/courses/25777/discussion_topics/110652)
@@ -151,7 +160,7 @@ rendered deck resolve. These additions are included in this checkpoint.
 Reload an open SGD notebook from disk before running it; the MCTS companion
 is `notebooks/applications/MonteCarloTreeSearch.ipynb`.
 
-## Immediate next work — optional Q&A November 19
+## November 17 lecture closeout and November 19 optional Q&A
 
 Selected Topics concluded on November 17 with the travel-time MCTS walkthrough,
 backup, and final route recommendation. The companion notebook was left for
