@@ -6,8 +6,6 @@ Assignment 6 grading materials are ready in the private course workspace.
 Grade there, then follow the instructor-review and release workflow. The
 grading deadline was November 19. Run the November 23–24 project presentations
 using the [final Canvas schedule](https://iit.instructure.com/courses/25777/discussion_topics/110202).
-The announced target for providing Selected Topics sample exam questions is
-November 25.
 
 ## Class schedule announcement — published November 17
 
@@ -22,14 +20,16 @@ was removed from the Dashboard; Q&A preparation and grading remain open.
 Matching Academic reminder state remains unverified under the retained access
 restrictions; no reminder was changed.
 
-## Sample exam questions — announced November 12
+## Selected Topics practice questions — released November 24
 
-The [Canvas announcement](https://iit.instructure.com/courses/25777/discussion_topics/110260)
-is published to All Sections, November 12 at 7:52 AM CST. Prepare and provide
-sample exam questions to accompany Selected Topics, hopefully by Wednesday,
-November 25. Preparation and release remain open. The
-[HTML reference](drafts/2026-11-25-selected-topics-sample-exam-announcement.html)
-preserves the published text.
+The [Tests page](https://fjhickernell.github.io/MATH565Fall2026/pages/tests.html)
+links to the [practice handout](https://fjhickernell.github.io/MATH565Fall2026/assets/tests/practice/selected-topics-practice.pdf).
+The live download matched the reviewed student copy. Canvas posted
+[Selected Topics practice questions are available](https://iit.instructure.com/courses/25777/discussion_topics/111135)
+to **All Sections** on **November 24 at 9:13 AM CST**, fulfilling the
+[November 12 announcement](https://iit.instructure.com/courses/25777/discussion_topics/110260).
+The [announcement reference](drafts/2026-11-24-selected-topics-practice-available.html)
+preserves the posted text.
 
 ## Syllabus revision — reviewer draft started November 17
 
