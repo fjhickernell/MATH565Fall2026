@@ -1,11 +1,12 @@
 # Next task
 
-## Immediate next work — Assignment 6 grading and project presentations
+## Immediate next work — Assignment 6 grading and project follow-up
 
 Assignment 6 grading materials are ready in the private course workspace.
 Grade there, then follow the instructor-review and release workflow. The
-grading deadline was November 19. Run the November 23–24 project presentations
-using the [final Canvas schedule](https://iit.instructure.com/courses/25777/discussion_topics/110202).
+grading deadline was November 19. The November 23–24 project presentations
+were scheduled in the [final Canvas announcement](https://iit.instructure.com/courses/25777/discussion_topics/110202).
+Check for outstanding follow-up before closing that work.
 
 ## Class schedule announcement — published November 17
 
@@ -793,7 +794,7 @@ is corrected locally and issue #3 is closed: the green band refers to
 reference error remain distinct. Code and saved outputs are unchanged.
 The prose correction is included in this Checkpoint.
 
-## Take-home final — October 30 update
+## Take-home final — November 25 release
 
 The Tests page now mirrors the prior course's take-home rules: AI and other
 inanimate resources are permitted; human help is prohibited; students must
@@ -804,25 +805,26 @@ hand-in. The take-home deadline is December 9, 2026, at 8:00 AM
 America/Chicago (CST), the start of the in-class final. The Tests page and
 Schedule reflect these directions.
 
-Both Canvas items are saved and verified, unpublished, in the existing Final
-Exam group (40% of the course):
+Both Canvas items use the existing Final Exam group (40% of the course):
 
 - Take-Home Final Exam: [108492](https://iit.instructure.com/courses/25777/assignments/108492),
-  35 points, individual file uploads, unlimited attempts, available November 25
-  at midnight, due December 9 at 8:00 AM America/Chicago (CST). No Until date.
+  published November 25 for everyone. Verified 35 points, individual file
+  uploads, unlimited attempts, November 25 midnight availability, and the
+  December 9, 8:00 AM America/Chicago (CST) deadline. The student exam and
+  companion data file both open in Student View.
 - In-Class Final Exam: [108493](https://iit.instructure.com/courses/25777/assignments/108493),
-  65 points, on-paper submission, December 9 at 10:00 AM due time; the actual
-  examination is 8:00–10:00 AM America/Chicago (CST), PH 109.
+  configured October 30 for 65 points, on-paper submission, and a December 9
+  10:00 AM due time. The examination is 8:00–10:00 AM America/Chicago (CST),
+  PH 109.
 
-Reuse these IDs. The points preserve the published 35%/65% split; no partner
-group is used. The website links are recorded in course metadata. No exam
-document has been attached or announcement published. The full website renders;
-the Schedule and Tests pages fit desktop and 390-pixel phone widths. All 720
-assembled local links/assets resolve, including 117 content links on those two
-pages. These changes are included in the earlier Checkpoint; its website
-publishing workflow succeeded, while live-page verification remains pending.
-Canvas publication still requires the
-instructor's confirmation after the public links are verified.
+Reuse these IDs. The points preserve the published 35%/65% split. The live
+Tests page links to the released take-home assignment, and the live Schedule
+shows the release and deadline. Grading is due December 15.
+
+The [take-home final announcement](https://iit.instructure.com/courses/25777/discussion_topics/111203)
+was posted November 25 at 12:45 PM CST to **All Sections**. The published
+announcement links to the assignment and gives the December 9, 8:00 AM
+Chicago-time submission deadline.
 
 ## Final-examination schedule — October 28 update
 

@@ -319,6 +319,10 @@ appropriate phase rather than appended indiscriminately.
       Final Exam group: 35-point take-home with individual file uploads,
       November 25 availability and December 9 at 8:00 AM deadline; 65-point
       in-class with on-paper submission and December 9 at 10:00 AM due time.
+    - [x] Publish the November 25 take-home final in Canvas and verify both
+      student files in Student View.
+    - [x] Post and verify the take-home final availability announcement for
+      both sections, with the assignment link and submission deadline.
     - [x] Complete and review the private Test 2 draft.
     - [x] Publish Test 2 solutions and anonymous score distribution on the
       Tests page and test archive; verify successful deployment and identical
